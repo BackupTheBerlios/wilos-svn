@@ -19,6 +19,7 @@ import org.springframework.core.io.Resource ;
 public class TestConfiguration extends TestCase {
 
 	// Getback the application context from the spring configuration file
+	// FIXME pb : recharge le context pour chaque test ... faut trouver un moyen plus rapide ?
 	private ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 
 	public ApplicationContext getApplicationContext() {

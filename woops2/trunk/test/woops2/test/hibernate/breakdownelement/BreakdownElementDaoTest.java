@@ -115,7 +115,7 @@ public class BreakdownElementDaoTest extends TestConfiguration {
 	/**
 	 * Test method for
 	 * {@link woops2.hibernate.breakdownelement.BreakdownElementDao#getBreakdownElement()}.
-	 * 
+	 * @FIXME : junit a revoir
 	 */
 	public void testGetBreakdownElement() {
 		// Rk: the setUp method is called here.
