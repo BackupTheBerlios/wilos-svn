@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
-                  "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
-<beans>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
 	<!-- DataSource Definition -->
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp.BasicDataSource"
@@ -30,8 +37,12 @@
 		<property name="mappingResources">
 			<list>
 				<value>woops2/model/element/Element.hbm.xml</value>
-				<value>woops2/model/breakdownelement/BreakdownElement.hbm.xml</value>
-				<value>woops2/model/workbreakdownelement/WorkBreakdownElement.hbm.xml</value>
+				<value>
+					woops2/model/breakdownelement/BreakdownElement.hbm.xml
+				</value>
+				<value>
+					woops2/model/workbreakdownelement/WorkBreakdownElement.hbm.xml
+				</value>
 				<value>woops2/model/activity/Activity.hbm.xml</value>
 				<value>woops2/model/task/TaskDescriptor.hbm.xml</value>
 				<value>woops2/model/task/TaskDefinition.hbm.xml</value>
@@ -77,39 +88,43 @@
 			<ref bean="jdbcExceptionTranslator" />
 		</property>
 	</bean>
-	   
-	<!--  
+
+	<!-- Hibernate Transaction Manager Defintion  -->
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory">
 			<ref local="sessionFactory" />
 		</property>
-	</bean> -->
+	</bean>
+
+	<!-- enable the configuration of transactional behavior based on annotations -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<!-- ========================= Start of BEAN DEFINITIONS ========================= -->
 
 	<!-- ========================= DAO Layer ========================= -->
-	
+
 	<bean id="ActivityDao"
 		class="woops2.hibernate.activity.ActivityDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
-	
+
 	<bean id="ElementDao" class="woops2.hibernate.element.ElementDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
-	
+
 	<bean id="BreakdownElementDao"
 		class="woops2.hibernate.breakdownelement.BreakdownElementDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
-	
-	<bean id="WorkBreakdownElementDao" 
+
+	<bean id="WorkBreakdownElementDao"
 		class="woops2.hibernate.workbreakdownelement.WorkBreakdownElementDao">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 
-	<bean id="TaskDefinitionDao" class="woops2.hibernate.task.TaskDefinitionDao">
+	<bean id="TaskDefinitionDao"
+		class="woops2.hibernate.task.TaskDefinitionDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 
@@ -117,8 +132,9 @@
 		class="woops2.hibernate.task.TaskDescriptorDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
-	
-	<bean id="RoleDefinitionDao" class="woops2.hibernate.role.RoleDefinitionDao">
+
+	<bean id="RoleDefinitionDao"
+		class="woops2.hibernate.role.RoleDefinitionDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 
@@ -126,16 +142,16 @@
 		class="woops2.hibernate.role.RoleDescriptorDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
-	
-	<bean id="StepDao"
-		class="woops2.hibernate.task.StepDao">
+
+	<bean id="StepDao" class="woops2.hibernate.task.StepDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 
 	<!-- ========================= Business Layer ========================= -->
+	  
 	<bean id="ActivityManager"
 		class="woops2.business.activity.ActivityManager">
 		<property name="activityDao" ref="ActivityDao" />
 	</bean>
-
+	
 </beans>
