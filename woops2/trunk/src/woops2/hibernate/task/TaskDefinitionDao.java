@@ -51,7 +51,7 @@ public class TaskDefinitionDao extends HibernateDaoSupport {
 		try{
 			this.getHibernateTemplate().delete(_taskDefinition) ;
 		}
-		catch(StaleObjectStateException e){
+		catch(Exception e){
 			// Catch normally errors when we delete an unexisting TaskDefinition into the
 			// db.
 			logger.error("#### ERROR #### --- TaskDefinitionDao => deleteTask: trying to delete unexisting object \n" + e) ;

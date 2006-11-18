@@ -41,8 +41,21 @@ public class ActivityManager {
 		return this.activityDao.getActivityFromPrefix(_prefix) ;
 	}
 	
+	/**
+	 * Function that make some test on transactionnal lazy loadings
+	 *
+	 */
 	public void Test(){
-		Activity a = activityDao.getActivityFromPrefix("test");
+		Activity a = this.activityDao.getActivityFromPrefix("test");
+		if (a == null){
+			a = new Activity();
+			a.setPrefix("test");
+			this.activityDao.saveOrUpdateActivity(a);
+			BreakdownElement b = new BreakdownElement();
+			this.activityDao.getHibernateTemplate().save(b);
+			a.getBreakDownElements().add(b);
+			this.activityDao.saveOrUpdateActivity(a);
+		}
 		List<BreakdownElement> liste = new ArrayList<BreakdownElement>(a.getBreakDownElements());
 		logger.debug("### ActivityManager - TEST ###  liste size = "+liste.size());
 		for (BreakdownElement b : liste){

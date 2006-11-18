@@ -55,7 +55,7 @@ public class ElementDao extends HibernateDaoSupport {
 		try {
 			this.getHibernateTemplate().delete(_element) ;
 		}
-		catch (StaleObjectStateException sose) {
+		catch (Exception sose) {
 			// Catch normally errors when we delete an unexisting element into the db.
 			logger.error("#### ERROR #### --- ElementDao => deleteElement : trying to delete unexisting object \n" + sose) ;
 		}

@@ -56,7 +56,7 @@ public class WorkBreakdownElementDao extends HibernateDaoSupport {
 		try {
 			this.getHibernateTemplate().delete(_workBreakdownElement) ;
 		}
-		catch (StaleObjectStateException sose) {
+		catch (Exception sose) {
 			// Catch normally errors when we delete an unexisting activity into
 			// the db.
 			logger.error("#### ERROR #### --- WorkBreakdownElementDao => deleteWorkBreakdownElement : trying to delete unexisting object \n" + sose) ;

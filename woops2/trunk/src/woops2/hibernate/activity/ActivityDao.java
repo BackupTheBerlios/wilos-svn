@@ -69,7 +69,7 @@ public class ActivityDao extends HibernateDaoSupport {
 		try{
 			this.getHibernateTemplate().delete(_activity) ;
 		}
-		catch(StaleObjectStateException sose){
+		catch(Exception sose){
 			// Catch normally errors when we delete an unexisting activity into the db.
 			logger.error("#### ERROR #### --- ActivityDao => deleteActivity : trying to delete unexisting object \n" + sose) ;
 		}

@@ -57,11 +57,10 @@ public class TaskDescriptorDao extends HibernateDaoSupport {
 	public void deleteTaskDescriptor(TaskDescriptor _taskdescriptor) {
 		try {
 			this.getHibernateTemplate().delete(_taskdescriptor);
-		} catch (StaleObjectStateException sose) {
+		} catch (Exception sose) {
 			// Catch normally errors when we delete an unexisting TaskDescriptor
 			// into the db.
-			logger
-					.error("#### ERROR #### --- TaskDescriptorDao => deleteTaskDescriptor : trying to delete unexisting object \n"
+			logger.error("#### ERROR #### --- TaskDescriptorDao => deleteTaskDescriptor : trying to delete unexisting object \n"
 							+ sose);
 		}
 	}

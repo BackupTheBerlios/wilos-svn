@@ -55,7 +55,7 @@ public class RoleDefinitionDao extends HibernateDaoSupport {
 		try{
 			this.getHibernateTemplate().delete(_roleDefinition) ;
 		}
-		catch(StaleObjectStateException e){
+		catch(Exception e){
 			// Catch normally errors when we delete an unexisting role into the
 			// db.
 			logger.error("#### ERROR #### --- RoleDefinitionDao => deleteRole : trying to delete unexisting object \n" + e) ;
