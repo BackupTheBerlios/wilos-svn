@@ -50,6 +50,11 @@ public class ActivityViewer {
 	 * Getter of activitiesList.
 	 * 
 	 * @return the activitiesList.
+	 * FIXME ne peut pas recuperer la liste
+	 */
+	/*
+	 * 09:31:41,153  WARN JDBCExceptionReporter:71 - SQL Error: 1054, SQLState: 42S22
+09:31:41,180 ERROR JDBCExceptionReporter:72 - Unknown column 'breakdowne1_4_.taskdefinition_id' in 'field list'
 	 */
 	public List<Activity> getActivitiesList() {
 		this.activitiesList = new ArrayList<Activity>();
