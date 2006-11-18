@@ -31,7 +31,7 @@ public class RoleDefinitionDaoTest extends TestConfiguration {
 		super.setUp();
 
 		// Get the RoleDefinitionDao Singleton for managing RoleDefinition data
-		this.roleDefinitionDao = (RoleDefinitionDao) super.getBeanFactory().getBean("RoleDefinitionDao");
+		this.roleDefinitionDao = (RoleDefinitionDao) super.getApplicationContext().getBean("RoleDefinitionDao");
 
 		// Create empty RoleDefinition
 		this.roleDefinition = new RoleDefinition();

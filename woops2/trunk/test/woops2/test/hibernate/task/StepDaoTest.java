@@ -39,7 +39,7 @@ public class StepDaoTest extends TestConfiguration {
 		super.setUp() ;
 
 		// Get the TaskDefinitionDao Singleton for managing TaskDefinition data
-		this.stepDao = (StepDao) super.getBeanFactory().getBean("StepDao") ;
+		this.stepDao = (StepDao) super.getApplicationContext().getBean("StepDao") ;
 
 		// Create empty TaskDefinition
 		this.step = new Step() ;

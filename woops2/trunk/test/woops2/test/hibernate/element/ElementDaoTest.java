@@ -31,7 +31,7 @@ public class ElementDaoTest extends TestConfiguration {
 		super.setUp();
 
 		// Get the ElementDao Singleton for managing Element data
-		this.elementDao = (ElementDao) super.getBeanFactory().getBean(
+		this.elementDao = (ElementDao) super.getApplicationContext().getBean(
 				"ElementDao");
 
 		// Create empty Activity

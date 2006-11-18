@@ -31,7 +31,7 @@ public class ActivityManagerTest extends TestConfiguration {
 		super.setUp() ;
 
 		// Get the ActivityDao Singleton for managing Activity data
-		this.activityManager = (ActivityManager) super.getBeanFactory().getBean("ActivityManager") ;
+		this.activityManager = (ActivityManager) super.getApplicationContext().getBean("ActivityManager") ;
 
 		// Create empty Activity
 		this.activity = new Activity() ;

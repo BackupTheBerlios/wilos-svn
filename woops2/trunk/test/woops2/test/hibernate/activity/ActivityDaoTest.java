@@ -47,7 +47,7 @@ public class ActivityDaoTest extends TestConfiguration {
 		super.setUp() ;
 
 		// Get the ActivityDao Singleton for managing Activity data
-		this.activityDao = (ActivityDao) super.getBeanFactory().getBean("ActivityDao") ;
+		this.activityDao = (ActivityDao) super.getApplicationContext().getBean("ActivityDao") ;
 
 		// Create empty Activity
 		this.activity = new Activity() ;

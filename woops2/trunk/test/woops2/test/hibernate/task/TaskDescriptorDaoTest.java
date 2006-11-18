@@ -57,7 +57,7 @@ public class TaskDescriptorDaoTest extends TestConfiguration {
 		super.setUp();
 
 		// Get the TaskDescriptorDao Singleton for managing TaskDescriptor data
-		this.taskDescriptorDao = (TaskDescriptorDao) super.getBeanFactory()
+		this.taskDescriptorDao = (TaskDescriptorDao) super.getApplicationContext()
 				.getBean("TaskDescriptorDao");
 
 		// Create empty TaskDescriptor

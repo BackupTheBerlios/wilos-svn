@@ -44,7 +44,7 @@ public class BreakdownElementDaoTest extends TestConfiguration {
 
 		// Get the BreakdownElementDao Singleton for managing BreakdownElement
 		// data
-		this.breakdownElementDao = (BreakdownElementDao) super.getBeanFactory()
+		this.breakdownElementDao = (BreakdownElementDao) super.getApplicationContext()
 				.getBean("BreakdownElementDao");
 
 		// Create empty BreakdownElement

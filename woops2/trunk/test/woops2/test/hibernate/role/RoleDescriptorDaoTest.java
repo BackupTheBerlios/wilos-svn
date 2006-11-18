@@ -39,7 +39,7 @@ public class RoleDescriptorDaoTest extends TestConfiguration {
 		super.setUp();
 
 		// Get the RoleDescriptorDao Singleton for managing RoleDescriptor data
-		this.roleDescriptorDao = (RoleDescriptorDao) super.getBeanFactory()
+		this.roleDescriptorDao = (RoleDescriptorDao) super.getApplicationContext()
 				.getBean("RoleDescriptorDao");
 
 		// Create empty roleDescriptor

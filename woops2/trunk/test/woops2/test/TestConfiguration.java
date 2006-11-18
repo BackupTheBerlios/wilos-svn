@@ -4,6 +4,8 @@ package woops2.test ;
 import junit.framework.TestCase ;
 
 import org.springframework.beans.factory.xml.XmlBeanFactory ;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.FileSystemResource ;
 import org.springframework.core.io.Resource ;
 
@@ -17,12 +19,15 @@ import org.springframework.core.io.Resource ;
 public class TestConfiguration extends TestCase {
 
 	// Getback the application context from the spring configuration file
-	private Resource resource = new FileSystemResource("src/applicationContext.xml") ;
+	private ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 
-	private XmlBeanFactory xmlBeanFactory = new XmlBeanFactory(resource) ;
-
-	public XmlBeanFactory getBeanFactory () {
-		return this.xmlBeanFactory ;
+	public ApplicationContext getApplicationContext() {
+		return applicationContext;
 	}
+
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
+	
 
 }

@@ -36,7 +36,7 @@ public class TaskDefinitionDaoTest extends TestConfiguration {
 		super.setUp();
 
 		// Get the TaskDefinitionDao Singleton for managing TaskDefinition data
-		this.taskDefinitionDao = (TaskDefinitionDao) super.getBeanFactory().getBean("TaskDefinitionDao");
+		this.taskDefinitionDao = (TaskDefinitionDao) super.getApplicationContext().getBean("TaskDefinitionDao");
 
 		// Create empty TaskDefinition
 		this.taskDefinition = new TaskDefinition();

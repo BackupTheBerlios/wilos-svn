@@ -48,8 +48,8 @@ public class WorkBreakdownElementDaoTest extends TestConfiguration {
 
 		// Get the BreakdownElementDao Singleton for managing BreakdownElement
 		// data
-		this.workBreakdownElementDao = (WorkBreakdownElementDao) super
-				.getBeanFactory().getBean("WorkBreakdownElementDao");
+		this.workBreakdownElementDao = (WorkBreakdownElementDao) super.getApplicationContext()
+		.getBean("WorkBreakdownElementDao");
 
 		// Create empty WorkBreakdownElement
 		this.workBreakdownElement = new WorkBreakdownElement();
