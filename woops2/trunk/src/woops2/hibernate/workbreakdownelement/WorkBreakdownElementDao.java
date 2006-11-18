@@ -4,7 +4,6 @@ package woops2.hibernate.workbreakdownelement ;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.hibernate.StaleObjectStateException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import woops2.model.workbreakdownelement.WorkBreakdownElement;

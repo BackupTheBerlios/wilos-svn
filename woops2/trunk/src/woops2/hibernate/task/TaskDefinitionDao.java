@@ -1,13 +1,12 @@
 
 package woops2.hibernate.task ;
 
-import java.util.HashSet ;
-import java.util.Set ;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.hibernate.StaleObjectStateException ;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import woops2.model.task.TaskDefinition ;
+import woops2.model.task.TaskDefinition;
 
 /**
  * /** TaskDefinitionDao manage requests from the system to store TaskDefinition to the database

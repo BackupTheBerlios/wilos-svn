@@ -3,7 +3,6 @@ package woops2.hibernate.breakdownelement;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.hibernate.StaleObjectStateException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import woops2.model.breakdownelement.BreakdownElement;

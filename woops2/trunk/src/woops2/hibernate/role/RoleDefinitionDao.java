@@ -1,13 +1,12 @@
 
 package woops2.hibernate.role ;
 
-import java.util.HashSet ;
-import java.util.Set ;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.hibernate.StaleObjectStateException ;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import woops2.model.role.RoleDefinition ;
+import woops2.model.role.RoleDefinition;
 
 /**
  * RoleDefinitionDao manage requests from the system to store RoleDefinition to the database
