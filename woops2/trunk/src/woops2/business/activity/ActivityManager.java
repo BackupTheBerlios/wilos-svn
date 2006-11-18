@@ -1,18 +1,25 @@
 
 package woops2.business.activity ;
 
-import java.util.Set ;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
-import woops2.hibernate.activity.ActivityDao ;
-import woops2.model.activity.Activity ;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import woops2.hibernate.activity.ActivityDao;
+import woops2.model.activity.Activity;
+import woops2.model.breakdownelement.BreakdownElement;
 
 /**
- * ActivityManager manage operations about activity, requested by web pages (activity.jsp &
+ * ActivityManager is a transactional class, that manage operations about activity, requested by web pages (activity.jsp &
  * activityform.jsp)
  * 
  * @author garwind
  * @author deder.
  */
+@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class ActivityManager {
 
 	private ActivityDao activityDao ;
@@ -25,7 +32,20 @@ public class ActivityManager {
 	public Set<Activity> getActivitiesList() {
 		return this.activityDao.getAllActivities() ;
 	}
-
+	
+	public Activity getActivityFromPrefix(String _prefix) {
+		return this.activityDao.getActivityFromPrefix(_prefix) ;
+	}
+	
+	public void Test(){
+		Activity a = activityDao.getActivityFromPrefix("test");
+		List<BreakdownElement> liste = new ArrayList<BreakdownElement>(a.getBreakDownElements());
+		System.out.println("liste size = "+liste.size());
+		for (BreakdownElement b : liste){
+			System.out.println("b="+b);
+		}
+	}
+	
 	/**
 	 * Save activity
 	 * 
