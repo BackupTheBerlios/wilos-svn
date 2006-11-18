@@ -28,6 +28,7 @@
 		</h:dataTable>
 		<br>
 		<h:commandButton value="new activity" action="createactivity"/>
+		<h:commandButton value="test transactions" actionListener="#{ActivityViewer.testTransactionActionListener}"/>
 	</h:form>
 </f:view>
 </body>
