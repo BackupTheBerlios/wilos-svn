@@ -1,14 +1,14 @@
 
 package woops2.presentation.activity ;
 
-import java.util.List ;
-import java.util.Set ;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.apache.commons.logging.Log ;
-import org.apache.commons.logging.LogFactory ;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
-import woops2.business.activity.ActivityManager ;
-import woops2.model.activity.Activity ;
+import woops2.business.activity.ActivityManager;
+import woops2.model.activity.Activity;
 
 /**
  * Managed-Bean link to activity.jsp and activitform.jsp
@@ -18,7 +18,7 @@ import woops2.model.activity.Activity ;
  */
 public class ActivityViewer {
 
-	private Set<Activity> activitiesList ;
+	private List<Activity> activitiesList ;
 
 	private ActivityManager activityManager ;
 
@@ -51,8 +51,9 @@ public class ActivityViewer {
 	 * 
 	 * @return the activitiesList.
 	 */
-	public Set<Activity> getActivitiesList() {
-		this.activitiesList = this.activityManager.getActivitiesList() ;
+	public List<Activity> getActivitiesList() {
+		this.activitiesList = new ArrayList<Activity>();
+		activitiesList.addAll(this.activityManager.getActivitiesList());
 		this.logger.debug("acti list =" + this.activitiesList) ;
 		return this.activitiesList ;
 	}
@@ -63,7 +64,7 @@ public class ActivityViewer {
 	 * @param _activitiesList
 	 *            The activitiesList to set.
 	 */
-	public void setActivitiesList(Set<Activity> _activitiesList) {
+	public void setActivitiesList(List<Activity> _activitiesList) {
 		this.activitiesList = _activitiesList ;
 	}
 
