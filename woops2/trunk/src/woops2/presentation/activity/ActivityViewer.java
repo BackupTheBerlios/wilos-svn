@@ -4,6 +4,8 @@ package woops2.presentation.activity ;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.event.ActionEvent;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -45,16 +47,15 @@ public class ActivityViewer {
 		this.activityManager.saveActivity(this.activity) ;
 		return url ;
 	}
+	
+	public void testTransactionActionListener(ActionEvent e){
+		this.activityManager.Test();
+	}
 
 	/**
 	 * Getter of activitiesList.
 	 * 
 	 * @return the activitiesList.
-	 * FIXME ne peut pas recuperer la liste
-	 */
-	/*
-	 * 09:31:41,153  WARN JDBCExceptionReporter:71 - SQL Error: 1054, SQLState: 42S22
-09:31:41,180 ERROR JDBCExceptionReporter:72 - Unknown column 'breakdowne1_4_.taskdefinition_id' in 'field list'
 	 */
 	public List<Activity> getActivitiesList() {
 		this.activitiesList = new ArrayList<Activity>();

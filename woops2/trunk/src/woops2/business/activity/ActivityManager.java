@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +25,9 @@ import woops2.model.breakdownelement.BreakdownElement;
 public class ActivityManager {
 
 	private ActivityDao activityDao ;
-
+	
+	protected final Log logger = LogFactory.getLog(this.getClass()) ;
+	
 	/**
 	 * Return activities list
 	 * 
@@ -40,7 +44,7 @@ public class ActivityManager {
 	public void Test(){
 		Activity a = activityDao.getActivityFromPrefix("test");
 		List<BreakdownElement> liste = new ArrayList<BreakdownElement>(a.getBreakDownElements());
-		System.out.println("liste size = "+liste.size());
+		logger.debug("### ActivityManager - TEST ###  liste size = "+liste.size());
 		for (BreakdownElement b : liste){
 			System.out.println("b="+b);
 		}
