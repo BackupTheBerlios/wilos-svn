@@ -1,13 +1,14 @@
 
 package woops2.hibernate.activity ;
 
-import java.util.HashSet ;
-import java.util.Set ;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import org.hibernate.StaleObjectStateException ;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
+import org.hibernate.StaleObjectStateException;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import woops2.model.activity.Activity ;
+import woops2.model.activity.Activity;
 
 /**
  * ActivityDao manage requests from the system to store Acitivties to the database
@@ -45,6 +46,18 @@ public class ActivityDao extends HibernateDaoSupport {
 	 */
 	public Activity getActivity(String _id) {
 		return (Activity) this.getHibernateTemplate().get(Activity.class, _id) ;
+	}
+	
+	/**
+	 * Test function that return an activity with the given prefix
+	 * If there are many activity with the same prefix, it returns the first
+	 * @param _prefix
+	 * @return
+	 */
+	public Activity getActivityFromPrefix(String _prefix) {
+		List actvities = this.getHibernateTemplate().find("from Activity a where a.prefix=?",_prefix);
+		if (actvities.size() > 0) return (Activity) actvities.get(0);
+		else return null;
 	}
 
 	/**
