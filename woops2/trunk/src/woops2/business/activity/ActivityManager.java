@@ -33,10 +33,16 @@ public class ActivityManager {
 	 * 
 	 * @return
 	 */
+	@Transactional(readOnly = true)
 	public Set<Activity> getActivitiesList() {
 		return this.activityDao.getAllActivities() ;
 	}
 	
+	/**
+	 * Test function that return activity from given prefix
+	 * @param _prefix
+	 * @return
+	 */
 	public Activity getActivityFromPrefix(String _prefix) {
 		return this.activityDao.getActivityFromPrefix(_prefix) ;
 	}
