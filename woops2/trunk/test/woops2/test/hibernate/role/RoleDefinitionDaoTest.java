@@ -2,6 +2,7 @@ package woops2.test.hibernate.role;
 
 import java.util.Set;
 
+import junit.framework.TestCase;
 import woops2.hibernate.role.RoleDefinitionDao;
 import woops2.model.role.RoleDefinition;
 import woops2.test.TestConfiguration;
@@ -11,7 +12,9 @@ import woops2.test.TestConfiguration;
  * 
  * @author Soosuske
  */
-public class RoleDefinitionDaoTest extends TestConfiguration {
+public class RoleDefinitionDaoTest extends TestCase {
+	
+	private TestConfiguration testConfiguration;
 
 	private RoleDefinitionDao roleDefinitionDao = null;
 
@@ -31,7 +34,7 @@ public class RoleDefinitionDaoTest extends TestConfiguration {
 		super.setUp();
 
 		// Get the RoleDefinitionDao Singleton for managing RoleDefinition data
-		this.roleDefinitionDao = (RoleDefinitionDao) super.getApplicationContext().getBean("RoleDefinitionDao");
+		this.roleDefinitionDao = (RoleDefinitionDao) this.testConfiguration.getInstance().getApplicationContext().getBean("RoleDefinitionDao");
 
 		// Create empty RoleDefinition
 		this.roleDefinition = new RoleDefinition();

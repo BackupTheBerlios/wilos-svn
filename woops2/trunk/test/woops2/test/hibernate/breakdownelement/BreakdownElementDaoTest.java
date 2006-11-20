@@ -3,6 +3,7 @@ package woops2.test.hibernate.breakdownelement;
 import java.util.HashSet;
 import java.util.Set;
 
+import junit.framework.TestCase;
 import woops2.hibernate.breakdownelement.BreakdownElementDao;
 import woops2.model.activity.Activity;
 import woops2.model.breakdownelement.BreakdownElement;
@@ -13,7 +14,9 @@ import woops2.test.TestConfiguration;
  * 
  * @author deder
  */
-public class BreakdownElementDaoTest extends TestConfiguration {
+public class BreakdownElementDaoTest extends TestCase {
+	
+	private TestConfiguration testConfiguration;
 
 	private BreakdownElementDao breakdownElementDao = null;
 
@@ -44,8 +47,7 @@ public class BreakdownElementDaoTest extends TestConfiguration {
 
 		// Get the BreakdownElementDao Singleton for managing BreakdownElement
 		// data
-		this.breakdownElementDao = (BreakdownElementDao) super.getApplicationContext()
-				.getBean("BreakdownElementDao");
+		this.breakdownElementDao = (BreakdownElementDao) this.testConfiguration.getInstance().getApplicationContext().getBean("BreakdownElementDao");
 
 		// Create empty BreakdownElement
 		this.breakdownElement = new BreakdownElement();

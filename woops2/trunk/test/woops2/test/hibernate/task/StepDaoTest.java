@@ -1,12 +1,13 @@
 
 package woops2.test.hibernate.task ;
 
-import java.util.Set ;
+import java.util.Set;
 
-import woops2.hibernate.task.StepDao ;
-import woops2.model.task.Step ;
-import woops2.model.task.TaskDefinition ;
-import woops2.test.TestConfiguration ;
+import junit.framework.TestCase;
+import woops2.hibernate.task.StepDao;
+import woops2.model.task.Step;
+import woops2.model.task.TaskDefinition;
+import woops2.test.TestConfiguration;
 
 /**
  * TODO finir commentaires
@@ -14,7 +15,9 @@ import woops2.test.TestConfiguration ;
  * @author garwind
  * 
  */
-public class StepDaoTest extends TestConfiguration {
+public class StepDaoTest extends TestCase {
+	
+	private TestConfiguration testConfiguration;
 	
 	private StepDao stepDao = null ;
 
@@ -39,7 +42,7 @@ public class StepDaoTest extends TestConfiguration {
 		super.setUp() ;
 
 		// Get the TaskDefinitionDao Singleton for managing TaskDefinition data
-		this.stepDao = (StepDao) super.getApplicationContext().getBean("StepDao") ;
+		this.stepDao = (StepDao) this.testConfiguration.getInstance().getApplicationContext().getBean("StepDao") ;
 
 		// Create empty TaskDefinition
 		this.step = new Step() ;

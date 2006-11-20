@@ -3,6 +3,7 @@ package woops2.test.hibernate.activity ;
 
 import java.util.Set;
 
+import junit.framework.TestCase;
 import woops2.hibernate.activity.ActivityDao;
 import woops2.model.activity.Activity;
 import woops2.test.TestConfiguration;
@@ -13,7 +14,9 @@ import woops2.test.TestConfiguration;
  * @author deder
  * @author garwind
  */
-public class ActivityDaoTest extends TestConfiguration {
+public class ActivityDaoTest extends TestCase {
+	
+	private TestConfiguration testConfiguration;
 
 	private ActivityDao activityDao = null ;
 
@@ -47,7 +50,7 @@ public class ActivityDaoTest extends TestConfiguration {
 		super.setUp() ;
 
 		// Get the ActivityDao Singleton for managing Activity data
-		this.activityDao = (ActivityDao) super.getApplicationContext().getBean("ActivityDao") ;
+		this.activityDao = (ActivityDao) this.testConfiguration.getInstance().getApplicationContext().getBean("ActivityDao") ;
 
 		// Create empty Activity
 		this.activity = new Activity() ;

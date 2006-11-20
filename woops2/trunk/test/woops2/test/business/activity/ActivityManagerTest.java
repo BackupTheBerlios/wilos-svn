@@ -1,18 +1,21 @@
 
 package woops2.test.business.activity ;
 
-import java.util.Set ;
+import java.util.Set;
 
-import woops2.business.activity.ActivityManager ;
-import woops2.model.activity.Activity ;
-import woops2.test.TestConfiguration ;
+import junit.framework.TestCase;
+import woops2.business.activity.ActivityManager;
+import woops2.model.activity.Activity;
+import woops2.test.TestConfiguration;
 
 /**
  * @author Mathieu BENOIT.
  * 
  */
-public class ActivityManagerTest extends TestConfiguration {
+public class ActivityManagerTest extends TestCase {
 
+	private TestConfiguration testConfiguration;
+	
 	private ActivityManager activityManager ;
 
 	private Activity activity ;
@@ -31,7 +34,7 @@ public class ActivityManagerTest extends TestConfiguration {
 		super.setUp() ;
 
 		// Get the ActivityDao Singleton for managing Activity data
-		this.activityManager = (ActivityManager) super.getApplicationContext().getBean("ActivityManager") ;
+		this.activityManager = (ActivityManager) this.testConfiguration.getInstance().getApplicationContext().getBean("ActivityManager") ;
 
 		// Create empty Activity
 		this.activity = new Activity() ;

@@ -2,6 +2,7 @@ package woops2.test.hibernate.workbreakdownelement;
 
 import java.util.Set;
 
+import junit.framework.TestCase;
 import woops2.hibernate.workbreakdownelement.WorkBreakdownElementDao;
 import woops2.model.breakdownelement.BreakdownElement;
 import woops2.model.workbreakdownelement.WorkBreakdownElement;
@@ -10,10 +11,12 @@ import woops2.test.TestConfiguration;
 /**
  * @author Sebastien
  * 
- * Unit test for WorkBreakdownElementDao TODO
+ * Unit test for WorkBreakdownElementDao
  * 
  */
-public class WorkBreakdownElementDaoTest extends TestConfiguration {
+public class WorkBreakdownElementDaoTest extends TestCase {
+
+	private TestConfiguration testConfiguration;
 
 	private WorkBreakdownElementDao workBreakdownElementDao = null;
 
@@ -48,8 +51,7 @@ public class WorkBreakdownElementDaoTest extends TestConfiguration {
 
 		// Get the BreakdownElementDao Singleton for managing BreakdownElement
 		// data
-		this.workBreakdownElementDao = (WorkBreakdownElementDao) super.getApplicationContext()
-		.getBean("WorkBreakdownElementDao");
+		this.workBreakdownElementDao = (WorkBreakdownElementDao) this.testConfiguration.getInstance().getApplicationContext().getBean("WorkBreakdownElementDao");
 
 		// Create empty WorkBreakdownElement
 		this.workBreakdownElement = new WorkBreakdownElement();

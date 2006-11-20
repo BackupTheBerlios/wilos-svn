@@ -2,6 +2,7 @@ package woops2.test.hibernate.task;
 
 import java.util.Set;
 
+import junit.framework.TestCase;
 import woops2.hibernate.task.TaskDefinitionDao;
 import woops2.model.task.TaskDefinition;
 import woops2.test.TestConfiguration;
@@ -12,7 +13,10 @@ import woops2.test.TestConfiguration;
  * @author eperico
  * 
  */
-public class TaskDefinitionDaoTest extends TestConfiguration {
+public class TaskDefinitionDaoTest extends TestCase {
+	
+	private TestConfiguration testConfiguration;
+	
 	private TaskDefinitionDao taskDefinitionDao = null;
 
 	private TaskDefinition taskDefinition = null;
@@ -36,7 +40,7 @@ public class TaskDefinitionDaoTest extends TestConfiguration {
 		super.setUp();
 
 		// Get the TaskDefinitionDao Singleton for managing TaskDefinition data
-		this.taskDefinitionDao = (TaskDefinitionDao) super.getApplicationContext().getBean("TaskDefinitionDao");
+		this.taskDefinitionDao = (TaskDefinitionDao) this.testConfiguration.getInstance().getApplicationContext().getBean("TaskDefinitionDao");
 
 		// Create empty TaskDefinition
 		this.taskDefinition = new TaskDefinition();

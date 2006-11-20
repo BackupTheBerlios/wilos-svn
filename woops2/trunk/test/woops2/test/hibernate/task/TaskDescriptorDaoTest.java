@@ -2,6 +2,7 @@ package woops2.test.hibernate.task;
 
 import java.util.Set;
 
+import junit.framework.TestCase;
 import woops2.hibernate.task.TaskDescriptorDao;
 import woops2.model.task.TaskDescriptor;
 import woops2.test.TestConfiguration;
@@ -12,7 +13,9 @@ import woops2.test.TestConfiguration;
  * @author eperico
  * 
  */
-public class TaskDescriptorDaoTest extends TestConfiguration {
+public class TaskDescriptorDaoTest extends TestCase {
+	
+	private TestConfiguration testConfiguration;
 
 	private TaskDescriptorDao taskDescriptorDao = null;
 
@@ -57,8 +60,7 @@ public class TaskDescriptorDaoTest extends TestConfiguration {
 		super.setUp();
 
 		// Get the TaskDescriptorDao Singleton for managing TaskDescriptor data
-		this.taskDescriptorDao = (TaskDescriptorDao) super.getApplicationContext()
-				.getBean("TaskDescriptorDao");
+		this.taskDescriptorDao = (TaskDescriptorDao) this.testConfiguration.getInstance().getApplicationContext().getBean("TaskDescriptorDao");
 
 		// Create empty TaskDescriptor
 		this.taskDescriptor = new TaskDescriptor();
