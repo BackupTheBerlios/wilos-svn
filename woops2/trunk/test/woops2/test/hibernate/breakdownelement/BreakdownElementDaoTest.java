@@ -153,7 +153,6 @@ public class BreakdownElementDaoTest extends TestCase {
 		assertEquals("IsOptional", bdeTmp.getIsOptional(), IS_OPTIONAL);
 		assertEquals("IsPlanned", bdeTmp.getIsPlanned(), IS_PLANNED);
 		Set<Activity> superActivities = bdeTmp.getSuperActivities();
-		assertNotNull(superActivities);
 		assertTrue(superActivities.size() == 2);// here FIXME pb with
 												// persistance !?
 
@@ -191,7 +190,6 @@ public class BreakdownElementDaoTest extends TestCase {
 
 		// Test the method deleteBreakdownElement with an BreakdownElement
 		// unexisting into the db.
-		// FIXME Normally here there are no exception thrown.
 		this.breakdownElementDao.deleteBreakdownElement(this.breakdownElement);
 
 		// Rk: the tearDown method is called here.

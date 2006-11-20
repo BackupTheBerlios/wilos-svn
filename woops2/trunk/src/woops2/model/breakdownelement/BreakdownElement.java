@@ -1,42 +1,42 @@
+package woops2.model.breakdownelement;
 
-package woops2.model.breakdownelement ;
+import java.util.HashSet;
+import java.util.Set;
 
-import java.util.HashSet ;
-import java.util.Set ;
-
-import woops2.model.activity.Activity ;
-import woops2.model.element.Element ;
+import woops2.model.activity.Activity;
+import woops2.model.element.Element;
 
 /**
  * @author deder.
  * 
- * Breakdown Element is an abstract generalization for any type of Element that is part of a
- * breakdown structure. It defines a set of properties available to all of its specializations.
+ * Breakdown Element is an abstract generalization for any type of Element that
+ * is part of a breakdown structure. It defines a set of properties available to
+ * all of its specializations.
  * 
  */
 public class BreakdownElement extends Element {
 
-	private String prefix ;
+	private String prefix;
 
-	private Boolean isPlanned ;
+	private Boolean isPlanned;
 
-	private Boolean hasMultipleOccurrences ;
+	private Boolean hasMultipleOccurrences;
 
-	private Boolean isOptional ;
+	private Boolean isOptional;
 
-	private Set<Activity> superActivities ;
+	private Set<Activity> superActivities;
 
 	/**
 	 * Constructor.
 	 * 
 	 */
 	public BreakdownElement() {
-		super() ;
-		this.isOptional = false ;
-		this.isPlanned = true ;
-		this.hasMultipleOccurrences = false ;
+		super();
+		this.isOptional = false;
+		this.isPlanned = true;
+		this.hasMultipleOccurrences = false;
 
-		this.superActivities = new HashSet<Activity>() ;
+		this.superActivities = new HashSet<Activity>();
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class BreakdownElement extends Element {
 	 * @return the hasMultipleOccurrences.
 	 */
 	public Boolean getHasMultipleOccurrences() {
-		return this.hasMultipleOccurrences ;
+		return this.hasMultipleOccurrences;
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class BreakdownElement extends Element {
 	 *            The hasMultipleOccurrences to set.
 	 */
 	public void setHasMultipleOccurrences(Boolean _hasMultipleOccurrences) {
-		this.hasMultipleOccurrences = _hasMultipleOccurrences ;
+		this.hasMultipleOccurrences = _hasMultipleOccurrences;
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class BreakdownElement extends Element {
 	 * @return the isOptional.
 	 */
 	public Boolean getIsOptional() {
-		return this.isOptional ;
+		return this.isOptional;
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class BreakdownElement extends Element {
 	 *            The isOptional to set.
 	 */
 	public void setIsOptional(Boolean _isOptional) {
-		this.isOptional = _isOptional ;
+		this.isOptional = _isOptional;
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class BreakdownElement extends Element {
 	 * @return the isPlanned.
 	 */
 	public Boolean getIsPlanned() {
-		return this.isPlanned ;
+		return this.isPlanned;
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class BreakdownElement extends Element {
 	 *            The isPlanned to set.
 	 */
 	public void setIsPlanned(Boolean _isPlanned) {
-		this.isPlanned = _isPlanned ;
+		this.isPlanned = _isPlanned;
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class BreakdownElement extends Element {
 	 * @return the prefix.
 	 */
 	public String getPrefix() {
-		return this.prefix ;
+		return this.prefix;
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class BreakdownElement extends Element {
 	 *            The prefix to set.
 	 */
 	public void setPrefix(String _prefix) {
-		this.prefix = _prefix ;
+		this.prefix = _prefix;
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class BreakdownElement extends Element {
 	 * @return the superActivities.
 	 */
 	public Set<Activity> getSuperActivities() {
-		return this.superActivities ;
+		return this.superActivities;
 	}
 
 	/**
@@ -130,7 +130,33 @@ public class BreakdownElement extends Element {
 	 * @param _superActivities
 	 *            The superActivities to set.
 	 */
-	public void setSuperActivities(Set<Activity> _superActivities) {
-		this.superActivities = _superActivities ;
+	private void setSuperActivities(Set<Activity> _superActivities) {
+		this.superActivities = _superActivities;
+	}
+
+	/**
+	 * Add the _activity to the superActivities collection.
+	 * 
+	 * @param _activity
+	 */
+	public void addToActivity(Activity _activity) {
+		this.superActivities.add(_activity);
+		_activity.getBreakDownElements().add(this); 
+	}
+	
+	public void removeFromActivity(Activity _activity){
+		this.superActivities.remove(_activity);
+		_activity.getBreakDownElements().remove(this); 
+	}
+	
+	public void removeAllActivities() {
+		for (Activity activity : this.superActivities) 
+			activity.removeFromBreakdownElement(this);
+		this.superActivities.clear();
+	}
+
+	public void removeFromAllActivity() {
+		for (Activity activity : this.superActivities) 
+			this.removeFromActivity(activity);
 	}
 }
