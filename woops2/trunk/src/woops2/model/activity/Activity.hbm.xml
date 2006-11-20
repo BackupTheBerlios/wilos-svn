@@ -8,7 +8,7 @@
 	<joined-subclass
 		name="woops2.model.activity.Activity"
 		extends="woops2.model.workbreakdownelement.WorkBreakdownElement"
-		table="activity">
+		table="activity" lazy="true">
 		<key column="activity_id"></key>
 		
 		<!-- Associations -->

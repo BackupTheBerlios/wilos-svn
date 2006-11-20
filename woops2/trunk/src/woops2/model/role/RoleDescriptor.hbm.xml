@@ -6,7 +6,7 @@
 <hibernate-mapping>
 	<joined-subclass name="woops2.model.role.RoleDescriptor"
 		extends="woops2.model.breakdownelement.BreakdownElement"
-		table="roledescriptor">
+		table="roledescriptor" lazy="true">
 		<key column="roledescriptor_id"></key>
 
 		<many-to-one name="roleDefinition" class="woops2.model.role.RoleDefinition"

@@ -5,7 +5,7 @@
 
 <hibernate-mapping>
 	<joined-subclass name="woops2.model.task.TaskDefinition"
-		extends="woops2.model.element.Element" table="taskdefinition">
+		extends="woops2.model.element.Element" table="taskdefinition" lazy="true">
 		<key column="taskdefinition_id"></key>
 		<set name="steps" lazy="true">
 			<key column="taskdefinition_id" />

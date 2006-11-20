@@ -8,7 +8,7 @@
 	<joined-subclass
 		name="woops2.model.breakdownelement.BreakdownElement"
 		extends="woops2.model.element.Element"
-		table="breakdownelement">
+		table="breakdownelement" lazy="true">
 		<key column="breakdownelement_id"></key>
 
 		<property name="prefix" type="java.lang.String" column="prefix"
