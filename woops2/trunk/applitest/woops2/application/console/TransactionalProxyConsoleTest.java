@@ -5,7 +5,7 @@ package woops2.application.console;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import woops2.business.activity.ActivityManager;
+import woops2.business.activity.ActivityService;
 
 public class TransactionalProxyConsoleTest {
 
@@ -14,7 +14,7 @@ public class TransactionalProxyConsoleTest {
 		// Getback the application context from the spring configuration file
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 		//XmlBeanFactory factory = new XmlBeanFactory(res);
-		ActivityManager am = (ActivityManager) ctx.getBean("ActivityManager");
+		ActivityService am = (ActivityService) ctx.getBean("ActivityService");
 		//System.out.println("ActivityManager="+am);
 		
 		/*
