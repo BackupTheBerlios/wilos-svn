@@ -1,14 +1,15 @@
 
 package woops2.model.activity ;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import org.apache.commons.lang.builder.EqualsBuilder ;
-import org.apache.commons.lang.builder.HashCodeBuilder ;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
-import woops2.model.breakdownelement.BreakdownElement ;
-import woops2.model.workbreakdownelement.WorkBreakdownElement ;
+import woops2.model.breakdownelement.BreakdownElement;
+import woops2.model.workbreakdownelement.WorkBreakdownElement;
 
 /**
  * @author deder.
@@ -22,7 +23,7 @@ import woops2.model.workbreakdownelement.WorkBreakdownElement ;
  */
 public class Activity extends WorkBreakdownElement {
 
-	private List<BreakdownElement> breakdownElements ;
+	private Set<BreakdownElement> breakdownElements ;
 
 	/**
 	 * Constructor.
@@ -30,7 +31,7 @@ public class Activity extends WorkBreakdownElement {
 	 */
 	public Activity() {
 		super() ;
-		this.breakdownElements = new ArrayList<BreakdownElement>() ;
+		this.breakdownElements = new HashSet<BreakdownElement>() ;
 	}
 
 	/**
@@ -38,7 +39,7 @@ public class Activity extends WorkBreakdownElement {
 	 * 
 	 * @return the breakDownElements.
 	 */
-	public List<BreakdownElement> getBreakDownElements() {
+	public Set<BreakdownElement> getBreakDownElements() {
 		return this.breakdownElements ;
 	}
 
@@ -48,7 +49,7 @@ public class Activity extends WorkBreakdownElement {
 	 * @param _breakDownElements
 	 *            The breakDownElements to set.
 	 */
-	private void setBreakDownElements(List<BreakdownElement> _breakDownElements) {
+	private void setBreakDownElements(Set<BreakdownElement> _breakDownElements) {
 		this.breakdownElements.addAll(_breakDownElements) ;
 	}
 
@@ -92,7 +93,7 @@ public class Activity extends WorkBreakdownElement {
 	 * 
 	 * @param _breakdownElement
 	 */
-	public void addToAllBreakdownElement(List<BreakdownElement> _breakdownElements) {
+	public void addToAllBreakdownElement(Set<BreakdownElement> _breakdownElements) {
 		this.setBreakDownElements(_breakdownElements);
 		for (BreakdownElement bde : _breakdownElements) {
 			bde.addToActivity(this);

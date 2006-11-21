@@ -3,7 +3,6 @@ package woops2.business.activity ;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,7 +21,7 @@ import woops2.model.breakdownelement.BreakdownElement;
  * @author deder.
  */
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-public class ActivityManager {
+public class ActivityService {
 
 	private ActivityDao activityDao ;
 	
@@ -34,7 +33,7 @@ public class ActivityManager {
 	 * @return
 	 */
 	@Transactional(readOnly = true)
-	public Set<Activity> getActivitiesList() {
+	public List<Activity> getActivitiesList() {
 		return this.activityDao.getAllActivities() ;
 	}
 	

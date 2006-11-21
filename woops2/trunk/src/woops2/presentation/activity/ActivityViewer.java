@@ -9,7 +9,7 @@ import javax.faces.event.ActionEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import woops2.business.activity.ActivityManager;
+import woops2.business.activity.ActivityService;
 import woops2.model.activity.Activity;
 
 /**
@@ -22,9 +22,9 @@ public class ActivityViewer {
 
 	private List<Activity> activitiesList ;
 
-	private ActivityManager activityManager ;
-
 	private Activity activity ;
+	
+	private ActivityService activityService;
 
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
@@ -44,12 +44,12 @@ public class ActivityViewer {
 	 */
 	public String saveActivityAction() {
 		String url = "activity" ;
-		this.activityManager.saveActivity(this.activity) ;
+		this.activityService.saveActivity(this.activity) ;
 		return url ;
 	}
 	
 	public void testTransactionActionListener(ActionEvent e){
-		this.activityManager.Test();
+		this.activityService.Test();
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class ActivityViewer {
 	 */
 	public List<Activity> getActivitiesList() {
 		this.activitiesList = new ArrayList<Activity>();
-		activitiesList.addAll(this.activityManager.getActivitiesList());
+		activitiesList = this.activityService.getActivitiesList();
 		this.logger.debug("acti list =" + this.activitiesList) ;
 		return this.activitiesList ;
 	}
@@ -95,22 +95,11 @@ public class ActivityViewer {
 		this.activity = _activity ;
 	}
 
-	/**
-	 * Getter of activityManager.
-	 * 
-	 * @return the activityManager.
-	 */
-	public ActivityManager getActivityManager() {
-		return this.activityManager ;
+	public ActivityService getActivityService() {
+		return activityService;
 	}
 
-	/**
-	 * Setter of activityManager.
-	 * 
-	 * @param _activityManager
-	 *            The activityManager to set.
-	 */
-	public void setActivityManager(ActivityManager _activityManager) {
-		this.activityManager = _activityManager ;
+	public void setActivityService(ActivityService activityService) {
+		this.activityService = activityService;
 	}
 }

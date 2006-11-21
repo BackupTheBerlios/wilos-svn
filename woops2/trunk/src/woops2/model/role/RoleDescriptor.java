@@ -2,6 +2,7 @@
 package woops2.model.role ;
 
 import java.util.List;
+import java.util.Set;
 
 import woops2.model.breakdownelement.BreakdownElement;
 import woops2.model.task.TaskDescriptor;
@@ -26,12 +27,12 @@ public class RoleDescriptor extends BreakdownElement {
 	/**
 	 * The main tasks of the roleDefinition
 	 */
-	private List<TaskDescriptor> primaryTasks ;
+	private Set<TaskDescriptor> primaryTasks ;
 
 	/**
 	 * The additional tasks of the roleDefinition
 	 */
-	private List<TaskDescriptor> additionalTasks ;
+	private Set<TaskDescriptor> additionalTasks ;
 
 	/**
 	 * Getter of roleDefinition.
@@ -57,7 +58,7 @@ public class RoleDescriptor extends BreakdownElement {
 	 * 
 	 * @return the primaryTasks.
 	 */
-	public List<TaskDescriptor> getPrimaryTasks() {
+	public Set<TaskDescriptor> getPrimaryTasks() {
 		return this.primaryTasks ;
 	}
 
@@ -67,7 +68,7 @@ public class RoleDescriptor extends BreakdownElement {
 	 * @param _primaryTasks
 	 *            The primaryTasks to set.
 	 */
-	public void setPrimaryTasks(List<TaskDescriptor> _primaryTasks) {
+	public void setPrimaryTasks(Set<TaskDescriptor> _primaryTasks) {
 		this.primaryTasks = _primaryTasks ;
 	}
 
@@ -76,7 +77,7 @@ public class RoleDescriptor extends BreakdownElement {
 	 * 
 	 * @return the additionalTasks.
 	 */
-	public List<TaskDescriptor> getAdditionalTasks() {
+	public Set<TaskDescriptor> getAdditionalTasks() {
 		return this.additionalTasks ;
 	}
 
@@ -86,7 +87,7 @@ public class RoleDescriptor extends BreakdownElement {
 	 * @param _additionalTasks
 	 *            The additionalTasks to set.
 	 */
-	public void setAdditionalTasks(List<TaskDescriptor> _additionalTasks) {
+	public void setAdditionalTasks(Set<TaskDescriptor> _additionalTasks) {
 		this.additionalTasks = _additionalTasks ;
 	}
 }

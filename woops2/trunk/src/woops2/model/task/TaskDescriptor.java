@@ -2,6 +2,7 @@
 package woops2.model.task ;
 
 import java.util.List;
+import java.util.Set;
 
 import woops2.model.role.RoleDescriptor;
 import woops2.model.workbreakdownelement.WorkBreakdownElement;
@@ -22,7 +23,7 @@ public class TaskDescriptor extends WorkBreakdownElement {
 	/**
 	 * The additional roles of the role
 	 */
-	private List<RoleDescriptor> additionalRoles ;
+	private Set<RoleDescriptor> additionalRoles ;
 
 	/**
 	 * The main role of the taskDefinition
@@ -60,7 +61,7 @@ public class TaskDescriptor extends WorkBreakdownElement {
 	 * 
 	 * @return the additionalRoles.
 	 */
-	public List<RoleDescriptor> getAdditionalRoles() {
+	public Set<RoleDescriptor> getAdditionalRoles() {
 		return this.additionalRoles ;
 	}
 
@@ -70,7 +71,7 @@ public class TaskDescriptor extends WorkBreakdownElement {
 	 * @param _additionalRoles
 	 *            The additionalRoles to set.
 	 */
-	public void setAdditionalRoles(List<RoleDescriptor> _additionalRoles) {
+	public void setAdditionalRoles(Set<RoleDescriptor> _additionalRoles) {
 		this.additionalRoles = _additionalRoles ;
 	}
 
