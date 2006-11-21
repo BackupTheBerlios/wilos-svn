@@ -1,7 +1,6 @@
 package woops2.model.activity;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
