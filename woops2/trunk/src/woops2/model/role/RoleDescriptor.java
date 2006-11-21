@@ -1,7 +1,6 @@
 
 package woops2.model.role ;
 
-import java.util.List;
 import java.util.Set;
 
 import woops2.model.breakdownelement.BreakdownElement;

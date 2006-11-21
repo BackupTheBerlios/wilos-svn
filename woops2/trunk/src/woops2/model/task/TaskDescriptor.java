@@ -1,7 +1,6 @@
 
 package woops2.model.task ;
 
-import java.util.List;
 import java.util.Set;
 
 import woops2.model.role.RoleDescriptor;

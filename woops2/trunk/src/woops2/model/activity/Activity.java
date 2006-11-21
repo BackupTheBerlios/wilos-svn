@@ -2,14 +2,13 @@
 package woops2.model.activity ;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang.builder.EqualsBuilder ;
-import org.apache.commons.lang.builder.HashCodeBuilder ;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
-import woops2.model.breakdownelement.BreakdownElement ;
-import woops2.model.workbreakdownelement.WorkBreakdownElement ;
+import woops2.model.breakdownelement.BreakdownElement;
+import woops2.model.workbreakdownelement.WorkBreakdownElement;
 
 /**
  * @author deder.

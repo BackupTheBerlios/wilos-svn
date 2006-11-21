@@ -105,6 +105,11 @@
 
 	<!-- ========================= DAO Layer ========================= -->
 
+	<bean id="ProcessDao"
+		class="woops2.hibernate.process.ProcessDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	
 	<bean id="ActivityDao"
 		class="woops2.hibernate.activity.ActivityDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
@@ -149,7 +154,12 @@
 	</bean>
 
 	<!-- ========================= Business Layer ========================= -->
-	  
+	
+	<bean id="ProcessService"
+		class="woops2.business.process.ProcessService">
+		<property name="processDao" ref="ProcessDao" />
+	</bean>  
+	
 	<bean id="ActivityService"
 		class="woops2.business.activity.ActivityService">
 		<property name="activityDao" ref="ActivityDao" />
