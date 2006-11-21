@@ -93,7 +93,7 @@ public class TaskDescriptor extends WorkBreakdownElement {
 	 * @param _mainRole
 	 *            The mainRole to set.
 	 */
-	protected void setMainRole(RoleDescriptor _mainRole) {
+	public void setMainRole(RoleDescriptor _mainRole) {
 		this.mainRole = _mainRole;
 	}
 	
