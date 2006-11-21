@@ -14,8 +14,6 @@ import woops2.test.TestConfiguration;
  */
 public class RoleDefinitionDaoTest extends TestCase {
 	
-	private TestConfiguration testConfiguration;
-
 	private RoleDefinitionDao roleDefinitionDao = null;
 
 	private RoleDefinition roleDefinition = null;
@@ -34,7 +32,7 @@ public class RoleDefinitionDaoTest extends TestCase {
 		super.setUp();
 
 		// Get the RoleDefinitionDao Singleton for managing RoleDefinition data
-		this.roleDefinitionDao = (RoleDefinitionDao) this.testConfiguration.getInstance().getApplicationContext().getBean("RoleDefinitionDao");
+		this.roleDefinitionDao = (RoleDefinitionDao) TestConfiguration.getInstance().getApplicationContext().getBean("RoleDefinitionDao");
 
 		// Create empty RoleDefinition
 		this.roleDefinition = new RoleDefinition();

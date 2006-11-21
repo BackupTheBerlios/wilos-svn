@@ -15,8 +15,6 @@ import woops2.test.TestConfiguration;
  */
 public class TaskDescriptorDaoTest extends TestCase {
 	
-	private TestConfiguration testConfiguration;
-
 	private TaskDescriptorDao taskDescriptorDao = null;
 
 	private TaskDescriptor taskDescriptor = null;
@@ -60,7 +58,7 @@ public class TaskDescriptorDaoTest extends TestCase {
 		super.setUp();
 
 		// Get the TaskDescriptorDao Singleton for managing TaskDescriptor data
-		this.taskDescriptorDao = (TaskDescriptorDao) this.testConfiguration.getInstance().getApplicationContext().getBean("TaskDescriptorDao");
+		this.taskDescriptorDao = (TaskDescriptorDao) TestConfiguration.getInstance().getApplicationContext().getBean("TaskDescriptorDao");
 
 		// Create empty TaskDescriptor
 		this.taskDescriptor = new TaskDescriptor();

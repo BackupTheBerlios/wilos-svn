@@ -16,8 +16,6 @@ import woops2.test.TestConfiguration;
  */
 public class WorkBreakdownElementDaoTest extends TestCase {
 
-	private TestConfiguration testConfiguration;
-
 	private WorkBreakdownElementDao workBreakdownElementDao = null;
 
 	private WorkBreakdownElement workBreakdownElement = null;
@@ -51,7 +49,7 @@ public class WorkBreakdownElementDaoTest extends TestCase {
 
 		// Get the BreakdownElementDao Singleton for managing BreakdownElement
 		// data
-		this.workBreakdownElementDao = (WorkBreakdownElementDao) this.testConfiguration.getInstance().getApplicationContext().getBean("WorkBreakdownElementDao");
+		this.workBreakdownElementDao = (WorkBreakdownElementDao) TestConfiguration.getInstance().getApplicationContext().getBean("WorkBreakdownElementDao");
 
 		// Create empty WorkBreakdownElement
 		this.workBreakdownElement = new WorkBreakdownElement();

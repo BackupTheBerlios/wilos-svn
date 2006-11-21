@@ -14,8 +14,6 @@ import woops2.test.TestConfiguration;
  */
 public class RoleDescriptorDaoTest extends TestCase {
 	
-	private TestConfiguration testConfiguration;
-
 	private RoleDescriptorDao roleDescriptorDao = null;
 
 	private RoleDescriptor roleDescriptor = null;
@@ -42,7 +40,7 @@ public class RoleDescriptorDaoTest extends TestCase {
 		super.setUp();
 
 		// Get the RoleDescriptorDao Singleton for managing RoleDescriptor data
-		this.roleDescriptorDao = (RoleDescriptorDao) this.testConfiguration.getInstance().getApplicationContext().getBean("RoleDescriptorDao");
+		this.roleDescriptorDao = (RoleDescriptorDao) TestConfiguration.getInstance().getApplicationContext().getBean("RoleDescriptorDao");
 
 		// Create empty roleDescriptor
 		this.roleDescriptor = new RoleDescriptor();

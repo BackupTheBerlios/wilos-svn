@@ -14,8 +14,6 @@ import woops2.test.TestConfiguration;
  */
 public class ElementDaoTest extends TestCase {
 	
-	private TestConfiguration testConfiguration;
-
 	private ElementDao elementDao = null;
 
 	private Element element = null;
@@ -34,7 +32,7 @@ public class ElementDaoTest extends TestCase {
 		super.setUp();
 
 		// Get the ElementDao Singleton for managing Element data
-		this.elementDao = (ElementDao) this.testConfiguration.getInstance().getApplicationContext().getBean(
+		this.elementDao = (ElementDao) TestConfiguration.getInstance().getApplicationContext().getBean(
 				"ElementDao");
 
 		// Create empty Activity

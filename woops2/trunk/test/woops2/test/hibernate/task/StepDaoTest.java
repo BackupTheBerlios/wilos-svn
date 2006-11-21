@@ -17,8 +17,6 @@ import woops2.test.TestConfiguration;
  */
 public class StepDaoTest extends TestCase {
 	
-	private TestConfiguration testConfiguration;
-	
 	private StepDao stepDao = null ;
 
 	private Step step = null ;
@@ -42,7 +40,7 @@ public class StepDaoTest extends TestCase {
 		super.setUp() ;
 
 		// Get the TaskDefinitionDao Singleton for managing TaskDefinition data
-		this.stepDao = (StepDao) this.testConfiguration.getInstance().getApplicationContext().getBean("StepDao") ;
+		this.stepDao = (StepDao) TestConfiguration.getInstance().getApplicationContext().getBean("StepDao") ;
 
 		// Create empty TaskDefinition
 		this.step = new Step() ;

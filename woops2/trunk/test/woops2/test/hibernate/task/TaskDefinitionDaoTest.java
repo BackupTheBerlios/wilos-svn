@@ -15,8 +15,6 @@ import woops2.test.TestConfiguration;
  */
 public class TaskDefinitionDaoTest extends TestCase {
 	
-	private TestConfiguration testConfiguration;
-	
 	private TaskDefinitionDao taskDefinitionDao = null;
 
 	private TaskDefinition taskDefinition = null;
@@ -40,7 +38,7 @@ public class TaskDefinitionDaoTest extends TestCase {
 		super.setUp();
 
 		// Get the TaskDefinitionDao Singleton for managing TaskDefinition data
-		this.taskDefinitionDao = (TaskDefinitionDao) this.testConfiguration.getInstance().getApplicationContext().getBean("TaskDefinitionDao");
+		this.taskDefinitionDao = (TaskDefinitionDao) TestConfiguration.getInstance().getApplicationContext().getBean("TaskDefinitionDao");
 
 		// Create empty TaskDefinition
 		this.taskDefinition = new TaskDefinition();

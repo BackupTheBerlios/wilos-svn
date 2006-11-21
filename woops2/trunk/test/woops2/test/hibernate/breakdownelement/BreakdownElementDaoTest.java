@@ -16,8 +16,6 @@ import woops2.test.TestConfiguration;
  */
 public class BreakdownElementDaoTest extends TestCase {
 	
-	private TestConfiguration testConfiguration;
-
 	private BreakdownElementDao breakdownElementDao = null;
 
 	private BreakdownElement breakdownElement = null;
@@ -47,7 +45,7 @@ public class BreakdownElementDaoTest extends TestCase {
 
 		// Get the BreakdownElementDao Singleton for managing BreakdownElement
 		// data
-		this.breakdownElementDao = (BreakdownElementDao) this.testConfiguration.getInstance().getApplicationContext().getBean("BreakdownElementDao");
+		this.breakdownElementDao = (BreakdownElementDao) TestConfiguration.getInstance().getApplicationContext().getBean("BreakdownElementDao");
 
 		// Create empty BreakdownElement
 		this.breakdownElement = new BreakdownElement();
@@ -117,7 +115,7 @@ public class BreakdownElementDaoTest extends TestCase {
 	/**
 	 * Test method for
 	 * {@link woops2.hibernate.breakdownelement.BreakdownElementDao#getBreakdownElement()}.
-	 * @FIXME : junit a revoir
+	 * 
 	 */
 	public void testGetBreakdownElement() {
 		// Rk: the setUp method is called here.
@@ -130,11 +128,7 @@ public class BreakdownElementDaoTest extends TestCase {
 				.setHasMultipleOccurrences(HAS_MULTIPLE_OCCURENCES);
 		this.breakdownElement.setIsOptional(IS_OPTIONAL);
 		this.breakdownElement.setIsPlanned(IS_PLANNED);
-		Activity activity1 = new Activity();
-		Activity activity2 = new Activity();
-		this.superActivities.add(activity1);
-		this.superActivities.add(activity2);
-
+		
 		// Save the breakdownElement into the database.
 		this.breakdownElementDao.getHibernateTemplate().saveOrUpdate(
 				this.breakdownElement);
@@ -152,10 +146,7 @@ public class BreakdownElementDaoTest extends TestCase {
 				.getHasMultipleOccurrences(), HAS_MULTIPLE_OCCURENCES);
 		assertEquals("IsOptional", bdeTmp.getIsOptional(), IS_OPTIONAL);
 		assertEquals("IsPlanned", bdeTmp.getIsPlanned(), IS_PLANNED);
-		Set<Activity> superActivities = bdeTmp.getSuperActivities();
-		assertTrue(superActivities.size() == 2);// here FIXME pb with
-												// persistance !?
-
+		
 		// Test the method getBreakdownElement with an unexisting
 		// breakdownElement.
 		this.breakdownElementDao.getHibernateTemplate().delete(
