@@ -1,5 +1,4 @@
-
-package woops2.test.model.activity ;
+package woops2.test.model.activity;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,22 +8,20 @@ import woops2.model.activity.Activity;
 import woops2.model.breakdownelement.BreakdownElement;
 
 /**
- * @author morpheus
- * 
- * This class represents the class test of the Activity class.
- * 
+ * @author Sebastien
+ *
+ * This class represents ... TODO
+ *
  */
 public class ActivityTest extends TestCase {
-
+	
 	private Activity activity ;
 
 	public static final String PREFIX = "prefix" ;
 
 	public static final Boolean IS_OPTIONAL = true ;
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#setUp()
 	 */
 	protected void setUp() throws Exception {
@@ -34,9 +31,7 @@ public class ActivityTest extends TestCase {
 		this.activity.setIsOptional(IS_OPTIONAL) ;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#tearDown()
 	 */
 	protected void tearDown() throws Exception {
@@ -44,26 +39,23 @@ public class ActivityTest extends TestCase {
 	}
 
 	/**
-	 * 
-	 * TODO Method description
-	 * 
+	 * Test method for {@link woops2.model.activity.Activity#hashCode()}.
 	 */
-	public void testEquals() {
-
-		Activity tmp = new Activity() ;
-		tmp.setPrefix(PREFIX) ;
-		tmp.setIsOptional(IS_OPTIONAL) ;
-
-		assertTrue(this.activity.equals(tmp)) ;
+	public void testHashCode() {
+		fail("Not yet implemented") ;
 	}
 
 	/**
-	 * 
-	 * TODO Method description
-	 * 
+	 * Test method for {@link woops2.model.activity.Activity#equals(java.lang.Object)}.
+	 */
+	public void testEqualsObject() {
+		fail("Not yet implemented") ;
+	}
+
+	/**
+	 * Test method for {@link woops2.model.activity.Activity#addToBreakdownElement(woops2.model.breakdownelement.BreakdownElement)}.
 	 */
 	public void testAddToBreakdownElement() {
-
 		BreakdownElement breakdownElement = new BreakdownElement() ;
 		breakdownElement.setPrefix(PREFIX) ;
 		breakdownElement.setIsOptional(IS_OPTIONAL) ;
@@ -77,12 +69,9 @@ public class ActivityTest extends TestCase {
 	}
 
 	/**
-	 * 
-	 * TODO Method description
-	 * 
+	 * Test method for {@link woops2.model.activity.Activity#addToAllBreakdownElement(java.util.Set)}.
 	 */
-	public void testAddToAllBreakdownElements() {
-
+	public void testAddToAllBreakdownElement() {
 		BreakdownElement breakdownElement = new BreakdownElement() ;
 		breakdownElement.setPrefix(PREFIX) ;
 		breakdownElement.setIsOptional(IS_OPTIONAL) ;
@@ -106,12 +95,9 @@ public class ActivityTest extends TestCase {
 	}
 
 	/**
-	 * 
-	 * TODO Method description
-	 * 
+	 * Test method for {@link woops2.model.activity.Activity#removeFromBreakdownElement(woops2.model.breakdownelement.BreakdownElement)}.
 	 */
 	public void testRemoveFromBreakdownElement() {
-
 		BreakdownElement breakdownElement = new BreakdownElement() ;
 		breakdownElement.setPrefix(PREFIX) ;
 		breakdownElement.setIsOptional(IS_OPTIONAL) ;
@@ -124,12 +110,9 @@ public class ActivityTest extends TestCase {
 	}
 
 	/**
-	 * 
-	 * TODO Method description
-	 * 
+	 * Test method for {@link woops2.model.activity.Activity#removeFromAllBreakdownElements()}.
 	 */
 	public void testRemoveFromAllBreakdownElements() {
-
 		BreakdownElement breakdownElement = new BreakdownElement() ;
 		breakdownElement.setPrefix(PREFIX) ;
 		breakdownElement.setIsOptional(IS_OPTIONAL) ;
