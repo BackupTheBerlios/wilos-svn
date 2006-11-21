@@ -1,7 +1,7 @@
 
 package woops2.test.hibernate.activity ;
 
-import java.util.Set;
+import java.util.List;
 
 import junit.framework.TestCase;
 import woops2.hibernate.activity.ActivityDao;
@@ -16,8 +16,6 @@ import woops2.test.TestConfiguration;
  */
 public class ActivityDaoTest extends TestCase {
 	
-	private TestConfiguration testConfiguration;
-
 	private ActivityDao activityDao = null ;
 
 	private Activity activity = null ;
@@ -50,10 +48,13 @@ public class ActivityDaoTest extends TestCase {
 		super.setUp() ;
 
 		// Get the ActivityDao Singleton for managing Activity data
-		this.activityDao = (ActivityDao) this.testConfiguration.getInstance().getApplicationContext().getBean("ActivityDao") ;
+		this.activityDao = (ActivityDao) TestConfiguration.getInstance().getApplicationContext().getBean("ActivityDao") ;
 
 		// Create empty Activity
 		this.activity = new Activity() ;
+
+		// Save the activity with the method to test.
+		this.activityDao.saveOrUpdateActivity(this.activity) ;
 	}
 
 	/*
@@ -67,10 +68,10 @@ public class ActivityDaoTest extends TestCase {
 
 		// Delete the tmp activity from the database.
 		try{
-			this.activityDao.getHibernateTemplate().delete(this.activity) ;
+			this.activityDao.deleteActivity(this.activity) ;
 		}
 		catch(Exception exception){
-			// None.
+			System.err.println("exception e ="+exception);
 		}
 	}
 
@@ -85,12 +86,10 @@ public class ActivityDaoTest extends TestCase {
 	public void testSaveOrUpdateActivity() {
 		// Rk: the setUp method is called here.
 
-		// Save the activity with the method to test.
-		this.activityDao.saveOrUpdateActivity(this.activity) ;
 
 		// Check the saving.
 		String id = this.activity.getId() ;
-		Activity activityTmp = (Activity) this.activityDao.getHibernateTemplate().load(Activity.class, id) ;
+		Activity activityTmp = (Activity) this.activityDao.getActivity(id) ;
 		assertNotNull(activityTmp) ;
 
 		// Rk: the tearDown method is called here.
@@ -104,13 +103,9 @@ public class ActivityDaoTest extends TestCase {
 	 * finish delete this tmp activity from the database.
 	 */
 	public void testGetAllActivities() {
-		// Rk: the setUp method is called here.
-
-		// Save the activity into the database.
-		this.activityDao.getHibernateTemplate().saveOrUpdate(this.activity) ;
 
 		// Look if this activity is also into the database and look if the size of the set is >= 1.
-		Set<Activity> activities = this.activityDao.getAllActivities() ;
+		List<Activity> activities = this.activityDao.getAllActivities() ;
 		assertNotNull(activities) ;
 		assertTrue(activities.size() >= 1) ;
 
@@ -136,7 +131,7 @@ public class ActivityDaoTest extends TestCase {
 		this.activity.setIsRepeatable(IS_REPEATABLE) ;
 
 		// Save the activity into the database.
-		this.activityDao.getHibernateTemplate().saveOrUpdate(this.activity) ;
+		this.activityDao.saveOrUpdateActivity(this.activity) ;
 		String id = this.activity.getId() ;
 
 		// Test the method getActivity with an existing activity.
@@ -153,7 +148,7 @@ public class ActivityDaoTest extends TestCase {
 		assertEquals("IsRepeatale", activityTmp.getIsRepeatable(), IS_REPEATABLE) ;
 
 		// Test the method getActivity with an unexisting activity.
-		this.activityDao.getHibernateTemplate().delete(this.activity) ;
+		this.activityDao.deleteActivity(this.activity) ;
 		activityTmp = this.activityDao.getActivity(id) ;
 		assertNull(activityTmp) ;
 
@@ -168,18 +163,18 @@ public class ActivityDaoTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		// Save the activity into the database.
-		this.activityDao.getHibernateTemplate().saveOrUpdate(this.activity) ;
+		this.activityDao.saveOrUpdateActivity(this.activity) ;
 		String id = this.activity.getId() ;
 
 		// Test the method deleteActivity with an activity existing into the db.
 		this.activityDao.deleteActivity(this.activity) ;
 
 		// See if this.activity is now absent in the db.
-		Activity activityTmp = (Activity) this.activityDao.getHibernateTemplate().get(Activity.class, id) ;
+		Activity activityTmp = (Activity) this.activityDao.getActivity(id) ;
 		assertNull(activityTmp) ;
 
 		// Test the method deleteActivity with an activity unexisting into the db.
-		// FIXME Normally here there are no exception thrown.
+		// Normally here there are no exception thrown.
 		this.activityDao.deleteActivity(this.activity) ;
 
 		// Rk: the tearDown method is called here.
