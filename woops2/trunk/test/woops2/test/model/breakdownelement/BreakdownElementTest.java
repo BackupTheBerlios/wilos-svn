@@ -1,31 +1,38 @@
-/**
- * 
- */
 package woops2.test.model.breakdownelement;
 
+import junit.framework.TestCase;
 import woops2.model.activity.Activity;
 import woops2.model.breakdownelement.BreakdownElement;
-import junit.framework.TestCase;
 
 /**
- * This class represents the class test of the Activity class.
+ * This class represents the class test of the BreakdownElement class.
  * 
  * @author deder
- *
+ * 
  */
 public class BreakdownElementTest extends TestCase {
-	
+
 	private BreakdownElement breakdownElement;
 
-	/* (non-Javadoc)
+	public static final String PREFIX = "prefix";
+
+	public static final Boolean IS_OPTIONAL = true;
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see junit.framework.TestCase#setUp()
 	 */
 	protected void setUp() throws Exception {
 		super.setUp();
 		this.breakdownElement = new BreakdownElement();
+		this.breakdownElement.setPrefix(PREFIX);
+		this.breakdownElement.setIsOptional(IS_OPTIONAL);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see junit.framework.TestCase#tearDown()
 	 */
 	protected void tearDown() throws Exception {
@@ -33,42 +40,102 @@ public class BreakdownElementTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link woops2.model.breakdownelement.BreakdownElement#addToActivity(woops2.model.activity.Activity)}.
+	 * Test method for
+	 * {@link woops2.model.breakdownelement.BreakdownElement#equals(Object obj)}.
+	 */
+	public void testEquals() {
+		// Rk: the setUp method is called here.
+
+		// Assert if it's equal by references.
+		assertTrue(this.breakdownElement.equals(this.breakdownElement));
+
+		// Assert if it's equal field by field.
+		BreakdownElement bdeTmp1 = new BreakdownElement();
+		bdeTmp1.setPrefix(PREFIX);
+		bdeTmp1.setIsOptional(IS_OPTIONAL);
+		assertTrue(this.breakdownElement.equals(bdeTmp1));
+
+		// Assert if it's not equal.
+		BreakdownElement bdeTmp2 = new BreakdownElement();
+		bdeTmp2.setPrefix("prefixFalse");
+		bdeTmp2.setIsOptional(true);
+		assertFalse(this.breakdownElement.equals(bdeTmp2));
+
+		// Rk: the tearDown method is called here.
+	}
+
+	/**
+	 * Test method for
+	 * {@link woops2.model.breakdownelement.BreakdownElement#hashCode()}.
+	 */
+	public void testHashCode() {
+		// Rk: the setUp method is called here.
+
+		fail("Not yet implemented"); // TODO
+
+		// Rk: the tearDown method is called here.
+	}
+
+	/**
+	 * Test method for
+	 * {@link woops2.model.breakdownelement.BreakdownElement#addToActivity(woops2.model.activity.Activity)}.
 	 */
 	public void testAddToActivity() {
-		assertTrue(this.breakdownElement.getSuperActivities().size() == 0);
+		// Rk: the setUp method is called here.
+
+		assertTrue(this.breakdownElement.getSuperActivities().isEmpty());
+
 		Activity activity1 = new Activity();
 		this.breakdownElement.addToActivity(activity1);
 		assertTrue(this.breakdownElement.getSuperActivities().size() == 1);
+		assertFalse(activity1.getBreakDownElements().size() == 1);
+
 		Activity activity2 = new Activity();
 		this.breakdownElement.addToActivity(activity2);
 		assertTrue(this.breakdownElement.getSuperActivities().size() == 2);
+		assertFalse(activity2.getBreakDownElements().size() == 1);
+
+		// Rk: the tearDown method is called here.
 	}
 
 	/**
-	 * Test method for {@link woops2.model.breakdownelement.BreakdownElement#removeFromActivity(woops2.model.activity.Activity)}.
+	 * Test method for
+	 * {@link woops2.model.breakdownelement.BreakdownElement#addToAllActivities(java.util.Set<Activity>)}.
+	 */
+	public void testAddToAllActivities() {
+		// Rk: the setUp method is called here.
+
+		fail("Not yet implemented"); // TODO
+
+		// Rk: the tearDown method is called here.
+	}
+
+	/**
+	 * Test method for
+	 * {@link woops2.model.breakdownelement.BreakdownElement#removeFromActivity(woops2.model.activity.Activity)}.
 	 */
 	public void testRemoveFromActivity() {
-		fail("Not yet implemented"); // TODO
+		// Rk: the setUp method is called here.
+
+		Activity activity = new Activity();
+		this.breakdownElement.addToActivity(activity);
+		this.breakdownElement.removeFromActivity(activity);
+
+		assertTrue(this.breakdownElement.getSuperActivities().isEmpty());
+		assertTrue(activity.getBreakDownElements().isEmpty());
+
+		// Rk: the tearDown method is called here.
 	}
 
 	/**
-	 * Test method for {@link woops2.model.breakdownelement.BreakdownElement#removeAllActivities()}.
+	 * Test method for
+	 * {@link woops2.model.breakdownelement.BreakdownElement#removeFromAllActivity()}.
 	 */
-	public void testRemoveAllActivities() {
-		Activity activity1 = new Activity();
-		this.breakdownElement.addToActivity(activity1);
-		Activity activity2 = new Activity();
-		this.breakdownElement.addToActivity(activity2);
-		assertTrue(this.breakdownElement.getSuperActivities().size() == 2);
-		this.breakdownElement.removeAllActivities();
-		assertTrue(this.breakdownElement.getSuperActivities().size() == 0);
-	}
+	public void testRemoveFromAllActivities() {
+		// Rk: the setUp method is called here.
 
-	/**
-	 * Test method for {@link woops2.model.breakdownelement.BreakdownElement#removeFromAllActivity()}.
-	 */
-	public void testRemoveFromAllActivity() {
 		fail("Not yet implemented"); // TODO
+
+		// Rk: the tearDown method is called here.
 	}
 }
