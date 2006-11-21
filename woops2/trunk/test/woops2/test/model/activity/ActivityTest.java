@@ -52,7 +52,11 @@ public class ActivityTest extends TestCase {
 	 * Test method for {@link woops2.model.activity.Activity#equals(java.lang.Object)}.
 	 */
 	public void testEqualsObject() {
-		fail("Not yet implemented") ;
+		Activity tmp = new Activity() ;
+		tmp.setPrefix(PREFIX) ;
+		tmp.setName(NAME);
+		tmp.setIsOptional(IS_OPTIONAL) ;
+		assertTrue(this.activity.equals(tmp));
 	}
 
 	/**
@@ -127,7 +131,7 @@ public class ActivityTest extends TestCase {
 
 		this.activity.addToBreakdownElement(breakdownElement) ;
 		this.activity.addToBreakdownElement(tmp) ;
-		this.activity.removeFromAllBreakdownElements();
+		this.activity.removeFromAllBreakdownElements(); // FIXME error found here
 
 		assertTrue(this.activity.getBreakDownElements().isEmpty()) ;
 		assertTrue(breakdownElement.getSuperActivities().isEmpty()) ;
