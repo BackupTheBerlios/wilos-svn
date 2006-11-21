@@ -85,7 +85,7 @@ public class Step extends Element {
 	 * @param _taskDefinition
 	 *            The taskDefinition to set.
 	 */
-	private void setTaskDefinition(TaskDefinition _taskDefinition) {
+	protected void setTaskDefinition(TaskDefinition _taskDefinition) {
 		this.taskDefinition = _taskDefinition ;
 	}
 
