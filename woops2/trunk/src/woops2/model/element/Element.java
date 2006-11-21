@@ -1,6 +1,9 @@
 
 package woops2.model.element ;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 /**
  * @author deder
  * 
@@ -22,7 +25,33 @@ public class Element {
 	 * 
 	 */
 	public Element() {
-		// None.
+	}
+
+	/**
+	 * Indicates whether another object is "equal to" this one.
+	 * 
+	 * @return true if equal else false
+	 */
+	public boolean equals(Object obj) {
+		if(obj instanceof Element == false){
+			return false ;
+		}
+		if(this == obj){
+			return true ;
+		}
+		Element element = (Element) obj ;
+		return new EqualsBuilder().append(this.name, element.name)
+								  .append(this.description, element.description)
+								  .isEquals() ;
+	}
+
+	/**
+	 * Returns a hash code value for the object.
+	 * 
+	 * @return a hash code
+	 */
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37).append(this.name).toHashCode() ;
 	}
 
 	/**

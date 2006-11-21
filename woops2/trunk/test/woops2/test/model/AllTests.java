@@ -16,6 +16,7 @@ public class AllTests {
 		suite.addTest(woops2.test.model.activity.AllTests.suite()) ;
 		suite.addTest(woops2.test.model.breakdownelement.AllTests.suite()) ;
 		suite.addTest(woops2.test.model.task.AllTests.suite()) ;
+		suite.addTest(woops2.test.model.element.AllTests.suite()) ;
 		// $JUnit-END$
 		return suite ;
 	}
