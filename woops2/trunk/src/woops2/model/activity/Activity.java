@@ -76,8 +76,7 @@ public class Activity extends WorkBreakdownElement {
 	 * @return a hash code
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
-				.append(this.getName()).toHashCode();
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode();
 	}
 
 	/**
