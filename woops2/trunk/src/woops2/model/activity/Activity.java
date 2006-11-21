@@ -1,36 +1,36 @@
-package woops2.model.activity;
 
-import java.util.HashSet;
-import java.util.Set;
+package woops2.model.activity ;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import java.util.HashSet ;
+import java.util.Set ;
 
-import woops2.model.breakdownelement.BreakdownElement;
-import woops2.model.workbreakdownelement.WorkBreakdownElement;
+import org.apache.commons.lang.builder.EqualsBuilder ;
+import org.apache.commons.lang.builder.HashCodeBuilder ;
+
+import woops2.model.breakdownelement.BreakdownElement ;
+import woops2.model.workbreakdownelement.WorkBreakdownElement ;
 
 /**
  * @author deder.
  * @author morpheus
  * 
- * An Activity is a Work Breakdown Element and Work Definition which supports
- * the nesting and logical grouping of related Breakdown Elements forming
- * breakdown structures. Although Activity is a concrete meta-class, other
- * classes which represent breakdown structures derive from it; such as Phase,
- * Iteration, Delivery Process, or Capability Pattern.
+ * An Activity is a Work Breakdown Element and Work Definition which supports the nesting and
+ * logical grouping of related Breakdown Elements forming breakdown structures. Although Activity is
+ * a concrete meta-class, other classes which represent breakdown structures derive from it; such as
+ * Phase, Iteration, Delivery Process, or Capability Pattern.
  * 
  */
 public class Activity extends WorkBreakdownElement {
 
-	private Set<BreakdownElement> breakDownElements;
+	private Set<BreakdownElement> breakDownElements ;
 
 	/**
 	 * Constructor.
 	 * 
 	 */
 	public Activity() {
-		super();
-		this.breakDownElements = new HashSet<BreakdownElement>();
+		super() ;
+		this.breakDownElements = new HashSet<BreakdownElement>() ;
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class Activity extends WorkBreakdownElement {
 	 * @return the breakDownElements.
 	 */
 	public Set<BreakdownElement> getBreakDownElements() {
-		return this.breakDownElements;
+		return this.breakDownElements ;
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class Activity extends WorkBreakdownElement {
 	 *            The breakDownElements to set.
 	 */
 	private void setBreakDownElements(Set<BreakdownElement> _breakDownElements) {
-		this.breakDownElements = _breakDownElements;
+		this.breakDownElements = _breakDownElements ;
 	}
 
 	/**
@@ -58,15 +58,14 @@ public class Activity extends WorkBreakdownElement {
 	 * @return true if equal else false
 	 */
 	public boolean equals(Object obj) {
-		if (obj instanceof Activity == false) {
-			return false;
+		if(obj instanceof Activity == false){
+			return false ;
 		}
-		if (this == obj) {
-			return true;
+		if(this == obj){
+			return true ;
 		}
-		Activity activity = (Activity) obj;
-		return new EqualsBuilder().appendSuper(super.equals(activity)).append(
-				this.breakDownElements, activity.breakDownElements).isEquals();
+		Activity activity = (Activity) obj ;
+		return new EqualsBuilder().appendSuper(super.equals(activity)).append(this.breakDownElements, activity.breakDownElements).isEquals() ;
 	}
 
 	/**
@@ -75,8 +74,7 @@ public class Activity extends WorkBreakdownElement {
 	 * @return a hash code
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
-				.append(this.breakDownElements).toHashCode();
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.breakDownElements).toHashCode() ;
 	}
 
 	/**
@@ -85,8 +83,8 @@ public class Activity extends WorkBreakdownElement {
 	 * @param _breakdownElement
 	 */
 	public void addToBreakdownElement(BreakdownElement _breakdownElement) {
-		this.getBreakDownElements().add(_breakdownElement);
-		_breakdownElement.getSuperActivities().add(this);
+		this.getBreakDownElements().add(_breakdownElement) ;
+		_breakdownElement.getSuperActivities().add(this) ;
 	}
 
 	/**
@@ -95,8 +93,8 @@ public class Activity extends WorkBreakdownElement {
 	 * @param _breakdownElement
 	 */
 	public void removeFromBreakdownElement(BreakdownElement _breakdownElement) {
-		this.getBreakDownElements().remove(_breakdownElement);
-		_breakdownElement.getSuperActivities().remove(this);
+		this.getBreakDownElements().remove(_breakdownElement) ;
+		_breakdownElement.getSuperActivities().remove(this) ;
 	}
 
 	/**
@@ -104,8 +102,8 @@ public class Activity extends WorkBreakdownElement {
 	 * 
 	 */
 	public void removeFromAllBreakdownElements() {
-		for (BreakdownElement temp : this.getBreakDownElements()) {
-			this.removeFromBreakdownElement(temp);
+		for(BreakdownElement temp : this.getBreakDownElements()){
+			this.removeFromBreakdownElement(temp) ;
 		}
 	}
 
