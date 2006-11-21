@@ -13,7 +13,7 @@ public class AllTests {
 	public static Test suite () {
 		TestSuite suite = new TestSuite("Test for woops2.test.business.activity") ;
 		// $JUnit-BEGIN$
-		suite.addTestSuite(ActivityManagerTest.class) ;
+		suite.addTestSuite(ActivityServiceTest.class) ;
 		// $JUnit-END$
 		return suite ;
 	}

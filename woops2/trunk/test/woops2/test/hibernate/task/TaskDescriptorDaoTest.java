@@ -1,6 +1,6 @@
 package woops2.test.hibernate.task;
 
-import java.util.Set;
+import java.util.List;
 
 import junit.framework.TestCase;
 import woops2.hibernate.task.TaskDescriptorDao;
@@ -124,8 +124,7 @@ public class TaskDescriptorDaoTest extends TestCase {
 
 		// Look if this taskDescriptor is also into the database and look if the
 		// size of the set is >= 1.
-		Set<TaskDescriptor> taskDescriptors = this.taskDescriptorDao
-				.getAllTaskDescriptor();
+		List<TaskDescriptor> taskDescriptors = this.taskDescriptorDao.getAllTaskDescriptor();
 		assertNotNull(taskDescriptors);
 		assertTrue(taskDescriptors.size() >= 1);
 

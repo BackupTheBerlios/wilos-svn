@@ -1,6 +1,6 @@
 package woops2.test.hibernate.workbreakdownelement;
 
-import java.util.Set;
+import java.util.List;
 
 import junit.framework.TestCase;
 import woops2.hibernate.workbreakdownelement.WorkBreakdownElementDao;
@@ -108,8 +108,7 @@ public class WorkBreakdownElementDaoTest extends TestCase {
 
 		// Look if this bde is also into the database and look if the size of
 		// the set is >= 1.
-		Set<WorkBreakdownElement> wbdes = this.workBreakdownElementDao
-				.getAllWorkBreakdownElements();
+		List<WorkBreakdownElement> wbdes = this.workBreakdownElementDao.getAllWorkBreakdownElements();
 		assertNotNull(wbdes);
 		assertTrue(wbdes.size() >= 1);
 

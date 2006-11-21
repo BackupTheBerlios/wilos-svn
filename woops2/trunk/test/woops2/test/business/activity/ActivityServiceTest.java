@@ -1,10 +1,10 @@
 
 package woops2.test.business.activity ;
 
-import java.util.Set;
+import java.util.List;
 
 import junit.framework.TestCase;
-import woops2.business.activity.ActivityManager;
+import woops2.business.activity.ActivityService;
 import woops2.model.activity.Activity;
 import woops2.test.TestConfiguration;
 
@@ -12,9 +12,9 @@ import woops2.test.TestConfiguration;
  * @author Mathieu BENOIT.
  * 
  */
-public class ActivityManagerTest extends TestCase {
+public class ActivityServiceTest extends TestCase {
 
-	private ActivityManager activityManager ;
+	private ActivityService activityService ;
 
 	private Activity activity ;
 
@@ -32,7 +32,7 @@ public class ActivityManagerTest extends TestCase {
 		super.setUp() ;
 
 		// Get the ActivityDao Singleton for managing Activity data
-		this.activityManager = (ActivityManager) TestConfiguration.getInstance().getApplicationContext().getBean("ActivityManager") ;
+		this.activityService = (ActivityService) TestConfiguration.getInstance().getApplicationContext().getBean("ActivityService") ;
 
 		// Create empty Activity
 		this.activity = new Activity() ;
@@ -48,7 +48,7 @@ public class ActivityManagerTest extends TestCase {
 		super.tearDown() ;
 
 		// Delete the tmp activity from the database.
-		this.activityManager.getActivityDao().deleteActivity(this.activity) ;
+		this.activityService.getActivityDao().deleteActivity(this.activity) ;
 	}
 
 	/**
@@ -62,10 +62,10 @@ public class ActivityManagerTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		// Save the activity.
-		this.activityManager.getActivityDao().saveOrUpdateActivity(this.activity) ;
+		this.activityService.getActivityDao().saveOrUpdateActivity(this.activity) ;
 
 		// Look if this activity is also into the database and look if the size of the set is >= 1.
-		Set<Activity> activities = this.activityManager.getActivitiesList() ;
+		List<Activity> activities = this.activityService.getActivitiesList() ;
 		assertNotNull(activities) ;
 		assertTrue(activities.size() >= 1) ;
 
@@ -86,11 +86,11 @@ public class ActivityManagerTest extends TestCase {
 		// Save the activity to test the method saveActivity.
 		this.activity.setPrefix(PREFIX) ;
 		this.activity.setIsOptional(IS_OPTIONAL) ;
-		this.activityManager.saveActivity(this.activity) ;
+		this.activityService.saveActivity(this.activity) ;
 		String id = this.activity.getId() ;
 
 		// Look if this activity is also into the database.
-		Activity activityTmp = (Activity) this.activityManager.getActivityDao().getActivity(id) ;
+		Activity activityTmp = (Activity) this.activityService.getActivityDao().getActivity(id) ;
 		assertNotNull(activityTmp) ;
 		assertEquals(activityTmp.getPrefix(), PREFIX) ;
 		assertEquals(activityTmp.getIsOptional(), IS_OPTIONAL) ;

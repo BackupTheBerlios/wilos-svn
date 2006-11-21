@@ -1,6 +1,7 @@
 package woops2.test.hibernate.breakdownelement;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import junit.framework.TestCase;
@@ -104,7 +105,7 @@ public class BreakdownElementDaoTest extends TestCase {
 
 		// Look if this bde is also into the database and look if the size of
 		// the set is >= 1.
-		Set<BreakdownElement> bdes = this.breakdownElementDao
+		List<BreakdownElement> bdes = this.breakdownElementDao
 				.getAllBreakdownElements();
 		assertNotNull(bdes);
 		assertTrue(bdes.size() >= 1);

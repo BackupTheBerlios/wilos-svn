@@ -1,6 +1,6 @@
 package woops2.test.hibernate.element;
 
-import java.util.Set;
+import java.util.List;
 
 import junit.framework.TestCase;
 import woops2.hibernate.element.ElementDao;
@@ -89,7 +89,7 @@ public class ElementDaoTest extends TestCase {
 
 		// Look if this element is also into the database and look if the size
 		// of the set is >= 1.
-		Set<Element> elements = this.elementDao.getAllElements();
+		List<Element> elements = this.elementDao.getAllElements();
 		assertNotNull(elements);
 		assertTrue(elements.size() >= 1);
 

@@ -1,7 +1,7 @@
 
 package woops2.test.hibernate.task ;
 
-import java.util.Set;
+import java.util.List;
 
 import junit.framework.TestCase;
 import woops2.hibernate.task.StepDao;
@@ -86,7 +86,7 @@ public class StepDaoTest extends TestCase {
 
 		// Look if this task is also into the database and look if the size of
 		// the set is >= 1.
-		Set<Step> steps = this.stepDao.getAllSteps() ;
+		List<Step> steps = this.stepDao.getAllSteps() ;
 		assertNotNull(steps) ;
 		assertTrue(steps.size() >= 1) ;
 

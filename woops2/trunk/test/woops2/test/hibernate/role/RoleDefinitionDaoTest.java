@@ -1,6 +1,6 @@
 package woops2.test.hibernate.role;
 
-import java.util.Set;
+import java.util.List;
 
 import junit.framework.TestCase;
 import woops2.hibernate.role.RoleDefinitionDao;
@@ -93,7 +93,7 @@ public class RoleDefinitionDaoTest extends TestCase {
 
 		// Look if this roleDefinition is also into the database and look if the size of
 		// the set is >= 1.
-		Set<RoleDefinition> roleDefinitions = this.roleDefinitionDao.getAllRole();
+		List<RoleDefinition> roleDefinitions = this.roleDefinitionDao.getAllRole();
 		assertNotNull(roleDefinitions);
 		assertTrue(roleDefinitions.size() >= 1);
 

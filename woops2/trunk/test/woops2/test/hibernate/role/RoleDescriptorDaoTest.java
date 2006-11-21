@@ -1,6 +1,6 @@
 package woops2.test.hibernate.role;
 
-import java.util.Set;
+import java.util.List;
 
 import junit.framework.TestCase;
 import woops2.hibernate.role.RoleDescriptorDao;
@@ -106,8 +106,7 @@ public class RoleDescriptorDaoTest extends TestCase {
 
 		// Look if this roleDescriptor is also into the database and look if the
 		// size of the set is >= 1.
-		Set<RoleDescriptor> roleDescriptors = this.roleDescriptorDao
-				.getAllRoleDescriptor();
+		List<RoleDescriptor> roleDescriptors = this.roleDescriptorDao.getAllRoleDescriptor();
 		assertNotNull(roleDescriptors);
 		assertTrue(roleDescriptors.size() >= 1);
 

@@ -1,6 +1,6 @@
 package woops2.test.hibernate.task;
 
-import java.util.Set;
+import java.util.List;
 
 import junit.framework.TestCase;
 import woops2.hibernate.task.TaskDefinitionDao;
@@ -100,7 +100,7 @@ public class TaskDefinitionDaoTest extends TestCase {
 
 		// Look if this taskDefinition is also into the database and look if the size of
 		// the set is >= 1.
-		Set<TaskDefinition> taskDefinitions = this.taskDefinitionDao.getAllTask();
+		List<TaskDefinition> taskDefinitions = this.taskDefinitionDao.getAllTask();
 		assertNotNull(taskDefinitions);
 		assertTrue(taskDefinitions.size() >= 1);
 
