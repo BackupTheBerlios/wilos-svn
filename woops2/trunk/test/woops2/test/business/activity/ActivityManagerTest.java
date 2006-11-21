@@ -14,8 +14,6 @@ import woops2.test.TestConfiguration;
  */
 public class ActivityManagerTest extends TestCase {
 
-	private TestConfiguration testConfiguration;
-	
 	private ActivityManager activityManager ;
 
 	private Activity activity ;
@@ -34,7 +32,7 @@ public class ActivityManagerTest extends TestCase {
 		super.setUp() ;
 
 		// Get the ActivityDao Singleton for managing Activity data
-		this.activityManager = (ActivityManager) this.testConfiguration.getInstance().getApplicationContext().getBean("ActivityManager") ;
+		this.activityManager = (ActivityManager) TestConfiguration.getInstance().getApplicationContext().getBean("ActivityManager") ;
 
 		// Create empty Activity
 		this.activity = new Activity() ;

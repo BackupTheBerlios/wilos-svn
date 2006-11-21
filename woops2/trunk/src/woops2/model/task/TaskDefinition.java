@@ -1,10 +1,10 @@
 
 package woops2.model.task ;
 
-import java.util.HashSet ;
-import java.util.Set ;
+import java.util.ArrayList;
+import java.util.List;
 
-import woops2.model.element.Element ;
+import woops2.model.element.Element;
 
 /**
  * @author Sebastien BALARD
@@ -18,20 +18,20 @@ public class TaskDefinition extends Element {
 	/**
 	 * Collection of Step
 	 */
-	private Set<Step> steps ;
+	private List<Step> steps ;
 
 	/**
 	 * Collection of TaskDescriptor
 	 */
-	private Set<TaskDescriptor> taskDescriptors ;
+	private List<TaskDescriptor> taskDescriptors ;
 
 	/**
 	 * Default constructor
 	 */
 	public TaskDefinition() {
 		super() ;
-		this.steps = new HashSet<Step>() ;
-		this.taskDescriptors = new HashSet<TaskDescriptor>() ;
+		this.steps = new ArrayList<Step>() ;
+		this.taskDescriptors = new ArrayList<TaskDescriptor>() ;
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class TaskDefinition extends Element {
 	 * 
 	 * @return the steps.
 	 */
-	public Set<Step> getSteps() {
+	public List<Step> getSteps() {
 		return this.steps ;
 	}
 
@@ -49,7 +49,7 @@ public class TaskDefinition extends Element {
 	 * @param _steps
 	 *            The steps to set.
 	 */
-	public void setSteps(Set<Step> _steps) {
+	public void setSteps(List<Step> _steps) {
 		this.steps = _steps ;
 	}
 
@@ -58,7 +58,7 @@ public class TaskDefinition extends Element {
 	 * 
 	 * @return the taskDescriptors.
 	 */
-	public Set<TaskDescriptor> getTaskDescriptors() {
+	public List<TaskDescriptor> getTaskDescriptors() {
 		return this.taskDescriptors ;
 	}
 
@@ -68,7 +68,7 @@ public class TaskDefinition extends Element {
 	 * @param _taskDescriptors
 	 *            The taskDescriptors to set.
 	 */
-	public void setTaskDescriptors(Set<TaskDescriptor> _taskDescriptors) {
+	public void setTaskDescriptors(List<TaskDescriptor> _taskDescriptors) {
 		this.taskDescriptors = _taskDescriptors ;
 	}
 }
