@@ -1,8 +1,10 @@
 
 package woops2.hibernate.workbreakdownelement ;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import woops2.model.workbreakdownelement.WorkBreakdownElement;
@@ -29,8 +31,14 @@ public class WorkBreakdownElementDao extends HibernateDaoSupport {
 	 * 
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public List <WorkBreakdownElement> getAllWorkBreakdownElements () {
-		List <WorkBreakdownElement> loadAll = this.getHibernateTemplate().loadAll(WorkBreakdownElement.class) ;
+		List <WorkBreakdownElement> loadAll = new ArrayList<WorkBreakdownElement>();
+		try {
+			loadAll.addAll(this.getHibernateTemplate().loadAll(WorkBreakdownElement.class));
+		} catch (DataAccessException e) {
+			logger.error("### WorkBreakdownElementDao ### --> "+e);
+		}
 		return loadAll ;
 	}
 

@@ -1,6 +1,7 @@
 
 package woops2.hibernate.element ;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -28,8 +29,14 @@ public class ElementDao extends HibernateDaoSupport {
 	 * 
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public List<Element> getAllElements () {
-		List<Element> loadAll = this.getHibernateTemplate().loadAll(Element.class) ;
+		List<Element> loadAll = new ArrayList<Element>();
+		try {
+			loadAll.addAll(this.getHibernateTemplate().loadAll(Element.class));
+		} catch (Exception e) {
+			logger.error("### ElementDao ### --> "+e);
+		}
 		return loadAll ;
 	}
 

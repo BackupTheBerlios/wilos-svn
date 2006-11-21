@@ -1,6 +1,7 @@
 
 package woops2.hibernate.task ;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -18,9 +19,15 @@ public class StepDao extends HibernateDaoSupport {
 	public void saveOrUpdateStep(Step _step) {
 		this.getHibernateTemplate().saveOrUpdate(_step) ;
 	}
-
+	
+	@SuppressWarnings("unchecked")
 	public List<Step> getAllSteps() {
-		List<Step> loadAll = this.getHibernateTemplate().loadAll(Step.class);
+		List<Step> loadAll = new ArrayList<Step>();
+		try {
+			loadAll.addAll(this.getHibernateTemplate().loadAll(Step.class));
+		} catch (Exception e) {
+			logger.error("### StepDao ### --> "+e);
+		}
 		return loadAll ;
 	}
 

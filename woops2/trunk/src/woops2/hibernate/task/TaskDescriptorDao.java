@@ -1,5 +1,6 @@
 package woops2.hibernate.task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -29,8 +30,14 @@ public class TaskDescriptorDao extends HibernateDaoSupport {
 	 * 
 	 * @return set <TaskDescriptor>
 	 */
+	@SuppressWarnings("unchecked")
 	public List<TaskDescriptor> getAllTaskDescriptor() {
-		List<TaskDescriptor> loadAll = this.getHibernateTemplate().loadAll(TaskDescriptor.class);
+		List<TaskDescriptor> loadAll = new ArrayList<TaskDescriptor>();
+		try {
+			loadAll.addAll(this.getHibernateTemplate().loadAll(TaskDescriptor.class));
+		} catch (Exception e) {
+			logger.error("### TaskDescriptorDao ### --> "+e);
+		}
 		return loadAll;
 	}
 

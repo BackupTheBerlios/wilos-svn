@@ -1,5 +1,6 @@
 package woops2.hibernate.breakdownelement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -28,8 +29,14 @@ public class BreakdownElementDao extends HibernateDaoSupport {
 	 * 
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public List<BreakdownElement> getAllBreakdownElements() {
-		List<BreakdownElement> loadAll = this.getHibernateTemplate().loadAll(BreakdownElement.class);
+		List<BreakdownElement> loadAll = new ArrayList<BreakdownElement>();
+		try {
+			loadAll.addAll(this.getHibernateTemplate().loadAll(BreakdownElement.class));
+		} catch (Exception e) {
+			logger.error("### BreakdownElementDao ### --> "+e);
+		}
 		return loadAll;
 	}
 

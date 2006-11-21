@@ -1,8 +1,10 @@
 
 package woops2.hibernate.task ;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import woops2.model.task.TaskDefinition;
@@ -26,8 +28,14 @@ public class TaskDefinitionDao extends HibernateDaoSupport {
 	/**
 	 * @return set <TaskDefinition>
 	 */
+	@SuppressWarnings("unchecked")
 	public List<TaskDefinition> getAllTask() {
-		List<TaskDefinition> loadAll = this.getHibernateTemplate().loadAll(TaskDefinition.class) ;
+		List<TaskDefinition> loadAll = new ArrayList<TaskDefinition>();
+		try {
+			loadAll.addAll(this.getHibernateTemplate().loadAll(TaskDefinition.class));
+		} catch (DataAccessException e) {
+			logger.error("### TaskDefinitionDao ### --> "+e);
+		}
 		return loadAll ;
 	}
 

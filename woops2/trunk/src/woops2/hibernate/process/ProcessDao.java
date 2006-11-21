@@ -28,9 +28,15 @@ public class ProcessDao extends HibernateDaoSupport {
 	 * 
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public List<Process> getAllProcesses() {
 		List<Process> loadAll = new ArrayList<Process>();
-		loadAll.addAll(this.getHibernateTemplate().loadAll(Process.class));
+		try {
+			loadAll.addAll(this.getHibernateTemplate().loadAll(Process.class));
+			
+		} catch (Exception e) {
+			logger.error("### ProcessDao ### --> "+e);
+		}
 		return loadAll;
 	}
 

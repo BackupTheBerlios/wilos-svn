@@ -1,6 +1,7 @@
 
 package woops2.hibernate.activity ;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -29,8 +30,14 @@ public class ActivityDao extends HibernateDaoSupport {
 	 * 
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public List<Activity> getAllActivities() {
-		List<Activity> loadAll = this.getHibernateTemplate().loadAll(Activity.class) ;
+		List<Activity> loadAll = new ArrayList<Activity>();
+		try {
+			loadAll.addAll(this.getHibernateTemplate().loadAll(Activity.class));
+		} catch (Exception e) {
+			logger.error("### ActivityDao ### --> "+e);
+		}
 		return loadAll ;
 	}
 
