@@ -39,7 +39,7 @@ public class StepTest extends TestCase {
 	 * Test method for {@link woops2.model.task.Step#hashCode()}.
 	 */
 	public void testHashCode() {
-		fail("Not yet implemented") ;
+		assertNotNull(this.step.hashCode());
 	}
 
 	/**

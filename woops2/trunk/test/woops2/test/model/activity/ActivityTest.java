@@ -18,6 +18,8 @@ public class ActivityTest extends TestCase {
 	private Activity activity ;
 
 	public static final String PREFIX = "prefix" ;
+	
+	public static final String NAME = "name" ;
 
 	public static final Boolean IS_OPTIONAL = true ;
 
@@ -28,6 +30,7 @@ public class ActivityTest extends TestCase {
 		super.setUp() ;
 		this.activity = new Activity() ;
 		this.activity.setPrefix(PREFIX) ;
+		this.activity.setName(NAME);
 		this.activity.setIsOptional(IS_OPTIONAL) ;
 	}
 
@@ -42,7 +45,7 @@ public class ActivityTest extends TestCase {
 	 * Test method for {@link woops2.model.activity.Activity#hashCode()}.
 	 */
 	public void testHashCode() {
-		fail("Not yet implemented") ;
+		assertNotNull(this.activity.hashCode());
 	}
 
 	/**
