@@ -198,6 +198,7 @@ public class BreakdownElement extends Element {
 	 * @param _superActivities
 	 *            The superActivities to set.
 	 */
+	@SuppressWarnings("unused")
 	private void setSuperActivities(Set<Activity> _superActivities) {
 		this.superActivities = _superActivities;
 	}

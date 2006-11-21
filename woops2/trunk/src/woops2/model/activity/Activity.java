@@ -48,6 +48,7 @@ public class Activity extends WorkBreakdownElement {
 	 * @param _breakDownElements
 	 *            The breakDownElements to set.
 	 */
+	@SuppressWarnings("unused")
 	private void setBreakDownElements(Set<BreakdownElement> _breakDownElements) {
 		this.breakdownElements.addAll(_breakDownElements);
 	}
