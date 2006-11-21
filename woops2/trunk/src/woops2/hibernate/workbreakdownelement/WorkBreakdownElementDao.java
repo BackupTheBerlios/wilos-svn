@@ -1,8 +1,7 @@
 
 package woops2.hibernate.workbreakdownelement ;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -30,9 +29,8 @@ public class WorkBreakdownElementDao extends HibernateDaoSupport {
 	 * 
 	 * @return
 	 */
-	public Set <WorkBreakdownElement> getAllWorkBreakdownElements () {
-		Set <WorkBreakdownElement> loadAll = new HashSet <WorkBreakdownElement>() ;
-		loadAll.addAll(this.getHibernateTemplate().loadAll(WorkBreakdownElement.class)) ;
+	public List <WorkBreakdownElement> getAllWorkBreakdownElements () {
+		List <WorkBreakdownElement> loadAll = this.getHibernateTemplate().loadAll(WorkBreakdownElement.class) ;
 		return loadAll ;
 	}
 

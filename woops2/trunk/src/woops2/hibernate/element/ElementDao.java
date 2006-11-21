@@ -1,8 +1,7 @@
 
 package woops2.hibernate.element ;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -29,9 +28,8 @@ public class ElementDao extends HibernateDaoSupport {
 	 * 
 	 * @return
 	 */
-	public Set <Element> getAllElements () {
-		Set <Element> loadAll = new HashSet<Element>() ;
-		loadAll.addAll(this.getHibernateTemplate().loadAll(Element.class)) ;
+	public List<Element> getAllElements () {
+		List<Element> loadAll = this.getHibernateTemplate().loadAll(Element.class) ;
 		return loadAll ;
 	}
 

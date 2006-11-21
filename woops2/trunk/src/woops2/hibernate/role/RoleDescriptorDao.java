@@ -1,7 +1,6 @@
 package woops2.hibernate.role;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -28,10 +27,8 @@ public class RoleDescriptorDao extends HibernateDaoSupport {
 	 * 
 	 * @return
 	 */
-	public Set<RoleDescriptor> getAllRoleDescriptor() {
-		Set<RoleDescriptor> loadAll = new HashSet<RoleDescriptor>();
-		loadAll.addAll(this.getHibernateTemplate()
-				.loadAll(RoleDescriptor.class));
+	public List<RoleDescriptor> getAllRoleDescriptor() {
+		List<RoleDescriptor> loadAll = this.getHibernateTemplate().loadAll(RoleDescriptor.class);
 		return loadAll;
 	}
 

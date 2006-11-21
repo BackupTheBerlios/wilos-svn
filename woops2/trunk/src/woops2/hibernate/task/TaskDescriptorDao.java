@@ -1,7 +1,6 @@
 package woops2.hibernate.task;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -30,10 +29,8 @@ public class TaskDescriptorDao extends HibernateDaoSupport {
 	 * 
 	 * @return set <TaskDescriptor>
 	 */
-	public Set<TaskDescriptor> getAllTaskDescriptor() {
-		Set<TaskDescriptor> loadAll = new HashSet<TaskDescriptor>();
-		loadAll.addAll(this.getHibernateTemplate()
-				.loadAll(TaskDescriptor.class));
+	public List<TaskDescriptor> getAllTaskDescriptor() {
+		List<TaskDescriptor> loadAll = this.getHibernateTemplate().loadAll(TaskDescriptor.class);
 		return loadAll;
 	}
 

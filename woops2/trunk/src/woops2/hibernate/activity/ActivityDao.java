@@ -1,9 +1,7 @@
 
 package woops2.hibernate.activity ;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -31,9 +29,8 @@ public class ActivityDao extends HibernateDaoSupport {
 	 * 
 	 * @return
 	 */
-	public Set<Activity> getAllActivities() {
-		Set<Activity> loadAll = new HashSet<Activity>() ;
-		loadAll.addAll(this.getHibernateTemplate().loadAll(Activity.class)) ;
+	public List<Activity> getAllActivities() {
+		List<Activity> loadAll = this.getHibernateTemplate().loadAll(Activity.class) ;
 		return loadAll ;
 	}
 

@@ -1,8 +1,7 @@
 
 package woops2.hibernate.task ;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -20,9 +19,8 @@ public class StepDao extends HibernateDaoSupport {
 		this.getHibernateTemplate().saveOrUpdate(_step) ;
 	}
 
-	public Set<Step> getAllSteps() {
-		Set<Step> loadAll = new HashSet<Step>() ;
-		loadAll.addAll(this.getHibernateTemplate().loadAll(Step.class)) ;
+	public List<Step> getAllSteps() {
+		List<Step> loadAll = this.getHibernateTemplate().loadAll(Step.class);
 		return loadAll ;
 	}
 
