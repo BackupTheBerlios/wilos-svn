@@ -1,5 +1,4 @@
-
-package woops2.hibernate.activity ;
+package woops2.hibernate.activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +8,8 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import woops2.model.activity.Activity;
 
 /**
- * ActivityDao manage requests from the system to store Acitivties to the database
+ * ActivityDao manage requests from the system to store Acitivties to the
+ * database
  * 
  * @author garwind
  * @author deder
@@ -22,7 +22,7 @@ public class ActivityDao extends HibernateDaoSupport {
 	 * @param _activity
 	 */
 	public void saveOrUpdateActivity(Activity _activity) {
-		this.getHibernateTemplate().saveOrUpdate(_activity) ;
+		this.getHibernateTemplate().saveOrUpdate(_activity);
 	}
 
 	/**
@@ -36,9 +36,9 @@ public class ActivityDao extends HibernateDaoSupport {
 		try {
 			loadAll.addAll(this.getHibernateTemplate().loadAll(Activity.class));
 		} catch (Exception e) {
-			logger.error("### ActivityDao ### --> "+e);
+			logger.error("### ActivityDao ### --> " + e);
 		}
-		return loadAll ;
+		return loadAll;
 	}
 
 	/**
@@ -48,19 +48,23 @@ public class ActivityDao extends HibernateDaoSupport {
 	 * @return
 	 */
 	public Activity getActivity(String _id) {
-		return (Activity) this.getHibernateTemplate().get(Activity.class, _id) ;
+		return (Activity) this.getHibernateTemplate().get(Activity.class, _id);
 	}
-	
+
 	/**
-	 * Test function that return an activity with the given prefix
-	 * If there are many activity with the same prefix, it returns the first
+	 * Test function that return an activity with the given prefix If there are
+	 * many activity with the same prefix, it returns the first
+	 * 
 	 * @param _prefix
 	 * @return
 	 */
 	public Activity getActivityFromPrefix(String _prefix) {
-		List actvities = this.getHibernateTemplate().find("from Activity a where a.prefix=?",_prefix);
-		if (actvities.size() > 0) return (Activity) actvities.get(0);
-		else return null;
+		List actvities = this.getHibernateTemplate().find(
+				"from Activity a where a.prefix=?", _prefix);
+		if (actvities.size() > 0)
+			return (Activity) actvities.get(0);
+		else
+			return null;
 	}
 
 	/**
@@ -69,12 +73,14 @@ public class ActivityDao extends HibernateDaoSupport {
 	 * @param _activity
 	 */
 	public void deleteActivity(Activity _activity) {
-		try{
-			this.getHibernateTemplate().delete(_activity) ;
-		}
-		catch(Exception sose){
-			// Catch normally errors when we delete an unexisting activity into the db.
-			logger.error("#### ERROR #### --- ActivityDao => deleteActivity : trying to delete unexisting object \n" + sose) ;
+		try {
+			this.getHibernateTemplate().delete(_activity);
+		} catch (Exception sose) {
+			// Catch normally errors when we delete an unexisting activity into
+			// the db.
+			logger
+					.error("#### ERROR #### --- ActivityDao => deleteActivity : trying to delete unexisting object \n"
+							+ sose);
 		}
 	}
 }

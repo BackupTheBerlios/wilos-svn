@@ -1,5 +1,4 @@
-
-package woops2.hibernate.workbreakdownelement ;
+package woops2.hibernate.workbreakdownelement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,8 @@ import woops2.model.workbreakdownelement.WorkBreakdownElement;
 /**
  * @author Sebastien
  * 
- * This class represents ... TODO
+ * WorkBreakdownElementDao manage requests from the system to store wbdes
+ * to the database
  * 
  */
 public class WorkBreakdownElementDao extends HibernateDaoSupport {
@@ -22,8 +22,9 @@ public class WorkBreakdownElementDao extends HibernateDaoSupport {
 	 * 
 	 * @param _activity
 	 */
-	public void saveOrUpdateWorkBreakdownElement (WorkBreakdownElement _workBreakdownElement) {
-		this.getHibernateTemplate().saveOrUpdate(_workBreakdownElement) ;
+	public void saveOrUpdateWorkBreakdownElement(
+			WorkBreakdownElement _workBreakdownElement) {
+		this.getHibernateTemplate().saveOrUpdate(_workBreakdownElement);
 	}
 
 	/**
@@ -32,14 +33,15 @@ public class WorkBreakdownElementDao extends HibernateDaoSupport {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List <WorkBreakdownElement> getAllWorkBreakdownElements () {
-		List <WorkBreakdownElement> loadAll = new ArrayList<WorkBreakdownElement>();
+	public List<WorkBreakdownElement> getAllWorkBreakdownElements() {
+		List<WorkBreakdownElement> loadAll = new ArrayList<WorkBreakdownElement>();
 		try {
-			loadAll.addAll(this.getHibernateTemplate().loadAll(WorkBreakdownElement.class));
+			loadAll.addAll(this.getHibernateTemplate().loadAll(
+					WorkBreakdownElement.class));
 		} catch (DataAccessException e) {
-			logger.error("### WorkBreakdownElementDao ### --> "+e);
+			logger.error("### WorkBreakdownElementDao ### --> " + e);
 		}
-		return loadAll ;
+		return loadAll;
 	}
 
 	/**
@@ -48,8 +50,9 @@ public class WorkBreakdownElementDao extends HibernateDaoSupport {
 	 * @param _id
 	 * @return
 	 */
-	public WorkBreakdownElement getWorkBreakdownElement (String _id) {
-		return (WorkBreakdownElement) this.getHibernateTemplate().get(WorkBreakdownElement.class, _id) ;
+	public WorkBreakdownElement getWorkBreakdownElement(String _id) {
+		return (WorkBreakdownElement) this.getHibernateTemplate().get(
+				WorkBreakdownElement.class, _id);
 	}
 
 	/**
@@ -57,14 +60,16 @@ public class WorkBreakdownElementDao extends HibernateDaoSupport {
 	 * 
 	 * @param _activity
 	 */
-	public void deleteWorkBreakdownElement (WorkBreakdownElement _workBreakdownElement) {
+	public void deleteWorkBreakdownElement(
+			WorkBreakdownElement _workBreakdownElement) {
 		try {
-			this.getHibernateTemplate().delete(_workBreakdownElement) ;
-		}
-		catch (Exception sose) {
+			this.getHibernateTemplate().delete(_workBreakdownElement);
+		} catch (Exception sose) {
 			// Catch normally errors when we delete an unexisting activity into
 			// the db.
-			logger.error("#### ERROR #### --- WorkBreakdownElementDao => deleteWorkBreakdownElement : trying to delete unexisting object \n" + sose) ;
+			logger
+					.error("#### ERROR #### --- WorkBreakdownElementDao => deleteWorkBreakdownElement : trying to delete unexisting object \n"
+							+ sose);
 		}
 	}
 }

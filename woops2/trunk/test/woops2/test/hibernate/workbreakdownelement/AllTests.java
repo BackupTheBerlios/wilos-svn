@@ -6,8 +6,6 @@ import junit.framework.TestSuite;
 /**
  * @author Sebastien
  *
- * This class represents ... TODO
- *
  */
 public class AllTests {
 

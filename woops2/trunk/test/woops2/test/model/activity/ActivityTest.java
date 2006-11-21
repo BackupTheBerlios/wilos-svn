@@ -10,7 +10,7 @@ import woops2.model.breakdownelement.BreakdownElement;
 /**
  * @author Sebastien
  *
- * This class represents ... TODO
+ * This class represents the class test of the Activity class.
  *
  */
 public class ActivityTest extends TestCase {
@@ -133,8 +133,8 @@ public class ActivityTest extends TestCase {
 		this.activity.addToBreakdownElement(tmp) ;
 		this.activity.removeFromAllBreakdownElements(); // FIXME error found here
 
-		assertTrue(this.activity.getBreakDownElements().isEmpty()) ;
-		assertTrue(breakdownElement.getSuperActivities().isEmpty()) ;
-		assertTrue(tmp.getSuperActivities().isEmpty()) ;
+		assertTrue("bdes", this.activity.getBreakDownElements().isEmpty()) ;
+		assertTrue("bde.acts", breakdownElement.getSuperActivities().isEmpty()) ;
+		assertTrue("tmp.acts", tmp.getSuperActivities().isEmpty()) ;
 	}
 }

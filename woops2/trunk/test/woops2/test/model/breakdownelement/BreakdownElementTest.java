@@ -1,5 +1,8 @@
 package woops2.test.model.breakdownelement;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import junit.framework.TestCase;
 import woops2.model.activity.Activity;
 import woops2.model.breakdownelement.BreakdownElement;
@@ -41,37 +44,38 @@ public class BreakdownElementTest extends TestCase {
 
 	/**
 	 * Test method for
+	 * {@link woops2.model.breakdownelement.BreakdownElement#hashCode()}.
+	 */
+	public void testHashCode() {
+		// Rk: the setUp method is called here.
+
+		assertNotNull(this.breakdownElement.hashCode());
+
+		// Rk: the tearDown method is called here.
+
+	}
+
+	/**
+	 * Test method for
 	 * {@link woops2.model.breakdownelement.BreakdownElement#equals(Object obj)}.
 	 */
 	public void testEquals() {
 		// Rk: the setUp method is called here.
 
 		// Assert if it's equal by references.
-		assertTrue(this.breakdownElement.equals(this.breakdownElement));
+		assertTrue("By references", this.breakdownElement.equals(this.breakdownElement));
 
 		// Assert if it's equal field by field.
 		BreakdownElement bdeTmp1 = new BreakdownElement();
 		bdeTmp1.setPrefix(PREFIX);
 		bdeTmp1.setIsOptional(IS_OPTIONAL);
-		assertTrue(this.breakdownElement.equals(bdeTmp1));
+		assertTrue("Field by field", this.breakdownElement.equals(bdeTmp1));
 
 		// Assert if it's not equal.
 		BreakdownElement bdeTmp2 = new BreakdownElement();
 		bdeTmp2.setPrefix("prefixFalse");
 		bdeTmp2.setIsOptional(true);
-		assertFalse(this.breakdownElement.equals(bdeTmp2));
-
-		// Rk: the tearDown method is called here.
-	}
-
-	/**
-	 * Test method for
-	 * {@link woops2.model.breakdownelement.BreakdownElement#hashCode()}.
-	 */
-	public void testHashCode() {
-		// Rk: the setUp method is called here.
-
-		fail("Not yet implemented"); // TODO
+		assertFalse("Not equals", this.breakdownElement.equals(bdeTmp2));//FIXME pb here !
 
 		// Rk: the tearDown method is called here.
 	}
@@ -83,17 +87,17 @@ public class BreakdownElementTest extends TestCase {
 	public void testAddToActivity() {
 		// Rk: the setUp method is called here.
 
-		assertTrue(this.breakdownElement.getSuperActivities().isEmpty());
+		assertTrue("Empty (begin)", this.breakdownElement.getSuperActivities().isEmpty());
 
 		Activity activity1 = new Activity();
 		this.breakdownElement.addToActivity(activity1);
-		assertTrue(this.breakdownElement.getSuperActivities().size() == 1);
-		assertFalse(activity1.getBreakDownElements().size() == 1);
+		assertTrue("acts.size == 1", this.breakdownElement.getSuperActivities().size() == 1);
+		assertTrue("bdes.size1 == 1", activity1.getBreakDownElements().size() == 1);
 
 		Activity activity2 = new Activity();
 		this.breakdownElement.addToActivity(activity2);
-		assertTrue(this.breakdownElement.getSuperActivities().size() == 2);
-		assertFalse(activity2.getBreakDownElements().size() == 1);
+		assertTrue("acts.size ==  2", this.breakdownElement.getSuperActivities().size() == 2);
+		assertTrue("bdes.size2 ==  1", activity2.getBreakDownElements().size() == 1);
 
 		// Rk: the tearDown method is called here.
 	}
@@ -105,7 +109,17 @@ public class BreakdownElementTest extends TestCase {
 	public void testAddToAllActivities() {
 		// Rk: the setUp method is called here.
 
-		fail("Not yet implemented"); // TODO
+		Activity activity1 = new Activity();
+		Activity activity2 = new Activity();
+		Set<Activity> activities = new HashSet<Activity>() ;
+		activities.add(activity1);
+		activities.add(activity2);
+		
+		this.breakdownElement.addToAllActivities(activities);
+		
+		assertTrue("acts.size ==  2", this.breakdownElement.getSuperActivities().size() == 2);
+		assertTrue("bdes1.size == 1", activity1.getBreakDownElements().size() == 1);
+		assertTrue("bdes2.size == 1", activity2.getBreakDownElements().size() == 1);
 
 		// Rk: the tearDown method is called here.
 	}

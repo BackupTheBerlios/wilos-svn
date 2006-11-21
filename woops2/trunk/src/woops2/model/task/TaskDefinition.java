@@ -10,8 +10,9 @@ import woops2.model.element.Element;
  * @author Sebastien BALARD
  * @author eperico
  * 
- * This class represents a task is a content element that describes work being performed by Roles.
- * It defines one default performing RoleDefinition as well as many additional performers... TODO
+ * This class represents a task is a content element that describes work being
+ * performed by Roles. It defines one default performing RoleDefinition as well
+ * as many additional performers.
  * 
  */
 public class TaskDefinition extends Element {

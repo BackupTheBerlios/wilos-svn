@@ -61,7 +61,7 @@ public class RoleDescriptor extends BreakdownElement {
 	 * @return the primaryTasks.
 	 */
 	@SuppressWarnings("unused")
-	private Set<TaskDescriptor> getPrimaryTasks() {
+	public Set<TaskDescriptor> getPrimaryTasks() {
 		return this.primaryTasks ;
 	}
 

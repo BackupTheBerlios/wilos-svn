@@ -12,7 +12,12 @@ import woops2.model.workbreakdownelement.WorkBreakdownElement;
  * @author Sebastien BALARD
  * @author eperico
  * 
- * This class represents ... TODO
+ * A Task Descriptor is a Descriptor and Work Breakdown Element that represents
+ * a proxy for a Task in the context of one specific Activity. Every breakdown
+ * structure can define different relationships of Task Descriptors to Work
+ * Product Descriptors and Role Descriptors. Therefore one Task can be
+ * represented by many Task Descriptors each within the context of an Activity
+ * with its own set of relationships.
  * 
  */
 public class TaskDescriptor extends WorkBreakdownElement {
@@ -96,7 +101,7 @@ public class TaskDescriptor extends WorkBreakdownElement {
 	public void setMainRole(RoleDescriptor _mainRole) {
 		this.mainRole = _mainRole;
 	}
-	
+
 	/**
 	 * Indicates whether another object is "equal to" this one.
 	 * 
@@ -110,8 +115,9 @@ public class TaskDescriptor extends WorkBreakdownElement {
 			return true;
 		}
 		TaskDescriptor taskDescriptor = (TaskDescriptor) obj;
-		return new EqualsBuilder().appendSuper(super.equals(taskDescriptor)).append(
-				this.taskDefinition, taskDescriptor.taskDefinition).isEquals();
+		return new EqualsBuilder().appendSuper(super.equals(taskDescriptor))
+				.append(this.taskDefinition, taskDescriptor.taskDefinition)
+				.isEquals();
 	}
 
 	/**
@@ -180,15 +186,15 @@ public class TaskDescriptor extends WorkBreakdownElement {
 		this.additionalRoles.remove(_roleDescriptor);
 	}
 
-//	/**
-//	 * Remove from a roleDescriptor all its taskDescriptors
-//	 */
-//	public void removeAllRoleDescriptor() {
-//		for (RoleDescriptor tmp : this.additionalRoles) {
-//			tmp.removeFromTaskDescriptor(this);
-//		}
-//		this.additionalRoles.clear();
-//	}
+	// /**
+	// * Remove from a roleDescriptor all its taskDescriptors
+	// */
+	// public void removeAllRoleDescriptor() {
+	// for (RoleDescriptor tmp : this.additionalRoles) {
+	// tmp.removeFromTaskDescriptor(this);
+	// }
+	// this.additionalRoles.clear();
+	// }
 
 	/**
 	 * Remove from a taskDescriptor all its roleDescriptors

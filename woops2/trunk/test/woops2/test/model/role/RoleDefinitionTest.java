@@ -3,11 +3,9 @@ package woops2.test.model.role;
 import java.util.HashSet;
 import java.util.Set;
 
-import woops2.model.breakdownelement.BreakdownElement;
+import junit.framework.TestCase;
 import woops2.model.role.RoleDefinition;
 import woops2.model.role.RoleDescriptor;
-import woops2.model.task.Step;
-import junit.framework.TestCase;
 
 public class RoleDefinitionTest extends TestCase{
 

@@ -41,7 +41,7 @@ public class BreakdownElement extends Element {
 
 		this.superActivities = new HashSet<Activity>();
 	}
-	
+
 	/**
 	 * Add an Activity to the superActivities collection of a BreakdownElement
 	 * 
@@ -49,53 +49,57 @@ public class BreakdownElement extends Element {
 	 */
 	public void addToActivity(Activity _activity) {
 		this.getSuperActivities().add(_activity);
-		_activity.getBreakDownElements().add(this); 
+		_activity.getBreakDownElements().add(this);
 	}
-	
+
 	/**
-	 * Add an activity collection to the activity collection of a breakdownelement
+	 * Add an activity collection to the activity collection of a
+	 * breakdownelement
 	 * 
 	 * @param _activities
 	 */
 	public void addToAllActivities(Set<Activity> _activities) {
 		for (Activity activity : _activities) {
-			activity.addToBreakdownElement(this);
+			//activity.addToBreakdownElement(this);
+			this.addToActivity(activity);
 		}
 	}
-	
+
 	/**
 	 * Remove from a breakdownelement one of these superActivities
 	 * 
 	 * @param _activity
 	 */
-	public void removeFromActivity(Activity _activity){
-		_activity.getBreakDownElements().remove(this); 
+	public void removeFromActivity(Activity _activity) {
+		_activity.getBreakDownElements().remove(this);
 		this.getSuperActivities().remove(_activity);
 	}
-	
+
 	/**
 	 * Remove from a breakdownelement all its superActivities.
 	 * 
 	 */
 	public void removeFromAllActivities() {
-		for (Activity activity : this.getSuperActivities()) 
+		for (Activity activity : this.getSuperActivities())
 			this.removeFromActivity(activity);
 	}
-	
+
 	/**
 	 * Indicates whether another object is "equal to" this one.
 	 * 
 	 * @return true if equal else false
 	 */
 	public boolean equals(Object obj) {
-		if(obj instanceof BreakdownElement == false){
-			return false ;
+		if (obj instanceof BreakdownElement == false) {
+			return false;
 		}
-		if(this == obj){
-			return true ;
+		if (this == obj) {
+			return true;
 		}
-		BreakdownElement breakdownElement = (BreakdownElement) obj ;
-		return new EqualsBuilder().appendSuper(super.equals(breakdownElement)).append(this.superActivities, breakdownElement.superActivities).isEquals() ;
+		BreakdownElement breakdownElement = (BreakdownElement) obj;
+		return new EqualsBuilder().appendSuper(super.equals(breakdownElement))
+				.append(this.superActivities, breakdownElement.superActivities)
+				.isEquals();
 	}
 
 	/**
@@ -104,7 +108,8 @@ public class BreakdownElement extends Element {
 	 * @return a hash code
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.superActivities).toHashCode() ;
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
+				.append(this.superActivities).toHashCode();
 	}
 
 	/**
