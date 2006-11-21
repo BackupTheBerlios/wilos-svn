@@ -10,7 +10,7 @@ import woops2.model.task.TaskDefinition;
 import woops2.test.TestConfiguration;
 
 /**
- * TODO finir commentaires
+ * Test for DAO That manage Step objets
  * 
  * @author garwind
  * 
