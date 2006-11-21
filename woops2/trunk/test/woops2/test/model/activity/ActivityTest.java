@@ -80,11 +80,11 @@ public class ActivityTest extends TestCase {
 		tmp.setPrefix(PREFIX) ;
 		tmp.setIsOptional(IS_OPTIONAL) ;
 
-		Set<BreakdownElement> list = new HashSet<BreakdownElement>() ;
-		list.add(breakdownElement) ;
-		list.add(tmp) ;
+		Set<BreakdownElement> set = new HashSet<BreakdownElement>() ;
+		set.add(breakdownElement) ;
+		set.add(tmp) ;
 
-		this.activity.addToAllBreakdownElement(list) ;
+		this.activity.addToAllBreakdownElement(set) ;
 
 		assertFalse(this.activity.getBreakDownElements().isEmpty()) ;
 		assertTrue(this.activity.getBreakDownElements().size() == 2);
@@ -113,6 +113,7 @@ public class ActivityTest extends TestCase {
 	 * Test method for {@link woops2.model.activity.Activity#removeFromAllBreakdownElements()}.
 	 */
 	public void testRemoveFromAllBreakdownElements() {
+		
 		BreakdownElement breakdownElement = new BreakdownElement() ;
 		breakdownElement.setPrefix(PREFIX) ;
 		breakdownElement.setIsOptional(IS_OPTIONAL) ;
