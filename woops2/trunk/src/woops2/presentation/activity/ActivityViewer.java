@@ -59,8 +59,8 @@ public class ActivityViewer {
 	 */
 	public List<Activity> getActivitiesList() {
 		this.activitiesList = new ArrayList<Activity>();
-		activitiesList = this.activityService.getActivitiesList();
-		this.logger.debug("acti list =" + this.activitiesList) ;
+		activitiesList.addAll(this.activityService.getActivitiesList());
+		//this.logger.debug("acti list =" + this.activitiesList) ;
 		return this.activitiesList ;
 	}
 
