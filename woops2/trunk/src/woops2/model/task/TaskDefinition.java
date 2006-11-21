@@ -51,6 +51,7 @@ public class TaskDefinition extends Element {
 	 * @param _steps
 	 *            The steps to set.
 	 */
+	@SuppressWarnings("unused")
 	private void setSteps(Set<Step> _steps) {
 		this.steps = _steps ;
 	}
@@ -70,6 +71,7 @@ public class TaskDefinition extends Element {
 	 * @param _taskDescriptors
 	 *            The taskDescriptors to set.
 	 */
+	@SuppressWarnings("unused")
 	private void setTaskDescriptors(Set<TaskDescriptor> _taskDescriptors) {
 		this.taskDescriptors = _taskDescriptors ;
 	}

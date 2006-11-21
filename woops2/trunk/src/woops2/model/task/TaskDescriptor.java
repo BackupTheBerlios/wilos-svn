@@ -73,6 +73,7 @@ public class TaskDescriptor extends WorkBreakdownElement {
 	 * @param _additionalRoles
 	 *            The additionalRoles to set.
 	 */
+	@SuppressWarnings("unused")
 	private void setAdditionalRoles(Set<RoleDescriptor> _additionalRoles) {
 		this.additionalRoles = _additionalRoles;
 	}

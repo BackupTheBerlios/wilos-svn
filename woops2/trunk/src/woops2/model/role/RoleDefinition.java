@@ -49,6 +49,7 @@ public class RoleDefinition extends Element {
 	 * @param _roleDescriptors
 	 *            The roleDescriptors to set.
 	 */
+	@SuppressWarnings("unused")
 	private void setRoleDescriptors(Set<RoleDescriptor> _roleDescriptors) {
 		this.roleDescriptors = _roleDescriptors;
 	}
