@@ -149,7 +149,7 @@ public class RoleDefinitionDaoTest extends TestCase {
 		assertNull(roleTmp);
 
 		// Test the method deleteRole with an roleDefinition unexisting into the db.
-		// FIXME Normally here there are no exception thrown.
+		// Normally here there are no exception thrown.
 		this.roleDefinitionDao.deleteRole(this.roleDefinition);
 
 		// Rk: the tearDown method is called here.

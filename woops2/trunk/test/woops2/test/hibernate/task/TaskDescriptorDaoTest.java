@@ -208,7 +208,7 @@ public class TaskDescriptorDaoTest extends TestCase {
 
 		// Test the method deleteTaskDescriptor with a taskDescriptor unexisting
 		// into the db.
-		// FIXME Normally here there are no exception thrown.
+		// Normally here there are no exception thrown.
 		this.taskDescriptorDao.deleteTaskDescriptor(this.taskDescriptor);
 
 		// Rk: the tearDown method is called here.

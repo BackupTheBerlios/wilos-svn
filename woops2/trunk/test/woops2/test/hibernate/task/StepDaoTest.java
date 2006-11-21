@@ -133,7 +133,7 @@ public class StepDaoTest extends TestCase {
 		assertNull(taskTmp) ;
 
 		// Test the method deleteTask with a task unexisting into the db.
-		// FIXME Normally here there are no exception thrown.
+		// Normally here there are no exception thrown.
 		this.stepDao.deleteStep(this.step) ;
 
 		// Rk: the tearDown method is called here.

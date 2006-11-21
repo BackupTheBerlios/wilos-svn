@@ -156,7 +156,7 @@ public class TaskDefinitionDaoTest extends TestCase {
 		assertNull(taskTmp);
 
 		// Test the method deleteTask with a taskDefinition unexisting into the db.
-		// FIXME Normally here there are no exception thrown.
+		// Normally here there are no exception thrown.
 		this.taskDefinitionDao.deleteTask(this.taskDefinition);
 
 		// Rk: the tearDown method is called here.
