@@ -1,12 +1,12 @@
 
 package woops2.test.model.activity ;
 
-import java.util.ArrayList ;
-import java.util.List ;
+import java.util.HashSet;
+import java.util.Set;
 
-import junit.framework.TestCase ;
-import woops2.model.activity.Activity ;
-import woops2.model.breakdownelement.BreakdownElement ;
+import junit.framework.TestCase;
+import woops2.model.activity.Activity;
+import woops2.model.breakdownelement.BreakdownElement;
 
 /**
  * @author morpheus
@@ -91,11 +91,11 @@ public class ActivityTest extends TestCase {
 		tmp.setPrefix(PREFIX) ;
 		tmp.setIsOptional(IS_OPTIONAL) ;
 
-		List<BreakdownElement> list = new ArrayList<BreakdownElement>() ;
+		Set<BreakdownElement> list = new HashSet<BreakdownElement>() ;
 		list.add(breakdownElement) ;
 		list.add(tmp) ;
 
-		//this.activity.addToAllBreakdownElement(list) ;
+		this.activity.addToAllBreakdownElement(list) ;
 
 		assertFalse(this.activity.getBreakDownElements().isEmpty()) ;
 		assertTrue(this.activity.getBreakDownElements().size() == 2);
@@ -140,7 +140,7 @@ public class ActivityTest extends TestCase {
 
 		this.activity.addToBreakdownElement(breakdownElement) ;
 		this.activity.addToBreakdownElement(tmp) ;
-		this.activity.removeFromAllBreakdownElements() ;
+		this.activity.removeFromAllBreakdownElements();
 
 		assertTrue(this.activity.getBreakDownElements().isEmpty()) ;
 		assertTrue(breakdownElement.getSuperActivities().isEmpty()) ;
