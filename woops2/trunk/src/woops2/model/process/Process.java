@@ -15,6 +15,10 @@ import woops2.model.activity.Activity;
  */
 public class Process extends Activity {
 
+	/**
+	 * Default constructor
+	 *
+	 */
 	public Process() {
 		super();
 	}
