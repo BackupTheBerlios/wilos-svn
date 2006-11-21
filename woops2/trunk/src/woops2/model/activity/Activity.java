@@ -117,7 +117,7 @@ public class Activity extends WorkBreakdownElement {
 	 * 
 	 */
 	public void removeFromAllBreakdownElements() {
-		for (BreakdownElement bde : this.getBreakDownElements()) {
+		for (BreakdownElement bde : this.getBreakDownElements()) { // FIXME error found here
 			this.removeFromBreakdownElement(bde);
 		}
 	}

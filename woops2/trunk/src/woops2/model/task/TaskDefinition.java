@@ -4,7 +4,6 @@ package woops2.model.task ;
 import java.util.HashSet;
 import java.util.Set;
 
-import woops2.model.breakdownelement.BreakdownElement;
 import woops2.model.element.Element;
 
 /**

@@ -60,6 +60,7 @@ public class RoleDescriptor extends BreakdownElement {
 	 * 
 	 * @return the primaryTasks.
 	 */
+	@SuppressWarnings("unused")
 	private Set<TaskDescriptor> getPrimaryTasks() {
 		return this.primaryTasks ;
 	}
@@ -70,6 +71,7 @@ public class RoleDescriptor extends BreakdownElement {
 	 * @param _primaryTasks
 	 *            The primaryTasks to set.
 	 */
+	@SuppressWarnings("unused")
 	private void setPrimaryTasks(Set<TaskDescriptor> _primaryTasks) {
 		this.primaryTasks = _primaryTasks ;
 	}
@@ -89,6 +91,7 @@ public class RoleDescriptor extends BreakdownElement {
 	 * @param _additionalTasks
 	 *            The additionalTasks to set.
 	 */
+	@SuppressWarnings("unused")
 	private void setAdditionalTasks(Set<TaskDescriptor> _additionalTasks) {
 		this.additionalTasks = _additionalTasks ;
 	}
