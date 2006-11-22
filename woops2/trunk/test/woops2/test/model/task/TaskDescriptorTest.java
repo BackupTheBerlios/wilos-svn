@@ -68,6 +68,36 @@ public class TaskDescriptorTest extends TestCase {
 	public void testHashCode() {
 		assertNotNull(this.taskDescriptor.hashCode());
 	}
+	
+	/**
+	 * Test method for
+	 * {@link woops2.model.breakdownelement.BreakdownElement#equals(Object obj)}.
+	 */
+	public void testEquals() {
+
+		// Assert if it's equal by references.
+		assertTrue("By references", this.taskDescriptor.equals(this.taskDescriptor));
+
+		// Assert if it's equal field by field.
+		TaskDescriptor td1 = new TaskDescriptor();
+		td1.setId(ID);
+		td1.setName(NAME);
+		td1.setDescription(DESCRIPTION);
+		td1.setPrefix(PREFIX);
+		td1.setIsPlanned(IS_PLANNED);
+		td1.setHasMultipleOccurrences(HAS_MULTIPLE_OCCURENCES);
+		td1.setIsOptional(IS_OPTIONAL);
+		td1.setIsRepeatable(IS_REPEATABLE);
+		td1.setIsOngoing(IS_ON_GOING);
+		td1.setIsEvenDriven(IS_EVEN_DRIVEN);
+		assertTrue("Field by field", this.taskDescriptor.equals(td1));
+
+		// Assert if it's not equal.
+		TaskDescriptor td2 = new TaskDescriptor();
+		td2.setIsRepeatable(false);
+		td2.setPrefix("prefixFalse");
+		assertFalse("Not equals", this.taskDescriptor.equals(td2));
+	}
 
 	/**
 	 * Test method for
