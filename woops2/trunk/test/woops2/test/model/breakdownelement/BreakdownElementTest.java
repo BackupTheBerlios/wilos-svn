@@ -111,6 +111,7 @@ public class BreakdownElementTest extends TestCase {
 
 		Activity activity1 = new Activity();
 		Activity activity2 = new Activity();
+		activity2.setName("name");
 		Set<Activity> activities = new HashSet<Activity>() ;
 		activities.add(activity1);
 		activities.add(activity2);
@@ -148,7 +149,20 @@ public class BreakdownElementTest extends TestCase {
 	public void testRemoveFromAllActivities() {
 		// Rk: the setUp method is called here.
 
-		fail("Not yet implemented"); // TODO
+		Activity activity1 = new Activity();
+		Activity activity2 = new Activity();
+		activity2.setName("name");
+		Set<Activity> activities = new HashSet<Activity>() ;
+		activities.add(activity1);
+		activities.add(activity2);
+		this.breakdownElement.addToAllActivities(activities);
+		
+		this.breakdownElement.removeFromAllActivities();
+		
+		assertTrue("acts.size ==  0", this.breakdownElement.getSuperActivities().size() == 0);
+		assertTrue("bdes1.size == 1", activity1.getBreakDownElements().size() == 1);
+		assertTrue("bdes2.size == 1", activity2.getBreakDownElements().size() == 1);
+
 
 		// Rk: the tearDown method is called here.
 	}
