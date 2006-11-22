@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+	<!-- DataSource Definition -->
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName">
+			<value>org.gjt.mm.mysql.Driver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:mysql://127.0.0.1/m1isb2</value>
+		</property>
+		<property name="username">
+			<value>m1isb2</value>
+		</property>
+		<property name="password">
+			<value>5lmpcdtc</value>
+		</property>
+	</bean>
+
+	<!-- Hibernate SessionFactory Definition -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+
+		<property name="mappingResources">
+			<list>
+				<value>woops2/model/element/Element.hbm.xml</value>
+				<value>
+					woops2/model/breakdownelement/BreakdownElement.hbm.xml
+				</value>
+				<value>
+					woops2/model/workbreakdownelement/WorkBreakdownElement.hbm.xml
+				</value>
+				<value>woops2/model/process/Process.hbm.xml</value>
+				<value>woops2/model/activity/Activity.hbm.xml</value>
+				<value>woops2/model/task/TaskDescriptor.hbm.xml</value>
+				<value>woops2/model/task/TaskDefinition.hbm.xml</value>
+				<value>woops2/model/task/Step.hbm.xml</value>
+				<value>woops2/model/role/RoleDescriptor.hbm.xml</value>
+				<value>woops2/model/role/RoleDefinition.hbm.xml</value>
+			</list>
+		</property>
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.cglib.use_reflection_optimizer">
+					true
+				</prop>
+				<prop key="hibernate.cache.provider_class">
+					org.hibernate.cache.HashtableCacheProvider
+				</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+
+	</bean>
+
+	<!-- Spring Data Access Exception Translator Defintion -->
+	<bean id="jdbcExceptionTranslator"
+		class="org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+
+	<!-- Hibernate Template Defintion  -->
+	<bean id="hibernateTemplate"
+		class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<property name="jdbcExceptionTranslator">
+			<ref bean="jdbcExceptionTranslator" />
+		</property>
+	</bean>
+
+	<!-- Hibernate Transaction Manager Defintion  -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<!-- enable the configuration of transactional behavior based on annotations -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- ========================= Start of BEAN DEFINITIONS ========================= -->
+
+	<!-- ========================= DAO Layer ========================= -->
+
+	<bean id="ProcessDao"
+		class="woops2.hibernate.process.ProcessDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	
+	<bean id="ActivityDao"
+		class="woops2.hibernate.activity.ActivityDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="ElementDao" class="woops2.hibernate.element.ElementDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="BreakdownElementDao"
+		class="woops2.hibernate.breakdownelement.BreakdownElementDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="WorkBreakdownElementDao"
+		class="woops2.hibernate.workbreakdownelement.WorkBreakdownElementDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="TaskDefinitionDao"
+		class="woops2.hibernate.task.TaskDefinitionDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="TaskDescriptorDao"
+		class="woops2.hibernate.task.TaskDescriptorDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="RoleDefinitionDao"
+		class="woops2.hibernate.role.RoleDefinitionDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="RoleDescriptorDao"
+		class="woops2.hibernate.role.RoleDescriptorDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="StepDao" class="woops2.hibernate.task.StepDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<!-- ========================= Business Layer ========================= -->
+	
+	<bean id="ProcessService"
+		class="woops2.business.process.ProcessService">
+		<property name="processDao" ref="ProcessDao" />
+	</bean>  
+	
+	<bean id="ActivityService"
+		class="woops2.business.activity.ActivityService">
+		<property name="activityDao" ref="ActivityDao" />
+	</bean>
+	
+</beans>
