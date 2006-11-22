@@ -30,8 +30,11 @@
 			<h:inputText value="#{ParticipantViewer.participant.login}" required="true"/>
 	
 			<h:outputText value="Mot de passe"/>
-			<h:inputText value="#{ParticipantViewer.participant.password}" required="true"/>		
-
+			<h:inputSecret value="#{ParticipantViewer.participant.password}" required="true"/>		
+			<!-- 
+			<h:outputText value="Confirmez"/>
+			<h:inputSecret value="#{ParticipantViewer.participant.password}" required="true"/>	
+			 -->
 			<h:commandButton value="S'enregistrer" action="#{ParticipantViewer.saveParticipantAction}"/>
 			<h:commandButton value="retour" action="activity"/>
 		</h:panelGrid>	
