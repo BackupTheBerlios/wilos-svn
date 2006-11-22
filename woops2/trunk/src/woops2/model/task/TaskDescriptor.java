@@ -1,5 +1,6 @@
 package woops2.model.task;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -42,6 +43,7 @@ public class TaskDescriptor extends WorkBreakdownElement {
 	 */
 	public TaskDescriptor() {
 		super();
+		this.additionalRoles = new HashSet<RoleDescriptor>();
 	}
 
 	/**
@@ -117,6 +119,8 @@ public class TaskDescriptor extends WorkBreakdownElement {
 		TaskDescriptor taskDescriptor = (TaskDescriptor) obj;
 		return new EqualsBuilder().appendSuper(super.equals(taskDescriptor))
 				.append(this.taskDefinition, taskDescriptor.taskDefinition)
+				.append(this.additionalRoles, taskDescriptor.additionalRoles)
+				.append(this.mainRole, taskDescriptor.mainRole)
 				.isEquals();
 	}
 
@@ -156,8 +160,8 @@ public class TaskDescriptor extends WorkBreakdownElement {
 	 * @param _roleDescriptor
 	 */
 	public void addToMainRole(RoleDescriptor _roleDescriptor) {
-		this.mainRole = _roleDescriptor;
-		_roleDescriptor.getAdditionalTasks().add(this);
+		this.mainRole = _roleDescriptor;	
+		_roleDescriptor.getPrimaryTasks().add(this);
 	}
 
 	/**
