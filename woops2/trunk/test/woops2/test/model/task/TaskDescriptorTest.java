@@ -1,6 +1,10 @@
 package woops2.test.model.task;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import junit.framework.TestCase;
+import woops2.model.activity.Activity;
 import woops2.model.role.RoleDescriptor;
 import woops2.model.task.TaskDefinition;
 import woops2.model.task.TaskDescriptor;
@@ -214,7 +218,7 @@ public class TaskDescriptorTest extends TestCase {
 	 * Test method for
 	 * {@link woops2.model.task.TaskDescriptor#removeFromAllRoleDescriptor(woops2.model.task.RoleDescriptor)}.
 	 */
-	public void testRemoveFromRoleAllDescriptor() {
+	public void testRemoveFromAllRoleDescriptors() {
 		RoleDescriptor rd1 = new RoleDescriptor();
 		RoleDescriptor rd2 = new RoleDescriptor();
 
@@ -231,14 +235,21 @@ public class TaskDescriptorTest extends TestCase {
 		rd2.setIsPlanned(IS_PLANNED);
 		rd2.setHasMultipleOccurrences(HAS_MULTIPLE_OCCURENCES);
 		rd2.setIsOptional(IS_OPTIONAL);
-
-		this.taskDescriptor.addToRoleDescriptor(rd1);
-		this.taskDescriptor.addToRoleDescriptor(rd2);
-		this.taskDescriptor.removeFromAllRoleDescriptor();
-
-		assertTrue(this.taskDescriptor.getAdditionalRoles().isEmpty());
-		assertTrue(rd1.getSuperActivities().isEmpty());
-		assertTrue(rd2.getSuperActivities().isEmpty());
+		
+		Set<RoleDescriptor> roledescriptors = new HashSet<RoleDescriptor>();
+		roledescriptors.add(rd1);
+		roledescriptors.add(rd2);
+		
+		this.taskDescriptor.addToAllRoleDescriptors(roledescriptors);
+		this.taskDescriptor.removeFromAllRoleDescriptors();
+		
+		
+		assertTrue(rd1.getAdditionalTasks().isEmpty());
+		assertTrue(rd2.getAdditionalTasks().isEmpty());
+		
+		// FIXME pris de l'exemple de testRemoveFromAllActivities mais est-ce cohérent ?
+		//assertEquals(1, rd1.getAdditionalTasks().size());
+		//assertEquals(1, rd2.getAdditionalTasks().size());
 	}
 
 }
