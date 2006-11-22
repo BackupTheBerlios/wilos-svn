@@ -44,6 +44,17 @@ public class ElementTest extends TestCase {
 	public void testHashCode() {
 		assertNotNull(this.element.hashCode());
 	}
+	
+	/**
+	 * Test method for {@link woops2.model.element.Element#clone()}.
+	 */
+	public void testClone() {
+		try {
+			assertEquals((Element)this.element.clone(), this.element);
+		} catch (CloneNotSupportedException e) {
+			fail("Error CloneNotSupportedException in the testClone method");
+		}
+	}
 
 	/**
 	 * Test method for

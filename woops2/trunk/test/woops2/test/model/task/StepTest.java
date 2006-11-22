@@ -38,6 +38,22 @@ public class StepTest extends TestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown();
 	}
+	
+	/**
+	 * Test method for {@link woops2.model.role.RoleDescriptor#clone()}.
+	 */
+	public final void testClone() {
+		// Rk: the setUp method is called here.
+
+		try {
+			assertEquals((Step) this.step.clone(),
+					this.step);
+		} catch (CloneNotSupportedException e) {
+			fail("Error CloneNotSupportedException in the testClone method");
+		}
+
+		// Rk: the tearDown method is called here.
+	}
 
 	/**
 	 * Test method for {@link woops2.model.task.Step#hashCode()}.

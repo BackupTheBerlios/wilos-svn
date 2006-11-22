@@ -13,6 +13,7 @@ public class AllTests {
 	public static Test suite () {
 		TestSuite suite = new TestSuite("Test for woops2.test.model") ;
 		// $JUnit-BEGIN$
+		suite.addTest(woops2.test.model.process.AllTests.suite()) ;
 		suite.addTest(woops2.test.model.activity.AllTests.suite()) ;
 		suite.addTest(woops2.test.model.breakdownelement.AllTests.suite()) ;
 		suite.addTest(woops2.test.model.workbreakdownelement.AllTests.suite()) ;

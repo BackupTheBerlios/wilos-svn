@@ -114,6 +114,23 @@ public class BreakdownElement extends Element {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
 				.append(this.prefix).toHashCode();
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		Object obj = super.clone();
+		BreakdownElement breakdownElement = (BreakdownElement)obj;
+		breakdownElement.setHasMultipleOccurrences(this.getHasMultipleOccurrences());
+		breakdownElement.setIsOptional(this.getIsOptional());
+		breakdownElement.setIsPlanned(this.getIsPlanned());
+		breakdownElement.setPrefix(this.getPrefix());
+		breakdownElement.setSuperActivities(this.getSuperActivities());
+		return breakdownElement;
+	}
 
 	/**
 	 * Getter of hasMultipleOccurrences.

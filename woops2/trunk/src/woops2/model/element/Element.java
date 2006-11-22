@@ -1,5 +1,4 @@
-
-package woops2.model.element ;
+package woops2.model.element;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -7,18 +6,18 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 /**
  * @author deder
  * 
- * Every class defined in this specification is derived from Element. In other words Element is the
- * root generalization for all UMA classes and defines a common set of attributes inherited by every
- * other element type of this model.
+ * Every class defined in this specification is derived from Element. In other
+ * words Element is the root generalization for all UMA classes and defines a
+ * common set of attributes inherited by every other element type of this model.
  * 
  */
-public class Element {
+public class Element implements Cloneable {
 
-	private String id ;
+	private String id;
 
-	private String name ;
+	private String name;
 
-	private String description ;
+	private String description;
 
 	/**
 	 * Constructor.
@@ -33,16 +32,15 @@ public class Element {
 	 * @return true if equal else false
 	 */
 	public boolean equals(Object obj) {
-		if(obj instanceof Element == false){
-			return false ;
+		if (obj instanceof Element == false) {
+			return false;
 		}
-		if(this == obj){
-			return true ;
+		if (this == obj) {
+			return true;
 		}
-		Element element = (Element) obj ;
-		return new EqualsBuilder().append(this.name, element.name)
-								  .append(this.description, element.description)
-								  .isEquals() ;
+		Element element = (Element) obj;
+		return new EqualsBuilder().append(this.name, element.name).append(
+				this.description, element.description).isEquals();
 	}
 
 	/**
@@ -51,7 +49,20 @@ public class Element {
 	 * @return a hash code
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(this.name).toHashCode() ;
+		return new HashCodeBuilder(17, 37).append(this.name).toHashCode();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		Element element = new Element();
+		element.setDescription(this.getDescription());
+		element.setName(this.getName());
+		return element;
 	}
 
 	/**
@@ -60,7 +71,7 @@ public class Element {
 	 * @return the description.
 	 */
 	public String getDescription() {
-		return this.description ;
+		return this.description;
 	}
 
 	/**
@@ -70,7 +81,7 @@ public class Element {
 	 *            The description to set.
 	 */
 	public void setDescription(String _description) {
-		this.description = _description ;
+		this.description = _description;
 	}
 
 	/**
@@ -79,7 +90,7 @@ public class Element {
 	 * @return the id.
 	 */
 	public String getId() {
-		return this.id ;
+		return this.id;
 	}
 
 	/**
@@ -89,7 +100,7 @@ public class Element {
 	 *            The id to set.
 	 */
 	public void setId(String _id) {
-		this.id = _id ;
+		this.id = _id;
 	}
 
 	/**
@@ -98,7 +109,7 @@ public class Element {
 	 * @return the name.
 	 */
 	public String getName() {
-		return this.name ;
+		return this.name;
 	}
 
 	/**
@@ -108,7 +119,7 @@ public class Element {
 	 *            The name to set.
 	 */
 	public void setName(String _name) {
-		this.name = _name ;
+		this.name = _name;
 	}
 
 }

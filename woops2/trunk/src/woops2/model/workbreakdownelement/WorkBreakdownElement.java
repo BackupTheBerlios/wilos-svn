@@ -56,6 +56,20 @@ public class WorkBreakdownElement extends BreakdownElement {
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode();
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		WorkBreakdownElement workBreakdownElement = (WorkBreakdownElement)super.clone();
+		workBreakdownElement.setIsEvenDriven(this.getIsEvenDriven());
+		workBreakdownElement.setIsOngoing(this.getIsOngoing());
+		workBreakdownElement.setIsRepeatable(this.getIsRepeatable());
+		return workBreakdownElement;
+	}
 
 	/**
 	 * Getter of isEvenDriven.

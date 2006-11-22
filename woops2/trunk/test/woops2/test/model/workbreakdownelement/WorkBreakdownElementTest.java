@@ -37,6 +37,17 @@ public class WorkBreakdownElementTest extends TestCase {
 	}
 
 	/**
+	 * Test method for {@link woops2.model.workbreakdownelement.WorkBreakdownElement#clone()}.
+	 */
+	public void testClone() {
+		try {
+			assertEquals((WorkBreakdownElement)this.workBreakdownElement.clone(), this.workBreakdownElement);
+		} catch (CloneNotSupportedException e) {
+			fail("Error CloneNotSupportedException in the testClone method");
+		}
+	}
+	
+	/**
 	 * Test method for
 	 * {@link woops2.model.workbreakdownelement.WorkBreakdownElement#hashCode()}.
 	 */

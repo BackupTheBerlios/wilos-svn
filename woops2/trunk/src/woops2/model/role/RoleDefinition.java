@@ -81,6 +81,18 @@ public class RoleDefinition extends Element {
 				.append(this.getName()).toHashCode();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		RoleDefinition roleDefinition = (RoleDefinition) super.clone();
+		roleDefinition.setRoleDescriptors(this.getRoleDescriptors());
+		return roleDefinition;
+	}
+
 	/**
 	 * relation between RoleDefinition and RoleDescriptor
 	 */

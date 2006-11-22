@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import woops2.model.process.Process;
+
 /**
  * ProcessDao manage requests from the system to store Acitivties to the
  * database

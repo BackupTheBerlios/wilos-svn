@@ -1,12 +1,12 @@
 
 package woops2.test.model.activity ;
 
-import java.util.HashSet ;
-import java.util.Set ;
+import java.util.HashSet;
+import java.util.Set;
 
-import junit.framework.TestCase ;
-import woops2.model.activity.Activity ;
-import woops2.model.breakdownelement.BreakdownElement ;
+import junit.framework.TestCase;
+import woops2.model.activity.Activity;
+import woops2.model.breakdownelement.BreakdownElement;
 
 /**
  * @author Sebastien
@@ -42,6 +42,17 @@ public class ActivityTest extends TestCase {
 	 */
 	protected void tearDown() throws Exception {
 		super.tearDown() ;
+	}
+	
+	/**
+	 * Test method for {@link woops2.model.activity.Activity#clone()}.
+	 */
+	public void testClone() {
+		try {
+			assertEquals((Activity)this.activity.clone(), this.activity);
+		} catch (CloneNotSupportedException e) {
+			fail("Error CloneNotSupportedException in the testClone method");
+		}
 	}
 
 	/**
@@ -141,10 +152,12 @@ public class ActivityTest extends TestCase {
 	public void testRemoveFromAllBreakdownElements() {
 
 		BreakdownElement breakdownElement = new BreakdownElement() ;
+		breakdownElement.setName("name1");
 		breakdownElement.setPrefix(PREFIX) ;
 		breakdownElement.setIsOptional(IS_OPTIONAL) ;
 
 		BreakdownElement tmp = new BreakdownElement() ;
+		tmp.setName("name2");
 		tmp.setPrefix(PREFIX) ;
 		tmp.setIsOptional(IS_OPTIONAL) ;
 		

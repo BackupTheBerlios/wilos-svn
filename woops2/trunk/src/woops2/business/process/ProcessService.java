@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import woops2.hibernate.process.ProcessDao;
+import woops2.model.process.Process;
 
 /**
  * ProcessService is a transactional class, that manage operations about process, requested by web pages (?)

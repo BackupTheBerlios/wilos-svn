@@ -1,5 +1,4 @@
-
-package woops2.model.role ;
+package woops2.model.role;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,42 +12,55 @@ import woops2.model.task.TaskDescriptor;
 /**
  * @author deder
  * 
- * A RoleDefinition Descriptor represents a RoleDefinition in the context of one specific Activity. Every breakdown
- * structure can define different relationships of RoleDefinition Descriptors to TaskDefinition Descriptors and Work
- * Product Descriptors. Therefore one RoleDefinition can be represented by many RoleDefinition Descriptors each within
- * the context of an Activity with its own set of relationships.
+ * A RoleDefinition Descriptor represents a RoleDefinition in the context of one
+ * specific Activity. Every breakdown structure can define different
+ * relationships of RoleDefinition Descriptors to TaskDefinition Descriptors and
+ * Work Product Descriptors. Therefore one RoleDefinition can be represented by
+ * many RoleDefinition Descriptors each within the context of an Activity with
+ * its own set of relationships.
  * 
  */
 public class RoleDescriptor extends BreakdownElement {
 
-	private RoleDefinition roleDefinition ;
-	
+	private RoleDefinition roleDefinition;
+
 	/**
 	 * The main tasks of the roleDefinition
 	 */
-	private Set<TaskDescriptor> primaryTasks ;
+	private Set<TaskDescriptor> primaryTasks;
 
 	/**
 	 * The additional tasks of the roleDefinition
 	 */
-	private Set<TaskDescriptor> additionalTasks ;
-
-	
+	private Set<TaskDescriptor> additionalTasks;
 
 	public RoleDescriptor() {
-		super() ;
+		super();
 		this.primaryTasks = new HashSet<TaskDescriptor>();
 		this.additionalTasks = new HashSet<TaskDescriptor>();
 	}
 
-	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		RoleDescriptor roleDescriptor = (RoleDescriptor) super.clone();
+		roleDescriptor.setAdditionalTasks(this.getAdditionalTasks());
+		roleDescriptor.setPrimaryTasks(this.getPrimaryTasks());
+		roleDescriptor.setRoleDefinition(this.getRoleDefinition());
+		return roleDescriptor;
+	}
+
 	/**
 	 * Getter of roleDefinition.
 	 * 
 	 * @return the roleDefinition.
 	 */
 	public RoleDefinition getRoleDefinition() {
-		return this.roleDefinition ;
+		return this.roleDefinition;
 	}
 
 	/**
@@ -58,7 +70,7 @@ public class RoleDescriptor extends BreakdownElement {
 	 *            The roleDefinition to set.
 	 */
 	protected void setRoleDefinition(RoleDefinition _roleDefinition) {
-		this.roleDefinition = _roleDefinition ;
+		this.roleDefinition = _roleDefinition;
 	}
 
 	/**
@@ -68,7 +80,7 @@ public class RoleDescriptor extends BreakdownElement {
 	 */
 	@SuppressWarnings("unused")
 	public Set<TaskDescriptor> getPrimaryTasks() {
-		return this.primaryTasks ;
+		return this.primaryTasks;
 	}
 
 	/**
@@ -79,7 +91,7 @@ public class RoleDescriptor extends BreakdownElement {
 	 */
 	@SuppressWarnings("unused")
 	private void setPrimaryTasks(Set<TaskDescriptor> _primaryTasks) {
-		this.primaryTasks = _primaryTasks ;
+		this.primaryTasks = _primaryTasks;
 	}
 
 	/**
@@ -88,7 +100,7 @@ public class RoleDescriptor extends BreakdownElement {
 	 * @return the additionalTasks.
 	 */
 	public Set<TaskDescriptor> getAdditionalTasks() {
-		return this.additionalTasks ;
+		return this.additionalTasks;
 	}
 
 	/**
@@ -99,9 +111,9 @@ public class RoleDescriptor extends BreakdownElement {
 	 */
 	@SuppressWarnings("unused")
 	private void setAdditionalTasks(Set<TaskDescriptor> _additionalTasks) {
-		this.additionalTasks = _additionalTasks ;
+		this.additionalTasks = _additionalTasks;
 	}
-	
+
 	/**
 	 * Indicates whether another object is "equal to" this one.
 	 * 
@@ -114,7 +126,7 @@ public class RoleDescriptor extends BreakdownElement {
 		if (this == obj) {
 			return true;
 		}
-		
+
 		RoleDescriptor roleDescriptor = (RoleDescriptor) obj;
 		return new EqualsBuilder().appendSuper(super.equals(roleDescriptor))
 				.append(this.roleDefinition, roleDescriptor.roleDefinition)

@@ -79,6 +79,17 @@ public class BreakdownElementTest extends TestCase {
 
 		// Rk: the tearDown method is called here.
 	}
+	
+	/**
+	 * Test method for {@link woops2.model.breakdownelement.BreakdownElement#clone()}.
+	 */
+	public void testClone() {
+		try {
+			assertEquals((BreakdownElement)this.breakdownElement.clone(), this.breakdownElement);
+		} catch (CloneNotSupportedException e) {
+			fail("Error CloneNotSupportedException in the testClone method");
+		}
+	}
 
 	/**
 	 * Test method for
@@ -162,7 +173,6 @@ public class BreakdownElementTest extends TestCase {
 		assertTrue("acts.size ==  0", this.breakdownElement.getSuperActivities().size() == 0);
 		assertTrue("bdes1.size == 1", activity1.getBreakDownElements().size() == 1);
 		assertTrue("bdes2.size == 1", activity2.getBreakDownElements().size() == 1);
-
 
 		// Rk: the tearDown method is called here.
 	}

@@ -1,5 +1,8 @@
 package woops2.model.process;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 import woops2.model.activity.Activity;
 
 /**
@@ -17,9 +20,47 @@ public class Process extends Activity {
 
 	/**
 	 * Default constructor
-	 *
+	 * 
 	 */
 	public Process() {
 		super();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		Process process = (Process) super.clone();
+		return process;
+	}
+
+	/**
+	 * Indicates whether another object is "equal to" this one.
+	 * 
+	 * @return true if equal else false
+	 */
+	public boolean equals(Object obj) {
+		if (obj instanceof Process == false) {
+			return false;
+		}
+		if (this == obj) {
+			return true;
+		}
+		Process process = (Process) obj;
+		return new EqualsBuilder().appendSuper(super.equals(process))
+				.isEquals();
+	}
+
+	/**
+	 * Returns a hash code value for the object.
+	 * 
+	 * @return a hash code
+	 */
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
+				.toHashCode();
 	}
 }

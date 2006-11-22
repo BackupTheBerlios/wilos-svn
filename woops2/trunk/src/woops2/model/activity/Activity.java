@@ -122,4 +122,15 @@ public class Activity extends WorkBreakdownElement {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		Activity activity = (Activity)super.clone();
+		activity.setBreakDownElements(this.getBreakDownElements());
+		return activity;
+	}
 }
