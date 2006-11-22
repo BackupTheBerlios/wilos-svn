@@ -46,6 +46,27 @@ public class RoleDescriptorTest extends TestCase {
 	}
 	
 	/**
+	 * Test method for {@link woops2.model.role.RoleDescriptor
+	 * #hashCode()}.
+	 */
+	public void testHashCode() {
+		assertNotNull(this.roleDescriptor.hashCode());
+	}
+	
+	
+	/**
+	 * Test method for
+	 * {@link woops2.model.role.RoleDefinition#equals(java.lang.Object)}.
+	 */
+	public void testEqualsObject() {
+		RoleDescriptor role = new RoleDescriptor();
+		role.setDescription(DESCRIPTION);
+		role.setName(NAME);
+
+		assertTrue(this.roleDescriptor.equals(role));
+	}
+	
+	/**
 	 * Test method for {@link woops2.model.role.RoleDescriptor#AddToRoleDefinition()}.
 	 *
 	 */

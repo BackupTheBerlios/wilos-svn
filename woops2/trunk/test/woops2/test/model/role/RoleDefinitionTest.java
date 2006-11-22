@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import junit.framework.TestCase;
+import woops2.model.element.Element;
 import woops2.model.role.RoleDefinition;
 import woops2.model.role.RoleDescriptor;
 
@@ -45,6 +46,18 @@ public class RoleDefinitionTest extends TestCase{
 	 */
 	public void testHashCode() {
 		assertNotNull(this.roleDefinition.hashCode());
+	}
+	
+	/**
+	 * Test method for
+	 * {@link woops2.model.role.RoleDefinition#equals(java.lang.Object)}.
+	 */
+	public void testEqualsObject() {
+		RoleDefinition role = new RoleDefinition();
+		role.setDescription(DESCRIPTION);
+		role.setName(NAME);
+
+		assertTrue(this.roleDefinition.equals(role));
 	}
 	
 	/**
