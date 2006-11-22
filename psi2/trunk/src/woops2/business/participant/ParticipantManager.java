@@ -8,7 +8,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import woops2.hibernate.participant.ParticipantDao;
 import woops2.model.participant.Participant;
+import woops2.model.role.RoleDescriptor;
 
+/**
+ * @author BlackMilk
+ * @author Mikamikaze
+ * @author Sakamakak
+ *
+ * This class represents ... TODO
+ *
+ */
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class ParticipantManager {
 
@@ -22,8 +31,8 @@ public class ParticipantManager {
 	 * @return
 	 */
 	@Transactional(readOnly = true)
-	public Set<Participant> getParticipantsList() {
-		return this.participantDao.getAllParticipants();
+	public Set<RoleDescriptor> getRolesList() {
+		return this.participantDao.getAllRoles();
 	}
 	
 	/**
@@ -57,7 +66,12 @@ public class ParticipantManager {
 		participantDao.saveOrUpdateParticipant(_participant) ;
 	}
 
-	public void setParticipantDao(ParticipantDao participantDao) {
-		this.participantDao = participantDao;
+	/**
+	 * Setter of participantDao.
+	 *
+	 * @param _participantDao The participantDao to set.
+	 */
+	public void setParticipantDao(ParticipantDao _participantDao) {
+		this.participantDao = _participantDao ;
 	}
 }

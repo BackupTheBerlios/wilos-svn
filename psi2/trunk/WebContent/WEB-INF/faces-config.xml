@@ -66,5 +66,13 @@
 			<to-view-id>/participant_logging.jsf</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>affect_role</from-outcome>
+			<to-view-id>/affect_role.jsf</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 	<!--       PSI2  -->
 </faces-config>

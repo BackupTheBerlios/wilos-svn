@@ -1,25 +1,28 @@
 package woops2.presentation.participant;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.faces.event.ActionEvent;
-import javax.faces.validator.ValidatorException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import woops2.business.participant.ParticipantManager;
 import woops2.model.participant.Participant;
+import woops2.model.role.RoleDescriptor;
 
 /**
- * Managed-Bean link to activity.jsp and activitform.jsp
+ * Managed-Bean link to participant_logging.jsp
  * 
- * @author garwind
- * @author deder.
+ * @author BlackMilk
+ * @author Mikamikaze
+ * @author Sakamakak
  */
 public class ParticipantViewer{
 
+	private List<RoleDescriptor> rolesList;
+	
 	private ParticipantManager participantManager ;
 
 	private Participant participant ;
@@ -36,7 +39,7 @@ public class ParticipantViewer{
 	}
 
 	/**
-	 * Method for saving activity data from form
+	 * Method for saving participant data from form
 	 * 
 	 * @return
 	 */
@@ -49,42 +52,53 @@ public class ParticipantViewer{
 	public void testTransactionActionListener(ActionEvent e){
 		//this.participantManager.Test();
 	}
-
+	
+	/**
+	 * Getter of rolesList.
+	 * 
+	 * @return the rolesList.
+	 */
+	public List<RoleDescriptor> getRolesList() {
+		this.rolesList = new ArrayList<RoleDescriptor>();
+		rolesList.addAll(this.participantManager.getRolesList());
+		this.logger.debug("roles list =" + this.rolesList) ;
+		return this.rolesList ;
+	}
 
 	/**
-	 * Getter of activity.
+	 * Getter of participant.
 	 * 
-	 * @return the activity.
+	 * @return the participant.
 	 */
 	public Participant getParticipant() {
 		return this.participant ;
 	}
 
 	/**
-	 * Setter of activity.
+	 * Setter of participant.
 	 * 
-	 * @param _activity
-	 *            The activity to set.
+	 * @param _participant
+	 *            The participant to set.
 	 */
 	public void setParticipant(Participant _participant) {
-		this.logger.debug("### Activity = " + _participant + " ###") ;
+		this.logger.debug("### Participant = " + _participant + " ###") ;
 		this.participant = _participant ;
 	}
 
 	/**
-	 * Getter of activityManager.
+	 * Getter of participantManager.
 	 * 
-	 * @return the activityManager.
+	 * @return the participantManager.
 	 */
 	public ParticipantManager getParticipantManager() {
 		return this.participantManager ;
 	}
 
 	/**
-	 * Setter of activityManager.
+	 * Setter of participantManager.
 	 * 
-	 * @param _activityManager
-	 *            The activityManager to set.
+	 * @param _participantManager
+	 *            The participantManager to set.
 	 */
 	public void setParticipantManager(ParticipantManager _participantManager) {
 		this.participantManager = _participantManager ;

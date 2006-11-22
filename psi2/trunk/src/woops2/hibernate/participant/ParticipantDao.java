@@ -6,7 +6,16 @@ import java.util.Set;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import woops2.model.participant.Participant;
+import woops2.model.role.RoleDescriptor;
 
+/**
+ * @author BlackMilk
+ * @author Mikamikaze
+ * @author Sakamakak
+ *
+ * This class represents ... TODO
+ *
+ */
 public class ParticipantDao extends HibernateDaoSupport {
 
 	/**
@@ -23,9 +32,9 @@ public class ParticipantDao extends HibernateDaoSupport {
 	 * 
 	 * @return
 	 */
-	public Set <Participant> getAllParticipants () {
-		Set <Participant> loadAll = new HashSet<Participant>() ;
-		loadAll.addAll(this.getHibernateTemplate().loadAll(Participant.class)) ;
+	public Set <RoleDescriptor> getAllRoles () {
+		Set <RoleDescriptor> loadAll = new HashSet<RoleDescriptor>() ;
+		loadAll.addAll(this.getHibernateTemplate().loadAll(RoleDescriptor.class)) ;
 		return loadAll ;
 	}
 
