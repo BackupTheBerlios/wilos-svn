@@ -51,7 +51,7 @@ public class ActivityTest extends TestCase {
 	 */
 	public void testClone() {
 		try {
-			assertEquals(this.activity, (Activity)this.activity.clone());
+			assertEquals(this.activity, this.activity.clone());
 		} catch (CloneNotSupportedException e) {
 			fail("Error CloneNotSupportedException in the testClone method");
 		}
@@ -146,12 +146,12 @@ public class ActivityTest extends TestCase {
 
 		this.activity.addToAllBreakdownElements(set) ;
 
-		assertFalse(this.activity.getBreakDownElements().isEmpty()) ;
-		assertTrue(this.activity.getBreakDownElements().size() == 2) ;
-		assertFalse(breakdownElement.getSuperActivities().isEmpty()) ;
-		assertTrue(breakdownElement.getSuperActivities().size() == 1) ;
-		assertFalse(tmp.getSuperActivities().isEmpty()) ;
-		assertTrue(tmp.getSuperActivities().size() == 1) ;
+		assertFalse("bdes vides",this.activity.getBreakDownElements().isEmpty()) ;
+		assertTrue("bdes = 2",this.activity.getBreakDownElements().size() == 2) ;
+		assertFalse("brk acts vide",breakdownElement.getSuperActivities().isEmpty()) ;
+		assertTrue("brk acts = 1",breakdownElement.getSuperActivities().size() == 1) ;
+		assertFalse("tmp acts vide",tmp.getSuperActivities().isEmpty()) ;
+		assertTrue("tmp acts = 1",tmp.getSuperActivities().size() == 1) ;
 	}
 
 	/**
@@ -160,8 +160,12 @@ public class ActivityTest extends TestCase {
 	 */
 	public void testRemoveFromBreakdownElement() {
 		BreakdownElement breakdownElement = new BreakdownElement() ;
-		breakdownElement.setPrefix(PREFIX) ;
-		breakdownElement.setIsOptional(IS_OPTIONAL) ;
+		breakdownElement.setName("name1") ;
+		breakdownElement.setDescription("description1") ;
+		breakdownElement.setPrefix("prefix1") ;
+		breakdownElement.setIsOptional(true) ;
+		breakdownElement.setIsPlanned(false) ;
+		breakdownElement.setHasMultipleOccurrences(false) ;
 
 		this.activity.addToBreakdownElement(breakdownElement) ;
 		this.activity.removeFromBreakdownElement(breakdownElement) ;
@@ -176,14 +180,20 @@ public class ActivityTest extends TestCase {
 	public void testRemoveFromAllBreakdownElements() {
 
 		BreakdownElement breakdownElement = new BreakdownElement() ;
-		breakdownElement.setName("name1");
-		breakdownElement.setPrefix("prefix1) ;
-		breakdownElement.setIsOptional(IS_OPTIONAL) ;
+		breakdownElement.setName("name1") ;
+		breakdownElement.setDescription("description1") ;
+		breakdownElement.setPrefix("prefix1") ;
+		breakdownElement.setIsOptional(true) ;
+		breakdownElement.setIsPlanned(false) ;
+		breakdownElement.setHasMultipleOccurrences(false) ;
 
 		BreakdownElement tmp = new BreakdownElement() ;
-		tmp.setName("name2");
-		tmp.setPrefix(PREFIX) ;
-		tmp.setIsOptional(IS_OPTIONAL) ;
+		tmp.setName("name1") ;
+		tmp.setDescription("description1") ;
+		tmp.setPrefix("prefix1") ;
+		tmp.setIsOptional(true) ;
+		tmp.setIsPlanned(false) ;
+		tmp.setHasMultipleOccurrences(false) ;
 		
 		Set<BreakdownElement> set = new HashSet<BreakdownElement>() ;
 		set.add(breakdownElement) ;
