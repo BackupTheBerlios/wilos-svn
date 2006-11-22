@@ -42,7 +42,14 @@ public class ElementTest extends TestCase {
 	 * Test method for {@link woops2.model.element.Element#hashCode()}.
 	 */
 	public void testHashCode() {
+		
+		element = new Element();
+		element.setDescription(DESCRIPTION);
+		element.setName(NAME);
+		
 		assertNotNull(this.element.hashCode());
+		assertNotNull(element.hashCode());
+		assertEquals(this.element.hashCode(),element.hashCode());
 	}
 	
 	/**
@@ -50,7 +57,7 @@ public class ElementTest extends TestCase {
 	 */
 	public void testClone() {
 		try {
-			assertEquals((Element)this.element.clone(), this.element);
+			assertEquals(this.element, (Element)this.element.clone());
 		} catch (CloneNotSupportedException e) {
 			fail("Error CloneNotSupportedException in the testClone method");
 		}

@@ -1,23 +1,24 @@
-package woops2.model.element;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+package woops2.model.element ;
+
+import org.apache.commons.lang.builder.EqualsBuilder ;
+import org.apache.commons.lang.builder.HashCodeBuilder ;
 
 /**
  * @author deder
  * 
- * Every class defined in this specification is derived from Element. In other
- * words Element is the root generalization for all UMA classes and defines a
- * common set of attributes inherited by every other element type of this model.
+ * Every class defined in this specification is derived from Element. In other words Element is the
+ * root generalization for all UMA classes and defines a common set of attributes inherited by every
+ * other element type of this model.
  * 
  */
 public class Element implements Cloneable {
 
-	private String id;
+	private String id ;
 
-	private String name;
+	private String name ;
 
-	private String description;
+	private String description ;
 
 	/**
 	 * Constructor.
@@ -26,21 +27,41 @@ public class Element implements Cloneable {
 	public Element() {
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#clone()
+	 */
+	@ Override
+	public Element clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		Element element = new Element() ;
+		element.copy(this) ;
+		return element ;
+	}
+
+	/**
+	 * Copy the object.
+	 */
+	protected void copy(final Element _element) {
+		this.name = _element.name ;
+		this.description = _element.description ;
+	}
+
 	/**
 	 * Indicates whether another object is "equal to" this one.
 	 * 
 	 * @return true if equal else false
 	 */
-	public boolean equals(Object obj) {
-		if (obj instanceof Element == false) {
-			return false;
+	public boolean equals(Object _obj) {
+		if(_obj instanceof Element == false){
+			return false ;
 		}
-		if (this == obj) {
-			return true;
+		if(this == _obj){
+			return true ;
 		}
-		Element element = (Element) obj;
-		return new EqualsBuilder().append(this.name, element.name).append(
-				this.description, element.description).isEquals();
+		Element element = (Element) _obj ;
+		return new EqualsBuilder().append(this.name, element.name).append(this.description, element.description).isEquals() ;
 	}
 
 	/**
@@ -49,20 +70,7 @@ public class Element implements Cloneable {
 	 * @return a hash code
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(this.name).toHashCode();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#clone()
-	 */
-	@Override
-	public Object clone() throws CloneNotSupportedException {
-		Element element = new Element();
-		element.setDescription(this.getDescription());
-		element.setName(this.getName());
-		return element;
+		return new HashCodeBuilder(17, 37).append(this.name).append(this.description).toHashCode() ;
 	}
 
 	/**
@@ -71,7 +79,7 @@ public class Element implements Cloneable {
 	 * @return the description.
 	 */
 	public String getDescription() {
-		return this.description;
+		return this.description ;
 	}
 
 	/**
@@ -81,7 +89,7 @@ public class Element implements Cloneable {
 	 *            The description to set.
 	 */
 	public void setDescription(String _description) {
-		this.description = _description;
+		this.description = _description ;
 	}
 
 	/**
@@ -90,7 +98,7 @@ public class Element implements Cloneable {
 	 * @return the id.
 	 */
 	public String getId() {
-		return this.id;
+		return this.id ;
 	}
 
 	/**
@@ -100,7 +108,7 @@ public class Element implements Cloneable {
 	 *            The id to set.
 	 */
 	public void setId(String _id) {
-		this.id = _id;
+		this.id = _id ;
 	}
 
 	/**
@@ -109,7 +117,7 @@ public class Element implements Cloneable {
 	 * @return the name.
 	 */
 	public String getName() {
-		return this.name;
+		return this.name ;
 	}
 
 	/**
@@ -119,7 +127,7 @@ public class Element implements Cloneable {
 	 *            The name to set.
 	 */
 	public void setName(String _name) {
-		this.name = _name;
+		this.name = _name ;
 	}
 
 }
