@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import woops2.business.activity.ActivityManager;
+
 import woops2.business.process.ProcessService;
 import woops2.hibernate.role.RoleDescriptorDao;
 import woops2.model.role.RoleDescriptor;
