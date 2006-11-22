@@ -12,7 +12,8 @@
 		<br>
 		<h:outputText value="Choose file to import : " />
 		<br>
-		<t:inputFileUpload storage="file" required="true" />
+		<t:inputFileUpload storage="file" value="#{UploadXmlViewer.uploadedFile}" /><br>
+		<h:commandButton value="upload !" action="#{UploadXmlViewer.UploadAction}"/>
 		<br>
 		<br>
 		<h:commandButton value="back to home" action="home" />
