@@ -41,7 +41,7 @@ public class WorkBreakdownElementTest extends TestCase {
 	 */
 	public void testClone() {
 		try {
-			assertEquals((WorkBreakdownElement)this.workBreakdownElement.clone(), this.workBreakdownElement);
+			assertEquals( this.workBreakdownElement, (WorkBreakdownElement)this.workBreakdownElement.clone());
 		} catch (CloneNotSupportedException e) {
 			fail("Error CloneNotSupportedException in the testClone method");
 		}

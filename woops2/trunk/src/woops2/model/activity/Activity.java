@@ -66,8 +66,8 @@ public class Activity extends WorkBreakdownElement {
 			return true;
 		}
 		Activity activity = (Activity) obj;
-		return new EqualsBuilder().appendSuper(super.equals(activity)).append(
-				this.breakdownElements, activity.breakdownElements).isEquals();
+		return new EqualsBuilder().appendSuper(super.equals(activity))
+								  .append(this.breakdownElements, activity.breakdownElements).isEquals();
 	}
 
 	/**
@@ -76,7 +76,9 @@ public class Activity extends WorkBreakdownElement {
 	 * @return a hash code
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode();
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
+										  .append(this.getBreakDownElements())
+										  .toHashCode();
 	}
 
 	/**
@@ -120,17 +122,5 @@ public class Activity extends WorkBreakdownElement {
 		for (BreakdownElement bde : this.getBreakDownElements()) { 
 			this.removeFromBreakdownElement(bde);
 		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#clone()
-	 */
-	@Override
-	public Object clone() throws CloneNotSupportedException {
-		Activity activity = (Activity)super.clone();
-		activity.setBreakDownElements(this.getBreakDownElements());
-		return activity;
 	}
 }

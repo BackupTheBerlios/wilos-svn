@@ -13,7 +13,7 @@ import woops2.model.breakdownelement.BreakdownElement ;
  * Breakdown Elements that represent or refer to Work Definitions.
  * 
  */
-public class WorkBreakdownElement extends BreakdownElement {
+public class WorkBreakdownElement extends BreakdownElement implements Cloneable {
 
 	private Boolean isRepeatable ;
 
@@ -26,6 +26,30 @@ public class WorkBreakdownElement extends BreakdownElement {
 		this.isEvenDriven = false ;
 		this.isOngoing = false ;
 		this.isRepeatable = false ;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see woops2.model.element.BreakDownElement#clone()
+	 */
+	@ Override
+	public WorkBreakdownElement clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		WorkBreakdownElement workBreakdownElement = new WorkBreakdownElement() ;
+		workBreakdownElement.copy(this) ;
+		return workBreakdownElement ;
+	}
+
+	/**
+	 * Copy the object.
+	 */
+	protected void copy(final WorkBreakdownElement _workBreakdownElement) {
+		super.copy(_workBreakdownElement) ;
+		this.isEvenDriven = _workBreakdownElement.isEvenDriven ;
+		this.isRepeatable = _workBreakdownElement.isRepeatable ;
+		this.isRepeatable = _workBreakdownElement.isRepeatable ;
+
 	}
 	
 	/**
@@ -54,21 +78,11 @@ public class WorkBreakdownElement extends BreakdownElement {
 	 * @return a hash code
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode();
-	}
-	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#clone()
-	 */
-	@Override
-	public Object clone() throws CloneNotSupportedException {
-		WorkBreakdownElement workBreakdownElement = (WorkBreakdownElement)super.clone();
-		workBreakdownElement.setIsEvenDriven(this.getIsEvenDriven());
-		workBreakdownElement.setIsOngoing(this.getIsOngoing());
-		workBreakdownElement.setIsRepeatable(this.getIsRepeatable());
-		return workBreakdownElement;
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
+										  .append(this.isEvenDriven)
+										  .append(this.isOngoing)
+										  .append(this.isRepeatable)
+										  .toHashCode() ;
 	}
 
 	/**
