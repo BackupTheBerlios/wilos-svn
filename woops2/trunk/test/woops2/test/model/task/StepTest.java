@@ -6,7 +6,7 @@ import woops2.model.task.TaskDefinition;
 
 /**
  * @author Sebastien
- * 
+ * @author eperico 
  * This class represents the class test of the Step class.
  * 
  */
@@ -47,10 +47,26 @@ public class StepTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link woops2.model.task.Step#equals(java.lang.Object)}.
+	 * Test method for {@link woops2.model.task.Step#equals(Object obj)}.
 	 */
-	public void testEqualsObject() {
-		fail("Not yet implemented");
+	public void testEquals() {
+
+		// Assert if it's equal by references.
+		assertTrue("By references", this.step.equals(this.step));
+
+		// Assert if it's equal field by field.
+		Step step = new Step();
+		step.setName(NAME);
+		step.setDescription(DESCRIPTION);
+
+		assertTrue("Field by field", this.step.equals(step));
+
+		// Assert if it's not equal.
+		Step step2 = new Step();
+		step2.setName(NAME);
+		step2.setDescription("aDescription");
+
+		assertFalse("Not equals", this.step.equals(step2));
 	}
 
 	/**
