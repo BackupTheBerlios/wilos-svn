@@ -49,6 +49,7 @@ public class XMLParserTest {
 				for (Iterator i = aSet.iterator() ; i.hasNext() ; ){
 					TaskDescriptor td = (TaskDescriptor)i.next();
 					assertTrue(td.getMainRole() != null);
+					System.out.println("NB STEPS : " + td.getTaskDefinition().getSteps().size());
 					TaskDefinition t = td.getTaskDefinition();
 					if (t!=null){
 						for (int j = 0 ; j < v.size() ; j++){
@@ -66,6 +67,7 @@ public class XMLParserTest {
 				}
 			} catch (Exception e) {
 				System.out.println("Exception");
+				e.printStackTrace();
 				fail();
 			}
 		}

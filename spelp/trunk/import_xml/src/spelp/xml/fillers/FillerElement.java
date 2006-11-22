@@ -9,7 +9,7 @@ public class FillerElement {
 	Node myNode ;
 	
 	private static String AttributeId = "id" ;
-	private static String AttributeName = "presentationName" ;
+	private static String AttributeName = "name" ;
 	private static String AttributeDescription = "briefDescription" ;
 		
 	public FillerElement (Element _e, Node _aNode) {
