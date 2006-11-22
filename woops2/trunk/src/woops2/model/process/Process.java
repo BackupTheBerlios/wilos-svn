@@ -16,7 +16,7 @@ import woops2.model.activity.Activity;
  * different situations of process reuse.
  * 
  */
-public class Process extends Activity {
+public class Process extends Activity implements Cloneable {
 
 	/**
 	 * Default constructor
@@ -32,7 +32,7 @@ public class Process extends Activity {
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
-	public Object clone() throws CloneNotSupportedException {
+	public Activity clone() throws CloneNotSupportedException {
 		Process process = (Process) super.clone();
 		return process;
 	}

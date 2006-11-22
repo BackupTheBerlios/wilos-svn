@@ -68,7 +68,14 @@ public class RoleDefinitionTest extends TestCase {
 	 * Test method for {@link woops2.model.role.RoleDefinition#hashCode()}.
 	 */
 	public void testHashCode() {
+
+		roleDefinition = new RoleDefinition();
+		roleDefinition.setDescription(DESCRIPTION);
+		roleDefinition.setName(NAME);
+
 		assertNotNull(this.roleDefinition.hashCode());
+		assertNotNull(roleDefinition.hashCode());
+		assertEquals(this.roleDefinition.hashCode(), roleDefinition.hashCode());
 	}
 
 	/**

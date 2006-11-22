@@ -77,8 +77,8 @@ public class RoleDefinition extends Element {
 	 * @return a hash code
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
-				.append(this.getName()).toHashCode();
+		return new HashCodeBuilder(17, 37).append(this.roleDescriptors)
+				.toHashCode();
 	}
 
 	/*
@@ -87,7 +87,7 @@ public class RoleDefinition extends Element {
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
-	public Object clone() throws CloneNotSupportedException {
+	public Element clone() throws CloneNotSupportedException {
 		RoleDefinition roleDefinition = (RoleDefinition) super.clone();
 		roleDefinition.setRoleDescriptors(this.getRoleDescriptors());
 		return roleDefinition;

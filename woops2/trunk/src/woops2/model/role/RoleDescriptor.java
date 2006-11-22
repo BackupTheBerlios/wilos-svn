@@ -37,16 +37,15 @@ public class RoleDescriptor extends BreakdownElement {
 	/**
 	 * The participants of the Participant
 	 */
-	//private Set<Participant> participants ;
+	// private Set<Participant> participants ;
 	/**
 	 * Getter of participant.
 	 * 
 	 * @return the participants.
 	 */
-//	public Set<Participant> getParticipant() {
-//		return this.participants ;
-//	}
-
+	// public Set<Participant> getParticipant() {
+	// return this.participants ;
+	// }
 	/**
 	 * Setter of participants.
 	 * 
@@ -54,10 +53,9 @@ public class RoleDescriptor extends BreakdownElement {
 	 *            The participants to set.
 	 */
 	@SuppressWarnings("unused")
-//	private void setParticipant(Set<Participant> _participants) {
-//		this.participants = _participants ;
-//	}
-	
+	// private void setParticipant(Set<Participant> _participants) {
+	// this.participants = _participants ;
+	// }
 	public RoleDescriptor() {
 		super();
 		this.primaryTasks = new HashSet<TaskDescriptor>();
@@ -70,7 +68,7 @@ public class RoleDescriptor extends BreakdownElement {
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
-	public Object clone() throws CloneNotSupportedException {
+	public BreakdownElement clone() throws CloneNotSupportedException {
 		RoleDescriptor roleDescriptor = (RoleDescriptor) super.clone();
 		roleDescriptor.setAdditionalTasks(this.getAdditionalTasks());
 		roleDescriptor.setPrimaryTasks(this.getPrimaryTasks());
@@ -165,8 +163,8 @@ public class RoleDescriptor extends BreakdownElement {
 	 * @return a hash code
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
-				.append(this.getName()).toHashCode();
+		return new HashCodeBuilder(17, 37).append(this.roleDefinition).append(
+				this.additionalTasks).append(this.primaryTasks).toHashCode();
 	}
 
 	/**
@@ -283,30 +281,30 @@ public class RoleDescriptor extends BreakdownElement {
 			this.removeFromTaskDescriptor(_task);
 		}
 	}
-	
-//	public void addToParticpant(Participant _participant) {
-//	this.participants.add(_participant);
-//	_participant.getRolesListForAProject().add(this);
-//}
-//
-//
-//public void removeFromParticipant(Participant _participant) {
-//	_participant.getRolesListForAProject().remove(this);
-//	this.additionalTasks.remove(_participant);
-//}
-//
-//
-//public void removeAllParticipant() {
-//	for (Participant _participant : this.participants) {
-//		_participant.removeFromRoleDescriptor(this);
-//	}
-//	this.participants.clear();
-//}
-//
-//
-//public void removeFromAllParticipant() {
-//	for (Participant _participant : this.participants) {
-//		this.removeFromParticipant(_participant);
-//	}
-//}
+
+	// public void addToParticpant(Participant _participant) {
+	// this.participants.add(_participant);
+	// _participant.getRolesListForAProject().add(this);
+	// }
+	//
+	//
+	// public void removeFromParticipant(Participant _participant) {
+	// _participant.getRolesListForAProject().remove(this);
+	// this.additionalTasks.remove(_participant);
+	// }
+	//
+	//
+	// public void removeAllParticipant() {
+	// for (Participant _participant : this.participants) {
+	// _participant.removeFromRoleDescriptor(this);
+	// }
+	// this.participants.clear();
+	// }
+	//
+	//
+	// public void removeFromAllParticipant() {
+	// for (Participant _participant : this.participants) {
+	// this.removeFromParticipant(_participant);
+	// }
+	// }
 }
