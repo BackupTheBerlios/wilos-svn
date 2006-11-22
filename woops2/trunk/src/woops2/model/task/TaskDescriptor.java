@@ -120,8 +120,7 @@ public class TaskDescriptor extends WorkBreakdownElement {
 		return new EqualsBuilder().appendSuper(super.equals(taskDescriptor))
 				.append(this.taskDefinition, taskDescriptor.taskDefinition)
 				.append(this.additionalRoles, taskDescriptor.additionalRoles)
-				.append(this.mainRole, taskDescriptor.mainRole)
-				.isEquals();
+				.append(this.mainRole, taskDescriptor.mainRole).isEquals();
 	}
 
 	/**
@@ -160,7 +159,7 @@ public class TaskDescriptor extends WorkBreakdownElement {
 	 * @param _roleDescriptor
 	 */
 	public void addToMainRole(RoleDescriptor _roleDescriptor) {
-		this.mainRole = _roleDescriptor;	
+		this.mainRole = _roleDescriptor;
 		_roleDescriptor.getPrimaryTasks().add(this);
 	}
 
@@ -190,15 +189,15 @@ public class TaskDescriptor extends WorkBreakdownElement {
 		this.additionalRoles.remove(_roleDescriptor);
 	}
 
-	// /**
-	// * Remove from a roleDescriptor all its taskDescriptors
-	// */
-	// public void removeAllRoleDescriptor() {
-	// for (RoleDescriptor tmp : this.additionalRoles) {
-	// tmp.removeFromTaskDescriptor(this);
-	// }
-	// this.additionalRoles.clear();
-	// }
+	 /**
+	 * Remove from a roleDescriptor all its taskDescriptors
+	 */
+	 public void removeAllRoleDescriptor() {
+	 for (RoleDescriptor tmp : this.additionalRoles) {
+	 tmp.removeFromTaskDescriptor(this);
+	 }
+	 this.additionalRoles.clear();
+	 }
 
 	/**
 	 * Remove from a taskDescriptor all its roleDescriptors
