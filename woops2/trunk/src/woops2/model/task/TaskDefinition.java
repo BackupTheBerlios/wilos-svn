@@ -100,6 +100,17 @@ public class TaskDefinition extends Element {
 	}
 	
 	/**
+	 * Add a taskDescriptor from a taskDefinition
+	 * 
+	 * @param _taskDescriptor
+	 */
+	public void addTaskDescriptor(TaskDescriptor _taskDescriptor) {
+		this.taskDescriptors.add(_taskDescriptor);
+		_taskDescriptor.setTaskDefinition(this);
+	} 
+
+	
+	/**
 	 * Add a taskDesciptor collection to the taskDesciptor collection of
 	 * a TaskDefinition
 	 * 
@@ -124,23 +135,13 @@ public class TaskDefinition extends Element {
 	/**
 	 * Remove all steps from a TaskDefinition
 	 */
-	public void removeAllStep() {
+	public void removeAllSteps() {
 		for (Step tmp : this.steps) {
 			tmp.removeFromTaskDefinition(this);
 		}
 		this.steps.clear();
 	}
 	
-	/**
-	 * Add a taskDescriptor from a taskDefinition
-	 * 
-	 * @param _taskDescriptor
-	 */
-	public void addTaskDescriptor(TaskDescriptor _taskDescriptor) {
-		this.taskDescriptors.add(_taskDescriptor);
-		_taskDescriptor.setTaskDefinition(this);
-	} 
-
 	/**
 	 * Remove a taskDescriptor to its taskDefinition
 	 * @param _taskDescriptor
@@ -153,7 +154,7 @@ public class TaskDefinition extends Element {
 	/**
 	 * Remove all taskDescriptors to its TaskDefinition
 	 */
-	public void removeAllTaskDescriptor() {
+	public void removeAllTaskDescriptors() {
 		for (TaskDescriptor tmp : this.taskDescriptors) {
 			tmp.removeFromTaskDefinition(this);
 		}
