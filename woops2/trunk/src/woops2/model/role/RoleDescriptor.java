@@ -34,6 +34,30 @@ public class RoleDescriptor extends BreakdownElement {
 	 */
 	private Set<TaskDescriptor> additionalTasks;
 
+	/**
+	 * The participants of the Participant
+	 */
+	//private Set<Participant> participants ;
+	/**
+	 * Getter of participant.
+	 * 
+	 * @return the participants.
+	 */
+//	public Set<Participant> getParticipant() {
+//		return this.participants ;
+//	}
+
+	/**
+	 * Setter of participants.
+	 * 
+	 * @param _participants
+	 *            The participants to set.
+	 */
+	@SuppressWarnings("unused")
+//	private void setParticipant(Set<Participant> _participants) {
+//		this.participants = _participants ;
+//	}
+	
 	public RoleDescriptor() {
 		super();
 		this.primaryTasks = new HashSet<TaskDescriptor>();
@@ -259,4 +283,30 @@ public class RoleDescriptor extends BreakdownElement {
 			this.removeFromTaskDescriptor(_task);
 		}
 	}
+	
+//	public void addToParticpant(Participant _participant) {
+//	this.participants.add(_participant);
+//	_participant.getRolesListForAProject().add(this);
+//}
+//
+//
+//public void removeFromParticipant(Participant _participant) {
+//	_participant.getRolesListForAProject().remove(this);
+//	this.additionalTasks.remove(_participant);
+//}
+//
+//
+//public void removeAllParticipant() {
+//	for (Participant _participant : this.participants) {
+//		_participant.removeFromRoleDescriptor(this);
+//	}
+//	this.participants.clear();
+//}
+//
+//
+//public void removeFromAllParticipant() {
+//	for (Participant _participant : this.participants) {
+//		this.removeFromParticipant(_participant);
+//	}
+//}
 }
