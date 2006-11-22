@@ -113,9 +113,12 @@ public class RoleDescriptor extends BreakdownElement {
 		if (this == obj) {
 			return true;
 		}
-		RoleDescriptor role = (RoleDescriptor) obj;
-		return new EqualsBuilder().appendSuper(super.equals(role)).append(
-				this.roleDefinition, role.roleDefinition).isEquals();
+		RoleDescriptor roleDescriptor = (RoleDescriptor) obj;
+		return new EqualsBuilder().appendSuper(super.equals(roleDescriptor))
+				.append(this.roleDefinition, roleDescriptor.roleDefinition)
+				.append(this.additionalTasks, roleDescriptor.additionalTasks)
+				.append(this.primaryTasks, roleDescriptor.primaryTasks)
+				.isEquals();
 	}
 
 	/**
