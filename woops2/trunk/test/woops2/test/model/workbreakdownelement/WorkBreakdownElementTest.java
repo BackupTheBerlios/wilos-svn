@@ -11,10 +11,6 @@ public class WorkBreakdownElementTest extends TestCase {
 
 	private WorkBreakdownElement workBreakdownElement;
 
-	public static final String PREFIX = "prefix";
-
-	public static final Boolean IS_OPTIONAL = true;
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -22,9 +18,16 @@ public class WorkBreakdownElementTest extends TestCase {
 	 */
 	protected void setUp() throws Exception {
 		super.setUp();
-		this.workBreakdownElement = new WorkBreakdownElement();
-		this.workBreakdownElement.setPrefix("prefix");
-		this.workBreakdownElement.setIsOptional(IS_OPTIONAL);
+		this.workBreakdownElement = new WorkBreakdownElement() ;
+		this.workBreakdownElement.setName("name1") ;
+		this.workBreakdownElement.setDescription("description1") ;
+		this.workBreakdownElement.setPrefix("prefix1") ;
+		this.workBreakdownElement.setIsOptional(true) ;
+		this.workBreakdownElement.setIsPlanned(false) ;
+		this.workBreakdownElement.setHasMultipleOccurrences(false) ;
+		this.workBreakdownElement.setIsOngoing(true);
+		this.workBreakdownElement.setIsPlanned(true);
+		this.workBreakdownElement.setIsRepeatable(true);
 	}
 
 	/*
@@ -41,7 +44,7 @@ public class WorkBreakdownElementTest extends TestCase {
 	 */
 	public void testClone() {
 		try {
-			assertEquals( this.workBreakdownElement, (WorkBreakdownElement)this.workBreakdownElement.clone());
+			assertEquals(this.workBreakdownElement, this.workBreakdownElement.clone());
 		} catch (CloneNotSupportedException e) {
 			fail("Error CloneNotSupportedException in the testClone method");
 		}
@@ -54,7 +57,20 @@ public class WorkBreakdownElementTest extends TestCase {
 	public final void testHashCode() {
 		// Rk: the setUp method is called here.
 
+		workBreakdownElement = new WorkBreakdownElement() ;
+		workBreakdownElement.setName("name1") ;
+		workBreakdownElement.setDescription("description1") ;
+		workBreakdownElement.setPrefix("prefix1") ;
+		workBreakdownElement.setIsOptional(true) ;
+		workBreakdownElement.setIsPlanned(false) ;
+		workBreakdownElement.setHasMultipleOccurrences(false) ;
+		workBreakdownElement.setIsOngoing(true);
+		workBreakdownElement.setIsPlanned(true);
+		workBreakdownElement.setIsRepeatable(true);
+		
 		assertNotNull(this.workBreakdownElement.hashCode());
+		assertNotNull(workBreakdownElement.hashCode());
+		assertEquals(this.workBreakdownElement.hashCode(),workBreakdownElement.hashCode());
 
 		// Rk: the tearDown method is called here.
 	}
@@ -72,14 +88,28 @@ public class WorkBreakdownElementTest extends TestCase {
 
 		// Assert if it's equal field by field.
 		WorkBreakdownElement bdeTmp1 = new WorkBreakdownElement();
-		bdeTmp1.setPrefix(PREFIX);
-		bdeTmp1.setIsOptional(IS_OPTIONAL);
+		bdeTmp1.setName("name1") ;
+		bdeTmp1.setDescription("description1") ;
+		bdeTmp1.setPrefix("prefix1") ;
+		bdeTmp1.setIsOptional(true) ;
+		bdeTmp1.setIsPlanned(false) ;
+		bdeTmp1.setHasMultipleOccurrences(false) ;
+		bdeTmp1.setIsOngoing(true);
+		bdeTmp1.setIsPlanned(true);
+		bdeTmp1.setIsRepeatable(true);
 		assertTrue("Field by field", this.workBreakdownElement.equals(bdeTmp1));
 
 		// Assert if it's not equal.
 		WorkBreakdownElement bdeTmp2 = new WorkBreakdownElement();
-		bdeTmp2.setPrefix("prefixFalse");
-		bdeTmp2.setIsOptional(true);
+		bdeTmp2.setName("name2") ;
+		bdeTmp2.setDescription("description2") ;
+		bdeTmp2.setPrefix("prefix2") ;
+		bdeTmp2.setIsOptional(true) ;
+		bdeTmp2.setIsPlanned(false) ;
+		bdeTmp2.setHasMultipleOccurrences(false) ;
+		bdeTmp2.setIsOngoing(true);
+		bdeTmp2.setIsPlanned(true);
+		bdeTmp2.setIsRepeatable(true);
 		assertFalse("Not equals", this.workBreakdownElement.equals(bdeTmp2));
 
 		// Rk: the tearDown method is called here.

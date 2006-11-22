@@ -35,9 +35,6 @@ public class BreakdownElement extends Element implements Cloneable {
 	 */
 	public BreakdownElement() {
 		super() ;
-		this.isOptional = false ;
-		this.isPlanned = true ;
-		this.hasMultipleOccurrences = false ;
 		this.superActivities = new HashSet<Activity>() ;
 	}
 

@@ -20,7 +20,7 @@ import woops2.model.workbreakdownelement.WorkBreakdownElement;
  * Iteration, Delivery Process, or Capability Pattern.
  * 
  */
-public class Activity extends WorkBreakdownElement {
+public class Activity extends WorkBreakdownElement implements Cloneable {
 
 	private Set<BreakdownElement> breakdownElements;
 
@@ -32,25 +32,27 @@ public class Activity extends WorkBreakdownElement {
 		super();
 		this.breakdownElements = new HashSet<BreakdownElement>();
 	}
-
-	/**
-	 * Getter of breakDownElements.
+	
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return the breakDownElements.
+	 * @see woops2.model.element.BreakDownElement#clone()
 	 */
-	public Set<BreakdownElement> getBreakDownElements() {
-		return this.breakdownElements;
+	@ Override
+	public Activity clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		Activity activity = new Activity() ;
+		activity.copy(this) ;
+		return activity ;
 	}
 
 	/**
-	 * Setter of breakDownElements.
-	 * 
-	 * @param _breakDownElements
-	 *            The breakDownElements to set.
+	 * Copy the object.
 	 */
-	@SuppressWarnings("unused")
-	private void setBreakDownElements(Set<BreakdownElement> _breakDownElements) {
-		this.breakdownElements.addAll(_breakDownElements);
+	protected void copy(final Activity _activity) {
+		super.copy(_activity) ;
+		this.setBreakDownElements(_activity.getBreakDownElements());
+		
 	}
 
 	/**
@@ -67,7 +69,8 @@ public class Activity extends WorkBreakdownElement {
 		}
 		Activity activity = (Activity) obj;
 		return new EqualsBuilder().appendSuper(super.equals(activity))
-								  .append(this.breakdownElements, activity.breakdownElements).isEquals();
+								  .append(this.breakdownElements, activity.breakdownElements)
+								  .isEquals();
 	}
 
 	/**
@@ -77,7 +80,7 @@ public class Activity extends WorkBreakdownElement {
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
-										  .append(this.getBreakDownElements())
+										  .append(this.breakdownElements)
 										  .toHashCode();
 	}
 
@@ -122,5 +125,25 @@ public class Activity extends WorkBreakdownElement {
 		for (BreakdownElement bde : this.getBreakDownElements()) { 
 			this.removeFromBreakdownElement(bde);
 		}
+	}
+	
+	/**
+	 * Getter of breakDownElements.
+	 * 
+	 * @return the breakDownElements.
+	 */
+	public Set<BreakdownElement> getBreakDownElements() {
+		return this.breakdownElements;
+	}
+
+	/**
+	 * Setter of breakDownElements.
+	 * 
+	 * @param _breakDownElements
+	 *            The breakDownElements to set.
+	 */
+	@SuppressWarnings("unused")
+	private void setBreakDownElements(Set<BreakdownElement> _breakDownElements) {
+		this.breakdownElements.addAll(_breakDownElements);
 	}
 }

@@ -7,7 +7,6 @@ import java.util.Set;
 import junit.framework.TestCase;
 import woops2.model.activity.Activity;
 import woops2.model.breakdownelement.BreakdownElement;
-import woops2.model.element.Element;
 
 /**
  * This class represents the class test of the BreakdownElement class.
@@ -49,7 +48,7 @@ public class BreakdownElementTest extends TestCase {
 	 */
 	public void testClone() {
 		try{
-			assertEquals(this.breakdownElement, (Element) this.breakdownElement.clone()) ;
+			assertEquals(this.breakdownElement, this.breakdownElement.clone()) ;
 		}
 		catch(CloneNotSupportedException e){
 			fail("Error CloneNotSupportedException in the testClone method") ;

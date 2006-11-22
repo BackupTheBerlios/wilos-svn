@@ -18,10 +18,6 @@ public class ActivityTest extends TestCase {
 
 	private Activity activity ;
 
-	public static final String PREFIX = "prefix" ;
-
-	public static final Boolean IS_OPTIONAL = true ;
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -30,9 +26,15 @@ public class ActivityTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp() ;
 		this.activity = new Activity() ;
-		this.activity.setPrefix(PREFIX) ;
-		this.activity.setName("name") ;
-		this.activity.setIsOptional(IS_OPTIONAL) ;
+		activity.setName("name1") ;
+		activity.setDescription("description1") ;
+		activity.setPrefix("prefix1") ;
+		activity.setIsOptional(true) ;
+		activity.setIsPlanned(false) ;
+		activity.setHasMultipleOccurrences(false) ;
+		activity.setIsEvenDriven(true) ;
+		activity.setIsOngoing(false) ;
+		activity.setIsRepeatable(true) ;
 	}
 
 	/*
@@ -49,7 +51,7 @@ public class ActivityTest extends TestCase {
 	 */
 	public void testClone() {
 		try {
-			assertEquals((Activity)this.activity.clone(), this.activity);
+			assertEquals(this.activity, (Activity)this.activity.clone());
 		} catch (CloneNotSupportedException e) {
 			fail("Error CloneNotSupportedException in the testClone method");
 		}
@@ -68,16 +70,28 @@ public class ActivityTest extends TestCase {
 	public void testEqualsObject() {
 		
 		Activity tmp = new Activity() ;
-		tmp.setPrefix(PREFIX) ;
-		tmp.setName("name") ;
-		tmp.setIsOptional(IS_OPTIONAL) ;
+		tmp.setName("name1") ;
+		tmp.setDescription("description1") ;
+		tmp.setPrefix("prefix1") ;
+		tmp.setIsOptional(true) ;
+		tmp.setIsPlanned(false) ;
+		tmp.setHasMultipleOccurrences(false) ;
+		tmp.setIsEvenDriven(true) ;
+		tmp.setIsOngoing(false) ;
+		tmp.setIsRepeatable(true) ;
 		
 		assertTrue(this.activity.equals(tmp)) ;
 		
 		Activity act = new Activity() ;
-		act.setPrefix(PREFIX) ;
 		act.setName("name2") ;
-		act.setIsOptional(IS_OPTIONAL) ;
+		act.setDescription("description2") ;
+		act.setPrefix("prefix2") ;
+		act.setIsOptional(true) ;
+		act.setIsPlanned(false) ;
+		act.setHasMultipleOccurrences(false) ;
+		act.setIsEvenDriven(true) ;
+		act.setIsOngoing(false) ;
+		act.setIsRepeatable(true) ;
 		
 		assertFalse(this.activity.equals(act)) ;
 	}
@@ -89,8 +103,12 @@ public class ActivityTest extends TestCase {
 	public void testAddToBreakdownElement() {
 		
 		BreakdownElement breakdownElement = new BreakdownElement() ;
-		breakdownElement.setPrefix(PREFIX) ;
-		breakdownElement.setIsOptional(IS_OPTIONAL) ;
+		breakdownElement.setName("name1") ;
+		breakdownElement.setDescription("description1") ;
+		breakdownElement.setPrefix("prefix1") ;
+		breakdownElement.setIsOptional(true) ;
+		breakdownElement.setIsPlanned(false) ;
+		breakdownElement.setHasMultipleOccurrences(false) ;
 
 		this.activity.addToBreakdownElement(breakdownElement) ;
 
@@ -107,14 +125,20 @@ public class ActivityTest extends TestCase {
 	public void testAddToAllBreakdownElement() {
 		
 		BreakdownElement breakdownElement = new BreakdownElement() ;
-		breakdownElement.setPrefix(PREFIX) ;
-		breakdownElement.setName("name") ;
-		breakdownElement.setIsOptional(IS_OPTIONAL) ;
+		breakdownElement.setName("name1") ;
+		breakdownElement.setDescription("description1") ;
+		breakdownElement.setPrefix("prefix1") ;
+		breakdownElement.setIsOptional(true) ;
+		breakdownElement.setIsPlanned(false) ;
+		breakdownElement.setHasMultipleOccurrences(false) ;
 
 		BreakdownElement tmp = new BreakdownElement() ;
-		tmp.setPrefix(PREFIX) ;
-		tmp.setName("name2") ;
-		tmp.setIsOptional(IS_OPTIONAL) ;
+		tmp.setName("name1") ;
+		tmp.setDescription("description1") ;
+		tmp.setPrefix("prefix1") ;
+		tmp.setIsOptional(true) ;
+		tmp.setIsPlanned(false) ;
+		tmp.setHasMultipleOccurrences(false) ;
 
 		Set<BreakdownElement> set = new HashSet<BreakdownElement>() ;
 		set.add(breakdownElement) ;
@@ -153,7 +177,7 @@ public class ActivityTest extends TestCase {
 
 		BreakdownElement breakdownElement = new BreakdownElement() ;
 		breakdownElement.setName("name1");
-		breakdownElement.setPrefix(PREFIX) ;
+		breakdownElement.setPrefix("prefix1) ;
 		breakdownElement.setIsOptional(IS_OPTIONAL) ;
 
 		BreakdownElement tmp = new BreakdownElement() ;

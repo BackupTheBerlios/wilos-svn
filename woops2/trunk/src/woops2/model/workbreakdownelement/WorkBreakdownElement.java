@@ -23,9 +23,6 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 
 	public WorkBreakdownElement () {
 		super() ;
-		this.isEvenDriven = false ;
-		this.isOngoing = false ;
-		this.isRepeatable = false ;
 	}
 	
 	/*

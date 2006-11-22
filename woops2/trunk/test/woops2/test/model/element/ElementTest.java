@@ -57,7 +57,7 @@ public class ElementTest extends TestCase {
 	 */
 	public void testClone() {
 		try {
-			assertEquals(this.element, (Element)this.element.clone());
+			assertEquals(this.element, this.element.clone());
 		} catch (CloneNotSupportedException e) {
 			fail("Error CloneNotSupportedException in the testClone method");
 		}
