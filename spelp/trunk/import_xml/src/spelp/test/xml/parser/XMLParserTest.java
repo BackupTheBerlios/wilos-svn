@@ -40,13 +40,16 @@ public class XMLParserTest {
 			XMLParser.setFile(f[p]);
 			System.out.println(f[p].getAbsolutePath());
 			try {
+				Set<RoleDescriptor> ensRole = XMLParser.getAllRoleDescriptors();
 				Vector <TaskDefinition> v = new Vector<TaskDefinition>();
-				Set<TaskDescriptor> aSet = XMLParser.getAllTaskDescriptors();
+				Set<TaskDescriptor> aSet = XMLParser.getAllTaskDescriptors(ensRole);
 				// test if the set of tasks is filled
 				assertTrue(aSet.size() != 0);
 				// test if all task are unique
 				for (Iterator i = aSet.iterator() ; i.hasNext() ; ){
-					TaskDefinition t = ((TaskDescriptor)i.next()).getTaskDefinition();
+					TaskDescriptor td = (TaskDescriptor)i.next();
+					assertTrue(td.getMainRole() != null);
+					TaskDefinition t = td.getTaskDefinition();
 					if (t!=null){
 						for (int j = 0 ; j < v.size() ; j++){
 							System.out.println("\nID : \n" + t.getId() + "\n" + ((TaskDefinition)v.get(j)).getId() + "\nMemes ref : " + (t == ((TaskDefinition)v.get(j))));

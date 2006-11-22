@@ -37,6 +37,7 @@ public class XMLParser {
 	// sections
 	private static String task = "Task";
 	private static String role = "Role";
+	private static String performedPrimarilyBy = "PerformedPrimarilyBy";
 	
 	private static Vector<TaskDefinition> TasksList = new Vector<TaskDefinition> ();
 	private static Vector<RoleDefinition> RoleList = new Vector<RoleDefinition> ();
@@ -54,15 +55,29 @@ public class XMLParser {
 		return (getProcess());
 	}
 	
+	public static RoleDescriptor getRoleDescriptorById(Set<RoleDescriptor> aSet,String id){
+		for (Iterator i = aSet.iterator() ; i.hasNext() ;){
+			RoleDescriptor tmp = (RoleDescriptor) i .next();
+			if (tmp.getId().equals(id)){
+				return  tmp;
+			}
+		}
+		return null ;
+	}
+	
 	/**
 	 * getProcess
 	 * @return
 	 */
 	public static Process getProcess (){
 		Process p = new Process() ;
-		try{
+		try{			
+			Set<RoleDescriptor> ensRole = getAllRoleDescriptors() ;
+			for (Iterator i = ensRole.iterator() ; i.hasNext() ;){
+				p.addToBreakdownElement((BreakdownElement) i.next());
+			}
 			// get all the tasks descriptor
-			Set<TaskDescriptor> allTasks = getAllTaskDescriptors();
+			Set<TaskDescriptor> allTasks = getAllTaskDescriptors(ensRole);
 			for (Iterator i = allTasks.iterator() ; i.hasNext() ;){
 				p.addToBreakdownElement((BreakdownElement) i.next());
 			}
@@ -78,7 +93,8 @@ public class XMLParser {
 	 * @return all the tasks descriptors
 	 * @throws Exception when no tasks descriptor are found
 	 */
-	public static Set<TaskDescriptor> getAllTaskDescriptors() throws Exception {
+	public static Set<TaskDescriptor> getAllTaskDescriptors(Set<RoleDescriptor> allRoles) throws Exception {
+		// gets all the roles in the file
 		HashSet<TaskDescriptor> taskList = new HashSet<TaskDescriptor>();
 		try {
 			NodeList taskDescriptors = (NodeList)XMLUtils.evaluate(taskDescriptor,XPathConstants.NODESET);
@@ -91,7 +107,12 @@ public class XMLParser {
 				TaskDescriptor aTaskDescriptor = new TaskDescriptor();
 				FillerTaskDescriptor aFiller = new FillerTaskDescriptor(aTaskDescriptor,aNode);	
 				TaskDescriptor taskDescriptorfilled = (TaskDescriptor)aFiller.getFilledElement();
+				
+				// affect the task definition to the task descriptor
 				setTaskByTaskDescriptor(taskDescriptorfilled,aNode);
+				
+				// affect the main role to the current task
+				setMainRoleByTaskDescriptor(taskDescriptorfilled, aNode, allRoles);
 				taskList.add(taskDescriptorfilled);
 			}
 		} catch (FileNotFoundException e) {
@@ -129,14 +150,6 @@ public class XMLParser {
 		return roleList;
 	}
 	
-	/**
-	 * getAllRolesDescriptors
-	 * @param t
-	 * @return a set containing the roles associated with the task descriptor
-	 */
-	public static Set<RoleDescriptor> getAllRolesDescriptors(){
-		return null ;
-	}
 	
 	/**
 	 * getTasksByTaskDescriptor
@@ -206,7 +219,28 @@ public class XMLParser {
 		return null ;
 	}
 	
-	
+	public static void setMainRoleByTaskDescriptor(TaskDescriptor _t,Node _n,Set<RoleDescriptor> _s) throws Exception {
+		// getting the id of the role
+		String idRole = "" ;
+		NodeList listOfTdNodes = _n.getChildNodes() ;
+		boolean trouve = false ;
+		for (int i = 0 ; i < listOfTdNodes.getLength() && !trouve ; i ++){
+			if (listOfTdNodes.item(i).getNodeName().equals(performedPrimarilyBy)){
+				trouve = true ;
+				idRole = listOfTdNodes.item(i).getTextContent();
+			}
+		}
+		if (trouve){
+			RoleDescriptor roleToBeset ;
+			roleToBeset = getRoleDescriptorById(_s,idRole);
+			// if the task doesn't exist
+			if (roleToBeset == null){
+				throw new Exception("role doesn't exist");
+			}
+			// set the role in the roledescriptor
+			_t.addToMainRole(roleToBeset);
+		}
+	}
 	/**
 	 * 
 	 * @param r
