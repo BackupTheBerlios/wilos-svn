@@ -60,7 +60,7 @@ public class BreakdownElement extends Element {
 	 */
 	public void addToAllActivities(Set<Activity> _activities) {
 		for (Activity activity : _activities) {
-			//activity.addToBreakdownElement(this);
+			// activity.addToBreakdownElement(this);
 			this.addToActivity(activity);
 		}
 	}
@@ -98,6 +98,10 @@ public class BreakdownElement extends Element {
 		}
 		BreakdownElement breakdownElement = (BreakdownElement) obj;
 		return new EqualsBuilder().appendSuper(super.equals(breakdownElement))
+				.append(this.prefix, breakdownElement.prefix)
+				.append(this.isPlanned, breakdownElement.isPlanned)
+				.append(this.hasMultipleOccurrences, breakdownElement.hasMultipleOccurrences)
+				.append(this.isOptional, breakdownElement.isOptional)
 				.append(this.superActivities, breakdownElement.superActivities)
 				.isEquals();
 	}
@@ -109,7 +113,7 @@ public class BreakdownElement extends Element {
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
-				.append(this.superActivities).toHashCode();
+				.append(this.prefix).toHashCode();
 	}
 
 	/**

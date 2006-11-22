@@ -75,7 +75,7 @@ public class BreakdownElementTest extends TestCase {
 		BreakdownElement bdeTmp2 = new BreakdownElement();
 		bdeTmp2.setPrefix("prefixFalse");
 		bdeTmp2.setIsOptional(true);
-		assertFalse("Not equals", this.breakdownElement.equals(bdeTmp2));//FIXME pb here !
+		assertFalse("Not equals", this.breakdownElement.equals(bdeTmp2));
 
 		// Rk: the tearDown method is called here.
 	}
