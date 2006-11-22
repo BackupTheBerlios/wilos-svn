@@ -85,13 +85,13 @@ public class TaskDefinitionTest extends TestCase {
 	 */
 	public void testAddToAllSteps() {
 		Step step1 = new Step();
-		step1.setDescription(DESCRIPTION);
-		step1.setName(NAME);
+		step1.setDescription("description1");
+		step1.setName("name1");
 
 		Step step2 = new Step();
-		step2.setDescription(DESCRIPTION);
-		step2.setName(NAME);
-
+		step2.setDescription("description2");
+		step2.setName("name2");
+		
 		Set<Step> set = new HashSet<Step>();
 		set.add(step1);
 		set.add(step2);
@@ -100,7 +100,6 @@ public class TaskDefinitionTest extends TestCase {
 
 		assertFalse(this.taskDefinition.getSteps().isEmpty());
 		assertEquals(2, this.taskDefinition.getSteps().size());
-		// assertTrue(this.taskDefinition.getSteps().size() == 2);
 	}
 	
 	/**
@@ -109,12 +108,12 @@ public class TaskDefinitionTest extends TestCase {
 	 */
 	public void testAddToAllTaskDesciptors() {
 		TaskDescriptor td1 = new TaskDescriptor();
-		td1.setDescription(DESCRIPTION);
-		td1.setName(NAME);
+		td1.setDescription("description1");
+		td1.setName("name1");
 		
 		TaskDescriptor td2 = new TaskDescriptor();
-		td2.setDescription(DESCRIPTION);
-		td2.setName(NAME);
+		td2.setDescription("description2");
+		td2.setName("name2");
 		
 		Set<TaskDescriptor> set = new HashSet<TaskDescriptor>();
 		set.add(td1);
@@ -124,5 +123,85 @@ public class TaskDefinitionTest extends TestCase {
 
 		assertFalse(this.taskDefinition.getTaskDescriptors().isEmpty());
 		assertEquals(2, this.taskDefinition.getTaskDescriptors().size());
+	}
+	
+	/**
+	 * Test method for
+	 * {@link woops2.model.task.TaskDefinition#removeStep(woops2.model.task.Step)}.
+	 */
+	public void testRemoveStep() {
+		Step step = new Step();
+		step.setDescription(DESCRIPTION);
+		step.setName(NAME);
+
+		this.taskDefinition.removeStep(step);
+		
+		assertTrue(this.taskDefinition.getSteps().isEmpty());
+		assertNull(step.getTaskDefinition());
+	}
+	
+	/**
+	 * Test method for
+	 * {@link woops2.model.task.TaskDefinition#removeTaskDescriptor(woops2.model.task.TaskDescriptor)}.
+	 */
+	public void testRemoveTaskDescriptor() {
+		TaskDescriptor taskDescriptor = new TaskDescriptor();
+		taskDescriptor.setDescription(DESCRIPTION);
+		taskDescriptor.setName(NAME);
+
+		this.taskDefinition.removeTaskDescriptor(taskDescriptor);
+		
+		assertTrue(this.taskDefinition.getTaskDescriptors().isEmpty());
+		assertNull(taskDescriptor.getTaskDefinition());
+	}
+	
+	/**
+	 * Test method for
+	 * {@link woops2.model.task.TaskDefinition#removeAllSteps(woops2.model.task.Step)}.
+	 */
+	public void testRemoveAllSteps() {
+		Step step1 = new Step();
+		step1.setDescription(DESCRIPTION);
+		step1.setName(NAME);
+		
+		Step step2 = new Step();
+		step2.setDescription(DESCRIPTION);
+		step2.setName(NAME);
+		
+		Set<Step> set = new HashSet<Step>();
+		set.add(step1);
+		set.add(step2);
+
+		this.taskDefinition.addToAllSteps(set);
+		this.taskDefinition.removeAllSteps();
+		
+		assertTrue(this.taskDefinition.getSteps().isEmpty());
+		assertNull(step1.getTaskDefinition());
+		assertNull(step2.getTaskDefinition());
+	}
+	
+	/**
+	 * Test method for
+	 * {@link woops2.model.task.TaskDefinition#removeAllTaskDescriptors(woops2.model.task.TaskDescriptor)}.
+	 */
+	public void testRemoveAllTaskDescriptors() {
+		TaskDescriptor td1 = new TaskDescriptor();
+		td1.setDescription(DESCRIPTION);
+		td1.setName(NAME);
+		
+		TaskDescriptor td2= new TaskDescriptor();
+		td2.setDescription(DESCRIPTION);
+		td2.setName(NAME);
+		
+		Set<TaskDescriptor> set = new HashSet<TaskDescriptor>();
+		set.add(td1);
+		set.add(td2);
+
+		this.taskDefinition.addToAllTaskDesciptors(set);
+		this.taskDefinition.removeAllTaskDescriptors();
+		
+		assertTrue(this.taskDefinition.getTaskDescriptors().isEmpty());
+		assertNull(td1.getTaskDefinition());
+		assertNull(td2.getTaskDefinition());
 	}
 }
