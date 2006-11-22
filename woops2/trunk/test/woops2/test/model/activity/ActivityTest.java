@@ -1,40 +1,43 @@
-package woops2.test.model.activity;
 
-import java.util.HashSet;
-import java.util.Set;
+package woops2.test.model.activity ;
 
-import junit.framework.TestCase;
-import woops2.model.activity.Activity;
-import woops2.model.breakdownelement.BreakdownElement;
+import java.util.HashSet ;
+import java.util.Set ;
+
+import junit.framework.TestCase ;
+import woops2.model.activity.Activity ;
+import woops2.model.breakdownelement.BreakdownElement ;
 
 /**
  * @author Sebastien
- *
+ * 
  * This class represents the class test of the Activity class.
- *
+ * 
  */
 public class ActivityTest extends TestCase {
-	
+
 	private Activity activity ;
 
 	public static final String PREFIX = "prefix" ;
-	
-	public static final String NAME = "name" ;
 
 	public static final Boolean IS_OPTIONAL = true ;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see junit.framework.TestCase#setUp()
 	 */
 	protected void setUp() throws Exception {
 		super.setUp() ;
 		this.activity = new Activity() ;
 		this.activity.setPrefix(PREFIX) ;
-		this.activity.setName(NAME);
+		this.activity.setName("name") ;
 		this.activity.setIsOptional(IS_OPTIONAL) ;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see junit.framework.TestCase#tearDown()
 	 */
 	protected void tearDown() throws Exception {
@@ -45,24 +48,35 @@ public class ActivityTest extends TestCase {
 	 * Test method for {@link woops2.model.activity.Activity#hashCode()}.
 	 */
 	public void testHashCode() {
-		assertNotNull(this.activity.hashCode());
+		assertNotNull(this.activity.hashCode()) ;
 	}
 
 	/**
 	 * Test method for {@link woops2.model.activity.Activity#equals(java.lang.Object)}.
 	 */
 	public void testEqualsObject() {
+		
 		Activity tmp = new Activity() ;
 		tmp.setPrefix(PREFIX) ;
-		tmp.setName(NAME);
+		tmp.setName("name") ;
 		tmp.setIsOptional(IS_OPTIONAL) ;
-		assertTrue(this.activity.equals(tmp));
+		
+		assertTrue(this.activity.equals(tmp)) ;
+		
+		Activity act = new Activity() ;
+		act.setPrefix(PREFIX) ;
+		act.setName("name2") ;
+		act.setIsOptional(IS_OPTIONAL) ;
+		
+		assertFalse(this.activity.equals(act)) ;
 	}
 
 	/**
-	 * Test method for {@link woops2.model.activity.Activity#addToBreakdownElement(woops2.model.breakdownelement.BreakdownElement)}.
+	 * Test method for
+	 * {@link woops2.model.activity.Activity#addToBreakdownElement(woops2.model.breakdownelement.BreakdownElement)}.
 	 */
 	public void testAddToBreakdownElement() {
+		
 		BreakdownElement breakdownElement = new BreakdownElement() ;
 		breakdownElement.setPrefix(PREFIX) ;
 		breakdownElement.setIsOptional(IS_OPTIONAL) ;
@@ -76,33 +90,38 @@ public class ActivityTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link woops2.model.activity.Activity#addToAllBreakdownElement(java.util.Set)}.
+	 * Test method for
+	 * {@link woops2.model.activity.Activity#addToAllBreakdownElements(java.util.Set)}.
 	 */
 	public void testAddToAllBreakdownElement() {
+		
 		BreakdownElement breakdownElement = new BreakdownElement() ;
 		breakdownElement.setPrefix(PREFIX) ;
+		breakdownElement.setName("name") ;
 		breakdownElement.setIsOptional(IS_OPTIONAL) ;
 
 		BreakdownElement tmp = new BreakdownElement() ;
 		tmp.setPrefix(PREFIX) ;
+		tmp.setName("name2") ;
 		tmp.setIsOptional(IS_OPTIONAL) ;
 
 		Set<BreakdownElement> set = new HashSet<BreakdownElement>() ;
 		set.add(breakdownElement) ;
 		set.add(tmp) ;
 
-		this.activity.addToAllBreakdownElement(set) ;
+		this.activity.addToAllBreakdownElements(set) ;
 
 		assertFalse(this.activity.getBreakDownElements().isEmpty()) ;
-		assertTrue(this.activity.getBreakDownElements().size() == 2);
+		assertTrue(this.activity.getBreakDownElements().size() == 2) ;
 		assertFalse(breakdownElement.getSuperActivities().isEmpty()) ;
-		assertTrue(breakdownElement.getSuperActivities().size() == 1);
+		assertTrue(breakdownElement.getSuperActivities().size() == 1) ;
 		assertFalse(tmp.getSuperActivities().isEmpty()) ;
-		assertTrue(tmp.getSuperActivities().size() == 1);
+		assertTrue(tmp.getSuperActivities().size() == 1) ;
 	}
 
 	/**
-	 * Test method for {@link woops2.model.activity.Activity#removeFromBreakdownElement(woops2.model.breakdownelement.BreakdownElement)}.
+	 * Test method for
+	 * {@link woops2.model.activity.Activity#removeFromBreakdownElement(woops2.model.breakdownelement.BreakdownElement)}.
 	 */
 	public void testRemoveFromBreakdownElement() {
 		BreakdownElement breakdownElement = new BreakdownElement() ;
@@ -120,7 +139,7 @@ public class ActivityTest extends TestCase {
 	 * Test method for {@link woops2.model.activity.Activity#removeFromAllBreakdownElements()}.
 	 */
 	public void testRemoveFromAllBreakdownElements() {
-		
+
 		BreakdownElement breakdownElement = new BreakdownElement() ;
 		breakdownElement.setPrefix(PREFIX) ;
 		breakdownElement.setIsOptional(IS_OPTIONAL) ;
@@ -128,10 +147,13 @@ public class ActivityTest extends TestCase {
 		BreakdownElement tmp = new BreakdownElement() ;
 		tmp.setPrefix(PREFIX) ;
 		tmp.setIsOptional(IS_OPTIONAL) ;
+		
+		Set<BreakdownElement> set = new HashSet<BreakdownElement>() ;
+		set.add(breakdownElement) ;
+		set.add(tmp) ;
 
-		this.activity.addToBreakdownElement(breakdownElement) ;
-		this.activity.addToBreakdownElement(tmp) ;
-		this.activity.removeFromAllBreakdownElements(); // FIXME error found here
+		this.activity.addToAllBreakdownElements(set);
+		this.activity.removeFromAllBreakdownElements() ;
 
 		assertTrue("bdes", this.activity.getBreakDownElements().isEmpty()) ;
 		assertTrue("bde.acts", breakdownElement.getSuperActivities().isEmpty()) ;

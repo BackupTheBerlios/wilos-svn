@@ -95,7 +95,7 @@ public class Activity extends WorkBreakdownElement {
 	 * 
 	 * @param _breakdownElement
 	 */
-	public void addToAllBreakdownElement(
+	public void addToAllBreakdownElements(
 			Set<BreakdownElement> _breakdownElements) {
 		for (BreakdownElement bde : _breakdownElements) {
 			bde.addToActivity(this);

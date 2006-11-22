@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import junit.framework.TestCase;
-import woops2.model.element.Element;
 import woops2.model.role.RoleDefinition;
 import woops2.model.role.RoleDescriptor;
 
