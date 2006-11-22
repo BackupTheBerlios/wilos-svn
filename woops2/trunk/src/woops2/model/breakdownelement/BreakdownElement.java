@@ -92,7 +92,7 @@ public class BreakdownElement extends Element implements Cloneable {
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.prefix).append(this.hasMultipleOccurrences).append(this.isOptional)
-				.append(this.isPlanned).append(this.getSuperActivities()).toHashCode() ;
+				.append(this.isPlanned)/*.append(this.getSuperActivities())*/.toHashCode() ; // FIXME stackoverFlow
 	}
 
 	/**
