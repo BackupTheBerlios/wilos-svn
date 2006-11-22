@@ -12,8 +12,7 @@ import woops2.model.participant.Participant;
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class ParticipantManager {
 
-	
-private ParticipantDao participantDao ;
+	private ParticipantDao participantDao ;
 	
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 	

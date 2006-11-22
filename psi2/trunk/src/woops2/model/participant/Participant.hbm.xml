@@ -24,14 +24,6 @@
 		<property name="password" type="java.lang.String" column="password"
 			length="256" />
 			
-		<!-- Associations 
-		<set name="breakDownElements" table="nesting" lazy="true">
-			<key column="activity_id"></key>
-			<many-to-many class="woops2.model.breakdownelement.BreakdownElement"
-				column="breakdownelement_id">
-			</many-to-many>
-		</set>-->
-		
 	</class>
 	
 </hibernate-mapping>

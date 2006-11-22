@@ -28,11 +28,19 @@
 		<managed-bean-class>woops2.presentation.participant.ParticipantViewer</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
-			<property-name>ParticipantManager</property-name>
+			<property-name>participantManager</property-name>
 			<value>#{ParticipantManager}</value>
 		</managed-property>
 	</managed-bean>
-	<!--       PSI2  -->
+	
+	<validator>
+		<validator-id>emailValidator</validator-id>
+		<validator-class>
+			woops2.presentation.validators.emailValidator
+		</validator-class>
+	</validator>
+	
+	<!--   PSI2  -->
 	
 	<navigation-rule>
 		<from-view-id>*</from-view-id>

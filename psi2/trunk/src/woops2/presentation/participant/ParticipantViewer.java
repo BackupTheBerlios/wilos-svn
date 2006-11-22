@@ -1,6 +1,10 @@
 package woops2.presentation.participant;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.validator.ValidatorException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -85,5 +89,6 @@ public class ParticipantViewer{
 	public void setParticipantManager(ParticipantManager _participantManager) {
 		this.participantManager = _participantManager ;
 	}
+
 }
 
