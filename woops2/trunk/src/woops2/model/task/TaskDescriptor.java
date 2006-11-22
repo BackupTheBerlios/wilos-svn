@@ -132,7 +132,7 @@ public class TaskDescriptor extends WorkBreakdownElement {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
 				.append(this.getName()).toHashCode();
 	}
-
+	
 	/**
 	 * Attach a taskDescriptor to a taskDefinition
 	 * 
@@ -180,6 +180,16 @@ public class TaskDescriptor extends WorkBreakdownElement {
 		this.additionalRoles.add(_roleDescriptor);
 		_roleDescriptor.getAdditionalTasks().add(this);
 	}
+	
+	/**
+	 * 
+	 * @param _role
+	 */
+	public void addToAllRoleDescriptors(Set<RoleDescriptor> _role) {
+		for (RoleDescriptor role : _role) {
+			role.addToTaskDescriptor(this);
+		}
+	}
 
 	/**
 	 * @param _roleDescriptor
@@ -192,7 +202,7 @@ public class TaskDescriptor extends WorkBreakdownElement {
 	 /**
 	 * Remove from a roleDescriptor all its taskDescriptors
 	 */
-	 public void removeAllRoleDescriptor() {
+	 public void removeAllRoleDescriptors() {
 	 for (RoleDescriptor tmp : this.additionalRoles) {
 	 tmp.removeFromTaskDescriptor(this);
 	 }
@@ -202,7 +212,7 @@ public class TaskDescriptor extends WorkBreakdownElement {
 	/**
 	 * Remove from a taskDescriptor all its roleDescriptors
 	 */
-	public void removeFromAllRoleDescriptor() {
+	public void removeFromAllRoleDescriptors() {
 		for (RoleDescriptor tmp : this.getAdditionalRoles()) {
 			this.removeFromRoleDescriptor(tmp);
 		}
