@@ -1,8 +1,11 @@
 package applitest;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.rmi.RemoteException;
 
-import webservices.TestWebServicesProxy;
+import woops2.model.role.*;
+import wilos.spelp.webservices.WizardServicesProxy;
 
 public class MainTest {
 
@@ -11,12 +14,15 @@ public class MainTest {
 	 */
 	public static void main(String[] args) {
 		// on instancie le proxy local
-		TestWebServicesProxy px = new TestWebServicesProxy();
+		WizardServicesProxy px = new WizardServicesProxy();
 		// on specifie l'adresse du serveur
-		px.setEndpoint("http://localhost:8080/remote/services/TestWebServices");
-		// on appelle la méthode sur le proxy local comme on le ferait sur l'objet distant
+		px.setEndpoint("http://localhost:8080/wilos_remote/services/WizardServices");
+		// on appelle la mï¿½thode sur le proxy local comme on le ferait sur l'objet distant
 		try {
-			System.out.println(px.getExample());
+			RoleDescriptor [] tabRoles = px.getRolesByUser("toto", "toto");
+			for (int i=0; i<tabRoles.length; i++) {
+				System.out.println(tabRoles[i].getName());
+			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

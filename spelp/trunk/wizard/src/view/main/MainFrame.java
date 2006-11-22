@@ -30,9 +30,8 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
-import modelWoops.role.RoleDescriptor;
-import modelWoops.task.Task;
-import modelWoops.task.TaskDescriptor;
+import woops2.model.role.RoleDescriptor;
+import woops2.model.task.TaskDescriptor;
 
 import org.jdesktop.swingx.JXTaskPane;
 import org.jdesktop.swingx.JXTaskPaneContainer;
@@ -64,7 +63,8 @@ public class MainFrame extends JFrame{
 	
 	private void initialize() {
 		this.setSize(300, 150);
-		this.setContentPane(new LoginPanel());
+		//this.setContentPane(new LoginPanel());
+		this.setContentPane(new TaskPanel());
        /*this.setJMenuBar(getMenu());
        dimFrame = Toolkit.getDefaultToolkit().getScreenSize();
        tp = new TreePanel();

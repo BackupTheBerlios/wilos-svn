@@ -28,7 +28,7 @@ import javax.swing.border.EtchedBorder;
 
 import ressources.Bundle;
 
-import modelWoops.role.RoleDescriptor;
+import woops2.model.role.RoleDescriptor;
 
 import java.awt.SystemColor;
 import java.awt.Font;

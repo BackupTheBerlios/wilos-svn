@@ -1,59 +1,59 @@
 /**
- * TestWebServicesServiceLocator.java
+ * WizardServicesServiceLocator.java
  *
  * This file was auto-generated from WSDL
  * by the Apache Axis 1.3 Oct 05, 2005 (05:23:37 EDT) WSDL2Java emitter.
  */
 
-package webservices;
+package wilos.spelp.webservices;
 
-public class TestWebServicesServiceLocator extends org.apache.axis.client.Service implements webservices.TestWebServicesService {
+public class WizardServicesServiceLocator extends org.apache.axis.client.Service implements wilos.spelp.webservices.WizardServicesService {
 
-    public TestWebServicesServiceLocator() {
+    public WizardServicesServiceLocator() {
     }
 
 
-    public TestWebServicesServiceLocator(org.apache.axis.EngineConfiguration config) {
+    public WizardServicesServiceLocator(org.apache.axis.EngineConfiguration config) {
         super(config);
     }
 
-    public TestWebServicesServiceLocator(java.lang.String wsdlLoc, javax.xml.namespace.QName sName) throws javax.xml.rpc.ServiceException {
+    public WizardServicesServiceLocator(java.lang.String wsdlLoc, javax.xml.namespace.QName sName) throws javax.xml.rpc.ServiceException {
         super(wsdlLoc, sName);
     }
 
-    // Use to get a proxy class for TestWebServices
-    private java.lang.String TestWebServices_address = "http://localhost:8080/remote/services/TestWebServices";
+    // Use to get a proxy class for WizardServices
+    private java.lang.String WizardServices_address = "http://localhost:9014/remote/services/WizardServices";
 
-    public java.lang.String getTestWebServicesAddress() {
-        return TestWebServices_address;
+    public java.lang.String getWizardServicesAddress() {
+        return WizardServices_address;
     }
 
     // The WSDD service name defaults to the port name.
-    private java.lang.String TestWebServicesWSDDServiceName = "TestWebServices";
+    private java.lang.String WizardServicesWSDDServiceName = "WizardServices";
 
-    public java.lang.String getTestWebServicesWSDDServiceName() {
-        return TestWebServicesWSDDServiceName;
+    public java.lang.String getWizardServicesWSDDServiceName() {
+        return WizardServicesWSDDServiceName;
     }
 
-    public void setTestWebServicesWSDDServiceName(java.lang.String name) {
-        TestWebServicesWSDDServiceName = name;
+    public void setWizardServicesWSDDServiceName(java.lang.String name) {
+        WizardServicesWSDDServiceName = name;
     }
 
-    public webservices.TestWebServices getTestWebServices() throws javax.xml.rpc.ServiceException {
+    public wilos.spelp.webservices.WizardServices getWizardServices() throws javax.xml.rpc.ServiceException {
        java.net.URL endpoint;
         try {
-            endpoint = new java.net.URL(TestWebServices_address);
+            endpoint = new java.net.URL(WizardServices_address);
         }
         catch (java.net.MalformedURLException e) {
             throw new javax.xml.rpc.ServiceException(e);
         }
-        return getTestWebServices(endpoint);
+        return getWizardServices(endpoint);
     }
 
-    public webservices.TestWebServices getTestWebServices(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
+    public wilos.spelp.webservices.WizardServices getWizardServices(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
         try {
-            webservices.TestWebServicesSoapBindingStub _stub = new webservices.TestWebServicesSoapBindingStub(portAddress, this);
-            _stub.setPortName(getTestWebServicesWSDDServiceName());
+            wilos.spelp.webservices.WizardServicesSoapBindingStub _stub = new wilos.spelp.webservices.WizardServicesSoapBindingStub(portAddress, this);
+            _stub.setPortName(getWizardServicesWSDDServiceName());
             return _stub;
         }
         catch (org.apache.axis.AxisFault e) {
@@ -61,8 +61,8 @@ public class TestWebServicesServiceLocator extends org.apache.axis.client.Servic
         }
     }
 
-    public void setTestWebServicesEndpointAddress(java.lang.String address) {
-        TestWebServices_address = address;
+    public void setWizardServicesEndpointAddress(java.lang.String address) {
+        WizardServices_address = address;
     }
 
     /**
@@ -72,9 +72,9 @@ public class TestWebServicesServiceLocator extends org.apache.axis.client.Servic
      */
     public java.rmi.Remote getPort(Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
         try {
-            if (webservices.TestWebServices.class.isAssignableFrom(serviceEndpointInterface)) {
-                webservices.TestWebServicesSoapBindingStub _stub = new webservices.TestWebServicesSoapBindingStub(new java.net.URL(TestWebServices_address), this);
-                _stub.setPortName(getTestWebServicesWSDDServiceName());
+            if (wilos.spelp.webservices.WizardServices.class.isAssignableFrom(serviceEndpointInterface)) {
+                wilos.spelp.webservices.WizardServicesSoapBindingStub _stub = new wilos.spelp.webservices.WizardServicesSoapBindingStub(new java.net.URL(WizardServices_address), this);
+                _stub.setPortName(getWizardServicesWSDDServiceName());
                 return _stub;
             }
         }
@@ -94,8 +94,8 @@ public class TestWebServicesServiceLocator extends org.apache.axis.client.Servic
             return getPort(serviceEndpointInterface);
         }
         java.lang.String inputPortName = portName.getLocalPart();
-        if ("TestWebServices".equals(inputPortName)) {
-            return getTestWebServices();
+        if ("WizardServices".equals(inputPortName)) {
+            return getWizardServices();
         }
         else  {
             java.rmi.Remote _stub = getPort(serviceEndpointInterface);
@@ -105,7 +105,7 @@ public class TestWebServicesServiceLocator extends org.apache.axis.client.Servic
     }
 
     public javax.xml.namespace.QName getServiceName() {
-        return new javax.xml.namespace.QName("http://webservices", "TestWebServicesService");
+        return new javax.xml.namespace.QName("http://webservices.spelp.wilos", "WizardServicesService");
     }
 
     private java.util.HashSet ports = null;
@@ -113,7 +113,7 @@ public class TestWebServicesServiceLocator extends org.apache.axis.client.Servic
     public java.util.Iterator getPorts() {
         if (ports == null) {
             ports = new java.util.HashSet();
-            ports.add(new javax.xml.namespace.QName("http://webservices", "TestWebServices"));
+            ports.add(new javax.xml.namespace.QName("http://webservices.spelp.wilos", "WizardServices"));
         }
         return ports.iterator();
     }
@@ -123,8 +123,8 @@ public class TestWebServicesServiceLocator extends org.apache.axis.client.Servic
     */
     public void setEndpointAddress(java.lang.String portName, java.lang.String address) throws javax.xml.rpc.ServiceException {
         
-if ("TestWebServices".equals(portName)) {
-            setTestWebServicesEndpointAddress(address);
+if ("WizardServices".equals(portName)) {
+            setWizardServicesEndpointAddress(address);
         }
         else 
 { // Unknown Port Name
