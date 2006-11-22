@@ -58,10 +58,14 @@ public class RoleDescriptorTest extends TestCase {
 	 * Test method for
 	 * {@link woops2.model.role.RoleDefinition#equals(java.lang.Object)}.
 	 */
-	public void testEqualsObject() {
+	public void testEquals() {
 		RoleDescriptor role = new RoleDescriptor();
 		role.setDescription(DESCRIPTION);
 		role.setName(NAME);
+		role.setPrefix(PREFIX);
+		role.setIsOptional(IS_OPTIONAL);
+		role.setHasMultipleOccurrences(HAS_MULTIPLE_OCCURENCES);
+		role.setIsPlanned(IS_PLANNED);
 
 		assertTrue(this.roleDescriptor.equals(role));
 	}
@@ -106,7 +110,7 @@ public class RoleDescriptorTest extends TestCase {
 		
 		this.roleDescriptor.addTaskDescriptor(task) ;
 		assertFalse(this.roleDescriptor.getPrimaryTasks().isEmpty());
-		assertNull(task.getMainRole());
+		
 	}
 	
 	/**
@@ -134,7 +138,7 @@ public class RoleDescriptorTest extends TestCase {
 		task.setDescription(DESCRIPTION);
 		
 		TaskDescriptor tmp = new TaskDescriptor();
-		tmp.setName(NAME);
+		tmp.setName("nom");
 		tmp.setDescription(DESCRIPTION);
 		
 		this.roleDescriptor.addTaskDescriptor(task) ;
@@ -155,7 +159,7 @@ public class RoleDescriptorTest extends TestCase {
 		
 
 		TaskDescriptor tmp = new TaskDescriptor() ;
-		tmp.setName(NAME);
+		tmp.setName("nom");
 		tmp.setDescription(DESCRIPTION);
 
 		Set<TaskDescriptor> set = new HashSet<TaskDescriptor>() ;
@@ -212,11 +216,14 @@ public class RoleDescriptorTest extends TestCase {
 		
 
 		TaskDescriptor tmp = new TaskDescriptor() ;
-		tmp.setName(NAME);
+		tmp.setName("nom");
 		tmp.setDescription(DESCRIPTION);
 		
-		this.roleDescriptor.addToTaskDescriptor(task);
-		this.roleDescriptor.addToTaskDescriptor(tmp);
+		Set<TaskDescriptor> set = new HashSet<TaskDescriptor>() ;
+		set.add(task) ;
+		set.add(tmp) ;
+
+		this.roleDescriptor.addToAllTaskDescriptors(set) ;
 		this.roleDescriptor.removeAllAdditionalTasks();
 		
 		assertTrue(this.roleDescriptor.getAdditionalTasks().isEmpty()) ;
@@ -233,11 +240,14 @@ public class RoleDescriptorTest extends TestCase {
 		
 
 		TaskDescriptor tmp = new TaskDescriptor() ;
-		tmp.setName(NAME);
+		tmp.setName("nom");
 		tmp.setDescription(DESCRIPTION);
 		
-		this.roleDescriptor.addToTaskDescriptor(task);
-		this.roleDescriptor.addToTaskDescriptor(tmp);
+		Set<TaskDescriptor> set = new HashSet<TaskDescriptor>() ;
+		set.add(task) ;
+		set.add(tmp) ;
+
+		this.roleDescriptor.addToAllTaskDescriptors(set) ;
 		this.roleDescriptor.removeFromAllTaskDescriptor();
 		
 		assertTrue(this.roleDescriptor.getAdditionalTasks().isEmpty()) ;
