@@ -60,8 +60,7 @@ public class BreakdownElement extends Element {
 	 */
 	public void addToAllActivities(Set<Activity> _activities) {
 		for (Activity activity : _activities) {
-			// activity.addToBreakdownElement(this);
-			this.addToActivity(activity);
+			activity.addToBreakdownElement(this);
 		}
 	}
 

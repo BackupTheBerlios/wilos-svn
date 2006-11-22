@@ -1,6 +1,9 @@
 
 package woops2.model.workbreakdownelement ;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 import woops2.model.breakdownelement.BreakdownElement ;
 
 /**
@@ -23,6 +26,35 @@ public class WorkBreakdownElement extends BreakdownElement {
 		this.isEvenDriven = false ;
 		this.isOngoing = false ;
 		this.isRepeatable = false ;
+	}
+	
+	/**
+	 * Indicates whether another object is "equal to" this one.
+	 * 
+	 * @return true if equal else false
+	 */
+	public boolean equals(Object obj) {
+		if (obj instanceof BreakdownElement == false) {
+			return false;
+		}
+		if (this == obj) {
+			return true;
+		}
+		WorkBreakdownElement workBreakdownElement = (WorkBreakdownElement) obj;
+		return new EqualsBuilder().appendSuper(super.equals(workBreakdownElement))
+				.append(this.isEvenDriven, workBreakdownElement.isEvenDriven)
+				.append(this.isOngoing, workBreakdownElement.isOngoing)
+				.append(this.isRepeatable, workBreakdownElement.isRepeatable)
+				.isEquals();
+	}
+
+	/**
+	 * Returns a hash code value for the object.
+	 * 
+	 * @return a hash code
+	 */
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode();
 	}
 
 	/**
