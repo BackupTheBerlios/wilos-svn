@@ -9,7 +9,9 @@
 
 <f:view>
 	<h:form id="form">
-		<h2>Woops2 - activities list</h2>
+		<h2>Woops2 - Activities list</h2>
+		<br>
+		<br>
 		<h:outputText value="Table :" />
 		<h:dataTable value="#{ActivityViewer.activitiesList}" border="1"
 			var="activity">
@@ -29,6 +31,7 @@
 		<br>
 		<h:commandButton value="new activity" action="createactivity"/>
 		<h:commandButton value="test transactions" actionListener="#{ActivityViewer.testTransactionActionListener}"/>
+		<h:commandButton value="back to home" action="home"/>
 	</h:form>
 </f:view>
 </body>

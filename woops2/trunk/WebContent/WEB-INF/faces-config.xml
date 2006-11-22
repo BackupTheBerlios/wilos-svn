@@ -23,8 +23,38 @@
 		</managed-property>
 	</managed-bean>
 	
+	<managed-bean>
+		<managed-bean-name>UploadXmlViewer</managed-bean-name>
+		<managed-bean-class>woops2.presentation.activity.UploadXmlViewer</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<navigation-rule>
+		<from-view-id>/home.jsf</from-view-id>
+		<navigation-case>
+			<from-outcome>activity</from-outcome>
+			<to-view-id>/activity.jsf</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/uploadxml.jsf</from-view-id>
+		<navigation-case>
+			<from-outcome>home</from-outcome>
+			<to-view-id>/home.jsf</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>home</from-outcome>
+			<to-view-id>/home.jsf</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>uploadxml</from-outcome>
+			<to-view-id>/uploadxml.jsf</to-view-id>
+		</navigation-case>
 		<navigation-case>
 			<from-outcome>createactivity</from-outcome>
 			<to-view-id>/activityform.jsf</to-view-id>
