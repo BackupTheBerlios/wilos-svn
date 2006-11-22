@@ -33,6 +33,7 @@ public class RoleDescriptor extends BreakdownElement {
 	 */
 	private Set<TaskDescriptor> additionalTasks ;
 
+	
 
 	public RoleDescriptor() {
 		super() ;
@@ -113,6 +114,7 @@ public class RoleDescriptor extends BreakdownElement {
 		if (this == obj) {
 			return true;
 		}
+		
 		RoleDescriptor roleDescriptor = (RoleDescriptor) obj;
 		return new EqualsBuilder().appendSuper(super.equals(roleDescriptor))
 				.append(this.roleDefinition, roleDescriptor.roleDefinition)
@@ -192,14 +194,12 @@ public class RoleDescriptor extends BreakdownElement {
 	}
 
 	/**
-	 * Add a RoleDescriptor collection to the RoleDescriptor collection of an
-	 * RoleDefinition
 	 * 
 	 * @param _role
 	 */
 	public void addToAllTaskDescriptors(Set<TaskDescriptor> _role) {
 		for (TaskDescriptor _role1 : _role) {
-			_role1.addToRoleDescriptor(this);
+			_role1.addToMainRole(this);
 		}
 	}
 

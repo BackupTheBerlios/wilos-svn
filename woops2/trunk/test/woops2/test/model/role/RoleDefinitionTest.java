@@ -12,8 +12,12 @@ public class RoleDefinitionTest extends TestCase{
 	private RoleDefinition roleDefinition;
 	
 	public static final String NAME = "name" ;
+	
+	public static final String NAME2 = "name1" ;
 
 	public static final String DESCRIPTION = "roleDescriptor description";
+	
+	public static final String DESCRIPTION2 = "description";
 
 	public static final String PREFIX = "prefix";
 
@@ -52,11 +56,17 @@ public class RoleDefinitionTest extends TestCase{
 	 * {@link woops2.model.role.RoleDefinition#equals(java.lang.Object)}.
 	 */
 	public void testEqualsObject() {
-		RoleDefinition role = new RoleDefinition();
-		role.setDescription(DESCRIPTION);
-		role.setName(NAME);
-
-		assertTrue(this.roleDefinition.equals(role));
+		RoleDefinition tmp = new RoleDefinition() ;
+		tmp.setName("name") ;
+		tmp.setDescription(DESCRIPTION) ;
+		
+		assertTrue(this.roleDefinition.equals(tmp)) ;
+		
+		RoleDefinition role = new RoleDefinition() ;
+		role.setName("name2") ;
+		role.setDescription(DESCRIPTION) ;
+		
+		assertFalse(this.roleDefinition.equals(role)) ;
 	}
 	
 	/**
@@ -98,11 +108,15 @@ public class RoleDefinitionTest extends TestCase{
 		role.setDescription(DESCRIPTION);
 		
 		RoleDescriptor tmp = new RoleDescriptor() ;
-		tmp.setName(NAME);
+		tmp.setName("nom");
 		tmp.setDescription(DESCRIPTION);
 		
-		this.roleDefinition.addRoleDescriptor(role) ;
-		this.roleDefinition.addRoleDescriptor(tmp) ;
+		
+		Set<RoleDescriptor> set = new HashSet<RoleDescriptor>() ;
+		set.add(role) ;
+		set.add(tmp) ;
+
+		this.roleDefinition.addToAllRoleDescriptors(set) ;
 		this.roleDefinition.removeAllRoleDescriptor();
 
 		assertTrue(this.roleDefinition.getRoleDescriptors().isEmpty()) ;
@@ -113,8 +127,8 @@ public class RoleDefinitionTest extends TestCase{
 	 */
 	public void testAddToAllRoleDescriptors() {
 		RoleDescriptor role = new RoleDescriptor() ;
-		role.setName(NAME);
-		role.setDescription(DESCRIPTION);
+		role.setName(NAME2);
+		role.setDescription(DESCRIPTION2);
 		
 
 		RoleDescriptor tmp = new RoleDescriptor() ;
