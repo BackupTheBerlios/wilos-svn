@@ -48,6 +48,28 @@ public class TaskDefinitionTest extends TestCase {
 	public void testHashCode() {
 		assertNotNull(this.taskDefinition.hashCode());
 	}
+	
+	/**
+	 * Test method for
+	 * {@link woops2.model.task.TaskDefinition#equals(Object obj)}.
+	 */
+	public void testEquals() {
+
+		// Assert if it's equal by references.
+		assertTrue("By references", this.taskDefinition.equals(this.taskDefinition));
+
+		// Assert if it's equal field by field.
+		TaskDescriptor td1 = new TaskDescriptor();
+		td1.setName(NAME);
+		td1.setDescription(DESCRIPTION);
+		assertTrue("Field by field", this.taskDefinition.equals(td1));
+
+		// Assert if it's not equal.
+		TaskDescriptor td2 = new TaskDescriptor();
+		td2.setIsRepeatable(false);
+		td2.setPrefix("prefixFalse");
+		assertFalse("Not equals", this.taskDefinition.equals(td2));
+	}
 
 	/**
 	 * Test method for
