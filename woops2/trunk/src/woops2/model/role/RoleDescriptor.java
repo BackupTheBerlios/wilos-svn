@@ -1,6 +1,7 @@
 
 package woops2.model.role ;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -21,11 +22,7 @@ import woops2.model.task.TaskDescriptor;
 public class RoleDescriptor extends BreakdownElement {
 
 	private RoleDefinition roleDefinition ;
-
-	public RoleDescriptor() {
-		super() ;
-	}
-
+	
 	/**
 	 * The main tasks of the roleDefinition
 	 */
@@ -36,6 +33,14 @@ public class RoleDescriptor extends BreakdownElement {
 	 */
 	private Set<TaskDescriptor> additionalTasks ;
 
+
+	public RoleDescriptor() {
+		super() ;
+		this.primaryTasks = new HashSet<TaskDescriptor>();
+		this.additionalTasks = new HashSet<TaskDescriptor>();
+	}
+
+	
 	/**
 	 * Getter of roleDefinition.
 	 * 
