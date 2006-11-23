@@ -17,6 +17,18 @@ import woops2.model.breakdownelement.BreakdownElement;
 public class BreakdownElementTest extends TestCase {
 
 	private BreakdownElement breakdownElement ;
+	
+	public static final String NAME = "name";
+
+	public static final String DESCRIPTION = "description";
+	
+	public static final String PREFIX = "prefix";
+	
+	public static final Boolean IS_OPTIONAL = true;
+	
+	public static final Boolean IS_PLANNED = true;
+	
+	public static final Boolean HAS_MULTIPLE = false;
 
 	/*
 	 * (non-Javadoc)
@@ -26,12 +38,12 @@ public class BreakdownElementTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp() ;
 		this.breakdownElement = new BreakdownElement() ;
-		this.breakdownElement.setName("name1") ;
-		this.breakdownElement.setDescription("description1") ;
-		this.breakdownElement.setPrefix("prefix1") ;
-		this.breakdownElement.setIsOptional(true) ;
-		this.breakdownElement.setIsPlanned(false) ;
-		this.breakdownElement.setHasMultipleOccurrences(false) ;
+		this.breakdownElement.setName(NAME) ;
+		this.breakdownElement.setDescription(DESCRIPTION) ;
+		this.breakdownElement.setPrefix(PREFIX) ;
+		this.breakdownElement.setIsOptional(IS_OPTIONAL) ;
+		this.breakdownElement.setIsPlanned(IS_PLANNED) ;
+		this.breakdownElement.setHasMultipleOccurrences(HAS_MULTIPLE) ;
 	}
 
 	/*
@@ -48,7 +60,8 @@ public class BreakdownElementTest extends TestCase {
 	 */
 	public void testClone() {
 		try{
-			assertEquals(this.breakdownElement, this.breakdownElement.clone()) ;
+			BreakdownElement bde = (BreakdownElement)this.breakdownElement.clone();
+			assertTrue(this.breakdownElement.equals(bde)) ;
 		}
 		catch(CloneNotSupportedException e){
 			fail("Error CloneNotSupportedException in the testClone method") ;
@@ -62,12 +75,12 @@ public class BreakdownElementTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		BreakdownElement bdeTmp1 = new BreakdownElement() ;
-		bdeTmp1.setName("name1") ;
-		bdeTmp1.setDescription("description1") ;
-		bdeTmp1.setPrefix("prefix1") ;
-		bdeTmp1.setIsOptional(true) ;
-		bdeTmp1.setIsPlanned(false) ;
-		bdeTmp1.setHasMultipleOccurrences(false) ;
+		bdeTmp1.setName(NAME) ;
+		bdeTmp1.setDescription(DESCRIPTION) ;
+		bdeTmp1.setPrefix(PREFIX) ;
+		bdeTmp1.setIsOptional(IS_OPTIONAL) ;
+		bdeTmp1.setIsPlanned(IS_PLANNED) ;
+		bdeTmp1.setHasMultipleOccurrences(HAS_MULTIPLE) ;
 
 		assertNotNull(this.breakdownElement.hashCode()) ;
 		assertNotNull(bdeTmp1.hashCode()) ;
@@ -88,12 +101,12 @@ public class BreakdownElementTest extends TestCase {
 
 		// Assert if it's equal field by field.
 		BreakdownElement bdeTmp1 = new BreakdownElement() ;
-		bdeTmp1.setName("name1") ;
-		bdeTmp1.setDescription("description1") ;
-		bdeTmp1.setPrefix("prefix1") ;
-		bdeTmp1.setIsOptional(true) ;
-		bdeTmp1.setIsPlanned(false) ;
-		bdeTmp1.setHasMultipleOccurrences(false) ;
+		bdeTmp1.setName(NAME) ;
+		bdeTmp1.setDescription(DESCRIPTION) ;
+		bdeTmp1.setPrefix(PREFIX) ;
+		bdeTmp1.setIsOptional(IS_OPTIONAL) ;
+		bdeTmp1.setIsPlanned(IS_PLANNED) ;
+		bdeTmp1.setHasMultipleOccurrences(HAS_MULTIPLE) ;
 		assertTrue("Field by field", this.breakdownElement.equals(bdeTmp1)) ;
 
 		// Assert if it's not equal.
@@ -119,7 +132,6 @@ public class BreakdownElementTest extends TestCase {
 		assertTrue("Empty (begin)", this.breakdownElement.getSuperActivities().isEmpty()) ;
 
 		Activity activity1 = new Activity() ;
-		activity1 = new Activity() ;
 		activity1.setName("name1") ;
 		activity1.setDescription("description1") ;
 		activity1.setPrefix("prefix1") ;
@@ -134,7 +146,6 @@ public class BreakdownElementTest extends TestCase {
 		assertTrue("bdes.size1 == 1", activity1.getBreakDownElements().size() == 1) ;
 
 		Activity activity2 = new Activity() ;
-		activity2 = new Activity() ;
 		activity2.setName("name2") ;
 		activity2.setDescription("description2") ;
 		activity2.setPrefix("prefix2") ;

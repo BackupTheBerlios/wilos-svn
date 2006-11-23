@@ -133,7 +133,7 @@ public class ActivityTest extends TestCase {
 		breakdownElement.setHasMultipleOccurrences(false) ;
 
 		BreakdownElement tmp = new BreakdownElement() ;
-		tmp.setName("name1") ;
+		tmp.setName("name2") ;
 		tmp.setDescription("description1") ;
 		tmp.setPrefix("prefix1") ;
 		tmp.setIsOptional(true) ;
@@ -188,7 +188,7 @@ public class ActivityTest extends TestCase {
 		breakdownElement.setHasMultipleOccurrences(false) ;
 
 		BreakdownElement tmp = new BreakdownElement() ;
-		tmp.setName("name1") ;
+		tmp.setName("name2") ;
 		tmp.setDescription("description1") ;
 		tmp.setPrefix("prefix1") ;
 		tmp.setIsOptional(true) ;
