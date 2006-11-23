@@ -75,10 +75,10 @@
 		<from-view-id>*</from-view-id>
 		<navigation-case>
 			<from-outcome>createParticipant</from-outcome>
-			<to-view-id>/participantform.jsf</to-view-id>
+			<to-view-id>/participantSubscribe.jsf</to-view-id>
 		</navigation-case>
 		<navigation-case>
-			<from-outcome>Participant</from-outcome>
+			<from-outcome>participant_logging</from-outcome>
 			<to-view-id>/participant_logging.jsf</to-view-id>
 		</navigation-case>
 	</navigation-rule>
