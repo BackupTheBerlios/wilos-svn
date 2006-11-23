@@ -6,13 +6,16 @@ import woops2.model.task.Step ;
 import woops2.model.task.TaskDefinition ;
 
 /**
+ * This class represents the class test of the Step class.
  * @author Sebastien
- * @author eperico This class represents the class test of the Step class.
+ * @author eperico 
  * 
  */
 public class StepTest extends TestCase {
 
 	private Step step ;
+
+	public static final String IDEPF = "idEPF" ;
 
 	public static final String NAME = "name" ;
 
@@ -28,6 +31,7 @@ public class StepTest extends TestCase {
 		this.step = new Step() ;
 		this.step.setDescription(DESCRIPTION) ;
 		this.step.setName(NAME) ;
+		this.step.setName(IDEPF) ;
 	}
 
 	/*
@@ -59,7 +63,14 @@ public class StepTest extends TestCase {
 	 * Test method for {@link woops2.model.task.Step#hashCode()}.
 	 */
 	public void testHashCode() {
+		Step step = new Step() ;
+		step.setDescription(DESCRIPTION) ;
+		step.setName(NAME) ;
+		step.setName(IDEPF) ;
+
 		assertNotNull(this.step.hashCode()) ;
+		assertNotNull(step.hashCode()) ;
+		assertEquals(this.step.hashCode(), step.hashCode()) ;
 	}
 
 	/**
@@ -72,15 +83,17 @@ public class StepTest extends TestCase {
 
 		// Assert if it's equal field by field.
 		Step step = new Step() ;
-		step.setName(NAME) ;
 		step.setDescription(DESCRIPTION) ;
+		step.setName(NAME) ;
+		step.setName(IDEPF) ;
 
 		assertTrue("Field by field", this.step.equals(step)) ;
 
 		// Assert if it's not equal.
 		Step step2 = new Step() ;
-		step2.setName(NAME) ;
-		step2.setDescription("aDescription") ;
+		step2.setDescription("description2") ;
+		step2.setName("name2") ;
+		step2.setName("idEPF2") ;
 
 		assertFalse("Not equals", this.step.equals(step2)) ;
 	}
@@ -93,11 +106,12 @@ public class StepTest extends TestCase {
 		TaskDefinition taskDefinition = new TaskDefinition() ;
 		taskDefinition.setDescription(DESCRIPTION) ;
 		taskDefinition.setName(NAME) ;
+		taskDefinition.setName(IDEPF) ;
 
 		this.step.addToTaskDefinition(taskDefinition) ;
 
 		assertNotNull(this.step.getTaskDefinition()) ;
-		assertTrue(taskDefinition.getSteps().size() == 1) ;
+		assertFalse(taskDefinition.getSteps().isEmpty()) ;
 	}
 
 	/**
@@ -108,12 +122,11 @@ public class StepTest extends TestCase {
 		TaskDefinition taskDefinition = new TaskDefinition() ;
 		taskDefinition.setDescription(DESCRIPTION) ;
 		taskDefinition.setName(NAME) ;
+		taskDefinition.setName(IDEPF) ;
 
 		this.step.addToTaskDefinition(taskDefinition) ;
-		assertNotNull(this.step.getTaskDefinition()) ;
-		assertTrue(taskDefinition.getSteps().size() == 1) ;
-		
 		this.step.removeFromTaskDefinition(taskDefinition) ;
+
 		assertNull(this.step.getTaskDefinition()) ;
 		assertTrue(taskDefinition.getSteps().isEmpty()) ;
 	}
