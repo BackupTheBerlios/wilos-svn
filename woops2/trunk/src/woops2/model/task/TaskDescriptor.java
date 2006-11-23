@@ -226,10 +226,10 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 	 * Remove from a roleDescriptor all its taskDescriptors
 	 */
 	public void removeAllRoleDescriptors() {
-		for (RoleDescriptor tmp : this.additionalRoles) {
-			tmp.removeFromTaskDescriptor(this);
+		for (RoleDescriptor tmp : this.getAdditionalRoles()) {
+			tmp.getAdditionalTasks().remove(this);
 		}
-		this.additionalRoles.clear();
+		this.getAdditionalRoles().clear();
 	}
 
 	/**

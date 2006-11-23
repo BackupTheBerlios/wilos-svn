@@ -61,7 +61,7 @@ public class TaskDefinitionTest extends TestCase {
 		// Assert if it's equal field by field.
 		TaskDefinition td1 = null;
 		try {
-			td1 = (TaskDefinition)this.taskDefinition.clone();
+			td1 = this.taskDefinition.clone();
 		} catch (CloneNotSupportedException e) {
 			fail("Error CloneNotSupportedException in the testEquals method");
 		}
@@ -85,7 +85,7 @@ public class TaskDefinitionTest extends TestCase {
 
 		this.taskDefinition.addStep(step);
 
-		assertNotNull(this.taskDefinition.getSteps());
+		assertTrue(this.taskDefinition.getSteps().size() == 1);
 		assertNotNull(step.getTaskDefinition());
 	}
 	
@@ -100,7 +100,7 @@ public class TaskDefinitionTest extends TestCase {
 		
 		this.taskDefinition.addTaskDescriptor(taskDescriptor);
 
-		assertNotNull(this.taskDefinition.getTaskDescriptors());
+		assertTrue(this.taskDefinition.getTaskDescriptors().size() == 1);
 		assertNotNull(taskDescriptor.getTaskDefinition());
 	}
 
@@ -125,6 +125,8 @@ public class TaskDefinitionTest extends TestCase {
 
 		assertFalse(this.taskDefinition.getSteps().isEmpty());
 		assertEquals(2, this.taskDefinition.getSteps().size());
+		assertNotNull(step1.getTaskDefinition());
+		assertNotNull(step2.getTaskDefinition());
 	}
 	
 	/**
@@ -148,6 +150,8 @@ public class TaskDefinitionTest extends TestCase {
 
 		assertFalse(this.taskDefinition.getTaskDescriptors().isEmpty());
 		assertEquals(2, this.taskDefinition.getTaskDescriptors().size());
+		assertNotNull(td1.getTaskDefinition());
+		assertNotNull(td2.getTaskDefinition());
 	}
 	
 	/**
@@ -187,7 +191,7 @@ public class TaskDefinitionTest extends TestCase {
 	public void testRemoveAllSteps() {
 		Step step1 = new Step();
 		step1.setDescription(DESCRIPTION);
-		step1.setName(NAME);
+		step1.setName("otherName");
 		
 		Step step2 = new Step();
 		step2.setDescription(DESCRIPTION);
@@ -198,8 +202,11 @@ public class TaskDefinitionTest extends TestCase {
 		set.add(step2);
 
 		this.taskDefinition.addToAllSteps(set);
-		this.taskDefinition.removeAllSteps();
+		assertTrue(this.taskDefinition.getSteps().size() == 2);
+		assertNotNull(step1.getTaskDefinition());
+		assertNotNull(step2.getTaskDefinition());
 		
+		this.taskDefinition.removeAllSteps();
 		assertTrue(this.taskDefinition.getSteps().isEmpty());
 		assertNull(step1.getTaskDefinition());
 		assertNull(step2.getTaskDefinition());
@@ -216,15 +223,18 @@ public class TaskDefinitionTest extends TestCase {
 		
 		TaskDescriptor td2= new TaskDescriptor();
 		td2.setDescription(DESCRIPTION);
-		td2.setName(NAME);
+		td2.setName("otherName");
 		
 		Set<TaskDescriptor> set = new HashSet<TaskDescriptor>();
 		set.add(td1);
 		set.add(td2);
 
 		this.taskDefinition.addToAllTaskDesciptors(set);
-		this.taskDefinition.removeAllTaskDescriptors();
+		assertTrue(this.taskDefinition.getTaskDescriptors().size() == 2);
+		assertNotNull(td1.getTaskDefinition());
+		assertNotNull(td2.getTaskDefinition());
 		
+		this.taskDefinition.removeAllTaskDescriptors();
 		assertTrue(this.taskDefinition.getTaskDescriptors().isEmpty());
 		assertNull(td1.getTaskDefinition());
 		assertNull(td2.getTaskDefinition());

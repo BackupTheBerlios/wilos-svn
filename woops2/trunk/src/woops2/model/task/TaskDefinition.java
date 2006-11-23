@@ -185,7 +185,7 @@ public class TaskDefinition extends Element implements Cloneable {
 	 */
 	public void removeAllSteps() {
 		for (Step tmp : this.steps) {
-			tmp.removeFromTaskDefinition(this);
+			tmp.setTaskDefinition(null);
 		}
 		this.steps.clear();
 	}
@@ -205,7 +205,7 @@ public class TaskDefinition extends Element implements Cloneable {
 	 */
 	public void removeAllTaskDescriptors() {
 		for (TaskDescriptor tmp : this.taskDescriptors) {
-			tmp.removeFromTaskDefinition(this);
+			tmp.setTaskDefinition(null);
 		}
 		this.taskDescriptors.clear();
 	}
