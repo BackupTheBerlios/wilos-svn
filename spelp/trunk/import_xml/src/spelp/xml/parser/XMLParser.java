@@ -77,6 +77,7 @@ public class XMLParser {
 			TaskDefinition  aTaskDefinition = new TaskDefinition();
 			FillerTask aFiller = new FillerTask(aTaskDefinition,aNode);	
 			aTaskDefinition = (TaskDefinition)aFiller.getFilledElement();
+			setStepByTaskDefinition(aTaskDefinition, aNode);
 			TasksList.add(aTaskDefinition);
 		}	
 	}
@@ -215,10 +216,11 @@ public class XMLParser {
 	}
 	
 	
-	public static void setStepByTaskDescriptor(TaskDescriptor _t,TaskDefinition _taskd,Node _n) throws Exception {
+	public static void setStepByTaskDefinition(TaskDefinition _taskd,Node _n) throws Exception {
 		// getting the id of the role
 		NodeList listOfTdNodes = _n.getChildNodes() ;
 		boolean trouve = false ;
+		
 		// search the nodes of the step
 		for (int i = 0 ; i < listOfTdNodes.getLength() && !trouve ; i ++){
 			if (listOfTdNodes.item(i).getNodeName().equals(presentation)){
@@ -335,10 +337,14 @@ public class XMLParser {
 				RoleDescriptor roleDescriptorfilled = (RoleDescriptor)aFiller.getFilledElement();
 				
 				setRoleByRoleDescriptor(roleDescriptorfilled,aNode);
+				
+				roleDescriptorfilled.setPrefix(String.valueOf(i));
 				System.out.println(roleDescriptorfilled.hashCode() + " " + roleDescriptorfilled.getName() + " " + roleDescriptorfilled.getId());
 				
 				// TODO Probleme a resoudre !!!!
-				roleList.add(roleDescriptorfilled) ;
+				while (roleList.add(roleDescriptorfilled) ==false){
+					
+				}
 				System.out.println("");
 			}
 		} catch (FileNotFoundException e) {

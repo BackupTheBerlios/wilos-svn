@@ -51,6 +51,7 @@ public class XMLParserTest extends XMLParser {
 			pathScrum,pathOPenUP
 		};
 		for (int p = 0 ; p < f.length ; p++){
+			System.out.println(">>>>>>>"+f[p].getName());
 			XMLUtils.setDocument(f[p]);
 			XMLParser.start();
 			try {
@@ -61,13 +62,15 @@ public class XMLParserTest extends XMLParser {
 				assertTrue(aSet.size() != 0);
 				// test if all task are unique
 				for (Iterator i = aSet.iterator() ; i.hasNext() ; ){
-					TaskDescriptor td = (TaskDescriptor)i.next();
-					assertTrue(td.getMainRole() != null);
-					System.out.println("NB STEPS : " + td.getTaskDefinition().getSteps().size());
+					TaskDescriptor td = (TaskDescriptor)i.next();		
+					//assertTrue(td.getMainRole() != null);
 					TaskDefinition t = td.getTaskDefinition();
 					if (t!=null){
+						if (td.getMainRole() != null){
+							System.out.println(t.getName() +"\n MAIN ROLE : " + td.getMainRole().getName());
+						}
+						System.out.println(" NB STEPS : " + t.getSteps().size());
 						for (int j = 0 ; j < v.size() ; j++){
-							System.out.println("\nID : \n" + t.getId() + "\n" + ((TaskDefinition)v.get(j)).getId() + "\nMemes ref : " + (t == ((TaskDefinition)v.get(j))));
 							assertTrue(
 								t.getId().equals(((TaskDefinition)v.get(j)).getId()) && t == ((TaskDefinition)v.get(j))
 								||
