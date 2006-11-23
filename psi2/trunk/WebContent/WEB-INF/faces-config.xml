@@ -40,12 +40,12 @@
 		</validator-class>
 	</validator>
 	
-	<!-- <validator>
+	<validator>
 		<validator-id>equalValidator</validator-id>
 		<validator-class>
 			woops2.presentation.validators.EqualValidator
 		</validator-class>
-	</validator>-->
+	</validator>
 	
 	  <!-- PSI2  -->
 	

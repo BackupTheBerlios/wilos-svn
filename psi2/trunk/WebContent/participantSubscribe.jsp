@@ -34,9 +34,12 @@
 			<h:message for="password" style="color:red;" showDetail="true"/>
 			
 			<h:outputText value="Confirmer votre mot de passe"/>
-			<h:inputSecret id="password2" value="#{ParticipantViewer.passwordConfirmation}" required="true">
+			<h:inputSecret id="password2" value="#{ParticipantViewer.passwordConfirmation}">
+				<f:validator validatorId="equalValidator"/>
+				<f:attribute name="password" value="#{ParticipantViewer.participant.password}"/>
 			</h:inputSecret>
 			<h:message for="password2" style="color:red;" showDetail="true"/>
+			
 		</h:panelGrid>
 		<h:panelGrid columns="2">
 			<h:commandButton value="S'enregistrer" action="#{ParticipantViewer.saveParticipantAction}"/>
