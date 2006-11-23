@@ -222,6 +222,8 @@ public class ActivityTest extends TestCase {
 		Set<BreakdownElement> set = new HashSet<BreakdownElement>() ;
 		set.add(breakdownElement) ;
 		set.add(tmp) ;
+		
+		assertTrue(set.size() == 2);
 
 		this.activity.addToAllBreakdownElements(set);
 		this.activity.removeFromAllBreakdownElements() ;
