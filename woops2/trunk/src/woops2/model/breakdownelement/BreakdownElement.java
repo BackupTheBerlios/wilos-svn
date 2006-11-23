@@ -93,7 +93,7 @@ public class BreakdownElement extends Element implements Cloneable {
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.prefix).append(this.hasMultipleOccurrences).append(this.isOptional)
-				.append(this.isPlanned)/*.append(this.getSuperActivities())*/.toHashCode() ; // FIXME a debattre si on fé le hashcode sur les collections
+				.append(this.isPlanned)/*.append(this.getSuperActivities())*/.toHashCode() ; // TODO a debattre si on fé le hashcode sur les collections
 	}
 
 	/**
