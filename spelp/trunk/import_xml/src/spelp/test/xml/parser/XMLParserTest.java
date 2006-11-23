@@ -1,5 +1,6 @@
 package spelp.test.xml.parser;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -35,6 +36,7 @@ public class XMLParserTest extends XMLParser {
 			}
 	}
 	
+	
 	public void testGetProcess(){
 		File[] f = new File[]{
 				pathScrum,pathOPenUP
@@ -47,6 +49,7 @@ public class XMLParserTest extends XMLParser {
 	
 	@Test
 	public void testGetAllTaskDescriptors() {
+		System.out.println("Test de getAllTaskDescriptors");
 		File[] f = new File[]{
 			pathScrum,pathOPenUP
 		};
@@ -90,7 +93,9 @@ public class XMLParserTest extends XMLParser {
 		}
 	}
 	
+	@Test
 	public void testSetAllRoleDescriptors() {
+		System.out.println("Test de getAllRoleDescriptors");
 		File[] f = new File[]{
 				pathScrum,pathOPenUP
 			};
@@ -104,26 +109,22 @@ public class XMLParserTest extends XMLParser {
 					assertTrue(aSet.size() != 0);
 					// test if all role are unique
 					for (Iterator i = aSet.iterator() ; i.hasNext() ; ){
-						RoleDefinition t = ((RoleDescriptor)i.next()).getRoleDefinition();
-						if (t!=null){
-							for (int j = 0 ; j < v.size() ; j++){
-								System.out.println("\nID : \n" + t.getId() + "\n" + ((RoleDefinition)v.get(j)).getId() + "\nMemes ref : " + (t == ((RoleDefinition)v.get(j))));
-								assertTrue(
-									t.getId().equals(((RoleDefinition)v.get(j)).getId()) && t == ((RoleDefinition)v.get(j))
-									||
-									!t.getId().equals(((RoleDefinition)v.get(j)).getId())
-								);
-							}
-							if (!v.contains(t)){
-								v.add(t);
-							}
+						RoleDescriptor rd = (RoleDescriptor)i.next() ;
+						RoleDefinition t = rd.getRoleDefinition();
+						assertNotNull(t);
+						System.out.println("ROLE DESCRIPTOR : " + rd.getName() + " ROLE DEF : " +  t.getName()+" :\n"+t.getDescription()+"\n");
+						for (int j = 0 ; j < v.size() ; j++){
+							//System.out.println("\nID : \n" + t.getId() + "\n" + ((RoleDefinition)v.get(j)).getId() + "\nMemes ref : " + (t == ((RoleDefinition)v.get(j))));
+							assertTrue(
+								t.getId().equals(((RoleDefinition)v.get(j)).getId()) && t == ((RoleDefinition)v.get(j))
+								||
+								!t.getId().equals(((RoleDefinition)v.get(j)).getId())
+							);
+						}
+						if (!v.contains(t)){
+							v.add(t);
 						}
 					}
-				
-
-					for(int i=0;i<v.size();i++)
-						System.out.println(v.get(i).getName()+" :\n"+v.get(i).getDescription()+"\n");
-					
 				} catch (Exception e) {
 				System.out.println("Exception");
 				fail();
