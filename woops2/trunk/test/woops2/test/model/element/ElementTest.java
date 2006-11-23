@@ -13,6 +13,8 @@ public class ElementTest extends TestCase {
 
 	private Element element;
 
+	public static final String IDEPF = "idEPF";
+	
 	public static final String NAME = "name";
 
 	public static final String DESCRIPTION = "description";
@@ -27,6 +29,7 @@ public class ElementTest extends TestCase {
 		this.element = new Element();
 		this.element.setDescription(DESCRIPTION);
 		this.element.setName(NAME);
+		this.element.setName(IDEPF);
 	}
 
 	/*
@@ -46,6 +49,7 @@ public class ElementTest extends TestCase {
 		element = new Element();
 		element.setDescription(DESCRIPTION);
 		element.setName(NAME);
+		element.setName(IDEPF);
 		
 		assertNotNull(this.element.hashCode());
 		assertNotNull(element.hashCode());
@@ -71,6 +75,7 @@ public class ElementTest extends TestCase {
 		Element element = new Element();
 		element.setDescription(DESCRIPTION);
 		element.setName(NAME);
+		element.setName(IDEPF);
 
 		assertTrue(this.element.equals(element));
 	}
