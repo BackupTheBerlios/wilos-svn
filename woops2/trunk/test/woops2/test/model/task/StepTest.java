@@ -31,7 +31,7 @@ public class StepTest extends TestCase {
 		this.step = new Step() ;
 		this.step.setDescription(DESCRIPTION) ;
 		this.step.setName(NAME) ;
-		this.step.setName(IDEPF) ;
+		this.step.setIdEPF(IDEPF) ;
 	}
 
 	/*
@@ -63,14 +63,14 @@ public class StepTest extends TestCase {
 	 * Test method for {@link woops2.model.task.Step#hashCode()}.
 	 */
 	public void testHashCode() {
-		Step step = new Step() ;
-		step.setDescription(DESCRIPTION) ;
-		step.setName(NAME) ;
-		step.setName(IDEPF) ;
+		Step stp = new Step() ;
+		stp.setDescription(DESCRIPTION) ;
+		stp.setName(NAME) ;
+		stp.setIdEPF(IDEPF) ;
 
 		assertNotNull(this.step.hashCode()) ;
-		assertNotNull(step.hashCode()) ;
-		assertEquals(this.step.hashCode(), step.hashCode()) ;
+		assertNotNull(stp.hashCode()) ;
+		assertEquals(this.step.hashCode(), stp.hashCode()) ;
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class StepTest extends TestCase {
 		Step step = new Step() ;
 		step.setDescription(DESCRIPTION) ;
 		step.setName(NAME) ;
-		step.setName(IDEPF) ;
+		step.setIdEPF(IDEPF) ;
 
 		assertTrue("Field by field", this.step.equals(step)) ;
 
@@ -93,7 +93,7 @@ public class StepTest extends TestCase {
 		Step step2 = new Step() ;
 		step2.setDescription("description2") ;
 		step2.setName("name2") ;
-		step2.setName("idEPF2") ;
+		step2.setIdEPF("idEPF2") ;
 
 		assertFalse("Not equals", this.step.equals(step2)) ;
 	}
@@ -106,7 +106,7 @@ public class StepTest extends TestCase {
 		TaskDefinition taskDefinition = new TaskDefinition() ;
 		taskDefinition.setDescription(DESCRIPTION) ;
 		taskDefinition.setName(NAME) ;
-		taskDefinition.setName(IDEPF) ;
+		taskDefinition.setIdEPF(IDEPF) ;
 
 		this.step.addToTaskDefinition(taskDefinition) ;
 
@@ -122,7 +122,7 @@ public class StepTest extends TestCase {
 		TaskDefinition taskDefinition = new TaskDefinition() ;
 		taskDefinition.setDescription(DESCRIPTION) ;
 		taskDefinition.setName(NAME) ;
-		taskDefinition.setName(IDEPF) ;
+		taskDefinition.setIdEPF(IDEPF) ;
 
 		this.step.addToTaskDefinition(taskDefinition) ;
 		this.step.removeFromTaskDefinition(taskDefinition) ;
