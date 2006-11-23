@@ -17,18 +17,6 @@ import woops2.model.breakdownelement.BreakdownElement;
 public class BreakdownElementTest extends TestCase {
 
 	private BreakdownElement breakdownElement ;
-	
-	public static final String NAME = "name";
-
-	public static final String DESCRIPTION = "description";
-	
-	public static final String PREFIX = "prefix";
-	
-	public static final Boolean IS_OPTIONAL = true;
-	
-	public static final Boolean IS_PLANNED = true;
-	
-	public static final Boolean HAS_MULTIPLE = false;
 
 	/*
 	 * (non-Javadoc)
@@ -38,12 +26,10 @@ public class BreakdownElementTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp() ;
 		this.breakdownElement = new BreakdownElement() ;
-		this.breakdownElement.setName(NAME) ;
-		this.breakdownElement.setDescription(DESCRIPTION) ;
-		this.breakdownElement.setPrefix(PREFIX) ;
-		this.breakdownElement.setIsOptional(IS_OPTIONAL) ;
-		this.breakdownElement.setIsPlanned(IS_PLANNED) ;
-		this.breakdownElement.setHasMultipleOccurrences(HAS_MULTIPLE) ;
+		this.breakdownElement.setPrefix("prefix1") ;
+		this.breakdownElement.setIsOptional(true) ;
+		this.breakdownElement.setIsPlanned(false) ;
+		this.breakdownElement.setHasMultipleOccurrences(false) ;
 	}
 
 	/*
@@ -60,8 +46,7 @@ public class BreakdownElementTest extends TestCase {
 	 */
 	public void testClone() {
 		try{
-			BreakdownElement bde = (BreakdownElement)this.breakdownElement.clone();
-			assertTrue(this.breakdownElement.equals(bde)) ;
+			assertEquals(this.breakdownElement, this.breakdownElement.clone()) ;
 		}
 		catch(CloneNotSupportedException e){
 			fail("Error CloneNotSupportedException in the testClone method") ;
@@ -75,12 +60,10 @@ public class BreakdownElementTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		BreakdownElement bdeTmp1 = new BreakdownElement() ;
-		bdeTmp1.setName(NAME) ;
-		bdeTmp1.setDescription(DESCRIPTION) ;
-		bdeTmp1.setPrefix(PREFIX) ;
-		bdeTmp1.setIsOptional(IS_OPTIONAL) ;
-		bdeTmp1.setIsPlanned(IS_PLANNED) ;
-		bdeTmp1.setHasMultipleOccurrences(HAS_MULTIPLE) ;
+		bdeTmp1.setPrefix("prefix1") ;
+		bdeTmp1.setIsOptional(true) ;
+		bdeTmp1.setIsPlanned(false) ;
+		bdeTmp1.setHasMultipleOccurrences(false) ;
 
 		assertNotNull(this.breakdownElement.hashCode()) ;
 		assertNotNull(bdeTmp1.hashCode()) ;
@@ -100,18 +83,15 @@ public class BreakdownElementTest extends TestCase {
 		assertTrue("By references", this.breakdownElement.equals(this.breakdownElement)) ;
 
 		// Assert if it's equal field by field.
-		BreakdownElement bdeTmp1 = null;
-		try {
-			bdeTmp1 = (BreakdownElement)this.breakdownElement.clone();
-		} catch (CloneNotSupportedException e) {
-			fail("Error CloneNotSupportedException in the testEquals method");
-		}
+		BreakdownElement bdeTmp1 = new BreakdownElement() ;
+		bdeTmp1.setPrefix("prefix1") ;
+		bdeTmp1.setIsOptional(true) ;
+		bdeTmp1.setIsPlanned(false) ;
+		bdeTmp1.setHasMultipleOccurrences(false) ;
 		assertTrue("Field by field", this.breakdownElement.equals(bdeTmp1)) ;
 
 		// Assert if it's not equal.
 		BreakdownElement bdeTmp2 = new BreakdownElement() ;
-		bdeTmp2.setName("name2") ;
-		bdeTmp2.setDescription("description2") ;
 		bdeTmp2.setPrefix("prefix2") ;
 		bdeTmp2.setIsOptional(true) ;
 		bdeTmp2.setIsPlanned(false) ;
@@ -131,6 +111,7 @@ public class BreakdownElementTest extends TestCase {
 		assertTrue("Empty (begin)", this.breakdownElement.getSuperActivities().isEmpty()) ;
 
 		Activity activity1 = new Activity() ;
+		activity1.setIdEPF("idEPF");
 		activity1.setName("name1") ;
 		activity1.setDescription("description1") ;
 		activity1.setPrefix("prefix1") ;
@@ -145,6 +126,7 @@ public class BreakdownElementTest extends TestCase {
 		assertTrue("bdes.size1 == 1", activity1.getBreakDownElements().size() == 1) ;
 
 		Activity activity2 = new Activity() ;
+		activity2.setIdEPF("idEPF");
 		activity2.setName("name2") ;
 		activity2.setDescription("description2") ;
 		activity2.setPrefix("prefix2") ;
@@ -169,7 +151,7 @@ public class BreakdownElementTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		Activity activity1 = new Activity() ;
-		activity1 = new Activity() ;
+		activity1.setIdEPF("idEPF");
 		activity1.setName("name1") ;
 		activity1.setDescription("description1") ;
 		activity1.setPrefix("prefix1") ;
@@ -181,7 +163,7 @@ public class BreakdownElementTest extends TestCase {
 		activity1.setIsRepeatable(true) ;
 
 		Activity activity2 = new Activity() ;
-		activity2 = new Activity() ;
+		activity2.setIdEPF("idEPF");
 		activity2.setName("name2") ;
 		activity2.setDescription("description2") ;
 		activity2.setPrefix("prefix2") ;
@@ -213,7 +195,7 @@ public class BreakdownElementTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		Activity activity = new Activity() ;
-		activity = new Activity() ;
+		activity.setIdEPF("idEPF");
 		activity.setName("name1") ;
 		activity.setDescription("description1") ;
 		activity.setPrefix("prefix1") ;
@@ -240,7 +222,7 @@ public class BreakdownElementTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		Activity activity = new Activity() ;
-		activity = new Activity() ;
+		activity.setIdEPF("idEPF");
 		activity.setName("name1") ;
 		activity.setDescription("description1") ;
 		activity.setPrefix("prefix1") ;
@@ -252,7 +234,7 @@ public class BreakdownElementTest extends TestCase {
 		activity.setIsRepeatable(true) ;
 
 		Activity activity2 = new Activity() ;
-		activity2 = new Activity() ;
+		activity2.setIdEPF("idEPF");
 		activity2.setName("name2") ;
 		activity2.setDescription("description2") ;
 		activity2.setPrefix("prefix2") ;
