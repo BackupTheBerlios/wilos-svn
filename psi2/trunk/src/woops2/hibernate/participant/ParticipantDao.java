@@ -39,6 +39,17 @@ public class ParticipantDao extends HibernateDaoSupport {
 	}
 
 	/**
+	 * Return a set of Participants.
+	 * 
+	 * @return
+	 */
+	public Set <Participant> getAllParticipants () {
+		Set <Participant> loadAll = new HashSet<Participant>() ;
+		loadAll.addAll(this.getHibernateTemplate().loadAll(Participant.class)) ;
+		return loadAll ;
+	}
+	
+	/**
 	 * Return the element which have the id _id.
 	 * 
 	 * @param _id
