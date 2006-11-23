@@ -126,8 +126,8 @@ public class TaskDescriptorTest extends TestCase {
 		this.taskDescriptor.addToTaskDefinition(taskDefinition);
 		this.taskDescriptor.removeFromTaskDefinition(taskDefinition);
 
-		assertNull(this.taskDescriptor.getTaskDefinition());
-		assertTrue(taskDefinition.getTaskDescriptors().isEmpty());
+		assertNull("null", this.taskDescriptor.getTaskDefinition());
+		assertTrue("empty", taskDefinition.getTaskDescriptors().isEmpty());
 	}
 
 	/**

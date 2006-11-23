@@ -172,8 +172,8 @@ public class TaskDescriptor extends WorkBreakdownElement {
 	 * @param _taskDefinition
 	 */
 	public void removeFromTaskDefinition(TaskDefinition _taskDefinition) {
-		this.taskDefinition = null;
 		_taskDefinition.getTaskDescriptors().remove(this);
+		this.taskDefinition = null;
 	}
 
 	/**
