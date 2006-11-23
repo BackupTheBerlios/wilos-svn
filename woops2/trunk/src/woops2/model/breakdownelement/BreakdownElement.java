@@ -127,9 +127,9 @@ public class BreakdownElement extends Element {
 	 */
 	@ Override
 	public Object clone() throws CloneNotSupportedException {
-		Activity activity = new Activity() ;
-		activity.copy(this) ;
-		return activity ;
+		BreakdownElement breakdownElement = new BreakdownElement() ;
+		breakdownElement.copy(this) ;
+		return breakdownElement ;
 	}
 
 	/**

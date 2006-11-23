@@ -23,35 +23,14 @@ import woops2.model.workbreakdownelement.WorkBreakdownElement;
 public class Activity extends WorkBreakdownElement {
 
 	private Set<BreakdownElement> breakdownElements;
-	
+
 	/**
 	 * Constructor.
 	 * 
 	 */
 	public Activity() {
 		super();
-
 		this.breakdownElements = new HashSet<BreakdownElement>();
-	}
-	
-	/**
-	 * Getter of breakDownElements.
-	 * 
-	 * @return the breakDownElements.
-	 */
-	public Set<BreakdownElement> getBreakDownElements() {
-		return this.breakdownElements;
-	}
-
-	/**
-	 * Setter of breakDownElements.
-	 * 
-	 * @param _breakDownElements
-	 *            The breakDownElements to set.
-	 */
-	@SuppressWarnings("unused")
-	private void setBreakDownElements(Set<BreakdownElement> _breakDownElements) {
-		this.breakdownElements.addAll(_breakDownElements);
 	}
 
 	/**
@@ -67,9 +46,8 @@ public class Activity extends WorkBreakdownElement {
 			return true;
 		}
 		Activity activity = (Activity) obj;
-		return new EqualsBuilder().appendSuper(super.equals(activity))
-								  .append(this.breakdownElements, activity.breakdownElements)
-								  .isEquals();
+		return new EqualsBuilder().appendSuper(super.equals(activity)).append(
+				this.breakdownElements, activity.breakdownElements).isEquals();
 	}
 
 	/**
@@ -79,8 +57,7 @@ public class Activity extends WorkBreakdownElement {
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
-										  .append(this.breakdownElements)
-										  .toHashCode();
+				.append(this.breakdownElements).toHashCode();
 	}
 
 	/**
@@ -121,7 +98,7 @@ public class Activity extends WorkBreakdownElement {
 	 * 
 	 */
 	public void removeFromAllBreakdownElements() {
-		for (BreakdownElement bde : this.getBreakDownElements()) { 
+		for (BreakdownElement bde : this.getBreakDownElements()) {
 			this.removeFromBreakdownElement(bde);
 		}
 	}
@@ -137,12 +114,32 @@ public class Activity extends WorkBreakdownElement {
 		activity.copy(this);
 		return activity;
 	}
-	
+
 	/**
 	 * Copy the _activity into this.
 	 */
 	protected void copy(final Activity _activity) {
-		super.copy(_activity) ;
+		super.copy(_activity);
 		this.setBreakDownElements(_activity.getBreakDownElements());
+	}
+
+	/**
+	 * Getter of breakDownElements.
+	 * 
+	 * @return the breakDownElements.
+	 */
+	public Set<BreakdownElement> getBreakDownElements() {
+		return this.breakdownElements;
+	}
+
+	/**
+	 * Setter of breakDownElements.
+	 * 
+	 * @param _breakDownElements
+	 *            The breakDownElements to set.
+	 */
+	@SuppressWarnings("unused")
+	private void setBreakDownElements(Set<BreakdownElement> _breakDownElements) {
+		this.breakdownElements.addAll(_breakDownElements);
 	}
 }
