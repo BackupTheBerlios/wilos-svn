@@ -175,8 +175,8 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
-				.append(this.roleDefinition).append(this.additionalTasks)
-				.append(this.primaryTasks)/*.append(this.participants)TODO*/
+				.append(this.roleDefinition)/*.append(this.additionalTasks)
+				.append(this.primaryTasks)TO DECIDE*//*.append(this.participants)TODO*/
 				.toHashCode();
 	}
 

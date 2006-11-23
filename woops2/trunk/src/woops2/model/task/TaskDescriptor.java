@@ -152,7 +152,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
-				.append(this.taskDefinition).append(this.additionalRoles)
+				.append(this.taskDefinition)/*.append(this.additionalRoles)*/
 				.append(this.mainRole).toHashCode();
 	}
 

@@ -140,7 +140,7 @@ public class RoleDefinitionTest extends TestCase {
 		role.setDescription(DESCRIPTION);
 
 		RoleDescriptor tmp = new RoleDescriptor();
-		tmp.setName("nom");
+		tmp.setName(NAME2);
 		tmp.setDescription(DESCRIPTION);
 
 		Set<RoleDescriptor> set = new HashSet<RoleDescriptor>();

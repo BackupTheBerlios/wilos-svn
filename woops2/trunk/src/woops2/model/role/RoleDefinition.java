@@ -78,7 +78,7 @@ public class RoleDefinition extends Element implements Cloneable {
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
-				.append(this.roleDescriptors).toHashCode();
+				/*.append(this.roleDescriptors)*/.toHashCode();
 	}
 
 	/*

@@ -63,7 +63,7 @@ public class TaskDefinition extends Element implements Cloneable {
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
-				.append(this.steps).append(this.taskDescriptors).toHashCode();
+				/*.append(this.steps).append(this.taskDescriptors)*/.toHashCode();
 	}
 
 	/*
