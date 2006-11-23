@@ -27,6 +27,9 @@ public class Element implements Cloneable {
 	 * 
 	 */
 	public Element() {
+		this.idEPF = "";
+		this.name = "";
+		this.description = "";
 	}
 
 	/*
