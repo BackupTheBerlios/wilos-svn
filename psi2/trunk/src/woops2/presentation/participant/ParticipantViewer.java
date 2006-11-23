@@ -26,6 +26,7 @@ public class ParticipantViewer{
 	private ParticipantManager participantManager ;
 
 	private Participant participant ;
+	private String passwordConfirmation;
 
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 

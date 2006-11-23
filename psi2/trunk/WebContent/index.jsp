@@ -2,5 +2,6 @@
 
 <%  
 	//response.sendRedirect("activity.jsf");
-	response.sendRedirect("participant_logging.jsf");
+	//response.sendRedirect("participant_logging.jsf");
+	response.sendRedirect("participantSubscribe.jsf");
 %>

@@ -36,11 +36,18 @@
 	<validator>
 		<validator-id>emailValidator</validator-id>
 		<validator-class>
-			woops2.presentation.validators.emailValidator
+			woops2.presentation.validators.EmailValidator
 		</validator-class>
 	</validator>
 	
-	<!--   PSI2  -->
+	<!-- <validator>
+		<validator-id>equalValidator</validator-id>
+		<validator-class>
+			woops2.presentation.validators.EqualValidator
+		</validator-class>
+	</validator>-->
+	
+	  <!-- PSI2  -->
 	
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
