@@ -211,7 +211,7 @@ public class ActivityTest extends TestCase {
 		breakdownElement.setHasMultipleOccurrences(false) ;
 
 		BreakdownElement tmp = new BreakdownElement() ;
-		breakdownElement.setIdEPF("idEPF2");
+		tmp.setIdEPF("idEPF2");
 		tmp.setName("name2") ;
 		tmp.setDescription("description1") ;
 		tmp.setPrefix("prefix1") ;
