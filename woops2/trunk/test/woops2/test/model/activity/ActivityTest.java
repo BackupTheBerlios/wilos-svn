@@ -26,15 +26,16 @@ public class ActivityTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp() ;
 		this.activity = new Activity() ;
-		activity.setName("name1") ;
-		activity.setDescription("description1") ;
-		activity.setPrefix("prefix1") ;
-		activity.setIsOptional(true) ;
-		activity.setIsPlanned(false) ;
-		activity.setHasMultipleOccurrences(false) ;
-		activity.setIsEvenDriven(true) ;
-		activity.setIsOngoing(false) ;
-		activity.setIsRepeatable(true) ;
+		this.activity.setIdEPF("idEPF1");
+		this.activity.setName("name1") ;
+		this.activity.setDescription("description1") ;
+		this.activity.setPrefix("prefix1") ;
+		this.activity.setIsOptional(true) ;
+		this.activity.setIsPlanned(false) ;
+		this.activity.setHasMultipleOccurrences(false) ;
+		this.activity.setIsEvenDriven(true) ;
+		this.activity.setIsOngoing(false) ;
+		this.activity.setIsRepeatable(true) ;
 	}
 
 	/*
@@ -61,7 +62,22 @@ public class ActivityTest extends TestCase {
 	 * Test method for {@link woops2.model.activity.Activity#hashCode()}.
 	 */
 	public void testHashCode() {
-		assertNotNull(this.activity.hashCode()) ;
+		
+		Activity tmp = new Activity() ;
+		tmp.setIdEPF("idEPF1");
+		tmp.setName("name1") ;
+		tmp.setDescription("description1") ;
+		tmp.setPrefix("prefix1") ;
+		tmp.setIsOptional(true) ;
+		tmp.setIsPlanned(false) ;
+		tmp.setHasMultipleOccurrences(false) ;
+		tmp.setIsEvenDriven(true) ;
+		tmp.setIsOngoing(false) ;
+		tmp.setIsRepeatable(true) ;
+		
+		assertNotNull(this.activity.hashCode());
+		assertNotNull(activity.hashCode());
+		assertEquals(this.activity.hashCode(),tmp.hashCode());
 	}
 
 	/**
@@ -70,6 +86,7 @@ public class ActivityTest extends TestCase {
 	public void testEqualsObject() {
 		
 		Activity tmp = new Activity() ;
+		tmp.setIdEPF("idEPF1");
 		tmp.setName("name1") ;
 		tmp.setDescription("description1") ;
 		tmp.setPrefix("prefix1") ;
@@ -83,6 +100,7 @@ public class ActivityTest extends TestCase {
 		assertTrue(this.activity.equals(tmp)) ;
 		
 		Activity act = new Activity() ;
+		act.setIdEPF("idEPF2");
 		act.setName("name2") ;
 		act.setDescription("description2") ;
 		act.setPrefix("prefix2") ;
@@ -103,6 +121,7 @@ public class ActivityTest extends TestCase {
 	public void testAddToBreakdownElement() {
 		
 		BreakdownElement breakdownElement = new BreakdownElement() ;
+		breakdownElement.setIdEPF("idEPF1");
 		breakdownElement.setName("name1") ;
 		breakdownElement.setDescription("description1") ;
 		breakdownElement.setPrefix("prefix1") ;
@@ -125,6 +144,7 @@ public class ActivityTest extends TestCase {
 	public void testAddToAllBreakdownElement() {
 		
 		BreakdownElement breakdownElement = new BreakdownElement() ;
+		breakdownElement.setIdEPF("idEPF1");
 		breakdownElement.setName("name1") ;
 		breakdownElement.setDescription("description1") ;
 		breakdownElement.setPrefix("prefix1") ;
@@ -133,6 +153,7 @@ public class ActivityTest extends TestCase {
 		breakdownElement.setHasMultipleOccurrences(false) ;
 
 		BreakdownElement tmp = new BreakdownElement() ;
+		tmp.setIdEPF("idEPF2");
 		tmp.setName("name2") ;
 		tmp.setDescription("description1") ;
 		tmp.setPrefix("prefix1") ;
@@ -160,6 +181,7 @@ public class ActivityTest extends TestCase {
 	 */
 	public void testRemoveFromBreakdownElement() {
 		BreakdownElement breakdownElement = new BreakdownElement() ;
+		breakdownElement.setIdEPF("idEPF1");
 		breakdownElement.setName("name1") ;
 		breakdownElement.setDescription("description1") ;
 		breakdownElement.setPrefix("prefix1") ;
@@ -180,6 +202,7 @@ public class ActivityTest extends TestCase {
 	public void testRemoveFromAllBreakdownElements() {
 
 		BreakdownElement breakdownElement = new BreakdownElement() ;
+		breakdownElement.setIdEPF("idEPF1");
 		breakdownElement.setName("name1") ;
 		breakdownElement.setDescription("description1") ;
 		breakdownElement.setPrefix("prefix1") ;
@@ -188,6 +211,7 @@ public class ActivityTest extends TestCase {
 		breakdownElement.setHasMultipleOccurrences(false) ;
 
 		BreakdownElement tmp = new BreakdownElement() ;
+		breakdownElement.setIdEPF("idEPF2");
 		tmp.setName("name2") ;
 		tmp.setDescription("description1") ;
 		tmp.setPrefix("prefix1") ;
