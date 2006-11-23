@@ -132,8 +132,11 @@ public class BreakdownElement extends Element implements Cloneable {
 	 * 
 	 */
 	public void removeFromAllActivities() {
+		/*for(Activity activity : this.getSuperActivities())
+			this.removeFromActivity(activity) ;*/
 		for(Activity activity : this.getSuperActivities())
-			this.removeFromActivity(activity) ;
+			activity.getBreakDownElements().remove(this);
+		this.getSuperActivities().clear();
 	}
 
 	/**

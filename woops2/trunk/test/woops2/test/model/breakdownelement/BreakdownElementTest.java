@@ -256,6 +256,13 @@ public class BreakdownElementTest extends TestCase {
 		activity2.setIsEvenDriven(true) ;
 		activity2.setIsOngoing(false) ;
 		activity2.setIsRepeatable(true) ;
+		
+		Set<Activity> set = new HashSet<Activity>() ;
+		set.add(activity) ;
+		set.add(activity2) ;
+		
+		this.breakdownElement.addToAllActivities(set);
+		this.breakdownElement.removeFromAllActivities();
 
 		assertTrue(this.breakdownElement.getSuperActivities().isEmpty()) ;
 		assertTrue(activity.getBreakDownElements().isEmpty()) ;

@@ -91,7 +91,7 @@ public class WorkBreakdownElementTest extends TestCase {
 		// Assert if it's equal field by field.
 		WorkBreakdownElement bdeTmp1 = null;
 		try {
-			bdeTmp1 = (WorkBreakdownElement)this.workBreakdownElement.clone();
+			bdeTmp1 = this.workBreakdownElement.clone();
 		} catch (CloneNotSupportedException e) {
 			fail("Error CloneNotSupportedException in the testEquals method");
 		}

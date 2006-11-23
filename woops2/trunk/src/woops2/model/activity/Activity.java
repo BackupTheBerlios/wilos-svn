@@ -1,14 +1,14 @@
 
 package woops2.model.activity ;
 
-import java.util.HashSet ;
-import java.util.Set ;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.apache.commons.lang.builder.EqualsBuilder ;
-import org.apache.commons.lang.builder.HashCodeBuilder ;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
-import woops2.model.breakdownelement.BreakdownElement ;
-import woops2.model.workbreakdownelement.WorkBreakdownElement ;
+import woops2.model.breakdownelement.BreakdownElement;
+import woops2.model.workbreakdownelement.WorkBreakdownElement;
 
 /**
  * @author deder.
@@ -55,9 +55,17 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 * @return a hash code
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())/*.append(this.breakdownElements)*/.toHashCode() ; // TODO a decider si on l'inclue ou pas (reunion)
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())/* .append(this.breakdownElements) */.toHashCode() ; // TODO
+																															// a
+																															// decider
+																															// si
+																															// on
+																															// l'inclue
+																															// ou
+																															// pas
+																															// (reunion)
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -114,9 +122,16 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 * 
 	 */
 	public void removeFromAllBreakdownElements() {
-		for(BreakdownElement bde : this.getBreakDownElements()){
+		/*for(BreakdownElement bde : this.getBreakDownElements()){
 			this.removeFromBreakdownElement(bde) ;
-		}
+		}*/
+		/*Iterator<BreakdownElement> iterator = this.getBreakDownElements().iterator();
+        while(iterator.hasNext()){
+        	this.removeFromBreakdownElement(iterator.next()) ;
+        }*/
+		for(BreakdownElement bde : this.getBreakDownElements())
+			bde.getSuperActivities().remove(this);
+		this.getBreakDownElements().clear();
 	}
 
 	/**
