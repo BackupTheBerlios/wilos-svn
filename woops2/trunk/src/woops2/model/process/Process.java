@@ -32,7 +32,7 @@ public class Process extends Activity implements Cloneable {
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
-	public Activity clone() throws CloneNotSupportedException {
+	public Process clone() throws CloneNotSupportedException {
 		Process process = new Process();
 		process.copy(this);
 		return process;

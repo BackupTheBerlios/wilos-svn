@@ -1,12 +1,12 @@
 
 package woops2.test.model.breakdownelement ;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashSet ;
+import java.util.Set ;
 
-import junit.framework.TestCase;
-import woops2.model.activity.Activity;
-import woops2.model.breakdownelement.BreakdownElement;
+import junit.framework.TestCase ;
+import woops2.model.activity.Activity ;
+import woops2.model.breakdownelement.BreakdownElement ;
 
 /**
  * This class represents the class test of the BreakdownElement class.
@@ -26,9 +26,9 @@ public class BreakdownElementTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp() ;
 		this.breakdownElement = new BreakdownElement() ;
-		this.breakdownElement.setIdEPF("idEPF1");
-		this.breakdownElement.setName("name1");
-		this.breakdownElement.setDescription("description1");
+		this.breakdownElement.setIdEPF("idEPF1") ;
+		this.breakdownElement.setName("name1") ;
+		this.breakdownElement.setDescription("description1") ;
 		this.breakdownElement.setPrefix("prefix1") ;
 		this.breakdownElement.setIsOptional(true) ;
 		this.breakdownElement.setIsPlanned(false) ;
@@ -63,9 +63,9 @@ public class BreakdownElementTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		BreakdownElement bdeTmp1 = new BreakdownElement() ;
-		bdeTmp1.setIdEPF("idEPF1");
-		bdeTmp1.setName("name1");
-		bdeTmp1.setDescription("description1");
+		bdeTmp1.setIdEPF("idEPF1") ;
+		bdeTmp1.setName("name1") ;
+		bdeTmp1.setDescription("description1") ;
 		bdeTmp1.setPrefix("prefix1") ;
 		bdeTmp1.setIsOptional(true) ;
 		bdeTmp1.setIsPlanned(false) ;
@@ -76,7 +76,6 @@ public class BreakdownElementTest extends TestCase {
 		assertEquals(this.breakdownElement.hashCode(), bdeTmp1.hashCode()) ;
 
 		// Rk: the tearDown method is called here.
-
 	}
 
 	/**
@@ -90,9 +89,9 @@ public class BreakdownElementTest extends TestCase {
 
 		// Assert if it's equal field by field.
 		BreakdownElement bdeTmp1 = new BreakdownElement() ;
-		bdeTmp1.setIdEPF("idEPF1");
-		bdeTmp1.setName("name1");
-		bdeTmp1.setDescription("description1");
+		bdeTmp1.setIdEPF("idEPF1") ;
+		bdeTmp1.setName("name1") ;
+		bdeTmp1.setDescription("description1") ;
 		bdeTmp1.setPrefix("prefix1") ;
 		bdeTmp1.setIsOptional(true) ;
 		bdeTmp1.setIsPlanned(false) ;
@@ -101,9 +100,9 @@ public class BreakdownElementTest extends TestCase {
 
 		// Assert if it's not equal.
 		BreakdownElement bdeTmp2 = new BreakdownElement() ;
-		bdeTmp2.setIdEPF("idEPF2");
-		bdeTmp2.setName("name2");
-		bdeTmp2.setDescription("description2");
+		bdeTmp2.setIdEPF("idEPF2") ;
+		bdeTmp2.setName("name2") ;
+		bdeTmp2.setDescription("description2") ;
 		bdeTmp2.setPrefix("prefix2") ;
 		bdeTmp2.setIsOptional(true) ;
 		bdeTmp2.setIsPlanned(false) ;
@@ -123,7 +122,7 @@ public class BreakdownElementTest extends TestCase {
 		assertTrue("Empty (begin)", this.breakdownElement.getSuperActivities().isEmpty()) ;
 
 		Activity activity1 = new Activity() ;
-		activity1.setIdEPF("idEPF");
+		activity1.setIdEPF("idEPF") ;
 		activity1.setName("name1") ;
 		activity1.setDescription("description1") ;
 		activity1.setPrefix("prefix1") ;
@@ -138,7 +137,7 @@ public class BreakdownElementTest extends TestCase {
 		assertTrue("bdes.size1 == 1", activity1.getBreakDownElements().size() == 1) ;
 
 		Activity activity2 = new Activity() ;
-		activity2.setIdEPF("idEPF");
+		activity2.setIdEPF("idEPF") ;
 		activity2.setName("name2") ;
 		activity2.setDescription("description2") ;
 		activity2.setPrefix("prefix2") ;
@@ -163,7 +162,7 @@ public class BreakdownElementTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		Activity activity1 = new Activity() ;
-		activity1.setIdEPF("idEPF");
+		activity1.setIdEPF("idEPF") ;
 		activity1.setName("name1") ;
 		activity1.setDescription("description1") ;
 		activity1.setPrefix("prefix1") ;
@@ -175,7 +174,7 @@ public class BreakdownElementTest extends TestCase {
 		activity1.setIsRepeatable(true) ;
 
 		Activity activity2 = new Activity() ;
-		activity2.setIdEPF("idEPF");
+		activity2.setIdEPF("idEPF") ;
 		activity2.setName("name2") ;
 		activity2.setDescription("description2") ;
 		activity2.setPrefix("prefix2") ;
@@ -207,7 +206,7 @@ public class BreakdownElementTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		Activity activity = new Activity() ;
-		activity.setIdEPF("idEPF");
+		activity.setIdEPF("idEPF") ;
 		activity.setName("name1") ;
 		activity.setDescription("description1") ;
 		activity.setPrefix("prefix1") ;
@@ -234,7 +233,7 @@ public class BreakdownElementTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		Activity activity = new Activity() ;
-		activity.setIdEPF("idEPF");
+		activity.setIdEPF("idEPF") ;
 		activity.setName("name1") ;
 		activity.setDescription("description1") ;
 		activity.setPrefix("prefix1") ;
@@ -246,7 +245,7 @@ public class BreakdownElementTest extends TestCase {
 		activity.setIsRepeatable(true) ;
 
 		Activity activity2 = new Activity() ;
-		activity2.setIdEPF("idEPF");
+		activity2.setIdEPF("idEPF") ;
 		activity2.setName("name2") ;
 		activity2.setDescription("description2") ;
 		activity2.setPrefix("prefix2") ;
@@ -256,16 +255,17 @@ public class BreakdownElementTest extends TestCase {
 		activity2.setIsEvenDriven(true) ;
 		activity2.setIsOngoing(false) ;
 		activity2.setIsRepeatable(true) ;
-		
+
 		Set<Activity> set = new HashSet<Activity>() ;
 		set.add(activity) ;
 		set.add(activity2) ;
-		
-		this.breakdownElement.addToAllActivities(set);
-		this.breakdownElement.removeFromAllActivities();
+
+		this.breakdownElement.addToAllActivities(set) ;
+		this.breakdownElement.removeFromAllActivities() ;
 
 		assertTrue(this.breakdownElement.getSuperActivities().isEmpty()) ;
 		assertTrue(activity.getBreakDownElements().isEmpty()) ;
+		assertTrue(activity2.getBreakDownElements().isEmpty()) ;
 
 		// Rk: the tearDown method is called here.
 	}

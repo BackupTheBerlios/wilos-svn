@@ -1,31 +1,32 @@
-package woops2.test.model.role;
 
-import java.util.HashSet;
-import java.util.Set;
+package woops2.test.model.role ;
 
-import junit.framework.TestCase;
-import woops2.model.role.RoleDefinition;
-import woops2.model.role.RoleDescriptor;
+import java.util.HashSet ;
+import java.util.Set ;
+
+import junit.framework.TestCase ;
+import woops2.model.role.RoleDefinition ;
+import woops2.model.role.RoleDescriptor ;
 
 public class RoleDefinitionTest extends TestCase {
 
-	private RoleDefinition roleDefinition;
+	private RoleDefinition roleDefinition ;
 
-	public static final String NAME = "name";
+	public static final String NAME = "name" ;
 
-	public static final String NAME2 = "name1";
+	public static final String NAME2 = "name1" ;
 
-	public static final String DESCRIPTION = "roleDescriptor description";
+	public static final String DESCRIPTION = "roleDescriptor description" ;
 
-	public static final String DESCRIPTION2 = "description";
+	public static final String DESCRIPTION2 = "description" ;
 
-	public static final String PREFIX = "prefix";
+	public static final String PREFIX = "prefix" ;
 
-	public static final Boolean IS_OPTIONAL = true;
+	public static final Boolean IS_OPTIONAL = true ;
 
-	public static final Boolean HAS_MULTIPLE_OCCURENCES = true;
+	public static final Boolean HAS_MULTIPLE_OCCURENCES = true ;
 
-	public static final Boolean IS_PLANNED = true;
+	public static final Boolean IS_PLANNED = true ;
 
 	/*
 	 * (non-Javadoc)
@@ -33,10 +34,10 @@ public class RoleDefinitionTest extends TestCase {
 	 * @see junit.framework.TestCase#setUp()
 	 */
 	protected void setUp() throws Exception {
-		super.setUp();
-		this.roleDefinition = new RoleDefinition();
-		this.roleDefinition.setDescription(DESCRIPTION);
-		this.roleDefinition.setName(NAME);
+		super.setUp() ;
+		this.roleDefinition = new RoleDefinition() ;
+		this.roleDefinition.setDescription(DESCRIPTION) ;
+		this.roleDefinition.setName(NAME) ;
 	}
 
 	/*
@@ -45,7 +46,7 @@ public class RoleDefinitionTest extends TestCase {
 	 * @see junit.framework.TestCase#tearDown()
 	 */
 	protected void tearDown() throws Exception {
-		super.tearDown();
+		super.tearDown() ;
 	}
 
 	/**
@@ -54,11 +55,11 @@ public class RoleDefinitionTest extends TestCase {
 	public final void testClone() {
 		// Rk: the setUp method is called here.
 
-		try {
-			assertEquals((RoleDefinition) this.roleDefinition.clone(),
-					this.roleDefinition);
-		} catch (CloneNotSupportedException e) {
-			fail("Error CloneNotSupportedException in the testClone method");
+		try{
+			assertEquals(this.roleDefinition.clone(), this.roleDefinition) ;
+		}
+		catch(CloneNotSupportedException e){
+			fail("Error CloneNotSupportedException in the testClone method") ;
 		}
 
 		// Rk: the tearDown method is called here.
@@ -69,88 +70,89 @@ public class RoleDefinitionTest extends TestCase {
 	 */
 	public void testHashCode() {
 
-		roleDefinition = new RoleDefinition();
-		roleDefinition.setDescription(DESCRIPTION);
-		roleDefinition.setName(NAME);
+		RoleDefinition rd = new RoleDefinition() ;
+		rd.setDescription(DESCRIPTION) ;
+		rd.setName(NAME) ;
 
-		assertNotNull(this.roleDefinition.hashCode());
-		assertNotNull(roleDefinition.hashCode());
-		assertEquals(this.roleDefinition.hashCode(), roleDefinition.hashCode());
+		assertNotNull(this.roleDefinition.hashCode()) ;
+		assertNotNull(rd.hashCode()) ;
+		assertEquals(this.roleDefinition.hashCode(), rd.hashCode()) ;
 	}
 
 	/**
-	 * Test method for
-	 * {@link woops2.model.role.RoleDefinition#equals(java.lang.Object)}.
+	 * Test method for {@link woops2.model.role.RoleDefinition#equals(java.lang.Object)}.
 	 */
 	public void testEquals() {
-		RoleDefinition tmp = null;
-		try {
-			tmp = (RoleDefinition)this.roleDefinition.clone();
-		} catch (CloneNotSupportedException e) {
-			fail("Error CloneNotSupportedException in the testEquals method");
+		RoleDefinition tmp = null ;
+		try{
+			tmp = this.roleDefinition.clone() ;
 		}
-		assertTrue(this.roleDefinition.equals(tmp));
+		catch(CloneNotSupportedException e){
+			fail("Error CloneNotSupportedException in the testEquals method") ;
+		}
+		assertTrue(this.roleDefinition.equals(tmp)) ;
 
-		RoleDefinition role = new RoleDefinition();
-		role.setName("name2");
-		role.setDescription(DESCRIPTION);
+		RoleDefinition role = new RoleDefinition() ;
+		role.setName("name2") ;
+		role.setDescription(DESCRIPTION) ;
 
-		assertFalse(this.roleDefinition.equals(role));
+		assertFalse(this.roleDefinition.equals(role)) ;
 	}
 
 	/**
-	 * Test method for
-	 * {@link woops2.model.role.RoleDefinition#addRoleDescriptor()}.
+	 * Test method for {@link woops2.model.role.RoleDefinition#addRoleDescriptor()}.
 	 */
 	public void testAddRoleDescriptor() {
-		RoleDescriptor role = new RoleDescriptor();
-		role.setName(NAME);
-		role.setDescription(DESCRIPTION);
+		RoleDescriptor role = new RoleDescriptor() ;
+		role.setName(NAME) ;
+		role.setDescription(DESCRIPTION) ;
 
-		this.roleDefinition.addRoleDescriptor(role);
-		assertFalse(this.roleDefinition.getRoleDescriptors().isEmpty());
-		assertTrue(this.roleDefinition.getRoleDescriptors().size() == 1);
-
+		this.roleDefinition.addRoleDescriptor(role) ;
+		assertFalse(this.roleDefinition.getRoleDescriptors().isEmpty()) ;
+		assertTrue(this.roleDefinition.getRoleDescriptors().size() == 1) ;
 	}
 
 	/**
-	 * Test method for
-	 * {@link woops2.model.role.RoleDefinition#RemoveRoleDescriptor()}.
+	 * Test method for {@link woops2.model.role.RoleDefinition#RemoveRoleDescriptor()}.
 	 */
 	public void testRemoveRoleDescriptor() {
-		RoleDescriptor role = new RoleDescriptor();
-		role.setName(NAME);
-		role.setDescription(DESCRIPTION);
+		RoleDescriptor role = new RoleDescriptor() ;
+		role.setName(NAME) ;
+		role.setDescription(DESCRIPTION) ;
 
-		this.roleDefinition.addRoleDescriptor(role);
-		this.roleDefinition.removeRoleDescriptor(role);
-
-		assertTrue(this.roleDefinition.getRoleDescriptors().isEmpty());
-
+		this.roleDefinition.addRoleDescriptor(role) ;
+		assertFalse(this.roleDefinition.getRoleDescriptors().isEmpty()) ;
+		
+		this.roleDefinition.removeRoleDescriptor(role) ;
+		assertTrue(this.roleDefinition.getRoleDescriptors().isEmpty()) ;
 	}
 
 	/**
-	 * Test method for
-	 * {@link woops2.model.role.RoleDefinition#RemoveAllRoleDescriptor()}.
+	 * Test method for {@link woops2.model.role.RoleDefinition#RemoveAllRoleDescriptor()}.
 	 * 
 	 */
 	public void testRemoveAllRoleDescriptor() {
-		RoleDescriptor role = new RoleDescriptor();
-		role.setName(NAME);
-		role.setDescription(DESCRIPTION);
+		RoleDescriptor role = new RoleDescriptor() ;
+		role.setName(NAME) ;
+		role.setDescription(DESCRIPTION) ;
 
-		RoleDescriptor tmp = new RoleDescriptor();
-		tmp.setName(NAME2);
-		tmp.setDescription(DESCRIPTION);
+		RoleDescriptor tmp = new RoleDescriptor() ;
+		tmp.setName(NAME2) ;
+		tmp.setDescription(DESCRIPTION) ;
 
-		Set<RoleDescriptor> set = new HashSet<RoleDescriptor>();
-		set.add(role);
-		set.add(tmp);
+		Set<RoleDescriptor> set = new HashSet<RoleDescriptor>() ;
+		set.add(role) ;
+		set.add(tmp) ;
 
-		this.roleDefinition.addToAllRoleDescriptors(set);
-		this.roleDefinition.removeAllRoleDescriptor();
-
-		assertTrue(this.roleDefinition.getRoleDescriptors().isEmpty());
+		this.roleDefinition.addToAllRoleDescriptors(set) ;
+		assertNotNull(role.getRoleDefinition()) ;
+		assertNotNull(tmp.getRoleDefinition()) ;
+		assertTrue(this.roleDefinition.getRoleDescriptors().size() == set.size()) ;
+		
+		this.roleDefinition.removeAllRoleDescriptor() ;
+		assertNull(role.getRoleDefinition()) ;
+		assertNull(tmp.getRoleDefinition()) ;
+		assertTrue(this.roleDefinition.getRoleDescriptors().isEmpty()) ;
 	}
 
 	/**
@@ -158,21 +160,23 @@ public class RoleDefinitionTest extends TestCase {
 	 * {@link woops2.model.role.RoleDefinitionTest#addToAllRoleDescriptors(java.util.Set)}.
 	 */
 	public void testAddToAllRoleDescriptors() {
-		RoleDescriptor role = new RoleDescriptor();
-		role.setName(NAME2);
-		role.setDescription(DESCRIPTION2);
+		RoleDescriptor role = new RoleDescriptor() ;
+		role.setName(NAME2) ;
+		role.setDescription(DESCRIPTION2) ;
 
-		RoleDescriptor tmp = new RoleDescriptor();
-		tmp.setName(NAME);
-		tmp.setDescription(DESCRIPTION);
+		RoleDescriptor tmp = new RoleDescriptor() ;
+		tmp.setName(NAME) ;
+		tmp.setDescription(DESCRIPTION) ;
 
-		Set<RoleDescriptor> set = new HashSet<RoleDescriptor>();
-		set.add(role);
-		set.add(tmp);
+		Set<RoleDescriptor> set = new HashSet<RoleDescriptor>() ;
+		set.add(role) ;
+		set.add(tmp) ;
 
-		this.roleDefinition.addToAllRoleDescriptors(set);
+		this.roleDefinition.addToAllRoleDescriptors(set) ;
 
-		assertFalse(this.roleDefinition.getRoleDescriptors().isEmpty());
-		assertTrue(this.roleDefinition.getRoleDescriptors().size() == 2);
+		assertFalse(this.roleDefinition.getRoleDescriptors().isEmpty()) ;
+		assertTrue(this.roleDefinition.getRoleDescriptors().size() == 2) ;
+		assertNotNull(role.getRoleDefinition()) ;
+		assertNotNull(tmp.getRoleDefinition()) ;
 	}
 }

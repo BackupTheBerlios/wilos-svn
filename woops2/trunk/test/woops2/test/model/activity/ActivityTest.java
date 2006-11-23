@@ -1,12 +1,12 @@
 
 package woops2.test.model.activity ;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashSet ;
+import java.util.Set ;
 
-import junit.framework.TestCase;
-import woops2.model.activity.Activity;
-import woops2.model.breakdownelement.BreakdownElement;
+import junit.framework.TestCase ;
+import woops2.model.activity.Activity ;
+import woops2.model.breakdownelement.BreakdownElement ;
 
 /**
  * @author Sebastien
@@ -26,7 +26,7 @@ public class ActivityTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp() ;
 		this.activity = new Activity() ;
-		this.activity.setIdEPF("idEPF1");
+		this.activity.setIdEPF("idEPF1") ;
 		this.activity.setName("name1") ;
 		this.activity.setDescription("description1") ;
 		this.activity.setPrefix("prefix1") ;
@@ -46,15 +46,16 @@ public class ActivityTest extends TestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown() ;
 	}
-	
+
 	/**
 	 * Test method for {@link woops2.model.activity.Activity#clone()}.
 	 */
 	public void testClone() {
-		try {
-			assertEquals(this.activity, this.activity.clone());
-		} catch (CloneNotSupportedException e) {
-			fail("Error CloneNotSupportedException in the testClone method");
+		try{
+			assertEquals(this.activity, this.activity.clone()) ;
+		}
+		catch(CloneNotSupportedException e){
+			fail("Error CloneNotSupportedException in the testClone method") ;
 		}
 	}
 
@@ -62,9 +63,9 @@ public class ActivityTest extends TestCase {
 	 * Test method for {@link woops2.model.activity.Activity#hashCode()}.
 	 */
 	public void testHashCode() {
-		
+
 		Activity tmp = new Activity() ;
-		tmp.setIdEPF("idEPF1");
+		tmp.setIdEPF("idEPF1") ;
 		tmp.setName("name1") ;
 		tmp.setDescription("description1") ;
 		tmp.setPrefix("prefix1") ;
@@ -74,19 +75,19 @@ public class ActivityTest extends TestCase {
 		tmp.setIsEvenDriven(true) ;
 		tmp.setIsOngoing(false) ;
 		tmp.setIsRepeatable(true) ;
-		
-		assertNotNull(this.activity.hashCode());
-		assertNotNull(activity.hashCode());
-		assertEquals(this.activity.hashCode(),tmp.hashCode());
+
+		assertNotNull(this.activity.hashCode()) ;
+		assertNotNull(tmp.hashCode()) ;
+		assertEquals(this.activity.hashCode(), tmp.hashCode()) ;
 	}
 
 	/**
 	 * Test method for {@link woops2.model.activity.Activity#equals(java.lang.Object)}.
 	 */
 	public void testEqualsObject() {
-		
+
 		Activity tmp = new Activity() ;
-		tmp.setIdEPF("idEPF1");
+		tmp.setIdEPF("idEPF1") ;
 		tmp.setName("name1") ;
 		tmp.setDescription("description1") ;
 		tmp.setPrefix("prefix1") ;
@@ -96,11 +97,11 @@ public class ActivityTest extends TestCase {
 		tmp.setIsEvenDriven(true) ;
 		tmp.setIsOngoing(false) ;
 		tmp.setIsRepeatable(true) ;
-		
+
 		assertTrue(this.activity.equals(tmp)) ;
-		
+
 		Activity act = new Activity() ;
-		act.setIdEPF("idEPF2");
+		act.setIdEPF("idEPF2") ;
 		act.setName("name2") ;
 		act.setDescription("description2") ;
 		act.setPrefix("prefix2") ;
@@ -110,7 +111,7 @@ public class ActivityTest extends TestCase {
 		act.setIsEvenDriven(true) ;
 		act.setIsOngoing(false) ;
 		act.setIsRepeatable(true) ;
-		
+
 		assertFalse(this.activity.equals(act)) ;
 	}
 
@@ -119,9 +120,9 @@ public class ActivityTest extends TestCase {
 	 * {@link woops2.model.activity.Activity#addToBreakdownElement(woops2.model.breakdownelement.BreakdownElement)}.
 	 */
 	public void testAddToBreakdownElement() {
-		
+
 		BreakdownElement breakdownElement = new BreakdownElement() ;
-		breakdownElement.setIdEPF("idEPF1");
+		breakdownElement.setIdEPF("idEPF1") ;
 		breakdownElement.setName("name1") ;
 		breakdownElement.setDescription("description1") ;
 		breakdownElement.setPrefix("prefix1") ;
@@ -142,9 +143,9 @@ public class ActivityTest extends TestCase {
 	 * {@link woops2.model.activity.Activity#addToAllBreakdownElements(java.util.Set)}.
 	 */
 	public void testAddToAllBreakdownElement() {
-		
+
 		BreakdownElement breakdownElement = new BreakdownElement() ;
-		breakdownElement.setIdEPF("idEPF1");
+		breakdownElement.setIdEPF("idEPF1") ;
 		breakdownElement.setName("name1") ;
 		breakdownElement.setDescription("description1") ;
 		breakdownElement.setPrefix("prefix1") ;
@@ -153,7 +154,7 @@ public class ActivityTest extends TestCase {
 		breakdownElement.setHasMultipleOccurrences(false) ;
 
 		BreakdownElement tmp = new BreakdownElement() ;
-		tmp.setIdEPF("idEPF2");
+		tmp.setIdEPF("idEPF2") ;
 		tmp.setName("name2") ;
 		tmp.setDescription("description1") ;
 		tmp.setPrefix("prefix1") ;
@@ -167,12 +168,12 @@ public class ActivityTest extends TestCase {
 
 		this.activity.addToAllBreakdownElements(set) ;
 
-		assertFalse("bdes vides",this.activity.getBreakDownElements().isEmpty()) ;
-		assertTrue("bdes = 2",this.activity.getBreakDownElements().size() == 2) ;
-		assertFalse("brk acts vide",breakdownElement.getSuperActivities().isEmpty()) ;
-		assertTrue("brk acts = 1",breakdownElement.getSuperActivities().size() == 1) ;
-		assertFalse("tmp acts vide",tmp.getSuperActivities().isEmpty()) ;
-		assertTrue("tmp acts = 1",tmp.getSuperActivities().size() == 1) ;
+		assertFalse("bdes vides", this.activity.getBreakDownElements().isEmpty()) ;
+		assertTrue("bdes = 2", this.activity.getBreakDownElements().size() == 2) ;
+		assertFalse("brk acts vide", breakdownElement.getSuperActivities().isEmpty()) ;
+		assertTrue("brk acts = 1", breakdownElement.getSuperActivities().size() == 1) ;
+		assertFalse("tmp acts vide", tmp.getSuperActivities().isEmpty()) ;
+		assertTrue("tmp acts = 1", tmp.getSuperActivities().size() == 1) ;
 	}
 
 	/**
@@ -181,7 +182,7 @@ public class ActivityTest extends TestCase {
 	 */
 	public void testRemoveFromBreakdownElement() {
 		BreakdownElement breakdownElement = new BreakdownElement() ;
-		breakdownElement.setIdEPF("idEPF1");
+		breakdownElement.setIdEPF("idEPF1") ;
 		breakdownElement.setName("name1") ;
 		breakdownElement.setDescription("description1") ;
 		breakdownElement.setPrefix("prefix1") ;
@@ -202,7 +203,7 @@ public class ActivityTest extends TestCase {
 	public void testRemoveFromAllBreakdownElements() {
 
 		BreakdownElement breakdownElement = new BreakdownElement() ;
-		breakdownElement.setIdEPF("idEPF1");
+		breakdownElement.setIdEPF("idEPF1") ;
 		breakdownElement.setName("name1") ;
 		breakdownElement.setDescription("description1") ;
 		breakdownElement.setPrefix("prefix1") ;
@@ -211,21 +212,21 @@ public class ActivityTest extends TestCase {
 		breakdownElement.setHasMultipleOccurrences(false) ;
 
 		BreakdownElement tmp = new BreakdownElement() ;
-		tmp.setIdEPF("idEPF2");
+		tmp.setIdEPF("idEPF2") ;
 		tmp.setName("name2") ;
 		tmp.setDescription("description1") ;
 		tmp.setPrefix("prefix1") ;
 		tmp.setIsOptional(true) ;
 		tmp.setIsPlanned(false) ;
 		tmp.setHasMultipleOccurrences(false) ;
-		
+
 		Set<BreakdownElement> set = new HashSet<BreakdownElement>() ;
 		set.add(breakdownElement) ;
 		set.add(tmp) ;
-		
-		assertTrue(set.size() == 2);
 
-		this.activity.addToAllBreakdownElements(set);
+		assertTrue(set.size() == 2) ;
+
+		this.activity.addToAllBreakdownElements(set) ;
 		this.activity.removeFromAllBreakdownElements() ;
 
 		assertTrue("bdes", this.activity.getBreakDownElements().isEmpty()) ;

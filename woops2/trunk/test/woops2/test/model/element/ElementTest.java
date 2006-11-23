@@ -46,14 +46,14 @@ public class ElementTest extends TestCase {
 	 */
 	public void testHashCode() {
 		
-		element = new Element();
-		element.setDescription(DESCRIPTION);
-		element.setName(NAME);
-		element.setName(IDEPF);
+		Element elt = new Element();
+		elt.setDescription(DESCRIPTION);
+		elt.setName(NAME);
+		elt.setName(IDEPF);
 		
 		assertNotNull(this.element.hashCode());
-		assertNotNull(element.hashCode());
-		assertEquals(this.element.hashCode(),element.hashCode());
+		assertNotNull(elt.hashCode());
+		assertEquals(this.element.hashCode(),elt.hashCode());
 	}
 	
 	/**
@@ -72,12 +72,12 @@ public class ElementTest extends TestCase {
 	 * {@link woops2.model.element.Element#equals(java.lang.Object)}.
 	 */
 	public void testEquals() {
-		Element element = new Element();
-		element.setDescription(DESCRIPTION);
-		element.setName(NAME);
-		element.setName(IDEPF);
+		Element elt = new Element();
+		elt.setDescription(DESCRIPTION);
+		elt.setName(NAME);
+		elt.setName(IDEPF);
 
-		assertTrue(this.element.equals(element));
+		assertTrue(this.element.equals(elt));
 	}
 
 }
