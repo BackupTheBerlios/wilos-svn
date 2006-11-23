@@ -13,14 +13,13 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.util.ArrayList;
-import java.util.Collection;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 
 import woops2.business.process.ProcessService;
-import woops2.hibernate.role.RoleDescriptorDao;
 import woops2.model.role.RoleDescriptor;
 import woops2.model.breakdownelement.BreakdownElement;
 import woops2.model.process.Process;
