@@ -26,6 +26,9 @@ public class BreakdownElementTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp() ;
 		this.breakdownElement = new BreakdownElement() ;
+		this.breakdownElement.setIdEPF("idEPF1");
+		this.breakdownElement.setName("name1");
+		this.breakdownElement.setDescription("description1");
 		this.breakdownElement.setPrefix("prefix1") ;
 		this.breakdownElement.setIsOptional(true) ;
 		this.breakdownElement.setIsPlanned(false) ;
@@ -60,6 +63,9 @@ public class BreakdownElementTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		BreakdownElement bdeTmp1 = new BreakdownElement() ;
+		bdeTmp1.setIdEPF("idEPF1");
+		bdeTmp1.setName("name1");
+		bdeTmp1.setDescription("description1");
 		bdeTmp1.setPrefix("prefix1") ;
 		bdeTmp1.setIsOptional(true) ;
 		bdeTmp1.setIsPlanned(false) ;
@@ -84,6 +90,9 @@ public class BreakdownElementTest extends TestCase {
 
 		// Assert if it's equal field by field.
 		BreakdownElement bdeTmp1 = new BreakdownElement() ;
+		bdeTmp1.setIdEPF("idEPF1");
+		bdeTmp1.setName("name1");
+		bdeTmp1.setDescription("description1");
 		bdeTmp1.setPrefix("prefix1") ;
 		bdeTmp1.setIsOptional(true) ;
 		bdeTmp1.setIsPlanned(false) ;
@@ -92,6 +101,9 @@ public class BreakdownElementTest extends TestCase {
 
 		// Assert if it's not equal.
 		BreakdownElement bdeTmp2 = new BreakdownElement() ;
+		bdeTmp2.setIdEPF("idEPF2");
+		bdeTmp2.setName("name2");
+		bdeTmp2.setDescription("description2");
 		bdeTmp2.setPrefix("prefix2") ;
 		bdeTmp2.setIsOptional(true) ;
 		bdeTmp2.setIsPlanned(false) ;
