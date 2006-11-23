@@ -13,7 +13,7 @@
 		<h:panelGrid columns="2">
 			<h:outputText value="Nom" />
 			<h:inputText value="#{ParticipantViewer.participant.name}" required="true"/>
-
+			
 			<h:outputText value="Prénom"/>
 			<h:inputText value="#{ParticipantViewer.participant.firstname}" required="true"/>
 		</h:panelGrid>
@@ -24,8 +24,9 @@
 				<f:validator validatorId="emailValidator"/>
 			</h:inputText>
 			<h:message for="email" style="color:red;" showDetail="true"/>
-</h:panelGrid>
-<h:panelGrid columns="2">
+		</h:panelGrid>
+		
+		<h:panelGrid columns="2">
 			<h:outputText value="Pseudo"/>
 			<h:inputText value="#{ParticipantViewer.participant.login}" required="true"/>
 	
