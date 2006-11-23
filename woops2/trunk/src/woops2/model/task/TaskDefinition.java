@@ -17,7 +17,7 @@ import woops2.model.element.Element;
  * as many additional performers.
  * 
  */
-public class TaskDefinition extends Element {
+public class TaskDefinition extends Element implements Cloneable {
 
 	/**
 	 * Collection of Step
@@ -72,7 +72,7 @@ public class TaskDefinition extends Element {
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
-	public Object clone() throws CloneNotSupportedException {
+	public TaskDefinition clone() throws CloneNotSupportedException {
 		TaskDefinition taskDefinition = new TaskDefinition();
 		taskDefinition.copy(this);
 		return taskDefinition;

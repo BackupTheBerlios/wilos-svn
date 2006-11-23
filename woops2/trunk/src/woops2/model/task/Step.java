@@ -12,7 +12,7 @@ import woops2.model.element.Element;
  * taskDefinition.
  * 
  */
-public class Step extends Element {
+public class Step extends Element implements Cloneable {
 
 	/**
 	 * the attached taskDefinition
@@ -31,7 +31,7 @@ public class Step extends Element {
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
-	public Object clone() throws CloneNotSupportedException {
+	public Step clone() throws CloneNotSupportedException {
 		Step step = new Step();
 		step.copy(this);
 		return step;

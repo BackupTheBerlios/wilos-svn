@@ -20,7 +20,7 @@ import woops2.model.task.TaskDescriptor;
  * its own set of relationships.
  * 
  */
-public class RoleDescriptor extends BreakdownElement {
+public class RoleDescriptor extends BreakdownElement implements Cloneable {
 
 	private RoleDefinition roleDefinition;
 
@@ -69,7 +69,7 @@ public class RoleDescriptor extends BreakdownElement {
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
-	public Object clone() throws CloneNotSupportedException {
+	public RoleDescriptor clone() throws CloneNotSupportedException {
 		RoleDescriptor roleDescriptor = new RoleDescriptor();
 		roleDescriptor.copy(this);
 		return roleDescriptor;

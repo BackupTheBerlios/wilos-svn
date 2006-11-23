@@ -21,7 +21,7 @@ import woops2.model.workbreakdownelement.WorkBreakdownElement;
  * with its own set of relationships.
  * 
  */
-public class TaskDescriptor extends WorkBreakdownElement {
+public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 
 	/**
 	 * the attached taskDefinition
@@ -52,7 +52,7 @@ public class TaskDescriptor extends WorkBreakdownElement {
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
-	public Object clone() throws CloneNotSupportedException {
+	public TaskDescriptor clone() throws CloneNotSupportedException {
 		TaskDescriptor taskDescriptor = new TaskDescriptor();
 		taskDescriptor.copy(this);
 		return taskDescriptor;

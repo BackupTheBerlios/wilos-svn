@@ -18,7 +18,7 @@ import woops2.model.element.Element;
  * for.
  * 
  */
-public class RoleDefinition extends Element {
+public class RoleDefinition extends Element implements Cloneable {
 
 	/**
 	 * Collection of TaskDescriptor
@@ -87,7 +87,7 @@ public class RoleDefinition extends Element {
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
-	public Object clone() throws CloneNotSupportedException {
+	public RoleDefinition clone() throws CloneNotSupportedException {
 		RoleDefinition roleDefinition = new RoleDefinition();
 		roleDefinition.copy(this);
 		return roleDefinition;
