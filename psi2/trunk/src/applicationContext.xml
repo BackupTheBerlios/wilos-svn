@@ -17,13 +17,13 @@
 			<value>org.gjt.mm.mysql.Driver</value>
 		</property>
 		<property name="url">
-			<value>jdbc:mysql://127.0.0.1/m1isb3</value>
+			<value>jdbc:mysql://127.0.0.1/Wilos</value>
 		</property>
 		<property name="username">
-			<value>m1isb3</value>
+			<value>root</value>
 		</property>
 		<property name="password">
-			<value>yfehin</value>
+			<value></value>
 		</property>
 	</bean>
 
@@ -49,7 +49,10 @@
 				<value>woops2/model/task/Step.hbm.xml</value>
 				<value>woops2/model/role/RoleDescriptor.hbm.xml</value>
 				<value>woops2/model/role/RoleDefinition.hbm.xml</value>
-				<value>woops2/model/participant/Participant.hbm.xml</value>
+				<value>
+					woops2/model/participant/Participant.hbm.xml
+				</value>
+				<value>woops2/model/wilosuser/WilosUser.hbm.xml</value>
 			</list>
 		</property>
 
@@ -147,22 +150,27 @@
 	<bean id="StepDao" class="woops2.hibernate.task.StepDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
-	
+
 	<bean id="ParticipantDao"
 		class="woops2.hibernate.participant.ParticipantDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 
+	<bean id="WilosUserDao"
+		class="woops2.hibernate.wilosuser.WilosUserDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
 	<!-- ========================= Business Layer ========================= -->
-	  
+
 	<bean id="ActivityManager"
 		class="woops2.business.activity.ActivityManager">
 		<property name="activityDao" ref="ActivityDao" />
 	</bean>
-	
+
 	<bean id="ParticipantManager"
 		class="woops2.business.participant.ParticipantManager">
 		<property name="participantDao" ref="ParticipantDao" />
 	</bean>
-	
+
 </beans>
