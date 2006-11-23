@@ -1,40 +1,35 @@
-package woops2.presentation.validators;
-import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.validator.Validator;
-import javax.faces.validator.ValidatorException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+package woops2.presentation.validators ;
+
+import javax.faces.application.FacesMessage ;
+import javax.faces.component.UIComponent ;
+import javax.faces.context.FacesContext ;
+import javax.faces.validator.Validator ;
+import javax.faces.validator.ValidatorException ;
+import org.apache.commons.logging.Log ;
+import org.apache.commons.logging.LogFactory ;
 
 /**
- * @author BlackMilk
- * @author Mikamikaze
+ * @author l3isi25 (Martial)
  * @author Sakamakak
  *
- * This class represents ... TODO
+ * This class represents a validator that allows to verify if two fields are the same
  *
  */
-public class EqualValidator implements Validator
-{
+public class EqualValidator implements Validator {
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
-	
-	/* (non-Javadoc)
-	 * @see javax.faces.validator.Validator#validate(javax.faces.context.FacesContext, javax.faces.component.UIComponent, java.lang.Object)
-	 */
-	public void validate(FacesContext context, UIComponent toValidate, Object value) throws ValidatorException {
-		
-			UIComponent pass1 = toValidate.findComponent("equal1");
-			String valeur = (String)pass1.getAttributes().get("value");
-			this.logger.debug("### AAAAAAAAAAAAAAAAH "+valeur+"###") ;
-			
-			if (!value.equals(valeur) || valeur.equals(""))
-			{
-				this.logger.debug("### THE FIELDS ARE NOT EQUALS ###") ;
-				FacesMessage message = new FacesMessage();
-				message.setSeverity(FacesMessage.SEVERITY_ERROR);
-				message.setSummary("The two fiels are not the same");
-				throw new ValidatorException(message);
-			}
+
+	public void validate(FacesContext _context, UIComponent _toValidate, Object _value) throws ValidatorException {
+
+		UIComponent component = _toValidate.findComponent("equal1") ;
+		String valeur = (String) component.getAttributes().get("value") ;
+
+		if(!_value.equals(valeur) || valeur.equals("")){
+			this.logger.debug("### THE FIELDS ARE NOT EQUALS ###") ;
+			FacesMessage message = new FacesMessage() ;
+			message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			message.setSummary("The two fiels are not the same") ;
+			throw new ValidatorException(message) ;
+		}
 	}
 }
