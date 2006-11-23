@@ -30,15 +30,14 @@
 			<h:message for="login" style="color:red;" showDetail="true"/>
 			
 			<h:outputText value="Mot de passe"/>
-			<h:inputSecret id="password" value="#{ParticipantViewer.participant.password}" required="true"/>		
-			<h:message for="password" style="color:red;" showDetail="true"/>
+			<h:inputSecret id="equal1" value="#{ParticipantViewer.participant.password}" required="true"/>		
+			<h:message for="equal1" style="color:red;" showDetail="true"/>
 			
 			<h:outputText value="Confirmer votre mot de passe"/>
-			<h:inputSecret id="password2" value="#{ParticipantViewer.passwordConfirmation}">
+			<h:inputSecret id="equal2" value="#{ParticipantViewer.passwordConfirmation}">
 				<f:validator validatorId="equalValidator"/>
-				<f:attribute name="password" value="#{ParticipantViewer.participant.password}"/>
 			</h:inputSecret>
-			<h:message for="password2" style="color:red;" showDetail="true"/>
+			<h:message for="equal2" style="color:red;" showDetail="true"/>
 			
 		</h:panelGrid>
 		<h:panelGrid columns="2">

@@ -1,4 +1,5 @@
 package woops2.presentation.validators;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.Validator;
@@ -23,18 +24,17 @@ public class EqualValidator implements Validator
 	 */
 	public void validate(FacesContext context, UIComponent toValidate, Object value) throws ValidatorException {
 		
-			String pass1 = (String)toValidate.getAttributes().get("compareAtt");
-			this.logger.debug("### AAAAAAAAAAAAAAAAH "+pass1+"###") ;
-			/*UIComponent foreignComp = toValidate.getParent().findComponent(_for);
-			EditableValueHolder foreignEditableValueHolder = (EditableValueHolder) foreignComp;
+			UIComponent pass1 = toValidate.findComponent("equal1");
+			String valeur = (String)pass1.getAttributes().get("value");
+			this.logger.debug("### AAAAAAAAAAAAAAAAH "+valeur+"###") ;
 			
-			if (foreignEditableValueHolder.getValue()==null ||!foreignEditableValueHolder.getValue().toString().equals(value.toString()))
+			if (!value.equals(valeur) || valeur.equals(""))
 			{
-				this.logger.debug("### NON VALID CONFIRMATION PASSWORD ###") ;
+				this.logger.debug("### THE FIELDS ARE NOT EQUALS ###") ;
 				FacesMessage message = new FacesMessage();
 				message.setSeverity(FacesMessage.SEVERITY_ERROR);
-				message.setSummary("invalid password confirmation");
+				message.setSummary("The two fiels are not the same");
 				throw new ValidatorException(message);
-			}*/
+			}
 	}
 }
