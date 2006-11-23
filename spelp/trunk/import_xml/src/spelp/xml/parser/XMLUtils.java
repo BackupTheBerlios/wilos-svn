@@ -5,14 +5,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import javax.xml.namespace.QName;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 public class XMLUtils {
@@ -38,11 +35,11 @@ public class XMLUtils {
 	public static Object evaluateDOM(String expression, QName retour){
 		Object resultat = null;
 		try{
-			//création du XPath 
+			//creation du XPath 
 			XPathFactory fabrique = XPathFactory.newInstance();
 			XPath xpath = fabrique.newXPath();
 			
-			//évaluation de l'expression XPath
+			//evaluation de l'expression XPath
 			XPathExpression exp = xpath.compile(expression);
 			resultat = exp.evaluate(document,retour);
 			
@@ -55,14 +52,14 @@ public class XMLUtils {
 	public static Object evaluate(String expression, QName retour){
 		Object resultat = null;
 		try{
-			//création de la source
+			//creation de la source
 			InputSource source = new InputSource(new FileInputStream(document));
 			
-			//création du XPath 
+			//creation du XPath 
 			XPathFactory fabrique = XPathFactory.newInstance();
 			XPath xpath = fabrique.newXPath();
 			
-			//évaluation de l'expression XPath
+			//evaluation de l'expression XPath
 			XPathExpression exp = xpath.compile(expression);
 			resultat = exp.evaluate(source,retour);
 			

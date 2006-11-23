@@ -35,6 +35,8 @@ import woops2.model.task.TaskDescriptor;
 public class XMLParser {
 	private static String roleDescriptor = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:RoleDescriptor']";
 	private static String taskDescriptor = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:TaskDescriptor']";
+	private static String roleDefinition =  "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Role' ]";
+	private static String taskDefinition  = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Task']";
 	// sections
 	private static String task = "Task";
 	private static String role = "Role";
@@ -42,29 +44,83 @@ public class XMLParser {
 	private static String step = "Section";
 	private static String presentation = "Presentation";
 	
-	private static Vector<TaskDefinition> TasksList = new Vector<TaskDefinition> ();
-	private static Vector<RoleDefinition> RoleList = new Vector<RoleDefinition> ();
+	protected static Vector<TaskDefinition> TasksList = new Vector<TaskDefinition> ();
+	protected static Vector<RoleDefinition> RoleList = new Vector<RoleDefinition>() ;
+	
 	/**
-	 * setFile is the function need to be called in first
-	 * @param f File to be parsed
+	 * Start 
+	 * initializes the List in memory
+	 * to launch before everything
 	 */
-	public static void setFile(File f){
-		// put the document in memory
-		XMLUtils.setDocument(f);
+	public static void start() {
+		try {
+			fillRoleDefinitionList();
+			fillTaskDefinitionList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+		
+	/**
+	 * fillTaskDefinitionList
+	 * fill the taskslist with task definition
+	 * @throws Exception
+	 */
+	public static void fillTaskDefinitionList() throws Exception{
+		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(taskDefinition,XPathConstants.NODESET);
+		if (nodeReturned == null){
+			throw new Exception ("NO TASKS DEFINITIONS FOUND");
+		}
+		Node aNode;
+		for(int i=0;i<nodeReturned.getLength();i++){
+			aNode = nodeReturned.item(i);
+			TaskDefinition  aTaskDefinition = new TaskDefinition();
+			FillerTask aFiller = new FillerTask(aTaskDefinition,aNode);	
+			aTaskDefinition = (TaskDefinition)aFiller.getFilledElement();
+			TasksList.add(aTaskDefinition);
+		}	
 	}
 	
+	/**
+	 * fillRoleDefinitionList
+	 * fill the RolesList with RoleDefinition
+	 * @throws Exception
+	 */
+	public static void fillRoleDefinitionList () throws Exception {
+		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(roleDefinition,XPathConstants.NODESET);
+		if (nodeReturned == null){
+			throw new Exception ("NO ROLE DEFINITIONS FOUND");
+		}
+		Node aNode;
+		for(int i=0;i<nodeReturned.getLength();i++){
+			aNode = nodeReturned.item(i);
+			RoleDefinition  aRoleDefinition = new RoleDefinition();
+			FillerRole aFiller = new FillerRole(aRoleDefinition,aNode);	
+			aRoleDefinition = (RoleDefinition)aFiller.getFilledElement();
+			RoleList.add(aRoleDefinition);
+		}	
+	}
+	
+	/**
+	 * getProcess
+	 * Return a Process from a file
+	 * @param f a XML file
+	 * @return the process
+	 */
 	public static Process getProcess(File f){
 		XMLUtils.setDocument(f);
+		start();
 		return (getProcess());
 	}
 	
 	/**
 	 * getProcess
-	 * @return
+	 * @return the process
 	 */
-	public static Process getProcess (){
+	private static Process getProcess (){
 		Process p = new Process() ;
 		try{			
+			// get all the roles descriptor
 			Set<RoleDescriptor> ensRole = getAllRoleDescriptors() ;
 			for (Iterator i = ensRole.iterator() ; i.hasNext() ;){
 				p.addToBreakdownElement((BreakdownElement) i.next());
@@ -109,11 +165,12 @@ public class XMLParser {
 				// affect the main role to the current task
 				setMainRoleByTaskDescriptor(taskDescriptorfilled, aNode, allRoles);
 				
+				// affect the additional roles to the current task TODO PAUL
+				setAddiotionalRoleByTaskDescriptor(taskDescriptorfilled, aNode, allRoles);
 				
 				taskList.add(taskDescriptorfilled);
 			}
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return taskList;
@@ -138,54 +195,31 @@ public class XMLParser {
 		}
 		// process if there is a task for this task desriptor
 		if (trouve){
-			taskTobereturn = getTaskInVector(idTask);
+			taskTobereturn = getTaskDefinitionByID(idTask);
 			// if the task doesn't exist
 			if (taskTobereturn == null){
-				taskTobereturn = new TaskDefinition();
-				
-				// getting the attributes of the task
-				Node aNode = getNodeTask(idTask);
-				FillerTask aFiller = new FillerTask(taskTobereturn,aNode);
-				
-				taskTobereturn = (TaskDefinition)aFiller.getFilledElement() ;
-				
-				// get steps
-				setStepByTaskDescriptor(_t,taskTobereturn,aNode);
-				
-				TasksList.add(taskTobereturn);
+				throw new Exception ("NO TASK DEFINITION FOR THIS TASK DESCRIPTOR");
 			}
 			// set the task in the taskdescriptor
 			_t.addToTaskDefinition(taskTobereturn);
 		}
 	}
 	
-	public static Node getNodeTask (String id) throws Exception {
-		String reqXpath = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Task' and @id ='"+id+"']";
-		Node nodeReturned = (Node)XMLUtils.evaluate(reqXpath,XPathConstants.NODE);
-		if (nodeReturned == null){
-			throw new Exception ("NO TASK FOUND");
-		}
-		return nodeReturned ;
-	}
-	
-	/**
-	 * getTaskInVector : search in the vector if the object already exists
-	 * @param id
-	 * @return
-	 */
-	public static TaskDefinition getTaskInVector (String id){
-		for (int i = 0 ; i < TasksList.size() ; i++){
-			if (TasksList.get(i).getId().equals(id)){
-				return (TasksList.get(i));
+	public static TaskDefinition getTaskDefinitionByID(String _id){
+		for (int i = 0 ; i < TasksList.size() ; i ++){
+			if (TasksList.get(i).getId().equals(_id)){
+				return TasksList.get(i);
 			}
 		}
 		return null ;
 	}
 	
+	
 	public static void setStepByTaskDescriptor(TaskDescriptor _t,TaskDefinition _taskd,Node _n) throws Exception {
 		// getting the id of the role
 		NodeList listOfTdNodes = _n.getChildNodes() ;
 		boolean trouve = false ;
+		// search the nodes of the step
 		for (int i = 0 ; i < listOfTdNodes.getLength() && !trouve ; i ++){
 			if (listOfTdNodes.item(i).getNodeName().equals(presentation)){
 				for (int j = 0 ; j < listOfTdNodes.item(i).getChildNodes().getLength() ; j ++){
@@ -201,6 +235,24 @@ public class XMLParser {
 		}
 	}
 	
+	/**
+	 * TODO PAUL
+	 * @param _t
+	 * @param _n
+	 * @param _s
+	 * @throws Exception
+	 */
+	public static void setAddiotionalRoleByTaskDescriptor(TaskDescriptor _t,Node _n,Set<RoleDescriptor> _s) throws Exception {
+		
+	}
+	
+	/**
+	 * setMainRoleByTaskDescriptor
+	 * @param _t the taskdescriptor executed
+	 * @param _n the node 
+	 * @param _s the set of roleDescriptor available
+	 * @throws Exception
+	 */
 	public static void setMainRoleByTaskDescriptor(TaskDescriptor _t,Node _n,Set<RoleDescriptor> _s) throws Exception {
 		// getting the id of the role
 		String idRole = "" ;
@@ -243,35 +295,13 @@ public class XMLParser {
 		}
 		// process if there is a task for this role desriptor
 		if (trouve){
-			roleTobereturn = getRoleInVector(idRole);
-			// if the task doesn't exist
-			if (roleTobereturn == null){
-				roleTobereturn = new RoleDefinition();
-				
-				// getting the attributes of the role
-				Node aNode = getNodeRole(idRole);
-				FillerRole aFiller = new FillerRole(roleTobereturn,aNode);
-				
-				roleTobereturn = (RoleDefinition)aFiller.getFilledElement() ;
-				RoleList.add(roleTobereturn);
-			}
+				roleTobereturn = getRoleDefinitionByID(idRole) ;
+				if (roleTobereturn == null){
+					throw new Exception ("PAS DE ROLE POUR CE ROLE DESCRIPTOR");	
+				}
 			// set the role in the roledescriptor
 			_r.addToRoleDefinition(roleTobereturn);
 		}
-	}
-
-	/**
-	 * getRoleInVector : search in the vector if the object already exists
-	 * @param id
-	 * @return
-	 */
-	public static RoleDefinition getRoleInVector (String id) {
-		for (int i = 0 ; i < RoleList.size() ; i++){
-			if (RoleList.get(i).getId().equals(id)){
-				return (RoleList.get(i));
-			}
-		}
-		return null ;
 	}
 	
 	public static RoleDescriptor getRoleDescriptorById(Set<RoleDescriptor> aSet,String id){
@@ -303,8 +333,11 @@ public class XMLParser {
 				RoleDescriptor aRoleDescriptor = new RoleDescriptor();
 				FillerRoleDescriptor aFiller = new FillerRoleDescriptor(aRoleDescriptor,aNode);	
 				RoleDescriptor roleDescriptorfilled = (RoleDescriptor)aFiller.getFilledElement();
+				
 				setRoleByRoleDescriptor(roleDescriptorfilled,aNode);
 				System.out.println(roleDescriptorfilled.hashCode() + " " + roleDescriptorfilled.getName() + " " + roleDescriptorfilled.getId());
+				
+				// TODO Probleme a resoudre !!!!
 				roleList.add(roleDescriptorfilled) ;
 				System.out.println("");
 			}
@@ -314,19 +347,14 @@ public class XMLParser {
 		return roleList;
 	}
 	
-	public static Node getNodeRole (String id) throws Exception {
-		String reqXpath = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Role' and @id ='"+id+"']";
-		Node nodeReturned = (Node)XMLUtils.evaluate(reqXpath,XPathConstants.NODE);
-		if (nodeReturned == null){
-			throw new Exception ("NO ROLE FOUND");
+	public static RoleDefinition getRoleDefinitionByID(String _id){
+		for (int i = 0 ; i < RoleList.size() ; i ++){
+			if (RoleList.get(i).getId().equals(_id)){
+				return RoleList.get(i);
+			}
 		}
-		return nodeReturned ;
+		return null ;
 	}
-		
-
-
-
-
 }
 
 

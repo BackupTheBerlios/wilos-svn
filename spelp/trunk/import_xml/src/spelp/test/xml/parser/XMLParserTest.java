@@ -11,16 +11,30 @@ import java.util.Vector;
 import org.junit.Test;
 
 import spelp.xml.parser.XMLParser;
+import spelp.xml.parser.XMLUtils;
 import woops2.model.process.Process;
 import woops2.model.role.RoleDefinition;
 import woops2.model.role.RoleDescriptor;
 import woops2.model.task.TaskDefinition;
 import woops2.model.task.TaskDescriptor;
 
-public class XMLParserTest {
+public class XMLParserTest extends XMLParser {
 	public static File pathScrum = new File("ressources" + File.separator + "scrum.xml"); 
 	public static File pathOPenUP =new File( "ressources" + File.separator + "sortieEPF.xml");
-	@Test
+	
+	
+	public void testStart(){
+		File[] f = new File[]{
+				pathScrum,pathOPenUP
+			};
+			for (int p = 0 ; p < f.length ; p++){
+				XMLUtils.setDocument(f[p]);
+				XMLParser.start();
+				assertTrue(XMLParser.RoleList.size() != 0 );
+				assertTrue(XMLParser.TasksList.size() != 0 );
+			}
+	}
+	
 	public void testGetProcess(){
 		File[] f = new File[]{
 				pathScrum,pathOPenUP
@@ -37,8 +51,8 @@ public class XMLParserTest {
 			pathScrum,pathOPenUP
 		};
 		for (int p = 0 ; p < f.length ; p++){
-			XMLParser.setFile(f[p]);
-			System.out.println(f[p].getAbsolutePath());
+			XMLUtils.setDocument(f[p]);
+			XMLParser.start();
 			try {
 				Set<RoleDescriptor> ensRole = XMLParser.getAllRoleDescriptors();
 				Vector <TaskDefinition> v = new Vector<TaskDefinition>();
@@ -72,13 +86,13 @@ public class XMLParserTest {
 			}
 		}
 	}
-	@Test
+	
 	public void testSetAllRoleDescriptors() {
 		File[] f = new File[]{
 				pathScrum,pathOPenUP
 			};
 			for (int p = 0 ; p < f.length ; p++){
-				XMLParser.setFile(f[p]);
+				XMLUtils.setDocument(f[p]);
 				System.out.println(f[p].getAbsolutePath());
 				try {
 					Vector <RoleDefinition> v = new Vector<RoleDefinition>();
