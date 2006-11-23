@@ -20,39 +20,38 @@ import woops2.model.workbreakdownelement.WorkBreakdownElement;
  * Iteration, Delivery Process, or Capability Pattern.
  * 
  */
-public class Activity extends WorkBreakdownElement implements Cloneable {
+public class Activity extends WorkBreakdownElement {
 
 	private Set<BreakdownElement> breakdownElements;
-
+	
 	/**
 	 * Constructor.
 	 * 
 	 */
 	public Activity() {
 		super();
+
 		this.breakdownElements = new HashSet<BreakdownElement>();
 	}
 	
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Getter of breakDownElements.
 	 * 
-	 * @see woops2.model.element.BreakDownElement#clone()
+	 * @return the breakDownElements.
 	 */
-	@ Override
-	public Activity clone() throws CloneNotSupportedException {
-		// TODO Auto-generated method stub
-		Activity activity = new Activity() ;
-		activity.copy(this) ;
-		return activity ;
+	public Set<BreakdownElement> getBreakDownElements() {
+		return this.breakdownElements;
 	}
 
 	/**
-	 * Copy the object.
+	 * Setter of breakDownElements.
+	 * 
+	 * @param _breakDownElements
+	 *            The breakDownElements to set.
 	 */
-	protected void copy(final Activity _activity) {
-		super.copy(_activity) ;
-		this.setBreakDownElements(_activity.getBreakDownElements());
-		
+	@SuppressWarnings("unused")
+	private void setBreakDownElements(Set<BreakdownElement> _breakDownElements) {
+		this.breakdownElements.addAll(_breakDownElements);
 	}
 
 	/**
@@ -126,24 +125,24 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 			this.removeFromBreakdownElement(bde);
 		}
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		Activity activity = new Activity();
+		this.copy(activity);
+		return activity;
+	}
 	
 	/**
-	 * Getter of breakDownElements.
-	 * 
-	 * @return the breakDownElements.
+	 * Copy the object.
 	 */
-	public Set<BreakdownElement> getBreakDownElements() {
-		return this.breakdownElements;
-	}
-
-	/**
-	 * Setter of breakDownElements.
-	 * 
-	 * @param _breakDownElements
-	 *            The breakDownElements to set.
-	 */
-	@SuppressWarnings("unused")
-	private void setBreakDownElements(Set<BreakdownElement> _breakDownElements) {
-		this.breakdownElements.addAll(_breakDownElements);
+	protected void copy(final Activity _activity) {
+		super.copy(_activity) ;
+		this.setBreakDownElements(_activity.getBreakDownElements());
 	}
 }

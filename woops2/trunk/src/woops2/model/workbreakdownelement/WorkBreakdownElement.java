@@ -13,40 +13,20 @@ import woops2.model.breakdownelement.BreakdownElement ;
  * Breakdown Elements that represent or refer to Work Definitions.
  * 
  */
-public class WorkBreakdownElement extends BreakdownElement implements Cloneable {
+public class WorkBreakdownElement extends BreakdownElement {
 
 	private Boolean isRepeatable ;
 
 	private Boolean isOngoing ;
 
 	private Boolean isEvenDriven ;
-
+	
 	public WorkBreakdownElement () {
 		super() ;
-	}
-	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see woops2.model.element.BreakDownElement#clone()
-	 */
-	@ Override
-	public WorkBreakdownElement clone() throws CloneNotSupportedException {
-		// TODO Auto-generated method stub
-		WorkBreakdownElement workBreakdownElement = new WorkBreakdownElement() ;
-		workBreakdownElement.copy(this) ;
-		return workBreakdownElement ;
-	}
 
-	/**
-	 * Copy the object.
-	 */
-	protected void copy(final WorkBreakdownElement _workBreakdownElement) {
-		super.copy(_workBreakdownElement) ;
-		this.isEvenDriven = _workBreakdownElement.isEvenDriven ;
-		this.isRepeatable = _workBreakdownElement.isRepeatable ;
-		this.isRepeatable = _workBreakdownElement.isRepeatable ;
-
+		this.isEvenDriven = false ;
+		this.isOngoing = false ;
+		this.isRepeatable = false ;
 	}
 	
 	/**
@@ -80,6 +60,28 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 										  .append(this.isOngoing)
 										  .append(this.isRepeatable)
 										  .toHashCode() ;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		WorkBreakdownElement workBreakdownElement = new WorkBreakdownElement();
+		this.copy(workBreakdownElement);
+		return workBreakdownElement;
+	}
+	
+	/**
+	 * Copy the object.
+	 */
+	protected void copy(final WorkBreakdownElement _workBreakdownElement) {
+		super.copy(_workBreakdownElement) ;
+		this.setIsEvenDriven(_workBreakdownElement.getIsEvenDriven());
+		this.setIsOngoing(_workBreakdownElement.getIsOngoing());
+		this.setIsRepeatable(_workBreakdownElement.getIsRepeatable());
 	}
 
 	/**
