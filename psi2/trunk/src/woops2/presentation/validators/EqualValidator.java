@@ -24,7 +24,7 @@ public class EqualValidator implements Validator {
 		UIComponent component = _toValidate.findComponent("equal1") ;
 		String valeur = (String) component.getAttributes().get("value") ;
 
-		if(!_value.equals(valeur) || valeur.equals("")){
+		if(!_value.equals(valeur) || valeur.equals("") || _value.equals("")){
 			this.logger.debug("### THE FIELDS ARE NOT EQUALS ###") ;
 			FacesMessage message = new FacesMessage() ;
 			message.setSeverity(FacesMessage.SEVERITY_ERROR) ;

@@ -20,7 +20,7 @@
 			<h:message for="prenom" style="color:red;" showDetail="true"/>
 			
 			<h:outputText value="Adresse Email"/>
-			<h:inputText id="email" value="#{ParticipantViewer.participant.emailAddress}" required="true">
+			<h:inputText id="email" size="30" value="#{ParticipantViewer.participant.emailAddress}" required="true">
 				<f:validator validatorId="emailValidator"/>
 			</h:inputText>
 			<h:message for="email" style="color:red;" showDetail="true"/>
@@ -30,11 +30,14 @@
 			<h:message for="login" style="color:red;" showDetail="true"/>
 			
 			<h:outputText value="Mot de passe"/>
-			<h:inputSecret id="equal1" value="#{ParticipantViewer.participant.password}" required="true"/>		
+			<h:inputSecret id="equal1" value="#{ParticipantViewer.participant.password}" required="true">		
+				<f:validateLength minimum="6" />
+			</h:inputSecret>
 			<h:message for="equal1" style="color:red;" showDetail="true"/>
 			
 			<h:outputText value="Confirmer votre mot de passe"/>
-			<h:inputSecret id="equal2" value="#{ParticipantViewer.passwordConfirmation}">
+			<h:inputSecret id="equal2" value="#{ParticipantViewer.passwordConfirmation}" required="true">
+				<f:validateLength minimum="6" />
 				<f:validator validatorId="equalValidator"/>
 			</h:inputSecret>
 			<h:message for="equal2" style="color:red;" showDetail="true"/>
@@ -42,7 +45,7 @@
 		</h:panelGrid>
 		<h:panelGrid columns="2">
 			<h:commandButton value="S'enregistrer" action="#{ParticipantViewer.saveParticipantAction}"/>
-			<h:commandButton value="retour" action="activity"/>
+			<h:commandButton value="retour" action="participant_logging"/>
 		</h:panelGrid>	
 	</h:form>
 </f:view>

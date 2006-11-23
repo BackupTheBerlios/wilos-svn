@@ -22,7 +22,6 @@ public class EmailValidator implements Validator {
 	public void validate(FacesContext context, UIComponent toValidate, Object value) throws ValidatorException {
 
 		String email = (String) value ;
-		this.logger.debug("### TEST " + toValidate.getAttributes().toString() + " ###") ;
 
 		if(email.indexOf('@') == -1 || email.indexOf('.') == -1){
 			this.logger.debug("### NON VALID EMAIL ###") ;
