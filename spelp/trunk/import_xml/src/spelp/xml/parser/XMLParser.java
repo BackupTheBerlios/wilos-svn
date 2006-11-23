@@ -41,6 +41,7 @@ public class XMLParser {
 	private static String task = "Task";
 	private static String role = "Role";
 	private static String performedPrimarilyBy = "PerformedPrimarilyBy";
+	private static String additionallyPerformedBy = "AdditionallyPerformedBy";
 	private static String step = "Section";
 	private static String presentation = "Presentation";
 	
@@ -245,7 +246,26 @@ public class XMLParser {
 	 * @throws Exception
 	 */
 	public static void setAddiotionalRoleByTaskDescriptor(TaskDescriptor _t,Node _n,Set<RoleDescriptor> _s) throws Exception {
-		
+//		 getting the id of the role
+		String idRole = "" ;
+		NodeList listOfTdNodes = _n.getChildNodes() ;
+		boolean trouve = false ;
+		for (int i = 0 ; i < listOfTdNodes.getLength() && !trouve ; i ++){
+			if (listOfTdNodes.item(i).getNodeName().equals(additionallyPerformedBy)){
+				trouve = true ;
+				idRole = listOfTdNodes.item(i).getTextContent();
+			}
+		}
+		if (trouve){
+			RoleDescriptor roleToBeset ;
+			roleToBeset = getRoleDescriptorById(_s, idRole);
+			// if the task doesn't exist
+			if (roleToBeset == null){
+				throw new Exception("role " + idRole + " doesn't exist");
+			}
+			// set the role in the roledescriptor
+			_t.addToMainRole(roleToBeset);
+		}
 	}
 	
 	/**
