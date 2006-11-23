@@ -20,6 +20,12 @@ public abstract class WilosUser {
 	private String password ;
 
 	/**
+	 * Default Constructor.
+	 *
+	 */
+	public WilosUser() {}
+	
+	/**
 	 * Constructor.
 	 * 
 	 * @param _name

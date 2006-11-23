@@ -10,6 +10,12 @@ package woops2.model.wilosuser ;
 public class ProcessManager extends WilosUser {
 
 	/**
+	 * Default Constructor.
+	 *
+	 */
+	public ProcessManager() {}
+	
+	/**
 	 * Constructor.
 	 * 
 	 * @param _name

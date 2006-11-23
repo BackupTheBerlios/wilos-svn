@@ -53,6 +53,9 @@
 					woops2/model/participant/Participant.hbm.xml
 				</value>
 				<value>woops2/model/wilosuser/WilosUser.hbm.xml</value>
+				<value>woops2/model/wilosuser/Administrator.hbm.xml</value>
+				<value>woops2/model/wilosuser/ProcessManager.hbm.xml</value>
+				<value>woops2/model/wilosuser/ProjectDirector.hbm.xml</value>
 			</list>
 		</property>
 
@@ -160,6 +163,21 @@
 		class="woops2.hibernate.wilosuser.WilosUserDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
+	
+	<bean id="AdministratorDao"
+		class="woops2.hibernate.wilosuser.AdministratorDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	
+	<bean id="ProcessManagerDao"
+		class="woops2.hibernate.wilosuser.ProcessManagerDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	
+	<bean id="ProjectDirectorDao"
+		class="woops2.hibernate.wilosuser.ProjectDirectorDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
 
 	<!-- ========================= Business Layer ========================= -->
 
@@ -171,6 +189,11 @@
 	<bean id="ParticipantManager"
 		class="woops2.business.participant.ParticipantManager">
 		<property name="participantDao" ref="ParticipantDao" />
+	</bean>
+	
+	<bean id="ProcessManagerManager"
+		class="woops2.business.wilosuser.ProcessManagerManager">
+		<property name="processManagerDao" ref="ProcessManagerDao" />
 	</bean>
 
 </beans>

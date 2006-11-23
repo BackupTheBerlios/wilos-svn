@@ -32,6 +32,15 @@
 			<value>#{ParticipantManager}</value>
 		</managed-property>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>ProcessManagerViewer</managed-bean-name>
+		<managed-bean-class>woops2.presentation.wilosuser.ProcessManagerViewer</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>processManagerManager</property-name>
+			<value>#{ProcessManagerManager}</value>
+		</managed-property>
+	</managed-bean>
 	
 	<validator>
 		<validator-id>emailValidator</validator-id>
