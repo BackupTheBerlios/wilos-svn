@@ -34,25 +34,7 @@ public class RoleDefinition extends Element implements Cloneable {
 		this.roleDescriptors = new HashSet<RoleDescriptor>();
 	}
 
-	/**
-	 * Getter of roleDescriptors.
-	 * 
-	 * @return the roleDescriptors.
-	 */
-	public Set<RoleDescriptor> getRoleDescriptors() {
-		return this.roleDescriptors;
-	}
-
-	/**
-	 * Setter of roleDescriptors.
-	 * 
-	 * @param _roleDescriptors
-	 *            The roleDescriptors to set.
-	 */
-	@SuppressWarnings("unused")
-	private void setRoleDescriptors(Set<RoleDescriptor> _roleDescriptors) {
-		this.roleDescriptors = _roleDescriptors;
-	}
+	
 
 	/**
 	 * Indicates whether another object is "equal to" this one.
@@ -147,5 +129,25 @@ public class RoleDefinition extends Element implements Cloneable {
 		for (RoleDescriptor _role1 : _role) {
 			_role1.addToRoleDefinition(this);
 		}
+	}
+	
+	/**
+	 * Getter of roleDescriptors.
+	 * 
+	 * @return the roleDescriptors.
+	 */
+	public Set<RoleDescriptor> getRoleDescriptors() {
+		return this.roleDescriptors;
+	}
+
+	/**
+	 * Setter of roleDescriptors.
+	 * 
+	 * @param _roleDescriptors
+	 *            The roleDescriptors to set.
+	 */
+	@SuppressWarnings("unused")
+	private void setRoleDescriptors(Set<RoleDescriptor> _roleDescriptors) {
+		this.roleDescriptors = _roleDescriptors;
 	}
 }

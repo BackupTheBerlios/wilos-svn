@@ -86,66 +86,7 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 		// this.setParticipants(_roleDescriptor.getParticipants());TODO
 	}
 
-	/**
-	 * Getter of roleDefinition.
-	 * 
-	 * @return the roleDefinition.
-	 */
-	public RoleDefinition getRoleDefinition() {
-		return this.roleDefinition;
-	}
-
-	/**
-	 * Setter of roleDefinition.
-	 * 
-	 * @param _roleDefinition
-	 *            The roleDefinition to set.
-	 */
-	protected void setRoleDefinition(RoleDefinition _roleDefinition) {
-		this.roleDefinition = _roleDefinition;
-	}
-
-	/**
-	 * Getter of primaryTasks.
-	 * 
-	 * @return the primaryTasks.
-	 */
-	@SuppressWarnings("unused")
-	public Set<TaskDescriptor> getPrimaryTasks() {
-		return this.primaryTasks;
-	}
-
-	/**
-	 * Setter of primaryTasks.
-	 * 
-	 * @param _primaryTasks
-	 *            The primaryTasks to set.
-	 */
-	@SuppressWarnings("unused")
-	private void setPrimaryTasks(Set<TaskDescriptor> _primaryTasks) {
-		this.primaryTasks = _primaryTasks;
-	}
-
-	/**
-	 * Getter of additionalTasks.
-	 * 
-	 * @return the additionalTasks.
-	 */
-	public Set<TaskDescriptor> getAdditionalTasks() {
-		return this.additionalTasks;
-	}
-
-	/**
-	 * Setter of additionalTasks.
-	 * 
-	 * @param _additionalTasks
-	 *            The additionalTasks to set.
-	 */
-	@SuppressWarnings("unused")
-	private void setAdditionalTasks(Set<TaskDescriptor> _additionalTasks) {
-		this.additionalTasks = _additionalTasks;
-	}
-
+	
 	/**
 	 * Indicates whether another object is "equal to" this one.
 	 * 
@@ -320,4 +261,65 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	// this.removeFromParticipant(_participant);
 	// }
 	// }
+	
+	/**
+	 * Getter of roleDefinition.
+	 * 
+	 * @return the roleDefinition.
+	 */
+	public RoleDefinition getRoleDefinition() {
+		return this.roleDefinition;
+	}
+
+	/**
+	 * Setter of roleDefinition.
+	 * 
+	 * @param _roleDefinition
+	 *            The roleDefinition to set.
+	 */
+	protected void setRoleDefinition(RoleDefinition _roleDefinition) {
+		this.roleDefinition = _roleDefinition;
+	}
+
+	/**
+	 * Getter of primaryTasks.
+	 * 
+	 * @return the primaryTasks.
+	 */
+	@SuppressWarnings("unused")
+	public Set<TaskDescriptor> getPrimaryTasks() {
+		return this.primaryTasks;
+	}
+
+	/**
+	 * Setter of primaryTasks.
+	 * 
+	 * @param _primaryTasks
+	 *            The primaryTasks to set.
+	 */
+	@SuppressWarnings("unused")
+	private void setPrimaryTasks(Set<TaskDescriptor> _primaryTasks) {
+		this.primaryTasks = _primaryTasks;
+	}
+
+	/**
+	 * Getter of additionalTasks.
+	 * 
+	 * @return the additionalTasks.
+	 */
+	public Set<TaskDescriptor> getAdditionalTasks() {
+		return this.additionalTasks;
+	}
+
+	/**
+	 * Setter of additionalTasks.
+	 * 
+	 * @param _additionalTasks
+	 *            The additionalTasks to set.
+	 */
+	@SuppressWarnings("unused")
+	private void setAdditionalTasks(Set<TaskDescriptor> _additionalTasks) {
+		this.additionalTasks = _additionalTasks;
+	}
+
 }
