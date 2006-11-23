@@ -31,10 +31,18 @@ public class Step extends Element {
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
-	public Element clone() throws CloneNotSupportedException {
-		Step step = (Step) super.clone();
-		step.setTaskDefinition(this.getTaskDefinition());
+	public Object clone() throws CloneNotSupportedException {
+		Step step = new Step();
+		step.copy(this);
 		return step;
+	}
+	
+	/**
+	 * Copy the _step into this.
+	 */
+	protected void copy(final Step _step) {
+		super.copy(_step) ;
+		this.setTaskDefinition(_step.getTaskDefinition());
 	}
 
 	/**

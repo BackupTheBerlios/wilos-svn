@@ -134,12 +134,12 @@ public class Activity extends WorkBreakdownElement {
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		Activity activity = new Activity();
-		this.copy(activity);
+		activity.copy(this);
 		return activity;
 	}
 	
 	/**
-	 * Copy the object.
+	 * Copy the _activity into this.
 	 */
 	protected void copy(final Activity _activity) {
 		super.copy(_activity) ;

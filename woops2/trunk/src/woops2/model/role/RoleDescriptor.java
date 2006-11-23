@@ -37,14 +37,14 @@ public class RoleDescriptor extends BreakdownElement {
 	/**
 	 * The participants of the Participant
 	 */
-	// private Set<Participant> participants ;
+	// private Set<Participant> participants ;TODO
 	/**
 	 * Getter of participant.
 	 * 
 	 * @return the participants.
 	 */
 	// public Set<Participant> getParticipant() {
-	// return this.participants ;
+	// return this.participants ;TODO
 	// }
 	/**
 	 * Setter of participants.
@@ -54,12 +54,13 @@ public class RoleDescriptor extends BreakdownElement {
 	 */
 	@SuppressWarnings("unused")
 	// private void setParticipant(Set<Participant> _participants) {
-	// this.participants = _participants ;
+	// this.participants = _participants ;TODO
 	// }
 	public RoleDescriptor() {
 		super();
 		this.primaryTasks = new HashSet<TaskDescriptor>();
 		this.additionalTasks = new HashSet<TaskDescriptor>();
+		// this.participants = new HashSet<Participant>();TODO
 	}
 
 	/*
@@ -68,12 +69,21 @@ public class RoleDescriptor extends BreakdownElement {
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
-	public BreakdownElement clone() throws CloneNotSupportedException {
-		RoleDescriptor roleDescriptor = (RoleDescriptor) super.clone();
-		roleDescriptor.setAdditionalTasks(this.getAdditionalTasks());
-		roleDescriptor.setPrimaryTasks(this.getPrimaryTasks());
-		roleDescriptor.setRoleDefinition(this.getRoleDefinition());
+	public Object clone() throws CloneNotSupportedException {
+		RoleDescriptor roleDescriptor = new RoleDescriptor();
+		roleDescriptor.copy(this);
 		return roleDescriptor;
+	}
+
+	/**
+	 * Copy the _roleDescriptor into this.
+	 */
+	protected void copy(final RoleDescriptor _roleDescriptor) {
+		super.copy(_roleDescriptor);
+		this.setAdditionalTasks(_roleDescriptor.getAdditionalTasks());
+		this.setPrimaryTasks(_roleDescriptor.getPrimaryTasks());
+		this.setRoleDefinition(_roleDescriptor.getRoleDefinition());
+		// this.setParticipants(_roleDescriptor.getParticipants());TODO
 	}
 
 	/**
@@ -154,6 +164,7 @@ public class RoleDescriptor extends BreakdownElement {
 				.append(this.roleDefinition, roleDescriptor.roleDefinition)
 				.append(this.additionalTasks, roleDescriptor.additionalTasks)
 				.append(this.primaryTasks, roleDescriptor.primaryTasks)
+				/* .append(this.participants, roleDescriptor.participants) TODO*/
 				.isEquals();
 	}
 
@@ -163,8 +174,10 @@ public class RoleDescriptor extends BreakdownElement {
 	 * @return a hash code
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(this.roleDefinition).append(
-				this.additionalTasks).append(this.primaryTasks).toHashCode();
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
+				.append(this.roleDefinition).append(this.additionalTasks)
+				.append(this.primaryTasks)/*.append(this.participants)TODO*/
+				.toHashCode();
 	}
 
 	/**
@@ -282,7 +295,7 @@ public class RoleDescriptor extends BreakdownElement {
 		}
 	}
 
-	// public void addToParticpant(Participant _participant) {
+	// public void addToParticpant(Participant _participant) {TODO
 	// this.participants.add(_participant);
 	// _participant.getRolesListForAProject().add(this);
 	// }

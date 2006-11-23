@@ -83,16 +83,12 @@ public class TaskDescriptorTest extends TestCase {
 		assertTrue("By references", this.taskDescriptor.equals(this.taskDescriptor));
 
 		// Assert if it's equal field by field.
-		TaskDescriptor td1 = new TaskDescriptor();
-		td1.setName(NAME);
-		td1.setDescription(DESCRIPTION);
-		td1.setPrefix(PREFIX);
-		td1.setIsPlanned(IS_PLANNED);
-		td1.setHasMultipleOccurrences(HAS_MULTIPLE_OCCURENCES);
-		td1.setIsOptional(IS_OPTIONAL);
-		td1.setIsRepeatable(IS_REPEATABLE);
-		td1.setIsOngoing(IS_ON_GOING);
-		td1.setIsEvenDriven(IS_EVEN_DRIVEN);
+		TaskDescriptor td1 = null;
+		try {
+			td1 = (TaskDescriptor)this.taskDescriptor.clone();
+		} catch (CloneNotSupportedException e) {
+			fail("Error with CloneNotSupportedException in the testEquals method");
+		}
 		assertTrue("Field by field", this.taskDescriptor.equals(td1));
 
 		// Assert if it's not equal.

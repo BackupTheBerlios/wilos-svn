@@ -100,13 +100,12 @@ public class BreakdownElementTest extends TestCase {
 		assertTrue("By references", this.breakdownElement.equals(this.breakdownElement)) ;
 
 		// Assert if it's equal field by field.
-		BreakdownElement bdeTmp1 = new BreakdownElement() ;
-		bdeTmp1.setName(NAME) ;
-		bdeTmp1.setDescription(DESCRIPTION) ;
-		bdeTmp1.setPrefix(PREFIX) ;
-		bdeTmp1.setIsOptional(IS_OPTIONAL) ;
-		bdeTmp1.setIsPlanned(IS_PLANNED) ;
-		bdeTmp1.setHasMultipleOccurrences(HAS_MULTIPLE) ;
+		BreakdownElement bdeTmp1 = null;
+		try {
+			bdeTmp1 = (BreakdownElement)this.breakdownElement.clone();
+		} catch (CloneNotSupportedException e) {
+			fail("Error CloneNotSupportedException in the testEquals method");
+		}
 		assertTrue("Field by field", this.breakdownElement.equals(bdeTmp1)) ;
 
 		// Assert if it's not equal.

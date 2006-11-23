@@ -67,7 +67,7 @@ public class ElementTest extends TestCase {
 	 * Test method for
 	 * {@link woops2.model.element.Element#equals(java.lang.Object)}.
 	 */
-	public void testEqualsObject() {
+	public void testEquals() {
 		Element element = new Element();
 		element.setDescription(DESCRIPTION);
 		element.setName(NAME);

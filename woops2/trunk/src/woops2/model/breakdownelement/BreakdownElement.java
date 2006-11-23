@@ -133,7 +133,7 @@ public class BreakdownElement extends Element {
 	}
 
 	/**
-	 * Copy the object.
+	 * Copy the _breakdownElement into this.
 	 */
 	protected void copy(final BreakdownElement _breakdownElement) {
 		super.copy(_breakdownElement) ;

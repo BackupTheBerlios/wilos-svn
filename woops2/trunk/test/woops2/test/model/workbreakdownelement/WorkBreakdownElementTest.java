@@ -79,7 +79,7 @@ public class WorkBreakdownElementTest extends TestCase {
 	 * Test method for
 	 * {@link woops2.model.workbreakdownelement.WorkBreakdownElement#equals(java.lang.Object)}.
 	 */
-	public final void testEqualsObject() {
+	public final void testEquals() {
 		// Rk: the setUp method is called here.
 
 		// Assert if it's equal by references.
@@ -87,16 +87,12 @@ public class WorkBreakdownElementTest extends TestCase {
 				.equals(this.workBreakdownElement));
 
 		// Assert if it's equal field by field.
-		WorkBreakdownElement bdeTmp1 = new WorkBreakdownElement();
-		bdeTmp1.setName("name1") ;
-		bdeTmp1.setDescription("description1") ;
-		bdeTmp1.setPrefix("prefix1") ;
-		bdeTmp1.setIsOptional(true) ;
-		bdeTmp1.setIsPlanned(false) ;
-		bdeTmp1.setHasMultipleOccurrences(false) ;
-		bdeTmp1.setIsOngoing(true);
-		bdeTmp1.setIsPlanned(true);
-		bdeTmp1.setIsRepeatable(true);
+		WorkBreakdownElement bdeTmp1 = null;
+		try {
+			bdeTmp1 = (WorkBreakdownElement)this.workBreakdownElement.clone();
+		} catch (CloneNotSupportedException e) {
+			fail("Error CloneNotSupportedException in the testEquals method");
+		}
 		assertTrue("Field by field", this.workBreakdownElement.equals(bdeTmp1));
 
 		// Assert if it's not equal.

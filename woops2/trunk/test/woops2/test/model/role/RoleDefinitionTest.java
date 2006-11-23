@@ -82,11 +82,13 @@ public class RoleDefinitionTest extends TestCase {
 	 * Test method for
 	 * {@link woops2.model.role.RoleDefinition#equals(java.lang.Object)}.
 	 */
-	public void testEqualsObject() {
-		RoleDefinition tmp = new RoleDefinition();
-		tmp.setName("name");
-		tmp.setDescription(DESCRIPTION);
-
+	public void testEquals() {
+		RoleDefinition tmp = null;
+		try {
+			tmp = (RoleDefinition)this.roleDefinition.clone();
+		} catch (CloneNotSupportedException e) {
+			fail("Error CloneNotSupportedException in the testEquals method");
+		}
 		assertTrue(this.roleDefinition.equals(tmp));
 
 		RoleDefinition role = new RoleDefinition();

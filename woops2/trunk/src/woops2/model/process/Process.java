@@ -33,8 +33,16 @@ public class Process extends Activity implements Cloneable {
 	 */
 	@Override
 	public Activity clone() throws CloneNotSupportedException {
-		Process process = (Process) super.clone();
+		Process process = new Process();
+		process.copy(this);
 		return process;
+	}
+	
+	/**
+	 * Copy the _process into this.
+	 */
+	protected void copy(final Process _process) {
+		super.copy(_process) ;
 	}
 
 	/**

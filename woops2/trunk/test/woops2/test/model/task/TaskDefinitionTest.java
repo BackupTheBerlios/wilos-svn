@@ -59,9 +59,12 @@ public class TaskDefinitionTest extends TestCase {
 		assertTrue("By references", this.taskDefinition.equals(this.taskDefinition));
 
 		// Assert if it's equal field by field.
-		TaskDescriptor td1 = new TaskDescriptor();
-		td1.setName(NAME);
-		td1.setDescription(DESCRIPTION);
+		TaskDefinition td1 = null;
+		try {
+			td1 = (TaskDefinition)this.taskDefinition.clone();
+		} catch (CloneNotSupportedException e) {
+			fail("Error CloneNotSupportedException in the testEquals method");
+		}
 		assertTrue("Field by field", this.taskDefinition.equals(td1));
 
 		// Assert if it's not equal.

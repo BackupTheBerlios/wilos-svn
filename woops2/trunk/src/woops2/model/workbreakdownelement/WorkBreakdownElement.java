@@ -70,12 +70,12 @@ public class WorkBreakdownElement extends BreakdownElement {
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		WorkBreakdownElement workBreakdownElement = new WorkBreakdownElement();
-		this.copy(workBreakdownElement);
+		workBreakdownElement.copy(this);
 		return workBreakdownElement;
 	}
 	
 	/**
-	 * Copy the object.
+	 * Copy the _workBreakdownElement into this.
 	 */
 	protected void copy(final WorkBreakdownElement _workBreakdownElement) {
 		super.copy(_workBreakdownElement) ;

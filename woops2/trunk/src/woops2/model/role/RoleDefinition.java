@@ -77,8 +77,8 @@ public class RoleDefinition extends Element {
 	 * @return a hash code
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(this.roleDescriptors)
-				.toHashCode();
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
+				.append(this.roleDescriptors).toHashCode();
 	}
 
 	/*
@@ -87,10 +87,18 @@ public class RoleDefinition extends Element {
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
-	public Element clone() throws CloneNotSupportedException {
-		RoleDefinition roleDefinition = (RoleDefinition) super.clone();
-		roleDefinition.setRoleDescriptors(this.getRoleDescriptors());
+	public Object clone() throws CloneNotSupportedException {
+		RoleDefinition roleDefinition = new RoleDefinition();
+		roleDefinition.copy(this);
 		return roleDefinition;
+	}
+
+	/**
+	 * Copy the _roleDefinition into this.
+	 */
+	protected void copy(final RoleDefinition _roleDefinition) {
+		super.copy(_roleDefinition);
+		this.setRoleDescriptors(_roleDefinition.getRoleDescriptors());
 	}
 
 	/**

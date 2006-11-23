@@ -55,7 +55,7 @@ public class Element implements Cloneable {
 	}
 
 	/**
-	 * Copy the object.
+	 * Copy the element into this.
 	 */
 	protected void copy(final Element _element) {
 		this.setDescription(_element.getDescription());
@@ -70,7 +70,7 @@ public class Element implements Cloneable {
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		Element element = new Element();
-		this.copy(element);
+		element.copy(this);
 		return element;
 	}
 

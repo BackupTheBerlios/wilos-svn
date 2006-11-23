@@ -51,16 +51,19 @@ public class ProcessTest extends TestCase {
 	 * Test method for
 	 * {@link woops2.model.process.Process#equals(java.lang.Object)}.
 	 */
-	public final void testEqualsObject() {
+	public final void testEquals() {
 		// Rk: the setUp method is called here.
 
 		// Assert if it's equal by references.
 		assertTrue("By references", this.process.equals(this.process));
 
 		// Assert if it's equal field by field.
-		Process processTmp1 = new Process();
-		processTmp1.setPrefix(PREFIX);
-		processTmp1.setIsOptional(IS_OPTIONAL);
+		Process processTmp1 = null;
+		try {
+			processTmp1 = (Process)this.process.clone();
+		} catch (CloneNotSupportedException e) {
+			fail("Error CloneNotSupportedException in the testEquals method");
+		}
 		assertTrue("Field by field", this.process.equals(processTmp1));
 
 		// Assert if it's not equal.
