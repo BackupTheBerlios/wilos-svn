@@ -19,6 +19,7 @@ public class WorkBreakdownElementTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		this.workBreakdownElement = new WorkBreakdownElement() ;
+		this.workBreakdownElement.setIdEPF("idEPF") ;
 		this.workBreakdownElement.setName("name1") ;
 		this.workBreakdownElement.setDescription("description1") ;
 		this.workBreakdownElement.setPrefix("prefix1") ;
@@ -58,6 +59,7 @@ public class WorkBreakdownElementTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		workBreakdownElement = new WorkBreakdownElement() ;
+		workBreakdownElement.setIdEPF("idEPF") ;
 		workBreakdownElement.setName("name1") ;
 		workBreakdownElement.setDescription("description1") ;
 		workBreakdownElement.setPrefix("prefix1") ;
@@ -97,6 +99,7 @@ public class WorkBreakdownElementTest extends TestCase {
 
 		// Assert if it's not equal.
 		WorkBreakdownElement bdeTmp2 = new WorkBreakdownElement();
+		workBreakdownElement.setIdEPF("idEPF2") ;
 		bdeTmp2.setName("name2") ;
 		bdeTmp2.setDescription("description2") ;
 		bdeTmp2.setPrefix("prefix2") ;

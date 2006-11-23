@@ -1,8 +1,8 @@
 
 package woops2.model.workbreakdownelement ;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder ;
+import org.apache.commons.lang.builder.HashCodeBuilder ;
 
 import woops2.model.breakdownelement.BreakdownElement ;
 
@@ -13,40 +13,36 @@ import woops2.model.breakdownelement.BreakdownElement ;
  * Breakdown Elements that represent or refer to Work Definitions.
  * 
  */
-public class WorkBreakdownElement extends BreakdownElement {
+public class WorkBreakdownElement extends BreakdownElement implements Cloneable {
 
 	private Boolean isRepeatable ;
 
 	private Boolean isOngoing ;
 
 	private Boolean isEvenDriven ;
-	
-	public WorkBreakdownElement () {
-		super() ;
 
+	public WorkBreakdownElement() {
+		super() ;
 		this.isEvenDriven = false ;
 		this.isOngoing = false ;
 		this.isRepeatable = false ;
 	}
-	
+
 	/**
 	 * Indicates whether another object is "equal to" this one.
 	 * 
 	 * @return true if equal else false
 	 */
 	public boolean equals(Object obj) {
-		if (obj instanceof BreakdownElement == false) {
-			return false;
+		if(obj instanceof BreakdownElement == false){
+			return false ;
 		}
-		if (this == obj) {
-			return true;
+		if(this == obj){
+			return true ;
 		}
-		WorkBreakdownElement workBreakdownElement = (WorkBreakdownElement) obj;
-		return new EqualsBuilder().appendSuper(super.equals(workBreakdownElement))
-				.append(this.isEvenDriven, workBreakdownElement.isEvenDriven)
-				.append(this.isOngoing, workBreakdownElement.isOngoing)
-				.append(this.isRepeatable, workBreakdownElement.isRepeatable)
-				.isEquals();
+		WorkBreakdownElement workBreakdownElement = (WorkBreakdownElement) obj ;
+		return new EqualsBuilder().appendSuper(super.equals(workBreakdownElement)).append(this.isEvenDriven, workBreakdownElement.isEvenDriven).append(
+				this.isOngoing, workBreakdownElement.isOngoing).append(this.isRepeatable, workBreakdownElement.isRepeatable).isEquals() ;
 	}
 
 	/**
@@ -55,33 +51,30 @@ public class WorkBreakdownElement extends BreakdownElement {
 	 * @return a hash code
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
-										  .append(this.isEvenDriven)
-										  .append(this.isOngoing)
-										  .append(this.isRepeatable)
-										  .toHashCode() ;
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.isEvenDriven).append(this.isOngoing).append(this.isRepeatable)
+				.toHashCode() ;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see java.lang.Object#clone()
 	 */
-	@Override
-	public Object clone() throws CloneNotSupportedException {
-		WorkBreakdownElement workBreakdownElement = new WorkBreakdownElement();
-		workBreakdownElement.copy(this);
-		return workBreakdownElement;
+	@ Override
+	public WorkBreakdownElement clone() throws CloneNotSupportedException {
+		WorkBreakdownElement workBreakdownElement = new WorkBreakdownElement() ;
+		workBreakdownElement.copy(this) ;
+		return workBreakdownElement ;
 	}
-	
+
 	/**
 	 * Copy the _workBreakdownElement into this.
 	 */
 	protected void copy(final WorkBreakdownElement _workBreakdownElement) {
 		super.copy(_workBreakdownElement) ;
-		this.setIsEvenDriven(_workBreakdownElement.getIsEvenDriven());
-		this.setIsOngoing(_workBreakdownElement.getIsOngoing());
-		this.setIsRepeatable(_workBreakdownElement.getIsRepeatable());
+		this.setIsEvenDriven(_workBreakdownElement.getIsEvenDriven()) ;
+		this.setIsOngoing(_workBreakdownElement.getIsOngoing()) ;
+		this.setIsRepeatable(_workBreakdownElement.getIsRepeatable()) ;
 	}
 
 	/**
@@ -89,7 +82,7 @@ public class WorkBreakdownElement extends BreakdownElement {
 	 * 
 	 * @return the isEvenDriven.
 	 */
-	public Boolean getIsEvenDriven () {
+	public Boolean getIsEvenDriven() {
 		return this.isEvenDriven ;
 	}
 
@@ -99,7 +92,7 @@ public class WorkBreakdownElement extends BreakdownElement {
 	 * @param _isEvenDriven
 	 *            The isEvenDriven to set.
 	 */
-	public void setIsEvenDriven (Boolean _isEvenDriven) {
+	public void setIsEvenDriven(Boolean _isEvenDriven) {
 		this.isEvenDriven = _isEvenDriven ;
 	}
 
@@ -108,7 +101,7 @@ public class WorkBreakdownElement extends BreakdownElement {
 	 * 
 	 * @return the isOngoing.
 	 */
-	public Boolean getIsOngoing () {
+	public Boolean getIsOngoing() {
 		return this.isOngoing ;
 	}
 
@@ -118,7 +111,7 @@ public class WorkBreakdownElement extends BreakdownElement {
 	 * @param _isOngoing
 	 *            The isOngoing to set.
 	 */
-	public void setIsOngoing (Boolean _isOngoing) {
+	public void setIsOngoing(Boolean _isOngoing) {
 		this.isOngoing = _isOngoing ;
 	}
 
@@ -127,7 +120,7 @@ public class WorkBreakdownElement extends BreakdownElement {
 	 * 
 	 * @return the isRepeatable.
 	 */
-	public Boolean getIsRepeatable () {
+	public Boolean getIsRepeatable() {
 		return this.isRepeatable ;
 	}
 
@@ -137,7 +130,7 @@ public class WorkBreakdownElement extends BreakdownElement {
 	 * @param _isRepeatable
 	 *            The isRepeatable to set.
 	 */
-	public void setIsRepeatable (Boolean _isRepeatable) {
+	public void setIsRepeatable(Boolean _isRepeatable) {
 		this.isRepeatable = _isRepeatable ;
 	}
 }
