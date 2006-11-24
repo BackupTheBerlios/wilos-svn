@@ -17,7 +17,7 @@ public class MainTest {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-            try { // Call Web Service Operation
+           /* try { // Call Web Service Operation
                 wilos.spelp.webservices.WizardServicesService service = new wilos.spelp.webservices.WizardServicesService();
                 // TODO initialize WS operation arguments here
                 java.lang.String login = "toto";
@@ -32,7 +32,22 @@ public class MainTest {
             } catch (Exception ex) {
                 // TODO handle custom exceptions here
                 ex.printStackTrace();
+            }*/
+            try { // Call Web Service Operation
+                services.WizardServicesService service = new services.WizardServicesService();
+                services.WizardServices port = service.getWizardServicesPort();
+                // TODO process result here
+                java.util.List<services.Process> result = port.getAllProcess();
+                System.out.println("Result = "+result);
+            } catch (Exception ex) {
+                // TODO handle custom exceptions here
+                ex.printStackTrace();
             }
+            
+            
+            
+            
+            
 //		// on instancie le proxy local
 //		WizardServicesProxy px = new WizardServicesProxy();
 //		// on specifie l'adresse du serveur
