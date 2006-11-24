@@ -29,7 +29,7 @@ import woops2.model.process.Process;
 
 /**
  *
- * @author toine
+ * @author toine 
  */
 @WebService()
 public class WizardServices {
