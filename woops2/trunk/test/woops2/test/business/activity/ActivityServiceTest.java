@@ -1,15 +1,15 @@
 
 package woops2.test.business.activity ;
 
-import java.util.List;
+import java.util.List ;
 
-import junit.framework.TestCase;
-import woops2.business.activity.ActivityService;
-import woops2.model.activity.Activity;
-import woops2.test.TestConfiguration;
+import junit.framework.TestCase ;
+import woops2.business.activity.ActivityService ;
+import woops2.model.activity.Activity ;
+import woops2.test.TestConfiguration ;
 
 /**
- * @author Mathieu BENOIT.
+ * @author deder
  * 
  */
 public class ActivityServiceTest extends TestCase {
@@ -31,7 +31,7 @@ public class ActivityServiceTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp() ;
 
-		// Get the ActivityDao Singleton for managing Activity data
+		// Get the ActivityService Singleton for managing Activity data
 		this.activityService = (ActivityService) TestConfiguration.getInstance().getApplicationContext().getBean("ActivityService") ;
 
 		// Create empty Activity
@@ -51,12 +51,11 @@ public class ActivityServiceTest extends TestCase {
 		this.activityService.getActivityDao().deleteActivity(this.activity) ;
 	}
 
-	/**
-	 * Test method for {@link woops2.business.activity.ActivityManager#getActivitiesList()}.
+	/*
+	 * (non-Javadoc) 
+	 * Test method for
+	 * {@link woops2.business.activity.ActivityManager#getActivitiesList()}.
 	 * 
-	 * PRINCIPLE Create a tmp activity, save it into the database. Then get all activities from the
-	 * database with the method to test, and look if the size of the activities set got is >= 1. To
-	 * finish delete this tmp activity from the database.
 	 */
 	public void testGetActivitiesList() {
 		// Rk: the setUp method is called here.
@@ -72,13 +71,10 @@ public class ActivityServiceTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
+	/* (non-Javadoc)
 	 * Test method for
 	 * {@link woops2.business.activity.ActivityManager#saveActivity(woops2.model.activity.Activity)}.
 	 * 
-	 * PRINCIPLE Create a tmp activity, save it into the database with the method to test. Then look
-	 * for the database to check if this tmp activity exists. To finish delete this tmp activity
-	 * from the database.
 	 */
 	public void testSaveActivity() {
 		// Rk: the setUp method is called here.
