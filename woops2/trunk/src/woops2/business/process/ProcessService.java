@@ -55,9 +55,10 @@ public class ProcessService {
 	protected final Log logger = LogFactory.getLog(this.getClass());
 	
 	public void TestSpelpParsingXML(){
-		File file = new File("C:\\Documents and Settings\\Moi\\Bureau\\Spelp-importXML\\ressources\\scrum.xml");
+		File file = new File("C:\\scrum.xml");
 		Process p = this.SpelpParsingXML(file);
 		System.out.println("Process = "+p);
+		this.SaveProcessService(p);
 	}
 	
 	public Process SpelpParsingXML (File _file) {
@@ -92,9 +93,9 @@ public class ProcessService {
 				TaskDescriptor taskDescriptor = (TaskDescriptor) breakdownElement;
 				TaskDefinition taskDefinition = taskDescriptor.getTaskDefinition();
 				
-				for (Step step: taskDefinition.getSteps()) {
+			/*	for (Step step: taskDefinition.getSteps()) {
 					elements.add(step);
-				}
+				}*/
 				
 				elements.add(taskDefinition);
 				elements.add(taskDescriptor);
