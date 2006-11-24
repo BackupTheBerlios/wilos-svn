@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.rmi.RemoteException;
+import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import wilos.spelp.webservices.RoleDescriptor;
 import wilos.spelp.webservices.WizardServices;
@@ -12,6 +13,7 @@ import wilos.spelp.webservices.WizardServicesService;
 
 
 public class MainTest {
+        private static String url ="http://localhost:8084/remote/WizardServices?wsdl";
 
 	/**
 	 * @param args
@@ -34,11 +36,26 @@ public class MainTest {
                 ex.printStackTrace();
             }*/
             try { // Call Web Service Operation
-                services.WizardServicesService service = new services.WizardServicesService();
-                services.WizardServices port = service.getWizardServicesPort();
+                //services.WizardServicesService service = new services.WizardServicesService();
                 // TODO process result here
-                java.util.List<services.Process> result = port.getAllProcess();
+                
+                Service serv = Service.create(new URL(url), new QName("http://webservices.spelp.wilos/", "WizardServicesService"));
+                
+                services.WizardServices port = serv.getPort(services.WizardServices.class);
+                
+                woops2.model.role.RoleDescriptor rd = null;
+                
+                
+                
+                //java.util.List<services.Process> result = port.getAllProcess();
+                java.util.List result = port.getRolesByUser("toto","toto");
                 System.out.println("Result = "+result);
+                System.out.println(((woops2.model.role.RoleDescriptor)result.get(0)).getName());
+                
+                
+                
+                
+                
             } catch (Exception ex) {
                 // TODO handle custom exceptions here
                 ex.printStackTrace();
