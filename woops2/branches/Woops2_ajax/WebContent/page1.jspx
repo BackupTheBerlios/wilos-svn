@@ -172,12 +172,13 @@
 			</ice:panelGroup>
 		</f:facet>
 	</ice:panelBorder>
+	
 	<!--
   PRELOAD IMAGES need for roleovers and layout in general, javascript is only
   loaded once per refresh which is good enough.  This improves overall user
   experience as they shouldn't have to wait for images to show up after the
-  initial load.
-  -->
+  initial load. -->
+  
 	<script language="JavaScript">
     <![CDATA[
     <!--
@@ -233,12 +234,13 @@
             './xmlhttp/css/xp/css-images/tbot-on-left-bot.gif',
             './xmlhttp/css/xp/css-images/tbot-on-mid-bot.gif',
             './xmlhttp/css/xp/css-images/tbot-on-right-bot.gif'
-    );
+    ); 
 
     // -->
-    ]]>
+    ]]> 
+
 </script>
 
 	</body>
 	</html>
-</f:view>
+</f:view> 
