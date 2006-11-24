@@ -17,9 +17,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
 import woops2.business.process.ProcessService;
+import woops2.hibernate.activity.ActivityDao;
 import woops2.model.role.RoleDescriptor;
 import woops2.model.breakdownelement.BreakdownElement;
 import woops2.model.process.Process;
@@ -52,8 +55,27 @@ public class WizardServices {
     
     @WebMethod
     public List<Process> getAllProcess () {
-    	ProcessService p = new ProcessService();
-		List<Process> lp = p.getProcessesList(); 
+    	        List<Process> lp = new ArrayList<Process>();
+                
+                 // Getback the application context from the spring configuration file
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+                // Show what is in the factory
+		System.out.println("factory => "+ctx);
+                // Getback the hibernateTemplate bean
+		org.springframework.orm.hibernate3.HibernateTemplate hibTempl = (org.springframework.orm.hibernate3.HibernateTemplate) ctx.getBean("hibernateTemplate");
+                System.out.println("HibTemplate => "+hibTempl);
+                // Get the ActivityDao Singleton for managing Activity data
+		//ActivityDao dao = (ActivityDao) ctx.getBean("ActivityDao");
+                
+                ProcessService p = (ProcessService)ctx.getBean("ProcessService");
+
+            // Create empty Activity
+		//Activity a = new Activity();
+            // Save it
+		//dao.saveOrUpdateActivity(a);
+            
+             lp = p.getProcessesList();
+
 		return lp;
     }
 }
