@@ -29,6 +29,29 @@
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     
+    <managed-bean>
+        <description>
+            Backing bean that controls which content will be displayed and
+            the MenuGroupBeans that make up the left navigation of the
+            application
+        </description>
+        <managed-bean-name>navigation</managed-bean-name>
+        <managed-bean-class>
+            woops2.util.NavigationBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+      <managed-bean-name>treeNavigation</managed-bean-name>
+      <managed-bean-class>
+            woops2.util.TreeNavigation
+        </managed-bean-class>
+      <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    
+    
     <!-- OutputProgress Render Manager-->
     <managed-bean>
         <managed-bean-name>renderManager</managed-bean-name>
