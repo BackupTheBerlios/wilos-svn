@@ -30,7 +30,7 @@ import woops2.model.process.Process;
  */
 @WebService()
 public class WizardServices {
-        @WebMethod
+    @WebMethod
 	public List<RoleDescriptor> getRolesByUser (@WebParam(name="login") String login,@WebParam(name="password")  String password) {
 		List<RoleDescriptor> r = new ArrayList<RoleDescriptor>();
 		if(login.equals("toto") && password.equals("toto")) {
@@ -47,7 +47,13 @@ public class WizardServices {
 				}
 			}
 		}
-
 		return r;
-	}	
+	}
+    
+    @WebMethod
+    public List<Process> getAllProcess () {
+    	ProcessService p = new ProcessService();
+		List<Process> lp = p.getProcessesList(); 
+		return lp;
+    }
 }
