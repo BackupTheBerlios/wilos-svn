@@ -46,7 +46,7 @@
 						border="0">
 
 						<ice:panelTabSet styleClass="componentPanelTabSetLayout">
-							
+
 							<ice:panelTab label="Activity Table">
 								<br />
 								<br />
@@ -72,7 +72,7 @@
 								</h:dataTable>
 								<br />
 								<br />
-					
+
 
 							</ice:panelTab>
 							<ice:panelTab label="New Activity">
@@ -84,43 +84,87 @@
 								<ice:outputText value="Valeur prefix : " />
 								<ice:outputText value="#{ActivityViewer.activity.prefix}" />
 								<br />
-								<ice:outputText value="isPlanned : "/>
-								<ice:selectBooleanCheckbox value="#{ActivityViewer.activity.isPlanned}"/>
+								<ice:outputText value="isPlanned : " />
+								<ice:selectBooleanCheckbox
+									value="#{ActivityViewer.activity.isPlanned}" />
 								<br />
-								<ice:outputText value="isOptional : "/>
-								<ice:selectBooleanCheckbox value="#{ActivityViewer.activity.isOptional}"/>
+								<ice:outputText value="isOptional : " />
+								<ice:selectBooleanCheckbox
+									value="#{ActivityViewer.activity.isOptional}" />
 								<br />
 								<br />
-								<ice:outputText value="Status : #{ActivityViewer.viewerMessage}"/>
+								<ice:outputText value="Status : #{ActivityViewer.viewerMessage}" />
 								<br />
 								<br />
-								<ice:commandButton value="Create Activity" actionListener="#{ActivityViewer.saveActivityActionListener}" />
-								<ice:commandButton value="New/Reset Activity" actionListener="#{ActivityViewer.resetActivityActionListener}" />
+								<ice:commandButton value="Create Activity"
+									actionListener="#{ActivityViewer.saveActivityActionListener}" />
+								<ice:commandButton value="New/Reset Activity"
+									actionListener="#{ActivityViewer.resetActivityActionListener}" />
 							</ice:panelTab>
-							
+
 							<ice:panelTab label="Import EPF Process File">
 
 								<ice:panelGrid styleClass="componentLayoutRootTable" columns="1">
 									<ice:panelGroup styleClass="formBorderHighlight"
 										style="text-align:left">
+										<br />
+										
+										<!-- Arbre  -->
+										
+										<ice:tree id="tree" value="#{treeExample.model}" var="item"
+											hideRootNode="false" hideNavigation="false"
+											imageDir="#{styleBean.imageDirectory}">
+											<ice:treeNode>
+												<f:facet name="icon">
+													<ice:panelGroup style="display: inline">
+														<ice:graphicImage value="#{item.userObject.icon}" />
+														<ice:commandLink
+															actionListener="#{item.userObject.nodeClicked}">
+															<ice:outputText value="#{item.userObject.text}" />
+														</ice:commandLink>
+													</ice:panelGroup>
+												</f:facet>
+												<f:facet name="content">
+													<ice:panelGroup style="display: inline">
+														<ice:outputText
+															value="#{msgs['components.tree.node.outputText.label']}"
+															style="font-style: italic"
+															rendered="#{item.userObject.componentType == 1}" />
+														<ice:inputText
+															rendered="#{item.userObject.componentType == 2}" />
+														<ice:commandButton
+															value="#{msgs['components.tree.node.outputText.label']}"
+															rendered="#{item.userObject.componentType == 3}" />
+													</ice:panelGroup>
+												</f:facet>
+											</ice:treeNode>
+										</ice:tree>
+
+										<br />
+										<ice:outputText value="Add your file :" />
+										<br />
 										<ice:inputFile style="border:none; width:400px; height:70px;"
 											progressListener="#{XmlFileImportViewer.progress}"
 											actionListener="#{XmlFileImportViewer.action}" />
-										<ice:outputProgress id="pro" value="#{XmlFileImportViewer.percent}" />
-										<ice:outputText value="File Name: #{XmlFileImportViewer.fileName}" />
+										<ice:outputProgress id="pro"
+											value="#{XmlFileImportViewer.percent}" />
+										<ice:outputText
+											value="File Name: #{XmlFileImportViewer.fileName}" />
 										<br />
-										<ice:outputText value="Content Type: #{XmlFileImportViewer.contentType}" />
+										<ice:outputText
+											value="Content Type: #{XmlFileImportViewer.contentType}" />
 										<ice:messages />
 									</ice:panelGroup>
+									
+									<br />
+						<ice:commandLink value="liens vers page2" action="page2" />
 								</ice:panelGrid>
 
 							</ice:panelTab>
-							
+
 						</ice:panelTabSet>
-						
-						<br />
-						<ice:commandLink value="liens vers page2" action="page2" />
-								
+
+
 					</ice:panelGrid>
 				</ice:form>
 
