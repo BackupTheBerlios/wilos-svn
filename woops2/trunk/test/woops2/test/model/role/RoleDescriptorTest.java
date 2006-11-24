@@ -136,12 +136,12 @@ public class RoleDescriptorTest extends TestCase {
 	 * Test method for {@link woops2.model.role.RoleDescriptor#AddTaskDescriptor()}.
 	 * 
 	 */
-	public void testAddTaskDescriptor() {
+	public void testAddPrimaryTask() {
 		TaskDescriptor task = new TaskDescriptor() ;
 		task.setName(NAME) ;
 		task.setDescription(DESCRIPTION) ;
 
-		this.roleDescriptor.addTaskDescriptor(task) ;
+		this.roleDescriptor.addPrimaryTask(task);
 		assertFalse(this.roleDescriptor.getPrimaryTasks().isEmpty()) ;
 		assertTrue(this.roleDescriptor.getPrimaryTasks().size() == 1) ;
 		assertNotNull(task.getMainRole()) ;
@@ -156,11 +156,11 @@ public class RoleDescriptorTest extends TestCase {
 		task.setName(NAME) ;
 		task.setDescription(DESCRIPTION) ;
 
-		this.roleDescriptor.addTaskDescriptor(task) ;
+		this.roleDescriptor.addPrimaryTask(task) ;
 		assertFalse(this.roleDescriptor.getPrimaryTasks().isEmpty()) ;
 		assertNotNull(task.getMainRole()) ;
 
-		this.roleDescriptor.removeTaskDescriptor(task) ;
+		this.roleDescriptor.removePrimaryTask(task) ;
 		assertTrue(this.roleDescriptor.getPrimaryTasks().isEmpty()) ;
 		assertNull(task.getMainRole()) ;
 	}
@@ -178,8 +178,8 @@ public class RoleDescriptorTest extends TestCase {
 		tmp.setName("nom") ;
 		tmp.setDescription(DESCRIPTION) ;
 
-		this.roleDescriptor.addTaskDescriptor(task) ;
-		this.roleDescriptor.addTaskDescriptor(tmp) ;
+		this.roleDescriptor.addPrimaryTask(task) ;
+		this.roleDescriptor.addPrimaryTask(tmp) ;
 		assertTrue(this.roleDescriptor.getPrimaryTasks().size() == 2) ;
 		assertNotNull(task.getMainRole()) ;
 		assertNotNull(tmp.getMainRole()) ;
@@ -207,7 +207,7 @@ public class RoleDescriptorTest extends TestCase {
 		set.add(task) ;
 		set.add(tmp) ;
 
-		this.roleDescriptor.addToAllTaskDescriptors(set) ;
+		this.roleDescriptor.addToAllPrimaryTasks(set) ;
 
 		assertFalse(this.roleDescriptor.getPrimaryTasks().isEmpty()) ;
 		assertTrue(this.roleDescriptor.getPrimaryTasks().size() == 2) ;
@@ -222,7 +222,7 @@ public class RoleDescriptorTest extends TestCase {
 		task.setName(NAME) ;
 		task.setDescription(DESCRIPTION) ;
 
-		this.roleDescriptor.addToTaskDescriptor(task) ;
+		this.roleDescriptor.addToAdditionalTask(task) ;
 
 		assertFalse(this.roleDescriptor.getAdditionalTasks().isEmpty()) ;
 		assertFalse(task.getAdditionalRoles().isEmpty()) ;
@@ -239,11 +239,11 @@ public class RoleDescriptorTest extends TestCase {
 		task.setName(NAME) ;
 		task.setDescription(DESCRIPTION) ;
 
-		this.roleDescriptor.addToTaskDescriptor(task) ;
+		this.roleDescriptor.addToAdditionalTask(task) ;
 		assertFalse(this.roleDescriptor.getAdditionalTasks().isEmpty()) ;
 		assertFalse(task.getAdditionalRoles().isEmpty());
 		
-		this.roleDescriptor.removeFromTaskDescriptor(task) ;
+		this.roleDescriptor.removeFromAdditionalTask(task) ;
 		assertTrue(this.roleDescriptor.getAdditionalTasks().isEmpty()) ;
 		assertTrue(task.getAdditionalRoles().isEmpty());
 	}
@@ -266,7 +266,7 @@ public class RoleDescriptorTest extends TestCase {
 		set.add(task) ;
 		set.add(tmp) ;
 
-		this.roleDescriptor.addToAllTaskDescriptors(set) ;
+		this.roleDescriptor.addToAllPrimaryTasks(set) ;
 		assertTrue(this.roleDescriptor.getAdditionalTasks().size() == 2) ;
 		assertTrue(task.getAdditionalRoles().size() == 1);
 		assertTrue(tmp.getAdditionalRoles().size() == 1);
@@ -294,12 +294,12 @@ public class RoleDescriptorTest extends TestCase {
 		set.add(task) ;
 		set.add(tmp) ;
 
-		this.roleDescriptor.addToAllTaskDescriptors(set) ;
+		this.roleDescriptor.addToAllPrimaryTasks(set) ;
 		assertTrue(this.roleDescriptor.getPrimaryTasks().size() == 2) ;
 		assertTrue(task.getAdditionalRoles().size() == 1);
 		assertTrue(tmp.getAdditionalRoles().size() == 1);
 		
-		this.roleDescriptor.removeFromAllTaskDescriptor() ;
+		this.roleDescriptor.removeFromAllAdditionalTasks() ;
 		assertTrue(this.roleDescriptor.getPrimaryTasks().isEmpty()) ;
 		assertTrue(task.getAdditionalRoles().isEmpty());
 		assertTrue(tmp.getAdditionalRoles().isEmpty());

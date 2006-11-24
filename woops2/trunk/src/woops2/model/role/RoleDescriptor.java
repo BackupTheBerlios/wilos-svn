@@ -146,7 +146,7 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	}
 
 	/**
-	 * relation mainrole
+	 * relation mainrole between RoleDescriptor and TaskDescriptor
 	 */
 
 	/**
@@ -154,7 +154,7 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * 
 	 * @param _task
 	 */
-	public void addTaskDescriptor(TaskDescriptor _task) {
+	public void addPrimaryTask(TaskDescriptor _task) {
 		this.primaryTasks.add(_task);
 		_task.setMainRole(this);
 	}
@@ -164,9 +164,19 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * 
 	 * @param _task
 	 */
-	public void removeTaskDescriptor(TaskDescriptor _task) {
+	public void removePrimaryTask(TaskDescriptor _task) {
 		_task.setMainRole(null);
 		this.primaryTasks.remove(_task);
+	}
+	
+	/**
+	 * 
+	 * @param _role
+	 */
+	public void addToAllPrimaryTasks(Set<TaskDescriptor> _role) {
+		for (TaskDescriptor _role1 : _role) {
+			_role1.addToMainRole(this);
+		}
 	}
 
 	/**
@@ -182,17 +192,7 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	}
 
 	/**
-	 * 
-	 * @param _role
-	 */
-	public void addToAllTaskDescriptors(Set<TaskDescriptor> _role) {
-		for (TaskDescriptor _role1 : _role) {
-			_role1.addToMainRole(this);
-		}
-	}
-
-	/**
-	 * relation additionnalTask
+	 * relation additionnalRoles between RoleDescriptor and TaskDescriptor
 	 */
 
 	/**
@@ -200,7 +200,7 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * 
 	 * @param _task
 	 */
-	public void addToTaskDescriptor(TaskDescriptor _task) {
+	public void addToAdditionalTask(TaskDescriptor _task) {
 		this.additionalTasks.add(_task);
 		_task.getAdditionalRoles().add(this);
 	}
@@ -210,13 +210,13 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * 
 	 * @param _task
 	 */
-	public void removeFromTaskDescriptor(TaskDescriptor _task) {
+	public void removeFromAdditionalTask(TaskDescriptor _task) {
 		_task.getAdditionalRoles().remove(this);
 		this.additionalTasks.remove(_task);
 	}
 
 	/**
-	 * remove all the roleDescriptor
+	 * remove all the roleDescriptors
 	 * 
 	 */
 	public void removeAllAdditionalTasks() {
@@ -230,9 +230,9 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * Remove from an RoleDescriptor all its AdditionalTask
 	 * 
 	 */
-	public void removeFromAllTaskDescriptor() {
+	public void removeFromAllAdditionalTasks() {
 		for (TaskDescriptor _task : this.additionalTasks) {
-			this.removeFromTaskDescriptor(_task);
+			this.removeFromAdditionalTask(_task);
 		}
 	}
 

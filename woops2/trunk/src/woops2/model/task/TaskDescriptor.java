@@ -152,7 +152,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 	 */
 	public void addToAllRoleDescriptors(Set<RoleDescriptor> _role) {
 		for (RoleDescriptor role : _role) {
-			role.addToTaskDescriptor(this);
+			role.addToAdditionalTask(this);
 		}
 	}
 
