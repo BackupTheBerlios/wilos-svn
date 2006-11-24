@@ -152,9 +152,9 @@ public class TaskDescriptorTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.task.TaskDescriptor#removeFromMainRole(woops2.model.task.RoleDescriptor)}.
+	 * {@link woops2.model.task.TaskDescriptor#removeMainRole(woops2.model.task.RoleDescriptor)}.
 	 */
-	public void testRemoveFromMainRole() {
+	public void testRemoveMainRole() {
 		RoleDescriptor roleDescriptor = new RoleDescriptor() ;
 		roleDescriptor.setName(NAME) ;
 		roleDescriptor.setDescription(DESCRIPTION) ;
