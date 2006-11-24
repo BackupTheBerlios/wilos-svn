@@ -13,14 +13,18 @@ public class FillerElement {
 	private static String AttributeDescription = "briefDescription" ;
 		
 	public FillerElement (Element _e, Node _aNode) {
-		myElement = _e ;
+		try {
+			myElement = _e.clone() ;
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
 		myNode = _aNode ;
 		fill();
 	}
 	
 	private void fill(){
 		// setting the id
-		myElement.setId(myNode.getAttributes().getNamedItem(AttributeId).getNodeValue());
+		myElement.setIdEPF(myNode.getAttributes().getNamedItem(AttributeId).getNodeValue());
 		// setting the name
 		myElement.setName(myNode.getAttributes().getNamedItem(AttributeName).getNodeValue());
 		// setting the description

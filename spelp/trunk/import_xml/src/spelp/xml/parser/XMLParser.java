@@ -209,7 +209,7 @@ public class XMLParser {
 	
 	public static TaskDefinition getTaskDefinitionByID(String _id){
 		for (int i = 0 ; i < TasksList.size() ; i ++){
-			if (TasksList.get(i).getId().equals(_id)){
+			if (TasksList.get(i).getIdEPF().equals(_id)){
 				return TasksList.get(i);
 			}
 		}
@@ -249,22 +249,18 @@ public class XMLParser {
 //		 getting the id of the role
 		String idRole = "" ;
 		NodeList listOfTdNodes = _n.getChildNodes() ;
-		boolean trouve = false ;
-		for (int i = 0 ; i < listOfTdNodes.getLength() && !trouve ; i ++){
+		for (int i = 0 ; i < listOfTdNodes.getLength() ; i ++){
 			if (listOfTdNodes.item(i).getNodeName().equals(additionallyPerformedBy)){
-				trouve = true ;
 				idRole = listOfTdNodes.item(i).getTextContent();
+				RoleDescriptor roleToBeset ;
+				roleToBeset = getRoleDescriptorById(_s, idRole);
+				// if the task doesn't exist
+				if (roleToBeset == null){
+					throw new Exception("role " + idRole + " doesn't exist");
+				}
+				// set the role in the roledescriptor
+				_t.addToRoleDescriptor(roleToBeset);
 			}
-		}
-		if (trouve){
-			RoleDescriptor roleToBeset ;
-			roleToBeset = getRoleDescriptorById(_s, idRole);
-			// if the task doesn't exist
-			if (roleToBeset == null){
-				throw new Exception("role " + idRole + " doesn't exist");
-			}
-			// set the role in the roledescriptor
-			_t.addToMainRole(roleToBeset);
 		}
 	}
 	
@@ -329,7 +325,7 @@ public class XMLParser {
 	public static RoleDescriptor getRoleDescriptorById(Set<RoleDescriptor> aSet,String id){
 		for (Iterator i = aSet.iterator() ; i.hasNext() ;){
 			RoleDescriptor tmp = (RoleDescriptor) i .next();
-			if (tmp.getId().equals(id)){
+			if (tmp.getIdEPF().equals(id)){
 				return  tmp;
 			}
 		}
@@ -351,20 +347,14 @@ public class XMLParser {
 			Node aNode;
 			for(int i=0;i<roleDescriptors.getLength();i++){
 				aNode = roleDescriptors.item(i);
-				
 				RoleDescriptor aRoleDescriptor = new RoleDescriptor();
 				FillerRoleDescriptor aFiller = new FillerRoleDescriptor(aRoleDescriptor,aNode);	
 				RoleDescriptor roleDescriptorfilled = (RoleDescriptor)aFiller.getFilledElement();
 				
 				setRoleByRoleDescriptor(roleDescriptorfilled,aNode);
+								
+				roleList.add(roleDescriptorfilled) ;
 				
-				roleDescriptorfilled.setPrefix(String.valueOf(i));
-				System.out.println(roleDescriptorfilled.hashCode() + " " + roleDescriptorfilled.getName() + " " + roleDescriptorfilled.getId());
-				
-				// TODO Probleme a resoudre !!!!
-				while (roleList.add(roleDescriptorfilled) ==false){
-					
-				}
 				System.out.println("");
 			}
 		} catch (FileNotFoundException e) {
@@ -375,7 +365,7 @@ public class XMLParser {
 	
 	public static RoleDefinition getRoleDefinitionByID(String _id){
 		for (int i = 0 ; i < RoleList.size() ; i ++){
-			if (RoleList.get(i).getId().equals(_id)){
+			if (RoleList.get(i).getIdEPF().equals(_id)){
 				return RoleList.get(i);
 			}
 		}

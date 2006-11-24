@@ -71,13 +71,19 @@ public class XMLParserTest extends XMLParser {
 					if (t!=null){
 						if (td.getMainRole() != null){
 							System.out.println(t.getName() +"\n MAIN ROLE : " + td.getMainRole().getName());
+							System.out.print(" ADDITIONAL ROLES : ");
+							for (Iterator j = td.getAdditionalRoles().iterator() ; j.hasNext() ; ){
+								System.out.print(((RoleDescriptor)j.next()).getName() + " ");
+								
+							}
+							System.out.print("\n");
 						}
 						System.out.println(" NB STEPS : " + t.getSteps().size());
 						for (int j = 0 ; j < v.size() ; j++){
 							assertTrue(
-								t.getId().equals(((TaskDefinition)v.get(j)).getId()) && t == ((TaskDefinition)v.get(j))
+								t.getIdEPF().equals(((TaskDefinition)v.get(j)).getIdEPF()) && t == ((TaskDefinition)v.get(j))
 								||
-								!t.getId().equals(((TaskDefinition)v.get(j)).getId())
+								!t.getIdEPF().equals(((TaskDefinition)v.get(j)).getIdEPF())
 							);
 						}
 						if (!v.contains(t)){
@@ -100,6 +106,7 @@ public class XMLParserTest extends XMLParser {
 				pathScrum,pathOPenUP
 			};
 			for (int p = 0 ; p < f.length ; p++){
+				System.out.println(">>>>>>>"+f[p].getName());
 				XMLUtils.setDocument(f[p]);
 				System.out.println(f[p].getAbsolutePath());
 				try {
@@ -114,11 +121,11 @@ public class XMLParserTest extends XMLParser {
 						assertNotNull(t);
 						System.out.println("ROLE DESCRIPTOR : " + rd.getName() + " ROLE DEF : " +  t.getName()+" :\n"+t.getDescription()+"\n");
 						for (int j = 0 ; j < v.size() ; j++){
-							//System.out.println("\nID : \n" + t.getId() + "\n" + ((RoleDefinition)v.get(j)).getId() + "\nMemes ref : " + (t == ((RoleDefinition)v.get(j))));
+							//System.out.println("\nID : \n" + t.getIdEPF() + "\n" + ((RoleDefinition)v.get(j)).getId() + "\nMemes ref : " + (t == ((RoleDefinition)v.get(j))));
 							assertTrue(
-								t.getId().equals(((RoleDefinition)v.get(j)).getId()) && t == ((RoleDefinition)v.get(j))
+								t.getIdEPF().equals(((RoleDefinition)v.get(j)).getIdEPF()) && t == ((RoleDefinition)v.get(j))
 								||
-								!t.getId().equals(((RoleDefinition)v.get(j)).getId())
+								!t.getIdEPF().equals(((RoleDefinition)v.get(j)).getIdEPF())
 							);
 						}
 						if (!v.contains(t)){
