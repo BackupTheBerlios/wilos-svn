@@ -24,7 +24,7 @@
     <managed-bean>
         <managed-bean-name>styleBean</managed-bean-name>
         <managed-bean-class>
-            com.icesoft.icefaces.samples.showcase.util.StyleBean
+            woops2.util.StyleBean
         </managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
