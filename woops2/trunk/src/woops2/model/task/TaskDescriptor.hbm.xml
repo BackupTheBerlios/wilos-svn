@@ -12,5 +12,17 @@
 		<many-to-one name="taskDefinition" class="woops2.model.task.TaskDefinition"
 			column="taskdefinition_id">
 		</many-to-one>
+		
+		<many-to-one name="mainRole" class="woops2.model.role.RoleDescriptor"
+			column="roledescriptor_id">
+		</many-to-one>
+		
+		<set name="additionalRoles" table="perform" lazy="true">
+			<key column="taskdescriptor_id"></key>
+			<many-to-many class="woops2.model.role.RoleDescriptor"
+				column="roledescriptor_id">
+			</many-to-many>
+		</set>
+		
 	</joined-subclass>
 </hibernate-mapping>
