@@ -119,7 +119,7 @@ public class BreakdownElementTest extends TestCase {
 	public void testAddToActivity() {
 		// Rk: the setUp method is called here.
 
-		assertTrue("Empty (begin)", this.breakdownElement.getSuperActivities().isEmpty()) ;
+		assertTrue("Empty (begin)", this.breakdownElement.getActivities().isEmpty()) ;
 
 		Activity activity1 = new Activity() ;
 		activity1.setIdEPF("idEPF") ;
@@ -133,7 +133,7 @@ public class BreakdownElementTest extends TestCase {
 		activity1.setIsOngoing(false) ;
 		activity1.setIsRepeatable(true) ;
 		this.breakdownElement.addActivity(activity1) ;
-		assertTrue("acts.size == 1", this.breakdownElement.getSuperActivities().size() == 1) ;
+		assertTrue("acts.size == 1", this.breakdownElement.getActivities().size() == 1) ;
 		assertTrue("bdes.size1 == 1", activity1.getBreakDownElements().size() == 1) ;
 
 		Activity activity2 = new Activity() ;
@@ -148,7 +148,7 @@ public class BreakdownElementTest extends TestCase {
 		activity2.setIsOngoing(false) ;
 		activity2.setIsRepeatable(true) ;
 		this.breakdownElement.addActivity(activity2) ;
-		assertTrue("acts.size ==  2", this.breakdownElement.getSuperActivities().size() == 2) ;
+		assertTrue("acts.size ==  2", this.breakdownElement.getActivities().size() == 2) ;
 		assertTrue("bdes.size2 ==  1", activity2.getBreakDownElements().size() == 1) ;
 
 		// Rk: the tearDown method is called here.
@@ -191,7 +191,7 @@ public class BreakdownElementTest extends TestCase {
 
 		this.breakdownElement.addAllActivities(activities) ;
 
-		assertTrue("acts.size ==  2", this.breakdownElement.getSuperActivities().size() == 2) ;
+		assertTrue("acts.size ==  2", this.breakdownElement.getActivities().size() == 2) ;
 		assertTrue("bdes1.size == 1", activity1.getBreakDownElements().size() == 1) ;
 		assertTrue("bdes2.size == 1", activity2.getBreakDownElements().size() == 1) ;
 
@@ -219,7 +219,7 @@ public class BreakdownElementTest extends TestCase {
 		this.breakdownElement.addActivity(activity) ;
 		this.breakdownElement.removeActivity(activity) ;
 
-		assertTrue(this.breakdownElement.getSuperActivities().isEmpty()) ;
+		assertTrue(this.breakdownElement.getActivities().isEmpty()) ;
 		assertTrue(activity.getBreakDownElements().isEmpty()) ;
 
 		// Rk: the tearDown method is called here.
@@ -263,7 +263,7 @@ public class BreakdownElementTest extends TestCase {
 		this.breakdownElement.addAllActivities(set) ;
 		this.breakdownElement.removeAllActivities() ;
 
-		assertTrue(this.breakdownElement.getSuperActivities().isEmpty()) ;
+		assertTrue(this.breakdownElement.getActivities().isEmpty()) ;
 		assertTrue(activity.getBreakDownElements().isEmpty()) ;
 		assertTrue(activity2.getBreakDownElements().isEmpty()) ;
 

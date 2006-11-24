@@ -85,7 +85,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 */
 	public void addBreakdownElement(BreakdownElement _breakdownElement) {
 		this.getBreakDownElements().add(_breakdownElement) ;
-		_breakdownElement.getSuperActivities().add(this) ;
+		_breakdownElement.getActivities().add(this) ;
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 * @param _breakdownElement
 	 */
 	public void removeBreakdownElement(BreakdownElement _breakdownElement) {
-		_breakdownElement.getSuperActivities().remove(this) ;
+		_breakdownElement.getActivities().remove(this) ;
 		this.getBreakDownElements().remove(_breakdownElement) ;
 	}
 
@@ -115,7 +115,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 */
 	public void removeAllBreakdownElements() {
 		for(BreakdownElement bde : this.getBreakDownElements())
-			bde.getSuperActivities().remove(this) ;
+			bde.getActivities().remove(this) ;
 		this.getBreakDownElements().clear() ;
 	}
 

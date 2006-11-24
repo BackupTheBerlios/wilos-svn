@@ -27,7 +27,7 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	private Boolean isOptional ;
 
-	private Set<Activity> superActivities ;
+	private Set<Activity> activities ;
 
 	/**
 	 * Constructor.
@@ -39,7 +39,7 @@ public class BreakdownElement extends Element implements Cloneable {
 		this.isOptional = false ;
 		this.isPlanned = true ;
 		this.hasMultipleOccurrences = false ;
-		this.superActivities = new HashSet<Activity>() ;
+		this.activities = new HashSet<Activity>() ;
 	}
 
 	/*
@@ -63,7 +63,7 @@ public class BreakdownElement extends Element implements Cloneable {
 		this.hasMultipleOccurrences = _breakdownElement.hasMultipleOccurrences ;
 		this.isPlanned = _breakdownElement.isPlanned ;
 		this.isOptional = _breakdownElement.isOptional ;
-		this.setSuperActivities(_breakdownElement.getSuperActivities()) ;
+		this.setActivities(_breakdownElement.getActivities()) ;
 
 	}
 
@@ -82,7 +82,7 @@ public class BreakdownElement extends Element implements Cloneable {
 		BreakdownElement breakdownElement = (BreakdownElement) obj ;
 		return new EqualsBuilder().appendSuper(super.equals(breakdownElement)).append(this.prefix, breakdownElement.prefix).append(this.isPlanned,
 				breakdownElement.isPlanned).append(this.hasMultipleOccurrences, breakdownElement.hasMultipleOccurrences).append(this.isOptional,
-				breakdownElement.isOptional).append(this.superActivities, breakdownElement.superActivities).isEquals() ;
+				breakdownElement.isOptional).append(this.activities, breakdownElement.activities).isEquals() ;
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class BreakdownElement extends Element implements Cloneable {
 	 * @param _activity
 	 */
 	public void addActivity(Activity _activity) {
-		this.getSuperActivities().add(_activity) ;
+		this.getActivities().add(_activity) ;
 		_activity.getBreakDownElements().add(this) ;
 	}
 
@@ -123,7 +123,7 @@ public class BreakdownElement extends Element implements Cloneable {
 	 */
 	public void removeActivity(Activity _activity) {
 		_activity.getBreakDownElements().remove(this) ;
-		this.getSuperActivities().remove(_activity) ;
+		this.getActivities().remove(_activity) ;
 	}
 
 	/**
@@ -131,9 +131,9 @@ public class BreakdownElement extends Element implements Cloneable {
 	 * 
 	 */
 	public void removeAllActivities() {
-		for(Activity activity : this.getSuperActivities())
+		for(Activity activity : this.getActivities())
 			activity.getBreakDownElements().remove(this) ;
-		this.getSuperActivities().clear() ;
+		this.getActivities().clear() ;
 	}
 
 	/**
@@ -213,22 +213,22 @@ public class BreakdownElement extends Element implements Cloneable {
 	}
 
 	/**
-	 * Getter of superActivities.
+	 * Getter of activities.
 	 * 
-	 * @return the superActivities.
+	 * @return the activities.
 	 */
-	public Set<Activity> getSuperActivities() {
-		return this.superActivities ;
+	public Set<Activity> getActivities() {
+		return this.activities ;
 	}
 
 	/**
-	 * Setter of superActivities.
+	 * Setter of activities.
 	 * 
 	 * @param _superActivities
-	 *            The superActivities to set.
+	 *            The activities to set.
 	 */
 	@ SuppressWarnings ("unused")
-	private void setSuperActivities(Set<Activity> _superActivities) {
-		this.superActivities = _superActivities ;
+	private void setActivities(Set<Activity> _activities) {
+		this.activities = _activities ;
 	}
 }
