@@ -144,12 +144,12 @@ public class RoleDefinitionTest extends TestCase {
 		set.add(role) ;
 		set.add(tmp) ;
 
-		this.roleDefinition.addToAllRoleDescriptors(set) ;
+		this.roleDefinition.addAllRoleDescriptors(set) ;
 		assertNotNull(role.getRoleDefinition()) ;
 		assertNotNull(tmp.getRoleDefinition()) ;
 		assertTrue(this.roleDefinition.getRoleDescriptors().size() == set.size()) ;
 		
-		this.roleDefinition.removeAllRoleDescriptor() ;
+		this.roleDefinition.removeAllRoleDescriptors() ;
 		assertNull(role.getRoleDefinition()) ;
 		assertNull(tmp.getRoleDefinition()) ;
 		assertTrue(this.roleDefinition.getRoleDescriptors().isEmpty()) ;
@@ -172,7 +172,7 @@ public class RoleDefinitionTest extends TestCase {
 		set.add(role) ;
 		set.add(tmp) ;
 
-		this.roleDefinition.addToAllRoleDescriptors(set) ;
+		this.roleDefinition.addAllRoleDescriptors(set) ;
 
 		assertFalse(this.roleDefinition.getRoleDescriptors().isEmpty()) ;
 		assertTrue(this.roleDefinition.getRoleDescriptors().size() == 2) ;

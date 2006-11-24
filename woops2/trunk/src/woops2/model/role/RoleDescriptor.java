@@ -1,38 +1,38 @@
-package woops2.model.role;
 
-import java.util.HashSet;
-import java.util.Set;
+package woops2.model.role ;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import java.util.HashSet ;
+import java.util.Set ;
 
-import woops2.model.breakdownelement.BreakdownElement;
-import woops2.model.task.TaskDescriptor;
+import org.apache.commons.lang.builder.EqualsBuilder ;
+import org.apache.commons.lang.builder.HashCodeBuilder ;
+
+import woops2.model.breakdownelement.BreakdownElement ;
+import woops2.model.task.TaskDescriptor ;
 
 /**
  * @author deder
  * 
- * A RoleDefinition Descriptor represents a RoleDefinition in the context of one
- * specific Activity. Every breakdown structure can define different
- * relationships of RoleDefinition Descriptors to TaskDefinition Descriptors and
- * Work Product Descriptors. Therefore one RoleDefinition can be represented by
- * many RoleDefinition Descriptors each within the context of an Activity with
- * its own set of relationships.
+ * A RoleDefinition Descriptor represents a RoleDefinition in the context of one specific Activity.
+ * Every breakdown structure can define different relationships of RoleDefinition Descriptors to
+ * TaskDefinition Descriptors and Work Product Descriptors. Therefore one RoleDefinition can be
+ * represented by many RoleDefinition Descriptors each within the context of an Activity with its
+ * own set of relationships.
  * 
  */
 public class RoleDescriptor extends BreakdownElement implements Cloneable {
 
-	private RoleDefinition roleDefinition;
+	private RoleDefinition roleDefinition ;
 
 	/**
 	 * The main tasks of the roleDefinition
 	 */
-	private Set<TaskDescriptor> primaryTasks;
+	private Set<TaskDescriptor> primaryTasks ;
 
 	/**
 	 * The additional tasks of the roleDefinition
 	 */
-	private Set<TaskDescriptor> additionalTasks;
+	private Set<TaskDescriptor> additionalTasks ;
 
 	/**
 	 * The participants of the Participant
@@ -52,14 +52,14 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * @param _participants
 	 *            The participants to set.
 	 */
-	@SuppressWarnings("unused")
+	@ SuppressWarnings ("unused")
 	// private void setParticipant(Set<Participant> _participants) {
 	// this.participants = _participants ;TODO
 	// }
 	public RoleDescriptor() {
-		super();
-		this.primaryTasks = new HashSet<TaskDescriptor>();
-		this.additionalTasks = new HashSet<TaskDescriptor>();
+		super() ;
+		this.primaryTasks = new HashSet<TaskDescriptor>() ;
+		this.additionalTasks = new HashSet<TaskDescriptor>() ;
 		// this.participants = new HashSet<Participant>();TODO
 	}
 
@@ -68,45 +68,39 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * 
 	 * @see java.lang.Object#clone()
 	 */
-	@Override
+	@ Override
 	public RoleDescriptor clone() throws CloneNotSupportedException {
-		RoleDescriptor roleDescriptor = new RoleDescriptor();
-		roleDescriptor.copy(this);
-		return roleDescriptor;
+		RoleDescriptor roleDescriptor = new RoleDescriptor() ;
+		roleDescriptor.copy(this) ;
+		return roleDescriptor ;
 	}
 
 	/**
 	 * Copy the _roleDescriptor into this.
 	 */
 	protected void copy(final RoleDescriptor _roleDescriptor) {
-		super.copy(_roleDescriptor);
-		this.setAdditionalTasks(_roleDescriptor.getAdditionalTasks());
-		this.setPrimaryTasks(_roleDescriptor.getPrimaryTasks());
-		this.setRoleDefinition(_roleDescriptor.getRoleDefinition());
+		super.copy(_roleDescriptor) ;
+		this.setAdditionalTasks(_roleDescriptor.getAdditionalTasks()) ;
+		this.setPrimaryTasks(_roleDescriptor.getPrimaryTasks()) ;
+		this.setRoleDefinition(_roleDescriptor.getRoleDefinition()) ;
 		// this.setParticipants(_roleDescriptor.getParticipants());TODO
 	}
 
-	
 	/**
 	 * Indicates whether another object is "equal to" this one.
 	 * 
 	 * @return true if equal else false
 	 */
 	public boolean equals(Object obj) {
-		if (obj instanceof RoleDescriptor == false) {
-			return false;
+		if(obj instanceof RoleDescriptor == false){
+			return false ;
 		}
-		if (this == obj) {
-			return true;
+		if(this == obj){
+			return true ;
 		}
 
-		RoleDescriptor roleDescriptor = (RoleDescriptor) obj;
-		return new EqualsBuilder().appendSuper(super.equals(roleDescriptor))
-				.append(this.roleDefinition, roleDescriptor.roleDefinition)
-				.append(this.additionalTasks, roleDescriptor.additionalTasks)
-				.append(this.primaryTasks, roleDescriptor.primaryTasks)
-				/* .append(this.participants, roleDescriptor.participants) TODO*/
-				.isEquals();
+		RoleDescriptor roleDescriptor = (RoleDescriptor) obj ;
+		return new EqualsBuilder().appendSuper(super.equals(roleDescriptor)).append(this.roleDefinition, roleDescriptor.roleDefinition).isEquals() ;
 	}
 
 	/**
@@ -115,8 +109,7 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * @return a hash code
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
-				.append(this.roleDefinition).toHashCode();
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.roleDefinition).toHashCode() ;
 	}
 
 	/**
@@ -128,9 +121,9 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * 
 	 * @param _role
 	 */
-	public void addToRoleDefinition(RoleDefinition _role) {
-		this.roleDefinition = _role;
-		_role.getRoleDescriptors().add(this);
+	public void addRoleDefinition(RoleDefinition _role) {
+		this.roleDefinition = _role ;
+		_role.getRoleDescriptors().add(this) ;
 	}
 
 	/**
@@ -138,9 +131,9 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * 
 	 * @param _role
 	 */
-	public void removeFromRoleDefinition(RoleDefinition _role) {
-		this.roleDefinition = null;
-		_role.getRoleDescriptors().remove(this);
+	public void removeRoleDefinition(RoleDefinition _role) {
+		this.roleDefinition = null ;
+		_role.getRoleDescriptors().remove(this) ;
 	}
 
 	/**
@@ -153,8 +146,8 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * @param _task
 	 */
 	public void addPrimaryTask(TaskDescriptor _task) {
-		this.primaryTasks.add(_task);
-		_task.setMainRole(this);
+		this.primaryTasks.add(_task) ;
+		_task.setMainRole(this) ;
 	}
 
 	/**
@@ -163,17 +156,17 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * @param _task
 	 */
 	public void removePrimaryTask(TaskDescriptor _task) {
-		_task.setMainRole(null);
-		this.primaryTasks.remove(_task);
+		_task.setMainRole(null) ;
+		this.primaryTasks.remove(_task) ;
 	}
-	
+
 	/**
 	 * 
 	 * @param _role
 	 */
-	public void addToAllPrimaryTasks(Set<TaskDescriptor> _role) {
-		for (TaskDescriptor _role1 : _role) {
-			_role1.addToMainRole(this);
+	public void addAllPrimaryTasks(Set<TaskDescriptor> _role) {
+		for(TaskDescriptor _role1 : _role){
+			_role1.addMainRole(this) ;
 		}
 	}
 
@@ -182,10 +175,10 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * 
 	 */
 	public void removeAllPrimaryTasks() {
-		for (TaskDescriptor _task : this.primaryTasks) {
-			_task.removeFromAdditionalRole(this);
+		for(TaskDescriptor _task : this.primaryTasks){
+			_task.removeAdditionalRole(this) ;
 		}
-		this.primaryTasks.clear();
+		this.primaryTasks.clear() ;
 
 	}
 
@@ -198,9 +191,9 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * 
 	 * @param _task
 	 */
-	public void addToAdditionalTask(TaskDescriptor _task) {
-		this.additionalTasks.add(_task);
-		_task.getAdditionalRoles().add(this);
+	public void addAdditionalTask(TaskDescriptor _task) {
+		this.additionalTasks.add(_task) ;
+		_task.getAdditionalRoles().add(this) ;
 	}
 
 	/**
@@ -208,18 +201,18 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * 
 	 * @param _task
 	 */
-	public void removeFromAdditionalTask(TaskDescriptor _task) {
-		_task.getAdditionalRoles().remove(this);
-		this.additionalTasks.remove(_task);
+	public void removeAdditionalTask(TaskDescriptor _task) {
+		_task.getAdditionalRoles().remove(this) ;
+		this.additionalTasks.remove(_task) ;
 	}
-	
+
 	/**
 	 * 
 	 * @param _role
 	 */
-	public void addToAllAdditionalTasks(Set<TaskDescriptor> _task) {
-		for (TaskDescriptor task : _task) {
-			task.addToAdditionalRole(this);
+	public void addAllAdditionalTasks(Set<TaskDescriptor> _task) {
+		for(TaskDescriptor task : _task){
+			task.addAdditionalRole(this) ;
 		}
 	}
 
@@ -228,21 +221,21 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * 
 	 */
 	public void removeAllAdditionalTasks() {
-		for (TaskDescriptor _task : this.additionalTasks) {
-			_task.removeFromAdditionalRole(this);
+		for(TaskDescriptor _task : this.additionalTasks){
+			_task.removeAdditionalRole(this) ;
 		}
-		this.additionalTasks.clear();
+		this.additionalTasks.clear() ;
 	}
 
 	/**
 	 * Remove from an RoleDescriptor all its AdditionalTask
 	 * 
 	 */
-	public void removeFromAllAdditionalTasks() {
-		for (TaskDescriptor _task : this.additionalTasks) {
-			this.removeFromAdditionalTask(_task);
+	/*public void removeFromAllAdditionalTasks() {
+		for(TaskDescriptor _task : this.additionalTasks){
+			this.removeFromAdditionalTask(_task) ;
 		}
-	}
+	}*/
 
 	// public void addToParticpant(Participant _participant) {TODO
 	// this.participants.add(_participant);
@@ -269,14 +262,14 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	// this.removeFromParticipant(_participant);
 	// }
 	// }
-	
+
 	/**
 	 * Getter of roleDefinition.
 	 * 
 	 * @return the roleDefinition.
 	 */
 	public RoleDefinition getRoleDefinition() {
-		return this.roleDefinition;
+		return this.roleDefinition ;
 	}
 
 	/**
@@ -286,7 +279,7 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 *            The roleDefinition to set.
 	 */
 	protected void setRoleDefinition(RoleDefinition _roleDefinition) {
-		this.roleDefinition = _roleDefinition;
+		this.roleDefinition = _roleDefinition ;
 	}
 
 	/**
@@ -294,9 +287,9 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * 
 	 * @return the primaryTasks.
 	 */
-	@SuppressWarnings("unused")
+	@ SuppressWarnings ("unused")
 	public Set<TaskDescriptor> getPrimaryTasks() {
-		return this.primaryTasks;
+		return this.primaryTasks ;
 	}
 
 	/**
@@ -305,9 +298,9 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * @param _primaryTasks
 	 *            The primaryTasks to set.
 	 */
-	@SuppressWarnings("unused")
+	@ SuppressWarnings ("unused")
 	private void setPrimaryTasks(Set<TaskDescriptor> _primaryTasks) {
-		this.primaryTasks = _primaryTasks;
+		this.primaryTasks = _primaryTasks ;
 	}
 
 	/**
@@ -316,7 +309,7 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * @return the additionalTasks.
 	 */
 	public Set<TaskDescriptor> getAdditionalTasks() {
-		return this.additionalTasks;
+		return this.additionalTasks ;
 	}
 
 	/**
@@ -325,9 +318,9 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * @param _additionalTasks
 	 *            The additionalTasks to set.
 	 */
-	@SuppressWarnings("unused")
+	@ SuppressWarnings ("unused")
 	private void setAdditionalTasks(Set<TaskDescriptor> _additionalTasks) {
-		this.additionalTasks = _additionalTasks;
+		this.additionalTasks = _additionalTasks ;
 	}
 
 }

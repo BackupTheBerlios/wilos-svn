@@ -122,7 +122,7 @@ public class TaskDefinition extends Element implements Cloneable {
 	 */
 	public void addAllTaskDesciptors(Set<TaskDescriptor> _taskDesciptor) {
 		for(TaskDescriptor td : _taskDesciptor){
-			td.addToTaskDefinition(this) ;
+			td.addTaskDefinition(this) ;
 		}
 	}
 

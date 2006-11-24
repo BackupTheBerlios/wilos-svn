@@ -59,8 +59,7 @@ public class RoleDefinition extends Element implements Cloneable {
 	 * @return a hash code
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
-				/*.append(this.roleDescriptors)*/.toHashCode();
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode();
 	}
 
 	/*
@@ -111,10 +110,10 @@ public class RoleDefinition extends Element implements Cloneable {
 	 * Remove from an RoleDefinition all its RoleDescriptor
 	 * 
 	 */
-	public void removeAllRoleDescriptor() {
+	public void removeAllRoleDescriptors() {
 
 		for (RoleDescriptor _role : this.roleDescriptors) {
-			_role.removeFromRoleDefinition(this);
+			_role.removeRoleDefinition(this);
 		}
 		this.roleDescriptors.clear();
 	}
@@ -125,9 +124,9 @@ public class RoleDefinition extends Element implements Cloneable {
 	 * 
 	 * @param _role
 	 */
-	public void addToAllRoleDescriptors(Set<RoleDescriptor> _role) {
+	public void addAllRoleDescriptors(Set<RoleDescriptor> _role) {
 		for (RoleDescriptor _role1 : _role) {
-			_role1.addToRoleDefinition(this);
+			_role1.addRoleDefinition(this);
 		}
 	}
 	
