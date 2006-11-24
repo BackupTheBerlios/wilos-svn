@@ -3,16 +3,16 @@
 	xmlns:jsp="http://java.sun.com/JSP/Page"
 	xmlns:ice="http://www.icesoft.com/icefaces/component">
 
-	<f:loadBundle
-		basename="com.icesoft.icefaces.samples.showcase.resources.messages"
-		var="msgs" />
+	<f:loadBundle basename="woops2.resources.messages" var="msgs" />
+
 	<ice:outputDeclaration doctypeRoot="HTML"
 		doctypePublic="-//W3C//DTD HTML 4.01 Transitional//EN"
 		doctypeSystem="http://www.w3.org/TR/html4/loose.dtd" />
 	<html>
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></meta>
-	<title><ice:outputText value="#{msgs.showCasetitle}" /></title>
+	<title>Wilos / Woops2</title>
+
 	<ice:outputText style="padding-top:0px; padding-bottom:0px;"
 		value="#{styleBean.style}" escape="false" />
 	<link href="css/showcase_style.css" rel="stylesheet" type="text/css" />
@@ -38,8 +38,7 @@
 				</ice:panelGrid>
 
 				<!-- Demo Title -->
-				<h2><ice:outputText
-					value="#{navigation.selectedPanel.menuContentTitle}" /></h2>
+				<h2><ice:outputText value="Wilos / Woops2 - Feat. Ajax" /></h2>
 
 				<ice:form>
 					<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1"
@@ -108,37 +107,6 @@
 									<ice:panelGroup styleClass="formBorderHighlight"
 										style="text-align:left">
 										<br />
-										
-										<!-- Arbre  -->
-										
-										<ice:tree id="tree" value="#{treeExample.model}" var="item"
-											hideRootNode="false" hideNavigation="false"
-											imageDir="#{styleBean.imageDirectory}">
-											<ice:treeNode>
-												<f:facet name="icon">
-													<ice:panelGroup style="display: inline">
-														<ice:graphicImage value="#{item.userObject.icon}" />
-														<ice:commandLink
-															actionListener="#{item.userObject.nodeClicked}">
-															<ice:outputText value="#{item.userObject.text}" />
-														</ice:commandLink>
-													</ice:panelGroup>
-												</f:facet>
-												<f:facet name="content">
-													<ice:panelGroup style="display: inline">
-														<ice:outputText
-															value="#{msgs['components.tree.node.outputText.label']}"
-															style="font-style: italic"
-															rendered="#{item.userObject.componentType == 1}" />
-														<ice:inputText
-															rendered="#{item.userObject.componentType == 2}" />
-														<ice:commandButton
-															value="#{msgs['components.tree.node.outputText.label']}"
-															rendered="#{item.userObject.componentType == 3}" />
-													</ice:panelGroup>
-												</f:facet>
-											</ice:treeNode>
-										</ice:tree>
 
 										<br />
 										<ice:outputText value="Add your file :" />
@@ -155,12 +123,49 @@
 											value="Content Type: #{XmlFileImportViewer.contentType}" />
 										<ice:messages />
 									</ice:panelGroup>
-									
+
 									<br />
-						<ice:commandLink value="liens vers page2" action="page2" />
+
 								</ice:panelGrid>
 
 							</ice:panelTab>
+
+							<ice:panelTab label="Display imported EPF Process File">
+								<ice:panelGroup label="Process Display">
+
+									<ice:tree id="tree" value="#{treeExample.model}" var="item"
+										hideRootNode="false" hideNavigation="false"
+										imageDir="#{styleBean.imageDirectory}">
+										<ice:treeNode>
+											<f:facet name="icon">
+												<ice:panelGroup style="display: inline">
+													<ice:graphicImage value="#{item.userObject.icon}" />
+													<ice:commandLink
+														actionListener="#{item.userObject.nodeClicked}">
+														<ice:outputText value="#{item.userObject.text}" />
+													</ice:commandLink>
+												</ice:panelGroup>
+											</f:facet>
+											<f:facet name="content">
+												<ice:panelGroup style="display: inline">
+													<ice:outputText
+														value="#{msgs['components.tree.node.outputText.label']}"
+														style="font-style: italic"
+														rendered="#{item.userObject.componentType == 1}" />
+													<ice:inputText
+														rendered="#{item.userObject.componentType == 2}" />
+													<ice:commandButton
+														value="#{msgs['components.tree.node.outputText.label']}"
+														rendered="#{item.userObject.componentType == 3}" />
+												</ice:panelGroup>
+											</f:facet>
+										</ice:treeNode>
+									</ice:tree>
+
+									<ice:commandLink value="liens vers page2" action="page2" />
+								</ice:panelGroup>
+							</ice:panelTab>
+
 
 						</ice:panelTabSet>
 
