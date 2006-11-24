@@ -91,83 +91,6 @@
             <value>true</value>
         </managed-property>
     </managed-bean>
-     
-    <managed-bean>
-        <description>
-            Backing bean for list example.
-        </description>
-        <managed-bean-name>cashier</managed-bean-name>
-        <managed-bean-class>
-            com.icesoft.icefaces.samples.showcase.layoutPanels.seriesPanel.Cashier
-        </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-    
-    <!-- Tree Table example bean-->
-    <managed-bean>
-        <description>
-            Backing bean for tree example.
-        </description>
-        <managed-bean-name>treeExample</managed-bean-name>
-        <managed-bean-class>
-            com.icesoft.icefaces.samples.showcase.components.tree.TreeBean
-        </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-    
-    <!-- Calendar example bean  -->
-    <managed-bean>
-        <description>
-            Backing bean for dateSelect example.
-        </description>
-        <managed-bean-name>dateSelect</managed-bean-name>
-        <managed-bean-class>
-            com.icesoft.icefaces.samples.showcase.components.calendar.SelectInputDateBean
-        </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-
-    <!-- Tree Menu backing bean-->
-    <managed-bean>
-        <managed-bean-name>treeMenu</managed-bean-name>
-        <managed-bean-class>
-            com.icesoft.icefaces.samples.showcase.components.tree.TreeBean</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-    
-    <!-- OutputProgress properties (used for both determinate and indeterminate modes) -->
-    <managed-bean>
-        <managed-bean-name>progressProperty</managed-bean-name>
-        <managed-bean-class>
-            com.icesoft.icefaces.samples.showcase.components.progressBar.OutputProgressPropertyBean
-        </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-
-    <managed-bean>
-        <managed-bean-name>progress</managed-bean-name>
-        <managed-bean-class>
-            com.icesoft.icefaces.samples.showcase.components.progressBar.OutputProgressRenderBean
-        </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-        <managed-property> 
-            <property-name>renderManager</property-name> 
-            <value>#{renderManager}</value> 
-        </managed-property>
-    </managed-bean>
-    
-    <!-- OutputProgress backing bean (indeterminate mode) -->
-    <managed-bean>
-        <managed-bean-name>progressIndeterminate</managed-bean-name>
-        <managed-bean-class>
-            com.icesoft.icefaces.samples.showcase.components.progressBar.OutputProgressIndeterminateBean
-        </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-        <managed-property> 
-            <property-name>renderManager</property-name> 
-            <value>#{renderManager}</value> 
-        </managed-property>
-    </managed-bean>
     
     <!-- OutputProgress Render Manager-->
     <managed-bean>
@@ -175,33 +98,6 @@
         <managed-bean-class>
             com.icesoft.faces.async.render.RenderManager</managed-bean-class>
         <managed-bean-scope>application</managed-bean-scope>
-    </managed-bean>
-
-    <!-- Auto complete user specific values -->
-
-    <managed-bean>
-        <description>
-            This bean holds the user-specific autoComplete values and not the dictionary.
-        </description>
-        <managed-bean-name>autoCompleteDictionary</managed-bean-name>
-        <managed-bean-class>
-            com.icesoft.icefaces.samples.showcase.components.autocomplete.AutoCompleteDictionary
-        </managed-bean-class>
-        <managed-bean-scope>application</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <description>
-            This bean holds the user-specific autoComplete values and not the dictionary.
-        </description>
-        <managed-bean-name>autoCompleteBean</managed-bean-name>
-        <managed-bean-class>
-            com.icesoft.icefaces.samples.showcase.components.autocomplete.AutoCompleteBean
-        </managed-bean-class>
-        <managed-property>
-            <property-name>dictionary</property-name>
-            <value>#{autoCompleteDictionary.dictionary}</value>
-        </managed-property>
-        <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
 
 	<managed-bean>
@@ -220,9 +116,14 @@
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     
+     <managed-bean>
+        <managed-bean-name>ProcessTreeBean</managed-bean-name>
+        <managed-bean-class>woops2.presentation.activity.ProcessTreeBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
     <navigation-rule>
         <description>Theme Reload</description>
-        
         <navigation-case>
             <from-outcome>reload</from-outcome>
             <to-view-id>/index.jsp</to-view-id>
