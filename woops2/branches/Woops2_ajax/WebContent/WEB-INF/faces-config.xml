@@ -319,39 +319,39 @@
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
 
-    <!-- Panel Grid backing bean -->
+    <!-- Panel Grid backing bean 
     <managed-bean>
         <managed-bean-name>table</managed-bean-name>
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.table.TableBean
         </managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
+    </managed-bean> -->
 
-    <!-- Columns backing bean -->
+    <!-- Columns backing bean 
     <managed-bean>
         <managed-bean-name>columnsBean</managed-bean-name>
         <managed-bean-class>
             com.icesoft.icefaces.samples.showcase.components.table.ColumnsBean
         </managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
+    </managed-bean> -->
     
-     <!-- Effects Beans -->
+     <!-- Effects Beans 
      <managed-bean>
         <managed-bean-name>effects</managed-bean-name>
       <managed-bean-class>com.icesoft.icefaces.samples.showcase.components.effects.Effects</managed-bean-class>
       <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
+    </managed-bean> -->
 
-    <!-- Positioned Panel -->
+    <!-- Positioned Panel 
     <managed-bean>
         <managed-bean-name>panelPositioned</managed-bean-name>
       <managed-bean-class>com.icesoft.icefaces.samples.showcase.layoutPanels.positionedPanel.PositionedPanelBean</managed-bean-class>
       <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
+    </managed-bean> -->
 
-    <!-- Managed Beans for outputChart examples -->
+    <!-- Managed Beans for outputChart examples
     <managed-bean>
         <managed-bean-name>combinedChart</managed-bean-name>
         <managed-bean-class>com.icesoft.icefaces.samples.showcase.components.charts.CombinedChartBean</managed-bean-class>
@@ -368,7 +368,7 @@
         <managed-bean-name>pieChart</managed-bean-name>
         <managed-bean-class>com.icesoft.icefaces.samples.showcase.components.charts.PieChartBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
+    </managed-bean> -->
 
 
 	<managed-bean>
