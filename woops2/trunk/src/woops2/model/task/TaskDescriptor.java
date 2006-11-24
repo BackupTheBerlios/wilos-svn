@@ -138,8 +138,8 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 	 * @param _roleDescriptor
 	 */
 	public void removeMainRole(RoleDescriptor _roleDescriptor) {
-		this.mainRole = null ;
 		_roleDescriptor.getPrimaryTasks().remove(this) ;
+		this.mainRole = null ;
 	}
 
 	/**

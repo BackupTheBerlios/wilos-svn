@@ -132,8 +132,8 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * @param _role
 	 */
 	public void removeRoleDefinition(RoleDefinition _role) {
-		this.roleDefinition = null ;
 		_role.getRoleDescriptors().remove(this) ;
+		this.roleDefinition = null ;
 	}
 
 	/**
