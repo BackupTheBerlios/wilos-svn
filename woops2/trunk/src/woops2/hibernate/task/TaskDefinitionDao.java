@@ -21,7 +21,7 @@ public class TaskDefinitionDao extends HibernateDaoSupport {
 	 * 
 	 * @param _taskDefinition
 	 */
-	public void saveOrUpdateTask(TaskDefinition _taskDefinition) {
+	public void saveOrUpdateTaskDefinition(TaskDefinition _taskDefinition) {
 		this.getHibernateTemplate().saveOrUpdate(_taskDefinition) ;
 	}
 

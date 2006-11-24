@@ -73,7 +73,7 @@ public class TaskDefinitionDaoTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		// Save the taskDefinition with the method to test.
-		this.taskDefinitionDao.saveOrUpdateTask(this.taskDefinition);
+		this.taskDefinitionDao.saveOrUpdateTaskDefinition(this.taskDefinition);
 
 		// Check the saving.
 		String id = taskDefinition.getId();
