@@ -379,7 +379,7 @@
        			<property-name>activityService</property-name>
         		<value>#{ActivityService}</value>
       		</managed-property>
-    </managed-bean>
+    </managed-bean> 
     
     <managed-bean>
         <managed-bean-name>XmlFileImportViewer</managed-bean-name>

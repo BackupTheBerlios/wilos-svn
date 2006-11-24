@@ -80,9 +80,6 @@
 								<ice:inputText value="#{ActivityViewer.activity.prefix}" />
 								<br />
 								<br />
-								<ice:outputText value="Valeur prefix : " />
-								<ice:outputText value="#{ActivityViewer.activity.prefix}" />
-								<br />
 								<ice:outputText value="isPlanned : " />
 								<ice:selectBooleanCheckbox
 									value="#{ActivityViewer.activity.isPlanned}" />
@@ -132,7 +129,7 @@
 
 							<ice:panelTab label="Display imported EPF Process File">
 								<ice:panelGroup label="Process Display">
-
+									<br/>
 									<ice:tree id="tree" value="#{treeExample.model}" var="item"
 										hideRootNode="false" hideNavigation="false"
 										imageDir="#{styleBean.imageDirectory}">
@@ -161,8 +158,6 @@
 											</f:facet>
 										</ice:treeNode>
 									</ice:tree>
-
-									<ice:commandLink value="liens vers page2" action="page2" />
 								</ice:panelGroup>
 							</ice:panelTab>
 
