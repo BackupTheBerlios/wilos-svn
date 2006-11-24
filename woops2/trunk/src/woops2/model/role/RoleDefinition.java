@@ -111,9 +111,8 @@ public class RoleDefinition extends Element implements Cloneable {
 	 * 
 	 */
 	public void removeAllRoleDescriptors() {
-
 		for (RoleDescriptor _role : this.roleDescriptors) {
-			_role.removeRoleDefinition(this);
+			_role.setRoleDefinition(null);
 		}
 		this.roleDescriptors.clear();
 	}
