@@ -35,10 +35,10 @@ public class BreakdownElement extends Element implements Cloneable {
 	 */
 	public BreakdownElement() {
 		super() ;
-		this.prefix = "";
-		this.isOptional = false;
-		this.isPlanned = true;
-		this.hasMultipleOccurrences = false;
+		this.prefix = "" ;
+		this.isOptional = false ;
+		this.isPlanned = true ;
+		this.hasMultipleOccurrences = false ;
 		this.superActivities = new HashSet<Activity>() ;
 	}
 
@@ -49,7 +49,6 @@ public class BreakdownElement extends Element implements Cloneable {
 	 */
 	@ Override
 	public BreakdownElement clone() throws CloneNotSupportedException {
-		// TODO Auto-generated method stub
 		BreakdownElement breakdownElement = new BreakdownElement() ;
 		breakdownElement.copy(this) ;
 		return breakdownElement ;
@@ -64,7 +63,7 @@ public class BreakdownElement extends Element implements Cloneable {
 		this.hasMultipleOccurrences = _breakdownElement.hasMultipleOccurrences ;
 		this.isPlanned = _breakdownElement.isPlanned ;
 		this.isOptional = _breakdownElement.isOptional ;
-		this.setSuperActivities(_breakdownElement.getSuperActivities());
+		this.setSuperActivities(_breakdownElement.getSuperActivities()) ;
 
 	}
 
@@ -93,7 +92,7 @@ public class BreakdownElement extends Element implements Cloneable {
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.prefix).append(this.hasMultipleOccurrences).append(this.isOptional)
-				.append(this.isPlanned)/*.append(this.getSuperActivities())*/.toHashCode() ; // TODO a debattre si on fé le hashcode sur les collections
+				.append(this.isPlanned).toHashCode() ;
 	}
 
 	/**
@@ -132,11 +131,9 @@ public class BreakdownElement extends Element implements Cloneable {
 	 * 
 	 */
 	public void removeAllActivities() {
-		/*for(Activity activity : this.getSuperActivities())
-			this.removeFromActivity(activity) ;*/
 		for(Activity activity : this.getSuperActivities())
-			activity.getBreakDownElements().remove(this);
-		this.getSuperActivities().clear();
+			activity.getBreakDownElements().remove(this) ;
+		this.getSuperActivities().clear() ;
 	}
 
 	/**

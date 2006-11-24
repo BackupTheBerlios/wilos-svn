@@ -23,7 +23,7 @@ public class Step extends Element implements Cloneable {
 	 * Default constructor
 	 */
 	public Step() {
-		super();
+		super() ;
 	}
 
 	/*
@@ -68,13 +68,7 @@ public class Step extends Element implements Cloneable {
 	 * @return a hash code
 	 */
 	public int hashCode() {
-
-		int i = new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.taskDefinition).toHashCode() ;
-		System.out.println("step hascode -> " + i) ;
-		return /*
-				 * new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
-				 * .append(this.taskDefinition).toHashCode()
-				 */i ;
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.taskDefinition).toHashCode() ;
 	}
 
 	/**
@@ -82,7 +76,7 @@ public class Step extends Element implements Cloneable {
 	 * 
 	 * @param _taskDefinition
 	 */
-	public void addToTaskDefinition(TaskDefinition _taskDefinition) {
+	public void addTaskDefinition(TaskDefinition _taskDefinition) {
 		this.setTaskDefinition(_taskDefinition) ;
 		_taskDefinition.getSteps().add(this) ;
 	}
@@ -92,7 +86,7 @@ public class Step extends Element implements Cloneable {
 	 * 
 	 * @param _taskDefinition
 	 */
-	public void removeFromTaskDefinition(TaskDefinition _taskDefinition) {
+	public void removeTaskDefinition(TaskDefinition _taskDefinition) {
 		_taskDefinition.getSteps().remove(this) ;
 		this.taskDefinition = null ;
 	}

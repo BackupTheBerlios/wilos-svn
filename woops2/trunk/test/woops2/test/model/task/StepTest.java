@@ -100,7 +100,7 @@ public class StepTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.task.Step#addToTaskDefinition(woops2.model.task.TaskDefinition)}.
+	 * {@link woops2.model.task.Step#addTaskDefinition(woops2.model.task.TaskDefinition)}.
 	 */
 	public void testAddToTaskDefinition() {
 		TaskDefinition taskDefinition = new TaskDefinition() ;
@@ -108,7 +108,7 @@ public class StepTest extends TestCase {
 		taskDefinition.setName(NAME) ;
 		taskDefinition.setIdEPF(IDEPF) ;
 
-		this.step.addToTaskDefinition(taskDefinition) ;
+		this.step.addTaskDefinition(taskDefinition) ;
 
 		assertNotNull(this.step.getTaskDefinition()) ;
 		assertFalse(taskDefinition.getSteps().isEmpty()) ;
@@ -116,7 +116,7 @@ public class StepTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.task.Step#removeFromTaskDefinition(woops2.model.task.TaskDefinition)}.
+	 * {@link woops2.model.task.Step#removeTaskDefinition(woops2.model.task.TaskDefinition)}.
 	 */
 	public void testRemoveFromTaskDefinition() {
 		TaskDefinition taskDefinition = new TaskDefinition() ;
@@ -124,8 +124,8 @@ public class StepTest extends TestCase {
 		taskDefinition.setName(NAME) ;
 		taskDefinition.setIdEPF(IDEPF) ;
 
-		this.step.addToTaskDefinition(taskDefinition) ;
-		this.step.removeFromTaskDefinition(taskDefinition) ;
+		this.step.addTaskDefinition(taskDefinition) ;
+		this.step.removeTaskDefinition(taskDefinition) ;
 
 		assertNull(this.step.getTaskDefinition()) ;
 		assertTrue(taskDefinition.getSteps().isEmpty()) ;

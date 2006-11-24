@@ -67,65 +67,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 		this.setTaskDefinition(_taskDescriptor.getTaskDefinition());
 		this.setMainRole(_taskDescriptor.getMainRole());
 	}
-
-	/**
-	 * Getter of taskDefinition.
-	 * 
-	 * @return the taskDefinition.
-	 */
-	public TaskDefinition getTaskDefinition() {
-		return this.taskDefinition;
-	}
-
-	/**
-	 * Setter of taskDefinition.
-	 * 
-	 * @param _taskDefinition
-	 *            The taskDefinition to set.
-	 */
-	protected void setTaskDefinition(TaskDefinition _taskDefinition) {
-		this.taskDefinition = _taskDefinition;
-	}
-
-	/**
-	 * Getter of additionalRoles.
-	 * 
-	 * @return the additionalRoles.
-	 */
-	public Set<RoleDescriptor> getAdditionalRoles() {
-		return this.additionalRoles;
-	}
-
-	/**
-	 * Setter of additionalRoles.
-	 * 
-	 * @param _additionalRoles
-	 *            The additionalRoles to set.
-	 */
-	@SuppressWarnings("unused")
-	private void setAdditionalRoles(Set<RoleDescriptor> _additionalRoles) {
-		this.additionalRoles = _additionalRoles;
-	}
-
-	/**
-	 * Getter of mainRole.
-	 * 
-	 * @return the mainRole.
-	 */
-	public RoleDescriptor getMainRole() {
-		return this.mainRole;
-	}
-
-	/**
-	 * Setter of mainRole.
-	 * 
-	 * @param _mainRole
-	 *            The mainRole to set.
-	 */
-	public void setMainRole(RoleDescriptor _mainRole) {
-		this.mainRole = _mainRole;
-	}
-
+	
 	/**
 	 * Indicates whether another object is "equal to" this one.
 	 * 
@@ -233,12 +175,71 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 	}
 
 	/**
-	 * Remove from a taskDescriptor all its roleDescriptors
+	 * Remove from a taskDescriptor all its roleDescriptors.
+	 * That is to say remove all the additional roles.
 	 */
 	public void removeFromAllRoleDescriptors() {
 		for (RoleDescriptor tmp : this.getAdditionalRoles()) {
-			this.removeFromRoleDescriptor(tmp);
+			tmp.getAdditionalTasks().remove(this);
 		}
+		this.getAdditionalRoles().clear();
 	}
 
+	/**
+	 * Getter of taskDefinition.
+	 * 
+	 * @return the taskDefinition.
+	 */
+	public TaskDefinition getTaskDefinition() {
+		return this.taskDefinition;
+	}
+
+	/**
+	 * Setter of taskDefinition.
+	 * 
+	 * @param _taskDefinition
+	 *            The taskDefinition to set.
+	 */
+	protected void setTaskDefinition(TaskDefinition _taskDefinition) {
+		this.taskDefinition = _taskDefinition;
+	}
+
+	/**
+	 * Getter of additionalRoles.
+	 * 
+	 * @return the additionalRoles.
+	 */
+	public Set<RoleDescriptor> getAdditionalRoles() {
+		return this.additionalRoles;
+	}
+
+	/**
+	 * Setter of additionalRoles.
+	 * 
+	 * @param _additionalRoles
+	 *            The additionalRoles to set.
+	 */
+	@SuppressWarnings("unused")
+	private void setAdditionalRoles(Set<RoleDescriptor> _additionalRoles) {
+		this.additionalRoles = _additionalRoles;
+	}
+
+	/**
+	 * Getter of mainRole.
+	 * 
+	 * @return the mainRole.
+	 */
+	public RoleDescriptor getMainRole() {
+		return this.mainRole;
+	}
+
+	/**
+	 * Setter of mainRole.
+	 * 
+	 * @param _mainRole
+	 *            The mainRole to set.
+	 */
+	public void setMainRole(RoleDescriptor _mainRole) {
+		this.mainRole = _mainRole;
+	}
 }
