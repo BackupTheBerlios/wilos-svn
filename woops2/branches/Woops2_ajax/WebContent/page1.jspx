@@ -80,6 +80,10 @@
 								<ice:outputText value="Valeur prefix : " />
 								<ice:inputText value="#{ActivityViewer.activity.prefix}" />
 								<br />
+								<br />
+								<ice:outputText value="Valeur prefix : " />
+								<ice:outputText value="#{ActivityViewer.activity.prefix}" />
+								<br />
 								<ice:outputText value="isPlanned : "/>
 								<ice:selectBooleanCheckbox value="#{ActivityViewer.activity.isPlanned}"/>
 								<br />
