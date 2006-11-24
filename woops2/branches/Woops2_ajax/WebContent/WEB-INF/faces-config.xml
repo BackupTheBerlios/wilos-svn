@@ -19,15 +19,6 @@
 		</variable-resolver>
       <locale-config/>
     </application>
-    
-
-    <managed-bean>
-        <managed-bean-name>inputFile</managed-bean-name>
-        <managed-bean-class>
-            com.icesoft.icefaces.samples.showcase.components.fileUpload.InputFileBean
-        </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
 
     <managed-bean>
         <description>
@@ -60,36 +51,6 @@
             com.icesoft.icefaces.samples.showcase.util.StyleBean
         </managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-
-    <!--
-         ||||||||||||||||||||||||||||||||||||||||
-         Start of Component Example backing beans
-         ||||||||||||||||||||||||||||||||||||||||
-    -->
-
-    <!-- Tabbed Pane example bean-->
-    <managed-bean>
-        <description>
-            Backing bean for tabbed pane example.
-        </description>
-        <managed-bean-name>tabbedPaneExample</managed-bean-name>
-        <managed-bean-class>
-            com.icesoft.icefaces.samples.showcase.layoutPanels.tabSetPanel.PanelTabSetBean
-        </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-        <managed-property>
-            <property-name>tabbedPane1Visible</property-name>
-            <value>true</value>
-        </managed-property>
-        <managed-property>
-            <property-name>tabbedPane2Visible</property-name>
-            <value>true</value>
-        </managed-property>
-        <managed-property>
-            <property-name>tabbedPane3Visible</property-name>
-            <value>true</value>
-        </managed-property>
     </managed-bean>
     
     <!-- OutputProgress Render Manager-->
