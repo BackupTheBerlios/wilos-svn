@@ -185,7 +185,7 @@ public class TaskDescriptorTest extends TestCase {
 		roleDescriptor.setHasMultipleOccurrences(HAS_MULTIPLE_OCCURENCES) ;
 		roleDescriptor.setIsOptional(IS_OPTIONAL) ;
 
-		this.taskDescriptor.addToRoleDescriptor(roleDescriptor) ;
+		this.taskDescriptor.addToAdditionalRole(roleDescriptor) ;
 
 		assertTrue(this.taskDescriptor.getAdditionalRoles().size() == 1) ;
 		assertTrue(roleDescriptor.getAdditionalTasks().size() == 1) ;
@@ -204,11 +204,11 @@ public class TaskDescriptorTest extends TestCase {
 		roleDescriptor.setHasMultipleOccurrences(HAS_MULTIPLE_OCCURENCES) ;
 		roleDescriptor.setIsOptional(IS_OPTIONAL) ;
 
-		this.taskDescriptor.addToRoleDescriptor(roleDescriptor) ;
+		this.taskDescriptor.addToAdditionalRole(roleDescriptor) ;
 		assertTrue(this.taskDescriptor.getAdditionalRoles().size() == 1) ;
 		assertTrue(roleDescriptor.getAdditionalTasks().size() == 1) ;
 		
-		this.taskDescriptor.removeFromRoleDescriptor(roleDescriptor) ;
+		this.taskDescriptor.removeFromAdditionalRole(roleDescriptor) ;
 		assertTrue(this.taskDescriptor.getAdditionalRoles().isEmpty()) ;
 		assertTrue(roleDescriptor.getAdditionalTasks().isEmpty()) ;
 	}
@@ -238,12 +238,12 @@ public class TaskDescriptorTest extends TestCase {
 		roledescriptors.add(rd1) ;
 		roledescriptors.add(rd2) ;
 
-		this.taskDescriptor.addToAllRoleDescriptors(roledescriptors) ;
+		this.taskDescriptor.addToAllAdditionalRoles(roledescriptors) ;
 		assertTrue(rd1.getAdditionalTasks().size() == 1) ;
 		assertTrue(rd2.getAdditionalTasks().size() == 1) ;
 		assertTrue(this.taskDescriptor.getAdditionalRoles().size() == 2);
 		
-		this.taskDescriptor.removeFromAllRoleDescriptors() ;
+		this.taskDescriptor.removeFromAllAdditionalRoles() ;
 		assertTrue(rd1.getAdditionalTasks().isEmpty()) ;
 		assertTrue(rd2.getAdditionalTasks().isEmpty()) ;
 		assertTrue(this.taskDescriptor.getAdditionalRoles().isEmpty());
