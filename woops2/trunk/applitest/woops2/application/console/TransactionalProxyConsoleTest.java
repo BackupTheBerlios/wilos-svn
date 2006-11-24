@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import woops2.business.activity.ActivityService;
+import woops2.business.process.ProcessService;
 
 public class TransactionalProxyConsoleTest {
 
@@ -15,6 +16,10 @@ public class TransactionalProxyConsoleTest {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 		//XmlBeanFactory factory = new XmlBeanFactory(res);
 		ActivityService am = (ActivityService) ctx.getBean("ActivityService");
+		
+		ProcessService pcsServ = (ProcessService) ctx.getBean("ProcessService");
+		
+		pcsServ.TestSpelpParsingXML();
 		//System.out.println("ActivityManager="+am);
 		
 		/*

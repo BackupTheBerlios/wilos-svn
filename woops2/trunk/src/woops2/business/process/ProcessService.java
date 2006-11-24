@@ -54,6 +54,12 @@ public class ProcessService {
 	
 	protected final Log logger = LogFactory.getLog(this.getClass());
 	
+	public void TestSpelpParsingXML(){
+		File file = new File("C:\\Documents and Settings\\Moi\\Bureau\\Spelp-importXML\\ressources\\scrum.xml");
+		Process p = this.SpelpParsingXML(file);
+		System.out.println("Process = "+p);
+	}
+	
 	public Process SpelpParsingXML (File _file) {
 	//	file = new File("C:\Documents and Settings\Moi\Bureau\Spelp-importXML\ressources\scrum.xml");
 		String absolutPath = _file.getAbsolutePath();
