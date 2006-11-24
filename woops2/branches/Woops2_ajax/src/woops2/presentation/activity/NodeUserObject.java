@@ -80,7 +80,7 @@ public class NodeUserObject extends IceUserObject {
             locale = Locale.ENGLISH;
         }
         ResourceBundle messages = ResourceBundle.getBundle(
-                "com.icesoft.icefaces.samples.showcase.resources.messages",
+                "woops2.resources.messages",
                 locale);
 
         // assign labels
