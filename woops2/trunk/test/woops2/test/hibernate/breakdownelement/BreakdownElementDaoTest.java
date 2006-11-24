@@ -84,10 +84,10 @@ public class BreakdownElementDaoTest extends TestCase {
 
 		// Check the saving.
 		String id = this.breakdownElement.getId();
-		Activity activityTmp = (Activity) this.breakdownElementDao
-				.getHibernateTemplate().load(Activity.class, id);
-		assertNotNull(activityTmp);
-
+		BreakdownElement bdeTmp = (BreakdownElement) this.breakdownElementDao
+				.getHibernateTemplate().load(BreakdownElement.class, id);
+		assertNotNull(bdeTmp);
+		
 		// Rk: the tearDown method is called here.
 	}
 

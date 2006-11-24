@@ -62,7 +62,7 @@ public class ActivityServiceTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		// Save the activity.
-		this.activityService.getActivityDao().saveOrUpdateActivity(this.activity) ;
+		this.activityService.saveActivity(this.activity) ;
 
 		// Look if this activity is also into the database and look if the size of the set is >= 1.
 		List<Activity> activities = this.activityService.getActivitiesList() ;

@@ -14,6 +14,7 @@ public class AllTests {
 		TestSuite suite = new TestSuite("Test for woops2.test.business") ;
 		// $JUnit-BEGIN$
 		suite.addTest(woops2.test.business.activity.AllTests.suite()) ;
+		suite.addTest(woops2.test.business.process.AllTests.suite()) ;
 		// $JUnit-END$
 		return suite ;
 	}

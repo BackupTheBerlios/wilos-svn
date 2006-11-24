@@ -52,9 +52,6 @@ public class ActivityDaoTest extends TestCase {
 
 		// Create empty Activity
 		this.activity = new Activity() ;
-
-		// Save the activity with the method to test.
-		this.activityDao.saveOrUpdateActivity(this.activity) ;
 	}
 
 	/*
@@ -86,12 +83,14 @@ public class ActivityDaoTest extends TestCase {
 	public void testSaveOrUpdateActivity() {
 		// Rk: the setUp method is called here.
 
-
+		//Save the activity with the method to test.
+		this.activityDao.saveOrUpdateActivity(this.activity) ;
+		
 		// Check the saving.
 		String id = this.activity.getId() ;
 		Activity activityTmp = (Activity) this.activityDao.getActivity(id) ;
 		assertNotNull(activityTmp) ;
-
+		
 		// Rk: the tearDown method is called here.
 	}
 
@@ -104,6 +103,9 @@ public class ActivityDaoTest extends TestCase {
 	 */
 	public void testGetAllActivities() {
 
+		//Save the activity with the method to test.
+		this.activityDao.saveOrUpdateActivity(this.activity) ;
+		
 		// Look if this activity is also into the database and look if the size of the set is >= 1.
 		List<Activity> activities = this.activityDao.getAllActivities() ;
 		assertNotNull(activities) ;
