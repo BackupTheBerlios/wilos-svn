@@ -27,7 +27,7 @@
 		</property>
 	</bean>
 
-	<!-- Hibernate SessionFactory Definition  -->
+	<!-- Hibernate SessionFactory Definition -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
 		<property name="dataSource">
@@ -158,6 +158,15 @@
 	<bean id="ProcessService"
 		class="woops2.business.process.ProcessService">
 		<property name="processDao" ref="ProcessDao" />
+		<property name="activityDao" ref="ActivityDao" />
+		<property name="breakdownElementDao" ref="BreakdownElementDao" />
+		<property name="elementDao" ref="ElementDao" />
+		<property name="roleDefinitionDao" ref="RoleDefinitionDao" />
+		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
+		<property name="stepDao" ref="StepDao" />
+		<property name="taskDefinitionDao" ref="TaskDefinitionDao" />
+		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
+		<property name="workBreakdownElementDao" ref="WorkBreakdownElementDao" />
 	</bean>  
 	
 	<bean id="ActivityService"
