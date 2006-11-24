@@ -77,9 +77,9 @@
     </managed-bean>
     
      <managed-bean>
-        <managed-bean-name>ProcessTreeBean</managed-bean-name>
-        <managed-bean-class>woops2.presentation.activity.ProcessTreeBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-name>TreeBean</managed-bean-name>
+        <managed-bean-class>woops2.presentation.activity.TreeBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     
     <navigation-rule>

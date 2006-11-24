@@ -33,12 +33,13 @@
 
 package woops2.presentation.activity;
 
+import java.util.Enumeration;
+
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import java.util.Enumeration;
 
 /**
  * <p>The TreeBean class is the backing bean for the Tree Component showcase
@@ -47,7 +48,7 @@ import java.util.Enumeration;
  * @see NodeUserObject
  * @since 0.3.0
  */
-public class ProcessTreeBean {
+public class TreeBean {
 
     // tree default model, used as a value for the tree component
     private DefaultTreeModel model;
@@ -264,7 +265,7 @@ public class ProcessTreeBean {
     /**
      * Construction the default tree structure by combining tree nodes.
      */
-    public ProcessTreeBean() {
+    public TreeBean() {
         rootTreeNode = new DefaultMutableTreeNode();
         NodeUserObject rootObject = new NodeUserObject(rootTreeNode, this);
         rootTreeNode.setUserObject(rootObject);

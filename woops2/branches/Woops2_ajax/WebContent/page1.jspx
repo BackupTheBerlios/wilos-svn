@@ -130,7 +130,7 @@
 							<ice:panelTab label="Display imported EPF Process File">
 								<ice:panelGroup label="Process Display">
 									<br/>
-									<ice:tree id="tree" value="#{ProcessTreeBean.model}" var="item"
+									<ice:tree id="tree" value="#{TreeBean.model}" var="item"
 										hideRootNode="false" hideNavigation="false"
 										imageDir="#{styleBean.imageDirectory}">
 										<ice:treeNode>

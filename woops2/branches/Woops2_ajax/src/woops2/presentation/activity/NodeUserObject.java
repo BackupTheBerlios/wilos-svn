@@ -58,7 +58,7 @@ import java.util.ResourceBundle;
 public class NodeUserObject extends IceUserObject {
 
     // treebean pointer - used to store selected node
-    private ProcessTreeBean treeBean;
+    private TreeBean treeBean;
 
     // message bundle references
     private static String nodeToolTip;
@@ -102,7 +102,7 @@ public class NodeUserObject extends IceUserObject {
      * @param treeBeanPointer callback to parent TreeBean class.
      */
     public NodeUserObject(DefaultMutableTreeNode wrapper,
-                          ProcessTreeBean treeBeanPointer) {
+                          TreeBean treeBeanPointer) {
         super(wrapper);
 
         treeBean = treeBeanPointer;
