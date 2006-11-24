@@ -19,31 +19,7 @@
 		</variable-resolver>
       <locale-config/>
     </application>
-
-    <managed-bean>
-        <description>
-            Backing bean that controls which content will be displayed and
-            the MenuGroupBeans that make up the left navigation of the
-            application
-        </description>
-        <managed-bean-name>navigation</managed-bean-name>
-        <managed-bean-class>
-            com.icesoft.icefaces.samples.showcase.navigation.NavigationBean
-        </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-
-    <managed-bean>
-        <description>
-            Backing bean for tree naviagation.
-        </description>
-        <managed-bean-name>treeNavigation</managed-bean-name>
-        <managed-bean-class>
-            com.icesoft.icefaces.samples.showcase.navigation.TreeNavigation
-        </managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-
+    
     <!-- Managed Bean for dynamic style examples -->
     <managed-bean>
         <managed-bean-name>styleBean</managed-bean-name>
