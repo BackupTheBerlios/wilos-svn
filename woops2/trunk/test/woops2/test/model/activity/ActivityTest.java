@@ -117,9 +117,9 @@ public class ActivityTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.activity.Activity#addToBreakdownElement(woops2.model.breakdownelement.BreakdownElement)}.
+	 * {@link woops2.model.activity.Activity#addBreakdownElement(woops2.model.breakdownelement.BreakdownElement)}.
 	 */
-	public void testAddToBreakdownElement() {
+	public void testAddBreakdownElement() {
 
 		BreakdownElement breakdownElement = new BreakdownElement() ;
 		breakdownElement.setIdEPF("idEPF1") ;
@@ -130,7 +130,7 @@ public class ActivityTest extends TestCase {
 		breakdownElement.setIsPlanned(false) ;
 		breakdownElement.setHasMultipleOccurrences(false) ;
 
-		this.activity.addToBreakdownElement(breakdownElement) ;
+		this.activity.addBreakdownElement(breakdownElement) ;
 
 		assertFalse(this.activity.getBreakDownElements().isEmpty()) ;
 		assertFalse(breakdownElement.getSuperActivities().isEmpty()) ;
@@ -140,9 +140,9 @@ public class ActivityTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.activity.Activity#addToAllBreakdownElements(java.util.Set)}.
+	 * {@link woops2.model.activity.Activity#addAllBreakdownElements(java.util.Set)}.
 	 */
-	public void testAddToAllBreakdownElement() {
+	public void testAddAllBreakdownElement() {
 
 		BreakdownElement breakdownElement = new BreakdownElement() ;
 		breakdownElement.setIdEPF("idEPF1") ;
@@ -166,7 +166,7 @@ public class ActivityTest extends TestCase {
 		set.add(breakdownElement) ;
 		set.add(tmp) ;
 
-		this.activity.addToAllBreakdownElements(set) ;
+		this.activity.addAllBreakdownElements(set) ;
 
 		assertFalse("bdes vides", this.activity.getBreakDownElements().isEmpty()) ;
 		assertTrue("bdes = 2", this.activity.getBreakDownElements().size() == 2) ;
@@ -178,9 +178,9 @@ public class ActivityTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.activity.Activity#removeFromBreakdownElement(woops2.model.breakdownelement.BreakdownElement)}.
+	 * {@link woops2.model.activity.Activity#removeBreakdownElement(woops2.model.breakdownelement.BreakdownElement)}.
 	 */
-	public void testRemoveFromBreakdownElement() {
+	public void testRemoveBreakdownElement() {
 		BreakdownElement breakdownElement = new BreakdownElement() ;
 		breakdownElement.setIdEPF("idEPF1") ;
 		breakdownElement.setName("name1") ;
@@ -190,17 +190,17 @@ public class ActivityTest extends TestCase {
 		breakdownElement.setIsPlanned(false) ;
 		breakdownElement.setHasMultipleOccurrences(false) ;
 
-		this.activity.addToBreakdownElement(breakdownElement) ;
-		this.activity.removeFromBreakdownElement(breakdownElement) ;
+		this.activity.addBreakdownElement(breakdownElement) ;
+		this.activity.removeBreakdownElement(breakdownElement) ;
 
 		assertTrue(this.activity.getBreakDownElements().isEmpty()) ;
 		assertTrue(breakdownElement.getSuperActivities().isEmpty()) ;
 	}
 
 	/**
-	 * Test method for {@link woops2.model.activity.Activity#removeFromAllBreakdownElements()}.
+	 * Test method for {@link woops2.model.activity.Activity#removeAllBreakdownElements()}.
 	 */
-	public void testRemoveFromAllBreakdownElements() {
+	public void testRemoveAllBreakdownElements() {
 
 		BreakdownElement breakdownElement = new BreakdownElement() ;
 		breakdownElement.setIdEPF("idEPF1") ;
@@ -226,8 +226,8 @@ public class ActivityTest extends TestCase {
 
 		assertTrue(set.size() == 2) ;
 
-		this.activity.addToAllBreakdownElements(set) ;
-		this.activity.removeFromAllBreakdownElements() ;
+		this.activity.addAllBreakdownElements(set) ;
+		this.activity.removeAllBreakdownElements() ;
 
 		assertTrue("bdes", this.activity.getBreakDownElements().isEmpty()) ;
 		assertTrue("bde.acts", breakdownElement.getSuperActivities().isEmpty()) ;

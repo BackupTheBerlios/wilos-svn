@@ -101,7 +101,7 @@ public class BreakdownElement extends Element implements Cloneable {
 	 * 
 	 * @param _activity
 	 */
-	public void addToActivity(Activity _activity) {
+	public void addActivity(Activity _activity) {
 		this.getSuperActivities().add(_activity) ;
 		_activity.getBreakDownElements().add(this) ;
 	}
@@ -111,9 +111,9 @@ public class BreakdownElement extends Element implements Cloneable {
 	 * 
 	 * @param _activities
 	 */
-	public void addToAllActivities(Set<Activity> _activities) {
+	public void addAllActivities(Set<Activity> _activities) {
 		for(Activity activity : _activities){
-			activity.addToBreakdownElement(this) ;
+			activity.addBreakdownElement(this) ;
 		}
 	}
 
@@ -122,7 +122,7 @@ public class BreakdownElement extends Element implements Cloneable {
 	 * 
 	 * @param _activity
 	 */
-	public void removeFromActivity(Activity _activity) {
+	public void removeActivity(Activity _activity) {
 		_activity.getBreakDownElements().remove(this) ;
 		this.getSuperActivities().remove(_activity) ;
 	}
@@ -131,7 +131,7 @@ public class BreakdownElement extends Element implements Cloneable {
 	 * Remove from a breakdownelement all its superActivities.
 	 * 
 	 */
-	public void removeFromAllActivities() {
+	public void removeAllActivities() {
 		/*for(Activity activity : this.getSuperActivities())
 			this.removeFromActivity(activity) ;*/
 		for(Activity activity : this.getSuperActivities())

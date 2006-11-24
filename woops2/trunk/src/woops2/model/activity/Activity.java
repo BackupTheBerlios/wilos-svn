@@ -55,15 +55,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 * @return a hash code
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())/* .append(this.breakdownElements) */.toHashCode() ; // TODO
-		// a
-		// decider
-		// si
-		// on
-		// l'inclue
-		// ou
-		// pas
-		// (reunion)
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode() ; 
 	}
 
 	/*
@@ -91,7 +83,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 * 
 	 * @param _breakdownElement
 	 */
-	public void addToBreakdownElement(BreakdownElement _breakdownElement) {
+	public void addBreakdownElement(BreakdownElement _breakdownElement) {
 		this.getBreakDownElements().add(_breakdownElement) ;
 		_breakdownElement.getSuperActivities().add(this) ;
 	}
@@ -101,9 +93,9 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 * 
 	 * @param _breakdownElement
 	 */
-	public void addToAllBreakdownElements(Set<BreakdownElement> _breakdownElements) {
+	public void addAllBreakdownElements(Set<BreakdownElement> _breakdownElements) {
 		for(BreakdownElement bde : _breakdownElements){
-			bde.addToActivity(this) ;
+			bde.addActivity(this) ;
 		}
 	}
 
@@ -112,7 +104,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 * 
 	 * @param _breakdownElement
 	 */
-	public void removeFromBreakdownElement(BreakdownElement _breakdownElement) {
+	public void removeBreakdownElement(BreakdownElement _breakdownElement) {
 		_breakdownElement.getSuperActivities().remove(this) ;
 		this.getBreakDownElements().remove(_breakdownElement) ;
 	}
@@ -121,15 +113,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 * Remove from an activity all its breakdownElements
 	 * 
 	 */
-	public void removeFromAllBreakdownElements() {
-		/*
-		 * for(BreakdownElement bde : this.getBreakDownElements()){
-		 * this.removeFromBreakdownElement(bde) ; }
-		 */
-		/*
-		 * Iterator<BreakdownElement> iterator = this.getBreakDownElements().iterator();
-		 * while(iterator.hasNext()){ this.removeFromBreakdownElement(iterator.next()) ; }
-		 */
+	public void removeAllBreakdownElements() {
 		for(BreakdownElement bde : this.getBreakDownElements())
 			bde.getSuperActivities().remove(this) ;
 		this.getBreakDownElements().clear() ;

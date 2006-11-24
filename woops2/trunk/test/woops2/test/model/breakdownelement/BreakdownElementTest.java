@@ -114,7 +114,7 @@ public class BreakdownElementTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.breakdownelement.BreakdownElement#addToActivity(woops2.model.activity.Activity)}.
+	 * {@link woops2.model.breakdownelement.BreakdownElement#addActivity(woops2.model.activity.Activity)}.
 	 */
 	public void testAddToActivity() {
 		// Rk: the setUp method is called here.
@@ -132,7 +132,7 @@ public class BreakdownElementTest extends TestCase {
 		activity1.setIsEvenDriven(true) ;
 		activity1.setIsOngoing(false) ;
 		activity1.setIsRepeatable(true) ;
-		this.breakdownElement.addToActivity(activity1) ;
+		this.breakdownElement.addActivity(activity1) ;
 		assertTrue("acts.size == 1", this.breakdownElement.getSuperActivities().size() == 1) ;
 		assertTrue("bdes.size1 == 1", activity1.getBreakDownElements().size() == 1) ;
 
@@ -147,7 +147,7 @@ public class BreakdownElementTest extends TestCase {
 		activity2.setIsEvenDriven(true) ;
 		activity2.setIsOngoing(false) ;
 		activity2.setIsRepeatable(true) ;
-		this.breakdownElement.addToActivity(activity2) ;
+		this.breakdownElement.addActivity(activity2) ;
 		assertTrue("acts.size ==  2", this.breakdownElement.getSuperActivities().size() == 2) ;
 		assertTrue("bdes.size2 ==  1", activity2.getBreakDownElements().size() == 1) ;
 
@@ -156,7 +156,7 @@ public class BreakdownElementTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.breakdownelement.BreakdownElement#addToAllActivities(java.util.Set<Activity>)}.
+	 * {@link woops2.model.breakdownelement.BreakdownElement#addAllActivities(java.util.Set<Activity>)}.
 	 */
 	public void testAddToAllActivities() {
 		// Rk: the setUp method is called here.
@@ -189,7 +189,7 @@ public class BreakdownElementTest extends TestCase {
 		activities.add(activity1) ;
 		activities.add(activity2) ;
 
-		this.breakdownElement.addToAllActivities(activities) ;
+		this.breakdownElement.addAllActivities(activities) ;
 
 		assertTrue("acts.size ==  2", this.breakdownElement.getSuperActivities().size() == 2) ;
 		assertTrue("bdes1.size == 1", activity1.getBreakDownElements().size() == 1) ;
@@ -200,7 +200,7 @@ public class BreakdownElementTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.breakdownelement.BreakdownElement#removeFromActivity(woops2.model.activity.Activity)}.
+	 * {@link woops2.model.breakdownelement.BreakdownElement#removeActivity(woops2.model.activity.Activity)}.
 	 */
 	public void testRemoveFromActivity() {
 		// Rk: the setUp method is called here.
@@ -216,8 +216,8 @@ public class BreakdownElementTest extends TestCase {
 		activity.setIsEvenDriven(true) ;
 		activity.setIsOngoing(false) ;
 		activity.setIsRepeatable(true) ;
-		this.breakdownElement.addToActivity(activity) ;
-		this.breakdownElement.removeFromActivity(activity) ;
+		this.breakdownElement.addActivity(activity) ;
+		this.breakdownElement.removeActivity(activity) ;
 
 		assertTrue(this.breakdownElement.getSuperActivities().isEmpty()) ;
 		assertTrue(activity.getBreakDownElements().isEmpty()) ;
@@ -227,7 +227,7 @@ public class BreakdownElementTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.breakdownelement.BreakdownElement#removeFromAllActivity()}.
+	 * {@link woops2.model.breakdownelement.BreakdownElement#removeAllActivity()}.
 	 */
 	public void testRemoveFromAllActivities() {
 		// Rk: the setUp method is called here.
@@ -260,8 +260,8 @@ public class BreakdownElementTest extends TestCase {
 		set.add(activity) ;
 		set.add(activity2) ;
 
-		this.breakdownElement.addToAllActivities(set) ;
-		this.breakdownElement.removeFromAllActivities() ;
+		this.breakdownElement.addAllActivities(set) ;
+		this.breakdownElement.removeAllActivities() ;
 
 		assertTrue(this.breakdownElement.getSuperActivities().isEmpty()) ;
 		assertTrue(activity.getBreakDownElements().isEmpty()) ;
