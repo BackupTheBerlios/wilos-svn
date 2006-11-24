@@ -7,9 +7,10 @@ import org.apache.commons.lang.builder.HashCodeBuilder ;
 import woops2.model.element.Element ;
 
 /**
- * @author Sebastien BALARD
  * 
  * This class represents a section which represents structural subsections of a taskDefinition.
+ * 
+ * @author Sebastien BALARD
  * 
  */
 public class Step extends Element implements Cloneable {
@@ -46,10 +47,10 @@ public class Step extends Element implements Cloneable {
 		this.setTaskDefinition(_step.getTaskDefinition()) ;
 	}
 
-	/**
-	 * Indicates whether another object is "equal to" this one.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return true if equal else false
+	 * @see woops2.model.element.Element#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
 		if(obj instanceof Step == false){
@@ -62,17 +63,17 @@ public class Step extends Element implements Cloneable {
 		return new EqualsBuilder().appendSuper(super.equals(step)).append(this.taskDefinition, step.taskDefinition).isEquals() ;
 	}
 
-	/**
-	 * Returns a hash code value for the object.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return a hash code
+	 * @see woops2.model.element.Element#hashCode()
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.taskDefinition).toHashCode() ;
 	}
 
 	/**
-	 * Attach a step to a TaskDefiniton
+	 * Add a step to a TaskDefiniton
 	 * 
 	 * @param _taskDefinition
 	 */

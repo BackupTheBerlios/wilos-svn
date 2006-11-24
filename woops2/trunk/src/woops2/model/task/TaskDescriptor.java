@@ -11,14 +11,15 @@ import woops2.model.role.RoleDescriptor ;
 import woops2.model.workbreakdownelement.WorkBreakdownElement ;
 
 /**
- * @author Sebastien BALARD
- * @author eperico
  * 
  * A Task Descriptor is a Descriptor and Work Breakdown Element that represents a proxy for a Task
  * in the context of one specific Activity. Every breakdown structure can define different
  * relationships of Task Descriptors to Work Product Descriptors and Role Descriptors. Therefore one
  * Task can be represented by many Task Descriptors each within the context of an Activity with its
  * own set of relationships.
+ * 
+ * @author Sebastien BALARD
+ * @author eperico
  * 
  */
 public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
@@ -68,10 +69,10 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 		this.setMainRole(_taskDescriptor.getMainRole()) ;
 	}
 
-	/**
-	 * Indicates whether another object is "equal to" this one.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return true if equal else false
+	 * @see woops2.model.workbreakdownelement.WorkBreakdownElement#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
 		if(obj instanceof TaskDescriptor == false){
@@ -85,16 +86,16 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 				this.additionalRoles, taskDescriptor.additionalRoles).append(this.mainRole, taskDescriptor.mainRole).isEquals() ;
 	}
 
-	/**
-	 * Returns a hash code value for the object.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return a hash code
+	 * @see woops2.model.workbreakdownelement.WorkBreakdownElement#hashCode()
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.taskDefinition).append(this.mainRole).toHashCode() ;
 	}
 
-	/**
+	/*
 	 * relation between TaskDescriptor and TaskDefinition
 	 * 
 	 */
@@ -119,9 +120,10 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 		this.taskDefinition = null ;
 	}
 
-	/**
+	/*
 	 * relation primaryTask between TaskDescriptor and RoleDescriptor
 	 */
+
 	/**
 	 * Attach a taskDescriptor to a roleDescriptor
 	 * 
@@ -142,7 +144,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 		this.mainRole = null ;
 	}
 
-	/**
+	/*
 	 * relation additionalTasks between TaskDescriptor and RoleDescriptor
 	 */
 
@@ -181,17 +183,6 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 		}
 		this.getAdditionalRoles().clear() ;
 	}
-
-	/**
-	 * Remove from a taskDescriptor all its roleDescriptors. That is to say remove all the
-	 * additional roles.
-	 */
-	/*public void removeFromAllAdditionalRoles() {
-		for(RoleDescriptor tmp : this.getAdditionalRoles()){
-			tmp.getAdditionalTasks().remove(this) ;
-		}
-		this.getAdditionalRoles().clear() ;
-	}*/
 
 	/**
 	 * Getter of taskDefinition.

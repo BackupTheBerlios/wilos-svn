@@ -11,13 +11,14 @@ import woops2.model.breakdownelement.BreakdownElement ;
 import woops2.model.task.TaskDescriptor ;
 
 /**
- * @author deder
  * 
  * A RoleDefinition Descriptor represents a RoleDefinition in the context of one specific Activity.
  * Every breakdown structure can define different relationships of RoleDefinition Descriptors to
  * TaskDefinition Descriptors and Work Product Descriptors. Therefore one RoleDefinition can be
  * represented by many RoleDefinition Descriptors each within the context of an Activity with its
  * own set of relationships.
+ * 
+ * @author deder
  * 
  */
 public class RoleDescriptor extends BreakdownElement implements Cloneable {
@@ -35,7 +36,7 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	private Set<TaskDescriptor> additionalTasks ;
 
 	/**
-	 * The participants of the Participant
+	 * The participants of the RoleDescriptor.
 	 */
 	// private Set<Participant> participants ;TODO
 	/**
@@ -76,7 +77,10 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	}
 
 	/**
-	 * Copy the _roleDescriptor into this.
+	 * Copy the object.
+	 * 
+	 * @param _roleDescriptor
+	 *            The RoleDescriptor to copy.
 	 */
 	protected void copy(final RoleDescriptor _roleDescriptor) {
 		super.copy(_roleDescriptor) ;
@@ -86,10 +90,10 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 		// this.setParticipants(_roleDescriptor.getParticipants());TODO
 	}
 
-	/**
-	 * Indicates whether another object is "equal to" this one.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return true if equal else false
+	 * @see woops2.model.breakdownelement.BreakdownElement#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
 		if(obj instanceof RoleDescriptor == false){
@@ -103,21 +107,21 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 		return new EqualsBuilder().appendSuper(super.equals(roleDescriptor)).append(this.roleDefinition, roleDescriptor.roleDefinition).isEquals() ;
 	}
 
-	/**
-	 * Returns a hash code value for the object.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return a hash code
+	 * @see woops2.model.breakdownelement.BreakdownElement#hashCode()
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.roleDefinition).toHashCode() ;
 	}
 
-	/**
+	/*
 	 * relation between RoleDescriptor and RoleDefinition
 	 */
 
 	/**
-	 * add a RoleDefinition to the Set
+	 * Add a RoleDefinition to the Set
 	 * 
 	 * @param _role
 	 */
@@ -136,7 +140,7 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 		this.roleDefinition = null ;
 	}
 
-	/**
+	/*
 	 * relation mainrole between RoleDescriptor and TaskDescriptor
 	 */
 
@@ -176,12 +180,12 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 */
 	public void removeAllPrimaryTasks() {
 		for(TaskDescriptor _task : this.primaryTasks){
-			_task.setMainRole(null);
+			_task.setMainRole(null) ;
 		}
 		this.primaryTasks.clear() ;
 	}
 
-	/**
+	/*
 	 * relation additionnalRoles between RoleDescriptor and TaskDescriptor
 	 */
 
@@ -221,7 +225,7 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 */
 	public void removeAllAdditionalTasks() {
 		for(TaskDescriptor _task : this.additionalTasks){
-			_task.getAdditionalRoles().remove(this);
+			_task.getAdditionalRoles().remove(this) ;
 		}
 		this.additionalTasks.clear() ;
 	}

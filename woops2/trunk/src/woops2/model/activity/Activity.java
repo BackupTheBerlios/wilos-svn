@@ -11,13 +11,14 @@ import woops2.model.breakdownelement.BreakdownElement ;
 import woops2.model.workbreakdownelement.WorkBreakdownElement ;
 
 /**
- * @author deder.
- * @author morpheus
  * 
  * An Activity is a Work Breakdown Element and Work Definition which supports the nesting and
  * logical grouping of related Breakdown Elements forming breakdown structures. Although Activity is
  * a concrete meta-class, other classes which represent breakdown structures derive from it; such as
  * Phase, Iteration, Delivery Process, or Capability Pattern.
+ * 
+ * @author deder.
+ * @author morpheus
  * 
  */
 public class Activity extends WorkBreakdownElement implements Cloneable {
@@ -33,10 +34,10 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 		this.breakdownElements = new HashSet<BreakdownElement>() ;
 	}
 
-	/**
-	 * Indicates whether another object is "equal to" this one.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return true if equal else false
+	 * @see woops2.model.workbreakdownelement.WorkBreakdownElement#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
 		if(obj instanceof Activity == false){
@@ -49,13 +50,13 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 		return new EqualsBuilder().appendSuper(super.equals(activity)).append(this.breakdownElements, activity.breakdownElements).isEquals() ;
 	}
 
-	/**
-	 * Returns a hash code value for the object.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return a hash code
+	 * @see woops2.model.workbreakdownelement.WorkBreakdownElement#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode() ; 
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode() ;
 	}
 
 	/*
@@ -71,7 +72,10 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	}
 
 	/**
-	 * Copy the _activity into this.
+	 * Copy the object.
+	 * 
+	 * @param _activity
+	 *            The Activity to copy.
 	 */
 	protected void copy(final Activity _activity) {
 		super.copy(_activity) ;
@@ -82,6 +86,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 * Add a breakdownElement to the breakdownElement collection of an activity
 	 * 
 	 * @param _breakdownElement
+	 *            The BreakdownElement to add.
 	 */
 	public void addBreakdownElement(BreakdownElement _breakdownElement) {
 		this.getBreakDownElements().add(_breakdownElement) ;
@@ -91,7 +96,8 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	/**
 	 * Add a breakdownElement collection to the breakdownElement collection of an activity
 	 * 
-	 * @param _breakdownElement
+	 * @param _breakdownElements
+	 *            The set of BreakdownElement to add.
 	 */
 	public void addAllBreakdownElements(Set<BreakdownElement> _breakdownElements) {
 		for(BreakdownElement bde : _breakdownElements){
@@ -103,6 +109,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 * Remove from an activity one of these breakdownElements
 	 * 
 	 * @param _breakdownElement
+	 *            The BreakdownElement to remove.
 	 */
 	public void removeBreakdownElement(BreakdownElement _breakdownElement) {
 		_breakdownElement.getActivities().remove(this) ;

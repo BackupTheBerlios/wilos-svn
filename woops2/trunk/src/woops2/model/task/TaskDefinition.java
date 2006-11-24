@@ -10,11 +10,12 @@ import org.apache.commons.lang.builder.HashCodeBuilder ;
 import woops2.model.element.Element ;
 
 /**
- * @author Sebastien BALARD
- * @author eperico
  * 
  * This class represents a task is a content element that describes work being performed by Roles.
  * It defines one default performing RoleDefinition as well as many additional performers.
+ * 
+ * @author Sebastien BALARD
+ * @author eperico
  * 
  */
 public class TaskDefinition extends Element implements Cloneable {
@@ -38,10 +39,10 @@ public class TaskDefinition extends Element implements Cloneable {
 		this.taskDescriptors = new HashSet<TaskDescriptor>() ;
 	}
 
-	/**
-	 * Indicates whether another object is "equal to" this one.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return true if equal else false
+	 * @see woops2.model.element.Element#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
 		if(obj instanceof TaskDefinition == false){
@@ -54,10 +55,10 @@ public class TaskDefinition extends Element implements Cloneable {
 		return new EqualsBuilder().appendSuper(super.equals(task)).append(this.steps, task.steps).append(this.taskDescriptors, task.taskDescriptors).isEquals() ;
 	}
 
-	/**
-	 * Returns a hash code value for the object.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return a hash code
+	 * @see woops2.model.element.Element#hashCode()
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode() ;

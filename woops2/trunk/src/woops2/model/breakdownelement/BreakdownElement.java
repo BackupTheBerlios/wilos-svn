@@ -11,10 +11,11 @@ import woops2.model.activity.Activity ;
 import woops2.model.element.Element ;
 
 /**
- * @author deder.
  * 
  * Breakdown Element is an abstract generalization for any type of Element that is part of a
  * breakdown structure. It defines a set of properties available to all of its specializations.
+ * 
+ * @author deder
  * 
  */
 public class BreakdownElement extends Element implements Cloneable {
@@ -56,6 +57,9 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	/**
 	 * Copy the object.
+	 * 
+	 * @param _breakdownElement
+	 *            The BreakdownElement to copy.
 	 */
 	protected void copy(final BreakdownElement _breakdownElement) {
 		super.copy(_breakdownElement) ;
@@ -67,10 +71,10 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	}
 
-	/**
-	 * Indicates whether another object is "equal to" this one.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return true if equal else false
+	 * @see woops2.model.element.Element#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
 		if(obj instanceof BreakdownElement == false){
@@ -85,10 +89,10 @@ public class BreakdownElement extends Element implements Cloneable {
 				breakdownElement.isOptional).append(this.activities, breakdownElement.activities).isEquals() ;
 	}
 
-	/**
-	 * Returns a hash code value for the object.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return a hash code
+	 * @see woops2.model.element.Element#hashCode()
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.prefix).append(this.hasMultipleOccurrences).append(this.isOptional)
@@ -96,9 +100,10 @@ public class BreakdownElement extends Element implements Cloneable {
 	}
 
 	/**
-	 * Add an Activity to the superActivities collection of a BreakdownElement
+	 * Add an Activity to the activities collection of a BreakdownElement.
 	 * 
 	 * @param _activity
+	 *            The activity to add
 	 */
 	public void addActivity(Activity _activity) {
 		this.getActivities().add(_activity) ;
@@ -106,9 +111,10 @@ public class BreakdownElement extends Element implements Cloneable {
 	}
 
 	/**
-	 * Add an activity collection to the activity collection of a breakdownelement
+	 * Add an activity collection to the activity collection of a breakdownelement.
 	 * 
 	 * @param _activities
+	 *            The set of Activity to add.
 	 */
 	public void addAllActivities(Set<Activity> _activities) {
 		for(Activity activity : _activities){
@@ -117,9 +123,10 @@ public class BreakdownElement extends Element implements Cloneable {
 	}
 
 	/**
-	 * Remove from a breakdownelement one of these superActivities
+	 * Remove from a breakdownelement one of these activities.
 	 * 
 	 * @param _activity
+	 *            The Activity to remove.
 	 */
 	public void removeActivity(Activity _activity) {
 		_activity.getBreakDownElements().remove(this) ;
@@ -127,7 +134,7 @@ public class BreakdownElement extends Element implements Cloneable {
 	}
 
 	/**
-	 * Remove from a breakdownelement all its superActivities.
+	 * Remove from a breakdownelement all its activities.
 	 * 
 	 */
 	public void removeAllActivities() {

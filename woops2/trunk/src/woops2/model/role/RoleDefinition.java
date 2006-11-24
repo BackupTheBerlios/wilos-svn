@@ -1,21 +1,22 @@
-package woops2.model.role;
 
-import java.util.HashSet;
-import java.util.Set;
+package woops2.model.role ;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import java.util.HashSet ;
+import java.util.Set ;
 
-import woops2.model.element.Element;
+import org.apache.commons.lang.builder.EqualsBuilder ;
+import org.apache.commons.lang.builder.HashCodeBuilder ;
+
+import woops2.model.element.Element ;
 
 /**
+ * 
+ * A RoleDefinition is a content element that defines a set of related skills, competencies, and
+ * responsibilities. Roles are used by Tasks to define who performs them as well as define a set of
+ * work products they are responsible for.
+ * 
  * @author deder
  * @author soosuske
- * 
- * A RoleDefinition is a content element that defines a set of related skills,
- * competencies, and responsibilities. Roles are used by Tasks to define who
- * performs them as well as define a set of work products they are responsible
- * for.
  * 
  */
 public class RoleDefinition extends Element implements Cloneable {
@@ -23,43 +24,40 @@ public class RoleDefinition extends Element implements Cloneable {
 	/**
 	 * Collection of TaskDescriptor
 	 */
-	private Set<RoleDescriptor> roleDescriptors;
+	private Set<RoleDescriptor> roleDescriptors ;
 
 	/**
 	 * Constructor.
 	 * 
 	 */
 	public RoleDefinition() {
-		super();
-		this.roleDescriptors = new HashSet<RoleDescriptor>();
+		super() ;
+		this.roleDescriptors = new HashSet<RoleDescriptor>() ;
 	}
 
-	
-
-	/**
-	 * Indicates whether another object is "equal to" this one.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return true if equal else false
+	 * @see woops2.model.element.Element#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
-		if (obj instanceof RoleDefinition == false) {
-			return false;
+		if(obj instanceof RoleDefinition == false){
+			return false ;
 		}
-		if (this == obj) {
-			return true;
+		if(this == obj){
+			return true ;
 		}
-		RoleDefinition role = (RoleDefinition) obj;
-		return new EqualsBuilder().appendSuper(super.equals(role)).append(
-				this.roleDescriptors, role.roleDescriptors).isEquals();
+		RoleDefinition role = (RoleDefinition) obj ;
+		return new EqualsBuilder().appendSuper(super.equals(role)).append(this.roleDescriptors, role.roleDescriptors).isEquals() ;
 	}
 
-	/**
-	 * Returns a hash code value for the object.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return a hash code
+	 * @see woops2.model.element.Element#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode();
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode() ;
 	}
 
 	/*
@@ -67,19 +65,19 @@ public class RoleDefinition extends Element implements Cloneable {
 	 * 
 	 * @see java.lang.Object#clone()
 	 */
-	@Override
+	@ Override
 	public RoleDefinition clone() throws CloneNotSupportedException {
-		RoleDefinition roleDefinition = new RoleDefinition();
-		roleDefinition.copy(this);
-		return roleDefinition;
+		RoleDefinition roleDefinition = new RoleDefinition() ;
+		roleDefinition.copy(this) ;
+		return roleDefinition ;
 	}
 
 	/**
 	 * Copy the _roleDefinition into this.
 	 */
 	protected void copy(final RoleDefinition _roleDefinition) {
-		super.copy(_roleDefinition);
-		this.setRoleDescriptors(_roleDefinition.getRoleDescriptors());
+		super.copy(_roleDefinition) ;
+		this.setRoleDescriptors(_roleDefinition.getRoleDescriptors()) ;
 	}
 
 	/**
@@ -91,8 +89,8 @@ public class RoleDefinition extends Element implements Cloneable {
 	 * @param _role
 	 */
 	public void addRoleDescriptor(RoleDescriptor _role) {
-		this.roleDescriptors.add(_role);
-		_role.setRoleDefinition(this);
+		this.roleDescriptors.add(_role) ;
+		_role.setRoleDefinition(this) ;
 	}
 
 	/**
@@ -101,8 +99,8 @@ public class RoleDefinition extends Element implements Cloneable {
 	 * @param _role
 	 */
 	public void removeRoleDescriptor(RoleDescriptor _role) {
-		_role.setRoleDefinition(null);
-		this.roleDescriptors.remove(_role);
+		_role.setRoleDefinition(null) ;
+		this.roleDescriptors.remove(_role) ;
 
 	}
 
@@ -111,31 +109,30 @@ public class RoleDefinition extends Element implements Cloneable {
 	 * 
 	 */
 	public void removeAllRoleDescriptors() {
-		for (RoleDescriptor _role : this.roleDescriptors) {
-			_role.setRoleDefinition(null);
+		for(RoleDescriptor _role : this.roleDescriptors){
+			_role.setRoleDefinition(null) ;
 		}
-		this.roleDescriptors.clear();
+		this.roleDescriptors.clear() ;
 	}
 
 	/**
-	 * Add a RoleDescriptor collection to the RoleDescriptor collection of an
-	 * RoleDefinition
+	 * Add a RoleDescriptor collection to the RoleDescriptor collection of an RoleDefinition
 	 * 
 	 * @param _role
 	 */
 	public void addAllRoleDescriptors(Set<RoleDescriptor> _role) {
-		for (RoleDescriptor _role1 : _role) {
-			_role1.addRoleDefinition(this);
+		for(RoleDescriptor _role1 : _role){
+			_role1.addRoleDefinition(this) ;
 		}
 	}
-	
+
 	/**
 	 * Getter of roleDescriptors.
 	 * 
 	 * @return the roleDescriptors.
 	 */
 	public Set<RoleDescriptor> getRoleDescriptors() {
-		return this.roleDescriptors;
+		return this.roleDescriptors ;
 	}
 
 	/**
@@ -144,8 +141,8 @@ public class RoleDefinition extends Element implements Cloneable {
 	 * @param _roleDescriptors
 	 *            The roleDescriptors to set.
 	 */
-	@SuppressWarnings("unused")
+	@ SuppressWarnings ("unused")
 	private void setRoleDescriptors(Set<RoleDescriptor> _roleDescriptors) {
-		this.roleDescriptors = _roleDescriptors;
+		this.roleDescriptors = _roleDescriptors ;
 	}
 }

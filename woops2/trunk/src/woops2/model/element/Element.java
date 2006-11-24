@@ -5,21 +5,34 @@ import org.apache.commons.lang.builder.EqualsBuilder ;
 import org.apache.commons.lang.builder.HashCodeBuilder ;
 
 /**
- * @author deder
  * 
  * Every class defined in this specification is derived from Element. In other words Element is the
  * root generalization for all UMA classes and defines a common set of attributes inherited by every
  * other element type of this model.
  * 
+ * @author deder
+ * 
  */
 public class Element implements Cloneable {
 
+	/**
+	 * The id for the database mapping.
+	 */
 	private String id ;
-	
-	private String idEPF;
 
+	/**
+	 * The global unique id for EPF.
+	 */
+	private String idEPF ;
+
+	/**
+	 * The name of the element.
+	 */
 	private String name ;
 
+	/**
+	 * The sentences describe this element.
+	 */
 	private String description ;
 
 	/**
@@ -27,9 +40,9 @@ public class Element implements Cloneable {
 	 * 
 	 */
 	public Element() {
-		this.idEPF = "";
-		this.name = "";
-		this.description = "";
+		this.idEPF = "" ;
+		this.name = "" ;
+		this.description = "" ;
 	}
 
 	/*
@@ -39,7 +52,6 @@ public class Element implements Cloneable {
 	 */
 	@ Override
 	public Element clone() throws CloneNotSupportedException {
-		// TODO Auto-generated method stub
 		Element element = new Element() ;
 		element.copy(this) ;
 		return element ;
@@ -47,17 +59,20 @@ public class Element implements Cloneable {
 
 	/**
 	 * Copy the object.
+	 * 
+	 * @param _element
+	 *            The element to copy.
 	 */
 	protected void copy(final Element _element) {
-		this.idEPF = _element.idEPF;
+		this.idEPF = _element.idEPF ;
 		this.name = _element.name ;
 		this.description = _element.description ;
 	}
 
-	/**
-	 * Indicates whether another object is "equal to" this one.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return true if equal else false
+	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	public boolean equals(Object _obj) {
 		if(_obj instanceof Element == false){
@@ -67,16 +82,13 @@ public class Element implements Cloneable {
 			return true ;
 		}
 		Element element = (Element) _obj ;
-		return new EqualsBuilder().append(this.idEPF, element.idEPF)
-								  .append(this.name, element.name)
-								  .append(this.description, element.description)
-								  .isEquals() ;
+		return new EqualsBuilder().append(this.idEPF, element.idEPF).append(this.name, element.name).append(this.description, element.description).isEquals() ;
 	}
 
-	/**
-	 * Returns a hash code value for the object.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return a hash code
+	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).append(this.idEPF).append(this.name).append(this.description).toHashCode() ;
@@ -116,7 +128,7 @@ public class Element implements Cloneable {
 	 * @param _id
 	 *            The id to set.
 	 */
-	@SuppressWarnings("unused")
+	@ SuppressWarnings ("unused")
 	private void setId(String _id) {
 		this.id = _id ;
 	}
@@ -142,7 +154,7 @@ public class Element implements Cloneable {
 
 	/**
 	 * Getter of idEPF.
-	 *
+	 * 
 	 * @return the idEPF.
 	 */
 	public String getIdEPF() {
@@ -151,8 +163,9 @@ public class Element implements Cloneable {
 
 	/**
 	 * Setter of idEPF.
-	 *
-	 * @param _idEPF The idEPF to set.
+	 * 
+	 * @param _idEPF
+	 *            The idEPF to set.
 	 */
 	public void setIdEPF(String _idEPF) {
 		this.idEPF = _idEPF ;

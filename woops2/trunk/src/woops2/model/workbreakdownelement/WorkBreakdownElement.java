@@ -7,10 +7,11 @@ import org.apache.commons.lang.builder.HashCodeBuilder ;
 import woops2.model.breakdownelement.BreakdownElement ;
 
 /**
- * @author deder
  * 
  * A Work Breakdown Element is a special Breakdown Element that provides specific properties for
  * Breakdown Elements that represent or refer to Work Definitions.
+ * 
+ * @author deder
  * 
  */
 public class WorkBreakdownElement extends BreakdownElement implements Cloneable {
@@ -28,10 +29,10 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 		this.isRepeatable = false ;
 	}
 
-	/**
-	 * Indicates whether another object is "equal to" this one.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return true if equal else false
+	 * @see woops2.model.breakdownelement.BreakdownElement#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
 		if(obj instanceof BreakdownElement == false){
@@ -45,10 +46,10 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 				this.isOngoing, workBreakdownElement.isOngoing).append(this.isRepeatable, workBreakdownElement.isRepeatable).isEquals() ;
 	}
 
-	/**
-	 * Returns a hash code value for the object.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return a hash code
+	 * @see woops2.model.breakdownelement.BreakdownElement#hashCode()
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.isEvenDriven).append(this.isOngoing).append(this.isRepeatable)
