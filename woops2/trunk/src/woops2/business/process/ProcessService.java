@@ -146,7 +146,7 @@ public class ProcessService {
 	 * 
 	 * @param _process
 	 */
-	public void saveActivity(Process _process) {
+	public void saveProcess(Process _process) {
 		this.processDao.saveOrUpdateProcess(_process) ;
 	}
 	
