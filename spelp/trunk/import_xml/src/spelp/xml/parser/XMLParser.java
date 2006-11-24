@@ -53,7 +53,7 @@ public class XMLParser {
 	 * initializes the List in memory
 	 * to launch before everything
 	 */
-	public static void start() {
+	private static void start() {
 		try {
 			fillRoleDefinitionList();
 			fillTaskDefinitionList();
@@ -61,13 +61,14 @@ public class XMLParser {
 			e.printStackTrace();
 		}
 	}
-		
+	
 	/**
 	 * fillTaskDefinitionList
 	 * fill the taskslist with task definition
 	 * @throws Exception
 	 */
-	public static void fillTaskDefinitionList() throws Exception{
+	private static void fillTaskDefinitionList() throws Exception{
+		TasksList.clear();
 		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(taskDefinition,XPathConstants.NODESET);
 		if (nodeReturned == null){
 			throw new Exception ("NO TASKS DEFINITIONS FOUND");
@@ -88,7 +89,8 @@ public class XMLParser {
 	 * fill the RolesList with RoleDefinition
 	 * @throws Exception
 	 */
-	public static void fillRoleDefinitionList () throws Exception {
+	private static void fillRoleDefinitionList () throws Exception {
+		RoleList.clear();
 		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(roleDefinition,XPathConstants.NODESET);
 		if (nodeReturned == null){
 			throw new Exception ("NO ROLE DEFINITIONS FOUND");
@@ -108,8 +110,12 @@ public class XMLParser {
 	 * Return a Process from a file
 	 * @param f a XML file
 	 * @return the process
+	 * @throws Exception 
 	 */
-	public static Process getProcess(File f){
+	public static Process getProcess(File f) throws Exception{
+		if(!f.exists()){
+			throw new Exception("FILE DOESN'T EXIST");
+		}
 		XMLUtils.setDocument(f);
 		start();
 		return (getProcess());
@@ -125,12 +131,12 @@ public class XMLParser {
 			// get all the roles descriptor
 			Set<RoleDescriptor> ensRole = getAllRoleDescriptors() ;
 			for (Iterator i = ensRole.iterator() ; i.hasNext() ;){
-				p.addToBreakdownElement((BreakdownElement) i.next());
+				p.addBreakdownElement((BreakdownElement) i.next());
 			}
 			// get all the tasks descriptor
 			Set<TaskDescriptor> allTasks = getAllTaskDescriptors(ensRole);
 			for (Iterator i = allTasks.iterator() ; i.hasNext() ;){
-				p.addToBreakdownElement((BreakdownElement) i.next());
+				p.addBreakdownElement((BreakdownElement) i.next());
 			}
 		}
 		catch(Exception e)
@@ -146,7 +152,7 @@ public class XMLParser {
 	 * @return all the tasks descriptors
 	 * @throws Exception when no tasks descriptor are found
 	 */
-	public static Set<TaskDescriptor> getAllTaskDescriptors(Set<RoleDescriptor> allRoles) throws Exception {
+	private static Set<TaskDescriptor> getAllTaskDescriptors(Set<RoleDescriptor> allRoles) throws Exception {
 		// gets all the roles in the file
 		HashSet<TaskDescriptor> taskList = new HashSet<TaskDescriptor>();
 		try {
@@ -183,7 +189,7 @@ public class XMLParser {
 	 * @param t
 	 * @return a task 
 	 */
-	public static void setTaskByTaskDescriptor(TaskDescriptor _t,Node _node) throws Exception{
+	private static void setTaskByTaskDescriptor(TaskDescriptor _t,Node _node) throws Exception{
 		TaskDefinition taskTobereturn = null;
 		// getting the id of the task
 		String idTask = "" ;
@@ -203,11 +209,11 @@ public class XMLParser {
 				throw new Exception ("NO TASK DEFINITION FOR THIS TASK DESCRIPTOR");
 			}
 			// set the task in the taskdescriptor
-			_t.addToTaskDefinition(taskTobereturn);
+			_t.addTaskDefinition(taskTobereturn);
 		}
 	}
 	
-	public static TaskDefinition getTaskDefinitionByID(String _id){
+	private static TaskDefinition getTaskDefinitionByID(String _id){
 		for (int i = 0 ; i < TasksList.size() ; i ++){
 			if (TasksList.get(i).getIdEPF().equals(_id)){
 				return TasksList.get(i);
@@ -217,7 +223,7 @@ public class XMLParser {
 	}
 	
 	
-	public static void setStepByTaskDefinition(TaskDefinition _taskd,Node _n) throws Exception {
+	private static void setStepByTaskDefinition(TaskDefinition _taskd,Node _n) throws Exception {
 		// getting the id of the role
 		NodeList listOfTdNodes = _n.getChildNodes() ;
 		boolean trouve = false ;
@@ -245,7 +251,7 @@ public class XMLParser {
 	 * @param _s
 	 * @throws Exception
 	 */
-	public static void setAddiotionalRoleByTaskDescriptor(TaskDescriptor _t,Node _n,Set<RoleDescriptor> _s) throws Exception {
+	private static void setAddiotionalRoleByTaskDescriptor(TaskDescriptor _t,Node _n,Set<RoleDescriptor> _s) throws Exception {
 //		 getting the id of the role
 		String idRole = "" ;
 		NodeList listOfTdNodes = _n.getChildNodes() ;
@@ -259,7 +265,7 @@ public class XMLParser {
 					throw new Exception("role " + idRole + " doesn't exist");
 				}
 				// set the role in the roledescriptor
-				_t.addToRoleDescriptor(roleToBeset);
+				_t.addAdditionalRole(roleToBeset);
 			}
 		}
 	}
@@ -271,7 +277,7 @@ public class XMLParser {
 	 * @param _s the set of roleDescriptor available
 	 * @throws Exception
 	 */
-	public static void setMainRoleByTaskDescriptor(TaskDescriptor _t,Node _n,Set<RoleDescriptor> _s) throws Exception {
+	private static void setMainRoleByTaskDescriptor(TaskDescriptor _t,Node _n,Set<RoleDescriptor> _s) throws Exception {
 		// getting the id of the role
 		String idRole = "" ;
 		NodeList listOfTdNodes = _n.getChildNodes() ;
@@ -290,7 +296,7 @@ public class XMLParser {
 				throw new Exception("role " + idRole + " doesn't exist");
 			}
 			// set the role in the roledescriptor
-			_t.addToMainRole(roleToBeset);
+			_t.addMainRole(roleToBeset);
 		}
 	}
 	/**
@@ -299,7 +305,7 @@ public class XMLParser {
 	 * @param n
 	 * @return
 	 */
-	public static void setRoleByRoleDescriptor(RoleDescriptor _r,Node _n) throws Exception {
+	private static void setRoleByRoleDescriptor(RoleDescriptor _r,Node _n) throws Exception {
 		RoleDefinition roleTobereturn = null;
 		// getting the id of the role
 		String idRole = "" ;
@@ -318,11 +324,11 @@ public class XMLParser {
 					throw new Exception ("PAS DE ROLE POUR CE ROLE DESCRIPTOR");	
 				}
 			// set the role in the roledescriptor
-			_r.addToRoleDefinition(roleTobereturn);
+			_r.addRoleDefinition(roleTobereturn);
 		}
 	}
 	
-	public static RoleDescriptor getRoleDescriptorById(Set<RoleDescriptor> aSet,String id){
+	private static RoleDescriptor getRoleDescriptorById(Set<RoleDescriptor> aSet,String id){
 		for (Iterator i = aSet.iterator() ; i.hasNext() ;){
 			RoleDescriptor tmp = (RoleDescriptor) i .next();
 			if (tmp.getIdEPF().equals(id)){
@@ -337,7 +343,7 @@ public class XMLParser {
 	 * @return all the tasks descriptors
 	 * @throws Exception when no tasks descriptor are found
 	 */
-	public static Set<RoleDescriptor> getAllRoleDescriptors() throws Exception {
+	private static Set<RoleDescriptor> getAllRoleDescriptors() throws Exception {
 		LinkedHashSet<RoleDescriptor> roleList = new LinkedHashSet<RoleDescriptor>();
 		try {
 			NodeList roleDescriptors = (NodeList)XMLUtils.evaluate(roleDescriptor,XPathConstants.NODESET);
@@ -354,8 +360,6 @@ public class XMLParser {
 				setRoleByRoleDescriptor(roleDescriptorfilled,aNode);
 								
 				roleList.add(roleDescriptorfilled) ;
-				
-				System.out.println("");
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -363,7 +367,7 @@ public class XMLParser {
 		return roleList;
 	}
 	
-	public static RoleDefinition getRoleDefinitionByID(String _id){
+	private static RoleDefinition getRoleDefinitionByID(String _id){
 		for (int i = 0 ; i < RoleList.size() ; i ++){
 			if (RoleList.get(i).getIdEPF().equals(_id)){
 				return RoleList.get(i);
