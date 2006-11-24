@@ -93,9 +93,9 @@ public class ProcessService {
 				TaskDescriptor taskDescriptor = (TaskDescriptor) breakdownElement;
 				TaskDefinition taskDefinition = taskDescriptor.getTaskDefinition();
 				
-			/*	for (Step step: taskDefinition.getSteps()) {
+				for (Step step: taskDefinition.getSteps()) {
 					elements.add(step);
-				}*/
+				}
 				
 				elements.add(taskDefinition);
 				elements.add(taskDescriptor);
