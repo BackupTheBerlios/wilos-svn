@@ -13,16 +13,14 @@ public class TreePanel extends JScrollPane {
 		super();
 		this.setLayout(new ScrollPaneLayout());
 		this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-//		this.add(getTree());
 	}
 	
 	public void putTree (JXTree t){
-		tree= t ;
+		tree = t ;
 		this.setViewportView(t);
 	}
 	
 	public JXTree getTree (){
 		return tree;
 	}
-	
 }

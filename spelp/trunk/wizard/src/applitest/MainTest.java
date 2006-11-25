@@ -26,7 +26,7 @@ public class MainTest {
                 java.lang.String password = "toto";
                 // TODO process result here
                 
-                 Service servic2 = WizardServicesService.create(new URL("http://localhost:8084/remote/WizardServices?wsdl"),service.getServiceName());
+                 Service servic2 = WizardServicesService.create(new URL("http://localhost:8084/remote/WizardServices?wsdl"), service.getServiceName());
             
                 WizardServices port = servic2.getPort(WizardServices.class);
                 java.util.List<RoleDescriptor> result = port.getRolesByUser(login, password);

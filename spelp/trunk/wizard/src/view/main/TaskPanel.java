@@ -2,34 +2,37 @@ package view.main;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.MutableTreeNode;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Set;
-
-import woops2.model.role.*;
-import woops2.model.task.TaskDescriptor;
-
-import org.jdesktop.swingx.JXTree;
 
 import ressources.Bundle;
+import view.htmlViewer.HTMLViewer;
+import webservices.WizardServicesProxy;
+import woops2.model.role.RoleDescriptor;
+import woops2.model.task.TaskDescriptor;
+import javax.swing.JFrame;
 
-public class TaskPanel extends JPanel{
+public class TaskPanel extends JPanel implements TreeSelectionListener {
 	
 	private JTree taskTree = null;
 	private JPanel panelTree = null;
+	private MainFrame mainFrame = null;
 	
 	/**
 	 * TaskPanel Constructor
 	 *
 	 */
-	public TaskPanel() {
+	public TaskPanel(MainFrame aFrame) {
 		init();
+		mainFrame = aFrame;
 	}
 	
 	/**
@@ -38,53 +41,123 @@ public class TaskPanel extends JPanel{
 	 * 
 	 */
 	public void init() {
-		
 		this.setLayout(new BorderLayout());
-		this.add(getTreePanel(),BorderLayout.CENTER);
+		
+		ArrayList<RoleDescriptor> rolesListe = WizardServicesProxy.getRolesByUser("polo", "olop");
+		
+		taskTree = initTaskTree(rolesListe);
+		
+		panelTree = initTreePanel();
+		this.add(panelTree,BorderLayout.CENTER);
+		
+		taskTree.addTreeSelectionListener(this); 
 	}
 	
 	/**
 	 * This method initializes treePanel
 	 * @return JPanel
 	 */
-	private JPanel getTreePanel() {
+	private JPanel initTreePanel() {
+		if (taskTree == null)
+			return null;
+		
 		if (panelTree == null)
-		{
-			RoleDescriptor r[] = new RoleDescriptor[2];			
-			RoleDescriptor dev = new RoleDescriptor();
-			
-			dev.setName("developper");
-			
-			r[0] = dev;
-			
-			
-			taskTree = getTreeWithTasks(r);
 			panelTree = new JPanel();
-			panelTree.setLayout(new GridLayout());
-			panelTree.add(taskTree, null);
-		}
+		
+		JScrollPane myScrollPane = new JScrollPane(taskTree);
+		panelTree.setLayout(new GridLayout());
+		panelTree.add(myScrollPane, null);
+
 		return panelTree;
 	}
 	
-	private JTree getTreeWithTasks(RoleDescriptor roles[]){
+	private JTree initTaskTree(ArrayList<RoleDescriptor> rolesListe) {
+		JTree aJTree;
 		
-		if (taskTree == null)
-		{
-			DefaultMutableTreeNode root = new DefaultMutableTreeNode(Bundle.getText("taskPanel.rule"));
-			taskTree = new JTree(root);
-			System.out.println("apres root");
-			for (int i = 0; i < roles.length; i++) {
-				//RoleDescriptor aRole = new RoleDescriptor();
-				TaskDescriptor task = new TaskDescriptor();
-				
-				
-				//aRole.setName(roles[i].toString());
-				DefaultMutableTreeNode tmp = new DefaultMutableTreeNode(roles[i], true );
-				// add the rule in the root node
-				root.add(tmp);
-			}			
+		RoleDescriptorInfo tmpRoleDescriptor;
+		TaskDescriptorInfo tmpTaskDescriptor;
+		HashSet<TaskDescriptor> tasksListe;
+		Iterator it;
+		
+		DefaultMutableTreeNode rootNode;
+		DefaultMutableTreeNode roleNode;
+		DefaultMutableTreeNode taskNode;
+		
+		rootNode = new DefaultMutableTreeNode(Bundle.getText("taskPanel.rule"));
+		aJTree = new JTree(rootNode);			
+		
+		for (int i = 0; i < rolesListe.size(); i++) {
+			tmpRoleDescriptor = new RoleDescriptorInfo((RoleDescriptor) rolesListe.get(i));
+			roleNode = new DefaultMutableTreeNode(tmpRoleDescriptor, true );
+			
+			tasksListe = (HashSet<TaskDescriptor>) tmpRoleDescriptor.getPrimaryTasks();
+			it = tasksListe.iterator();
+			while (it.hasNext()) {
+				tmpTaskDescriptor = new TaskDescriptorInfo((TaskDescriptor) it.next());
+				taskNode = new DefaultMutableTreeNode(tmpTaskDescriptor, true );
+				roleNode.add(taskNode);
+			}
+			
+			rootNode.add(roleNode);
+		}	
+		return aJTree;
+	}
+	
+	public void valueChanged(TreeSelectionEvent e) {
+		
+		DefaultMutableTreeNode node = (DefaultMutableTreeNode) 
+        		taskTree.getLastSelectedPathComponent();
+		
+		if (node == null) return;
+
+        Object nodeInfo = node.getUserObject();
+        if (nodeInfo instanceof TaskDescriptorInfo) {
+            TaskDescriptorInfo tmpTaskDescriptor = (TaskDescriptorInfo) nodeInfo;
+            mainFrame.moveHTML();
+            HTMLViewer.getInstance(null).setMessage(tmpTaskDescriptor.getTaskDescriptor().getDescription());
+            
+        } else if (nodeInfo instanceof RoleDescriptorInfo){
+        	RoleDescriptorInfo tmpRoleDescriptor = (RoleDescriptorInfo) nodeInfo;
+        	mainFrame.moveHTML();
+        	HTMLViewer.getInstance(null).setMessage(tmpRoleDescriptor.getRoleDescriptor().getDescription());
+        	
+        }
+	}
+	
+	private class TaskDescriptorInfo {
+		private TaskDescriptor myTaskDescriptor;
+		
+		public TaskDescriptorInfo(TaskDescriptor descriptor) {
+			myTaskDescriptor = descriptor;
 		}
-		return this.taskTree;
+
+		public String toString() {
+			return myTaskDescriptor.getName();
+		}
+		
+		public TaskDescriptor getTaskDescriptor() {
+			return myTaskDescriptor;
+		}
+	}
+	
+	private class RoleDescriptorInfo {
+		private RoleDescriptor myRoleDescriptor;
+		
+		public RoleDescriptorInfo(RoleDescriptor descriptor) {
+			myRoleDescriptor = descriptor;
+		}
+
+		public HashSet<TaskDescriptor> getPrimaryTasks() {
+			return (HashSet<TaskDescriptor>) myRoleDescriptor.getPrimaryTasks();
+		}
+
+		public String toString() {
+			return myRoleDescriptor.getName();
+		}
+		
+		public RoleDescriptor getRoleDescriptor() {
+			return myRoleDescriptor;
+		}
 	}
 	
 }

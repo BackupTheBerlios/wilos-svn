@@ -49,9 +49,9 @@ public class HTMLViewer extends JFrame {
 		
 		if(message.length() != 0)
 			this.myEditorPane.setCaretPosition(1); // revient au debut du texte
+		
+		this.setVisible(true);
 	}
-	
-	
 	
 	/**
 	 * 
