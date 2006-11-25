@@ -39,61 +39,13 @@ public class WizardServicesTest extends TestCase {
 
     protected void tearDown() throws Exception {
     }
-
-    /**
-     * Test of getRolesByUser method, of class wilos.spelp.webservices.WizardServices.
-     */
-    public void testGetRolesByUser() {
-        System.out.println("getRolesByUser");
-        
-        String login = "";
-        String password = "";
-        WizardServices instance = new WizardServices();
-        
-        List<RoleDescriptor> result = instance.getRolesByUser(login, password);
-        assertNotNull(result);
-        assertTrue(result.size()==0);
-        
-        login = "toto";
-        password = "toto";
-        
-        Process proc = new Process();
-        RoleDescriptor r = new RoleDescriptor();
-        r.setName("TestRole");
-        
-        proc.addToBreakdownElement(r);
-        
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-        org.springframework.orm.hibernate3.HibernateTemplate hibTempl = (org.springframework.orm.hibernate3.HibernateTemplate) ctx.getBean("hibernateTemplate");
-
-        ProcessService p = (ProcessService)ctx.getBean("ProcessService");
-        
-        p.saveActivity(proc);
-        
-        result = instance.getRolesByUser(login, password);
-        assertNotNull(result);
-        assertTrue(result.size()!=0); 
-        r = result.get(0);
-        assertTrue(r.getName()== "TestRole");
-        
-        RoleDescriptorDao rDAO = (RoleDescriptorDao)ctx.getBean("RoleDescriptorDao");
-        rDAO.deleteRoleDescriptor(r);
-        
-        p.getprocessDao().deleteProcess(proc);
-        
-        
-        
-        
-        
-        
-    }
-
+   
     /**
      * Test of getAllProcess method, of class wilos.spelp.webservices.WizardServices.
      */
     public void testGetAllProcess() {
         System.out.println("getAllProcess");
-        
+        System.out.println("testBD");
         WizardServices instance = new WizardServices();
         
         Process proc = new Process();
@@ -103,15 +55,25 @@ public class WizardServicesTest extends TestCase {
 
         ProcessService p = (ProcessService)ctx.getBean("ProcessService");
         
-        p.saveActivity(proc);
-
+        p.SaveProcessService(proc);
         
-        List<Process> result = instance.getAllProcess();
+        String login = "testBD";
+        String pass = "testBD";
+        
+        List<String> result = instance.getAllProcess(login,pass);
         
         assertNotNull(result);
         assertTrue(result.size()>=1);
+
+        p.getProcessDao().deleteProcess(proc);
         
-        p.getprocessDao().deleteProcess(proc);
+        login = "testSansBD";
+        pass = "testSansBD";
+        
+        result = instance.getAllProcess(login,pass);
+        
+        assertNotNull(result);
+        assertTrue(result.size()>=1);
         
     }
     
