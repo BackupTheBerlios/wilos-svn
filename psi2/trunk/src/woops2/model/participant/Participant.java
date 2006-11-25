@@ -162,7 +162,7 @@ public class Participant {
 	public void removeAllRoleDescriptors(){
 		for (RoleDescriptor _roleD : this.rolesListForAProject) {
 			
-//PAS BON _roleD.removeFromParticipant(this);
+			//_roleD.removeFromParticipant(this);
 		}
 		this.rolesListForAProject.clear();
 	}
@@ -174,7 +174,7 @@ public class Participant {
 	 */
 	public void removeFromAllRoleDescriptor(){
 		for(RoleDescriptor _roleD : this.rolesListForAProject){
-			this.removeRoleDescriptor(_roleD);
+			this.removeFromRoleDescriptor(_roleD);
 		}
 	}
 }
