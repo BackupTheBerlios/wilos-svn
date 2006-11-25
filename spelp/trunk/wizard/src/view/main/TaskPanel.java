@@ -43,7 +43,7 @@ public class TaskPanel extends JPanel implements TreeSelectionListener {
 	public void init() {
 		this.setLayout(new BorderLayout());
 		
-		ArrayList<RoleDescriptor> rolesListe = WizardServicesProxy.getRolesByUser("polo", "olop");
+		ArrayList<RoleDescriptor> rolesListe = WizardServicesProxy.getRolesByUser("testSansBD", "testSansBD");
 		
 		taskTree = initTaskTree(rolesListe);
 		
