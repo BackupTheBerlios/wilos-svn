@@ -18,7 +18,7 @@ import woops2.model.wilosuser.ProcessManager ;
  * 
  */
 @ Transactional (readOnly = false, propagation = Propagation.REQUIRED)
-public class ProcessManagerManager {
+public class ProcessManagerService {
 
 	private ProcessManagerDao processManagerDao ;
 
@@ -29,8 +29,8 @@ public class ProcessManagerManager {
 	 * 
 	 * @param _processmanager
 	 */
-	public void saveProcessManager(ProcessManager _processmanager) {
-		this.processManagerDao.saveOrUpdateProcessManager(_processmanager) ;
+	public void saveProcessManager(ProcessManager _processManager) {
+		this.processManagerDao.saveOrUpdateProcessManager(_processManager) ;
 	}
 
 	/**

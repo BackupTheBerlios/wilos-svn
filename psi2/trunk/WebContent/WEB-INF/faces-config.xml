@@ -28,8 +28,8 @@
 		<managed-bean-class>woops2.presentation.participant.ParticipantViewer</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
-			<property-name>participantManager</property-name>
-			<value>#{ParticipantManager}</value>
+			<property-name>participantService</property-name>
+			<value>#{ParticipantService}</value>
 		</managed-property>
 	</managed-bean>
 	<managed-bean>
@@ -37,8 +37,8 @@
 		<managed-bean-class>woops2.presentation.wilosuser.ProcessManagerViewer</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
-			<property-name>processManagerManager</property-name>
-			<value>#{ProcessManagerManager}</value>
+			<property-name>processManagerService</property-name>
+			<value>#{ProcessManagerService}</value>
 		</managed-property>
 	</managed-bean>
 	

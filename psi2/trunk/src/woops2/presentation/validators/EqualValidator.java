@@ -28,7 +28,7 @@ public class EqualValidator implements Validator {
 			this.logger.debug("### THE FIELDS ARE NOT EQUALS ###") ;
 			FacesMessage message = new FacesMessage() ;
 			message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
-			message.setSummary("The two fiels are not the same") ;
+			message.setSummary("The two fields are not the same") ;
 			throw new ValidatorException(message) ;
 		}
 	}

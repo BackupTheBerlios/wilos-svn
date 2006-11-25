@@ -20,7 +20,7 @@ import woops2.model.role.RoleDescriptor ;
  * @author Sakamakak
  */
 @ Transactional (readOnly = false, propagation = Propagation.REQUIRED)
-public class ParticipantManager {
+public class ParticipantService {
 
 	private ParticipantDao participantDao ;
 

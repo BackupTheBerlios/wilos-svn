@@ -33,9 +33,9 @@
 			<h:inputSecret id="equal1" value="#{ParticipantViewer.participant.password}" required="true">		
 				<f:validateLength minimum="6" />
 			</h:inputSecret>
-			<h:message for="equal1" style="color:red;" showDetail="true"/>
+			<h:message for="equal2" style="color:red;" showDetail="true"/>
 			
-			<h:outputText value="Confirmer votre mot de passe"/>
+			<h:outputText value="Confirmez votre mot de passe"/>
 			<h:inputSecret id="equal2" value="#{ParticipantViewer.passwordConfirmation}" required="true">
 				<f:validateLength minimum="6" />
 				<f:validator validatorId="equalValidator"/>

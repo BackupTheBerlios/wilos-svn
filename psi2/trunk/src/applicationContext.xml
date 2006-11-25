@@ -181,13 +181,13 @@
 
 	<!-- ========================= Business Layer ========================= -->
 
-	<bean id="ParticipantManager"
-		class="woops2.business.participant.ParticipantManager">
+	<bean id="ParticipantService"
+		class="woops2.business.participant.ParticipantService">
 		<property name="participantDao" ref="ParticipantDao" />
 	</bean>
 	
-	<bean id="ProcessManagerManager"
-		class="woops2.business.wilosuser.ProcessManagerManager">
+	<bean id="ProcessManagerService"
+		class="woops2.business.wilosuser.ProcessManagerService">
 		<property name="processManagerDao" ref="ProcessManagerDao" />
 	</bean>
 

@@ -9,7 +9,7 @@ import javax.faces.event.ActionEvent ;
 import org.apache.commons.logging.Log ;
 import org.apache.commons.logging.LogFactory ;
 
-import woops2.business.wilosuser.ProcessManagerManager ;
+import woops2.business.wilosuser.ProcessManagerService ;
 import woops2.model.wilosuser.ProcessManager ;
 
 /**
@@ -19,7 +19,7 @@ import woops2.model.wilosuser.ProcessManager ;
  */
 public class ProcessManagerViewer {
 
-	private ProcessManagerManager processManagerManager ;
+	private ProcessManagerService processManagerService ;
 
 	private ProcessManager processManager ;
 
@@ -43,7 +43,7 @@ public class ProcessManagerViewer {
 	 */
 	public String saveProcessManagerAction() {
 		String url = "processManager" ;
-		this.processManagerManager.saveProcessManager(this.processManager) ;
+		this.processManagerService.saveProcessManager(this.processManager) ;
 		return url ;
 	}
 
@@ -67,22 +67,22 @@ public class ProcessManagerViewer {
 	}
 
 	/**
-	 * Getter of processManagerManager.
+	 * Getter of processManagerService.
 	 * 
-	 * @return the processManagerManager.
+	 * @return the processManagerService.
 	 */
-	public ProcessManagerManager getProcessManagerManager() {
-		return this.processManagerManager ;
+	public ProcessManagerService getProcessManagerService() {
+		return this.processManagerService ;
 	}
 
 	/**
-	 * Setter of processManagerManager.
+	 * Setter of processManagerService.
 	 * 
-	 * @param _processManagerManager
-	 *            The processManagerManager to set.
+	 * @param _processManagerService
+	 *            The processManagerService to set.
 	 */
-	public void setProcessManagerManager(ProcessManagerManager _processManagerManager) {
-		this.processManagerManager = _processManagerManager ;
+	public void setProcessManagerService(ProcessManagerService _processManagerService) {
+		this.processManagerService = _processManagerService ;
 	}
 
 	/**

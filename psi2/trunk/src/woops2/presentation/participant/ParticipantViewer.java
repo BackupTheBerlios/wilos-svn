@@ -8,7 +8,7 @@ import javax.faces.event.ActionEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import woops2.business.participant.ParticipantManager;
+import woops2.business.participant.ParticipantService;
 import woops2.model.participant.Participant;
 import woops2.model.role.RoleDescriptor;
 
@@ -23,7 +23,7 @@ public class ParticipantViewer{
 
 	private List<RoleDescriptor> rolesList;
 	
-	private ParticipantManager participantManager ;
+	private ParticipantService participantService ;
 
 	private Participant participant ;
 	private String passwordConfirmation;
@@ -46,7 +46,7 @@ public class ParticipantViewer{
 	 */
 	public String saveParticipantAction() {
 		String url = "participant" ;
-		this.participantManager.saveParticipant(this.participant) ;
+		this.participantService.saveParticipant(this.participant) ;
 		return url ;
 	}
 	
@@ -61,7 +61,7 @@ public class ParticipantViewer{
 	 */
 	public List<RoleDescriptor> getRolesList() {
 		this.rolesList = new ArrayList<RoleDescriptor>();
-		rolesList.addAll(this.participantManager.getRolesList());
+		rolesList.addAll(this.participantService.getRolesList());
 		this.logger.debug("roles list =" + this.rolesList) ;
 		return this.rolesList ;
 	}
@@ -87,22 +87,22 @@ public class ParticipantViewer{
 	}
 
 	/**
-	 * Getter of participantManager.
+	 * Getter of participantService.
 	 * 
-	 * @return the participantManager.
+	 * @return the participantService.
 	 */
-	public ParticipantManager getParticipantManager() {
-		return this.participantManager ;
+	public ParticipantService getParticipantService() {
+		return this.participantService ;
 	}
 
 	/**
-	 * Setter of participantManager.
+	 * Setter of participantService.
 	 * 
-	 * @param _participantManager
-	 *            The participantManager to set.
+	 * @param _participantService
+	 *            The participantService to set.
 	 */
-	public void setParticipantManager(ParticipantManager _participantManager) {
-		this.participantManager = _participantManager ;
+	public void setParticipantService(ParticipantService _participantService) {
+		this.participantService = _participantService ;
 	}
 
 	public String getPasswordConfirmation() {
