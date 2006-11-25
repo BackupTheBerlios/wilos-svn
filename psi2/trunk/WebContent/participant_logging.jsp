@@ -19,8 +19,8 @@
 		</h:panelGrid>
 		
 		<h:panelGrid columns="2">
-			<h:commandButton value="se connecter" action="createParticipant"/>
-			<h:commandButton value="creer un compte" action="createParticipant"/>
+			<h:commandButton value="Se Connecter" action="createParticipant"/>
+			<h:commandButton value="Créer un Compte" action="createParticipant"/>
 		</h:panelGrid>	
 	</h:form>
 </f:view>
