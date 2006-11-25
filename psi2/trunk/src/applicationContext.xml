@@ -181,11 +181,6 @@
 
 	<!-- ========================= Business Layer ========================= -->
 
-	<bean id="ActivityManager"
-		class="woops2.business.activity.ActivityManager">
-		<property name="activityDao" ref="ActivityDao" />
-	</bean>
-
 	<bean id="ParticipantManager"
 		class="woops2.business.participant.ParticipantManager">
 		<property name="participantDao" ref="ParticipantDao" />
