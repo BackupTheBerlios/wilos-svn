@@ -25,12 +25,14 @@ public class TaskPanel extends JPanel implements TreeSelectionListener {
 	private JTree taskTree = null;
 	private JPanel panelTree = null;
 	private MainFrame mainFrame = null;
+        private ArrayList<RoleDescriptor> roleList;
 	
 	/**
 	 * TaskPanel Constructor
 	 *
 	 */
-	public TaskPanel(MainFrame aFrame) {
+	public TaskPanel(MainFrame aFrame, ArrayList<RoleDescriptor> roleL) {
+                this.roleList = roleL;
 		init();
 		mainFrame = aFrame;
 	}
@@ -43,9 +45,7 @@ public class TaskPanel extends JPanel implements TreeSelectionListener {
 	public void init() {
 		this.setLayout(new BorderLayout());
 		
-		ArrayList<RoleDescriptor> rolesListe = WizardServicesProxy.getRolesByUser("testSansBD", "testSansBD");
-		
-		taskTree = initTaskTree(rolesListe);
+		taskTree = initTaskTree(this.roleList);
 		
 		panelTree = initTreePanel();
 		this.add(panelTree,BorderLayout.CENTER);
