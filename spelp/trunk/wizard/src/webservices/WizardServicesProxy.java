@@ -1,18 +1,22 @@
 package webservices;
 
 import com.thoughtworks.xstream.XStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.namespace.QName;
+import javax.xml.ws.Service;
 import woops2.model.breakdownelement.BreakdownElement;
 
 import woops2.model.role.RoleDescriptor;
-import woops2.model.task.TaskDescriptor;
 import woops2.model.process.Process;
 
 public class WizardServicesProxy {
-	public static ArrayList<RoleDescriptor> getRolesByUser(String login, String password) {	
+        public static String ENDPOINT = "/WizardServices?wsdl";
+    
+	public static ArrayList<RoleDescriptor> getRolesByUser(String login, String password, String adresseServeur) {	
             ArrayList<RoleDescriptor> myRoleListe = new  ArrayList<RoleDescriptor>();
-            List<Process> pros = getAllProcess(login, password);
+            List<Process> pros = getAllProcess(login, password,adresseServeur);
             for (Process pro : pros) {
                 for (BreakdownElement bre: pro.getBreakDownElements()) {
                     if (bre instanceof RoleDescriptor) {
@@ -24,12 +28,13 @@ public class WizardServicesProxy {
             return myRoleListe;
 	}
         
-        private static List<Process> getAllProcess(String login, String password) {
+        private static List<Process> getAllProcess(String login, String password, String adresseServeur) {
              ArrayList<Process> pros = new  ArrayList<Process>();
              try { 
+                Service service = Service.create(new URL(adresseServeur+ENDPOINT), new QName("http://webservices.spelp.wilos/", "WizardServicesService"));
                 // Call Web Service Operation
-                services.WizardServicesService service = new services.WizardServicesService();
-                services.WizardServices port = service.getWizardServicesPort();
+                //services.WizardServicesService service = new services.WizardServicesService();
+                services.WizardServices port = service.getPort(services.WizardServices.class);
                 java.util.List<String> result = port.getAllProcess(login, password);
                 XStream xstream = new XStream();     
                 for (String strxml : result) {
