@@ -29,6 +29,7 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
+import org.jdesktop.swingx.JXImagePanel;
 
 import woops2.model.role.RoleDescriptor;
 import woops2.model.task.TaskDescriptor;
@@ -121,11 +122,6 @@ public class MainFrame extends JFrame{
 		this.setLocation(0,0);
 		initialize();
 		this.setVisible(true);
-		
-                
-                
-		//myLoginPanel = new LoginPanel();
-		//myLoginPanel.setVisible(true);
 	}
 
 	public Dimension getDimFrame() {
