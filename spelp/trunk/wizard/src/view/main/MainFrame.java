@@ -52,9 +52,7 @@ public class MainFrame extends JFrame{
 	
 	
 	private LoginPanel myLoginPanel;
-	private TaskPanel myTaskPanel;
-	
-	
+		
 	public static Dimension dimFrame ;
 
 	/**
@@ -64,13 +62,12 @@ public class MainFrame extends JFrame{
 	
 	private void initialize() {
 		this.setSize(350, 150);
-		
-		myTaskPanel = new TaskPanel(this);
-		this.setContentPane(myTaskPanel);
-		
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		this.setVisible(false);
+                
+                myLoginPanel = new LoginPanel(this);
+                this.setContentPane(myLoginPanel);
+                myLoginPanel.setVisible(true);                
+                
+                this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		// ajout listener deplacement
 	   	this.addComponentListener(new ComponentListener(){
@@ -125,6 +122,8 @@ public class MainFrame extends JFrame{
 		initialize();
 		this.setVisible(true);
 		
+                
+                
 		//myLoginPanel = new LoginPanel();
 		//myLoginPanel.setVisible(true);
 	}
