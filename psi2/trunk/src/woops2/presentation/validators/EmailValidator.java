@@ -1,13 +1,17 @@
 
 package woops2.presentation.validators ;
 
-import javax.faces.application.FacesMessage ;
-import javax.faces.component.UIComponent ;
-import javax.faces.context.FacesContext ;
-import javax.faces.validator.Validator ;
-import javax.faces.validator.ValidatorException ;
-import org.apache.commons.logging.Log ;
-import org.apache.commons.logging.LogFactory ;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.Validator;
+import javax.faces.validator.ValidatorException;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * @author Mikamikaze
@@ -19,16 +23,23 @@ import org.apache.commons.logging.LogFactory ;
 public class EmailValidator implements Validator {
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
-	public void validate(FacesContext context, UIComponent toValidate, Object value) throws ValidatorException {
-
-		String email = (String) value ;
-
-		if(email.indexOf('@') == -1 || email.indexOf('.') == -1){
-			this.logger.debug("### NON VALID EMAIL ###") ;
-			FacesMessage message = new FacesMessage() ;
-			message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
-			message.setSummary("L'email est invalide") ;
-			throw new ValidatorException(message) ;
-		}
+	public void validate(FacesContext _context, UIComponent _toValidate, Object _value) throws ValidatorException {		
+        String enteredEmail = (String)_value;
+        //Set the email pattern string
+        Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
+        
+        //Match the given string with the pattern
+        Matcher m = p.matcher(enteredEmail);
+        
+        //Check whether match is found
+        boolean matchFound = m.matches();
+        
+        if (!matchFound) {
+            FacesMessage message = new FacesMessage();
+            message.setDetail("L'email est invalide");
+            message.setSummary("L'email est invalide");
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            throw new ValidatorException(message);
+        }
 	}
 }
