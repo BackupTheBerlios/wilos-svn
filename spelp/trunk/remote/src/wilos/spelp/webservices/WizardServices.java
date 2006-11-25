@@ -9,6 +9,7 @@
 
 package wilos.spelp.webservices;
 
+import com.thoughtworks.xstream.XStream;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -22,10 +23,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
 import woops2.business.process.ProcessService;
-import woops2.hibernate.activity.ActivityDao;
+import woops2.model.activity.Activity;
 import woops2.model.role.RoleDescriptor;
 import woops2.model.breakdownelement.BreakdownElement;
 import woops2.model.process.Process;
+import woops2.model.task.TaskDescriptor;
 
 /**
  *
@@ -51,6 +53,35 @@ public class WizardServices {
 			}
 		}
 		return r;
+	}
+    
+     @WebMethod
+	public List<String> getRolesByUserXstream (@WebParam(name="login") String login,@WebParam(name="password")  String password) {
+                XStream xstream = new XStream();
+		List<String> r = new ArrayList<String>();
+//		if(login.equals("toto") && password.equals("toto")) {
+//			ProcessService p = new ProcessService();
+//			List<Process> lp = p.getProcessesList(); 
+//			
+//			Set<BreakdownElement> bdes = new HashSet<BreakdownElement>();
+//			for (Process pr : lp) {
+//				bdes = pr.getBreakDownElements();
+//				for (BreakdownElement bd : bdes) {
+//					if (bd instanceof RoleDescriptor) {
+//						r.add(xstream.toXML((RoleDescriptor)bd));
+//					}
+//				}
+//			}
+//		}
+                RoleDescriptor rd = new RoleDescriptor();
+                rd.setName("TestRoleDescriptor");
+                TaskDescriptor td = new TaskDescriptor();
+                td.setMainRole(rd);
+                td.setName("TestTaskDescriptor");
+                rd.addPrimaryTask(td);
+
+                r.add(xstream.toXML(rd));
+                return r;
 	}
     
     @WebMethod
