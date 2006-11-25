@@ -50,6 +50,8 @@ public class LoginPanel extends JPanel {
         private MainFrame mframe = null;
         
         private TaskPanel mTaskPanel = null;
+        
+        private ImagePanel iconPanel = null;
 
 	/**
 	 * @param owner
@@ -73,6 +75,7 @@ public class LoginPanel extends JPanel {
 		this.add(introLabel, BorderLayout.NORTH);
 		this.add(getButtonsPanel(), BorderLayout.SOUTH);
 		this.add(getFieldsPanel(), BorderLayout.CENTER);
+                this.add(getImagePanel(),BorderLayout.NORTH);
 	}
 
 	/**
@@ -88,6 +91,17 @@ public class LoginPanel extends JPanel {
 		}
 		return buttonsPanel;
 	}
+        
+        /**
+         *
+         */
+        private ImagePanel getImagePanel() {
+            if (iconPanel == null)
+            {
+                iconPanel = new ImagePanel();                
+            }
+            return this.iconPanel;
+        }
 
 	/**
 	 * This method initializes fieldsPanel	
@@ -126,7 +140,7 @@ public class LoginPanel extends JPanel {
                         connectionButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					
-                                        ArrayList<RoleDescriptor> rolesListe = WizardServicesProxy.getRolesByUser(loginTextField.getText(),new String(passwordPasswordField.getPassword()));
+                                        ArrayList<RoleDescriptor> rolesListe = WizardServicesProxy.getRolesByUser(loginTextField.getText(),new String(passwordPasswordField.getPassword()), adressTextField.getText());
                                         setVisible(false);
                                         mTaskPanel = new TaskPanel(mframe,rolesListe);
                                         
@@ -139,8 +153,6 @@ public class LoginPanel extends JPanel {
                                             mframe.setContentPane(mTaskPanel);
                                             mTaskPanel.setVisible(true);                                         
                                         }
-		
-                                        
 				}
 			});
 		}
