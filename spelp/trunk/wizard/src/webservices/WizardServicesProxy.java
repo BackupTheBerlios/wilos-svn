@@ -1,72 +1,44 @@
 package webservices;
 
+import com.thoughtworks.xstream.XStream;
 import java.util.ArrayList;
 import java.util.List;
+import woops2.model.breakdownelement.BreakdownElement;
 
 import woops2.model.role.RoleDescriptor;
 import woops2.model.task.TaskDescriptor;
+import woops2.model.process.Process;
 
 public class WizardServicesProxy {
-	public static ArrayList<RoleDescriptor> getRolesByUser(String login, String password) {		
-		ArrayList<RoleDescriptor> myRoleListe;
-		RoleDescriptor aTmpRole;
-		TaskDescriptor aTmpTask;
-		
-		aTmpRole = new RoleDescriptor();
-		aTmpTask = new TaskDescriptor();
-		myRoleListe = new ArrayList<RoleDescriptor>();
-		
-		aTmpRole.setName("Developper");
-		aTmpRole.setDescription("Un gars qui développe");
-		
-		aTmpTask.setName("Coder le programme");
-		aTmpTask.setDescription("Un grand moment de solitude");
-		aTmpRole.addPrimaryTask(aTmpTask);
-		aTmpTask = new TaskDescriptor();
-		aTmpTask.setName("Aimer son programme");
-		aTmpTask.setDescription("Un grand moment d'amour");
-		aTmpRole.addPrimaryTask(aTmpTask);
-		aTmpTask = new TaskDescriptor();
-		aTmpTask.setName("Passer le balai");
-		aTmpTask.setDescription("Et c'est plus propre");
-		aTmpRole.addPrimaryTask(aTmpTask);
-		
-		myRoleListe.add(aTmpRole);
-		
-		
-		aTmpRole = new RoleDescriptor();
-		aTmpTask = new TaskDescriptor();
-		aTmpRole.setName("Tester");
-		aTmpRole.setDescription("Faire des essais, en gros");
-		aTmpTask.setName("Tester le programme");
-		aTmpTask.setDescription("Un grand moment de solitude");
-		aTmpRole.addPrimaryTask(aTmpTask);
-		aTmpTask = new TaskDescriptor();
-		aTmpTask.setName("Detester le programme");
-		aTmpTask.setDescription("Un grand moment de haine");
-		aTmpRole.addPrimaryTask(aTmpTask);
-		aTmpTask = new TaskDescriptor();
-		aTmpTask.setName("Passer la serpillière");
-		aTmpTask.setDescription("Un grand moment de solitude");
-		aTmpRole.addPrimaryTask(aTmpTask);
-		
-		myRoleListe.add(aTmpRole);
-		
-		aTmpRole = new RoleDescriptor();
-		aTmpTask = new TaskDescriptor();
-		aTmpRole.setName("Conceptualisateur");
-		aTmpTask = new TaskDescriptor();
-		aTmpTask.setName("Conceptualiser les concepts du programme");
-		aTmpRole.addPrimaryTask(aTmpTask);
-		aTmpTask = new TaskDescriptor();
-		aTmpTask.setName("Rever du programme");
-		aTmpRole.addPrimaryTask(aTmpTask);
-		aTmpTask = new TaskDescriptor();
-		aTmpTask.setName("Faire le café concept");
-		aTmpRole.addPrimaryTask(aTmpTask);
-		
-		myRoleListe.add(aTmpRole);
-		
-		return myRoleListe;
+	public static ArrayList<RoleDescriptor> getRolesByUser(String login, String password) {	
+            ArrayList<RoleDescriptor> myRoleListe = new  ArrayList<RoleDescriptor>();
+            List<Process> pros = getAllProcess(login, password);
+            for (Process pro : pros) {
+                for (BreakdownElement bre: pro.getBreakDownElements()) {
+                    if (bre instanceof RoleDescriptor) {
+                        myRoleListe.add((RoleDescriptor)bre);
+                    }
+                }
+            }
+
+            return myRoleListe;
 	}
+        
+        private static List<Process> getAllProcess(String login, String password) {
+             ArrayList<Process> pros = new  ArrayList<Process>();
+             try { 
+                // Call Web Service Operation
+                services.WizardServicesService service = new services.WizardServicesService();
+                services.WizardServices port = service.getWizardServicesPort();
+                java.util.List<String> result = port.getAllProcess(login, password);
+                XStream xstream = new XStream();     
+                for (String strxml : result) {
+                    pros.add((Process)xstream.fromXML(strxml));
+                }
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+             return pros;
+        }
 }
