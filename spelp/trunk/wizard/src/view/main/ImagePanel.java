@@ -42,22 +42,13 @@ public class ImagePanel extends JXImagePanel {
     
     public void init() {
         Image image;
-        try {
+       /* try {
             image = ImageIO.read(getClass().getResource(imagePath));
             this.setImage(image);
         } catch (IOException ex) {
             ex.printStackTrace();
-        }
-            
-            //com.sun.org.apache.bcel.internal.util.ClassLoader.getSystemResources(imagePath);
-            //Image image = ImageIO.read(new File(imagePath));
-//            Image image;
-//            image = Toolkit.getDefaultToolkit().createImage(imagePath);
-           
-            
-            
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }        
+        }*/
+       image = Toolkit.getDefaultToolkit().createImage(imagePath);
+       this.setImage(image);
     }    
 }
