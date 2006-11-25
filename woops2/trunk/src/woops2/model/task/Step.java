@@ -13,7 +13,7 @@ import woops2.model.element.Element ;
  * @author Sebastien BALARD
  * 
  */
-public class Step extends Element implements Cloneable {
+public class Step extends Element implements Cloneable, Comparable {
 
 	/**
 	 * the attached taskDefinition
@@ -72,6 +72,19 @@ public class Step extends Element implements Cloneable {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.taskDefinition).toHashCode() ;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(Object _arg0) {
+		// Return 0, if this is equal to _arg0.
+		if(this.equals((Step) _arg0))
+			return 0 ;
+		else
+			return -1 ;
+	}
+
 	/**
 	 * Add a step to a TaskDefiniton
 	 * 
@@ -110,5 +123,4 @@ public class Step extends Element implements Cloneable {
 	protected void setTaskDefinition(TaskDefinition _taskDefinition) {
 		this.taskDefinition = _taskDefinition ;
 	}
-
 }

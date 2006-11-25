@@ -1,13 +1,15 @@
 
 package woops2.test.model.task ;
 
-import java.util.HashSet ;
-import java.util.Set ;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
-import junit.framework.TestCase ;
-import woops2.model.task.Step ;
-import woops2.model.task.TaskDefinition ;
-import woops2.model.task.TaskDescriptor ;
+import junit.framework.TestCase;
+import woops2.model.task.Step;
+import woops2.model.task.TaskDefinition;
+import woops2.model.task.TaskDescriptor;
 
 /**
  * @author eperico
@@ -117,7 +119,7 @@ public class TaskDefinitionTest extends TestCase {
 		step2.setDescription("description2") ;
 		step2.setName("name2") ;
 
-		Set<Step> set = new HashSet<Step>() ;
+		SortedSet<Step> set = new TreeSet<Step>() ;
 		set.add(step1) ;
 		set.add(step2) ;
 
@@ -127,6 +129,10 @@ public class TaskDefinitionTest extends TestCase {
 		assertEquals(2, this.taskDefinition.getSteps().size()) ;
 		assertNotNull(step1.getTaskDefinition()) ;
 		assertNotNull(step2.getTaskDefinition()) ;
+		
+		//check that the set is almost sorted.
+		assertEquals(this.taskDefinition.getSteps().first(), step1);
+		assertEquals(this.taskDefinition.getSteps().last(), step2);
 	}
 
 	/**
@@ -196,7 +202,7 @@ public class TaskDefinitionTest extends TestCase {
 		step2.setDescription(DESCRIPTION) ;
 		step2.setName(NAME) ;
 
-		Set<Step> set = new HashSet<Step>() ;
+		SortedSet<Step> set = new TreeSet<Step>() ;
 		set.add(step1) ;
 		set.add(step2) ;
 

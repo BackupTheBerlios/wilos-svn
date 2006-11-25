@@ -1,13 +1,15 @@
 
 package woops2.model.task ;
 
-import java.util.HashSet ;
-import java.util.Set ;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
-import org.apache.commons.lang.builder.EqualsBuilder ;
-import org.apache.commons.lang.builder.HashCodeBuilder ;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
-import woops2.model.element.Element ;
+import woops2.model.element.Element;
 
 /**
  * 
@@ -23,7 +25,7 @@ public class TaskDefinition extends Element implements Cloneable {
 	/**
 	 * Collection of Step
 	 */
-	private Set<Step> steps ;
+	private SortedSet<Step> steps ;
 
 	/**
 	 * Collection of TaskDescriptor
@@ -35,7 +37,7 @@ public class TaskDefinition extends Element implements Cloneable {
 	 */
 	public TaskDefinition() {
 		super() ;
-		this.steps = new HashSet<Step>() ;
+		this.steps = new TreeSet<Step>() ;
 		this.taskDescriptors = new HashSet<TaskDescriptor>() ;
 	}
 
@@ -100,7 +102,7 @@ public class TaskDefinition extends Element implements Cloneable {
 	 * 
 	 * @param _steps
 	 */
-	public void addAllSteps(Set<Step> _steps) {
+	public void addAllSteps(SortedSet<Step> _steps) {
 		for(Step s : _steps){
 			s.addTaskDefinition(this) ;
 		}
@@ -172,7 +174,7 @@ public class TaskDefinition extends Element implements Cloneable {
 	 * 
 	 * @return the steps.
 	 */
-	public Set<Step> getSteps() {
+	public SortedSet<Step> getSteps() {
 		return this.steps ;
 	}
 
@@ -183,7 +185,7 @@ public class TaskDefinition extends Element implements Cloneable {
 	 *            The steps to set.
 	 */
 	@ SuppressWarnings ("unused")
-	private void setSteps(Set<Step> _steps) {
+	private void setSteps(SortedSet<Step> _steps) {
 		this.steps = _steps ;
 	}
 

@@ -130,5 +130,23 @@ public class StepTest extends TestCase {
 		assertNull(this.step.getTaskDefinition()) ;
 		assertTrue(taskDefinition.getSteps().isEmpty()) ;
 	}
+	
+	/**
+	 * Test method for
+	 * {@link woops2.model.task.Step#compare(java.lang.Object, java.lang.Object)}.
+	 */
+	public void testCompare() {
+		TaskDefinition taskDefinition = new TaskDefinition() ;
+		taskDefinition.setDescription(DESCRIPTION) ;
+		taskDefinition.setName(NAME) ;
+		taskDefinition.setIdEPF(IDEPF) ;
+		this.step.addTaskDefinition(taskDefinition) ;
+		assertEquals(0, this.step.compareTo(this.step)) ;
+		
+		
+		Step stepTmp = new Step();
+		stepTmp.setName("otherName");
+		assertEquals(-1, this.step.compareTo(stepTmp)) ;
+	}
 
 }

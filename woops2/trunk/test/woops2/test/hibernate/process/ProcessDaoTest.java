@@ -9,9 +9,7 @@ import woops2.model.process.Process;
 import woops2.test.TestConfiguration;
 
 /**
- * @author Administrateur
- *
- * This class represents ... TODO
+ * @author deder
  *
  */
 public class ProcessDaoTest extends TestCase {
