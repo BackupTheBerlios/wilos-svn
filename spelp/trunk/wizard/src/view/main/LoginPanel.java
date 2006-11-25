@@ -1,5 +1,6 @@
 package view.main;
 
+import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import java.awt.FlowLayout;
@@ -19,6 +20,8 @@ import javax.swing.JPasswordField;
 import ressources.Bundle;
 
 import java.awt.Button;
+import webservices.WizardServicesProxy;
+import woops2.model.role.RoleDescriptor;
 
 public class LoginPanel extends JPanel {
 
@@ -30,9 +33,7 @@ public class LoginPanel extends JPanel {
 
 	private JPanel fieldsPanel = null;
 
-	private JButton okButton = null;
-
-	private JButton cancelButton = null;
+	private JButton connectionButton = null;	
 
 	private JTextField loginTextField = null;
 
@@ -45,11 +46,16 @@ public class LoginPanel extends JPanel {
 	private JLabel adressLabel = null;
 
 	private JTextField adressTextField = null;
+        
+        private MainFrame mframe = null;
+        
+        private TaskPanel mTaskPanel = null;
 
 	/**
 	 * @param owner
 	 */
-	public LoginPanel() {
+	public LoginPanel(MainFrame mf) {
+                this.mframe = mf;               
 		initialize();
 	}
 
@@ -78,8 +84,7 @@ public class LoginPanel extends JPanel {
 		if (buttonsPanel == null) {
 			buttonsPanel = new JPanel();
 			buttonsPanel.setLayout(new GridBagLayout());
-			buttonsPanel.add(getOkButton(), new GridBagConstraints());
-			buttonsPanel.add(getCancelButton(), new GridBagConstraints());
+			buttonsPanel.add(getConnectionButton(), new GridBagConstraints());			
 		}
 		return buttonsPanel;
 	}
@@ -114,27 +119,35 @@ public class LoginPanel extends JPanel {
 	 * 	
 	 * @return javax.swing.JButton	
 	 */
-	private JButton getOkButton() {
-		if (okButton == null) {
-			okButton = new JButton();
-			okButton.setText(Bundle.getText("loginPanel.ok"));
+	private JButton getConnectionButton() {
+		if (connectionButton == null) {
+			connectionButton = new JButton();
+			connectionButton.setText(Bundle.getText("loginPanel.connection"));
+                        connectionButton.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					
+                                        ArrayList<RoleDescriptor> rolesListe = WizardServicesProxy.getRolesByUser(loginTextField.getText(),new String(passwordPasswordField.getPassword()));
+                                        setVisible(false);
+                                        mTaskPanel = new TaskPanel(mframe,rolesListe);
+                                        
+                                        if (rolesListe.isEmpty())
+                                        {
+                                            setVisible(true);                                        
+                                        }  
+                                        else
+                                        {
+                                            mframe.setContentPane(mTaskPanel);
+                                            mTaskPanel.setVisible(true);                                         
+                                        }
+		
+                                        
+				}
+			});
 		}
-		return okButton;
+		return connectionButton;
 	}
 
-	/**
-	 * This method initializes cancelButton	
-	 * 	
-	 * @return javax.swing.JButton	
-	 */
-	private JButton getCancelButton() {
-		if (cancelButton == null) {
-			cancelButton = new JButton();
-			cancelButton.setText(Bundle.getText("loginPanel.cancel"));
-		}
-		return cancelButton;
-	}
-
+	
 	/**
 	 * This method initializes loginTextField	
 	 * 	
