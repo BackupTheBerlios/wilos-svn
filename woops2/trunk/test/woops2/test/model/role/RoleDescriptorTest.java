@@ -1,13 +1,14 @@
 
 package woops2.test.model.role ;
 
-import java.util.HashSet ;
-import java.util.Set ;
+import java.util.HashSet;
+import java.util.Set;
 
-import junit.framework.TestCase ;
-import woops2.model.role.RoleDefinition ;
-import woops2.model.role.RoleDescriptor ;
-import woops2.model.task.TaskDescriptor ;
+import junit.framework.TestCase;
+import woops2.model.role.Participant;
+import woops2.model.role.RoleDefinition;
+import woops2.model.role.RoleDescriptor;
+import woops2.model.task.TaskDescriptor;
 
 public class RoleDescriptorTest extends TestCase {
 
@@ -220,7 +221,7 @@ public class RoleDescriptorTest extends TestCase {
 	 * Test method for {@link woops2.model.role.RoleDescriptor#addAdditionalTask()}.
 	 * 
 	 */
-	public void testAddToTaskDescriptor() {
+	public void testAddAdditionnalTask() {
 		TaskDescriptor task = new TaskDescriptor() ;
 		task.setName(NAME) ;
 		task.setDescription(DESCRIPTION) ;
@@ -278,5 +279,88 @@ public class RoleDescriptorTest extends TestCase {
 		assertTrue(this.roleDescriptor.getAdditionalTasks().isEmpty()) ;
 		assertTrue(task.getAdditionalRoles().isEmpty());
 		assertTrue(tmp.getAdditionalRoles().isEmpty());
+	}
+	
+	/**
+	 * Test method for {@link woops2.model.role.RoleDescriptor#addParticipant()}.
+	 * 
+	 */
+	public void testAddParticipant() {
+		Participant participant = new Participant() ;
+		
+		this.roleDescriptor.addParticpant(participant) ;
+
+		assertFalse(this.roleDescriptor.getParticipants().isEmpty()) ;
+		assertFalse(participant.getRolesListForAProject().isEmpty()) ;
+		assertTrue(this.roleDescriptor.getParticipants().size() == 1) ;
+		assertTrue(participant.getRolesListForAProject().size() == 1) ;
+	}
+	
+	/**
+	 * Test method for {@link woops2.model.role.RoleDescriptor#AddAllParticipants()}.
+	 * 
+	 */
+	public void testAddAllParticipants() {
+		Participant task = new Participant() ;
+		task.setName(NAME) ;
+		task.setDescription(DESCRIPTION) ;
+
+		Participant tmp = new Participant() ;
+		
+		Set<Participant> set = new HashSet<Participant>() ;
+		set.add(task) ;
+		set.add(tmp) ;
+
+		this.roleDescriptor.addAllParticipants(set) ;
+
+		assertFalse(this.roleDescriptor.getParticipants().isEmpty()) ;
+		assertTrue(this.roleDescriptor.getParticipants().size() == 2) ;
+	}
+	
+	/**
+	 * Test method for {@link woops2.model.role.RoleDescriptor#removeParticipant()}.
+	 * 
+	 */
+	public void testRemoveParticipant() {
+		Participant task = new Participant() ;
+		task.setName(NAME) ;
+		task.setDescription(DESCRIPTION) ;
+
+		this.roleDescriptor.addParticpant(task) ;
+		assertFalse(this.roleDescriptor.getParticipants().isEmpty()) ;
+		assertFalse(task.getRolesListForAProject().isEmpty());
+		
+		this.roleDescriptor.removeParticipant(task) ;
+		assertTrue(this.roleDescriptor.getParticipants().isEmpty()) ;
+		assertTrue(task.getRolesListForAProject().isEmpty());
+	}
+	
+	/**
+	 * Test method for {@link woops2.model.role.RoleDescriptor#RemoveAllParticipants()}.
+	 * 
+	 */
+	public void testRemoveAllParticipants() {
+
+		Participant task = new Participant() ;
+		task.setName(NAME) ;
+		task.setDescription(DESCRIPTION) ;
+
+		Participant tmp = new Participant() ;
+		tmp.setName("autreNom") ;
+		tmp.setDescription(DESCRIPTION) ;
+
+		Set<Participant> set = new HashSet<Participant>() ;
+		set.add(task) ;
+		set.add(tmp) ;
+
+		this.roleDescriptor.addAllParticipants(set) ;
+		assertTrue(this.roleDescriptor.getParticipants().size() == 2) ;
+		assertTrue(task.getRolesListForAProject().size() == 1);
+		assertTrue(tmp.getRolesListForAProject().size() == 1);
+		
+		this.roleDescriptor.removeAllParticipants() ;
+		assertTrue(this.roleDescriptor.getParticipants().isEmpty()) ;
+		assertTrue(task.getRolesListForAProject().isEmpty());
+		assertTrue(tmp.getRolesListForAProject().isEmpty());
 	}
 }

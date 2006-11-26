@@ -38,15 +38,17 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	/**
 	 * The participants of the RoleDescriptor.
 	 */
-	// private Set<Participant> participants ;TODO
+	private Set<Participant> participants ;
+
 	/**
 	 * Getter of participant.
 	 * 
 	 * @return the participants.
 	 */
-	// public Set<Participant> getParticipant() {
-	// return this.participants ;TODO
-	// }
+	public Set<Participant> getParticipants() {
+		return this.participants ;
+	}
+
 	/**
 	 * Setter of participants.
 	 * 
@@ -54,14 +56,15 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 *            The participants to set.
 	 */
 	@ SuppressWarnings ("unused")
-	// private void setParticipant(Set<Participant> _participants) {
-	// this.participants = _participants ;TODO
-	// }
+	private void setParticipants(Set<Participant> _participants) {
+		this.participants = _participants ;
+	}
+
 	public RoleDescriptor() {
 		super() ;
 		this.primaryTasks = new HashSet<TaskDescriptor>() ;
 		this.additionalTasks = new HashSet<TaskDescriptor>() ;
-		// this.participants = new HashSet<Participant>();TODO
+		this.participants = new HashSet<Participant>() ;
 	}
 
 	/*
@@ -87,7 +90,7 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 		this.setAdditionalTasks(_roleDescriptor.getAdditionalTasks()) ;
 		this.setPrimaryTasks(_roleDescriptor.getPrimaryTasks()) ;
 		this.setRoleDefinition(_roleDescriptor.getRoleDefinition()) ;
-		// this.setParticipants(_roleDescriptor.getParticipants());TODO
+		this.setParticipants(_roleDescriptor.getParticipants()) ;
 	}
 
 	/*
@@ -230,31 +233,28 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 		this.additionalTasks.clear() ;
 	}
 
-	// public void addToParticpant(Participant _participant) {TODO
-	// this.participants.add(_participant);
-	// _participant.getRolesListForAProject().add(this);
-	// }
-	//
-	//
-	// public void removeFromParticipant(Participant _participant) {
-	// _participant.getRolesListForAProject().remove(this);
-	// this.additionalTasks.remove(_participant);
-	// }
-	//
-	//
-	// public void removeAllParticipant() {
-	// for (Participant _participant : this.participants) {
-	// _participant.removeFromRoleDescriptor(this);
-	// }
-	// this.participants.clear();
-	// }
-	//
-	//
-	// public void removeFromAllParticipant() {
-	// for (Participant _participant : this.participants) {
-	// this.removeFromParticipant(_participant);
-	// }
-	// }
+	public void addParticpant(Participant _participant) {
+		this.participants.add(_participant) ;
+		_participant.getRolesListForAProject().add(this) ;
+	}
+	
+	public void addAllParticipants(Set<Participant> _participants) {
+		for(Participant participant : _participants){
+			participant.addToRoleDescriptor(this) ;
+		}
+	}
+
+	public void removeParticipant(Participant _participant) {
+		_participant.getRolesListForAProject().remove(this) ;
+		this.participants.remove(_participant) ;
+	}
+
+	public void removeAllParticipants() {
+		for(Participant _participant : this.participants){
+			_participant.getRolesListForAProject().remove(this) ;
+		}
+		this.participants.clear() ;
+	}
 
 	/**
 	 * Getter of roleDefinition.
