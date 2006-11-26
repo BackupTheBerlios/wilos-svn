@@ -27,7 +27,7 @@
 
 	<!-- <taskdef file="${ant.dir}/tomcatTasks.properties" classpathref="classpath" /> -->
 	
-	<taskdef name="install"
+	<taskdef name="deploy"
 	           classname="org.apache.catalina.ant.DeployTask"
 	           classpathref="classpath" />
 	
