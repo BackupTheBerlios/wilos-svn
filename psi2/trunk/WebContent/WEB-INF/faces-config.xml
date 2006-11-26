@@ -10,7 +10,9 @@
 		<variable-resolver>
 			org.springframework.web.jsf.DelegatingVariableResolver
 		</variable-resolver>
-		<locale-config />
+		<locale-config >
+			<default-locale>fr_FR</default-locale>
+		</locale-config>
 	</application>
 	
 	<managed-bean>
@@ -39,6 +41,15 @@
 		<managed-property>
 			<property-name>processManagerService</property-name>
 			<value>#{ProcessManagerService}</value>
+		</managed-property>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>ProjectDirectorViewer</managed-bean-name>
+		<managed-bean-class>woops2.presentation.wilosuser.ProjectDirectorViewer</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>projectDirectorService</property-name>
+			<value>#{ProjectDirectorService}</value>
 		</managed-property>
 	</managed-bean>
 	
@@ -77,6 +88,10 @@
 			<from-outcome>createParticipant</from-outcome>
 			<to-view-id>/participantSubscribe.jsf</to-view-id>
 		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
 		<navigation-case>
 			<from-outcome>participant_logging</from-outcome>
 			<to-view-id>/participant_logging.jsf</to-view-id>
@@ -90,5 +105,29 @@
 			<to-view-id>/affect_role.jsf</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	<!--       PSI2  -->
+	
+	<navigation-rule>
+  		<from-view-id>*</from-view-id>
+  		<navigation-case>
+    		<from-outcome>processManager_create</from-outcome>
+    		<to-view-id>/processManager_create.jsf</to-view-id>
+  		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+  		<from-view-id>*</from-view-id>
+  		<navigation-case>
+    		<from-outcome>projectDirector_create</from-outcome>
+    		<to-view-id>/projectDirector_create.jsf</to-view-id>
+  		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+  		<from-view-id>*</from-view-id>
+  		<navigation-case>
+    		<from-outcome>admin_main</from-outcome>
+    		<to-view-id>/admin_main.jsf</to-view-id>
+  		</navigation-case>
+	</navigation-rule>
+	
 </faces-config>
