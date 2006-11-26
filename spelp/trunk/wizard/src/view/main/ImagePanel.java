@@ -11,7 +11,9 @@ package view.main;
 
 import com.sun.xml.bind.v2.model.annotation.ClassLocatable;
 import com.thoughtworks.xstream.core.util.ClassLoaderReference;
+import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.ImageObserver;
@@ -22,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import org.jdesktop.swingx.JXImagePanel;
 import java.lang.Exception;
@@ -45,7 +48,13 @@ public class ImagePanel extends JXImagePanel {
     
     public void init() {
        Image image;
-       image = Toolkit.getDefaultToolkit().createImage(imagePath);                   
-       this.setImage(image);
+       
+       try {
+            // récupération de l'image que l'on applique au panel
+            image = ImageIO.read(new File(imagePath));
+            this.setImage(image);
+       } catch (IOException ex) {
+            ex.printStackTrace();
+       }
     }    
 }
