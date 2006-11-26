@@ -1,5 +1,10 @@
 package view.main;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import ressources.ProfileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
@@ -26,7 +31,9 @@ import woops2.model.role.RoleDescriptor;
 public class LoginPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
+        
+        private static String path_file = ClassLoader.getSystemResource("ressources/wizard_setting.ini").getPath();
+        
 	private JLabel introLabel = null;
 
 	private JPanel buttonsPanel = null;
@@ -58,7 +65,8 @@ public class LoginPanel extends JPanel {
 	 */
 	public LoginPanel(MainFrame mf) {
                 this.mframe = mf;               
-		initialize();
+                initialize();
+                loadINI(path_file);		
 	}
 
 	/**
@@ -67,15 +75,15 @@ public class LoginPanel extends JPanel {
 	 * @return void
 	 */
 	private void initialize() {
-		//this.setSize(300, 150);
 		introLabel = new JLabel();
 		introLabel.setText(Bundle.getText("loginPanel.labelLoginPasswd"));
 
 		this.setLayout(new BorderLayout());
 		this.add(introLabel, BorderLayout.NORTH);
+                this.add(getImagePanel(),BorderLayout.NORTH);
 		this.add(getButtonsPanel(), BorderLayout.SOUTH);
 		this.add(getFieldsPanel(), BorderLayout.CENTER);
-                this.add(getImagePanel(),BorderLayout.NORTH);
+                
 	}
 
 	/**
@@ -98,9 +106,33 @@ public class LoginPanel extends JPanel {
         private ImagePanel getImagePanel() {
             if (iconPanel == null)
             {
-                iconPanel = new ImagePanel();                
+                iconPanel = new ImagePanel();    
+                iconPanel.setLayout(new GridBagLayout());
+		iconPanel.add(getConnectionButton(), new GridBagConstraints());
             }
             return this.iconPanel;
+        }
+        
+        /**
+         *
+         */
+        private void loadINI(String file) 
+        {
+            ProfileReader pr = new ProfileReader();
+            FileInputStream i;
+            try {
+                i = new FileInputStream(file);
+                try {
+                    pr.load(i);                    
+                    String addr = pr.getProperty("remote","address");
+                    adressTextField.setText(addr);
+                    
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            }
         }
 
 	/**
