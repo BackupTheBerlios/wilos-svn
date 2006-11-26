@@ -62,7 +62,9 @@ public class MainFrame extends JFrame{
 	 */
 	
 	private void initialize() {
-		this.setSize(350, 150);
+		this.setSize(350, 300);
+                
+                this.setLocation(300,200);
                 
                 myLoginPanel = new LoginPanel(this);
                 this.setContentPane(myLoginPanel);
