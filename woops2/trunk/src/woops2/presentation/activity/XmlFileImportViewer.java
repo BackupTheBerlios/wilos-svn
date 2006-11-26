@@ -8,6 +8,8 @@ import javax.faces.event.ActionEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import woops2.business.process.ProcessService;
+
 import com.icesoft.faces.component.inputfile.InputFile;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
 import com.icesoft.faces.webapp.xmlhttp.RenderingException;
@@ -22,6 +24,7 @@ public class XmlFileImportViewer {
 
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 	
+	private ProcessService processService;
 	
 	public XmlFileImportViewer() {
 		state = PersistentFacesState.getInstance();
@@ -66,6 +69,7 @@ public class XmlFileImportViewer {
 		logger.debug("### fichier = "+file.getPath()+" => "+file.getName()+" ###");
 		file.renameTo(destFile);
 		logger.debug("### Nouveau fichier = "+destFile.getPath()+" => "+destFile.getName()+" ###");
+		
 	}
 
 	public void progress(EventObject event) {
@@ -110,5 +114,13 @@ public class XmlFileImportViewer {
 			return "saved";
 		}
 		return "";
+	}
+
+	public ProcessService getProcessService() {
+		return processService;
+	}
+
+	public void setProcessService(ProcessService processService) {
+		this.processService = processService;
 	}
 }

@@ -105,11 +105,10 @@
 
 	<!-- ========================= DAO Layer ========================= -->
 
-	<bean id="ProcessDao"
-		class="woops2.hibernate.process.ProcessDao">
+	<bean id="ProcessDao" class="woops2.hibernate.process.ProcessDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
-	
+
 	<bean id="ActivityDao"
 		class="woops2.hibernate.activity.ActivityDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
@@ -154,15 +153,25 @@
 	</bean>
 
 	<!-- ========================= Business Layer ========================= -->
-	
+
 	<bean id="ProcessService"
 		class="woops2.business.process.ProcessService">
 		<property name="processDao" ref="ProcessDao" />
-	</bean>  
-	
+		<property name="activityDao" ref="ActivityDao" />
+		<property name="breakdownElementDao" ref="BreakdownElementDao" />
+		<property name="elementDao" ref="ElementDao" />
+		<property name="roleDefinitionDao" ref="RoleDefinitionDao" />
+		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
+		<property name="stepDao" ref="StepDao" />
+		<property name="taskDefinitionDao" ref="TaskDefinitionDao" />
+		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
+		<property name="workBreakdownElementDao"
+			ref="WorkBreakdownElementDao" />
+	</bean>
+
 	<bean id="ActivityService"
 		class="woops2.business.activity.ActivityService">
 		<property name="activityDao" ref="ActivityDao" />
 	</bean>
-	
+
 </beans>
