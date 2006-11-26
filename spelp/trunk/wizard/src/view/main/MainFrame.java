@@ -68,6 +68,7 @@ public class MainFrame extends JFrame{
                 
                 myLoginPanel = new LoginPanel(this);
                 this.setContentPane(myLoginPanel);
+                this.pack();
                 myLoginPanel.setVisible(true);                
                 
                 this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
