@@ -195,5 +195,10 @@
 		class="woops2.business.wilosuser.ProjectDirectorService">
 		<property name="projectDirectorDao" ref="ProjectDirectorDao" />
 	</bean>
+	
+	<bean id="LoginService"
+		class="woops2.business.wilosuser.LoginService">
+		<property name="wilosUserDao" ref="WilosUserDao" />
+	</bean>
 
 </beans>

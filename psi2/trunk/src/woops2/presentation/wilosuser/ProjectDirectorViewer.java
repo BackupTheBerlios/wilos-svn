@@ -37,7 +37,7 @@ public class ProjectDirectorViewer {
 	 * @return
 	 */
 	public String saveProjectDirectorAction() {
-		String url = "projectDirector" ;
+		String url = "admin_main" ;
 		this.projectDirectorService.saveProjectDirector(this.projectDirector) ;
 		return url ;
 	}

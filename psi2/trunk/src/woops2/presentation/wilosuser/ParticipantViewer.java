@@ -45,7 +45,7 @@ public class ParticipantViewer{
 	 * @return
 	 */
 	public String saveParticipantAction() {
-		String url = "participant" ;
+		String url = "connect" ;
 		this.participantService.saveParticipant(this.participant) ;
 		return url ;
 	}

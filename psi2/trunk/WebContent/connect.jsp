@@ -9,18 +9,20 @@
 	<h:form id="form">
 		<h1>Wilos</h1>
 		<h:outputText value="- Connexion -" style="h1" />
+		<br>
+		<h:messages style="color:red;" showDetail="true"/>
 
-		<h:panelGrid columns="2">
-			<h:outputText value="login" />
-			<h:inputText value="#{ParticipantViewer.participant.login}"/>
+		<h:panelGrid columns="2">			
+			<h:outputText value="login"/>
+			<h:inputText value="#{LoginBean.login}"/>
 			
 			<h:outputText value="password"/>
-			<h:inputSecret value="#{ParticipantViewer.participant.password}"/>
+			<h:inputSecret value="#{LoginBean.password}"/>
 		</h:panelGrid>
 		
 		<h:panelGrid columns="2">
-			<h:commandButton value="Se Connecter" action="createParticipant"/>
-			<h:commandButton value="Créer un Compte" action="createParticipant"/>
+			<h:commandButton value="Se Connecter" action="#{LoginBean.authentificationAction}"/>
+			<h:commandButton immediate="true" value="Créer un Compte" action="createParticipant"/>
 		</h:panelGrid>	
 	</h:form>
 </f:view>

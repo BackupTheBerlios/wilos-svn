@@ -37,7 +37,7 @@ public class ProcessManagerViewer {
 	 * @return
 	 */
 	public String saveProcessManagerAction() {
-		String url = "processManager" ;
+		String url = "admin_main" ;
 		this.processManagerService.saveProcessManager(this.processManager) ;
 		return url ;
 	}

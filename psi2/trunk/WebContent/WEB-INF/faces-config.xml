@@ -53,6 +53,16 @@
 		</managed-property>
 	</managed-bean>
 	
+	<managed-bean>
+		<managed-bean-name>LoginBean</managed-bean-name>
+		<managed-bean-class>woops2.presentation.wilosuser.LoginBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>loginService</property-name>
+			<value>#{LoginService}</value>
+		</managed-property>
+	</managed-bean>
+	
 	<validator>
 		<validator-id>emailValidator</validator-id>
 		<validator-class>
@@ -127,6 +137,14 @@
   		<navigation-case>
     		<from-outcome>admin_main</from-outcome>
     		<to-view-id>/admin_main.jsf</to-view-id>
+  		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+  		<from-view-id>*</from-view-id>
+  		<navigation-case>
+    		<from-outcome>welcome</from-outcome>
+    		<to-view-id>/welcome.jsf</to-view-id>
   		</navigation-case>
 	</navigation-rule>
 	
