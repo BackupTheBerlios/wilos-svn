@@ -79,7 +79,7 @@ public class LoginPanel extends JPanel {
 		introLabel.setText(Bundle.getText("loginPanel.labelLoginPasswd"));
 
 		this.setLayout(new BorderLayout());
-		this.add(introLabel, BorderLayout.NORTH);
+		//this.add(introLabel, BorderLayout.NORTH);
                 this.add(getImagePanel(),BorderLayout.NORTH);
 		this.add(getButtonsPanel(), BorderLayout.SOUTH);
 		this.add(getFieldsPanel(), BorderLayout.CENTER);
@@ -107,8 +107,7 @@ public class LoginPanel extends JPanel {
             if (iconPanel == null)
             {
                 iconPanel = new ImagePanel();    
-                iconPanel.setLayout(new GridBagLayout());
-		iconPanel.add(getConnectionButton(), new GridBagConstraints());
+                iconPanel.setLayout(new GridBagLayout());		
             }
             return this.iconPanel;
         }
@@ -227,5 +226,5 @@ public class LoginPanel extends JPanel {
 		}
 		return adressTextField;
 	}
-	
+
 }
