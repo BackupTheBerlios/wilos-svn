@@ -6,6 +6,7 @@ import woops2.model.role.RoleDescriptor;
 import woops2.model.activity.Activity;
 import woops2.model.task.TaskDescriptor;
 import woops2.model.process.Process;
+import wilos.spelp.webservices.*;
 
 public class MainTest {
 

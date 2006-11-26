@@ -6,10 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
-import woops2.model.breakdownelement.BreakdownElement;
 
+import woops2.model.breakdownelement.BreakdownElement;
 import woops2.model.role.RoleDescriptor;
 import woops2.model.process.Process;
+import wilos.spelp.webservices.*;
 
 public class WizardServicesProxy {
         public static String ENDPOINT = "/WizardServices?wsdl";
