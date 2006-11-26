@@ -110,7 +110,7 @@ public class LoginBean implements Serializable {
 		}
 		else{
 			FacesMessage message = new FacesMessage() ;
-			message.setDetail("login ou mot de passe incorrects") ;
+			message.setDetail("Login ou Mot de passe incorrects") ;
 			message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 
 			FacesContext facesContext = FacesContext.getCurrentInstance() ;

@@ -39,7 +39,7 @@
 		</h:panelGrid>
 		<h:panelGrid columns="2">
 			<h:commandButton value="S'enregistrer" action="#{ProjectDirectorViewer.saveProjectDirectorAction}"/>
-			<h:commandButton value="retour" immediate="true" action="admin_main"/>
+			<h:commandButton value="Retour" immediate="true" action="admin_main"/>
 		</h:panelGrid>	
 	</h:form>
 </f:view>

@@ -13,10 +13,10 @@
 		<h:messages style="color:red;" showDetail="true"/>
 
 		<h:panelGrid columns="2">			
-			<h:outputText value="login"/>
+			<h:outputText value="Pseudo"/>
 			<h:inputText value="#{LoginBean.login}"/>
 			
-			<h:outputText value="password"/>
+			<h:outputText value="Mot de Passe"/>
 			<h:inputSecret value="#{LoginBean.password}"/>
 		</h:panelGrid>
 		
