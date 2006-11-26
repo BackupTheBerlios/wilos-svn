@@ -35,7 +35,7 @@ public class WizardServicesProxy {
                 Service service = Service.create(new URL(adresseServeur+ENDPOINT), new QName("http://webservices.spelp.wilos/", "WizardServicesService"));
                 // Call Web Service Operation
                 //services.WizardServicesService service = new services.WizardServicesService();
-                services.WizardServices port = service.getPort(services.WizardServices.class);
+                WizardServices port = service.getPort(WizardServices.class);
                 java.util.List<String> result = port.getAllProcess(login, password);
                 XStream xstream = new XStream();     
                 for (String strxml : result) {
