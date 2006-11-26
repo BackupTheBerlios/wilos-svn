@@ -1,11 +1,6 @@
 
 package woops2.presentation.wilosuser ;
 
-import java.util.ArrayList ;
-import java.util.List ;
-
-import javax.faces.event.ActionEvent ;
-
 import org.apache.commons.logging.Log ;
 import org.apache.commons.logging.LogFactory ;
 

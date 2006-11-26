@@ -190,5 +190,10 @@
 		class="woops2.business.wilosuser.ProcessManagerService">
 		<property name="processManagerDao" ref="ProcessManagerDao" />
 	</bean>
+	
+	<bean id="ProjectDirectorService"
+		class="woops2.business.wilosuser.ProjectDirectorService">
+		<property name="projectDirectorDao" ref="ProjectDirectorDao" />
+	</bean>
 
 </beans>
