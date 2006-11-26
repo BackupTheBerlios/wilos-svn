@@ -92,6 +92,7 @@ public class ProcessService {
 	 * 
 	 * @param _process
 	 */
+	// FIXME Objets non enregistres : org.hibernate.TransientObjectException: woops2.model.breakdownelement.BreakdownElement
 	public void SaveProcessService(Process _process) {
 		List<Element> elements = new ArrayList<Element>() ;
 		Set<BreakdownElement> bdes = _process.getBreakDownElements() ;
