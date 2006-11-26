@@ -13,8 +13,8 @@
 		<property name="name" type="java.lang.String" column="name"
 			length="256" />
 
-		<property name="firstName" type="java.lang.String"
-			column="firstName" length="256" />
+		<property name="firstname" type="java.lang.String"
+			column="firstname" length="256" />
 
 		<property name="emailAddress" type="java.lang.String"
 			column="emailAddress" length="256" />

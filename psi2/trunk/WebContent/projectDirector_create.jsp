@@ -16,7 +16,7 @@
 			<h:message for="nom" style="color:red;" showDetail="true"/>
 					
 			<h:outputText value="Prénom"/>
-			<h:inputText id="prenom" value="#{ProjectDirectorViewer.projectDirector.firstName}" required="true"/>
+			<h:inputText id="prenom" value="#{ProjectDirectorViewer.projectDirector.firstname}" required="true"/>
 			<h:message for="prenom" style="color:red;" showDetail="true"/>
 
 			<h:outputText value="Pseudo"/>

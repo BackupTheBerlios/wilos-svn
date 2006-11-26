@@ -11,7 +11,7 @@ public abstract class WilosUser {
 
 	private String name ;
 
-	private String firstName ;
+	private String firstname ;
 
 	private String emailAddress ;
 
@@ -36,7 +36,7 @@ public abstract class WilosUser {
 	 */
 	public WilosUser(String _name, String _fName, String _email, String _login, String _password) {
 		this.name = _name ;
-		this.firstName = _fName ;
+		this.firstname = _fName ;
 		this.emailAddress = _email ;
 		this.login = _login ;
 		this.password = _password ;
@@ -62,22 +62,22 @@ public abstract class WilosUser {
 	}
 
 	/**
-	 * Getter of firstName.
+	 * Getter of firstname.
 	 * 
-	 * @return the firstName.
+	 * @return the firstname.
 	 */
-	public String getFirstName() {
-		return this.firstName ;
+	public String getFirstname() {
+		return this.firstname ;
 	}
 
 	/**
-	 * Setter of firstName.
+	 * Setter of firstname.
 	 * 
-	 * @param _firstName
-	 *            The firstName to set.
+	 * @param _firstname
+	 *            The firstname to set.
 	 */
-	public void setFirstName(String _firstName) {
-		this.firstName = _firstName ;
+	public void setFirstname(String _firstname) {
+		this.firstname = _firstname ;
 	}
 
 	/**

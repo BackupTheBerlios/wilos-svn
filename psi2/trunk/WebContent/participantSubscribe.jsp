@@ -45,7 +45,7 @@
 		</h:panelGrid>
 		<h:panelGrid columns="2">
 			<h:commandButton value="S'enregistrer" action="#{ParticipantViewer.saveParticipantAction}"/>
-			<h:commandButton immediate="true" value="retour" action="participant_logging"/>
+			<h:commandButton immediate="true" value="retour" action="connect"/>
 		</h:panelGrid>	
 	</h:form>
 </f:view>

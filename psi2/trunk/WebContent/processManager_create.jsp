@@ -16,7 +16,7 @@
 			<h:message for="nom" style="color:red;" showDetail="true"/>
 					
 			<h:outputText value="Prénom"/>
-			<h:inputText id="prenom" value="#{ProcessManagerViewer.processManager.firstName}" required="true"/>
+			<h:inputText id="prenom" value="#{ProcessManagerViewer.processManager.firstname}" required="true"/>
 			<h:message for="prenom" style="color:red;" showDetail="true"/>
 
 			<h:outputText value="Pseudo"/>

@@ -9,7 +9,7 @@ import javax.faces.validator.ValidatorException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import woops2.business.participant.ParticipantService;
+import woops2.business.wilosuser.ParticipantService;
 
 /**
  * @author mikamikaze

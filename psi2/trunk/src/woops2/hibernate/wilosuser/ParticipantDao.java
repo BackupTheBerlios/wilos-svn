@@ -1,12 +1,12 @@
-package woops2.hibernate.participant;
+package woops2.hibernate.wilosuser;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import woops2.model.participant.Participant;
 import woops2.model.role.RoleDescriptor;
+import woops2.model.wilosuser.Participant;
 
 /**
  * @author BlackMilk

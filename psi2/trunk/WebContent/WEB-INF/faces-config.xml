@@ -27,7 +27,7 @@
 	<!--       PSI2  -->
 	<managed-bean>
 		<managed-bean-name>ParticipantViewer</managed-bean-name>
-		<managed-bean-class>woops2.presentation.participant.ParticipantViewer</managed-bean-class>
+		<managed-bean-class>woops2.presentation.wilosuser.ParticipantViewer</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
 			<property-name>participantService</property-name>
@@ -93,8 +93,8 @@
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
 		<navigation-case>
-			<from-outcome>participant_logging</from-outcome>
-			<to-view-id>/participant_logging.jsf</to-view-id>
+			<from-outcome>connect</from-outcome>
+			<to-view-id>/connect.jsf</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	

@@ -1,4 +1,4 @@
-package woops2.presentation.participant;
+package woops2.presentation.wilosuser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +8,9 @@ import javax.faces.event.ActionEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import woops2.business.participant.ParticipantService;
-import woops2.model.participant.Participant;
+import woops2.business.wilosuser.ParticipantService;
 import woops2.model.role.RoleDescriptor;
+import woops2.model.wilosuser.Participant;
 
 /**
  * Managed-Bean link to participant_logging.jsp
