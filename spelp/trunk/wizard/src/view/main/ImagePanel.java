@@ -38,7 +38,7 @@ import org.omg.CORBA.portable.ApplicationException;
  */
 public class ImagePanel extends JXImagePanel {
     
-    private static String imagePath = ClassLoader.getSystemResource("ressources/logo.png").getPath();
+    private static String imagePath = "ressources/logo.png";
     
     /** Creates a new instance of ImagePanel */
     public ImagePanel() {
@@ -51,7 +51,7 @@ public class ImagePanel extends JXImagePanel {
        
        try {
             // récupération de l'image que l'on applique au panel
-            image = ImageIO.read(new File(imagePath));
+            image = ImageIO.read(ClassLoader.getSystemResource(imagePath));
             this.setImage(image);
        } catch (IOException ex) {
             ex.printStackTrace();
