@@ -280,6 +280,20 @@ public class TreeBean {
             rootTreeNode.add(branchNode);
 
         }
+        
+        DefaultMutableTreeNode branchNode = new DefaultMutableTreeNode();
+        NodeUserObject branchObject = new NodeUserObject(branchNode, this);
+        branchNode.setUserObject(branchObject);
+        branchObject.setLeaf(false);
+        rootTreeNode.add(branchNode);
+        
+        DefaultMutableTreeNode branchNode2 = new DefaultMutableTreeNode();
+        NodeUserObject branchObject2 = new NodeUserObject(branchNode2, this);
+        branchNode2.setUserObject(branchObject2);
+        branchObject2.setLeaf(true);
+        branchObject2.setText("test");
+        
+        branchNode.add(branchNode2);
     }
 
     /**
