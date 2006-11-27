@@ -20,7 +20,7 @@ public class TestConfiguration {
 
 	private TestConfiguration() {
 		this.applicationContext = new ClassPathXmlApplicationContext(
-				"applicationContextWoops2.xml");
+				"applicationContext.xml");
 	}
 
 	public static TestConfiguration getInstance() {
