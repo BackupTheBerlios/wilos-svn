@@ -66,7 +66,7 @@ public class ProcessService {
 		File file = new File("C:\\scrum.xml");
 		Process p = this.SpelpParsingXML(file);
 		System.out.println("Process = " + p);
-		this.SaveProcessService(p);
+		this.SaveImportedProcess(p);
 	}
 
 	public Process SpelpParsingXML(File _file) {
@@ -91,10 +91,11 @@ public class ProcessService {
 	 * @param _process
 	 */
 	// FIXME Objets non enregistres : org.hibernate.TransientObjectException: woops2.model.breakdownelement.BreakdownElement
-	public void SaveProcessService(Process _process) {
+	public void SaveImportedProcess(Process _process) {
 		List<Element> elements = new ArrayList<Element>();
 		Set<BreakdownElement> bdes = _process.getBreakDownElements();
 		int elementAdded = 0;
+		int elementSaved = 0;
 		logger.debug("### SaveProcessService ### elements="+elements);
 		logger.debug("### SaveProcessService ### bdes="+bdes+" size="+bdes.size());
 		// add element of process in elements
@@ -141,30 +142,33 @@ public class ProcessService {
 		
 		// save in the database
 		for (Element element : elements) {
-			if (element instanceof Step) {
-				logger.debug("### SaveProcessService ### save Step ="+(Step) element);
-				this.stepDao.saveOrUpdateStep((Step) element);
-			} else if (element instanceof TaskDefinition) {
-				logger.debug("### SaveProcessService ### save TaskDefinition ="+(TaskDefinition) element);
-				this.taskDefinitionDao
-						.saveOrUpdateTaskDefinition((TaskDefinition) element);
-			} else if (element instanceof TaskDescriptor) {
-				logger.debug("### SaveProcessService ### save TaskDescriptor ="+(TaskDescriptor) element);
-				this.taskDescriptorDao
-						.saveOrUpdateTaskDescriptor((TaskDescriptor) element);
-			} else if (element instanceof RoleDescriptor) {
-				logger.debug("### SaveProcessService ### save RoleDescriptor ="+(RoleDescriptor) element);
-				this.roleDescriptorDao
-						.saveOrUpdateRoleDescriptor((RoleDescriptor) element);
-			} else if (element instanceof RoleDefinition) {
-				logger.debug("### SaveProcessService ### save RoleDefinition ="+(RoleDefinition) element);
-				this.roleDefinitionDao
-						.saveOrUpdateRole((RoleDefinition) element);
-			} else if (element instanceof Process) {
-				logger.debug("### SaveProcessService ### save Process ="+(Process) element);
-				this.processDao.saveOrUpdateProcess((Process) element);
+			try {
+				if (element instanceof Step) {
+					this.stepDao.saveOrUpdateStep((Step) element);
+					logger.debug("### SaveProcessService ### save Step ="+(Step) element+" id="+element.getId());
+				} else if (element instanceof TaskDefinition) {
+					this.taskDefinitionDao.saveOrUpdateTaskDefinition((TaskDefinition) element);
+					logger.debug("### SaveProcessService ### save TaskDefinition ="+(TaskDefinition) element+" id="+element.getId());
+				} else if (element instanceof TaskDescriptor) {
+					this.taskDescriptorDao.saveOrUpdateTaskDescriptor((TaskDescriptor) element);
+					logger.debug("### SaveProcessService ### save TaskDescriptor ="+(TaskDescriptor) element+" id="+element.getId());
+				} else if (element instanceof RoleDescriptor) {
+					this.roleDescriptorDao.saveOrUpdateRoleDescriptor((RoleDescriptor) element);
+					logger.debug("### SaveProcessService ### save RoleDescriptor ="+(RoleDescriptor) element+" id="+element.getId());
+				} else if (element instanceof RoleDefinition) {
+					this.roleDefinitionDao.saveOrUpdateRole((RoleDefinition) element);
+					logger.debug("### SaveProcessService ### save RoleDefinition ="+(RoleDefinition) element+" id="+element.getId());
+				} else if (element instanceof Process) {
+					this.processDao.saveOrUpdateProcess((Process) element);
+					logger.debug("### SaveProcessService ### save Process ="+(Process) element+" id="+element.getId());
+				}
+			} catch (Exception e) {
+				logger.error("### SaveProcessService ### DataIntegrityViolationException : "+e);
 			}
+			elementSaved++;
+			logger.debug("### SaveProcessService ### elements saved = "+elementSaved);
 		}
+		logger.debug("### SaveProcessService ### end processing");
 	}
 
 	/**

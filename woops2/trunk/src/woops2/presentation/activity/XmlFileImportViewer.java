@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import woops2.business.process.ProcessService;
+import woops2.model.process.Process;
 
 import com.icesoft.faces.component.inputfile.InputFile;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
@@ -69,7 +70,8 @@ public class XmlFileImportViewer {
 		logger.debug("### fichier = "+file.getPath()+" => "+file.getName()+" ###");
 		file.renameTo(destFile);
 		logger.debug("### Nouveau fichier = "+destFile.getPath()+" => "+destFile.getName()+" ###");
-		
+		Process p = processService.SpelpParsingXML(file);
+		processService.SaveImportedProcess(p);
 	}
 
 	public void progress(EventObject event) {
