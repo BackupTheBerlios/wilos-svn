@@ -2,6 +2,7 @@ package view.main;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import javax.swing.BorderFactory;
 import ressources.ProfileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -77,7 +78,7 @@ public class LoginPanel extends JPanel {
 	private void initialize() {
 		introLabel = new JLabel();
 		introLabel.setText(Bundle.getText("loginPanel.labelLoginPasswd"));
-
+                this.setBorder(BorderFactory.createEmptyBorder(0, 10, 5, 10));
 		this.setLayout(new BorderLayout());
 		//this.add(introLabel, BorderLayout.NORTH);
                 this.add(getImagePanel(),BorderLayout.NORTH);
