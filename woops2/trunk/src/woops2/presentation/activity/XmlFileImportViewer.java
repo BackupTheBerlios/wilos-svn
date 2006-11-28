@@ -22,10 +22,14 @@ public class XmlFileImportViewer {
 	private PersistentFacesState state = null;
 
 	private File file = null;
-
-	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 	
 	private ProcessService processService;
+	
+	private TreeBean treeBean;
+	
+	protected final Log logger = LogFactory.getLog(this.getClass()) ;
+	
+	
 	
 	public XmlFileImportViewer() {
 		state = PersistentFacesState.getInstance();
@@ -71,7 +75,7 @@ public class XmlFileImportViewer {
 		file.renameTo(destFile);
 		logger.debug("### Nouveau fichier = "+destFile.getPath()+" => "+destFile.getName()+" ###");
 		Process p = processService.SpelpParsingXML(file);
-		processService.SaveImportedProcess(p);
+		//processService.SaveImportedProcess(p);
 	}
 
 	public void progress(EventObject event) {
@@ -124,5 +128,13 @@ public class XmlFileImportViewer {
 
 	public void setProcessService(ProcessService processService) {
 		this.processService = processService;
+	}
+
+	public TreeBean getTreeBean() {
+		return treeBean;
+	}
+
+	public void setTreeBean(TreeBean treeBean) {
+		this.treeBean = treeBean;
 	}
 }

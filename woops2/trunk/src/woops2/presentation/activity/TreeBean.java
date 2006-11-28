@@ -41,6 +41,9 @@ import javax.faces.model.SelectItem;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import woops2.business.process.ProcessService;
+import woops2.model.element.Element;
+
 /**
  * <p>The TreeBean class is the backing bean for the Tree Component showcase
  * demonstration. It is used to store and display the selected tree node</p>
@@ -53,6 +56,7 @@ public class TreeBean {
     // tree default model, used as a value for the tree component
     private DefaultTreeModel model;
     private DefaultMutableTreeNode rootTreeNode;
+    private ProcessService treeProcessService;
 
     // label count increases one for each new node
     private int labelCount = 0;
@@ -268,10 +272,22 @@ public class TreeBean {
     public TreeBean() {
         rootTreeNode = new DefaultMutableTreeNode();
         NodeUserObject rootObject = new NodeUserObject(rootTreeNode, this);
+        rootObject.setText("/");
         rootTreeNode.setUserObject(rootObject);
 
         model = new DefaultTreeModel(rootTreeNode);
-
+        if (this.treeProcessService != null){
+        for (Element elt : this.treeProcessService.getElementDao().getAllElements())
+        {
+        	DefaultMutableTreeNode branchNode = new DefaultMutableTreeNode();
+            NodeUserObject branchObject = new NodeUserObject(branchNode, this);
+            branchNode.setUserObject(branchObject);
+            branchObject.setLeaf(true);
+            branchObject.setText(""+elt.getIdEPF()+" "+elt.getIdEPF());
+            rootTreeNode.add(branchNode);
+        }
+        }
+        /*
         for (int i = 0; i < 3; i++) {
             DefaultMutableTreeNode branchNode = new DefaultMutableTreeNode();
             NodeUserObject branchObject = new NodeUserObject(branchNode, this);
@@ -294,6 +310,7 @@ public class TreeBean {
         branchObject2.setText("test");
         
         branchNode.add(branchNode2);
+        */
     }
 
     /**
@@ -341,4 +358,12 @@ public class TreeBean {
     public int getIncreasedLabelCount() {
         return ++labelCount;
     }
+
+	public ProcessService getTreeProcessService() {
+		return treeProcessService;
+	}
+
+	public void setTreeProcessService(ProcessService processService) {
+		this.treeProcessService = processService;
+	}
 }
