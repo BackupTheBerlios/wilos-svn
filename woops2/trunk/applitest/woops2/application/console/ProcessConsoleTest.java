@@ -17,6 +17,6 @@ public class ProcessConsoleTest {
 		//am.TestSpelpParsingXML();
 		Process p = am.SpelpParsingXML(new File("applitest/woops2/application/console/scrum.xml"));
 		System.out.println("p= "+p);
-		am.saveProcess(p);
+		am.SaveProcessService(p);
 	}
 }
