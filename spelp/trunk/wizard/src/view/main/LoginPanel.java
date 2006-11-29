@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.BorderLayout;
@@ -78,13 +79,13 @@ public class LoginPanel extends JPanel {
 	private void initialize() {
 		introLabel = new JLabel();
 		introLabel.setText(Bundle.getText("loginPanel.labelLoginPasswd"));
-                this.setBorder(BorderFactory.createEmptyBorder(0, 10, 5, 10));
+                this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		this.setLayout(new BorderLayout());
 		//this.add(introLabel, BorderLayout.NORTH);
                 this.add(getImagePanel(),BorderLayout.NORTH);
 		this.add(getButtonsPanel(), BorderLayout.SOUTH);
 		this.add(getFieldsPanel(), BorderLayout.CENTER);
-                
+                 
 	}
 
 	/**
@@ -95,7 +96,8 @@ public class LoginPanel extends JPanel {
 	private JPanel getButtonsPanel() {
 		if (buttonsPanel == null) {
 			buttonsPanel = new JPanel();
-			buttonsPanel.setLayout(new GridBagLayout());
+			buttonsPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		    buttonsPanel.setLayout(new GridBagLayout());
 			buttonsPanel.add(getConnectionButton(), new GridBagConstraints());			
 		}
 		return buttonsPanel;
@@ -107,7 +109,7 @@ public class LoginPanel extends JPanel {
         private ImagePanel getImagePanel() {
             if (iconPanel == null)
             {
-                iconPanel = new ImagePanel();    
+                iconPanel = new ImagePanel();     
                 iconPanel.setLayout(new GridBagLayout());		
             }
             return this.iconPanel;
@@ -149,6 +151,7 @@ public class LoginPanel extends JPanel {
 			loginLabel = new JLabel();
 			loginLabel.setText(Bundle.getText("loginPanel.login"));
 			fieldsPanel = new JPanel();
+			fieldsPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 			fieldsPanel.setLayout(new GridLayout(3,2));
 			fieldsPanel.add(adressLabel, null);
 			fieldsPanel.add(getAdressTextField(), null);
@@ -156,6 +159,10 @@ public class LoginPanel extends JPanel {
 			fieldsPanel.add(getLoginTextField());
 			fieldsPanel.add(passwordLabel, null);
 			fieldsPanel.add(getPasswordPasswordField());
+			/* for (Component c : fieldsPanel.getComponents()) {
+				if (c instanceof JLabel) ((javax.swing.JComponent) c).setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+				
+			} */
 		}
 		return fieldsPanel;
 	}
