@@ -93,7 +93,19 @@ public class ProcessService {
 	// FIXME Objets non enregistres : org.hibernate.TransientObjectException: woops2.model.breakdownelement.BreakdownElement
 	public void SaveImportedProcess(Process _process) {
 		List<Element> elements = new ArrayList<Element>();
-		Set<BreakdownElement> bdes = _process.getBreakDownElements();
+		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
+		bdes.addAll(_process.getBreakDownElements());
+
+		logger.debug("### SaveProcessService ### elements.size ="+elements.size());
+		
+//		 TODO : faire plsr listes en fonction de chaque classe
+		List<Step> stepList = new ArrayList<Step>();
+		List<TaskDefinition> taskDefinitionList = new ArrayList<TaskDefinition>();
+		List<TaskDescriptor> taskDescriptorList = new ArrayList<TaskDescriptor>();
+		List<RoleDefinition> roleDefinitionList = new ArrayList<RoleDefinition>();
+		List<RoleDescriptor> roleDescriptorList = new ArrayList<RoleDescriptor>();
+		List<Process> processList = new ArrayList<Process>();
+		
 		int elementAdded = 0;
 		int elementSaved = 0;
 		logger.debug("### SaveProcessService ### elements="+elements);
@@ -110,37 +122,82 @@ public class ProcessService {
 					for (Step step : taskDefinition.getSteps()) {
 						logger.debug("### SaveProcessService ### for steps ... ="+taskDefinition.getSteps());
 						if (step != null)
-							elements.add(step);
+							stepList.add(step);
 							elementAdded++;
-						logger.debug("### SaveProcessService ### elements -> add step ="+step);
+						logger.debug("### SaveProcessService ### stepList -> add step ="+step);
 					}
-					elements.add(taskDefinition);
+					taskDefinitionList.add(taskDefinition);
 					elementAdded++;
-					logger.debug("### SaveProcessService ### elements -> add taskDefinition ="+taskDefinition);
+					logger.debug("### SaveProcessService ### taskDefinitionList -> add taskDefinition ="+taskDefinition);
 				}
-				elements.add(taskDescriptor);
+				taskDescriptorList.add(taskDescriptor);
 				elementAdded++;
-				logger.debug("### SaveProcessService ### elements -> add taskDescriptor ="+taskDescriptor);
+				logger.debug("### SaveProcessService ### taskDescriptorList -> add taskDescriptor ="+taskDescriptor);
 			} else if (breakdownElement instanceof RoleDescriptor) {
 				logger.debug("### SaveProcessService ### breakdownElement iof RoleDescriptor ="+breakdownElement);
 				RoleDescriptor roleDescriptor = (RoleDescriptor) breakdownElement;
 				logger.debug("### SaveProcessService ### RoleDescriptor ="+roleDescriptor);
-				elements.add(roleDescriptor.getRoleDefinition());
-				logger.debug("### SaveProcessService ### elements -> add roleDescriptor.getRoleDefinition() ="+roleDescriptor.getRoleDefinition());
+				roleDefinitionList.add(roleDescriptor.getRoleDefinition());
+				logger.debug("### SaveProcessService ### roleDefinitionList -> add roleDescriptor.getRoleDefinition() ="+roleDescriptor.getRoleDefinition());
 				elementAdded++;
-				elements.add(roleDescriptor);
-				logger.debug("### SaveProcessService ### elements -> add roleDescriptor ="+roleDescriptor);
+				roleDescriptorList.add(roleDescriptor);
+				logger.debug("### SaveProcessService ### roleDescriptorList -> add roleDescriptor ="+roleDescriptor);
 				elementAdded++;
 			}
+			else {
+				logger.error("### SaveProcessService ### unkown type of object from process !");
+			}
 		}
-		logger.debug("### SaveProcessService ### elements -> add _process ="+_process);
+		logger.debug("### SaveProcessService ### processList -> add _process ="+_process);
 		elementAdded++;
-		elements.add(_process);
+		processList.add(_process);
 		
 		logger.debug("### SaveProcessService ### total elements added ="+elementAdded);
-		logger.debug("### SaveProcessService ### elements.size ="+elements.size());
+		
+		// list all list sizes
+		
+		logger.debug("### SaveProcessService ### stepList.size ="+stepList.size());
+		logger.debug("### SaveProcessService ### taskDefinitionList.size ="+taskDefinitionList.size());
+		logger.debug("### SaveProcessService ### roleDefinitionList.size ="+roleDefinitionList.size());
+		logger.debug("### SaveProcessService ### taskDescriptorList.size ="+taskDescriptorList.size());
+		logger.debug("### SaveProcessService ### roleDescriptorList.size ="+roleDescriptorList.size());
+		logger.debug("### SaveProcessService ### processList.size ="+processList.size());
+		
+		for (Step s : stepList){
+			elementSaved++;
+			this.stepDao.saveOrUpdateStep(s);
+			logger.debug("### SaveProcessService ### save Step ="+s+" id="+s.getId());
+		}
+		for (TaskDefinition td : taskDefinitionList){
+			elementSaved++;
+			this.taskDefinitionDao.saveOrUpdateTaskDefinition(td);
+			logger.debug("### SaveProcessService ### save TaskDefinition ="+td+" id="+td.getId());
+		}
+		for (RoleDefinition rd : roleDefinitionList){
+			elementSaved++;
+			this.roleDefinitionDao.saveOrUpdateRole(rd);
+			logger.debug("### SaveProcessService ### save RoleDefinition ="+rd+" id="+rd.getId());
+		}
+		for (TaskDescriptor tdr : taskDescriptorList){
+			elementSaved++;
+			this.taskDescriptorDao.saveOrUpdateTaskDescriptor(tdr);
+			logger.debug("### SaveProcessService ### save TaskDescriptor ="+tdr+" id="+tdr.getId());
+		}
+		for (RoleDescriptor rdr : roleDescriptorList){
+			elementSaved++;
+			this.roleDescriptorDao.saveOrUpdateRoleDescriptor(rdr);
+			logger.debug("### SaveProcessService ### save RoleDescriptor ="+rdr+" id="+rdr.getId());
+		}
+		for (Process p : processList){
+			elementSaved++;
+			this.processDao.saveOrUpdateProcess(p);
+			logger.debug("### SaveProcessService ### save Process ="+p+" id="+p.getId());
+		}
+		
+		logger.debug("### SaveProcessService ### objects saved = "+elementSaved);
 		
 		// save in the database
+		/*
 		for (Element element : elements) {
 			try {
 				if (element instanceof Step) {
@@ -167,7 +224,9 @@ public class ProcessService {
 			}
 			elementSaved++;
 			logger.debug("### SaveProcessService ### elements saved = "+elementSaved);
-		}
+			}
+			*/
+		
 		logger.debug("### SaveProcessService ### end processing");
 	}
 
