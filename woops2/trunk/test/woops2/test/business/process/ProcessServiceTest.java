@@ -35,6 +35,9 @@ public class ProcessServiceTest extends TestCase {
 	 */
 	protected void tearDown() throws Exception {
 		super.tearDown() ;
+		
+//		 Delete the tmp activity from the database.
+		this.processService.getProcessDao().deleteProcess(this.process) ;
 	}
 
 	/* (non-Javadoc)
