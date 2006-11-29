@@ -270,47 +270,48 @@ public class TreeBean {
      * Construction the default tree structure by combining tree nodes.
      */
     public TreeBean() {
-        rootTreeNode = new DefaultMutableTreeNode();
-        NodeUserObject rootObject = new NodeUserObject(rootTreeNode, this);
-        rootObject.setText("/");
-        rootTreeNode.setUserObject(rootObject);
+    }
+    
+    public void buildTree(){
+    	 rootTreeNode = new DefaultMutableTreeNode();
+         NodeUserObject rootObject = new NodeUserObject(rootTreeNode, this);
+         rootObject.setText("/");
+         rootTreeNode.setUserObject(rootObject);
 
-        model = new DefaultTreeModel(rootTreeNode);
-        if (this.treeProcessService != null){
-        for (Element elt : this.treeProcessService.getElementDao().getAllElements())
-        {
-        	DefaultMutableTreeNode branchNode = new DefaultMutableTreeNode();
-            NodeUserObject branchObject = new NodeUserObject(branchNode, this);
-            branchNode.setUserObject(branchObject);
-            branchObject.setLeaf(true);
-            branchObject.setText(""+elt.getIdEPF()+" "+elt.getIdEPF());
-            rootTreeNode.add(branchNode);
-        }
-        }
-        /*
-        for (int i = 0; i < 3; i++) {
-            DefaultMutableTreeNode branchNode = new DefaultMutableTreeNode();
-            NodeUserObject branchObject = new NodeUserObject(branchNode, this);
-            branchNode.setUserObject(branchObject);
-            branchObject.setLeaf(true);
-            rootTreeNode.add(branchNode);
-
-        }
-        
-        DefaultMutableTreeNode branchNode = new DefaultMutableTreeNode();
-        NodeUserObject branchObject = new NodeUserObject(branchNode, this);
-        branchNode.setUserObject(branchObject);
-        branchObject.setLeaf(false);
-        rootTreeNode.add(branchNode);
-        
-        DefaultMutableTreeNode branchNode2 = new DefaultMutableTreeNode();
-        NodeUserObject branchObject2 = new NodeUserObject(branchNode2, this);
-        branchNode2.setUserObject(branchObject2);
-        branchObject2.setLeaf(true);
-        branchObject2.setText("test");
-        
-        branchNode.add(branchNode2);
-        */
+         model = new DefaultTreeModel(rootTreeNode);
+         if (this.treeProcessService != null) {
+ 			for (Element elt : this.treeProcessService.getElementDao()
+ 					.getAllElements()) {
+ 				DefaultMutableTreeNode branchNode = new DefaultMutableTreeNode();
+ 				NodeUserObject branchObject = new NodeUserObject(branchNode,
+ 						this);
+ 				branchNode.setUserObject(branchObject);
+ 				branchObject.setLeaf(true);
+ 				branchObject
+ 						.setText("" + elt.getIdEPF() + " " + elt.getIdEPF());
+ 				rootTreeNode.add(branchNode);
+ 			}
+ 		}
+         /*
+ 		 * for (int i = 0; i < 3; i++) { DefaultMutableTreeNode branchNode = new
+ 		 * DefaultMutableTreeNode(); NodeUserObject branchObject = new
+ 		 * NodeUserObject(branchNode, this);
+ 		 * branchNode.setUserObject(branchObject); branchObject.setLeaf(true);
+ 		 * rootTreeNode.add(branchNode);
+ 		 *  }
+ 		 * 
+ 		 * DefaultMutableTreeNode branchNode = new DefaultMutableTreeNode();
+ 		 * NodeUserObject branchObject = new NodeUserObject(branchNode, this);
+ 		 * branchNode.setUserObject(branchObject); branchObject.setLeaf(false);
+ 		 * rootTreeNode.add(branchNode);
+ 		 * 
+ 		 * DefaultMutableTreeNode branchNode2 = new DefaultMutableTreeNode();
+ 		 * NodeUserObject branchObject2 = new NodeUserObject(branchNode2, this);
+ 		 * branchNode2.setUserObject(branchObject2);
+ 		 * branchObject2.setLeaf(true); branchObject2.setText("test");
+ 		 * 
+ 		 * branchNode.add(branchNode2);
+ 		 */
     }
 
     /**

@@ -75,6 +75,7 @@ public class XmlFileImportViewer {
 		file.renameTo(destFile);
 		logger.debug("### Nouveau fichier = "+destFile.getPath()+" => "+destFile.getName()+" ###");
 		Process p = processService.SpelpParsingXML(file);
+		//TODO save the process
 		//processService.SaveImportedProcess(p);
 	}
 
