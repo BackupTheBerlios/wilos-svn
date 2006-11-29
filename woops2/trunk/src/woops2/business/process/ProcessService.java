@@ -37,7 +37,7 @@ import woops2.model.task.TaskDescriptor;
  * @author eperico
  * @author soosuske
  */
-@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 public class ProcessService {
 
 	private ActivityDao activityDao;
