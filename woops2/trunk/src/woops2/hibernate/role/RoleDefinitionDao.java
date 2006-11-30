@@ -21,7 +21,7 @@ public class RoleDefinitionDao extends HibernateDaoSupport {
 	 * 
 	 * @param _roleDefinition
 	 */
-	public void saveOrUpdateRole(RoleDefinition _roleDefinition) {
+	public void saveOrUpdateRoleDefinition(RoleDefinition _roleDefinition) {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_roleDefinition) ;
 			this.getHibernateTemplate().flush() ;

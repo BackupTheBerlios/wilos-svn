@@ -67,7 +67,7 @@ public class RoleDefinitionDaoTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		// Save the roleDefinition with the method to test.
-		this.roleDefinitionDao.saveOrUpdateRole(this.roleDefinition);
+		this.roleDefinitionDao.saveOrUpdateRoleDefinition(this.roleDefinition);
 
 		// Check the saving.
 		String id = roleDefinition.getId();
