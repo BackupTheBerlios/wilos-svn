@@ -22,7 +22,7 @@ import woops2.model.wilosuser.Participant;
  * @author Mikamikaze
  * @author Sakamakak
  */
-public class ParticipantViewer{
+public class ParticipantBean{
 
 	private List<RoleDescriptor> rolesList;
 	private ParticipantService participantService ;
@@ -37,8 +37,8 @@ public class ParticipantViewer{
 	 * Constructor.
 	 * 
 	 */
-	public ParticipantViewer() {
-		this.logger.debug("--- ParticipantViewer --- == creating ..." + this) ;
+	public ParticipantBean() {
+		this.logger.debug("--- ParticipantBean --- == creating ..." + this) ;
 		this.participant = new Participant() ;
 	}
 

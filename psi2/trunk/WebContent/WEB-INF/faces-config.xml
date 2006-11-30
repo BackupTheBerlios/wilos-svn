@@ -26,8 +26,8 @@
 	</managed-bean>
 	<!--       PSI2  -->
 	<managed-bean>
-		<managed-bean-name>ParticipantViewer</managed-bean-name>
-		<managed-bean-class>woops2.presentation.wilosuser.ParticipantViewer</managed-bean-class>
+		<managed-bean-name>ParticipantBean</managed-bean-name>
+		<managed-bean-class>woops2.presentation.wilosuser.ParticipantBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
 			<property-name>participantService</property-name>
@@ -39,8 +39,8 @@
 		</managed-property>
 	</managed-bean>
 	<managed-bean>
-		<managed-bean-name>ProcessManagerViewer</managed-bean-name>
-		<managed-bean-class>woops2.presentation.wilosuser.ProcessManagerViewer</managed-bean-class>
+		<managed-bean-name>ProcessManagerBean</managed-bean-name>
+		<managed-bean-class>woops2.presentation.wilosuser.ProcessManagerBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
 			<property-name>processManagerService</property-name>
@@ -48,8 +48,8 @@
 		</managed-property>
 	</managed-bean>
 	<managed-bean>
-		<managed-bean-name>ProjectDirectorViewer</managed-bean-name>
-		<managed-bean-class>woops2.presentation.wilosuser.ProjectDirectorViewer</managed-bean-class>
+		<managed-bean-name>ProjectDirectorBean</managed-bean-name>
+		<managed-bean-class>woops2.presentation.wilosuser.ProjectDirectorBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
 			<property-name>projectDirectorService</property-name>

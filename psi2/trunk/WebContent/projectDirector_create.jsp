@@ -12,25 +12,25 @@
  
 		<h:panelGrid columns="3">
 			<h:outputText value="Nom" />
-			<h:inputText id="nom" value="#{ProjectDirectorViewer.projectDirector.name}" required="true"/>
+			<h:inputText id="nom" value="#{ProjectDirectorBean.projectDirector.name}" required="true"/>
 			<h:message for="nom" style="color:red;" showDetail="true"/>
 					
 			<h:outputText value="Prénom"/>
-			<h:inputText id="prenom" value="#{ProjectDirectorViewer.projectDirector.firstname}" required="true"/>
+			<h:inputText id="prenom" value="#{ProjectDirectorBean.projectDirector.firstname}" required="true"/>
 			<h:message for="prenom" style="color:red;" showDetail="true"/>
 
 			<h:outputText value="Pseudo"/>
-			<h:inputText id="login" value="#{ProjectDirectorViewer.projectDirector.login}" required="true"/>
+			<h:inputText id="login" value="#{ProjectDirectorBean.projectDirector.login}" required="true"/>
 			<h:message for="login" style="color:red;" showDetail="true"/>
 			
 			<h:outputText value="Mot de passe"/>
-			<h:inputSecret id="equal1" value="#{ProjectDirectorViewer.projectDirector.password}" required="true">
+			<h:inputSecret id="equal1" value="#{ProjectDirectorBean.projectDirector.password}" required="true">
 				<f:validateLength minimum="6" />
 			</h:inputSecret>		
 			<h:message for="equal1" style="color:red;" showDetail="true"/>
 			
 			<h:outputText value="Confirmer le mot de passe"/>
-			<h:inputSecret id="equal2" value="#{ProjectDirectorViewer.passwordConfirmation}">
+			<h:inputSecret id="equal2" value="#{ProjectDirectorBean.passwordConfirmation}">
 				<f:validateLength minimum="6" />
 				<f:validator validatorId="equalValidator"/>
 			</h:inputSecret>
@@ -38,7 +38,7 @@
 			
 		</h:panelGrid>
 		<h:panelGrid columns="2">
-			<h:commandButton value="S'enregistrer" action="#{ProjectDirectorViewer.saveProjectDirectorAction}"/>
+			<h:commandButton value="S'enregistrer" action="#{ProjectDirectorBean.saveProjectDirectorAction}"/>
 			<h:commandButton value="Retour" immediate="true" action="admin_main"/>
 		</h:panelGrid>	
 	</h:form>

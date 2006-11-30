@@ -12,25 +12,25 @@
  
 		<h:panelGrid columns="3">
 			<h:outputText value="Nom" />
-			<h:inputText id="nom" value="#{ProcessManagerViewer.processManager.name}" required="true"/>
+			<h:inputText id="nom" value="#{ProcessManagerBean.processManager.name}" required="true"/>
 			<h:message for="nom" style="color:red;" showDetail="true"/>
 					
 			<h:outputText value="Prénom"/>
-			<h:inputText id="prenom" value="#{ProcessManagerViewer.processManager.firstname}" required="true"/>
+			<h:inputText id="prenom" value="#{ProcessManagerBean.processManager.firstname}" required="true"/>
 			<h:message for="prenom" style="color:red;" showDetail="true"/>
 
 			<h:outputText value="Pseudo"/>
-			<h:inputText id="login" value="#{ProcessManagerViewer.processManager.login}" required="true"/>
+			<h:inputText id="login" value="#{ProcessManagerBean.processManager.login}" required="true"/>
 			<h:message for="login" style="color:red;" showDetail="true"/>
 			
 			<h:outputText value="Mot de passe"/>
-			<h:inputSecret id="equal1" value="#{ProcessManagerViewer.processManager.password}" required="true">		
+			<h:inputSecret id="equal1" value="#{ProcessManagerBean.processManager.password}" required="true">		
 				<f:validateLength minimum="6" />
 			</h:inputSecret>
 			<h:message for="equal1" style="color:red;" showDetail="true"/>
 			
 			<h:outputText value="Confirmer le mot de passe"/>
-			<h:inputSecret id="equal2" value="#{ProcessManagerViewer.passwordConfirmation}">
+			<h:inputSecret id="equal2" value="#{ProcessManagerBean.passwordConfirmation}">
 				<f:validateLength minimum="6" />
 				<f:validator validatorId="equalValidator"/>
 			</h:inputSecret>
@@ -38,7 +38,7 @@
 			
 		</h:panelGrid>
 		<h:panelGrid columns="2">
-			<h:commandButton value="S'enregistrer" action="#{ProcessManagerViewer.saveProcessManagerAction}"/>
+			<h:commandButton value="S'enregistrer" action="#{ProcessManagerBean.saveProcessManagerAction}"/>
 			<h:commandButton value="Retour" immediate="true" action="admin_main"/>
 		</h:panelGrid>	
 	</h:form>

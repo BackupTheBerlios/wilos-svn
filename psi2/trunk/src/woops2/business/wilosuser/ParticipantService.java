@@ -9,10 +9,8 @@ import org.springframework.transaction.annotation.Propagation ;
 import org.springframework.transaction.annotation.Transactional ;
 
 import woops2.hibernate.wilosuser.ParticipantDao;
-import woops2.hibernate.wilosuser.WilosUserDao;
 import woops2.model.role.RoleDescriptor ;
 import woops2.model.wilosuser.Participant;
-import woops2.model.wilosuser.WilosUser;
 
 /**
  * This class represents ... TODO

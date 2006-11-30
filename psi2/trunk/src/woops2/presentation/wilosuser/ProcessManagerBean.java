@@ -12,7 +12,7 @@ import woops2.model.wilosuser.ProcessManager ;
  * 
  * @author Marseyeah
  */
-public class ProcessManagerViewer {
+public class ProcessManagerBean {
 
 	private ProcessManagerService processManagerService ;
 
@@ -26,8 +26,8 @@ public class ProcessManagerViewer {
 	 * Constructor.
 	 * 
 	 */
-	public ProcessManagerViewer() {
-		this.logger.debug("--- ProcessManagerViewer --- == creating ..." + this) ;
+	public ProcessManagerBean() {
+		this.logger.debug("--- ProcessManagerBean --- == creating ..." + this) ;
 		this.processManager = new ProcessManager() ;
 	}
 

@@ -12,7 +12,7 @@ import woops2.model.wilosuser.ProjectDirector ;
  * 
  * @author Marseyeah
  */
-public class ProjectDirectorViewer {
+public class ProjectDirectorBean {
 
 	private ProjectDirectorService projectDirectorService ;
 
@@ -26,8 +26,8 @@ public class ProjectDirectorViewer {
 	 * Constructor.
 	 * 
 	 */
-	public ProjectDirectorViewer() {
-		this.logger.debug("--- ProjectDirectorViewer --- == creating ..." + this) ;
+	public ProjectDirectorBean() {
+		this.logger.debug("--- ProjectDirectorBean --- == creating ..." + this) ;
 		this.projectDirector = new ProjectDirector() ;
 	}
 

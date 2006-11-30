@@ -6,7 +6,7 @@
 <body>
 <f:view>
 	<h:form id="form">
-	<t:dataTable value="#{ParticipantViewer.rolesList}" border="1" var="roleD">
+	<t:dataTable value="#{ParticipantBean.rolesList}" border="1" var="roleD">
 		<h:column>
 			<f:facet name="header">
 				<h:outputText value="Role" />
