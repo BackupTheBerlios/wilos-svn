@@ -291,6 +291,37 @@ public class ProcessService {
 		processList.add(_process);
 		logger.debug("TestSaveCollectionsProcess: processList -> " + processList);
 		logger.debug("TestSaveCollectionsProcess: processList.size -> " + processList.size());
+		
+		for (Process p : processList) {
+			this.processDao.saveOrUpdateProcess(p);
+		}
+		for (RoleDescriptor rd : roleDescriptorList) {
+			this.roleDescriptorDao.saveOrUpdateRoleDescriptor(rd);
+		}
+		for (RoleDefinition rdef : roleDefinitionList) {
+			this.roleDefinitionDao.saveOrUpdateRole(rdef);
+		}
+		for (TaskDescriptor td : taskDescriptorList) {
+			this.taskDescriptorDao.saveOrUpdateTaskDescriptor(td);
+		}
+		for (TaskDefinition tdef : taskDefinitionList) {
+			this.taskDefinitionDao.saveOrUpdateTaskDefinition(tdef);
+		}
+		for (Step s : stepList) {
+			this.stepDao.saveOrUpdateStep(s);
+		}
+		
+		System.out.println("TestProcessPersistence -> ca sauvegarde") ;
+		
+		/*rddef.addRoleDescriptor(rd);
+		s1.addTaskDefinition(tddef);
+		s2.addTaskDefinition(tddef);
+		tddef.addTaskDescriptor(td);
+		rd.addAdditionalTask(td);
+		p.addBreakdownElement(rd);
+		p.addBreakdownElement(td);
+		
+		System.out.println("TestProcessPersistence -> ca update les objets") ;*/
 	}
 
 	/**
@@ -322,6 +353,68 @@ public class ProcessService {
 		Process p = this.processDao.getProcess(_id);
 		logger.debug("TestProcessPersistence p => "+p+" id="+p.getId());
 		logger.debug("#### p -> "+p.getIdEPF()+" "+p.getName());
+	}
+	
+	public void TestEmptyObjectDBSave() {
+		
+		Process p = new Process();
+		p.setIdEPF("processGuID");
+		p.setName("processName");
+		p.setPrefix("processPrefix");
+		logger.debug("#### p -> "+p.getIdEPF()+" "+p.getName());
+		
+		RoleDescriptor rd = new RoleDescriptor();
+		rd.setIdEPF("roledescriptorGuID");
+		rd.setName("roledescriptorName");
+		rd.setPrefix("roledescriptorPrefix");
+		logger.debug("#### rd -> "+rd.getIdEPF()+" "+rd.getName());
+		
+		TaskDescriptor td = new TaskDescriptor();
+		td.setIdEPF("taskdescriptorGuID");
+		td.setName("tddesriptorName");
+		td.setPrefix("taskdescriptorPrefix");
+		logger.debug("#### td -> "+td.getIdEPF()+" "+td.getName());
+		
+		RoleDefinition rddef = new RoleDefinition();
+		rddef.setIdEPF("roledefinitionGuID");
+		rddef.setName("roledefinitionName");
+		logger.debug("#### rddef -> "+rddef.getIdEPF()+" "+rddef.getName());
+		
+		TaskDefinition tddef = new TaskDefinition();
+		tddef.setIdEPF("taskdefinitionGuID");
+		tddef.setName("taskdefinitionName");
+		logger.debug("#### tddef -> "+tddef.getIdEPF()+" "+tddef.getName());
+		
+		Step s1 = new Step();
+		s1.setIdEPF("taskdefinitionGuID");
+		s1.setName("taskdefinitionName");
+		logger.debug("#### s1 -> "+s1.getIdEPF()+" "+s1.getName());
+		
+		Step s2 = new Step();
+		s2.setIdEPF("taskdefinitionGuID");
+		s2.setName("taskdefinitionName");
+		logger.debug("#### s2 -> "+s2.getIdEPF()+" "+s2.getName());
+		
+		this.processDao.saveOrUpdateProcess(p);
+		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(rd);
+		this.taskDescriptorDao.saveOrUpdateTaskDescriptor(td);
+		this.roleDefinitionDao.saveOrUpdateRole(rddef);
+		this.taskDefinitionDao.saveOrUpdateTaskDefinition(tddef);
+		this.stepDao.saveOrUpdateStep(s1);
+		this.stepDao.saveOrUpdateStep(s2);
+		
+		System.out.println("TestProcessPersistence -> ca sauvegarde") ;
+		
+		rddef.addRoleDescriptor(rd);
+		s1.addTaskDefinition(tddef);
+		s2.addTaskDefinition(tddef);
+		tddef.addTaskDescriptor(td);
+		rd.addAdditionalTask(td);
+		p.addBreakdownElement(rd);
+		p.addBreakdownElement(td);
+		
+		System.out.println("TestProcessPersistence -> ca update les objets") ;
+		
 	}
 
 	/**
