@@ -320,6 +320,7 @@ public class TreeBean {
      * @return tree model.
      */
     public DefaultTreeModel getModel() {
+    	this.buildTree();
         return model;
     }
 
