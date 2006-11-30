@@ -4,6 +4,7 @@ package woops2.hibernate.task ;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import woops2.model.task.Step;
@@ -20,7 +21,16 @@ public class StepDao extends HibernateDaoSupport {
 	 * @param _step
 	 */
 	public void saveOrUpdateStep(Step _step) {
-		this.getHibernateTemplate().saveOrUpdate(_step) ;
+		try{
+			this.getHibernateTemplate().saveOrUpdate(_step) ;
+			this.getHibernateTemplate().flush() ;
+
+		}
+		catch(DataIntegrityViolationException e){
+			System.out.print("save in StepDao: The Exception is " + e.getClass().getName() + "\n") ;
+			e.printStackTrace() ;
+			throw e ;
+		}
 	}
 	
 	/**
@@ -33,7 +43,7 @@ public class StepDao extends HibernateDaoSupport {
 		try {
 			loadAll.addAll(this.getHibernateTemplate().loadAll(Step.class));
 		} catch (Exception e) {
-			logger.error("### StepDao ### --> "+e);
+			logger.error("###StepDao ### --> "+e);
 		}
 		return loadAll ;
 	}

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import woops2.model.task.TaskDefinition;
@@ -22,7 +23,16 @@ public class TaskDefinitionDao extends HibernateDaoSupport {
 	 * @param _taskDefinition
 	 */
 	public void saveOrUpdateTaskDefinition(TaskDefinition _taskDefinition) {
-		this.getHibernateTemplate().saveOrUpdate(_taskDefinition) ;
+		try{
+			this.getHibernateTemplate().saveOrUpdate(_taskDefinition) ;
+			this.getHibernateTemplate().flush() ;
+
+		}
+		catch(DataIntegrityViolationException e){
+			System.out.print("save in TaskDefinitionDao: The Exception is " + e.getClass().getName() + "\n") ;
+			e.printStackTrace() ;
+			throw e ;
+		}
 	}
 
 	/**
@@ -34,7 +44,7 @@ public class TaskDefinitionDao extends HibernateDaoSupport {
 		try {
 			loadAll.addAll(this.getHibernateTemplate().loadAll(TaskDefinition.class));
 		} catch (DataAccessException e) {
-			logger.error("### TaskDefinitionDao ### --> "+e);
+			logger.error("###TaskDefinitionDao ### --> "+e);
 		}
 		return loadAll ;
 	}

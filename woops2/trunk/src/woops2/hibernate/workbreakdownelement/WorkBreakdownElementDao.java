@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import woops2.model.workbreakdownelement.WorkBreakdownElement;
@@ -24,7 +25,16 @@ public class WorkBreakdownElementDao extends HibernateDaoSupport {
 	 */
 	public void saveOrUpdateWorkBreakdownElement(
 			WorkBreakdownElement _workBreakdownElement) {
-		this.getHibernateTemplate().saveOrUpdate(_workBreakdownElement);
+		try{
+			this.getHibernateTemplate().saveOrUpdate(_workBreakdownElement) ;
+			this.getHibernateTemplate().flush() ;
+
+		}
+		catch(DataIntegrityViolationException e){
+			System.out.print("save in WBdEDao: The Exception is " + e.getClass().getName() + "\n") ;
+			e.printStackTrace() ;
+			throw e ;
+		}
 	}
 
 	/**
@@ -39,7 +49,7 @@ public class WorkBreakdownElementDao extends HibernateDaoSupport {
 			loadAll.addAll(this.getHibernateTemplate().loadAll(
 					WorkBreakdownElement.class));
 		} catch (DataAccessException e) {
-			logger.error("### WorkBreakdownElementDao ### --> " + e);
+			logger.error("###WorkBreakdownElementDao ### --> " + e);
 		}
 		return loadAll;
 	}

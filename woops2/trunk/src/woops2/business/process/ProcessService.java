@@ -37,7 +37,7 @@ import woops2.model.task.TaskDescriptor;
  * @author eperico
  * @author soosuske
  */
-@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class ProcessService {
 
 	private ActivityDao activityDao;
@@ -63,7 +63,7 @@ public class ProcessService {
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
 	public void TestSpelpParsingXML() {
-		File file = new File("C:\\scrum.xml");
+		File file = new File("~m1isb10/scrum.xml");
 		Process p = this.SpelpParsingXML(file);
 		System.out.println("Process = " + p);
 		this.SaveImportedProcess(p);
@@ -199,7 +199,7 @@ public class ProcessService {
 		// save in the database
 		/*
 		for (Element element : elements) {
-			try {
+			//try {
 				if (element instanceof Step) {
 					this.stepDao.saveOrUpdateStep((Step) element);
 					logger.debug("### SaveProcessService ### save Step ="+(Step) element+" id="+element.getId());
@@ -219,9 +219,9 @@ public class ProcessService {
 					this.processDao.saveOrUpdateProcess((Process) element);
 					logger.debug("### SaveProcessService ### save Process ="+(Process) element+" id="+element.getId());
 				}
-			} catch (Exception e) {
+			/*} catch (Exception e) {
 				logger.error("### SaveProcessService ### DataIntegrityViolationException : "+e);
-			}
+			}*/
 			elementSaved++;
 			logger.debug("### SaveProcessService ### elements saved = "+elementSaved);
 			}

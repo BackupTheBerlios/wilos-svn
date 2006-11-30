@@ -3,6 +3,7 @@ package woops2.hibernate.breakdownelement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import woops2.model.breakdownelement.BreakdownElement;
@@ -21,7 +22,16 @@ public class BreakdownElementDao extends HibernateDaoSupport {
 	 * @param _bde
 	 */
 	public void saveOrUpdateBreakdownElement(BreakdownElement _bde) {
-		this.getHibernateTemplate().saveOrUpdate(_bde);
+		try{
+			this.getHibernateTemplate().saveOrUpdate(_bde) ;
+			this.getHibernateTemplate().flush() ;
+
+		}
+		catch(DataIntegrityViolationException e){
+			System.out.print("save in BreakdownElementDao: The Exception is " + e.getClass().getName() + "\n") ;
+			e.printStackTrace() ;
+			throw e ;
+		}
 	}
 
 	/**
@@ -35,7 +45,7 @@ public class BreakdownElementDao extends HibernateDaoSupport {
 		try {
 			loadAll.addAll(this.getHibernateTemplate().loadAll(BreakdownElement.class));
 		} catch (Exception e) {
-			logger.error("### BreakdownElementDao ### --> "+e);
+			logger.error("###BreakdownElementDao ### --> "+e);
 		}
 		return loadAll;
 	}

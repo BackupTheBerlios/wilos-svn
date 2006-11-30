@@ -4,6 +4,7 @@ package woops2.hibernate.element ;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import woops2.model.element.Element;
@@ -21,7 +22,16 @@ public class ElementDao extends HibernateDaoSupport {
 	 * @param _element
 	 */
 	public void saveOrUpdateElement (Element _element) {
-		this.getHibernateTemplate().saveOrUpdate(_element) ;
+		try{
+			this.getHibernateTemplate().saveOrUpdate(_element) ;
+			this.getHibernateTemplate().flush() ;
+
+		}
+		catch(DataIntegrityViolationException e){
+			System.out.print("save in ElementDao: The Exception is " + e.getClass().getName() + "\n") ;
+			e.printStackTrace() ;
+			throw e ;
+		}
 	}
 
 	/**
@@ -35,7 +45,7 @@ public class ElementDao extends HibernateDaoSupport {
 		try {
 			loadAll.addAll(this.getHibernateTemplate().loadAll(Element.class));
 		} catch (Exception e) {
-			logger.error("### ElementDao ### --> "+e);
+			logger.error("###ElementDao ### --> "+e);
 		}
 		return loadAll ;
 	}

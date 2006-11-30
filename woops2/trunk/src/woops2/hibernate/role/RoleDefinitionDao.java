@@ -4,6 +4,7 @@ package woops2.hibernate.role ;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import woops2.model.role.RoleDefinition;
@@ -21,7 +22,16 @@ public class RoleDefinitionDao extends HibernateDaoSupport {
 	 * @param _roleDefinition
 	 */
 	public void saveOrUpdateRole(RoleDefinition _roleDefinition) {
-		this.getHibernateTemplate().saveOrUpdate(_roleDefinition) ;
+		try{
+			this.getHibernateTemplate().saveOrUpdate(_roleDefinition) ;
+			this.getHibernateTemplate().flush() ;
+
+		}
+		catch(DataIntegrityViolationException e){
+			System.out.print("save in RoleDefinitionDao: The Exception is " + e.getClass().getName() + "\n") ;
+			e.printStackTrace() ;
+			throw e ;
+		}	
 	}
 
 	/**
@@ -35,7 +45,7 @@ public class RoleDefinitionDao extends HibernateDaoSupport {
 		try {
 			loadAll.addAll(this.getHibernateTemplate().loadAll(RoleDefinition.class));
 		} catch (Exception e) {
-			logger.error("### RoleDefinitionDao ### --> "+e);
+			logger.error("###RoleDefinitionDao ### --> "+e);
 		}
 		return loadAll ;
 	}

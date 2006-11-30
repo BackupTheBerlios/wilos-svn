@@ -3,6 +3,7 @@ package woops2.hibernate.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import woops2.model.activity.Activity;
@@ -22,9 +23,18 @@ public class ActivityDao extends HibernateDaoSupport {
 	 * @param _activity
 	 */
 	public void saveOrUpdateActivity(Activity _activity) {
-		this.getHibernateTemplate().saveOrUpdate(_activity);
-	}
+		try{
+			this.getHibernateTemplate().saveOrUpdate(_activity) ;
+			this.getHibernateTemplate().flush() ;
 
+		}
+		catch(DataIntegrityViolationException e){
+			System.out.print("save in ActivityDao: The Exception is " + e.getClass().getName() + "\n") ;
+			e.printStackTrace() ;
+			throw e ;
+		}
+	}			
+			
 	/**
 	 * Return a list of activities
 	 * 
@@ -36,7 +46,7 @@ public class ActivityDao extends HibernateDaoSupport {
 		try {
 			loadAll.addAll(this.getHibernateTemplate().loadAll(Activity.class));
 		} catch (Exception e) {
-			logger.error("### ActivityDao ### --> " + e);
+			logger.error("###ActivityDao ### --> " + e);
 		}
 		return loadAll;
 	}

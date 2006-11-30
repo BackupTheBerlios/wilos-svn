@@ -3,6 +3,7 @@ package woops2.hibernate.task;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import woops2.model.task.TaskDescriptor;
@@ -22,7 +23,16 @@ public class TaskDescriptorDao extends HibernateDaoSupport {
 	 * @param _taskdescriptor
 	 */
 	public void saveOrUpdateTaskDescriptor(TaskDescriptor _taskdescriptor) {
-		this.getHibernateTemplate().saveOrUpdate(_taskdescriptor);
+		try{
+			this.getHibernateTemplate().saveOrUpdate(_taskdescriptor) ;
+			this.getHibernateTemplate().flush() ;
+
+		}
+		catch(DataIntegrityViolationException e){
+			System.out.print("save in TaskDescriptorDao The Exception is " + e.getClass().getName() + "\n") ;
+			e.printStackTrace() ;
+			throw e ;
+		}
 	}
 
 	/**
@@ -36,7 +46,7 @@ public class TaskDescriptorDao extends HibernateDaoSupport {
 		try {
 			loadAll.addAll(this.getHibernateTemplate().loadAll(TaskDescriptor.class));
 		} catch (Exception e) {
-			logger.error("### TaskDescriptorDao ### --> "+e);
+			logger.error("###TaskDescriptorDao ### --> "+e);
 		}
 		return loadAll;
 	}
