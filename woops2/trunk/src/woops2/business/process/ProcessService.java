@@ -228,6 +228,70 @@ public class ProcessService {
 		
 		logger.debug("### SaveProcessService ### end processing");
 	}
+	
+	/**
+	 * 
+	 * TODO Method description
+	 * test save of collections' process
+	 * @param _process
+	 */
+	public void TestSaveCollectionsProcess(Process _process) {
+		
+		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
+		bdes.addAll(_process.getBreakDownElements());
+
+		List<Step> stepList = new ArrayList<Step>();
+		List<TaskDefinition> taskDefinitionList = new ArrayList<TaskDefinition>();
+		List<TaskDescriptor> taskDescriptorList = new ArrayList<TaskDescriptor>();
+		List<RoleDefinition> roleDefinitionList = new ArrayList<RoleDefinition>();
+		List<RoleDescriptor> roleDescriptorList = new ArrayList<RoleDescriptor>();
+		List<Process> processList = new ArrayList<Process>();
+		
+		int nbTD = 0;
+		// add element of process in elements
+		for (BreakdownElement breakdownElement : bdes) {
+			logger.debug("### TestSaveCollectionsProcess ### for bdes -> bde ="+breakdownElement);
+			if (breakdownElement instanceof TaskDescriptor) {
+				logger.debug("### TestSaveCollectionsProcess ### bde instance of TaskDescriptor ="+breakdownElement);
+				TaskDescriptor taskDescriptor = (TaskDescriptor) breakdownElement;
+				TaskDefinition taskDefinition = taskDescriptor.getTaskDefinition();
+				
+				if (taskDefinition != null) {
+					for (Step step : taskDefinition.getSteps()) {
+						logger.debug("### SaveProcessService ### for steps ... ="+taskDefinition.getSteps());
+						if (step != null)
+							stepList.add(step);
+							logger.debug("TestSaveCollectionsProcess: stepList -> " + stepList);
+							logger.debug("TestSaveCollectionsProcess: stepList.size -> " + stepList.size());
+					}
+					taskDefinitionList.add(taskDefinition);
+					logger.debug("TestSaveCollectionsProcess: taskDefinitionList -> " + taskDefinitionList);
+					logger.debug("TestSaveCollectionsProcess: taskDefinitionList.size -> " + taskDefinitionList.size());
+				}
+				taskDescriptorList.add(taskDescriptor);
+				nbTD ++;
+				logger.debug("TestSaveCollectionsProcess: taskDescriptorList -> " + taskDescriptorList);
+				logger.debug("TestSaveCollectionsProcess: taskDescriptorList.size -> " + taskDescriptorList.size());
+				
+			} else if (breakdownElement instanceof RoleDescriptor) {
+				logger.debug("### SaveProcessService ### breakdownElement instance of RoleDescriptor ="+breakdownElement);
+				RoleDescriptor roleDescriptor = (RoleDescriptor) breakdownElement;
+				roleDescriptorList.add(roleDescriptor);
+				logger.debug("TestSaveCollectionsProcess: roleDescriptorList -> " + roleDescriptorList);
+				logger.debug("TestSaveCollectionsProcess: roleDescriptorList.size -> " + roleDescriptorList.size());
+								
+				roleDefinitionList.add(roleDescriptor.getRoleDefinition());
+				logger.debug("TestSaveCollectionsProcess: roleDefinitionList -> " + roleDefinitionList);
+				logger.debug("TestSaveCollectionsProcess: roleDefinitionList.size -> " + roleDefinitionList.size());				
+			}
+			else {
+				logger.error("### SaveProcessService ### unkown type of object from process !");
+			}
+		}
+		processList.add(_process);
+		logger.debug("TestSaveCollectionsProcess: processList -> " + processList);
+		logger.debug("TestSaveCollectionsProcess: processList.size -> " + processList.size());
+	}
 
 	/**
 	 * Return processes list
