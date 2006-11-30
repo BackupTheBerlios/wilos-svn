@@ -38,6 +38,16 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.jsf</url-pattern>
 	</servlet-mapping>
+	
+	<!-- Filters -->
+	<filter>
+	     <filter-name>AuthentificationFilter</filter-name>
+	     <filter-class>woops2.presentation.filters.AuthentificationFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	     <filter-name>AuthentificationFilter</filter-name>
+	     <servlet-name>Faces Servlet</servlet-name>
+ 	</filter-mapping>
 
 	<!-- Welcome files -->
 	<welcome-file-list>

@@ -1,9 +1,13 @@
 
 package woops2.presentation.wilosuser ;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+
 import org.apache.commons.logging.Log ;
 import org.apache.commons.logging.LogFactory ;
 
+import woops2.business.wilosuser.LoginService;
 import woops2.business.wilosuser.ProjectDirectorService ;
 import woops2.model.wilosuser.ProjectDirector ;
 
@@ -17,6 +21,8 @@ public class ProjectDirectorBean {
 	private ProjectDirectorService projectDirectorService ;
 
 	private ProjectDirector projectDirector ;
+	
+	private LoginService loginService ;
 
 	private String passwordConfirmation ;
 
@@ -38,7 +44,18 @@ public class ProjectDirectorBean {
 	 */
 	public String saveProjectDirectorAction() {
 		String url = "admin_main" ;
-		this.projectDirectorService.saveProjectDirector(this.projectDirector) ;
+		if(this.loginService.loginExist(this.projectDirector.getLogin())){
+			FacesMessage message = new FacesMessage() ;
+			message.setDetail("Ce Login existe deja") ;
+			message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			FacesContext facesContext = FacesContext.getCurrentInstance() ;
+			facesContext.addMessage(null, message) ;
+			url = "projectDirector_create" ;
+		}
+		else{
+			this.projectDirectorService.saveProjectDirector(this.projectDirector) ;
+			url = "admin_main" ;
+		}
 		return url ;
 	}
 
@@ -92,6 +109,24 @@ public class ProjectDirectorBean {
 	 */
 	public void setPasswordConfirmation(String passwordConfirmation) {
 		this.passwordConfirmation = passwordConfirmation;
+	}
+
+	/**
+	 * Getter of loginService.
+	 *
+	 * @return the loginService.
+	 */
+	public LoginService getLoginService() {
+		return this.loginService ;
+	}
+
+	/**
+	 * Setter of loginService.
+	 *
+	 * @param _loginService The loginService to set.
+	 */
+	public void setLoginService(LoginService _loginService) {
+		this.loginService = _loginService ;
 	}
 
 }

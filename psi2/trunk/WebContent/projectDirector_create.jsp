@@ -9,32 +9,28 @@
 	<h:form id="form">
 		<h1>Wilos - Administration</h1>
 		<h:outputText value="- Ajout d'un nouveau Project Director -" style="h1" />
- 
-		<h:panelGrid columns="3">
+ 		<h:messages style="color:red;" showDetail="true"/>
+ 		
+		<h:panelGrid columns="2">
 			<h:outputText value="Nom" />
 			<h:inputText id="nom" value="#{ProjectDirectorBean.projectDirector.name}" required="true"/>
-			<h:message for="nom" style="color:red;" showDetail="true"/>
 					
 			<h:outputText value="Prénom"/>
 			<h:inputText id="prenom" value="#{ProjectDirectorBean.projectDirector.firstname}" required="true"/>
-			<h:message for="prenom" style="color:red;" showDetail="true"/>
 
 			<h:outputText value="Pseudo"/>
 			<h:inputText id="login" value="#{ProjectDirectorBean.projectDirector.login}" required="true"/>
-			<h:message for="login" style="color:red;" showDetail="true"/>
 			
 			<h:outputText value="Mot de passe"/>
 			<h:inputSecret id="equal1" value="#{ProjectDirectorBean.projectDirector.password}" required="true">
 				<f:validateLength minimum="6" />
-			</h:inputSecret>		
-			<h:message for="equal1" style="color:red;" showDetail="true"/>
+			</h:inputSecret>
 			
 			<h:outputText value="Confirmer le mot de passe"/>
 			<h:inputSecret id="equal2" value="#{ProjectDirectorBean.passwordConfirmation}">
 				<f:validateLength minimum="6" />
 				<f:validator validatorId="equalValidator"/>
 			</h:inputSecret>
-			<h:message for="equal2" style="color:red;" showDetail="true"/>
 			
 		</h:panelGrid>
 		<h:panelGrid columns="2">

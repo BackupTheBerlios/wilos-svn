@@ -46,6 +46,10 @@
 			<property-name>processManagerService</property-name>
 			<value>#{ProcessManagerService}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>loginService</property-name>
+			<value>#{LoginService}</value>
+		</managed-property>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>ProjectDirectorBean</managed-bean-name>
@@ -54,6 +58,10 @@
 		<managed-property>
 			<property-name>projectDirectorService</property-name>
 			<value>#{ProjectDirectorService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>loginService</property-name>
+			<value>#{LoginService}</value>
 		</managed-property>
 	</managed-bean>
 	

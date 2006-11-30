@@ -1,19 +1,20 @@
-package woops2.presentation.wilosuser;
 
-import java.util.ArrayList;
-import java.util.List;
+package woops2.presentation.wilosuser ;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
+import java.util.ArrayList ;
+import java.util.List ;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import javax.faces.application.FacesMessage ;
+import javax.faces.context.FacesContext ;
+import javax.faces.event.ActionEvent ;
 
-import woops2.business.wilosuser.LoginService;
-import woops2.business.wilosuser.ParticipantService;
-import woops2.model.role.RoleDescriptor;
-import woops2.model.wilosuser.Participant;
+import org.apache.commons.logging.Log ;
+import org.apache.commons.logging.LogFactory ;
+
+import woops2.business.wilosuser.LoginService ;
+import woops2.business.wilosuser.ParticipantService ;
+import woops2.model.role.RoleDescriptor ;
+import woops2.model.wilosuser.Participant ;
 
 /**
  * Managed-Bean link to participant_logging.jsp
@@ -22,14 +23,17 @@ import woops2.model.wilosuser.Participant;
  * @author Mikamikaze
  * @author Sakamakak
  */
-public class ParticipantBean{
+public class ParticipantBean {
 
-	private List<RoleDescriptor> rolesList;
+	private List<RoleDescriptor> rolesList ;
+
 	private ParticipantService participantService ;
-	private LoginService loginService;
-	
+
+	private LoginService loginService ;
+
 	private Participant participant ;
-	private String passwordConfirmation;
+
+	private String passwordConfirmation ;
 
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
@@ -48,37 +52,35 @@ public class ParticipantBean{
 	 * @return
 	 */
 	public String saveParticipantAction() {
-		String url = "connect";
-		boolean loginExists = this.loginService.loginExist(this.participant.getLogin());
-		if(loginExists == true)
-		{
+		String url = "connect" ;
+		boolean loginExists = this.loginService.loginExist(this.participant.getLogin()) ;
+		if(loginExists == true){
 			FacesMessage message = new FacesMessage() ;
 			message.setDetail("Ce Login existe deja") ;
 			message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 			FacesContext facesContext = FacesContext.getCurrentInstance() ;
 			facesContext.addMessage(null, message) ;
-			url = "createParticipant" ;		
+			url = "createParticipant" ;
 		}
-		else
-		{
+		else{
 			this.participantService.saveParticipant(this.participant) ;
-			url = "connect";
+			url = "connect" ;
 		}
 		return url ;
 	}
-	
-	public void testTransactionActionListener(ActionEvent e){
-		//this.participantManager.Test();
+
+	public void testTransactionActionListener(ActionEvent e) {
+		// this.participantManager.Test();
 	}
-	
+
 	/**
 	 * Getter of rolesList.
 	 * 
 	 * @return the rolesList.
 	 */
 	public List<RoleDescriptor> getRolesList() {
-		this.rolesList = new ArrayList<RoleDescriptor>();
-		rolesList.addAll(this.participantService.getRolesList());
+		this.rolesList = new ArrayList<RoleDescriptor>() ;
+		rolesList.addAll(this.participantService.getRolesList()) ;
 		this.logger.debug("roles list =" + this.rolesList) ;
 		return this.rolesList ;
 	}
@@ -123,11 +125,11 @@ public class ParticipantBean{
 	}
 
 	public String getPasswordConfirmation() {
-		return passwordConfirmation;
+		return passwordConfirmation ;
 	}
 
 	public void setPasswordConfirmation(String passwordConfirmation) {
-		this.passwordConfirmation = passwordConfirmation;
+		this.passwordConfirmation = passwordConfirmation ;
 	}
 
 	public LoginService getLoginService() {
@@ -139,4 +141,3 @@ public class ParticipantBean{
 	}
 
 }
-

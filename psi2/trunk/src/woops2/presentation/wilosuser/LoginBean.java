@@ -1,10 +1,10 @@
 
 package woops2.presentation.wilosuser ;
 
-import java.io.Serializable;
-
 import javax.faces.application.FacesMessage ;
 import javax.faces.context.FacesContext ;
+
+import javax.servlet.http.* ;
 
 import woops2.business.wilosuser.LoginService ;
 import woops2.model.wilosuser.Administrator ;
@@ -20,7 +20,7 @@ import woops2.model.wilosuser.WilosUser ;
  * This class represents ... TODO
  * 
  */
-public class LoginBean implements Serializable {
+public class LoginBean {
 
 	private String login ;
 
@@ -95,16 +95,24 @@ public class LoginBean implements Serializable {
 		String url = "" ;
 		WilosUser user = this.loginService.getAuthentifiedUser(this.login, this.password) ;
 		if(user != null){
+			HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
+			HttpSession sess = req.getSession() ;
+			sess.setAttribute("wilosUser",user) ;
+			
 			if(user instanceof Participant){
+				sess.setAttribute("role","participant") ;
 				url = "welcome" ;
 			}
 			else if(user instanceof ProcessManager){
+				sess.setAttribute("role","processManager") ;
 				url = "welcome" ;
 			}
 			else if(user instanceof ProjectDirector){
+				sess.setAttribute("role","projectDirector") ;
 				url = "welcome" ;
 			}
 			else if(user instanceof Administrator){
+				sess.setAttribute("role","admin") ;
 				url = "admin_main" ;
 			}
 		}

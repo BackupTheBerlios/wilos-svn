@@ -1,9 +1,13 @@
 
 package woops2.presentation.wilosuser ;
 
+import javax.faces.application.FacesMessage ;
+import javax.faces.context.FacesContext ;
+
 import org.apache.commons.logging.Log ;
 import org.apache.commons.logging.LogFactory ;
 
+import woops2.business.wilosuser.LoginService ;
 import woops2.business.wilosuser.ProcessManagerService ;
 import woops2.model.wilosuser.ProcessManager ;
 
@@ -17,6 +21,8 @@ public class ProcessManagerBean {
 	private ProcessManagerService processManagerService ;
 
 	private ProcessManager processManager ;
+
+	private LoginService loginService ;
 
 	private String passwordConfirmation ;
 
@@ -38,7 +44,18 @@ public class ProcessManagerBean {
 	 */
 	public String saveProcessManagerAction() {
 		String url = "admin_main" ;
-		this.processManagerService.saveProcessManager(this.processManager) ;
+		if(this.loginService.loginExist(this.processManager.getLogin())){
+			FacesMessage message = new FacesMessage() ;
+			message.setDetail("Ce Login existe deja") ;
+			message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			FacesContext facesContext = FacesContext.getCurrentInstance() ;
+			facesContext.addMessage(null, message) ;
+			url = "processManager_create" ;
+		}
+		else{
+			this.processManagerService.saveProcessManager(this.processManager) ;
+			url = "admin_main" ;
+		}
 		return url ;
 	}
 
@@ -84,14 +101,32 @@ public class ProcessManagerBean {
 	 * @return
 	 */
 	public String getPasswordConfirmation() {
-		return passwordConfirmation;
+		return passwordConfirmation ;
 	}
 
 	/**
 	 * @param passwordConfirmation
 	 */
 	public void setPasswordConfirmation(String passwordConfirmation) {
-		this.passwordConfirmation = passwordConfirmation;
+		this.passwordConfirmation = passwordConfirmation ;
+	}
+
+	/**
+	 * Getter of loginService.
+	 *
+	 * @return the loginService.
+	 */
+	public LoginService getLoginService() {
+		return this.loginService ;
+	}
+
+	/**
+	 * Setter of loginService.
+	 *
+	 * @param _loginService The loginService to set.
+	 */
+	public void setLoginService(LoginService _loginService) {
+		this.loginService = _loginService ;
 	}
 
 }

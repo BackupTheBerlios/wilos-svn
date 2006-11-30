@@ -73,18 +73,18 @@ public class LoginService {
 	 */
 	public boolean loginExist(String _login) {
 		boolean found = false;
+		String userLogin ;
 		Set<WilosUser> wilosUsers = this.wilosUserDao.getAllWilosUsers() ;
 		for(WilosUser user : wilosUsers)
 		{
-			if(user.getLogin().equals(_login))
+			userLogin = user.getLogin().toUpperCase();
+			if(userLogin.equals(_login.toUpperCase()))
 			{
-				this.logger.debug("### new login already exists ###") ;
-				found = true ;
+				this.logger.debug("### new login "+userLogin+" already exists ###") ;
+				return true ;
 			}
 			else{
-				this.logger.debug("### new login is ok ###") ;
-				found = false;
-				
+				this.logger.debug("### new login "+userLogin+" is ok ###") ;
 			}
 		}
 		return found;
