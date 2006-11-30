@@ -221,7 +221,7 @@ public class ProcessService {
 				}
 			/*} catch (Exception e) {
 				logger.error("### SaveProcessService ### DataIntegrityViolationException : "+e);
-			}*/
+			}
 			elementSaved++;
 			logger.debug("### SaveProcessService ### elements saved = "+elementSaved);
 			}
