@@ -65,5 +65,31 @@ public class LoginService {
 		}
 		return null ;
 	}
+	
+	/**
+	 * Check if the login is already used
+	 *
+	 * @param _login
+	 * @return True is the login is already present 
+	 */
+	public boolean loginExist(String _login) {
+		boolean found = false;
+		Set<WilosUser> wilosUsers = this.wilosUserDao.getAllWilosUsers() ;
+		for(WilosUser user : wilosUsers)
+		{
+			if(user.getLogin().equals(_login))
+			{
+				this.logger.debug("### new login already exists ###") ;
+				found = true ;
+			}
+			else{
+				this.logger.debug("### new login is ok ###") ;
+				found = false;
+				
+			}
+		}
+		return found;
+	}
+
 
 }

@@ -33,6 +33,10 @@
 			<property-name>participantService</property-name>
 			<value>#{ParticipantService}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>loginService</property-name>
+			<value>#{LoginService}</value>
+		</managed-property>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>ProcessManagerViewer</managed-bean-name>

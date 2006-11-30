@@ -3,11 +3,14 @@ package woops2.presentation.wilosuser;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import woops2.business.wilosuser.LoginService;
 import woops2.business.wilosuser.ParticipantService;
 import woops2.model.role.RoleDescriptor;
 import woops2.model.wilosuser.Participant;
@@ -22,9 +25,9 @@ import woops2.model.wilosuser.Participant;
 public class ParticipantViewer{
 
 	private List<RoleDescriptor> rolesList;
-	
 	private ParticipantService participantService ;
-
+	private LoginService loginService;
+	
 	private Participant participant ;
 	private String passwordConfirmation;
 
@@ -45,8 +48,22 @@ public class ParticipantViewer{
 	 * @return
 	 */
 	public String saveParticipantAction() {
-		String url = "connect" ;
-		this.participantService.saveParticipant(this.participant) ;
+		String url = "connect";
+		boolean loginExists = this.loginService.loginExist(this.participant.getLogin());
+		if(loginExists == true)
+		{
+			FacesMessage message = new FacesMessage() ;
+			message.setDetail("Ce Login existe deja") ;
+			message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			FacesContext facesContext = FacesContext.getCurrentInstance() ;
+			facesContext.addMessage(null, message) ;
+			url = "createParticipant" ;		
+		}
+		else
+		{
+			this.participantService.saveParticipant(this.participant) ;
+			url = "connect";
+		}
 		return url ;
 	}
 	
@@ -111,6 +128,14 @@ public class ParticipantViewer{
 
 	public void setPasswordConfirmation(String passwordConfirmation) {
 		this.passwordConfirmation = passwordConfirmation;
+	}
+
+	public LoginService getLoginService() {
+		return this.loginService ;
+	}
+
+	public void setLoginService(LoginService _loginService) {
+		this.loginService = _loginService ;
 	}
 
 }

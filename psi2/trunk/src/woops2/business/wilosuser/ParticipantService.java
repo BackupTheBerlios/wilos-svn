@@ -9,8 +9,10 @@ import org.springframework.transaction.annotation.Propagation ;
 import org.springframework.transaction.annotation.Transactional ;
 
 import woops2.hibernate.wilosuser.ParticipantDao;
+import woops2.hibernate.wilosuser.WilosUserDao;
 import woops2.model.role.RoleDescriptor ;
 import woops2.model.wilosuser.Participant;
+import woops2.model.wilosuser.WilosUser;
 
 /**
  * This class represents ... TODO
@@ -35,25 +37,7 @@ public class ParticipantService {
 	public Set<RoleDescriptor> getRolesList() {
 		return this.participantDao.getAllRoles();
 	}
-
 	
-	/**
-	 * Check if the login is already used
-	 *
-	 * @param _login
-	 * @return True is the login is already present 
-	 */
-	public boolean loginExist(String _login) {
-		boolean found = false;
-		Set<Participant> setParticipant = this.participantDao.getAllParticipants() ;
-		for (Participant parti : setParticipant) {
-			if(parti.getLogin().equals(_login)){
-				found = true;
-			}	
-		}
-		return found;
-	}
-
 	/**
 	 * Save participant
 	 * 
@@ -71,5 +55,9 @@ public class ParticipantService {
 	 */
 	public void setParticipantDao(ParticipantDao _participantDao) {
 		this.participantDao = _participantDao ;
+	}
+
+	public ParticipantDao getParticipantDao() {
+		return this.participantDao ;
 	}
 }
