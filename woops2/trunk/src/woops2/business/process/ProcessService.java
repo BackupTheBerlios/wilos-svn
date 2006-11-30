@@ -3,7 +3,6 @@ package woops2.business.process;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -238,6 +237,27 @@ public class ProcessService {
 	@Transactional(readOnly = true)
 	public List<Process> getProcessesList() {
 		return this.processDao.getAllProcesses();
+	}
+	
+	
+	public String TestPersistence(){
+		Process p = new Process();
+		p.setIdEPF("epf-test");
+		p.setName("test_process");
+		logger.debug("TestPersistence p => "+p+" id="+p.getId());
+		logger.debug("TestPersistence p => "+p+" id="+p.getId());
+		logger.debug("#### p -> "+p.getIdEPF()+" "+p.getName());
+		this.processDao.saveOrUpdateProcess(p);
+		logger.debug("TestPersistence p => "+p+" id="+p.getId());
+		logger.debug("#### p -> "+p.getIdEPF()+" "+p.getName());
+		return p.getId();
+	}
+	
+	public void TestProcessPersistence(String _id){
+		
+		Process p = this.processDao.getProcess(_id);
+		logger.debug("TestProcessPersistence p => "+p+" id="+p.getId());
+		logger.debug("#### p -> "+p.getIdEPF()+" "+p.getName());
 	}
 
 	/**
