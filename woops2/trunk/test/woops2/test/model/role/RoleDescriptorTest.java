@@ -288,7 +288,7 @@ public class RoleDescriptorTest extends TestCase {
 	public void testAddParticipant() {
 		Participant participant = new Participant() ;
 		
-		this.roleDescriptor.addParticpant(participant) ;
+		this.roleDescriptor.addParticipant(participant) ;
 
 		assertFalse(this.roleDescriptor.getParticipants().isEmpty()) ;
 		assertFalse(participant.getRolesListForAProject().isEmpty()) ;
@@ -326,7 +326,7 @@ public class RoleDescriptorTest extends TestCase {
 		task.setName(NAME) ;
 		task.setDescription(DESCRIPTION) ;
 
-		this.roleDescriptor.addParticpant(task) ;
+		this.roleDescriptor.addParticipant(task) ;
 		assertFalse(this.roleDescriptor.getParticipants().isEmpty()) ;
 		assertFalse(task.getRolesListForAProject().isEmpty());
 		

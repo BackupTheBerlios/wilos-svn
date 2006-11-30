@@ -233,7 +233,7 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 		this.additionalTasks.clear() ;
 	}
 
-	public void addParticpant(Participant _participant) {
+	public void addParticipant(Participant _participant) {
 		this.participants.add(_participant) ;
 		_participant.getRolesListForAProject().add(this) ;
 	}

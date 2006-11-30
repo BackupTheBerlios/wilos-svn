@@ -3,10 +3,14 @@ package woops2.presentation.activity;
 import java.io.File;
 import java.util.EventObject;
 
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.Resource;
+import org.springframework.web.jsf.FacesContextUtils;
 
 import woops2.business.process.ProcessService;
 import woops2.model.process.Process;
@@ -77,6 +81,11 @@ public class XmlFileImportViewer {
 		Process p = processService.SpelpParsingXML(file);
 		//TODO save the process
 		//processService.SaveImportedProcess(p);
+		/*
+		ApplicationContext ctx = FacesContextUtils.getWebApplicationContext(FacesContext.getCurrentInstance());
+		Resource r = ctx.getResource("");
+		r.getInputStream()
+		*/
 	}
 
 	public void progress(EventObject event) {
