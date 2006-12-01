@@ -3,9 +3,8 @@
 	Ant Web Archive Script Building
 	Arnaud.GIULIANI
 -->
-
 <!-- The target archive will be created in the dist folder -->
-<project name="Woops2 WAR Builder" default="build.war" basedir="../">
+<project name="Woops2 WAR Builder/Manager" default="build.war" basedir="../">
 
 	<!-- Configure the context path for this application -->
 	<property name="project.name" value="Woops2" />
@@ -16,8 +15,15 @@
 	<property name="web.dir" value="${basedir}/WebContent" />
 	<property name="lib.dir" value="${basedir}/WebContent/WEB-INF/lib" />
 	<property name="dist.dir" value="${basedir}/dist" />
-	<property file="tomcat.properties" />
+	<property file="${ant.dir}/tomcat.properties"  />
 	
+	<!-- Taches Tomcat
+	<taskdef file="${ant.dir}/tomcatTask.properties">
+		<classpath>
+			<pathelement path="${tomcat.dir}/server/lib/catalina-ant.jar"/>
+		</classpath>
+	</taskdef>  -->
+
 	<!-- Libraries Import -->
 	<path id="classpath">
 		<fileset dir="${lib.dir}">
@@ -25,12 +31,6 @@
 		</fileset>
 	</path>
 
-	<!-- <taskdef file="${ant.dir}/tomcatTasks.properties" classpathref="classpath" /> -->
-	
-	<taskdef name="deploy"
-	           classname="org.apache.catalina.ant.DeployTask"
-	           classpathref="classpath" />
-	
 	<!-- Building space clean up -->
 	<target name="clean" depends="clean_dist">
 		<delete dir="${build.dir}" />
@@ -53,6 +53,8 @@
 		<mkdir dir="${build.dir}/${project.name}/css" />
 		<mkdir dir="${dist.dir}" />
 	</target>
+
+
 
 	<!-- Copie des Jar et classes -->
 	<target name="copyJars">
@@ -129,14 +131,91 @@
 		</war>
 		<delete dir="${build.dir}" />
 	</target>
-	
+
+	<!--
 	<target name="tomcat_deploy" depends="build.war">
-	        <deploy url="${tomcat.manager.url}"
+		<deploy url="${tomcat.manager.url}"
 	            username="${tomcat.username}"
 	            password="${tomcat.password}"
 	            path="/${project.name}}"
 	            war="file:${build.dir}/${project.name}/"/>
-	    </target>
+	</target> -->
+
+	<!-- Copie du fichier dans tomcat -->
+	<target name="tomcat_clean_and_copy_2_tomcat" depends="build.war">
+		<!-- Suppression anciens fichiers -->
+		<delete dir="${tomcat.webapps.dir}/${project.name}" />
+		<delete file="${tomcat.webapps.dir}/${project.name}.war" />
+		<!-- Copie des nouveaux fichiers -->
+		<copy todir="${tomcat.webapps.dir}">
+			<fileset dir="${tomcat.webapps.dir}">
+				<include name="*.war" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- Lancement de Tomcat -->
+	<target name="tomcat_run_win" depends="tomcat_clean_and_copy_2_tomcat">
+		<exec command="${tomcat.bin.dir}/startup.bat"
+				dir="${tomcat.bin.dir}" />
+	</target>
+
+	<target name="tomcat_run_linux" depends="tomcat_clean_and_copy_2_tomcat">
+		<exec command="${tomcat.bin.dir}/startup.sh"
+					dir="${tomcat.bin.dir}" />
+	</target>
+
+	<!-- Suppression repertoire de logs 
+		<target name="clearLogs">
+			<delete dir="${project.logs}" />
+			<mkdir dir="${project.logs}" />
+		</target> -->
+
+	<!-- =============================================================================
+
+	<target name="deploy" description="Install application in Tomcat"
+	        depends="build.war">
+		<deploy url="${tomcat.manager.url}"
+	            username="${tomcat.username}"
+	            password="${tomcat.password}"
+	            path="/${project.name}"
+	            war="file:${dist.dir}/${project.name}.war"/>
+	</target>
+
+	<target name="tomcat_undeploy" description="Remove application in Tomcat">
+		<undeploy url="${tomcat.manager.url}"
+	            username="${tomcat.username}"
+	            password="${tomcat.password}"
+	            path="/${project.name}"/>
+	</target>
+
+	<target name="tomcat_reload" description="Reload application in Tomcat">
+		<reload url="${tomcat.manager.url}"
+	            username="${tomcat.username}"
+	            password="${tomcat.password}"
+	            path="/${project.name}"/>
+	</target>
+
+	<target name="tomcat_start" description="Start Tomcat application">
+		<start url="${tomcat.manager.url}"
+	            username="${tomcat.username}"
+	            password="${tomcat.password}"
+	            path="/${project.name}"/>
+	</target>
+
+	<target name="tomcat_stop" description="Stop Tomcat application">
+		<stop url="${tomcat.manager.url}"
+	            username="${tomcat.username}"
+	            password="${tomcat.password}"
+	            path="/${project.name}"/>
+	</target>
+
+	<target name="tomcat_listapp" description="List Tomcat applications">
+		<list url="${tomcat.manager.url}"
+	            username="${tomcat.username}"
+	            password="${tomcat.password}"/>
+	</target>
+	-->
 
 </project>
 
