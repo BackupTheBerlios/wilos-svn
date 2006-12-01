@@ -71,10 +71,10 @@ public class XmlFileImportBean {
 		if (inputFile.getStatus() == InputFile.UNKNOWN_SIZE) {
 			inputFile.getFileInfo().getException().printStackTrace();
 		}
-		File destFile = new File("/upload/"+file.getName());
+		//File destFile = new File("/upload/"+file.getName());
 		logger.debug("### fichier = "+file.getPath()+" => "+file.getName()+" ###");
-		file.renameTo(destFile);
-		logger.debug("### Nouveau fichier = "+destFile.getPath()+" => "+destFile.getName()+" ###");
+		//file.renameTo(destFile);
+		//logger.debug("### Nouveau fichier = "+destFile.getPath()+" => "+destFile.getName()+" ###");
 		//String id = null;
 		//TreeBean treeBean = null;
 		try {
