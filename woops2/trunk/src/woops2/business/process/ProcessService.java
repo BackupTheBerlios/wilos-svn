@@ -2,7 +2,9 @@ package woops2.business.process;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -240,7 +242,8 @@ public class ProcessService {
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 		bdes.addAll(_process.getBreakDownElements());
 
-		List<Step> stepList = new ArrayList<Step>();
+		Set<Step> stepList = new HashSet<Step>();
+		Set<Step> stepListTmp = new HashSet<Step>();
 		List<TaskDefinition> taskDefinitionList = new ArrayList<TaskDefinition>();
 		List<TaskDescriptor> taskDescriptorList = new ArrayList<TaskDescriptor>();
 		List<RoleDefinition> roleDefinitionList = new ArrayList<RoleDefinition>();
@@ -254,19 +257,18 @@ public class ProcessService {
 			if (breakdownElement instanceof TaskDescriptor) {
 				logger.debug("### TestSaveCollectionsProcess ### bde instance of TaskDescriptor ="+breakdownElement);
 				TaskDescriptor taskDescriptor = (TaskDescriptor) breakdownElement;
-				//taskDescriptor.getAdditionalRoles().clear();
 				TaskDefinition taskDefinition = taskDescriptor.getTaskDefinition();
-				//taskDefinition.getTaskDescriptors().clear();
 				
 				if (taskDefinition != null) {
 					for (Step step : taskDefinition.getSteps()) {
 						logger.debug("### SaveProcessService ### for steps ... ="+taskDefinition.getSteps());
 						if (step != null)
 							stepList.add(step);
+							stepListTmp.add(step);
 							logger.debug("TestSaveCollectionsProcess: stepList -> " + stepList);
 							logger.debug("TestSaveCollectionsProcess: stepList.size -> " + stepList.size());
 					}
-					//taskDefinition.getSteps().clear();
+
 					taskDefinitionList.add(taskDefinition);
 					logger.debug("TestSaveCollectionsProcess: taskDefinitionList -> " + taskDefinitionList);
 					logger.debug("TestSaveCollectionsProcess: taskDefinitionList.size -> " + taskDefinitionList.size());
@@ -279,15 +281,12 @@ public class ProcessService {
 			} else if (breakdownElement instanceof RoleDescriptor) {
 				logger.debug("### SaveProcessService ### breakdownElement instance of RoleDescriptor ="+breakdownElement);
 				RoleDescriptor roleDescriptor = (RoleDescriptor) breakdownElement;
+				roleDescriptorList.add(roleDescriptor);
 				
 				logger.debug("TestSaveCollectionsProcess: roleDescriptorList -> " + roleDescriptorList);
 				logger.debug("TestSaveCollectionsProcess: roleDescriptorList.size -> " + roleDescriptorList.size());
 								
 				RoleDefinition rd = roleDescriptor.getRoleDefinition();
-				//rd.getRoleDescriptors().clear();
-				//roleDescriptor.getPrimaryTasks().clear();
-				//roleDescriptor.setRoleDefinition(null);
-				roleDescriptorList.add(roleDescriptor);
 				roleDefinitionList.add(rd);
 				logger.debug("TestSaveCollectionsProcess: roleDefinitionList -> " + roleDefinitionList);
 				logger.debug("TestSaveCollectionsProcess: roleDefinitionList.size -> " + roleDefinitionList.size());				
@@ -328,12 +327,16 @@ public class ProcessService {
 			tdef.getSteps().clear();
 			this.taskDefinitionDao.saveOrUpdateTaskDefinition(tdef);
 		}
-		for (Step s : stepList) {
+		for (Step s : stepListTmp) {
 			s.setTaskDefinition(null);
 			this.stepDao.saveOrUpdateStep(s);
 		}
 		
-		System.out.println("TestProcessPersistence -> ca sauvegarde") ;
+		System.out.println("TestProcessPersistence -> ca sauvegarde ") ;
+		
+		for (Step s : stepList) {
+			this.stepDao.saveOrUpdateStep(s);
+		}
 		
 		/*rddef.addRoleDescriptor(rd);
 		s1.addTaskDefinition(tddef);
