@@ -15,15 +15,6 @@
 		</locale-config>
 	</application>
 	
-	<managed-bean>
-		<managed-bean-name>ActivityViewer</managed-bean-name>
-		<managed-bean-class>woops2.presentation.activity.ActivityViewer</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-		<managed-property>
-			<property-name>activityManager</property-name>
-			<value>#{ActivityManager}</value>
-		</managed-property>
-	</managed-bean>
 	<!--       PSI2  -->
 	<managed-bean>
 		<managed-bean-name>ParticipantBean</managed-bean-name>

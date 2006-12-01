@@ -58,13 +58,11 @@ public class Participant extends WilosUser {
 	}
 
 	/**
-	 * Empty the set of RoleDescriptor
+	 * Remove all the role descriptors
 	 * 
-	 * @param _roleDesc
 	 */
 	public void removeAllRoleDescriptors() {
 		for(RoleDescriptor _roleD : this.rolesListForAProject){
-
 			// _roleD.removeFromParticipant(this);
 		}
 		this.rolesListForAProject.clear() ;
