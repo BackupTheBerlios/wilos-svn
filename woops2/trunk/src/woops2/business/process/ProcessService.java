@@ -2,9 +2,7 @@ package woops2.business.process;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -237,18 +235,24 @@ public class ProcessService {
 	 * test save of collections' process
 	 * @param _process
 	 */
-	public void TestSaveCollectionsProcess(Process _process) {
+	public String TestSaveCollectionsProcess(Process _process) {
 		
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 		bdes.addAll(_process.getBreakDownElements());
 
-		Set<Step> stepList = new HashSet<Step>();
-		Set<Step> stepListTmp = new HashSet<Step>();
+		List<Step> stepList = new ArrayList<Step>();
+		List<Step> stepListTmp = new ArrayList<Step>();
 		List<TaskDefinition> taskDefinitionList = new ArrayList<TaskDefinition>();
+		List<TaskDefinition> taskDefinitionListTmp = new ArrayList<TaskDefinition>();
 		List<TaskDescriptor> taskDescriptorList = new ArrayList<TaskDescriptor>();
+		List<TaskDescriptor> taskDescriptorListTmp = new ArrayList<TaskDescriptor>();
 		List<RoleDefinition> roleDefinitionList = new ArrayList<RoleDefinition>();
+		List<RoleDefinition> roleDefinitionListTmp = new ArrayList<RoleDefinition>();
 		List<RoleDescriptor> roleDescriptorList = new ArrayList<RoleDescriptor>();
-		List<Process> processList = new ArrayList<Process>();
+		List<RoleDescriptor> roleDescriptorListTmp = new ArrayList<RoleDescriptor>();
+		Process processTmp = new Process();
+		
+		String id_process = null;
 		
 		int nbTD = 0;
 		// add element of process in elements
@@ -264,16 +268,36 @@ public class ProcessService {
 						logger.debug("### SaveProcessService ### for steps ... ="+taskDefinition.getSteps());
 						if (step != null)
 							stepList.add(step);
-							stepListTmp.add(step);
+							try{
+								stepListTmp.add(step.clone());
+							}
+							catch(CloneNotSupportedException e){
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							logger.debug("TestSaveCollectionsProcess: stepList -> " + stepList);
 							logger.debug("TestSaveCollectionsProcess: stepList.size -> " + stepList.size());
 					}
 
 					taskDefinitionList.add(taskDefinition);
+					try{
+						taskDefinitionListTmp.add(taskDefinition.clone());
+					}
+					catch(CloneNotSupportedException e){
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					logger.debug("TestSaveCollectionsProcess: taskDefinitionList -> " + taskDefinitionList);
 					logger.debug("TestSaveCollectionsProcess: taskDefinitionList.size -> " + taskDefinitionList.size());
 				}
 				taskDescriptorList.add(taskDescriptor);
+				try{
+					taskDescriptorListTmp.add(taskDescriptor. clone());
+				}
+				catch(CloneNotSupportedException e){
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				nbTD ++;
 				logger.debug("TestSaveCollectionsProcess: taskDescriptorList -> " + taskDescriptorList);
 				logger.debug("TestSaveCollectionsProcess: taskDescriptorList.size -> " + taskDescriptorList.size());
@@ -282,12 +306,26 @@ public class ProcessService {
 				logger.debug("### SaveProcessService ### breakdownElement instance of RoleDescriptor ="+breakdownElement);
 				RoleDescriptor roleDescriptor = (RoleDescriptor) breakdownElement;
 				roleDescriptorList.add(roleDescriptor);
+				try{
+					roleDescriptorListTmp.add(roleDescriptor.clone());
+				}
+				catch(CloneNotSupportedException e){
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 				logger.debug("TestSaveCollectionsProcess: roleDescriptorList -> " + roleDescriptorList);
 				logger.debug("TestSaveCollectionsProcess: roleDescriptorList.size -> " + roleDescriptorList.size());
 								
 				RoleDefinition rd = roleDescriptor.getRoleDefinition();
 				roleDefinitionList.add(rd);
+				try{
+					roleDefinitionListTmp.add(rd.clone());
+				}
+				catch(CloneNotSupportedException e){
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				logger.debug("TestSaveCollectionsProcess: roleDefinitionList -> " + roleDefinitionList);
 				logger.debug("TestSaveCollectionsProcess: roleDefinitionList.size -> " + roleDefinitionList.size());				
 			}
@@ -295,14 +333,19 @@ public class ProcessService {
 				logger.error("### SaveProcessService ### unkown type of object from process !");
 			}
 		}
-		_process.getBreakDownElements().clear();
-		processList.add(_process);
-		logger.debug("TestSaveCollectionsProcess: processList -> " + processList);
-		logger.debug("TestSaveCollectionsProcess: processList.size -> " + processList.size());
-		
-		for (Process p : processList) {
-			this.processDao.saveOrUpdateProcess(p);
+		try{
+			processTmp = _process.clone();
 		}
+		catch(CloneNotSupportedException e){
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		logger.debug("TestSaveCollectionsProcess: processId -> " + _process.getIdEPF());
+		
+		_process.getBreakDownElements().clear();
+		this.processDao.saveOrUpdateProcess(_process);
+		id_process = _process.getId();
+
 		for (RoleDescriptor rd : roleDescriptorList) {
 			rd.getAdditionalTasks().clear();
 			rd.getActivities().clear();
@@ -327,26 +370,70 @@ public class ProcessService {
 			tdef.getSteps().clear();
 			this.taskDefinitionDao.saveOrUpdateTaskDefinition(tdef);
 		}
-		for (Step s : stepListTmp) {
+		for (Step s : stepList) {
 			s.setTaskDefinition(null);
 			this.stepDao.saveOrUpdateStep(s);
 		}
 		
 		System.out.println("TestProcessPersistence -> ca sauvegarde ") ;
 		
+		// update des steps		
+		for (int i = 0;i < stepListTmp.size();i++) {
+			stepList.get(i).setTaskDefinition(stepListTmp.get(i).getTaskDefinition());
+		}
+		
 		for (Step s : stepList) {
 			this.stepDao.saveOrUpdateStep(s);
 		}
 		
-		/*rddef.addRoleDescriptor(rd);
-		s1.addTaskDefinition(tddef);
-		s2.addTaskDefinition(tddef);
-		tddef.addTaskDescriptor(td);
-		rd.addAdditionalTask(td);
-		p.addBreakdownElement(rd);
-		p.addBreakdownElement(td);
+		// update des taskDefinitions		
+		for (int i = 0;i < taskDefinitionListTmp.size();i++) {
+			taskDefinitionList.get(i).addAllTaskDesciptors(taskDefinitionListTmp.get(i).getTaskDescriptors());
+			taskDefinitionList.get(i).addAllSteps(taskDefinitionListTmp.get(i).getSteps());
+		}
 		
-		System.out.println("TestProcessPersistence -> ca update les objets") ;*/
+		for (TaskDefinition tdef : taskDefinitionList) {
+			this.taskDefinitionDao.saveOrUpdateTaskDefinition(tdef);
+		}
+		
+		// update des taskDescriptors		
+		for (int i = 0;i < taskDescriptorListTmp.size();i++) {
+			taskDescriptorList.get(i).setMainRole(taskDescriptorListTmp.get(i).getMainRole());
+			taskDescriptorList.get(i).setTaskDefinition(taskDescriptorListTmp.get(i).getTaskDefinition());
+			taskDescriptorList.get(i).addAllAdditionalRoles(taskDescriptorListTmp.get(i).getAdditionalRoles());
+			taskDescriptorList.get(i).addAllActivities(taskDescriptorListTmp.get(i).getActivities());
+		}
+		
+		for (TaskDescriptor td : taskDescriptorList) {
+			this.taskDescriptorDao.saveOrUpdateTaskDescriptor(td);
+		}
+		
+		for (int i = 0;i < roleDefinitionListTmp.size();i++) {
+			roleDefinitionList.get(i).addAllRoleDescriptors(roleDefinitionListTmp.get(i).getRoleDescriptors());
+		}
+		
+		for (RoleDefinition rdef : roleDefinitionList) {
+			this.roleDefinitionDao.saveOrUpdateRoleDefinition(rdef);
+		}
+		
+		for (int i = 0;i < roleDescriptorListTmp.size();i++) {
+			roleDescriptorList.get(i).setRoleDefinition(roleDescriptorListTmp.get(i).getRoleDefinition());
+			roleDescriptorList.get(i).addAllPrimaryTasks(roleDescriptorListTmp.get(i).getPrimaryTasks());
+			roleDescriptorList.get(i).addAllParticipants(roleDescriptorListTmp.get(i).getParticipants());
+			roleDescriptorList.get(i).addAllAdditionalTasks(roleDescriptorListTmp.get(i).getAdditionalTasks());
+			roleDescriptorList.get(i).addAllActivities(roleDescriptorListTmp.get(i).getActivities());
+		}
+		
+		for (RoleDescriptor rd : roleDescriptorList) {
+			this.roleDescriptorDao.saveOrUpdateRoleDescriptor(rd);
+		}
+		
+		_process.addAllBreakdownElements(processTmp.getBreakDownElements());
+		this.processDao.saveOrUpdateProcess(_process);
+		
+		System.out.println("TestProcessPersistence -> ca update ") ;
+		
+		return id_process;
 	}
 
 	/**
@@ -360,7 +447,6 @@ public class ProcessService {
 	}
 	
 	
-	/*
 	public String TestPersistence(){
 		Process p = new Process();
 		p.setIdEPF("epf-test");
@@ -380,7 +466,6 @@ public class ProcessService {
 		logger.debug("TestProcessPersistence p => "+p+" id="+p.getId());
 		logger.debug("#### p -> "+p.getIdEPF()+" "+p.getName());
 	}
-	*/
 	
 	public void TestEmptyObjectDBSave() {
 		
