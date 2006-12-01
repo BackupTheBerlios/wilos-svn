@@ -127,5 +127,21 @@ public class LoginBean {
 		}
 		return url ;
 	}
+	
+	
+	/**
+	 * TODO Method description
+	 *
+	 * @return
+	 */
+	public String logoutAction() {
+		String url = "connect" ;
+		
+		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
+		HttpSession sess = req.getSession() ;
+		sess.invalidate() ;
+		
+		return url ;
+	}
 
 }

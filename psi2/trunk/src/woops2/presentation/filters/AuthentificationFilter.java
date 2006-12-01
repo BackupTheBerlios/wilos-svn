@@ -3,12 +3,9 @@ package woops2.presentation.filters ;
 
 import java.io.IOException ;
 
-import javax.servlet.Filter ;
-import javax.servlet.FilterChain ;
-import javax.servlet.FilterConfig ;
-import javax.servlet.ServletException ;
-import javax.servlet.ServletRequest ;
-import javax.servlet.ServletResponse ;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.servlet.* ;
 import javax.servlet.http.HttpServletRequest ;
 import javax.servlet.http.HttpServletResponse ;
 import javax.servlet.http.HttpSession ;
@@ -48,18 +45,34 @@ public class AuthentificationFilter implements Filter {
 
 		HttpServletRequest httpRequest = (HttpServletRequest) _request ;
 		HttpServletResponse httpResponse = (HttpServletResponse) _response ;
-
+		
 		HttpSession sess = httpRequest.getSession(true) ;
+		
+		String cache ;
+		if(sess.getAttribute("cache") != null) {
+			cache = (String)sess.getAttribute("cache") ;
+		}
+		else {
+			cache = "" ;
+		}
 
-		// String relativePath = httpRequest.getServletPath() + httpRequest.getPathInfo() ;
+		String relativePath = httpRequest.getServletPath() + httpRequest.getPathInfo() ;
+		
 		WilosUser user = (WilosUser) sess.getAttribute("wilosUser") ;
+		
 		if(user == null){
 			this.logger.debug("### Filtre : login null ###") ;
-			// httpResponse.sendRedirect(httpResponse.encodeRedirectURL("/Wilos/connect.jsf"));
+			if(!cache.equals(relativePath))
+			{
+				httpResponse.setHeader("refresh", "0; URL=/Wilos/connect.jsf") ;
+				httpResponse.flushBuffer() ;
+				sess.setAttribute("cache", relativePath) ;				
+			}
+			
+			//httpResponse.sendRedirect("/Wilos/connect.jsf");
 			// String login_page = filterConfig.getInitParameter("login_page");
-			// httpRequest.getRequestDispatcher("/Wilos/connect.jsf").forward(_request, _response);
+			//httpRequest.getRequestDispatcher("/Wilos/connect.jsf").forward(_request, _response);
 			// filterConfig.getServletContext().getRequestDispatcher(login_page).
-
 		}
 		else{
 			this.logger.debug("### Filtre : login NON null " + user.getName() + " ###") ;

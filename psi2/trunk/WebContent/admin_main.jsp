@@ -27,6 +27,13 @@
 	   		<h:outputText
 	                   value="Créer un nouveau Project Director"/>
 	  	</h:commandLink>
+	  	<br><br>
+	  	-<h:commandLink id="logout"
+	                   action="#{LoginBean.logoutAction}"
+	                   immediate="true">
+	   		<h:outputText
+	                   value="Se déconnecter"/>
+	  	</h:commandLink>
   	</h:form>
 </f:view>
 </body>

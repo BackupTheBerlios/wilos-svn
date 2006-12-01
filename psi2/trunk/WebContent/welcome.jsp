@@ -9,7 +9,16 @@
 </head>
 <body>
 <f:view>
-	<h1>Bienvenue dans Wilos</h1>
+	<h:form id="form">
+		<h1>Bienvenue dans Wilos</h1>
+		<br>
+		  	-<h:commandLink id="logout"
+		                   action="#{LoginBean.logoutAction}"
+		                   immediate="true">
+		   		<h:outputText
+		                   value="Se déconnecter"/>
+		  	</h:commandLink>
+	 </h:form>
 </f:view>
 </body>
 </html>
