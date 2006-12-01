@@ -26,7 +26,7 @@ public class ActivityDao extends HibernateDaoSupport {
 	public void saveOrUpdateActivity(Activity _activity) {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_activity) ;
-			this.getHibernateTemplate().flush() ;
+			//this.getHibernateTemplate().flush() ;
 
 		}
 		catch(DataIntegrityViolationException e){

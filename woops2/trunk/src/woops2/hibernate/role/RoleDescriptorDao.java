@@ -24,7 +24,7 @@ public class RoleDescriptorDao extends HibernateDaoSupport {
 	public void saveOrUpdateRoleDescriptor(RoleDescriptor _RoleDescriptor) {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_RoleDescriptor) ;
-			this.getHibernateTemplate().flush() ;
+			//this.getHibernateTemplate().flush() ;
 
 		}
 		catch(DataIntegrityViolationException e){

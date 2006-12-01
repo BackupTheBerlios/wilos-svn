@@ -26,7 +26,7 @@ public class TaskDescriptorDao extends HibernateDaoSupport {
 	public void saveOrUpdateTaskDescriptor(TaskDescriptor _taskdescriptor) {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_taskdescriptor) ;
-			this.getHibernateTemplate().flush() ;
+			//this.getHibernateTemplate().flush() ;
 
 		}
 		catch(DataIntegrityViolationException e){

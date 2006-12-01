@@ -24,7 +24,7 @@ public class StepDao extends HibernateDaoSupport {
 	public void saveOrUpdateStep(Step _step) {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_step) ;
-			this.getHibernateTemplate().flush() ;
+			//this.getHibernateTemplate().flush() ;
 
 		}
 		catch(DataIntegrityViolationException e){

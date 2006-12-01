@@ -344,8 +344,7 @@ public class ProcessService {
 		
 		_process.getBreakDownElements().clear();
 		this.processDao.saveOrUpdateProcess(_process);
-		id_process = _process.getId();
-
+		
 		for (RoleDescriptor rd : roleDescriptorList) {
 			rd.getAdditionalTasks().clear();
 			rd.getActivities().clear();
@@ -430,6 +429,7 @@ public class ProcessService {
 		
 		_process.addAllBreakdownElements(processTmp.getBreakDownElements());
 		this.processDao.saveOrUpdateProcess(_process);
+		id_process = _process.getId();
 		
 		System.out.println("TestProcessPersistence -> ca update ") ;
 		
@@ -528,7 +528,7 @@ public class ProcessService {
 		System.out.println("TestProcessPersistence -> ca update les objets") ;
 		
 	}
-
+	
 	/**
 	 * Save process
 	 * 

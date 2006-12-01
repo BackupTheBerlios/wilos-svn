@@ -1,14 +1,14 @@
 
 package woops2.hibernate.process ;
 
-import java.util.ArrayList ;
-import java.util.List ;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.dao.DataIntegrityViolationException ;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import woops2.model.process.Process ;
+import woops2.model.process.Process;
 
 /**
  * ProcessDao manage requests from the system to store Acitivties to the database
@@ -26,7 +26,7 @@ public class ProcessDao extends HibernateDaoSupport {
 	public void saveOrUpdateProcess(Process _process) {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_process) ;
-			this.getHibernateTemplate().flush() ;
+			//this.getHibernateTemplate().flush() ;
 
 		}
 		catch(DataIntegrityViolationException e){

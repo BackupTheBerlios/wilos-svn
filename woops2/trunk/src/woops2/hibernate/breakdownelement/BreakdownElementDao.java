@@ -25,7 +25,7 @@ public class BreakdownElementDao extends HibernateDaoSupport {
 	public void saveOrUpdateBreakdownElement(BreakdownElement _bde) {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_bde) ;
-			this.getHibernateTemplate().flush() ;
+			//this.getHibernateTemplate().flush() ;
 
 		}
 		catch(DataIntegrityViolationException e){

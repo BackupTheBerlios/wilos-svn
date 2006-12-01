@@ -287,7 +287,6 @@ public class TreeBean {
 	public TreeBean() {
 	}
 	
-	/*
 	public Process buildProcess() {
 		Process process = new Process();
 		process.setIdEPF("myProcess");
@@ -321,11 +320,21 @@ public class TreeBean {
 		rdes1.addRoleDefinition(roleDefinition);
 
 		return process;
-	}*/
+	}
 	
 	public void buildTree(String _id) {
+		
+		// FIXME A revoir
 		Process process = null;//this.buildProcess();
-		if (_id != null) process = this.treeProcessService.getProcessDao().getProcess(_id);
+		
+		// if (_id != null) process = this.treeProcessService.getProcessDao().getProcess(_id);
+		/*
+		List<Process> liste = this.treeProcessService.getProcessDao().getAllProcesses();
+		if (liste.size() > 0) process = liste.get(liste.size() - 1);
+		
+		else process = this.buildProcess();*/
+		process = this.buildProcess();
+		
 		rootTreeNode = new DefaultMutableTreeNode();
 		NodeUserObject rootObject = new NodeUserObject(rootTreeNode, this);
 		rootObject.setText(process.getName());
@@ -410,7 +419,8 @@ public class TreeBean {
 	 */
 	public DefaultTreeModel getModel() {
 		//Delegation au processService
-		this.buildTree(this.processId);
+		//this.buildTree(this.processId);
+		this.buildTree("id bidon");
 		return this.model;
 	}
 

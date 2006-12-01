@@ -26,7 +26,7 @@ public class TaskDefinitionDao extends HibernateDaoSupport {
 	public void saveOrUpdateTaskDefinition(TaskDefinition _taskDefinition) {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_taskDefinition) ;
-			this.getHibernateTemplate().flush() ;
+			//this.getHibernateTemplate().flush() ;
 
 		}
 		catch(DataIntegrityViolationException e){

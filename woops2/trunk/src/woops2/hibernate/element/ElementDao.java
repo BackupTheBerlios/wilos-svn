@@ -25,7 +25,7 @@ public class ElementDao extends HibernateDaoSupport {
 	public void saveOrUpdateElement (Element _element) {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_element) ;
-			this.getHibernateTemplate().flush() ;
+			//this.getHibernateTemplate().flush() ;
 
 		}
 		catch(DataIntegrityViolationException e){
