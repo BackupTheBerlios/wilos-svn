@@ -124,39 +124,41 @@
 									<br />
 
 								</ice:panelGrid>
-								<ice:panelGrid styleClass="componentLayoutRootTable" columns="2">
-									<ice:panelGroup label="Process Display">
-										<br/>
-										<ice:tree id="tree" value="#{TreeBean.model}" var="item"
-											hideRootNode="false" hideNavigation="false"
-											imageDir="#{styleBean.imageDirectory}">
-											<ice:treeNode>
-												<f:facet name="icon">
-													<ice:panelGroup style="display: inline">
-														<ice:graphicImage value="#{item.userObject.icon}" />
-														<ice:commandLink
-															actionListener="#{item.userObject.nodeClicked}">
-															<ice:outputText value="#{item.userObject.text}" />
-														</ice:commandLink>
-													</ice:panelGroup>
-												</f:facet>
-												<f:facet name="content">
-													<ice:panelGroup style="display: inline">
-														<ice:outputText
-															value="#{msgs['components.tree.node.outputText.label']}"
-															style="font-style: italic"
-															rendered="#{item.userObject.componentType == 1}" />
-														<ice:inputText
-															rendered="#{item.userObject.componentType == 2}" />
-														<ice:commandButton
-															value="#{msgs['components.tree.node.outputText.label']}"
-															rendered="#{item.userObject.componentType == 3}" />
-													</ice:panelGroup>
-												</f:facet>
-											</ice:treeNode>
-										</ice:tree>
-									</ice:panelGroup>
-								</ice:panelGrid>
+							</ice:panelTab>
+							
+							<ice:panelTab label="Display Imported Process File">
+								<ice:panelGroup label="Process Display">
+									<br />
+									<ice:tree id="tree" value="#{TreeBean.model}" var="item"
+										hideRootNode="false" hideNavigation="false"
+										imageDir="#{styleBean.imageDirectory}">
+										<ice:treeNode>
+											<f:facet name="icon">
+												<ice:panelGroup style="display: inline">
+													<ice:graphicImage value="#{item.userObject.icon}" />
+													<ice:commandLink
+														actionListener="#{item.userObject.nodeClicked}">
+														<ice:outputText value="#{item.userObject.text}" />
+													</ice:commandLink>
+												</ice:panelGroup>
+											</f:facet>
+											<f:facet name="content">
+												<ice:panelGroup style="display: inline">
+													<ice:outputText
+														value="#{msgs['components.tree.node.outputText.label']}"
+														style="font-style: italic"
+														rendered="#{item.userObject.componentType == 1}" />
+													<ice:inputText
+														rendered="#{item.userObject.componentType == 2}" />
+													<ice:commandButton
+														value="#{msgs['components.tree.node.outputText.label']}"
+														rendered="#{item.userObject.componentType == 3}" />
+												</ice:panelGroup>
+											</f:facet>
+										</ice:treeNode>
+									</ice:tree>
+								</ice:panelGroup>
+
 							</ice:panelTab>
 						</ice:panelTabSet>
 					</ice:panelGrid>
@@ -166,13 +168,13 @@
 			</ice:panelGroup>
 		</f:facet>
 	</ice:panelBorder>
-	
+
 	<!--
   PRELOAD IMAGES need for roleovers and layout in general, javascript is only
   loaded once per refresh which is good enough.  This improves overall user
   experience as they shouldn't have to wait for images to show up after the
   initial load. -->
-  
+
 	<script language="JavaScript">
     <![CDATA[
     <!--
@@ -237,4 +239,4 @@
 
 	</body>
 	</html>
-</f:view> 
+</f:view>
