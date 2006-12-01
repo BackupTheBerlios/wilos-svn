@@ -40,5 +40,13 @@ public class ProcessManagerService {
 	public void setProcessManagerDao(ProcessManagerDao _processManagerDao) {
 		this.processManagerDao = _processManagerDao ;
 	}
+	/**
+	 * Getter of processManagerDao.
+	 * 
+	 *            The processManagerDao to get.
+	 */
+	public ProcessManagerDao getProcessManagerDao() {
+		return this.processManagerDao ;
+	}
 
 }

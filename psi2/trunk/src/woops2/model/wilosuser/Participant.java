@@ -1,6 +1,7 @@
 
 package woops2.model.wilosuser ;
 
+import java.util.HashSet;
 import java.util.Set ;
 
 import woops2.model.role.RoleDescriptor ;
@@ -17,6 +18,11 @@ import woops2.model.role.RoleDescriptor ;
 public class Participant extends WilosUser {
 
 	private Set<RoleDescriptor> rolesListForAProject ;
+	
+	public Participant()
+	{
+		rolesListForAProject=new HashSet<RoleDescriptor>();
+	}
 
 	/**
 	 * Getter of rolesListForAProject.
@@ -63,7 +69,7 @@ public class Participant extends WilosUser {
 	 */
 	public void removeAllRoleDescriptors() {
 		for(RoleDescriptor _roleD : this.rolesListForAProject){
-			// _roleD.removeFromParticipant(this);
+			//_roleD.removeFromParticipant(this);
 		}
 		this.rolesListForAProject.clear() ;
 	}

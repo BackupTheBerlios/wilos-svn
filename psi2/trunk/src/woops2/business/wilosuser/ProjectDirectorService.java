@@ -41,4 +41,13 @@ public class ProjectDirectorService {
 		this.projectDirectorDao = _projectDirectorDao ;
 	}
 
+	/**
+	 * Getter of projectDirectorDao.
+	 *
+	 * @return the projectDirectorDao.
+	 */
+	public ProjectDirectorDao getProjectDirectorDao() {
+		return this.projectDirectorDao ;
+	}
+
 }
