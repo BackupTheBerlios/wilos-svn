@@ -1,5 +1,6 @@
 package view.main;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import javax.swing.BorderFactory;
@@ -34,7 +35,7 @@ public class LoginPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
         
-        private static String path_file = ClassLoader.getSystemResource("ressources/wizard_setting.ini").getPath();
+        private static String path_file = "ressources/wizard_setting.ini";
         
 	private JLabel introLabel = null;
 
@@ -121,9 +122,9 @@ public class LoginPanel extends JPanel {
         private void loadINI(String file) 
         {
             ProfileReader pr = new ProfileReader();
-            FileInputStream i;
-            try {
-                i = new FileInputStream(file);
+            InputStream i;
+               //i = new FileInputStream(file);
+                i = ClassLoader.getSystemResourceAsStream(file);
                 try {
                     pr.load(i);                    
                     String addr = pr.getProperty("remote","address");
@@ -132,9 +133,6 @@ public class LoginPanel extends JPanel {
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-            } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
-            }
         }
 
 	/**
