@@ -286,7 +286,7 @@ public class TreeBean {
 	 */
 	public TreeBean() {
 	}
-	/*
+
 	public Process buildProcess() {
 		Process process = new Process();
 		process.setIdEPF("myProcess");
@@ -321,10 +321,10 @@ public class TreeBean {
 
 		return process;
 	}
-	*/
 	
 	public void buildTree(String _id) {
-		Process process = this.treeProcessService.getProcessDao().getProcess(_id);
+		Process process = null;//this.buildProcess();
+		if (_id != null) process = this.treeProcessService.getProcessDao().getProcess(_id);
 		rootTreeNode = new DefaultMutableTreeNode();
 		NodeUserObject rootObject = new NodeUserObject(rootTreeNode, this);
 		rootObject.setText(process.getName());

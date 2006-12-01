@@ -76,15 +76,14 @@ public class XmlFileImportBean {
 		file.renameTo(destFile);
 		logger.debug("### Nouveau fichier = "+destFile.getPath()+" => "+destFile.getName()+" ###");
 		Process p = processService.SpelpParsingXML(file);
-		//TODO save the process
-		processService.SaveImportedProcess(p);
-		// envoi id au treeBean
+		//save the process
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		TreeBean treeBean
 		    = (TreeBean) facesContext.getApplication()
 		      .getVariableResolver().resolveVariable(facesContext, "TreeBean");
+		logger.debug("### XmlFileImportBean ### action -> id="+p.getId());
 		
-		treeBean.setProcessId(p.getId());
+		treeBean.setProcessId(this.processService.TestSaveCollectionsProcess(p));
 	}
 
 	public void progress(EventObject event) {
