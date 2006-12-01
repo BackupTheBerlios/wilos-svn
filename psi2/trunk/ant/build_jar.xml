@@ -12,6 +12,7 @@
 	<property name="src.dir" value="${basedir}/src" />
 	<property name="src.java.dir" value="${src.dir}" />
 	<property name="lib.dir" value="${basedir}/WebContent/WEB-INF/lib" />
+	<property name="webinf.dir" value="${basedir}/WebContent/WEB-INF" />
 	<property name="dist.dir" value="${basedir}/dist" />
 
 	<path id="classpath">
@@ -47,6 +48,9 @@
 				<include name="**/*.xml" />
 				<include name="**/*.tld" />
 				<include name="**/*.properties" />
+			</fileset>
+			<fileset dir="${webinf.dir}">
+				<include name="**/*.xml" />
 			</fileset>
 		</copy>
 	</target>
