@@ -199,7 +199,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 	 * @param _taskDefinition
 	 *            The taskDefinition to set.
 	 */
-	protected void setTaskDefinition(TaskDefinition _taskDefinition) {
+	public void setTaskDefinition(TaskDefinition _taskDefinition) {
 		this.taskDefinition = _taskDefinition ;
 	}
 

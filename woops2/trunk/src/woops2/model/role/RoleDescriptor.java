@@ -271,7 +271,7 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * @param _roleDefinition
 	 *            The roleDefinition to set.
 	 */
-	protected void setRoleDefinition(RoleDefinition _roleDefinition) {
+	public void setRoleDefinition(RoleDefinition _roleDefinition) {
 		this.roleDefinition = _roleDefinition ;
 	}
 

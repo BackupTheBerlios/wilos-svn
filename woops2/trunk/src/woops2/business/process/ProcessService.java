@@ -174,7 +174,7 @@ public class ProcessService {
 		}
 		for (RoleDefinition rd : roleDefinitionList){
 			elementSaved++;
-			this.roleDefinitionDao.saveOrUpdateRole(rd);
+			this.roleDefinitionDao.saveOrUpdateRoleDefinition(rd);
 			logger.debug("### SaveProcessService ### save RoleDefinition ="+rd+" id="+rd.getId());
 		}
 		for (TaskDescriptor tdr : taskDescriptorList){
@@ -254,7 +254,9 @@ public class ProcessService {
 			if (breakdownElement instanceof TaskDescriptor) {
 				logger.debug("### TestSaveCollectionsProcess ### bde instance of TaskDescriptor ="+breakdownElement);
 				TaskDescriptor taskDescriptor = (TaskDescriptor) breakdownElement;
+				//taskDescriptor.getAdditionalRoles().clear();
 				TaskDefinition taskDefinition = taskDescriptor.getTaskDefinition();
+				//taskDefinition.getTaskDescriptors().clear();
 				
 				if (taskDefinition != null) {
 					for (Step step : taskDefinition.getSteps()) {
@@ -264,6 +266,7 @@ public class ProcessService {
 							logger.debug("TestSaveCollectionsProcess: stepList -> " + stepList);
 							logger.debug("TestSaveCollectionsProcess: stepList.size -> " + stepList.size());
 					}
+					//taskDefinition.getSteps().clear();
 					taskDefinitionList.add(taskDefinition);
 					logger.debug("TestSaveCollectionsProcess: taskDefinitionList -> " + taskDefinitionList);
 					logger.debug("TestSaveCollectionsProcess: taskDefinitionList.size -> " + taskDefinitionList.size());
@@ -276,11 +279,16 @@ public class ProcessService {
 			} else if (breakdownElement instanceof RoleDescriptor) {
 				logger.debug("### SaveProcessService ### breakdownElement instance of RoleDescriptor ="+breakdownElement);
 				RoleDescriptor roleDescriptor = (RoleDescriptor) breakdownElement;
-				roleDescriptorList.add(roleDescriptor);
+				
 				logger.debug("TestSaveCollectionsProcess: roleDescriptorList -> " + roleDescriptorList);
 				logger.debug("TestSaveCollectionsProcess: roleDescriptorList.size -> " + roleDescriptorList.size());
 								
-				roleDefinitionList.add(roleDescriptor.getRoleDefinition());
+				RoleDefinition rd = roleDescriptor.getRoleDefinition();
+				//rd.getRoleDescriptors().clear();
+				//roleDescriptor.getPrimaryTasks().clear();
+				//roleDescriptor.setRoleDefinition(null);
+				roleDescriptorList.add(roleDescriptor);
+				roleDefinitionList.add(rd);
 				logger.debug("TestSaveCollectionsProcess: roleDefinitionList -> " + roleDefinitionList);
 				logger.debug("TestSaveCollectionsProcess: roleDefinitionList.size -> " + roleDefinitionList.size());				
 			}
@@ -288,6 +296,7 @@ public class ProcessService {
 				logger.error("### SaveProcessService ### unkown type of object from process !");
 			}
 		}
+		_process.getBreakDownElements().clear();
 		processList.add(_process);
 		logger.debug("TestSaveCollectionsProcess: processList -> " + processList);
 		logger.debug("TestSaveCollectionsProcess: processList.size -> " + processList.size());
@@ -296,18 +305,31 @@ public class ProcessService {
 			this.processDao.saveOrUpdateProcess(p);
 		}
 		for (RoleDescriptor rd : roleDescriptorList) {
+			rd.getAdditionalTasks().clear();
+			rd.getActivities().clear();
+			rd.getParticipants().clear();
+			rd.getPrimaryTasks().clear();
+			rd.setRoleDefinition(null);
 			this.roleDescriptorDao.saveOrUpdateRoleDescriptor(rd);
 		}
 		for (RoleDefinition rdef : roleDefinitionList) {
-			this.roleDefinitionDao.saveOrUpdateRole(rdef);
+			rdef.getRoleDescriptors().clear();
+			this.roleDefinitionDao.saveOrUpdateRoleDefinition(rdef);
 		}
 		for (TaskDescriptor td : taskDescriptorList) {
+			td.getAdditionalRoles().clear();
+			td.getActivities().clear();
+			td.setMainRole(null);
+			td.setTaskDefinition(null);
 			this.taskDescriptorDao.saveOrUpdateTaskDescriptor(td);
 		}
 		for (TaskDefinition tdef : taskDefinitionList) {
+			tdef.getTaskDescriptors().clear();
+			tdef.getSteps().clear();
 			this.taskDefinitionDao.saveOrUpdateTaskDefinition(tdef);
 		}
 		for (Step s : stepList) {
+			s.setTaskDefinition(null);
 			this.stepDao.saveOrUpdateStep(s);
 		}
 		
@@ -398,7 +420,7 @@ public class ProcessService {
 		this.processDao.saveOrUpdateProcess(p);
 		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(rd);
 		this.taskDescriptorDao.saveOrUpdateTaskDescriptor(td);
-		this.roleDefinitionDao.saveOrUpdateRole(rddef);
+		this.roleDefinitionDao.saveOrUpdateRoleDefinition(rddef);
 		this.taskDefinitionDao.saveOrUpdateTaskDefinition(tddef);
 		this.stepDao.saveOrUpdateStep(s1);
 		this.stepDao.saveOrUpdateStep(s2);
