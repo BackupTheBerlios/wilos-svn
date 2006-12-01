@@ -61,9 +61,9 @@
 	</managed-bean>
 
 	<managed-bean>
-		<managed-bean-name>ActivityViewer</managed-bean-name>
+		<managed-bean-name>ActivityBean</managed-bean-name>
 		<managed-bean-class>
-			woops2.presentation.activity.ActivityViewer
+			woops2.presentation.activity.ActivityBean
 		</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
@@ -73,9 +73,9 @@
 	</managed-bean>
 
 	<managed-bean>
-		<managed-bean-name>XmlFileImportViewer</managed-bean-name>
+		<managed-bean-name>XmlFileImportBean</managed-bean-name>
 		<managed-bean-class>
-			woops2.presentation.activity.XmlFileImportViewer
+			woops2.presentation.activity.XmlFileImportBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>

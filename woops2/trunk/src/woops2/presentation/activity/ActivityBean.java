@@ -18,7 +18,7 @@ import woops2.model.activity.Activity;
  * @author garwind
  * @author deder.
  */
-public class ActivityViewer {
+public class ActivityBean {
 
 	private List<Activity> activitiesList ;
 
@@ -36,7 +36,7 @@ public class ActivityViewer {
 	 * Constructor.
 	 * 
 	 */
-	public ActivityViewer() {
+	public ActivityBean() {
 		this.logger.debug("--- ActivityViewer --- == creating ..." + this) ;
 		this.activity = new Activity() ;
 	}

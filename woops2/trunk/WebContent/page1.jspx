@@ -52,7 +52,7 @@
 
 								<h:outputText value="Activity Table :" />
 
-								<h:dataTable value="#{ActivityViewer.activitiesList}" border="1"
+								<h:dataTable value="#{ActivityBean.activitiesList}" border="1"
 									var="activity">
 									<h:column>
 										<h:outputText value="#{activity.id}" />
@@ -77,25 +77,25 @@
 							<ice:panelTab label="New Activity">
 								<br />
 								<ice:outputText value="Valeur prefix : " />
-								<ice:inputText value="#{ActivityViewer.activity.prefix}" />
+								<ice:inputText value="#{ActivityBean.activity.prefix}" />
 								<br />
 								<br />
 								<ice:outputText value="isPlanned : " />
 								<ice:selectBooleanCheckbox
-									value="#{ActivityViewer.activity.isPlanned}" />
+									value="#{ActivityBean.activity.isPlanned}" />
 								<br />
 								<ice:outputText value="isOptional : " />
 								<ice:selectBooleanCheckbox
-									value="#{ActivityViewer.activity.isOptional}" />
+									value="#{ActivityBean.activity.isOptional}" />
 								<br />
 								<br />
-								<ice:outputText value="Status : #{ActivityViewer.viewerMessage}" />
+								<ice:outputText value="Status : #{ActivityBean.viewerMessage}" />
 								<br />
 								<br />
 								<ice:commandButton value="Create Activity"
-									actionListener="#{ActivityViewer.saveActivityActionListener}" />
+									actionListener="#{ActivityBean.saveActivityActionListener}" />
 								<ice:commandButton value="New/Reset Activity"
-									actionListener="#{ActivityViewer.resetActivityActionListener}" />
+									actionListener="#{ActivityBean.resetActivityActionListener}" />
 							</ice:panelTab>
 
 							<ice:panelTab label="Import EPF Process File">
@@ -109,62 +109,56 @@
 										<ice:outputText value="Add your file :" />
 										<br />
 										<ice:inputFile style="border:none; width:400px; height:70px;"
-											progressListener="#{XmlFileImportViewer.progress}"
-											actionListener="#{XmlFileImportViewer.action}" />
+											progressListener="#{XmlFileImportBean.progress}"
+											actionListener="#{XmlFileImportBean.action}" />
 										<ice:outputProgress id="pro"
-											value="#{XmlFileImportViewer.percent}" />
+											value="#{XmlFileImportBean.percent}" />
 										<ice:outputText
-											value="File Name: #{XmlFileImportViewer.fileName}" />
+											value="File Name: #{XmlFileImportBean.fileName}" />
 										<br />
 										<ice:outputText
-											value="Content Type: #{XmlFileImportViewer.contentType}" />
+											value="Content Type: #{XmlFileImportBean.contentType}" />
 										<ice:messages />
 									</ice:panelGroup>
 
 									<br />
 
 								</ice:panelGrid>
-
+								<ice:panelGrid styleClass="componentLayoutRootTable" columns="1">
+									<ice:panelGroup label="Process Display">
+										<br/>
+										<ice:tree id="tree" value="#{TreeBean.model}" var="item"
+											hideRootNode="false" hideNavigation="false"
+											imageDir="#{styleBean.imageDirectory}">
+											<ice:treeNode>
+												<f:facet name="icon">
+													<ice:panelGroup style="display: inline">
+														<ice:graphicImage value="#{item.userObject.icon}" />
+														<ice:commandLink
+															actionListener="#{item.userObject.nodeClicked}">
+															<ice:outputText value="#{item.userObject.text}" />
+														</ice:commandLink>
+													</ice:panelGroup>
+												</f:facet>
+												<f:facet name="content">
+													<ice:panelGroup style="display: inline">
+														<ice:outputText
+															value="#{msgs['components.tree.node.outputText.label']}"
+															style="font-style: italic"
+															rendered="#{item.userObject.componentType == 1}" />
+														<ice:inputText
+															rendered="#{item.userObject.componentType == 2}" />
+														<ice:commandButton
+															value="#{msgs['components.tree.node.outputText.label']}"
+															rendered="#{item.userObject.componentType == 3}" />
+													</ice:panelGroup>
+												</f:facet>
+											</ice:treeNode>
+										</ice:tree>
+									</ice:panelGroup>
+								</ice:panelGrid>
 							</ice:panelTab>
-
-							<ice:panelTab label="Display imported EPF Process File">
-								<ice:panelGroup label="Process Display">
-									<br/>
-									<ice:tree id="tree" value="#{TreeBean.model}" var="item"
-										hideRootNode="false" hideNavigation="false"
-										imageDir="#{styleBean.imageDirectory}">
-										<ice:treeNode>
-											<f:facet name="icon">
-												<ice:panelGroup style="display: inline">
-													<ice:graphicImage value="#{item.userObject.icon}" />
-													<ice:commandLink
-														actionListener="#{item.userObject.nodeClicked}">
-														<ice:outputText value="#{item.userObject.text}" />
-													</ice:commandLink>
-												</ice:panelGroup>
-											</f:facet>
-											<f:facet name="content">
-												<ice:panelGroup style="display: inline">
-													<ice:outputText
-														value="#{msgs['components.tree.node.outputText.label']}"
-														style="font-style: italic"
-														rendered="#{item.userObject.componentType == 1}" />
-													<ice:inputText
-														rendered="#{item.userObject.componentType == 2}" />
-													<ice:commandButton
-														value="#{msgs['components.tree.node.outputText.label']}"
-														rendered="#{item.userObject.componentType == 3}" />
-												</ice:panelGroup>
-											</f:facet>
-										</ice:treeNode>
-									</ice:tree>
-								</ice:panelGroup>
-							</ice:panelTab>
-
-
 						</ice:panelTabSet>
-
-
 					</ice:panelGrid>
 				</ice:form>
 
