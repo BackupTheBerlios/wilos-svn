@@ -286,7 +286,8 @@ public class TreeBean {
 	 */
 	public TreeBean() {
 	}
-
+	
+	/*
 	public Process buildProcess() {
 		Process process = new Process();
 		process.setIdEPF("myProcess");
@@ -320,7 +321,7 @@ public class TreeBean {
 		rdes1.addRoleDefinition(roleDefinition);
 
 		return process;
-	}
+	}*/
 	
 	public void buildTree(String _id) {
 		Process process = null;//this.buildProcess();
@@ -400,7 +401,8 @@ public class TreeBean {
 	 * for (Element elt : this.treeProcessService.getElementDao()
 	 * .getAllElements()) { DefaultMutableTreeNode branchNode = new
 	 */
-
+	
+	
 	/**
 	 * Gets the tree's default model.
 	 * 

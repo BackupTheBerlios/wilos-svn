@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.EventObject;
 
 import javax.faces.context.FacesContext;
+import javax.faces.el.EvaluationException;
 import javax.faces.event.ActionEvent;
 
 import org.apache.commons.logging.Log;
@@ -75,15 +76,19 @@ public class XmlFileImportBean {
 		logger.debug("### fichier = "+file.getPath()+" => "+file.getName()+" ###");
 		file.renameTo(destFile);
 		logger.debug("### Nouveau fichier = "+destFile.getPath()+" => "+destFile.getName()+" ###");
-		Process p = processService.SpelpParsingXML(file);
-		//save the process
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		TreeBean treeBean
-		    = (TreeBean) facesContext.getApplication()
-		      .getVariableResolver().resolveVariable(facesContext, "TreeBean");
-		logger.debug("### XmlFileImportBean ### action -> id="+p.getId());
-		
-		treeBean.setProcessId(this.processService.TestSaveCollectionsProcess(p));
+		try {
+			Process p = processService.SpelpParsingXML(file);
+			//save the process
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			TreeBean treeBean
+			    = (TreeBean) facesContext.getApplication()
+			      .getVariableResolver().resolveVariable(facesContext, "TreeBean");
+			logger.debug("### XmlFileImportBean ### action -> id="+p.getId());
+			
+			treeBean.setProcessId(this.processService.TestSaveCollectionsProcess(p));
+		} catch (Exception e) {
+			logger.error("### XmlFileImportBean ### action -> "+e);
+		}
 	}
 
 	public void progress(EventObject event) {
