@@ -5,10 +5,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import junit.framework.TestCase;
-import woops2.model.role.Participant;
 import woops2.model.role.RoleDefinition;
 import woops2.model.role.RoleDescriptor;
 import woops2.model.task.TaskDescriptor;
+import woops2.model.wilosuser.Participant;
 
 public class RoleDescriptorTest extends TestCase {
 
@@ -303,8 +303,7 @@ public class RoleDescriptorTest extends TestCase {
 	public void testAddAllParticipants() {
 		Participant task = new Participant() ;
 		task.setName(NAME) ;
-		task.setDescription(DESCRIPTION) ;
-
+		
 		Participant tmp = new Participant() ;
 		
 		Set<Participant> set = new HashSet<Participant>() ;
@@ -324,8 +323,7 @@ public class RoleDescriptorTest extends TestCase {
 	public void testRemoveParticipant() {
 		Participant task = new Participant() ;
 		task.setName(NAME) ;
-		task.setDescription(DESCRIPTION) ;
-
+		
 		this.roleDescriptor.addParticipant(task) ;
 		assertFalse(this.roleDescriptor.getParticipants().isEmpty()) ;
 		assertFalse(task.getRolesListForAProject().isEmpty());
@@ -343,12 +341,10 @@ public class RoleDescriptorTest extends TestCase {
 
 		Participant task = new Participant() ;
 		task.setName(NAME) ;
-		task.setDescription(DESCRIPTION) ;
-
+		
 		Participant tmp = new Participant() ;
 		tmp.setName("autreNom") ;
-		tmp.setDescription(DESCRIPTION) ;
-
+		
 		Set<Participant> set = new HashSet<Participant>() ;
 		set.add(task) ;
 		set.add(tmp) ;

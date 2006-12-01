@@ -1,14 +1,15 @@
 
 package woops2.model.role ;
 
-import java.util.HashSet ;
-import java.util.Set ;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.apache.commons.lang.builder.EqualsBuilder ;
-import org.apache.commons.lang.builder.HashCodeBuilder ;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
-import woops2.model.breakdownelement.BreakdownElement ;
-import woops2.model.task.TaskDescriptor ;
+import woops2.model.breakdownelement.BreakdownElement;
+import woops2.model.task.TaskDescriptor;
+import woops2.model.wilosuser.Participant;
 
 /**
  * 
