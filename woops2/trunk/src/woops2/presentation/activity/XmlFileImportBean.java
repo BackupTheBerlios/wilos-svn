@@ -3,6 +3,7 @@ package woops2.presentation.activity;
 import java.io.File;
 import java.util.EventObject;
 
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import org.apache.commons.logging.Log;
@@ -78,7 +79,12 @@ public class XmlFileImportBean {
 		//TODO save the process
 		processService.SaveImportedProcess(p);
 		// envoi id au treeBean
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		TreeBean treeBean
+		    = (TreeBean) facesContext.getApplication()
+		      .getVariableResolver().resolveVariable(facesContext, "TreeBean");
 		
+		treeBean.setProcessId(p.getId());
 	}
 
 	public void progress(EventObject event) {

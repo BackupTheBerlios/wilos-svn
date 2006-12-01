@@ -360,7 +360,7 @@ public class ProcessService {
 	}
 	
 	
-	
+	/*
 	public String TestPersistence(){
 		Process p = new Process();
 		p.setIdEPF("epf-test");
@@ -380,6 +380,7 @@ public class ProcessService {
 		logger.debug("TestProcessPersistence p => "+p+" id="+p.getId());
 		logger.debug("#### p -> "+p.getIdEPF()+" "+p.getName());
 	}
+	*/
 	
 	public void TestEmptyObjectDBSave() {
 		

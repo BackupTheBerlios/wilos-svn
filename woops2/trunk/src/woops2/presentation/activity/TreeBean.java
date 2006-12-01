@@ -85,6 +85,8 @@ public class TreeBean {
 
 	// backing for the drop down of components
 	private Integer componentToAdd = new Integer(1);
+	
+	private String processId;
 
 	/**
 	 * Gets the component list.
@@ -321,15 +323,16 @@ public class TreeBean {
 	}
 	*/
 	
-	public void buildTree(Process _process) {
+	public void buildTree(String _id) {
+		Process process = this.treeProcessService.getProcessDao().getProcess(_id);
 		rootTreeNode = new DefaultMutableTreeNode();
 		NodeUserObject rootObject = new NodeUserObject(rootTreeNode, this);
-		rootObject.setText(_process.getName());
+		rootObject.setText(process.getName());
 		rootTreeNode.setUserObject(rootObject);
 		model = new DefaultTreeModel(rootTreeNode);
 
 		// add element of process in elements
-		for (BreakdownElement breakdownElement : _process.getBreakDownElements()) {
+		for (BreakdownElement breakdownElement : process.getBreakDownElements()) {
 			if (breakdownElement instanceof TaskDescriptor) {
 				TaskDescriptor taskDescriptor = (TaskDescriptor) breakdownElement;
 				DefaultMutableTreeNode branchTaskDescriptorNode = new DefaultMutableTreeNode();
@@ -405,8 +408,7 @@ public class TreeBean {
 	 */
 	public DefaultTreeModel getModel() {
 		//Delegation au processService
-		//this.buildTree(this.buildProcess());
-		
+		this.buildTree(this.processId);
 		return this.model;
 	}
 
@@ -455,5 +457,13 @@ public class TreeBean {
 
 	public void setTreeProcessService(ProcessService processService) {
 		this.treeProcessService = processService;
+	}
+
+	public String getProcessId() {
+		return processId;
+	}
+
+	public void setProcessId(String processId) {
+		this.processId = processId;
 	}
 }
