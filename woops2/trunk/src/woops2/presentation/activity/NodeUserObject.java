@@ -107,7 +107,7 @@ public class NodeUserObject extends IceUserObject {
 
         treeBean = treeBeanPointer;
         label = generateLabel();
-
+        
         setLeafIcon("xmlhttp/css/xp/css-images/tree_document.gif");
         setBranchContractedIcon(
                 "xmlhttp/css/xp/css-images/tree_folder_close.gif");
