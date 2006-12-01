@@ -76,7 +76,9 @@ public class XmlFileImportBean {
 		logger.debug("### Nouveau fichier = "+destFile.getPath()+" => "+destFile.getName()+" ###");
 		Process p = processService.SpelpParsingXML(file);
 		//TODO save the process
-		//processService.SaveImportedProcess(p);
+		processService.SaveImportedProcess(p);
+		// envoi id au treeBean
+		
 	}
 
 	public void progress(EventObject event) {

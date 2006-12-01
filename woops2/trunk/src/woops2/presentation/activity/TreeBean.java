@@ -284,7 +284,7 @@ public class TreeBean {
 	 */
 	public TreeBean() {
 	}
-
+	/*
 	public Process buildProcess() {
 		Process process = new Process();
 		process.setIdEPF("myProcess");
@@ -319,7 +319,8 @@ public class TreeBean {
 
 		return process;
 	}
-
+	*/
+	
 	public void buildTree(Process _process) {
 		rootTreeNode = new DefaultMutableTreeNode();
 		NodeUserObject rootObject = new NodeUserObject(rootTreeNode, this);
@@ -403,7 +404,9 @@ public class TreeBean {
 	 * @return tree model.
 	 */
 	public DefaultTreeModel getModel() {
-		this.buildTree(this.buildProcess());
+		//Delegation au processService
+		//this.buildTree(this.buildProcess());
+		
 		return this.model;
 	}
 
