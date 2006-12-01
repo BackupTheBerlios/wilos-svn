@@ -5,11 +5,11 @@ import java.util.EventObject;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.ServletContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.core.io.Resource;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.jsf.FacesContextUtils;
 
 import woops2.business.process.ProcessService;
@@ -74,18 +74,16 @@ public class XmlFileImportViewer {
 		if (inputFile.getStatus() == InputFile.UNKNOWN_SIZE) {
 			inputFile.getFileInfo().getException().printStackTrace();
 		}
-		File destFile = new File("/upload/"+file.getName());
-		logger.debug("### fichier = "+file.getPath()+" => "+file.getName()+" ###");
-		file.renameTo(destFile);
-		logger.debug("### Nouveau fichier = "+destFile.getPath()+" => "+destFile.getName()+" ###");
+		
 		Process p = processService.SpelpParsingXML(file);
-		//TODO save the process
+		//TODO save the process pour upload
 		//processService.SaveImportedProcess(p);
-		/*
-		ApplicationContext ctx = FacesContextUtils.getWebApplicationContext(FacesContext.getCurrentInstance());
-		Resource r = ctx.getResource("");
-		r.getInputStream()
-		*/
+		
+		ServletContext theApplicationsServletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+		String realPath = theApplicationsServletContext.getRealPath("/upload");
+		File f = inputFile.getFile();
+		f.renameTo(new File(realPath+inputFile.getFile().getName()));
+		
 	}
 
 	public void progress(EventObject event) {
