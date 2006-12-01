@@ -358,6 +358,7 @@ public class TreeBean {
 							NodeUserObject branchStepObject = new NodeUserObject(
 									branchStepNode, this);
 							branchStepNode.setUserObject(branchStepObject);
+							branchStepObject.setLeaf(true);
 							branchStepObject.setText(step.getName());
 							branchTaskDefinitionNode.insert(branchStepNode, 0);
 						}
@@ -383,6 +384,7 @@ public class TreeBean {
 							.setUserObject(branchRoleDefinitionObject);
 					branchRoleDefinitionObject
 							.setText(roleDefinition.getName());
+					branchRoleDefinitionObject.setLeaf(true);
 					branchRoleDescriptorNode
 							.insert(branchRoleDefinitionNode, 0);
 				}

@@ -124,7 +124,7 @@
 									<br />
 
 								</ice:panelGrid>
-								<ice:panelGrid styleClass="componentLayoutRootTable" columns="1">
+								<ice:panelGrid styleClass="componentLayoutRootTable" columns="2">
 									<ice:panelGroup label="Process Display">
 										<br/>
 										<ice:tree id="tree" value="#{TreeBean.model}" var="item"
