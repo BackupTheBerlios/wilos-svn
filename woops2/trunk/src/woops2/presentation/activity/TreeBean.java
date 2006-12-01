@@ -289,11 +289,11 @@ public class TreeBean {
 	
 	public Process buildProcess() {
 		Process process = new Process();
-		process.setIdEPF("myProcess");
+		process.setGuid("myProcess");
 		process.setName("TheProceSS");
 
 		TaskDescriptor tskdes1 = new TaskDescriptor();
-		tskdes1.setIdEPF("tsk1");
+		tskdes1.setGuid("tsk1");
 		tskdes1.setName("tsk1Name");
 		process.addBreakdownElement(tskdes1);
 
@@ -306,12 +306,12 @@ public class TreeBean {
 		taskDefinition.addStep(step1);
 
 		TaskDescriptor tskdes2 = new TaskDescriptor();
-		tskdes2.setIdEPF("tsk2");
+		tskdes2.setGuid("tsk2");
 		tskdes2.setName("tsk2Name");
 		process.addBreakdownElement(tskdes2);
 
 		RoleDescriptor rdes1 = new RoleDescriptor();
-		rdes1.setIdEPF("rdes1");
+		rdes1.setGuid("rdes1");
 		rdes1.setName("rdes1Name");
 		process.addBreakdownElement(rdes1);
 

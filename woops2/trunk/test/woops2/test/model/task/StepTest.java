@@ -31,7 +31,7 @@ public class StepTest extends TestCase {
 		this.step = new Step() ;
 		this.step.setDescription(DESCRIPTION) ;
 		this.step.setName(NAME) ;
-		this.step.setIdEPF(IDEPF) ;
+		this.step.setGuid(IDEPF) ;
 	}
 
 	/*
@@ -66,7 +66,7 @@ public class StepTest extends TestCase {
 		Step stp = new Step() ;
 		stp.setDescription(DESCRIPTION) ;
 		stp.setName(NAME) ;
-		stp.setIdEPF(IDEPF) ;
+		stp.setGuid(IDEPF) ;
 
 		assertNotNull(this.step.hashCode()) ;
 		assertNotNull(stp.hashCode()) ;
@@ -85,7 +85,7 @@ public class StepTest extends TestCase {
 		Step step = new Step() ;
 		step.setDescription(DESCRIPTION) ;
 		step.setName(NAME) ;
-		step.setIdEPF(IDEPF) ;
+		step.setGuid(IDEPF) ;
 
 		assertTrue("Field by field", this.step.equals(step)) ;
 
@@ -93,7 +93,7 @@ public class StepTest extends TestCase {
 		Step step2 = new Step() ;
 		step2.setDescription("description2") ;
 		step2.setName("name2") ;
-		step2.setIdEPF("idEPF2") ;
+		step2.setGuid("idEPF2") ;
 
 		assertFalse("Not equals", this.step.equals(step2)) ;
 	}
@@ -106,7 +106,7 @@ public class StepTest extends TestCase {
 		TaskDefinition taskDefinition = new TaskDefinition() ;
 		taskDefinition.setDescription(DESCRIPTION) ;
 		taskDefinition.setName(NAME) ;
-		taskDefinition.setIdEPF(IDEPF) ;
+		taskDefinition.setGuid(IDEPF) ;
 
 		this.step.addTaskDefinition(taskDefinition) ;
 
@@ -122,7 +122,7 @@ public class StepTest extends TestCase {
 		TaskDefinition taskDefinition = new TaskDefinition() ;
 		taskDefinition.setDescription(DESCRIPTION) ;
 		taskDefinition.setName(NAME) ;
-		taskDefinition.setIdEPF(IDEPF) ;
+		taskDefinition.setGuid(IDEPF) ;
 
 		this.step.addTaskDefinition(taskDefinition) ;
 		this.step.removeTaskDefinition(taskDefinition) ;
@@ -139,7 +139,7 @@ public class StepTest extends TestCase {
 		TaskDefinition taskDefinition = new TaskDefinition() ;
 		taskDefinition.setDescription(DESCRIPTION) ;
 		taskDefinition.setName(NAME) ;
-		taskDefinition.setIdEPF(IDEPF) ;
+		taskDefinition.setGuid(IDEPF) ;
 		this.step.addTaskDefinition(taskDefinition) ;
 		assertEquals(0, this.step.compareTo(this.step)) ;
 		

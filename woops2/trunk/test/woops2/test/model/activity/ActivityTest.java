@@ -26,7 +26,7 @@ public class ActivityTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp() ;
 		this.activity = new Activity() ;
-		this.activity.setIdEPF("idEPF1") ;
+		this.activity.setGuid("idEPF1") ;
 		this.activity.setName("name1") ;
 		this.activity.setDescription("description1") ;
 		this.activity.setPrefix("prefix1") ;
@@ -65,7 +65,7 @@ public class ActivityTest extends TestCase {
 	public void testHashCode() {
 
 		Activity tmp = new Activity() ;
-		tmp.setIdEPF("idEPF1") ;
+		tmp.setGuid("idEPF1") ;
 		tmp.setName("name1") ;
 		tmp.setDescription("description1") ;
 		tmp.setPrefix("prefix1") ;
@@ -87,7 +87,7 @@ public class ActivityTest extends TestCase {
 	public void testEqualsObject() {
 
 		Activity tmp = new Activity() ;
-		tmp.setIdEPF("idEPF1") ;
+		tmp.setGuid("idEPF1") ;
 		tmp.setName("name1") ;
 		tmp.setDescription("description1") ;
 		tmp.setPrefix("prefix1") ;
@@ -101,7 +101,7 @@ public class ActivityTest extends TestCase {
 		assertTrue(this.activity.equals(tmp)) ;
 
 		Activity act = new Activity() ;
-		act.setIdEPF("idEPF2") ;
+		act.setGuid("idEPF2") ;
 		act.setName("name2") ;
 		act.setDescription("description2") ;
 		act.setPrefix("prefix2") ;
@@ -122,7 +122,7 @@ public class ActivityTest extends TestCase {
 	public void testAddBreakdownElement() {
 
 		BreakdownElement breakdownElement = new BreakdownElement() ;
-		breakdownElement.setIdEPF("idEPF1") ;
+		breakdownElement.setGuid("idEPF1") ;
 		breakdownElement.setName("name1") ;
 		breakdownElement.setDescription("description1") ;
 		breakdownElement.setPrefix("prefix1") ;
@@ -145,7 +145,7 @@ public class ActivityTest extends TestCase {
 	public void testAddAllBreakdownElement() {
 
 		BreakdownElement breakdownElement = new BreakdownElement() ;
-		breakdownElement.setIdEPF("idEPF1") ;
+		breakdownElement.setGuid("idEPF1") ;
 		breakdownElement.setName("name1") ;
 		breakdownElement.setDescription("description1") ;
 		breakdownElement.setPrefix("prefix1") ;
@@ -154,7 +154,7 @@ public class ActivityTest extends TestCase {
 		breakdownElement.setHasMultipleOccurrences(false) ;
 
 		BreakdownElement tmp = new BreakdownElement() ;
-		tmp.setIdEPF("idEPF2") ;
+		tmp.setGuid("idEPF2") ;
 		tmp.setName("name2") ;
 		tmp.setDescription("description1") ;
 		tmp.setPrefix("prefix1") ;
@@ -182,7 +182,7 @@ public class ActivityTest extends TestCase {
 	 */
 	public void testRemoveBreakdownElement() {
 		BreakdownElement breakdownElement = new BreakdownElement() ;
-		breakdownElement.setIdEPF("idEPF1") ;
+		breakdownElement.setGuid("idEPF1") ;
 		breakdownElement.setName("name1") ;
 		breakdownElement.setDescription("description1") ;
 		breakdownElement.setPrefix("prefix1") ;
@@ -203,7 +203,7 @@ public class ActivityTest extends TestCase {
 	public void testRemoveAllBreakdownElements() {
 
 		BreakdownElement breakdownElement = new BreakdownElement() ;
-		breakdownElement.setIdEPF("idEPF1") ;
+		breakdownElement.setGuid("idEPF1") ;
 		breakdownElement.setName("name1") ;
 		breakdownElement.setDescription("description1") ;
 		breakdownElement.setPrefix("prefix1") ;
@@ -212,7 +212,7 @@ public class ActivityTest extends TestCase {
 		breakdownElement.setHasMultipleOccurrences(false) ;
 
 		BreakdownElement tmp = new BreakdownElement() ;
-		tmp.setIdEPF("idEPF2") ;
+		tmp.setGuid("idEPF2") ;
 		tmp.setName("name2") ;
 		tmp.setDescription("description1") ;
 		tmp.setPrefix("prefix1") ;

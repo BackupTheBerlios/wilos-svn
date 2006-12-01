@@ -340,7 +340,7 @@ public class ProcessService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		logger.debug("TestSaveCollectionsProcess: processId -> " + _process.getIdEPF());
+		logger.debug("TestSaveCollectionsProcess: processId -> " + _process.getGuid());
 		
 		_process.getBreakDownElements().clear();
 		this.processDao.saveOrUpdateProcess(_process);
@@ -449,14 +449,14 @@ public class ProcessService {
 	
 	public String TestPersistence(){
 		Process p = new Process();
-		p.setIdEPF("epf-test");
+		p.setGuid("epf-test");
 		p.setName("test_process");
 		logger.debug("TestPersistence p => "+p+" id="+p.getId());
 		logger.debug("TestPersistence p => "+p+" id="+p.getId());
-		logger.debug("#### p -> "+p.getIdEPF()+" "+p.getName());
+		logger.debug("#### p -> "+p.getGuid()+" "+p.getName());
 		this.processDao.saveOrUpdateProcess(p);
 		logger.debug("TestPersistence p => "+p+" id="+p.getId());
-		logger.debug("#### p -> "+p.getIdEPF()+" "+p.getName());
+		logger.debug("#### p -> "+p.getGuid()+" "+p.getName());
 		return p.getId();
 	}
 	
@@ -464,48 +464,48 @@ public class ProcessService {
 		
 		Process p = this.processDao.getProcess(_id);
 		logger.debug("TestProcessPersistence p => "+p+" id="+p.getId());
-		logger.debug("#### p -> "+p.getIdEPF()+" "+p.getName());
+		logger.debug("#### p -> "+p.getGuid()+" "+p.getName());
 	}
 	
 	public void TestEmptyObjectDBSave() {
 		
 		Process p = new Process();
-		p.setIdEPF("processGuID");
+		p.setGuid("processGuID");
 		p.setName("processName");
 		p.setPrefix("processPrefix");
-		logger.debug("#### p -> "+p.getIdEPF()+" "+p.getName());
+		logger.debug("#### p -> "+p.getGuid()+" "+p.getName());
 		
 		RoleDescriptor rd = new RoleDescriptor();
-		rd.setIdEPF("roledescriptorGuID");
+		rd.setGuid("roledescriptorGuID");
 		rd.setName("roledescriptorName");
 		rd.setPrefix("roledescriptorPrefix");
-		logger.debug("#### rd -> "+rd.getIdEPF()+" "+rd.getName());
+		logger.debug("#### rd -> "+rd.getGuid()+" "+rd.getName());
 		
 		TaskDescriptor td = new TaskDescriptor();
-		td.setIdEPF("taskdescriptorGuID");
+		td.setGuid("taskdescriptorGuID");
 		td.setName("tddesriptorName");
 		td.setPrefix("taskdescriptorPrefix");
-		logger.debug("#### td -> "+td.getIdEPF()+" "+td.getName());
+		logger.debug("#### td -> "+td.getGuid()+" "+td.getName());
 		
 		RoleDefinition rddef = new RoleDefinition();
-		rddef.setIdEPF("roledefinitionGuID");
+		rddef.setGuid("roledefinitionGuID");
 		rddef.setName("roledefinitionName");
-		logger.debug("#### rddef -> "+rddef.getIdEPF()+" "+rddef.getName());
+		logger.debug("#### rddef -> "+rddef.getGuid()+" "+rddef.getName());
 		
 		TaskDefinition tddef = new TaskDefinition();
-		tddef.setIdEPF("taskdefinitionGuID");
+		tddef.setGuid("taskdefinitionGuID");
 		tddef.setName("taskdefinitionName");
-		logger.debug("#### tddef -> "+tddef.getIdEPF()+" "+tddef.getName());
+		logger.debug("#### tddef -> "+tddef.getGuid()+" "+tddef.getName());
 		
 		Step s1 = new Step();
-		s1.setIdEPF("taskdefinitionGuID");
+		s1.setGuid("taskdefinitionGuID");
 		s1.setName("taskdefinitionName");
-		logger.debug("#### s1 -> "+s1.getIdEPF()+" "+s1.getName());
+		logger.debug("#### s1 -> "+s1.getGuid()+" "+s1.getName());
 		
 		Step s2 = new Step();
-		s2.setIdEPF("taskdefinitionGuID");
+		s2.setGuid("taskdefinitionGuID");
 		s2.setName("taskdefinitionName");
-		logger.debug("#### s2 -> "+s2.getIdEPF()+" "+s2.getName());
+		logger.debug("#### s2 -> "+s2.getGuid()+" "+s2.getName());
 		
 		this.processDao.saveOrUpdateProcess(p);
 		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(rd);

@@ -23,7 +23,7 @@ public class Element implements Cloneable {
 	/**
 	 * The global unique id for EPF.
 	 */
-	private String idEPF ;
+	private String guid ;
 
 	/**
 	 * The name of the element.
@@ -40,7 +40,7 @@ public class Element implements Cloneable {
 	 * 
 	 */
 	public Element() {
-		this.idEPF = "" ;
+		this.guid = "" ;
 		this.name = "" ;
 		this.description = "" ;
 	}
@@ -64,7 +64,7 @@ public class Element implements Cloneable {
 	 *            The element to copy.
 	 */
 	protected void copy(final Element _element) {
-		this.idEPF = _element.idEPF ;
+		this.guid = _element.guid ;
 		this.name = _element.name ;
 		this.description = _element.description ;
 	}
@@ -82,7 +82,7 @@ public class Element implements Cloneable {
 			return true ;
 		}
 		Element element = (Element) _obj ;
-		return new EqualsBuilder().append(this.idEPF, element.idEPF).append(this.name, element.name).append(this.description, element.description).isEquals() ;
+		return new EqualsBuilder().append(this.guid, element.guid).append(this.name, element.name).append(this.description, element.description).isEquals() ;
 	}
 
 	/*
@@ -91,7 +91,7 @@ public class Element implements Cloneable {
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(this.idEPF).append(this.name).append(this.description).toHashCode() ;
+		return new HashCodeBuilder(17, 37).append(this.guid).append(this.name).append(this.description).toHashCode() ;
 	}
 
 	/**
@@ -157,18 +157,18 @@ public class Element implements Cloneable {
 	 * 
 	 * @return the idEPF.
 	 */
-	public String getIdEPF() {
-		return this.idEPF ;
+	public String getGuid() {
+		return this.guid ;
 	}
 
 	/**
 	 * Setter of idEPF.
 	 * 
-	 * @param _idEPF
+	 * @param _guid
 	 *            The idEPF to set.
 	 */
-	public void setIdEPF(String _idEPF) {
-		this.idEPF = _idEPF ;
+	public void setGuid(String _guid) {
+		this.guid = _guid ;
 	}
 
 }
