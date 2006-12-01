@@ -3,6 +3,7 @@ package woops2.hibernate.workbreakdownelement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -27,13 +28,16 @@ public class WorkBreakdownElementDao extends HibernateDaoSupport {
 			WorkBreakdownElement _workBreakdownElement) {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_workBreakdownElement) ;
-			this.getHibernateTemplate().flush() ;
+			//this.getHibernateTemplate().flush() ;
 
 		}
 		catch(DataIntegrityViolationException e){
 			System.out.print("save in WBdEDao: The Exception is " + e.getClass().getName() + "\n") ;
-			e.printStackTrace() ;
-			throw e ;
+			//e.printStackTrace() ;
+		}
+		catch(ConstraintViolationException ex){
+			System.out.print("save in WBdEDao: The Exception is " + ex.getClass().getName() + "\n") ;
+			//ex.printStackTrace() ;
 		}
 	}
 

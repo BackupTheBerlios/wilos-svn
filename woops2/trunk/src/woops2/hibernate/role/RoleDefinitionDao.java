@@ -4,6 +4,7 @@ package woops2.hibernate.role ;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -29,9 +30,10 @@ public class RoleDefinitionDao extends HibernateDaoSupport {
 		}
 		catch(DataIntegrityViolationException e){
 			System.out.print("save in RoleDefinitionDao: The Exception is " + e.getClass().getName() + "\n") ;
-			e.printStackTrace() ;
-			throw e ;
-		}	
+		}
+		catch(ConstraintViolationException ex){
+			System.out.print("save in RoleDefinitionDao: The Exception is " + ex.getClass().getName() + "\n") ;
+		}
 	}
 
 	/**
