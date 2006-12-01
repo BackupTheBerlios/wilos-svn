@@ -86,6 +86,9 @@ public class WizardServices {
     
     @WebMethod
     public List<String> getAllProcess (@WebParam(name="login") String login,@WebParam(name="password")  String password) {
+        System.out.println("APPEL DE LA METHODE GETALLPROCESS");
+        System.out.println("LOGIN : "+login);
+        System.out.println("PASS : "+password);
         List<String> result = new ArrayList<String>();
         if(login.equals("testBD") && password.equals("testBD")) {
             List<Process> lp = new ArrayList<Process>();
