@@ -16,13 +16,13 @@
 	<property name="lib.dir" value="${basedir}/WebContent/WEB-INF/lib" />
 	<property name="dist.dir" value="${basedir}/dist" />
 	<property file="${ant.dir}/tomcat.properties"  />
-	
-	<!-- Taches Tomcat
+
+	<!-- Taches Tomcat -->
 	<taskdef file="${ant.dir}/tomcatTask.properties">
 		<classpath>
-			<pathelement path="${tomcat.dir}/server/lib/catalina-ant.jar"/>
+			<pathelement path="${ant.dir}/catalina-ant.jar"/>
 		</classpath>
-	</taskdef>  -->
+	</taskdef>
 
 	<!-- Libraries Import -->
 	<path id="classpath">
@@ -132,48 +132,34 @@
 		<delete dir="${build.dir}" />
 	</target>
 
-	<!--
-	<target name="tomcat_deploy" depends="build.war">
-		<deploy url="${tomcat.manager.url}"
-	            username="${tomcat.username}"
-	            password="${tomcat.password}"
-	            path="/${project.name}}"
-	            war="file:${build.dir}/${project.name}/"/>
-	</target> -->
 
-	<!-- Copie du fichier dans tomcat -->
-	<target name="tomcat_clean_and_copy_2_tomcat" depends="build.war">
-		<!-- Suppression anciens fichiers -->
-		<delete dir="${tomcat.webapps.dir}/${project.name}" />
-		<delete file="${tomcat.webapps.dir}/${project.name}.war" />
-		<!-- Copie des nouveaux fichiers -->
-		<copy todir="${tomcat.webapps.dir}">
-			<fileset dir="${tomcat.webapps.dir}">
-				<include name="*.war" />
-			</fileset>
-		</copy>
-	</target>
 
+	<!-- ============================================================================= -->
+	
 	<!-- Lancement de Tomcat -->
-	<target name="tomcat_run_win" depends="tomcat_clean_and_copy_2_tomcat">
+	<target name="tomcat_run_win" >
 		<exec command="${tomcat.bin.dir}/startup.bat"
-				dir="${tomcat.bin.dir}" />
-	</target>
-
-	<target name="tomcat_run_linux" depends="tomcat_clean_and_copy_2_tomcat">
-		<exec command="${tomcat.bin.dir}/startup.sh"
 					dir="${tomcat.bin.dir}" />
 	</target>
+	
+	<target name="tomcat_shutdown_win" >
+			<exec command="${tomcat.bin.dir}/shutdown.bat"
+						dir="${tomcat.bin.dir}" />
+		</target>
 
-	<!-- Suppression repertoire de logs 
-		<target name="clearLogs">
-			<delete dir="${project.logs}" />
-			<mkdir dir="${project.logs}" />
-		</target> -->
+	<target name="tomcat_run_linux">
+		<exec command="${tomcat.bin.dir}/startup.sh"
+						dir="${tomcat.bin.dir}" />
+	</target>
+	
+	<target name="tomcat_shutdown_linux">
+			<exec command="${tomcat.bin.dir}/shutdown.sh"
+							dir="${tomcat.bin.dir}" />
+		</target>
 
-	<!-- =============================================================================
-
-	<target name="deploy" description="Install application in Tomcat"
+	<!-- Gestion du serveur -->
+	
+	<target name="tomcat_deploy" description="Install application in Tomcat"
 	        depends="build.war">
 		<deploy url="${tomcat.manager.url}"
 	            username="${tomcat.username}"
@@ -202,7 +188,8 @@
 	            password="${tomcat.password}"
 	            path="/${project.name}"/>
 	</target>
-
+	
+	<!-- 
 	<target name="tomcat_stop" description="Stop Tomcat application">
 		<stop url="${tomcat.manager.url}"
 	            username="${tomcat.username}"
@@ -214,8 +201,7 @@
 		<list url="${tomcat.manager.url}"
 	            username="${tomcat.username}"
 	            password="${tomcat.password}"/>
-	</target>
-	-->
+	</target> -->
 
 </project>
 
