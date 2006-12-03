@@ -68,7 +68,6 @@ public class BreakdownElement extends Element implements Cloneable {
 		this.isPlanned = _breakdownElement.isPlanned ;
 		this.isOptional = _breakdownElement.isOptional ;
 		this.setActivities(_breakdownElement.getActivities()) ;
-
 	}
 
 	/*
