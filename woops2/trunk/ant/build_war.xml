@@ -181,7 +181,7 @@
 	            password="${tomcat.password}"
 	            path="/${project.name}"/>
 	</target>
-
+	<!--
 	<target name="tomcat_start" description="Start Tomcat application">
 		<start url="${tomcat.manager.url}"
 	            username="${tomcat.username}"
@@ -189,19 +189,19 @@
 	            path="/${project.name}"/>
 	</target>
 	
-	<!-- 
+	 
 	<target name="tomcat_stop" description="Stop Tomcat application">
 		<stop url="${tomcat.manager.url}"
 	            username="${tomcat.username}"
 	            password="${tomcat.password}"
 	            path="/${project.name}"/>
 	</target>
-
+	-->
 	<target name="tomcat_listapp" description="List Tomcat applications">
 		<list url="${tomcat.manager.url}"
 	            username="${tomcat.username}"
 	            password="${tomcat.password}"/>
-	</target> -->
+	</target> 
 
 </project>
 
