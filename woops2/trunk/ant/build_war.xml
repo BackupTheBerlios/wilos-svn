@@ -15,12 +15,12 @@
 	<property name="web.dir" value="${basedir}/WebContent" />
 	<property name="lib.dir" value="${basedir}/WebContent/WEB-INF/lib" />
 	<property name="dist.dir" value="${basedir}/dist" />
-	<property file="${ant.dir}/tomcat.properties"  />
+	<property file="${ant.dir}/tomcat.properties" />
 
 	<!-- Taches Tomcat -->
 	<taskdef file="${ant.dir}/tomcatTask.properties">
 		<classpath>
-			<pathelement path="${ant.dir}/catalina-ant.jar"/>
+			<pathelement path="${ant.dir}/catalina-ant.jar" />
 		</classpath>
 	</taskdef>
 
@@ -135,51 +135,41 @@
 
 
 	<!-- ============================================================================= -->
-	
+
 	<!-- Lancement de Tomcat -->
-	<target name="tomcat_run_win" >
-		<exec command="${tomcat.bin.dir}/startup.bat"
-					dir="${tomcat.bin.dir}" />
+	<target name="tomcat_run_win">
+		<exec command="${tomcat.bin.dir}/startup.bat" dir="${tomcat.bin.dir}" />
 	</target>
-	
-	<target name="tomcat_shutdown_win" >
-			<exec command="${tomcat.bin.dir}/shutdown.bat"
-						dir="${tomcat.bin.dir}" />
-		</target>
+
+	<target name="tomcat_shutdown_win">
+		<exec command="${tomcat.bin.dir}/shutdown.bat" dir="${tomcat.bin.dir}" />
+	</target>
 
 	<target name="tomcat_run_linux">
-		<exec command="${tomcat.bin.dir}/startup.sh"
-						dir="${tomcat.bin.dir}" />
+		<exec command="${tomcat.bin.dir}/startup.sh" dir="${tomcat.bin.dir}" />
 	</target>
-	
+
 	<target name="tomcat_shutdown_linux">
-			<exec command="${tomcat.bin.dir}/shutdown.sh"
-							dir="${tomcat.bin.dir}" />
-		</target>
+		<exec command="${tomcat.bin.dir}/shutdown.sh" dir="${tomcat.bin.dir}" />
+	</target>
 
 	<!-- Gestion du serveur -->
-	
-	<target name="tomcat_deploy" description="Install application in Tomcat"
-	        depends="build.war">
-		<deploy url="${tomcat.manager.url}"
-	            username="${tomcat.username}"
-	            password="${tomcat.password}"
-	            path="/${project.name}"
-	            war="file:${dist.dir}/${project.name}.war"/>
+
+	<target name="tomcat_deploy" description="Install application in Tomcat" depends="build.war">
+		<deploy url="${tomcat.manager.url}" username="${tomcat.username}" password="${tomcat.password}" path="/${project.name}" war="file:${dist.dir}/${project.name}.war" />
 	</target>
 
 	<target name="tomcat_undeploy" description="Remove application in Tomcat">
-		<undeploy url="${tomcat.manager.url}"
-	            username="${tomcat.username}"
-	            password="${tomcat.password}"
-	            path="/${project.name}"/>
+		<undeploy url="${tomcat.manager.url}" username="${tomcat.username}" password="${tomcat.password}" path="/${project.name}" />
+	</target>
+
+	<target name="tomcat_redeploy" description="Remove application in Tomcat" depends="build.war">
+		<undeploy url="${tomcat.manager.url}" username="${tomcat.username}" password="${tomcat.password}" path="/${project.name}" />
+		<deploy url="${tomcat.manager.url}" username="${tomcat.username}" password="${tomcat.password}" path="/${project.name}" war="file:${dist.dir}/${project.name}.war" />
 	</target>
 
 	<target name="tomcat_reload" description="Reload application in Tomcat">
-		<reload url="${tomcat.manager.url}"
-	            username="${tomcat.username}"
-	            password="${tomcat.password}"
-	            path="/${project.name}"/>
+		<reload url="${tomcat.manager.url}" username="${tomcat.username}" password="${tomcat.password}" path="/${project.name}" />
 	</target>
 	<!--
 	<target name="tomcat_start" description="Start Tomcat application">
@@ -198,10 +188,8 @@
 	</target>
 	-->
 	<target name="tomcat_listapp" description="List Tomcat applications">
-		<list url="${tomcat.manager.url}"
-	            username="${tomcat.username}"
-	            password="${tomcat.password}"/>
-	</target> 
+		<list url="${tomcat.manager.url}" username="${tomcat.username}" password="${tomcat.password}" />
+	</target>
 
 </project>
 

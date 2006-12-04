@@ -1,8 +1,10 @@
 package woops2.presentation.activity;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.EventObject;
 
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
@@ -71,8 +73,20 @@ public class XmlFileImportBean {
 		if (inputFile.getStatus() == InputFile.UNKNOWN_SIZE) {
 			inputFile.getFileInfo().getException().printStackTrace();
 		}
+		ExternalContext extCtx = FacesContext.getCurrentInstance().getExternalContext();
 		//File destFile = new File("/upload/"+file.getName());
 		logger.debug("### fichier = "+file.getPath()+" => "+file.getName()+" ###");
+		try {
+			logger.debug("### getCanonicalPath = "+file.getCanonicalPath());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		logger.debug("### getAbsoluteFile = "+file.getAbsoluteFile());
+		logger.debug("### getRequestContextPath = "+extCtx.getRequestContextPath());
+		logger.debug("### getRequestPathInfo = "+extCtx.getRequestPathInfo());
+		extCtx.getResourceAsStream("");
+		
 		//file.renameTo(destFile);
 		//logger.debug("### Nouveau fichier = "+destFile.getPath()+" => "+destFile.getName()+" ###");
 		//String id = null;

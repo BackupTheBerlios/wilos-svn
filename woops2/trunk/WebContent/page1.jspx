@@ -111,7 +111,7 @@
 										<ice:inputFile style="border:none; width:400px; height:70px;"
 											progressListener="#{XmlFileImportBean.progress}"
 											actionListener="#{XmlFileImportBean.action}" 
-											uniqueFolder="false"/>
+											uniqueFolder="false" file="#{XmlFileImportBean.file}" immediate="true"/>
 										<ice:outputProgress id="pro"
 											value="#{XmlFileImportBean.percent}" />
 										<ice:outputText
