@@ -65,7 +65,15 @@
 			<value>#{LoginService}</value>
 		</managed-property>
 	</managed-bean>
-	
+	<managed-bean>
+		<managed-bean-name>ProjectBean</managed-bean-name>
+		<managed-bean-class>woops2.presentation.project.ProjectBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+	</managed-bean>
 	<validator>
 		<validator-id>emailValidator</validator-id>
 		<validator-class>
@@ -148,6 +156,14 @@
   		<navigation-case>
     		<from-outcome>welcome</from-outcome>
     		<to-view-id>/welcome.jsf</to-view-id>
+  		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+  		<from-view-id>*</from-view-id>
+  		<navigation-case>
+    		<from-outcome>project_create</from-outcome>
+    		<to-view-id>/project_create.jsf</to-view-id>
   		</navigation-case>
 	</navigation-rule>
 	

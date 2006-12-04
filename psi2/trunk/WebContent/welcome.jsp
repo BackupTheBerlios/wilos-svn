@@ -12,6 +12,13 @@
 	<h:form id="form">
 		<h1>Bienvenue dans Wilos</h1>
 		<br>
+		-<h:commandLink id="createProject"
+	                   action="project_create"
+	                   immediate="true">
+	   		<h:outputText
+	                   value="Créer un nouveau Projet"/>
+	  	</h:commandLink>
+		<br>
 		  	-<h:commandLink id="logout"
 		                   action="#{LoginBean.logoutAction}"
 		                   immediate="true">
