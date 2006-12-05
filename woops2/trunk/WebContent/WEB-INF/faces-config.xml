@@ -24,7 +24,7 @@
 	<!-- Managed Bean for dynamic style examples -->
 	<managed-bean>
 		<managed-bean-name>styleBean</managed-bean-name>
-		<managed-bean-class>woops2.util.StyleBean</managed-bean-class>
+		<managed-bean-class>wilos.util.StyleBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
@@ -36,7 +36,7 @@
 		</description>
 		<managed-bean-name>navigation</managed-bean-name>
 		<managed-bean-class>
-			woops2.util.NavigationBean
+			wilos.util.NavigationBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
@@ -44,7 +44,7 @@
 	<managed-bean>
 		<managed-bean-name>treeNavigation</managed-bean-name>
 		<managed-bean-class>
-			woops2.util.TreeNavigation
+			wilos.util.TreeNavigation
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
@@ -63,7 +63,7 @@
 	<managed-bean>
 		<managed-bean-name>ActivityBean</managed-bean-name>
 		<managed-bean-class>
-			woops2.presentation.activity.ActivityBean
+			wilos.presentation.activity.ActivityBean
 		</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
@@ -75,7 +75,7 @@
 	<managed-bean>
 		<managed-bean-name>XmlFileImportBean</managed-bean-name>
 		<managed-bean-class>
-			woops2.presentation.activity.XmlFileImportBean
+			wilos.presentation.activity.XmlFileImportBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
@@ -87,7 +87,7 @@
 	<managed-bean>
 		<managed-bean-name>TreeBean</managed-bean-name>
 		<managed-bean-class>
-			woops2.presentation.activity.TreeBean
+			wilos.presentation.activity.TreeBean
 		</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
