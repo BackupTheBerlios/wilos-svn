@@ -1,19 +1,19 @@
 
-package wilos.test.hibernate ;
+package wilos.test.business.services.process ;
 
 import junit.framework.Test ;
 import junit.framework.TestSuite ;
 
 /**
- * @author deder
+ * @author Mathieu BENOIT.
  * 
  */
 public class AllTests {
 
 	public static Test suite () {
-		TestSuite suite = new TestSuite("Test for wilos.test.hibernate") ;
+		TestSuite suite = new TestSuite("Test for wilos.test.business.services.process") ;
 		// $JUnit-BEGIN$
-		suite.addTest(wilos.test.hibernate.spem2.AllTests.suite()) ;
+		suite.addTestSuite(ProcessServiceTest.class) ;
 		// $JUnit-END$
 		return suite ;
 	}
