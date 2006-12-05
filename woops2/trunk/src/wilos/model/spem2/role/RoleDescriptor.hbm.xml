@@ -27,7 +27,7 @@
 		
 		<set name="participants" table="play" lazy="true">
 			<key column="roledescriptor_id"></key>
-			<many-to-many class="wilos.model.spem2.wilosuser.Participant"
+			<many-to-many class="woops2.model.wilosuser.Participant"
 				column="participant_id">
 			</many-to-many>
 		</set>
