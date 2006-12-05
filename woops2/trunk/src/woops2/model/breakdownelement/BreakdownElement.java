@@ -20,6 +20,8 @@ import woops2.model.element.Element ;
  */
 public class BreakdownElement extends Element implements Cloneable {
 
+	private String presentationName;
+	
 	private String prefix ;
 
 	private Boolean isPlanned ;
@@ -36,6 +38,7 @@ public class BreakdownElement extends Element implements Cloneable {
 	 */
 	public BreakdownElement() {
 		super() ;
+		this.presentationName = "";
 		this.prefix = "" ;
 		this.isOptional = false ;
 		this.isPlanned = true ;
@@ -63,6 +66,7 @@ public class BreakdownElement extends Element implements Cloneable {
 	 */
 	protected void copy(final BreakdownElement _breakdownElement) {
 		super.copy(_breakdownElement) ;
+		this.presentationName = _breakdownElement.presentationName;
 		this.prefix = _breakdownElement.prefix ;
 		this.hasMultipleOccurrences = _breakdownElement.hasMultipleOccurrences ;
 		this.isPlanned = _breakdownElement.isPlanned ;
@@ -83,7 +87,7 @@ public class BreakdownElement extends Element implements Cloneable {
 			return true ;
 		}
 		BreakdownElement breakdownElement = (BreakdownElement) obj ;
-		return new EqualsBuilder().appendSuper(super.equals(breakdownElement)).append(this.prefix, breakdownElement.prefix).append(this.isPlanned,
+		return new EqualsBuilder().appendSuper(super.equals(breakdownElement)).append(this.presentationName, breakdownElement.presentationName).append(this.prefix, breakdownElement.prefix).append(this.isPlanned,
 				breakdownElement.isPlanned).append(this.hasMultipleOccurrences, breakdownElement.hasMultipleOccurrences).append(this.isOptional,
 				breakdownElement.isOptional).append(this.activities, breakdownElement.activities).isEquals() ;
 	}
@@ -94,7 +98,7 @@ public class BreakdownElement extends Element implements Cloneable {
 	 * @see woops2.model.element.Element#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.prefix).append(this.hasMultipleOccurrences).append(this.isOptional)
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.presentationName).append(this.prefix).append(this.hasMultipleOccurrences).append(this.isOptional)
 				.append(this.isPlanned).toHashCode() ;
 	}
 
@@ -140,6 +144,22 @@ public class BreakdownElement extends Element implements Cloneable {
 		for(Activity activity : this.getActivities())
 			activity.getBreakDownElements().remove(this) ;
 		this.getActivities().clear() ;
+	}
+
+	/**
+	 * @return the presentationName
+	 */
+	public String getPresentationName() {
+		return this.presentationName ;
+	}
+
+	/**
+	 * Setter of presentationName.
+	 *
+	 * @param _presentationName The presentationName to set.
+	 */
+	public void setPresentationName(String _presentationName) {
+		this.presentationName = _presentationName ;
 	}
 
 	/**
