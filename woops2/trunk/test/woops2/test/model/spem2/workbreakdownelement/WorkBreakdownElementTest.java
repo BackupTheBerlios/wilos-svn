@@ -1,7 +1,7 @@
-package woops2.test.model.workbreakdownelement;
+package wilos.test.model.spem2.workbreakdownelement;
 
 import junit.framework.TestCase;
-import woops2.model.workbreakdownelement.WorkBreakdownElement;
+import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 
 /**
  * @author deder
@@ -41,7 +41,7 @@ public class WorkBreakdownElementTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link woops2.model.workbreakdownelement.WorkBreakdownElement#clone()}.
+	 * Test method for {@link wilos.model.spem2.workbreakdownelement.WorkBreakdownElement#clone()}.
 	 */
 	public void testClone() {
 		try {
@@ -53,7 +53,7 @@ public class WorkBreakdownElementTest extends TestCase {
 	
 	/**
 	 * Test method for
-	 * {@link woops2.model.workbreakdownelement.WorkBreakdownElement#hashCode()}.
+	 * {@link wilos.model.spem2.workbreakdownelement.WorkBreakdownElement#hashCode()}.
 	 */
 	public final void testHashCode() {
 		// Rk: the setUp method is called here.
@@ -79,7 +79,7 @@ public class WorkBreakdownElementTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.workbreakdownelement.WorkBreakdownElement#equals(java.lang.Object)}.
+	 * {@link wilos.model.spem2.workbreakdownelement.WorkBreakdownElement#equals(java.lang.Object)}.
 	 */
 	public final void testEquals() {
 		// Rk: the setUp method is called here.

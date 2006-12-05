@@ -1,13 +1,13 @@
 
-package woops2.test.model.task ;
+package wilos.test.model.spem2.task ;
 
 import java.util.HashSet ;
 import java.util.Set ;
 
 import junit.framework.TestCase ;
-import woops2.model.role.RoleDescriptor ;
-import woops2.model.task.TaskDefinition ;
-import woops2.model.task.TaskDescriptor ;
+import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.task.TaskDefinition;
+import wilos.model.spem2.task.TaskDescriptor;
 
 /**
  * @author eperico
@@ -66,14 +66,14 @@ public class TaskDescriptorTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link woops2.model.task.TaskDescriptor#hashCode()}.
+	 * Test method for {@link wilos.model.spem2.task.TaskDescriptor#hashCode()}.
 	 */
 	public void testHashCode() {
 		assertNotNull(this.taskDescriptor.hashCode()) ;
 	}
 
 	/**
-	 * Test method for {@link woops2.model.task.TaskDescriptor#equals(Object obj)}.
+	 * Test method for {@link wilos.model.spem2.task.TaskDescriptor#equals(Object obj)}.
 	 */
 	public void testEquals() {
 
@@ -100,7 +100,7 @@ public class TaskDescriptorTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.task.TaskDescriptor#addToTaskDefinition(woops2.model.task.TaskDefinition)}.
+	 * {@link wilos.model.spem2.task.TaskDescriptor#addToTaskDefinition(wilos.model.spem2.task.TaskDefinition)}.
 	 */
 	public void testAddToTaskDefinition() {
 		TaskDefinition taskDefinition = new TaskDefinition() ;
@@ -115,7 +115,7 @@ public class TaskDescriptorTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.task.TaskDescriptor#removeFromTaskDefinition(woops2.model.task.TaskDefinition)}.
+	 * {@link wilos.model.spem2.task.TaskDescriptor#removeFromTaskDefinition(wilos.model.spem2.task.TaskDefinition)}.
 	 */
 	public void testRemoveFromTaskDefinition() {
 		TaskDefinition taskDefinition = new TaskDefinition() ;
@@ -133,7 +133,7 @@ public class TaskDescriptorTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.task.TaskDescriptor#addToMainRole(woops2.model.task.RoleDescriptor)}.
+	 * {@link wilos.model.spem2.task.TaskDescriptor#addToMainRole(wilos.model.spem2.task.RoleDescriptor)}.
 	 */
 	public void testAddToMainRole() {
 		RoleDescriptor roleDescriptor = new RoleDescriptor() ;
@@ -152,7 +152,7 @@ public class TaskDescriptorTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.task.TaskDescriptor#removeMainRole(woops2.model.task.RoleDescriptor)}.
+	 * {@link wilos.model.spem2.task.TaskDescriptor#removeMainRole(wilos.model.spem2.task.RoleDescriptor)}.
 	 */
 	public void testRemoveMainRole() {
 		RoleDescriptor roleDescriptor = new RoleDescriptor() ;
@@ -174,7 +174,7 @@ public class TaskDescriptorTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.task.TaskDescriptor#addToRoleDescriptor(woops2.model.task.RoleDescriptor)}.
+	 * {@link wilos.model.spem2.task.TaskDescriptor#addToRoleDescriptor(wilos.model.spem2.task.RoleDescriptor)}.
 	 */
 	public void testAddToRoleDescriptor() {
 		RoleDescriptor roleDescriptor = new RoleDescriptor() ;
@@ -193,7 +193,7 @@ public class TaskDescriptorTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.task.TaskDescriptor#removeFromRoleDescriptor(woops2.model.task.RoleDescriptor)}.
+	 * {@link wilos.model.spem2.task.TaskDescriptor#removeFromRoleDescriptor(wilos.model.spem2.task.RoleDescriptor)}.
 	 */
 	public void testRemoveFromRoleDescriptor() {
 		RoleDescriptor roleDescriptor = new RoleDescriptor() ;
@@ -215,7 +215,7 @@ public class TaskDescriptorTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.task.TaskDescriptor#removeFromAllRoleDescriptor(woops2.model.task.RoleDescriptor)}.
+	 * {@link wilos.model.spem2.task.TaskDescriptor#removeFromAllRoleDescriptor(wilos.model.spem2.task.RoleDescriptor)}.
 	 */
 	public void testRemoveFromAllRoleDescriptors() {
 		RoleDescriptor rd1 = new RoleDescriptor() ;

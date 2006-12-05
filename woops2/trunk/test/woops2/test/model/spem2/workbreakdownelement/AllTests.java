@@ -1,4 +1,4 @@
-package woops2.test.model.workbreakdownelement;
+package wilos.test.model.spem2.workbreakdownelement;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

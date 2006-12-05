@@ -1,4 +1,4 @@
-package woops2.test.model.task;
+package wilos.test.model.spem2.task;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

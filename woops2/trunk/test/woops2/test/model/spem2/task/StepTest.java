@@ -1,9 +1,9 @@
 
-package woops2.test.model.task ;
+package wilos.test.model.spem2.task ;
 
 import junit.framework.TestCase ;
-import woops2.model.task.Step ;
-import woops2.model.task.TaskDefinition ;
+import wilos.model.spem2.task.Step;
+import wilos.model.spem2.task.TaskDefinition;
 
 /**
  * This class represents the class test of the Step class.
@@ -44,7 +44,7 @@ public class StepTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link woops2.model.role.RoleDescriptor#clone()}.
+	 * Test method for {@link wilos.model.spem2.role.RoleDescriptor#clone()}.
 	 */
 	public final void testClone() {
 		// Rk: the setUp method is called here.
@@ -60,7 +60,7 @@ public class StepTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link woops2.model.task.Step#hashCode()}.
+	 * Test method for {@link wilos.model.spem2.task.Step#hashCode()}.
 	 */
 	public void testHashCode() {
 		Step stp = new Step() ;
@@ -74,7 +74,7 @@ public class StepTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link woops2.model.task.Step#equals(Object obj)}.
+	 * Test method for {@link wilos.model.spem2.task.Step#equals(Object obj)}.
 	 */
 	public void testEquals() {
 
@@ -100,7 +100,7 @@ public class StepTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.task.Step#addTaskDefinition(woops2.model.task.TaskDefinition)}.
+	 * {@link wilos.model.spem2.task.Step#addTaskDefinition(wilos.model.spem2.task.TaskDefinition)}.
 	 */
 	public void testAddToTaskDefinition() {
 		TaskDefinition taskDefinition = new TaskDefinition() ;
@@ -116,7 +116,7 @@ public class StepTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.task.Step#removeTaskDefinition(woops2.model.task.TaskDefinition)}.
+	 * {@link wilos.model.spem2.task.Step#removeTaskDefinition(wilos.model.spem2.task.TaskDefinition)}.
 	 */
 	public void testRemoveFromTaskDefinition() {
 		TaskDefinition taskDefinition = new TaskDefinition() ;
@@ -133,7 +133,7 @@ public class StepTest extends TestCase {
 	
 	/**
 	 * Test method for
-	 * {@link woops2.model.task.Step#compare(java.lang.Object, java.lang.Object)}.
+	 * {@link wilos.model.spem2.task.Step#compare(java.lang.Object, java.lang.Object)}.
 	 */
 	public void testCompare() {
 		TaskDefinition taskDefinition = new TaskDefinition() ;

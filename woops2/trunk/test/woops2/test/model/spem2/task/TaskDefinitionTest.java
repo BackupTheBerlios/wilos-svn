@@ -1,5 +1,5 @@
 
-package woops2.test.model.task ;
+package wilos.test.model.spem2.task ;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -7,9 +7,9 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import junit.framework.TestCase;
-import woops2.model.task.Step;
-import woops2.model.task.TaskDefinition;
-import woops2.model.task.TaskDescriptor;
+import wilos.model.spem2.task.Step;
+import wilos.model.spem2.task.TaskDefinition;
+import wilos.model.spem2.task.TaskDescriptor;
 
 /**
  * @author eperico
@@ -46,14 +46,14 @@ public class TaskDefinitionTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link woops2.model.task.TaskDefinition#hashCode()}.
+	 * Test method for {@link wilos.model.spem2.task.TaskDefinition#hashCode()}.
 	 */
 	public void testHashCode() {
 		assertNotNull(this.taskDefinition.hashCode()) ;
 	}
 
 	/**
-	 * Test method for {@link woops2.model.task.TaskDefinition#equals(Object obj)}.
+	 * Test method for {@link wilos.model.spem2.task.TaskDefinition#equals(Object obj)}.
 	 */
 	public void testEquals() {
 
@@ -78,7 +78,7 @@ public class TaskDefinitionTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link woops2.model.task.TaskDefinition#addStep(woops2.model.task.Step)}.
+	 * Test method for {@link wilos.model.spem2.task.TaskDefinition#addStep(wilos.model.spem2.task.Step)}.
 	 */
 	public void testAddStep() {
 		Step step = new Step() ;
@@ -93,7 +93,7 @@ public class TaskDefinitionTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.task.TaskDefinition#addTaskDescriptor(woops2.model.task.TaskDescriptor)}.
+	 * {@link wilos.model.spem2.task.TaskDefinition#addTaskDescriptor(wilos.model.spem2.task.TaskDescriptor)}.
 	 */
 	public void testAddTaskDescriptor() {
 		TaskDescriptor taskDescriptor = new TaskDescriptor() ;
@@ -108,7 +108,7 @@ public class TaskDefinitionTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.task.TaskDefinition#addToAllSteps(woops2.model.task.Step)}.
+	 * {@link wilos.model.spem2.task.TaskDefinition#addToAllSteps(wilos.model.spem2.task.Step)}.
 	 */
 	public void testAddToAllSteps() {
 		Step step1 = new Step() ;
@@ -137,7 +137,7 @@ public class TaskDefinitionTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.task.TaskDefinition#addToAllTaskDesciptors(woops2.model.task.TaskDesciptor)}.
+	 * {@link wilos.model.spem2.task.TaskDefinition#addToAllTaskDesciptors(wilos.model.spem2.task.TaskDesciptor)}.
 	 */
 	public void testAddToAllTaskDesciptors() {
 		TaskDescriptor td1 = new TaskDescriptor() ;
@@ -161,7 +161,7 @@ public class TaskDefinitionTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link woops2.model.task.TaskDefinition#removeStep(woops2.model.task.Step)}.
+	 * Test method for {@link wilos.model.spem2.task.TaskDefinition#removeStep(wilos.model.spem2.task.Step)}.
 	 */
 	public void testRemoveStep() {
 		Step step = new Step() ;
@@ -176,7 +176,7 @@ public class TaskDefinitionTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.task.TaskDefinition#removeTaskDescriptor(woops2.model.task.TaskDescriptor)}.
+	 * {@link wilos.model.spem2.task.TaskDefinition#removeTaskDescriptor(wilos.model.spem2.task.TaskDescriptor)}.
 	 */
 	public void testRemoveTaskDescriptor() {
 		TaskDescriptor taskDescriptor = new TaskDescriptor() ;
@@ -191,7 +191,7 @@ public class TaskDefinitionTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.task.TaskDefinition#removeAllSteps(woops2.model.task.Step)}.
+	 * {@link wilos.model.spem2.task.TaskDefinition#removeAllSteps(wilos.model.spem2.task.Step)}.
 	 */
 	public void testRemoveAllSteps() {
 		Step step1 = new Step() ;
@@ -219,7 +219,7 @@ public class TaskDefinitionTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link woops2.model.task.TaskDefinition#removeAllTaskDescriptors(woops2.model.task.TaskDescriptor)}.
+	 * {@link wilos.model.spem2.task.TaskDefinition#removeAllTaskDescriptors(wilos.model.spem2.task.TaskDescriptor)}.
 	 */
 	public void testRemoveAllTaskDescriptors() {
 		TaskDescriptor td1 = new TaskDescriptor() ;
