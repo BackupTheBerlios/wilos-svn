@@ -44,7 +44,8 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	/**
 	 * Getter of participant.
 	 * 
-	 * @return the participants.
+	 * @return t
+	 * he participants.
 	 */
 	public Set<Participant> getParticipants() {
 		return this.participants ;
@@ -305,6 +306,7 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	public Set<TaskDescriptor> getAdditionalTasks() {
 		return this.additionalTasks ;
 	}
+	
 
 	/**
 	 * Setter of additionalTasks.

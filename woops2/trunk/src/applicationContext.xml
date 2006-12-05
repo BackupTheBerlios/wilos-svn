@@ -40,8 +40,7 @@
 				<value>
 					woops2/model/breakdownelement/BreakdownElement.hbm.xml
 				</value>
-				<value>
-					woops2/model/workbreakdownelement/WorkBreakdownElement.hbm.xml
+				<value>woops2/model/workbreakdownelement/WorkBreakdownElement.hbm.xml
 				</value>
 				<value>woops2/model/process/Process.hbm.xml</value>
 				<value>woops2/model/activity/Activity.hbm.xml</value>
@@ -50,6 +49,8 @@
 				<value>woops2/model/task/Step.hbm.xml</value>
 				<value>woops2/model/role/RoleDescriptor.hbm.xml</value>
 				<value>woops2/model/role/RoleDefinition.hbm.xml</value>
+				<value>woops2/model/wilosuser/Participant.hbm.xml</value>
+				<value>woops2/model/wilosuser/WilosUser.hbm.xml</value>
 			</list>
 		</property>
 
