@@ -11,10 +11,9 @@ import junit.framework.TestSuite ;
 public class AllTests {
 
 	public static Test suite () {
-		TestSuite suite = new TestSuite("Test for woops2.test.business") ;
+		TestSuite suite = new TestSuite("Test for wilos.test.business") ;
 		// $JUnit-BEGIN$
-		suite.addTest(wilos.test.business.activity.AllTests.suite()) ;
-		suite.addTest(wilos.test.business.process.AllTests.suite()) ;
+		suite.addTest(wilos.test.business.services.AllTests.suite()) ;
 		// $JUnit-END$
 		return suite ;
 	}
