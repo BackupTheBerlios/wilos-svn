@@ -1,4 +1,4 @@
-package spelp.test.xml.parser;
+package wilos.test.business.services.util.xml.parser;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -10,7 +10,7 @@ import javax.xml.xpath.XPathConstants;
 import org.junit.Test;
 import org.w3c.dom.NodeList;
 
-import spelp.xml.parser.XMLUtils;
+import wilos.business.services.util.xml.parser.XMLUtils;
 
 public class XMLUtilsTest {
 	public static String path = "ressources" + File.separator + "scrum.xml";

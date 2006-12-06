@@ -1,4 +1,4 @@
-package spelp.test.xml.parser;
+package wilos.test.business.services.util.xml.parser;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -8,15 +8,15 @@ import java.util.Vector;
 
 import org.junit.Test;
 
-import spelp.xml.parser.XMLParser;
+import wilos.business.services.util.xml.parser.XMLParser;
 import sun.net.smtp.SmtpClient;
-import woops2.model.breakdownelement.BreakdownElement;
-import woops2.model.process.Process;
-import woops2.model.role.RoleDefinition;
-import woops2.model.role.RoleDescriptor;
-import woops2.model.task.Step;
-import woops2.model.task.TaskDefinition;
-import woops2.model.task.TaskDescriptor;
+import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.process.Process;
+import wilos.model.spem2.role.RoleDefinition;
+import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.task.Step;
+import wilos.model.spem2.task.TaskDefinition;
+import wilos.model.spem2.task.TaskDescriptor;
 
 public class XMLParserTest extends XMLParser {
 	public static File pathScrum = new File("ressources" + File.separator + "scrum.xml"); 
