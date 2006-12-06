@@ -24,7 +24,7 @@
 	<!-- Managed Bean for dynamic style examples -->
 	<managed-bean>
 		<managed-bean-name>styleBean</managed-bean-name>
-		<managed-bean-class>wilos.util.StyleBean</managed-bean-class>
+		<managed-bean-class>wilos.presentation.web.util.StyleBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
@@ -36,7 +36,7 @@
 		</description>
 		<managed-bean-name>navigation</managed-bean-name>
 		<managed-bean-class>
-			wilos.util.NavigationBean
+			wilos.presentation.web.util.NavigationBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
@@ -44,7 +44,7 @@
 	<managed-bean>
 		<managed-bean-name>treeNavigation</managed-bean-name>
 		<managed-bean-class>
-			wilos.util.TreeNavigation
+			wilos.presentation.web.util.TreeNavigation
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>

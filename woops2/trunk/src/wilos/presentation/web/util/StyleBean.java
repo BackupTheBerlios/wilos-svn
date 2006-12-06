@@ -31,7 +31,7 @@
  *
  */
 
-package wilos.util;
+package wilos.presentation.web.util;
 
 import java.util.ArrayList;
 import java.util.List;

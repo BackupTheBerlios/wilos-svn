@@ -31,7 +31,7 @@
  *
  */
 
-package wilos.util;
+package wilos.presentation.web.util;
 
 /**
  * <p>The NavigationBean class is responsible for storing the state of the two
