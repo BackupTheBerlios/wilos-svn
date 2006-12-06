@@ -21,6 +21,7 @@ public class Participant extends WilosUser {
 	
 	public Participant()
 	{
+		super();
 		rolesListForAProject=new HashSet<RoleDescriptor>();
 	}
 

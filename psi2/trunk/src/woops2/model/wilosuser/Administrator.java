@@ -13,7 +13,9 @@ public class Administrator extends WilosUser {
 	 * Default Constructor.
 	 *
 	 */
-	public Administrator() {}
+	public Administrator() {
+		super();
+	}
 	
 	/**
 	 * Constructor.

@@ -13,7 +13,9 @@ public class ProcessManager extends WilosUser {
 	 * Default Constructor.
 	 *
 	 */
-	public ProcessManager() {}
+	public ProcessManager() {
+		super();
+	}
 	
 	/**
 	 * Constructor.

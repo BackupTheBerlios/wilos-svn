@@ -9,7 +9,9 @@ package woops2.model.wilosuser ;
  */
 public class ProjectDirector extends WilosUser {
 
-	public ProjectDirector() {}
+	public ProjectDirector() {
+		super();
+	}
 	
 	/**
 	 * Constructor.
