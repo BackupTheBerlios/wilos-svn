@@ -7,7 +7,7 @@
  * and open the template in the editor.
  */
 
-package wilos.spelp.webservices;
+package wilos.business.webservices;
 
 import com.thoughtworks.xstream.XStream;
 import javax.jws.WebMethod;
@@ -108,63 +108,61 @@ public class WizardServices {
             }          
         } else {
             if(login.equals("testSansBD") && password.equals("testSansBD")) {
-                ArrayList<RoleDescriptor> myRoleListe;
-		RoleDescriptor aTmpRole;
-		TaskDescriptor aTmpTask;
-		
-		aTmpRole = new RoleDescriptor();
-		aTmpTask = new TaskDescriptor();
-		myRoleListe = new ArrayList<RoleDescriptor>();
-                Process pro = new Process();
-		
-		aTmpRole.setName("Developper");
-		aTmpRole.setDescription("Un gars qui développe");
-		
-		aTmpTask.setName("Coder le programme");
-		aTmpTask.setDescription("Un grand moment de solitude");
-		aTmpRole.addPrimaryTask(aTmpTask);
-		aTmpTask = new TaskDescriptor();
-		aTmpTask.setName("Aimer son programme");
-		aTmpTask.setDescription("Un grand moment d'amour");
-		aTmpRole.addPrimaryTask(aTmpTask);
-		aTmpTask = new TaskDescriptor();
-		aTmpTask.setName("Passer le balai");
-		aTmpTask.setDescription("Et c'est plus propre");
-		aTmpRole.addPrimaryTask(aTmpTask);
+				RoleDescriptor aTmpRole;
+				TaskDescriptor aTmpTask;
+				
+				aTmpRole = new RoleDescriptor();
+				aTmpTask = new TaskDescriptor();
+		        Process pro = new Process();
+				
+				aTmpRole.setName("Developper");
+				aTmpRole.setDescription("Un gars qui développe");
+				
+				aTmpTask.setName("Coder le programme");
+				aTmpTask.setDescription("Un grand moment de solitude");
+				aTmpRole.addPrimaryTask(aTmpTask);
+				aTmpTask = new TaskDescriptor();
+				aTmpTask.setName("Aimer son programme");
+				aTmpTask.setDescription("Un grand moment d'amour");
+				aTmpRole.addPrimaryTask(aTmpTask);
+				aTmpTask = new TaskDescriptor();
+				aTmpTask.setName("Passer le balai");
+				aTmpTask.setDescription("Et c'est plus propre");
+				aTmpRole.addPrimaryTask(aTmpTask);
 		
                 pro.addBreakdownElement(aTmpRole);	
 		
-		aTmpRole = new RoleDescriptor();
-		aTmpTask = new TaskDescriptor();
-		aTmpRole.setName("Tester");
-		aTmpRole.setDescription("Faire des essais, en gros");
-		aTmpTask.setName("Tester le programme");
-		aTmpTask.setDescription("Un grand moment de solitude");
-		aTmpRole.addPrimaryTask(aTmpTask);
-		aTmpTask = new TaskDescriptor();
-		aTmpTask.setName("Detester le programme");
-		aTmpTask.setDescription("Un grand moment de haine");
-		aTmpRole.addPrimaryTask(aTmpTask);
-		aTmpTask = new TaskDescriptor();
-		aTmpTask.setName("Passer la serpillière");
-		aTmpTask.setDescription("Un grand moment de solitude");
-		aTmpRole.addPrimaryTask(aTmpTask);
-		
-		pro.addBreakdownElement(aTmpRole);	
-		
-		aTmpRole = new RoleDescriptor();
-		aTmpTask = new TaskDescriptor();
-		aTmpRole.setName("Conceptualisateur");
-		aTmpTask = new TaskDescriptor();
-		aTmpTask.setName("Conceptualiser les concepts du programme");
-		aTmpRole.addPrimaryTask(aTmpTask);
-		aTmpTask = new TaskDescriptor();
-		aTmpTask.setName("Rever du programme");
-		aTmpRole.addPrimaryTask(aTmpTask);
-		aTmpTask = new TaskDescriptor();
-		aTmpTask.setName("Faire le café concept");
-		aTmpRole.addPrimaryTask(aTmpTask);		
-		pro.addBreakdownElement(aTmpRole);
+				aTmpRole = new RoleDescriptor();
+				aTmpTask = new TaskDescriptor();
+				aTmpRole.setName("Tester");
+				aTmpRole.setDescription("Faire des essais, en gros");
+				aTmpTask.setName("Tester le programme");
+				aTmpTask.setDescription("Un grand moment de solitude");
+				aTmpRole.addPrimaryTask(aTmpTask);
+				aTmpTask = new TaskDescriptor();
+				aTmpTask.setName("Detester le programme");
+				aTmpTask.setDescription("Un grand moment de haine");
+				aTmpRole.addPrimaryTask(aTmpTask);
+				aTmpTask = new TaskDescriptor();
+				aTmpTask.setName("Passer la serpillière");
+				aTmpTask.setDescription("Un grand moment de solitude");
+				aTmpRole.addPrimaryTask(aTmpTask);
+				
+				pro.addBreakdownElement(aTmpRole);	
+				
+				aTmpRole = new RoleDescriptor();
+				aTmpTask = new TaskDescriptor();
+				aTmpRole.setName("Conceptualisateur");
+				aTmpTask = new TaskDescriptor();
+				aTmpTask.setName("Conceptualiser les concepts du programme");
+				aTmpRole.addPrimaryTask(aTmpTask);
+				aTmpTask = new TaskDescriptor();
+				aTmpTask.setName("Rever du programme");
+				aTmpRole.addPrimaryTask(aTmpTask);
+				aTmpTask = new TaskDescriptor();
+				aTmpTask.setName("Faire le café concept");
+				aTmpRole.addPrimaryTask(aTmpTask);		
+				pro.addBreakdownElement(aTmpRole);
                 XStream xstream = new XStream();
                 result.add(xstream.toXML(pro));
             }
