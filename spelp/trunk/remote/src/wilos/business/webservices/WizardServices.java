@@ -22,12 +22,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
-import woops2.business.process.ProcessService;
-import woops2.model.activity.Activity;
-import woops2.model.role.RoleDescriptor;
-import woops2.model.breakdownelement.BreakdownElement;
-import woops2.model.process.Process;
-import woops2.model.task.TaskDescriptor;
+import wilos.business.services.process.ProcessService;
+import wilos.model.spem2.activity.Activity;
+import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.process.Process;
+import wilos.model.spem2.task.TaskDescriptor;
 
 /**
  *
@@ -116,7 +116,7 @@ public class WizardServices {
 		        Process pro = new Process();
 				
 				aTmpRole.setName("Developper");
-				aTmpRole.setDescription("Un gars qui développe");
+				aTmpRole.setDescription("Un gars qui developpe");
 				
 				aTmpTask.setName("Coder le programme");
 				aTmpTask.setDescription("Un grand moment de solitude");
@@ -144,7 +144,7 @@ public class WizardServices {
 				aTmpTask.setDescription("Un grand moment de haine");
 				aTmpRole.addPrimaryTask(aTmpTask);
 				aTmpTask = new TaskDescriptor();
-				aTmpTask.setName("Passer la serpillière");
+				aTmpTask.setName("Passer la serpilliere");
 				aTmpTask.setDescription("Un grand moment de solitude");
 				aTmpRole.addPrimaryTask(aTmpTask);
 				
@@ -160,7 +160,7 @@ public class WizardServices {
 				aTmpTask.setName("Rever du programme");
 				aTmpRole.addPrimaryTask(aTmpTask);
 				aTmpTask = new TaskDescriptor();
-				aTmpTask.setName("Faire le café concept");
+				aTmpTask.setName("Faire le cafe concept");
 				aTmpRole.addPrimaryTask(aTmpTask);		
 				pro.addBreakdownElement(aTmpRole);
                 XStream xstream = new XStream();
