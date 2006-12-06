@@ -433,12 +433,48 @@ public class ProcessService {
 		return id_process;
 	}
 	
+	public Process buildProcess() {
+		Process process = new Process();
+		process.setGuid("myProcess");
+		process.setName("TheProceSS");
+
+		TaskDescriptor tskdes1 = new TaskDescriptor();
+		tskdes1.setGuid("tsk1");
+		tskdes1.setName("tsk1Name");
+		process.addBreakdownElement(tskdes1);
+
+		TaskDefinition taskDefinition = new TaskDefinition();
+		taskDefinition.setName("tskdef1Name");
+		tskdes1.addTaskDefinition(taskDefinition);
+
+		Step step1 = new Step();
+		step1.setName("step1");
+		taskDefinition.addStep(step1);
+
+		TaskDescriptor tskdes2 = new TaskDescriptor();
+		tskdes2.setGuid("tsk2");
+		tskdes2.setName("tsk2Name");
+		process.addBreakdownElement(tskdes2);
+
+		RoleDescriptor rdes1 = new RoleDescriptor();
+		rdes1.setGuid("rdes1");
+		rdes1.setName("rdes1Name");
+		process.addBreakdownElement(rdes1);
+
+		RoleDefinition roleDefinition = new RoleDefinition();
+		roleDefinition.setName("rdef1Name");
+		rdes1.addRoleDefinition(roleDefinition);
+
+		return process;
+	}
+	
 	@Transactional(readOnly = true)
 	public DefaultTreeModel buildTree(String _id) {
-		Process process = null;//this.buildProcess();
+		Process process = this.buildProcess();
 		TreeBean tree = new TreeBean();
+		tree.setTreeProcessService(this);
 		logger.debug("### buildTree id = "+_id+" ###");
-		if (_id != null) process = this.getProcessDao().getProcess(_id);
+		//if (_id != null) process = this.getProcessDao().getProcess(_id);
 		logger.debug("### buildTree process size = "+process.getBreakDownElements().size()+" ###");
 		DefaultMutableTreeNode rootTreeNode = new DefaultMutableTreeNode();
 		NodeUserObject rootObject = new NodeUserObject(rootTreeNode, tree);
