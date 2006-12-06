@@ -32,7 +32,7 @@ public class WizardServicesProxy {
         private static List<Process> getAllProcess(String login, String password, String adresseServeur) {
              ArrayList<Process> pros = new  ArrayList<Process>();
              try { 
-                Service service = Service.create(new URL(adresseServeur+ENDPOINT), new QName("http://webservices.spelp.wilos/", "WizardServicesService"));
+                Service service = Service.create(new URL(adresseServeur+ENDPOINT), new QName("http://webservices.business.wilos/", "WizardServicesService"));
                 // Call Web Service Operation
                 //services.WizardServicesService service = new services.WizardServicesService();
                 WizardServices port = service.getPort(WizardServices.class);
