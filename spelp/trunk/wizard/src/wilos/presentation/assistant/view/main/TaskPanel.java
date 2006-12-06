@@ -1,4 +1,4 @@
-package view.main;
+package wilos.presentation.assistant.view.main;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -13,9 +13,9 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import ressources.Bundle;
-import view.htmlViewer.HTMLViewer;
-import webservices.WizardServicesProxy;
+import wilos.presentation.assistant.ressources.Bundle;
+import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
+import wilos.presentation.assistant.webservices.WizardServicesProxy;
 import woops2.model.role.RoleDescriptor;
 import woops2.model.task.TaskDescriptor;
 import javax.swing.JFrame;

@@ -1,4 +1,4 @@
-package ressources;
+package wilos.presentation.assistant.ressources;
 
 import java.io.BufferedReader; 
 import java.io.InputStream; 

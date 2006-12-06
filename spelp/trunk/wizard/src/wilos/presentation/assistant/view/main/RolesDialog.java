@@ -1,4 +1,4 @@
-package view.main;
+package wilos.presentation.assistant.view.main;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -26,7 +26,7 @@ import javax.swing.BoxLayout;
 import java.awt.event.KeyEvent;
 import javax.swing.border.EtchedBorder;
 
-import ressources.Bundle;
+import wilos.presentation.assistant.ressources.Bundle;
 
 import woops2.model.role.RoleDescriptor;
 

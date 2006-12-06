@@ -7,7 +7,7 @@
  * and open the template in the editor.
  */
 
-package view.main;
+package wilos.presentation.assistant.view.main;
 
 import com.sun.xml.bind.v2.model.annotation.ClassLocatable;
 import com.thoughtworks.xstream.core.util.ClassLoaderReference;
@@ -38,7 +38,7 @@ import org.omg.CORBA.portable.ApplicationException;
  */
 public class ImagePanel extends JXImagePanel {
     
-    private static String imagePath = "ressources/logo.png";
+    private static String imagePath = "wilos/presentation/assistant/ressources/logo.png";
     
     /** Creates a new instance of ImagePanel */
     public ImagePanel() {

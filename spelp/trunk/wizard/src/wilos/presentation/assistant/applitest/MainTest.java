@@ -1,4 +1,4 @@
-package applitest;
+package wilos.presentation.assistant.applitest;
 
 import java.util.List;
 

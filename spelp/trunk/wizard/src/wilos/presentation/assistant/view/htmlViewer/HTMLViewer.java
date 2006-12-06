@@ -1,4 +1,4 @@
-package view.htmlViewer;
+package wilos.presentation.assistant.view.htmlViewer;
 
 import java.awt.BorderLayout;
 import java.awt.Point;
@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
-import ressources.Bundle;
+import wilos.presentation.assistant.ressources.Bundle;
 
 public class HTMLViewer extends JFrame {
 	private static HTMLViewer instance = null;

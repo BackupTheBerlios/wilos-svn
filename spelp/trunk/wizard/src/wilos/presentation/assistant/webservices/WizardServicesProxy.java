@@ -1,4 +1,4 @@
-package webservices;
+package wilos.presentation.assistant.webservices;
 
 import com.thoughtworks.xstream.XStream;
 import java.net.URL;

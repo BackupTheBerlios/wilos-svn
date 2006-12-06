@@ -1,4 +1,4 @@
-package view.main;
+package wilos.presentation.assistant.view.main;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -38,10 +38,10 @@ import org.jdesktop.swingx.JXTaskPane;
 import org.jdesktop.swingx.JXTaskPaneContainer;
 import org.jdesktop.swingx.JXTree;
 
-import ressources.Bundle;
+import wilos.presentation.assistant.ressources.Bundle;
 
 /*import parser.Parser;*/
-import view.htmlViewer.HTMLViewer;
+import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 
 public class MainFrame extends JFrame{
 	private JMenuBar menu = null;

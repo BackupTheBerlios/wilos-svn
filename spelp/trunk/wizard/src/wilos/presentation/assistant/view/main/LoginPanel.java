@@ -1,10 +1,10 @@
-package view.main;
+package wilos.presentation.assistant.view.main;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import javax.swing.BorderFactory;
-import ressources.ProfileReader;
+import wilos.presentation.assistant.ressources.ProfileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -25,17 +25,17 @@ import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 
-import ressources.Bundle;
+import wilos.presentation.assistant.ressources.Bundle;
 
 import java.awt.Button;
-import webservices.WizardServicesProxy;
+import wilos.presentation.assistant.webservices.WizardServicesProxy;
 import woops2.model.role.RoleDescriptor;
 
 public class LoginPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
         
-        private static String path_file = "ressources/wizard_setting.ini";
+        private static String path_file = "wilos/presentation/assistant/ressources/wizard_setting.ini";
         
 	private JLabel introLabel = null;
 

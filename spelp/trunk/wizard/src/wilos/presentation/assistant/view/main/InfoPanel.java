@@ -1,4 +1,4 @@
-package view.main;
+package wilos.presentation.assistant.view.main;
 
 import java.awt.BorderLayout;
 import java.awt.SystemColor;
@@ -10,7 +10,7 @@ import javax.swing.JScrollPane;
 import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXTaskPane;
 
-import ressources.Bundle;
+import wilos.presentation.assistant.ressources.Bundle;
 
 public class InfoPanel extends JXPanel {
 	private JXTaskPane tasks = null ;
