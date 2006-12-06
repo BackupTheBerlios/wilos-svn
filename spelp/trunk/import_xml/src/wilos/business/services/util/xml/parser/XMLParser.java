@@ -1,4 +1,4 @@
-package spelp.xml.parser;
+package wilos.business.services.util.xml.parser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,11 +13,11 @@ import javax.xml.xpath.XPathConstants;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import spelp.xml.fillers.FillerRole;
-import spelp.xml.fillers.FillerRoleDescriptor;
-import spelp.xml.fillers.FillerStep;
-import spelp.xml.fillers.FillerTask;
-import spelp.xml.fillers.FillerTaskDescriptor;
+import wilos.business.services.util.xml.fillers.FillerRole;
+import wilos.business.services.util.xml.fillers.FillerRoleDescriptor;
+import wilos.business.services.util.xml.fillers.FillerStep;
+import wilos.business.services.util.xml.fillers.FillerTask;
+import wilos.business.services.util.xml.fillers.FillerTaskDescriptor;
 import woops2.model.breakdownelement.BreakdownElement;
 import woops2.model.process.Process;
 import woops2.model.role.RoleDefinition;
