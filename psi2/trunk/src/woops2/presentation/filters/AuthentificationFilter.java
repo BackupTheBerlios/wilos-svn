@@ -48,6 +48,7 @@ public class AuthentificationFilter implements Filter {
 		
 		HttpSession sess = httpRequest.getSession(true) ;
 		
+		/*
 		String cache ;
 		if(sess.getAttribute("cache") != null) {
 			cache = (String)sess.getAttribute("cache") ;
@@ -57,17 +58,17 @@ public class AuthentificationFilter implements Filter {
 		}
 
 		String relativePath = httpRequest.getServletPath() + httpRequest.getPathInfo() ;
-		
+		*/
 		WilosUser user = (WilosUser) sess.getAttribute("wilosUser") ;
 		
 		if(user == null){
 			this.logger.debug("### Filtre : login null ###") ;
-			if(!cache.equals(relativePath))
+			/*if(!cache.equals(relativePath))
 			{
 				httpResponse.setHeader("refresh", "0; URL=/Wilos/connect.jsf") ;
 				httpResponse.flushBuffer() ;
 				sess.setAttribute("cache", relativePath) ;				
-			}
+			}*/
 			
 			//httpResponse.sendRedirect("/Wilos/connect.jsf");
 			// String login_page = filterConfig.getInitParameter("login_page");
