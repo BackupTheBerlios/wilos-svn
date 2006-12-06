@@ -17,6 +17,7 @@ import javax.xml.ws.Service;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.process.Process;
+import wilos.presentation.assistant.webservices.*;
 
 /**
  *
