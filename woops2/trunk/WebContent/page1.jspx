@@ -3,7 +3,7 @@
 	xmlns:jsp="http://java.sun.com/JSP/Page"
 	xmlns:ice="http://www.icesoft.com/icefaces/component">
 
-	<f:loadBundle basename="woops2.resources.messages" var="msgs" />
+	<f:loadBundle basename="wilos.resources.messages" var="msgs" />
 
 	<ice:outputDeclaration doctypeRoot="HTML"
 		doctypePublic="-//W3C//DTD HTML 4.01 Transitional//EN"

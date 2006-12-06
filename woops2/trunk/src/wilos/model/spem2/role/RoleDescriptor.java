@@ -9,7 +9,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.task.TaskDescriptor;
-import woops2.model.wilosuser.Participant;
+//import woops2.model.wilosuser.Participant;
 
 /**
  * 
@@ -39,7 +39,7 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	/**
 	 * The participants of the RoleDescriptor.
 	 */
-	private Set<Participant> participants ;
+	//private Set<Participant> participants ;
 
 	/**
 	 * Getter of participant.
@@ -47,9 +47,9 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 * @return t
 	 * he participants.
 	 */
-	public Set<Participant> getParticipants() {
-		return this.participants ;
-	}
+	//public Set<Participant> getParticipants() {
+	//	return this.participants ;
+	//}
 
 	/**
 	 * Setter of participants.
@@ -58,15 +58,15 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 *            The participants to set.
 	 */
 	@ SuppressWarnings ("unused")
-	private void setParticipants(Set<Participant> _participants) {
-		this.participants = _participants ;
-	}
+	//private void setParticipants(Set<Participant> _participants) {
+		//this.participants = _participants ;
+	//}
 
 	public RoleDescriptor() {
 		super() ;
 		this.primaryTasks = new HashSet<TaskDescriptor>() ;
 		this.additionalTasks = new HashSet<TaskDescriptor>() ;
-		this.participants = new HashSet<Participant>() ;
+		//this.participants = new HashSet<Participant>() ;
 	}
 
 	/*
@@ -92,7 +92,7 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 		this.setAdditionalTasks(_roleDescriptor.getAdditionalTasks()) ;
 		this.setPrimaryTasks(_roleDescriptor.getPrimaryTasks()) ;
 		this.setRoleDefinition(_roleDescriptor.getRoleDefinition()) ;
-		this.setParticipants(_roleDescriptor.getParticipants()) ;
+		//this.setParticipants(_roleDescriptor.getParticipants()) ;
 	}
 
 	/*
@@ -235,28 +235,28 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 		this.additionalTasks.clear() ;
 	}
 
-	public void addParticipant(Participant _participant) {
-		this.participants.add(_participant) ;
+	//public void addParticipant(Participant _participant) {
+	//	this.participants.add(_participant) ;
 		//_participant.getRolesListForAProject().add(this) ;
-	}
+	//}
 	
-	public void addAllParticipants(Set<Participant> _participants) {
-		for(Participant participant : _participants){
-			//participant.addToRoleDescriptor(this) ;
-		}
-	}
+	//public void addAllParticipants(Set<Participant> _participants) {
+	//	for(Participant participant : _participants){
+	//		//participant.addToRoleDescriptor(this) ;
+	//	}
+	//}
 
-	public void removeParticipant(Participant _participant) {
-		//_participant.getRolesListForAProject().remove(this) ;
-		this.participants.remove(_participant) ;
-	}
+	//public void removeParticipant(Participant _participant) {
+	//	//_participant.getRolesListForAProject().remove(this) ;
+	//	this.participants.remove(_participant) ;
+	//}
 
-	public void removeAllParticipants() {
-		for(Participant _participant : this.participants){
-			//_participant.getRolesListForAProject().remove(this) ;
-		}
-		this.participants.clear() ;
-	}
+	//public void removeAllParticipants() {
+	//	for(Participant _participant : this.participants){
+	//		//_participant.getRolesListForAProject().remove(this) ;
+	//	}
+	//	this.participants.clear() ;
+	//}
 
 	/**
 	 * Getter of roleDefinition.

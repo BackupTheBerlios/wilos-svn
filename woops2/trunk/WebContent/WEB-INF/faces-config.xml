@@ -63,7 +63,7 @@
 	<managed-bean>
 		<managed-bean-name>ActivityBean</managed-bean-name>
 		<managed-bean-class>
-			wilos.presentation.activity.ActivityBean
+			wilos.presentation.web.ActivityBean
 		</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
@@ -75,7 +75,7 @@
 	<managed-bean>
 		<managed-bean-name>XmlFileImportBean</managed-bean-name>
 		<managed-bean-class>
-			wilos.presentation.activity.XmlFileImportBean
+			wilos.presentation.web.XmlFileImportBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
@@ -87,7 +87,7 @@
 	<managed-bean>
 		<managed-bean-name>TreeBean</managed-bean-name>
 		<managed-bean-class>
-			wilos.presentation.activity.TreeBean
+			wilos.presentation.web.TreeBean
 		</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
@@ -107,7 +107,7 @@
 
 
 	<navigation-rule>
-		<description>Custom Pgae for Woops2</description>
+		<description>Custom Page for Woops2</description>
 
 		<navigation-case>
 			<from-outcome>page2</from-outcome>

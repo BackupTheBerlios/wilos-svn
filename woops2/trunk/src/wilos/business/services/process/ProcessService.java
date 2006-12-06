@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import spelp.xml.parser.XMLParser;
+import wilos.business.services.util.xml.parser.XMLParser;
 import wilos.hibernate.spem2.activity.ActivityDao;
 import wilos.hibernate.spem2.breakdownelement.BreakdownElementDao;
 import wilos.hibernate.spem2.element.ElementDao;
@@ -75,9 +75,8 @@ public class ProcessService {
 		System.out.println("absolutPath: " + absolutPath);
 
 		try {
-			//Process spelpProcess = XMLParser.getProcess(_file);
-			//return spelpProcess;
-			return null;
+			Process spelpProcess = XMLParser.getProcess(_file);
+			return spelpProcess;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -349,7 +348,7 @@ public class ProcessService {
 		for (RoleDescriptor rd : roleDescriptorList) {
 			rd.getAdditionalTasks().clear();
 			rd.getActivities().clear();
-			rd.getParticipants().clear();
+			//rd.getParticipants().clear();
 			rd.getPrimaryTasks().clear();
 			rd.setRoleDefinition(null);
 			this.roleDescriptorDao.saveOrUpdateRoleDescriptor(rd);
@@ -419,7 +418,7 @@ public class ProcessService {
 		for (int i = 0;i < roleDescriptorListTmp.size();i++) {
 			roleDescriptorList.get(i).setRoleDefinition(roleDescriptorListTmp.get(i).getRoleDefinition());
 			roleDescriptorList.get(i).addAllPrimaryTasks(roleDescriptorListTmp.get(i).getPrimaryTasks());
-			roleDescriptorList.get(i).addAllParticipants(roleDescriptorListTmp.get(i).getParticipants());
+			//roleDescriptorList.get(i).addAllParticipants(roleDescriptorListTmp.get(i).getParticipants());
 			roleDescriptorList.get(i).addAllAdditionalTasks(roleDescriptorListTmp.get(i).getAdditionalTasks());
 			roleDescriptorList.get(i).addAllActivities(roleDescriptorListTmp.get(i).getActivities());
 		}

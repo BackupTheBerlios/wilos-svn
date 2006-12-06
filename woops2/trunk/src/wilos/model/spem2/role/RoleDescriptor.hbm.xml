@@ -25,12 +25,5 @@
 			</many-to-many>
 		</set>
 		
-		<set name="participants" table="play" lazy="true">
-			<key column="roledescriptor_id"></key>
-			<many-to-many class="woops2.model.wilosuser.Participant"
-				column="participant_id">
-			</many-to-many>
-		</set>
-		
 	</joined-subclass>
 </hibernate-mapping>
