@@ -16,8 +16,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 import wilos.presentation.assistant.webservices.WizardServicesProxy;
-import woops2.model.role.RoleDescriptor;
-import woops2.model.task.TaskDescriptor;
+import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.task.TaskDescriptor;
 import javax.swing.JFrame;
 
 public class TaskPanel extends JPanel implements TreeSelectionListener {

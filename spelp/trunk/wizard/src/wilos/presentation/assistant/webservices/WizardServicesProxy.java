@@ -7,9 +7,9 @@ import java.util.List;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
-import woops2.model.breakdownelement.BreakdownElement;
-import woops2.model.role.RoleDescriptor;
-import woops2.model.process.Process;
+import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.process.Process;
 import wilos.spelp.webservices.*;
 
 public class WizardServicesProxy {

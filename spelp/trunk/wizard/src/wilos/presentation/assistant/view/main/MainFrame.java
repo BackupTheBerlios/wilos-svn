@@ -31,8 +31,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import org.jdesktop.swingx.JXImagePanel;
 
-import woops2.model.role.RoleDescriptor;
-import woops2.model.task.TaskDescriptor;
+import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.task.TaskDescriptor;
 
 import org.jdesktop.swingx.JXTaskPane;
 import org.jdesktop.swingx.JXTaskPaneContainer;

@@ -29,7 +29,7 @@ import wilos.presentation.assistant.ressources.Bundle;
 
 import java.awt.Button;
 import wilos.presentation.assistant.webservices.WizardServicesProxy;
-import woops2.model.role.RoleDescriptor;
+import wilos.model.spem2.role.RoleDescriptor;
 
 public class LoginPanel extends JPanel {
 

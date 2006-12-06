@@ -28,7 +28,7 @@ import javax.swing.border.EtchedBorder;
 
 import wilos.presentation.assistant.ressources.Bundle;
 
-import woops2.model.role.RoleDescriptor;
+import wilos.model.spem2.role.RoleDescriptor;
 
 import java.awt.SystemColor;
 import java.awt.Font;
