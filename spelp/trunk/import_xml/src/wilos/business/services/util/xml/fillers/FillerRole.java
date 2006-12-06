@@ -2,7 +2,7 @@ package wilos.business.services.util.xml.fillers;
 
 import org.w3c.dom.Node;
 
-import woops2.model.role.RoleDefinition;
+import wilos.model.spem2.role.RoleDefinition;
 
 public class FillerRole extends FillerElement {
 

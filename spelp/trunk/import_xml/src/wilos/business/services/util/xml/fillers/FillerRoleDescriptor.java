@@ -2,7 +2,7 @@ package wilos.business.services.util.xml.fillers;
 
 import org.w3c.dom.Node;
 
-import woops2.model.role.RoleDescriptor;
+import wilos.model.spem2.role.RoleDescriptor;
 
 public class FillerRoleDescriptor extends FillerBreakDownElement {
 

@@ -2,7 +2,7 @@ package wilos.business.services.util.xml.fillers;
 
 import org.w3c.dom.Node;
 
-import woops2.model.breakdownelement.BreakdownElement;
+import wilos.model.spem2.breakdownelement.BreakdownElement;
 
 public class FillerBreakDownElement extends FillerElement {
 	private static String prefix = "prefix" ;

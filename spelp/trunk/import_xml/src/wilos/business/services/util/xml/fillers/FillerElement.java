@@ -2,7 +2,7 @@ package wilos.business.services.util.xml.fillers;
 
 import org.w3c.dom.Node;
 
-import woops2.model.element.Element;
+import wilos.model.spem2.element.Element;
 
 public class FillerElement {
 	Element myElement ;

@@ -2,8 +2,8 @@ package wilos.business.services.util.xml.fillers;
 
 import org.w3c.dom.Node;
 
-import woops2.model.breakdownelement.BreakdownElement;
-import woops2.model.workbreakdownelement.WorkBreakdownElement;
+import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 
 public class FillerWorkBreakDownElement extends FillerBreakDownElement{
 	private static String isRepeatable = "isRepeatable" ;
