@@ -24,17 +24,11 @@ import woops2.model.wilosuser.Participant ;
  * @author Sakamakak
  */
 public class ParticipantBean {
-
 	private List<RoleDescriptor> rolesList ;
-
 	private ParticipantService participantService ;
-
 	private LoginService loginService ;
-
 	private Participant participant ;
-
 	private String passwordConfirmation ;
-
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
 	/**

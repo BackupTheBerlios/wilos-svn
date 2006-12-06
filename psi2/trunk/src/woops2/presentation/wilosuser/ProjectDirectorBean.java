@@ -17,15 +17,10 @@ import woops2.model.wilosuser.ProjectDirector ;
  * @author Marseyeah
  */
 public class ProjectDirectorBean {
-
 	private ProjectDirectorService projectDirectorService ;
-
 	private ProjectDirector projectDirector ;
-	
 	private LoginService loginService ;
-
 	private String passwordConfirmation ;
-
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
 	/**

@@ -3,8 +3,8 @@ package woops2.presentation.wilosuser ;
 
 import javax.faces.application.FacesMessage ;
 import javax.faces.context.FacesContext ;
-
-import javax.servlet.http.* ;
+import javax.servlet.http.HttpServletRequest ;
+import javax.servlet.http.HttpSession ;
 
 import woops2.business.wilosuser.LoginService ;
 import woops2.model.wilosuser.Administrator ;
@@ -14,8 +14,7 @@ import woops2.model.wilosuser.ProjectDirector ;
 import woops2.model.wilosuser.WilosUser ;
 
 /**
- * @author Marseyeah
- * @author Sakamakak
+ * @author Marseyeah, Sakamakak
  * 
  * This class represents ... TODO
  * 
@@ -82,37 +81,38 @@ public class LoginBean {
 	 *            The password to set.
 	 */
 	public void setPassword(String _password) {
+		//this.password = Security.encode(_password) ;
 		this.password = _password ;
 	}
 
-	
 	/**
 	 * Redirect to the page corresponding to the type of the user
-	 *
+	 * 
 	 * @return the faces-config id of the page
 	 */
 	public String authentificationAction() {
 		String url = "" ;
+		//WilosUser user = this.loginService.getAuthentifiedUser(this.login, Security.encode(this.password)) ;
 		WilosUser user = this.loginService.getAuthentifiedUser(this.login, this.password) ;
 		if(user != null){
-			HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
+			HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
 			HttpSession sess = req.getSession() ;
-			sess.setAttribute("wilosUser",user) ;
-			
+			sess.setAttribute("wilosUser", user) ;
+
 			if(user instanceof Participant){
-				sess.setAttribute("role","participant") ;
+				sess.setAttribute("role", "participant") ;
 				url = "welcome" ;
 			}
 			else if(user instanceof ProcessManager){
-				sess.setAttribute("role","processManager") ;
+				sess.setAttribute("role", "processManager") ;
 				url = "welcome" ;
 			}
 			else if(user instanceof ProjectDirector){
-				sess.setAttribute("role","projectDirector") ;
+				sess.setAttribute("role", "projectDirector") ;
 				url = "welcome" ;
 			}
 			else if(user instanceof Administrator){
-				sess.setAttribute("role","admin") ;
+				sess.setAttribute("role", "admin") ;
 				url = "admin_main" ;
 			}
 		}
@@ -127,20 +127,19 @@ public class LoginBean {
 		}
 		return url ;
 	}
-	
-	
+
 	/**
 	 * TODO Method description
-	 *
+	 * 
 	 * @return
 	 */
 	public String logoutAction() {
 		String url = "connect" ;
-		
-		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
+
+		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
 		HttpSession sess = req.getSession() ;
 		sess.invalidate() ;
-		
+
 		return url ;
 	}
 

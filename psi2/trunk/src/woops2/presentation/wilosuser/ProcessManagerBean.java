@@ -17,15 +17,10 @@ import woops2.model.wilosuser.ProcessManager ;
  * @author Marseyeah
  */
 public class ProcessManagerBean {
-
 	private ProcessManagerService processManagerService ;
-
 	private ProcessManager processManager ;
-
 	private LoginService loginService ;
-
 	private String passwordConfirmation ;
-
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
 	/**

@@ -1,4 +1,4 @@
-package woops2.presentation.wilosuser;
+package woops2.business.wilosuser;
 import java.security.*;
 
 /**
@@ -7,7 +7,7 @@ import java.security.*;
  * This class represents ... TODO
  *
  */
-public class Md5 {
+public class Security {
 	/*
 	* Encode la chaine passé en paramètre avec l’algorithme MD5
 	* @param key : la chaine à encoder

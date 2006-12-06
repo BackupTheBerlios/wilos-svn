@@ -27,8 +27,9 @@ public class ProjectDirectorService {
 	 * 
 	 * @param _projectdirector
 	 */
-	public void saveProjectDirector(ProjectDirector _processmanager) {
-		this.projectDirectorDao.saveOrUpdateProjectDirector(_processmanager) ;
+	public void saveProjectDirector(ProjectDirector _projectDirector) {
+		_projectDirector.setPassword(Security.encode(_projectDirector.getPassword()));
+		this.projectDirectorDao.saveOrUpdateProjectDirector(_projectDirector) ;
 	}
 
 	/**

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional ;
 import woops2.hibernate.wilosuser.ParticipantDao;
 import woops2.model.role.RoleDescriptor ;
 import woops2.model.wilosuser.Participant;
+import woops2.business.wilosuser.Security;
 
 /**
  * This class represents ... TODO
@@ -42,6 +43,7 @@ public class ParticipantService {
 	 * @param _participant
 	 */
 	public void saveParticipant(Participant _participant) {
+		_participant.setPassword(Security.encode(_participant.getPassword()));
 		participantDao.saveOrUpdateParticipant(_participant) ;
 	}
 

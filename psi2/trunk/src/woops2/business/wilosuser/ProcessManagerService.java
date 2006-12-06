@@ -28,6 +28,7 @@ public class ProcessManagerService {
 	 * @param _processmanager
 	 */
 	public void saveProcessManager(ProcessManager _processManager) {
+		_processManager.setPassword(Security.encode(_processManager.getPassword()));
 		this.processManagerDao.saveOrUpdateProcessManager(_processManager) ;
 	}
 

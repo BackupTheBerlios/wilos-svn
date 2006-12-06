@@ -1,15 +1,16 @@
 
 package woops2.business.wilosuser ;
 
-import java.util.Set ;
+import java.util.Set;
 
-import org.apache.commons.logging.Log ;
-import org.apache.commons.logging.LogFactory ;
-import org.springframework.transaction.annotation.Propagation ;
-import org.springframework.transaction.annotation.Transactional ;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import woops2.hibernate.wilosuser.WilosUserDao ;
-import woops2.model.wilosuser.WilosUser ;
+import woops2.hibernate.wilosuser.WilosUserDao;
+import woops2.model.wilosuser.WilosUser;
+import woops2.business.wilosuser.Security;
 
 /**
  * @author Marseyeah
@@ -54,7 +55,7 @@ public class LoginService {
 	public WilosUser getAuthentifiedUser(String _login, String _password) {
 		Set<WilosUser> wilosUsers = this.wilosUserDao.getAllWilosUsers() ;
 		for(WilosUser user : wilosUsers){
-			if(user.getLogin().equals(_login) && user.getPassword().equals(_password)){
+			if(user.getLogin().equals(_login) && user.getPassword().equals(Security.encode(_password))){
 				this.logger.debug("### connection OK ###") ;
 				return user ;
 			}
