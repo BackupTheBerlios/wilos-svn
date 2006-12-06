@@ -5,7 +5,7 @@
  * Created on 24 novembre 2006, 16:03
  */
 
-package wilos.spelp.webservices;
+package wilos.test.business.webservices;
 
 import junit.framework.*;
 import javax.jws.WebMethod;
@@ -17,12 +17,12 @@ import java.util.List;
 import java.util.Set;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import woops2.business.process.ProcessService;
-import woops2.hibernate.activity.ActivityDao;
-import woops2.hibernate.role.RoleDescriptorDao;
-import woops2.model.role.RoleDescriptor;
-import woops2.model.breakdownelement.BreakdownElement;
-import woops2.model.process.Process;
+import wilos.business.services.process.ProcessService;
+import wilos.hibernate.spem2.activity.ActivityDao;
+import wilos.hibernate.spem2.role.RoleDescriptorDao;
+import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.process.Process;
 
 /**
  *
