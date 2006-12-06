@@ -8,7 +8,7 @@ import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.model.spem2.process.Process;
-import wilos.spelp.webservices.*;
+import wilos.business.webservices.*;
 
 public class MainTest {
 

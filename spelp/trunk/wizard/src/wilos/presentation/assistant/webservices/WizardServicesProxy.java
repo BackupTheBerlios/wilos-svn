@@ -10,7 +10,7 @@ import javax.xml.ws.Service;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.process.Process;
-import wilos.spelp.webservices.*;
+import wilos.business.webservices.*;
 
 public class WizardServicesProxy {
         public static String ENDPOINT = "/WizardServices?wsdl";
