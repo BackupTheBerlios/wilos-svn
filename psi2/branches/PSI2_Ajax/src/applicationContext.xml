@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+	<!-- DataSource Definition -->
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName">
+			<value>org.gjt.mm.mysql.Driver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:mysql://127.0.0.1/m1isb3</value>
+		</property>
+		<property name="username">
+			<value>m1isb3</value>
+		</property>
+		<property name="password">
+			<value>yfehin</value>
+		</property>
+	</bean>
+
+	<!-- Hibernate SessionFactory Definition -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+
+		<property name="mappingResources">
+			<list>
+			<value>woops2/model/wilosuser/Participant.hbm.xml</value>
+			<value>woops2/model/wilosuser/WilosUser.hbm.xml</value>
+			<value>woops2/model/wilosuser/Administrator.hbm.xml</value>
+			<value>woops2/model/wilosuser/ProcessManager.hbm.xml</value>
+			<value>woops2/model/wilosuser/ProjectDirector.hbm.xml</value>
+			</list>
+		</property>
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.cglib.use_reflection_optimizer">
+					true
+				</prop>
+				<prop key="hibernate.cache.provider_class">
+					org.hibernate.cache.HashtableCacheProvider
+				</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+
+	</bean>
+
+	<!-- Spring Data Access Exception Translator Defintion -->
+	<bean id="jdbcExceptionTranslator"
+		class="org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+
+	<!-- Hibernate Template Defintion  -->
+	<bean id="hibernateTemplate"
+		class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<property name="jdbcExceptionTranslator">
+			<ref bean="jdbcExceptionTranslator" />
+		</property>
+	</bean>
+
+	<!-- Hibernate Transaction Manager Defintion  -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<!-- enable the configuration of transactional behavior based on annotations -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- ========================= Start of BEAN DEFINITIONS ========================= -->
+
+	<!-- ========================= DAO Layer ========================= -->
+	
+	<bean id="ParticipantDao"
+		class="woops2.hibernate.wilosuser.ParticipantDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="WilosUserDao"
+		class="woops2.hibernate.wilosuser.WilosUserDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	
+	<bean id="AdministratorDao"
+		class="woops2.hibernate.wilosuser.AdministratorDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	
+	<bean id="ProcessManagerDao"
+		class="woops2.hibernate.wilosuser.ProcessManagerDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	
+	<bean id="ProjectDirectorDao"
+		class="woops2.hibernate.wilosuser.ProjectDirectorDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	<!-- ========================= Business Layer ========================= -->
+
+	<bean id="ParticipantService"
+		class="woops2.business.wilosuser.ParticipantService">
+		<property name="participantDao" ref="ParticipantDao" />
+	</bean>
+	
+	<bean id="ProcessManagerService"
+		class="woops2.business.wilosuser.ProcessManagerService">
+		<property name="processManagerDao" ref="ProcessManagerDao" />
+	</bean>
+	
+	<bean id="ProjectDirectorService"
+		class="woops2.business.wilosuser.ProjectDirectorService">
+		<property name="projectDirectorDao" ref="ProjectDirectorDao" />
+	</bean>
+	
+	<bean id="LoginService"
+		class="woops2.business.wilosuser.LoginService">
+		<property name="wilosUserDao" ref="WilosUserDao" />
+	</bean>
+
+</beans>
