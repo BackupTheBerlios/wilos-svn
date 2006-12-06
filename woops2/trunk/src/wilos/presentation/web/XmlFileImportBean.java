@@ -92,14 +92,14 @@ public class XmlFileImportBean {
 		//String id = null;
 		//TreeBean treeBean = null;
 		try {
-			Process p = processService.SpelpParsingXML(file);
+			Process p = processService.spelpParsingXML(file);
 			//save the process
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			treeBean = (TreeBean) facesContext.getApplication()
 			      .getVariableResolver().resolveVariable(facesContext, "TreeBean");
-			logger.debug("### XmlFileImportBean ### action -> id="+p.getId());
+			logger.debug("###XmlFileImportBean ### action -> id="+p.getId());
 			//id = this.processService.TestSaveCollectionsProcess(p);
-			this.processService.TestSaveCollectionsProcess(p);
+			this.processService.saveProcess(p);
 		} catch (Exception e) {
 			logger.error("### XmlFileImportBean ### action -> "+e);
 		}

@@ -15,8 +15,8 @@ public class ProcessConsoleTest {
 		
 		ProcessService am = (ProcessService) ctx.getBean("ProcessService");
 		//am.TestSpelpParsingXML();
-		Process p = am.SpelpParsingXML(new File("applitest/wilos/application/console/scrum.xml"));
+		Process p = am.spelpParsingXML(new File("applitest/wilos/application/console/scrum.xml"));
 		System.out.println("p= "+p);
-		am.SaveImportedProcess(p);
+		am.saveProcess(p);
 	}
 }

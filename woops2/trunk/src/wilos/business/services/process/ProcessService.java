@@ -4,6 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,13 +24,14 @@ import wilos.hibernate.spem2.task.TaskDefinitionDao;
 import wilos.hibernate.spem2.task.TaskDescriptorDao;
 import wilos.hibernate.spem2.workbreakdownelement.WorkBreakdownElementDao;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
-import wilos.model.spem2.element.Element;
 import wilos.model.spem2.process.Process;
 import wilos.model.spem2.role.RoleDefinition;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
+import wilos.presentation.web.NodeUserObject;
+import wilos.presentation.web.TreeBean;
 
 /**
  * ProcessService is a transactional class, that manage operations about process, requested by web
@@ -61,14 +65,7 @@ public class ProcessService {
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
-	public void TestSpelpParsingXML() {
-		File file = new File("~m1isb10/scrum.xml");
-		Process p = this.SpelpParsingXML(file);
-		System.out.println("Process = " + p);
-		this.SaveImportedProcess(p);
-	}
-
-	public Process SpelpParsingXML(File _file) {
+	public Process spelpParsingXML(File _file) {
 		// file = new File("C:\Documents and
 		// Settings\Moi\Bureau\Spelp-importXML\ressources\scrum.xml");
 		String absolutPath = _file.getAbsolutePath();
@@ -90,7 +87,7 @@ public class ProcessService {
 	 * @param _process
 	 */
 	// FIXME Objets non enregistres : org.hibernate.TransientObjectException: woops2.model.breakdownelement.BreakdownElement
-	public void SaveImportedProcess(Process _process) {
+	/*public void SaveImportedProcess(Process _process) {
 		List<Element> elements = new ArrayList<Element>();
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 		bdes.addAll(_process.getBreakDownElements());
@@ -224,10 +221,10 @@ public class ProcessService {
 			elementSaved++;
 			logger.debug("### SaveProcessService ### elements saved = "+elementSaved);
 			}
-			*/
+			
 		
 		logger.debug("### SaveProcessService ### end processing");
-	}
+	}*/
 	
 	/**
 	 * 
@@ -235,7 +232,7 @@ public class ProcessService {
 	 * test save of collections' process
 	 * @param _process
 	 */
-	public String TestSaveCollectionsProcess(Process _process) {
+	public String saveProcess(Process _process) {
 		
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 		bdes.addAll(_process.getBreakDownElements());
@@ -344,7 +341,8 @@ public class ProcessService {
 		
 		_process.getBreakDownElements().clear();
 		this.processDao.saveOrUpdateProcess(_process);
-		
+		id_process = _process.getId();
+
 		for (RoleDescriptor rd : roleDescriptorList) {
 			rd.getAdditionalTasks().clear();
 			rd.getActivities().clear();
@@ -388,7 +386,7 @@ public class ProcessService {
 		// update des taskDefinitions		
 		for (int i = 0;i < taskDefinitionListTmp.size();i++) {
 			taskDefinitionList.get(i).addAllTaskDesciptors(taskDefinitionListTmp.get(i).getTaskDescriptors());
-			taskDefinitionList.get(i).addAllSteps(taskDefinitionListTmp.get(i).getSteps());
+			//taskDefinitionList.get(i).addAllSteps(taskDefinitionListTmp.get(i).getSteps());
 		}
 		
 		for (TaskDefinition tdef : taskDefinitionList) {
@@ -399,8 +397,8 @@ public class ProcessService {
 		for (int i = 0;i < taskDescriptorListTmp.size();i++) {
 			taskDescriptorList.get(i).setMainRole(taskDescriptorListTmp.get(i).getMainRole());
 			taskDescriptorList.get(i).setTaskDefinition(taskDescriptorListTmp.get(i).getTaskDefinition());
-			taskDescriptorList.get(i).addAllAdditionalRoles(taskDescriptorListTmp.get(i).getAdditionalRoles());
-			taskDescriptorList.get(i).addAllActivities(taskDescriptorListTmp.get(i).getActivities());
+			//taskDescriptorList.get(i).addAllAdditionalRoles(taskDescriptorListTmp.get(i).getAdditionalRoles());
+			//taskDescriptorList.get(i).addAllActivities(taskDescriptorListTmp.get(i).getActivities());
 		}
 		
 		for (TaskDescriptor td : taskDescriptorList) {
@@ -419,8 +417,8 @@ public class ProcessService {
 			roleDescriptorList.get(i).setRoleDefinition(roleDescriptorListTmp.get(i).getRoleDefinition());
 			roleDescriptorList.get(i).addAllPrimaryTasks(roleDescriptorListTmp.get(i).getPrimaryTasks());
 			//roleDescriptorList.get(i).addAllParticipants(roleDescriptorListTmp.get(i).getParticipants());
-			roleDescriptorList.get(i).addAllAdditionalTasks(roleDescriptorListTmp.get(i).getAdditionalTasks());
-			roleDescriptorList.get(i).addAllActivities(roleDescriptorListTmp.get(i).getActivities());
+			//roleDescriptorList.get(i).addAllAdditionalTasks(roleDescriptorListTmp.get(i).getAdditionalTasks());
+			//roleDescriptorList.get(i).addAllActivities(roleDescriptorListTmp.get(i).getActivities());
 		}
 		
 		for (RoleDescriptor rd : roleDescriptorList) {
@@ -429,11 +427,89 @@ public class ProcessService {
 		
 		_process.addAllBreakdownElements(processTmp.getBreakDownElements());
 		this.processDao.saveOrUpdateProcess(_process);
-		id_process = _process.getId();
 		
 		System.out.println("TestProcessPersistence -> ca update ") ;
 		
 		return id_process;
+	}
+	
+	@Transactional(readOnly = true)
+	public DefaultTreeModel buildTree(String _id) {
+		Process process = null;//this.buildProcess();
+		TreeBean tree = new TreeBean();
+		logger.debug("### buildTree id = "+_id+" ###");
+		if (_id != null) process = this.getProcessDao().getProcess(_id);
+		logger.debug("### buildTree process size = "+process.getBreakDownElements().size()+" ###");
+		DefaultMutableTreeNode rootTreeNode = new DefaultMutableTreeNode();
+		NodeUserObject rootObject = new NodeUserObject(rootTreeNode, tree);
+		rootObject.setText(process.getName());
+		rootTreeNode.setUserObject(rootObject);
+		DefaultTreeModel model = new DefaultTreeModel(rootTreeNode);
+
+		// add element of process in elements
+		for (BreakdownElement breakdownElement : process.getBreakDownElements()) {
+			if (breakdownElement instanceof TaskDescriptor) {
+				TaskDescriptor taskDescriptor = (TaskDescriptor) breakdownElement;
+				DefaultMutableTreeNode branchTaskDescriptorNode = new DefaultMutableTreeNode();
+				NodeUserObject branchTaskDescriptorObject = new NodeUserObject(
+						branchTaskDescriptorNode, tree);
+				branchTaskDescriptorNode
+						.setUserObject(branchTaskDescriptorObject);
+				branchTaskDescriptorObject.setText(taskDescriptor.getName());
+				rootTreeNode.insert(branchTaskDescriptorNode, 0);
+
+				TaskDefinition taskDefinition = taskDescriptor
+						.getTaskDefinition();
+				if (taskDefinition != null) {
+					DefaultMutableTreeNode branchTaskDefinitionNode = new DefaultMutableTreeNode();
+					NodeUserObject branchTaskDefinitionObject = new NodeUserObject(
+							branchTaskDefinitionNode, tree);
+					branchTaskDefinitionNode
+							.setUserObject(branchTaskDefinitionObject);
+					branchTaskDefinitionObject
+							.setText(taskDefinition.getName());
+					branchTaskDescriptorNode
+							.insert(branchTaskDefinitionNode, 0);
+
+					for (Step step : taskDefinition.getSteps()) {
+						if (step != null) {
+							DefaultMutableTreeNode branchStepNode = new DefaultMutableTreeNode();
+							NodeUserObject branchStepObject = new NodeUserObject(
+									branchStepNode, tree);
+							branchStepNode.setUserObject(branchStepObject);
+							branchStepObject.setLeaf(true);
+							branchStepObject.setText(step.getName());
+							branchTaskDefinitionNode.insert(branchStepNode, 0);
+						}
+					}
+				}
+			} else if (breakdownElement instanceof RoleDescriptor) {
+				RoleDescriptor roleDescriptor = (RoleDescriptor) breakdownElement;
+				DefaultMutableTreeNode branchRoleDescriptorNode = new DefaultMutableTreeNode();
+				NodeUserObject branchRoleDescriptorObject = new NodeUserObject(
+						branchRoleDescriptorNode, tree);
+				branchRoleDescriptorNode
+						.setUserObject(branchRoleDescriptorObject);
+				branchRoleDescriptorObject.setText(roleDescriptor.getName());
+				rootTreeNode.insert(branchRoleDescriptorNode, 0);
+
+				RoleDefinition roleDefinition = roleDescriptor
+						.getRoleDefinition();
+				if (roleDefinition != null) {
+					DefaultMutableTreeNode branchRoleDefinitionNode = new DefaultMutableTreeNode();
+					NodeUserObject branchRoleDefinitionObject = new NodeUserObject(
+							branchRoleDefinitionNode, tree);
+					branchRoleDefinitionNode
+							.setUserObject(branchRoleDefinitionObject);
+					branchRoleDefinitionObject
+							.setText(roleDefinition.getName());
+					branchRoleDefinitionObject.setLeaf(true);
+					branchRoleDescriptorNode
+							.insert(branchRoleDefinitionNode, 0);
+				}
+			}
+		}
+		return model;
 	}
 
 	/**
@@ -527,15 +603,6 @@ public class ProcessService {
 		
 		System.out.println("TestProcessPersistence -> ca update les objets") ;
 		
-	}
-	
-	/**
-	 * Save process
-	 * 
-	 * @param _process
-	 */
-	public void saveProcess(Process _process) {
-		this.processDao.saveOrUpdateProcess(_process);
 	}
 
 	/**

@@ -14,7 +14,7 @@ public class PersistentTransactionConsoleTest {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 		
 		ProcessService am = (ProcessService) ctx.getBean("ProcessService");
-		Process p = am.SpelpParsingXML(new File("applitest/wilos/application/console/scrum.xml"));
+		Process p = am.spelpParsingXML(new File("applitest/wilos/application/console/scrum.xml"));
 		//am.TestSpelpParsingXML();
 		/*String id = am.TestPersistence();
 		am.TestProcessPersistence(id);*/
@@ -23,6 +23,6 @@ public class PersistentTransactionConsoleTest {
 		System.out.println("TestProcessPersistence p => "+p+" id="+p.getId());
 		System.out.println("#### p -> "+p.getIdEPF()+" "+p.getName());*/
 		
-		am.TestSaveCollectionsProcess(p);
+		am.saveProcess(p);
 	}
 }

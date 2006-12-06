@@ -19,7 +19,7 @@ public class TransactionalProxyConsoleTest {
 		
 		ProcessService pcsServ = (ProcessService) ctx.getBean("ProcessService");
 		
-		pcsServ.TestSpelpParsingXML();
+		//pcsServ.spelpParsingXML();
 		//System.out.println("ActivityManager="+am);
 		
 		/*
