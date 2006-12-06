@@ -215,7 +215,7 @@ public class XMLParser {
 	
 	private static TaskDefinition getTaskDefinitionByID(String _id){
 		for (int i = 0 ; i < TasksList.size() ; i ++){
-			if (TasksList.get(i).getIdEPF().equals(_id)){
+			if (TasksList.get(i).getGuid().equals(_id)){
 				return TasksList.get(i);
 			}
 		}
@@ -331,7 +331,7 @@ public class XMLParser {
 	private static RoleDescriptor getRoleDescriptorById(Set<RoleDescriptor> aSet,String id){
 		for (Iterator i = aSet.iterator() ; i.hasNext() ;){
 			RoleDescriptor tmp = (RoleDescriptor) i .next();
-			if (tmp.getIdEPF().equals(id)){
+			if (tmp.getGuid().equals(id)){
 				return  tmp;
 			}
 		}
@@ -369,7 +369,7 @@ public class XMLParser {
 	
 	private static RoleDefinition getRoleDefinitionByID(String _id){
 		for (int i = 0 ; i < RoleList.size() ; i ++){
-			if (RoleList.get(i).getIdEPF().equals(_id)){
+			if (RoleList.get(i).getGuid().equals(_id)){
 				return RoleList.get(i);
 			}
 		}

@@ -19,9 +19,9 @@ import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
 
 public class XMLParserTest extends XMLParser {
-	public static File pathScrum = new File("ressources" + File.separator + "scrum.xml"); 
-	public static File pathOPenUP =new File("ressources" + File.separator + "sortieEPF.xml");
-	public static File pathMonTest =new File("ressources" + File.separator + "monTest.xml");
+	public static File pathScrum = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "scrum.xml"); 
+	public static File pathOPenUP =new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "sortieEPF.xml");
+	public static File pathMonTest =new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "monTest.xml");
 	public static File fileError =new File("prout");
 		
 	@Test
@@ -39,31 +39,31 @@ public class XMLParserTest extends XMLParser {
 			
 			
 			RoleDefinition notreRdef = new RoleDefinition() ;
-			notreRdef.setIdEPF("1");
+			notreRdef.setGuid("1");
 			notreRdef.setName("Product Owner");
 			notreRdef.setDescription("petite description");
 			
 			RoleDescriptor notreRdesc = new RoleDescriptor() ;
 			notreRdesc.setName("ScrumMaster");
-			notreRdesc.setIdEPF("5");
+			notreRdesc.setGuid("5");
 			notreRdesc.setIsOptional(false);
 			notreRdesc.setIsPlanned(true);
 			notreRdesc.addRoleDefinition(notreRdef);
 			notreRdesc.setPrefix("");
 			
 			Step s1 = new Step();
-			s1.setIdEPF("3");
+			s1.setGuid("3");
 			s1.setName("Definir le but du sprint");
 			s1.setDescription("coucou");
 			
 			TaskDefinition notreTdef = new TaskDefinition() ;
-			notreTdef.setIdEPF("2");
+			notreTdef.setGuid("2");
 			notreTdef.setName("Plan sprint");
 			notreTdef.setDescription("Planification du court terme");
 			notreTdef.addStep(s1);
 			
 			TaskDescriptor notreTdesc = new TaskDescriptor () ;
-			notreTdesc.setIdEPF("4");
+			notreTdesc.setGuid("4");
 			notreTdesc.setName("Plan sprint");
 			notreTdesc.setHasMultipleOccurrences(false);
 			notreTdesc.setIsPlanned(false);
@@ -80,7 +80,7 @@ public class XMLParserTest extends XMLParser {
 					TaskDescriptor td = (TaskDescriptor) t ;
 					tdXML = td ;
 					tdfXML = td.getTaskDefinition();
-					assertTrue(td.getIdEPF().equals(notreTdesc.getIdEPF() )) ;
+					assertTrue(td.getGuid().equals(notreTdesc.getGuid() )) ;
 					assertTrue(td.getPrefix().equals(notreTdesc.getPrefix() )) ;
 					assertTrue(td.getDescription().equals(notreTdesc.getDescription() )) ;
 					assertTrue(td.getIsEvenDriven().equals(notreTdesc.getIsEvenDriven() )) ;
@@ -88,38 +88,38 @@ public class XMLParserTest extends XMLParser {
 					assertTrue(td.getIsOptional().equals(notreTdesc.getIsOptional()) ) ;
 					assertTrue(td.getIsPlanned().equals(notreTdesc.getIsPlanned()) ) ;
 					assertTrue(td.getIsRepeatable().equals(notreTdesc.getIsRepeatable()) ) ;
-					assertTrue(td.getTaskDefinition().getIdEPF().equals(notreTdesc.getTaskDefinition().getIdEPF()));
+					assertTrue(td.getTaskDefinition().getGuid().equals(notreTdesc.getTaskDefinition().getGuid()));
 					assertTrue(td.getTaskDefinition().getName().equals(notreTdesc.getTaskDefinition().getName()));
 					assertTrue(td.getHasMultipleOccurrences().equals(notreTdesc.getHasMultipleOccurrences()));
-					assertTrue(td.getMainRole().getIdEPF().equals(notreTdesc.getMainRole().getIdEPF()));
+					assertTrue(td.getMainRole().getGuid().equals(notreTdesc.getMainRole().getGuid()));
 					for (RoleDescriptor stmp : td.getAdditionalRoles()){
-						assertTrue(stmp.getIdEPF().equals(notreRdesc.getIdEPF()));
+						assertTrue(stmp.getGuid().equals(notreRdesc.getGuid()));
 					}
 					for (TaskDescriptor stmp : td.getTaskDefinition().getTaskDescriptors()){
 						assertTrue(stmp.equals(tdXML));
-						assertTrue(stmp.getIdEPF().equals(notreTdesc.getIdEPF()));
+						assertTrue(stmp.getGuid().equals(notreTdesc.getGuid()));
 						assertTrue(stmp.getDescription().equals(notreTdesc.getDescription()));
 						assertTrue(stmp.getName().equals(notreTdesc.getName()));
-						assertTrue(stmp.getTaskDefinition().getIdEPF().equals(notreTdesc.getTaskDefinition().getIdEPF()));
+						assertTrue(stmp.getTaskDefinition().getGuid().equals(notreTdesc.getTaskDefinition().getGuid()));
 					}
 					for (Step stmp : td.getTaskDefinition().getSteps()){
-						assertTrue(stmp.getIdEPF().equals(s1.getIdEPF()));
+						assertTrue(stmp.getGuid().equals(s1.getGuid()));
 						assertTrue(stmp.getDescription().equals(s1.getDescription()));
 						assertTrue(stmp.getName().equals(s1.getName()));
-						assertTrue(stmp.getTaskDefinition().getIdEPF().equals(s1.getTaskDefinition().getIdEPF()));
+						assertTrue(stmp.getTaskDefinition().getGuid().equals(s1.getTaskDefinition().getGuid()));
 					}
 				}
 				else if (t instanceof RoleDescriptor) {
 					RoleDescriptor td = (RoleDescriptor) t ;
 					rdXML = td ;
 					rdfXML = td.getRoleDefinition();
-					assertTrue(td.getIdEPF().equals(notreRdesc.getIdEPF() )) ;
+					assertTrue(td.getGuid().equals(notreRdesc.getGuid() )) ;
 					assertTrue(td.getDescription().equals(notreRdesc.getDescription() )) ;
 					assertTrue(td.getIsOptional().equals(notreRdesc.getIsOptional() )) ;
 					assertTrue(td.getIsPlanned().equals(notreRdesc.getIsPlanned() )) ;
 					assertTrue(td.getName().equals(notreRdesc.getName() )) ;
 					assertTrue(td.getPrefix().equals(notreRdesc.getPrefix() )) ;
-					assertTrue(td.getRoleDefinition().getIdEPF().equals(notreRdesc.getRoleDefinition().getIdEPF()));
+					assertTrue(td.getRoleDefinition().getGuid().equals(notreRdesc.getRoleDefinition().getGuid()));
 					assertTrue(td.getRoleDefinition().getDescription().equals(notreRdesc.getRoleDefinition().getDescription()));
 					assertTrue(td.getRoleDefinition().getName().equals(notreRdesc.getRoleDefinition().getName()));
 					for (RoleDescriptor def : td.getRoleDefinition().getRoleDescriptors()){

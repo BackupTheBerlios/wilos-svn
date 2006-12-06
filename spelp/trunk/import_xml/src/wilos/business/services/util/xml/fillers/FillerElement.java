@@ -24,7 +24,7 @@ public class FillerElement {
 	
 	private void fill(){
 		// setting the id
-		myElement.setIdEPF(myNode.getAttributes().getNamedItem(AttributeId).getNodeValue());
+		myElement.setGuid(myNode.getAttributes().getNamedItem(AttributeId).getNodeValue());
 		// setting the name
 		myElement.setName(myNode.getAttributes().getNamedItem(AttributeName).getNodeValue());
 		// setting the description
