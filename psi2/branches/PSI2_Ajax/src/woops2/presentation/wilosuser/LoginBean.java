@@ -136,9 +136,9 @@ public class LoginBean {
 	public String logoutAction() {
 		String url = "connect" ;
 		
-		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
+		/*HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
 		HttpSession sess = req.getSession() ;
-		sess.invalidate() ;
+		sess.invalidate() ;*/
 		
 		return url ;
 	}

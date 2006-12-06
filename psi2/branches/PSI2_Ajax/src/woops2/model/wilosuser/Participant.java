@@ -21,7 +21,7 @@ public class Participant extends WilosUser {
 	
 	public Participant()
 	{
-		super("","","","","");
+		super();
 		rolesListForAProject=new HashSet<RoleDescriptor>();
 	}
 
