@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Wilos - Woops2 - feat. ajax</title>
+        <title>Wilos - feat. ajax</title>
     </head>
     <body>
         <jsp:forward page="connect.iface" />
