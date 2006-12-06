@@ -23,6 +23,7 @@ import wilos.hibernate.spem2.role.RoleDescriptorDao;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.process.Process;
+import  wilos.business.webservices.WizardServices;
 
 /**
  *
@@ -55,7 +56,7 @@ public class WizardServicesTest extends TestCase {
 
         ProcessService p = (ProcessService)ctx.getBean("ProcessService");
         
-        p.SaveProcessService(proc);
+        p.saveProcess(proc);
         
         String login = "testBD";
         String pass = "testBD";
