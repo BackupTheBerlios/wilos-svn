@@ -9,7 +9,6 @@ import java.util.Vector;
 import org.junit.Test;
 
 import wilos.business.services.util.xml.parser.XMLParser;
-import sun.net.smtp.SmtpClient;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.process.Process;
 import wilos.model.spem2.role.RoleDefinition;
