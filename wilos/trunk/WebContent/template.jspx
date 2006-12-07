@@ -1,0 +1,58 @@
+<f:view xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<f:loadBundle basename="wilos.resources.messages" var="msgs" />
+
+	<ice:outputDeclaration doctypeRoot="HTML"
+		doctypePublic="-//W3C//DTD HTML 4.01 Transitional//EN"
+		doctypeSystem="http://www.w3.org/TR/html4/loose.dtd" />
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></meta>
+	<title>Welcome</title>
+
+	<ice:outputText style="padding-top:0px; padding-bottom:0px;"
+		value="#{styleBean.style}" escape="false" />
+	<link href="css/css.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body bgcolor="#ded9e6">
+	<div id="container"> 
+		<div id="logo">     
+			<img src="images/logo_wilos.png" />
+		</div>
+		<div id="banner">     
+			<table width="500px">
+				<tr><td>
+      			Banner
+      			</td></tr>
+			</table>
+		</div>
+		<div id="connection">     
+			<h4>Insertion du connection tag</h4>
+		</div>
+		<div id="navigation">     
+			<h4>Insertion du navigation tag</h4>
+		</div>		
+		<div id="content">     
+			<div id="content_center">
+				<h4>Insertion du content tag</h4>
+				Ceci est du contenu non formate.<br/>
+				Ceci est du contenu non formate.<br/>
+				Ceci est du contenu non formate.<br/>
+				Ceci est du contenu non formate.<br/>
+				Ceci est du contenu non formate.<br/>
+				Ceci est du contenu non formate.<br/>
+				Ceci est du contenu non formate.<br/>
+				Ceci est du contenu non formate.<br/>
+				Ceci est du contenu non formate.<br />
+				Ceci est du contenu non formate.<br/>
+				Ceci est du contenu non formate.<br/>
+				Ceci est du contenu non formate.<br/>
+				Ceci est du contenu non formate.<br />
+			</div>
+		</div>		
+	</div>
+</body>
+</html>
+</f:view>
