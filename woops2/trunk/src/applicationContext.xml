@@ -49,6 +49,8 @@
 				<value>wilos/model/spem2/task/Step.hbm.xml</value>
 				<value>wilos/model/spem2/role/RoleDescriptor.hbm.xml</value>
 				<value>wilos/model/spem2/role/RoleDefinition.hbm.xml</value>
+				<value>wilos/model/misc/wilosuser/Participant.hbm.xml</value>
+				<value>wilos/model/misc/wilosuser/WilosUser.hbm.xml</value>
 			</list>
 		</property>
 

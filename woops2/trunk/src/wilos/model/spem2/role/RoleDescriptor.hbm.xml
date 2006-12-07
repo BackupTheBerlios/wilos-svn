@@ -25,5 +25,12 @@
 			</many-to-many>
 		</set>
 		
+		<set name="participants" table="play" lazy="true">
+			<key column="roledescriptor_id"></key>
+			<many-to-many class="wilos.model.misc.wilosuser.Participant"
+				column="participant_id">
+			</many-to-many>
+		</set>
+		
 	</joined-subclass>
 </hibernate-mapping>
