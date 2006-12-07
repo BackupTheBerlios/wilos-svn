@@ -5,18 +5,10 @@
  * Created on 25 novembre 2006, 17:58
  */
 
-package webservices;
+package wilos.test.presentation.assistant.webservices;
 
 import junit.framework.*;
-import com.thoughtworks.xstream.XStream;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import javax.xml.namespace.QName;
-import javax.xml.ws.Service;
-import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.role.RoleDescriptor;
-import wilos.model.spem2.process.Process;
 import wilos.presentation.assistant.webservices.*;
 
 /**
