@@ -23,6 +23,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
 import wilos.business.services.process.ProcessService;
+import wilos.business.services.wilosuser.LoginService;
+import wilos.model.misc.wilosuser.WilosUser;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
@@ -82,7 +84,29 @@ public class WizardServices {
 //
 //                r.add(xstream.toXML(rd));
 //                return r;
-//	}
+    
+
+    @WebMethod
+    public WilosUser getWilosUser(@WebParam(name="login") String login, @WebParam(name="password")  String password)
+    {
+       WilosUser wu; 
+       System.out.println("APPEL DE LA METHODE getWilosUser");
+       System.out.println("LOGIN : "+login);
+       System.out.println("PASS : "+password);
+         
+       LoginService ls = new LoginService();
+       wu = ls.getAuthentifiedUser(login,password);
+       if (wu == null)
+       {
+           System.out.println("le wilos user n'existe pas");
+       }
+       else
+       {
+           System.out.println("le wilos user existe");        
+       }
+       
+       return wu;
+    }
     
     @WebMethod
     public List<String> getAllProcess (@WebParam(name="login") String login,@WebParam(name="password")  String password) {
