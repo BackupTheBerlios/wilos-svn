@@ -14,7 +14,8 @@ public class ExceptionManager {
 	/**
 	 * Default constructor
 	 */
-	private ExceptionManager() {}
+	private ExceptionManager() {
+	}
 
 	/**
 	 * Get the current instance of the singleton
@@ -26,5 +27,9 @@ public class ExceptionManager {
 			ExceptionManager.instance = new ExceptionManager() ;
 		}
 		return ExceptionManager.instance ;
+	}
+
+	public void manageDaoException(Exception _e) {
+				
 	}
 }
