@@ -51,7 +51,7 @@ public class Participant extends WilosUser {
 	 */
 	public void addToRoleDescriptor(RoleDescriptor _roleDesc) {
 		this.rolesListForAProject.add(_roleDesc) ;
-		// _roleDesc.getParticipant().add(this);
+		_roleDesc.getParticipants().add(this);
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class Participant extends WilosUser {
 	 */
 	public void removeFromRoleDescriptor(RoleDescriptor _roleDesc) {
 		this.rolesListForAProject.remove(_roleDesc) ;
-		// _roleDesc..getParticipant().remove(this);
+		_roleDesc.getParticipants().remove(this);
 	}
 
 	/**

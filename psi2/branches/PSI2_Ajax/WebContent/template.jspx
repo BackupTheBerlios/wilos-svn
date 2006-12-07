@@ -1,6 +1,7 @@
 <f:view xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ice="http://www.icesoft.com/icefaces/component">
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <f:loadBundle basename="wilos.resources.messages" var="msgs" />
 
@@ -29,9 +30,9 @@
 			</table>
 		</div>
 		<div id="connection">     
-			<h4>Insertion du connection tag</h4>
+			<jsp:directive.include file="./connect.jspx"/>
 		</div>
-		<div id="navigation">     
+		<div id="navigation">
 			<h4>Insertion du navigation tag</h4>
 		</div>		
 		<div id="content">     
@@ -45,11 +46,11 @@
 				Ceci est du contenu non formate.<br/>
 				Ceci est du contenu non formate.<br/>
 				Ceci est du contenu non formate.<br/>
-				Ceci est du contenu non formate.<br />
 				Ceci est du contenu non formate.<br/>
 				Ceci est du contenu non formate.<br/>
 				Ceci est du contenu non formate.<br/>
-				Ceci est du contenu non formate.<br />
+				Ceci est du contenu non formate.<br/>
+				Ceci est du contenu non formate.<br/>
 			</div>
 		</div>		
 	</div>
