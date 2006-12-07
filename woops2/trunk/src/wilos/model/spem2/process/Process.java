@@ -5,7 +5,6 @@ import org.apache.commons.lang.builder.EqualsBuilder ;
 import org.apache.commons.lang.builder.HashCodeBuilder ;
 
 import wilos.model.spem2.activity.Activity;
-import wilos.model.spem2.methodpackage.ProcessPackage;
 
 /**
  * 
@@ -21,8 +20,6 @@ import wilos.model.spem2.methodpackage.ProcessPackage;
  * 
  */
 public class Process extends Activity implements Cloneable {
-
-	private ProcessPackage processPackage ;
 
 	/**
 	 * Default constructor
@@ -52,7 +49,6 @@ public class Process extends Activity implements Cloneable {
 	 */
 	protected void copy(final Process _process) {
 		super.copy(_process) ;
-		this.processPackage = _process.getProcessPackage() ;
 	}
 
 	/*
@@ -68,7 +64,7 @@ public class Process extends Activity implements Cloneable {
 			return true ;
 		}
 		Process process = (Process) obj ;
-		return new EqualsBuilder().appendSuper(super.equals(process)).append(this.processPackage, process.getProcessPackage()).isEquals() ;
+		return new EqualsBuilder().appendSuper(super.equals(process)).isEquals() ;
 	}
 
 	/*
@@ -77,23 +73,6 @@ public class Process extends Activity implements Cloneable {
 	 * @see woops2.model.activity.Activity#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.processPackage).toHashCode() ;
-	}
-
-	/**
-	 * @return the processPackage
-	 */
-	public ProcessPackage getProcessPackage() {
-		return this.processPackage ;
-	}
-
-	/**
-	 * Setter of processPackage.
-	 * 
-	 * @param _processPackage
-	 *            The processPackage to set.
-	 */
-	public void setProcessPackage(ProcessPackage _processPackage) {
-		this.processPackage = _processPackage ;
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode() ;
 	}
 }
