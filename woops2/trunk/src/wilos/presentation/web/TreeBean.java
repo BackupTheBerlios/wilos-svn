@@ -55,11 +55,9 @@ import wilos.business.services.process.ProcessService;
 public class TreeBean {
 
 	// tree default model, used as a value for the tree component
-	private DefaultTreeModel model ;
+	private DefaultTreeModel model;
 
 	private DefaultMutableTreeNode rootTreeNode ;
-
-	private ProcessService treeProcessService ;
 
 	// label count increases one for each new node
 	private int labelCount = 0 ;
@@ -290,7 +288,7 @@ public class TreeBean {
 	 */
 	public DefaultTreeModel getModel() {
 		// Delegation au processService
-		this.model = this.treeProcessService.buildTree(this.processId) ;
+		// this.model = this.treeProcessService.buildTree(this.processId);/*this.processId*/
 		return model;
 	}
 
@@ -333,19 +331,19 @@ public class TreeBean {
 		return ++labelCount ;
 	}
 
-	public ProcessService getTreeProcessService() {
-		return treeProcessService ;
-	}
-
-	public void setTreeProcessService(ProcessService processService) {
-		this.treeProcessService = processService ;
-	}
-
 	public String getProcessId() {
 		return processId ;
 	}
 
 	public void setProcessId(String processId) {
 		this.processId = processId ;
+	}
+
+	public DefaultMutableTreeNode getRootTreeNode() {
+		return rootTreeNode;
+	}
+
+	public void setRootTreeNode(DefaultMutableTreeNode rootTreeNode) {
+		this.rootTreeNode = rootTreeNode;
 	}
 }

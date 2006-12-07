@@ -85,13 +85,13 @@
 	</managed-bean>
 
 	<managed-bean>
-		<managed-bean-name>TreeBean</managed-bean-name>
+		<managed-bean-name>TreeViewBean</managed-bean-name>
 		<managed-bean-class>
-			wilos.presentation.web.TreeBean
+			wilos.presentation.web.TreeViewBean
 		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
-			<property-name>treeProcessService</property-name>
+			<property-name>processService</property-name>
 			<value>#{ProcessService}</value>
 		</managed-property>
 	</managed-bean>

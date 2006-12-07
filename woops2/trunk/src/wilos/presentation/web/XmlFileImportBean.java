@@ -25,15 +25,13 @@ public class XmlFileImportBean {
 	private PersistentFacesState state = null;
 
 	private File file = null;
-	
+
 	private ProcessService processService;
-	
+
 	private TreeBean treeBean;
-	
-	protected final Log logger = LogFactory.getLog(this.getClass()) ;
-	
-	
-	
+
+	protected final Log logger = LogFactory.getLog(this.getClass());
+
 	public XmlFileImportBean() {
 		state = PersistentFacesState.getInstance();
 	}
@@ -53,7 +51,8 @@ public class XmlFileImportBean {
 	public File getFile() {
 		return file;
 	}
-	//FIXME verif methode parsing
+
+	// FIXME verif methode parsing
 	public void action(ActionEvent event) {
 		InputFile inputFile = (InputFile) event.getSource();
 		if (inputFile.getStatus() == InputFile.SAVED) {
@@ -73,38 +72,42 @@ public class XmlFileImportBean {
 		if (inputFile.getStatus() == InputFile.UNKNOWN_SIZE) {
 			inputFile.getFileInfo().getException().printStackTrace();
 		}
-		ExternalContext extCtx = FacesContext.getCurrentInstance().getExternalContext();
-		//File destFile = new File("/upload/"+file.getName());
-		logger.debug("### fichier = "+file.getPath()+" => "+file.getName()+" ###");
+		ExternalContext extCtx = FacesContext.getCurrentInstance()
+				.getExternalContext();
+		// File destFile = new File("/upload/"+file.getName());
+		logger.debug("### fichier = " + file.getPath() + " => "
+				+ file.getName() + " ###");
 		try {
-			logger.debug("### getCanonicalPath = "+file.getCanonicalPath());
+			logger.debug("### getCanonicalPath = " + file.getCanonicalPath());
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		logger.debug("### getAbsoluteFile = "+file.getAbsoluteFile());
-		logger.debug("### getRequestContextPath = "+extCtx.getRequestContextPath());
-		logger.debug("### getRequestPathInfo = "+extCtx.getRequestPathInfo());
+		logger.debug("### getAbsoluteFile = " + file.getAbsoluteFile());
+		logger.debug("### getRequestContextPath = "
+				+ extCtx.getRequestContextPath());
+		logger.debug("### getRequestPathInfo = " + extCtx.getRequestPathInfo());
 		extCtx.getResourceAsStream("");
-		
-		//file.renameTo(destFile);
-		//logger.debug("### Nouveau fichier = "+destFile.getPath()+" => "+destFile.getName()+" ###");
-		//String id = null;
-		//TreeBean treeBean = null;
+
+		// file.renameTo(destFile);
+		// logger.debug("### Nouveau fichier = "+destFile.getPath()+" =>
+		// "+destFile.getName()+" ###");
+		String id = null;
+		TreeViewBean treeBean = null;
 		try {
 			Process p = processService.spelpParsingXML(file);
-			//save the process
+			// save the process
 			FacesContext facesContext = FacesContext.getCurrentInstance();
-			treeBean = (TreeBean) facesContext.getApplication()
-			      .getVariableResolver().resolveVariable(facesContext, "TreeBean");
-			logger.debug("###XmlFileImportBean ### action -> id="+p.getId());
-			//id = this.processService.TestSaveCollectionsProcess(p);
-			this.processService.saveProcess(p);
+			treeBean = (TreeViewBean) facesContext.getApplication()
+					.getVariableResolver().resolveVariable(facesContext,
+							"TreeViewBean");
+			logger.debug("###XmlFileImportBean ### action -> id=" + p.getId());
+			id = this.processService.saveProcess(p);
 		} catch (Exception e) {
-			logger.error("### XmlFileImportBean ### action -> "+e);
+			logger.error("### XmlFileImportBean ### action -> " + e);
 		}
 		// TODO Recup id du process
-		//treeBean.setProcessId(id);
+		treeBean.setProcessId(id);
 	}
 
 	public void progress(EventObject event) {
