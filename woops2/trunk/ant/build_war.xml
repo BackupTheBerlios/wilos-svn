@@ -20,7 +20,7 @@
 	<!-- Taches Tomcat -->
 	<taskdef file="${ant.dir}/tomcatTask.properties">
 		<classpath>
-			<pathelement path="${ant.dir}/catalina-ant.jar" />
+			<pathelement path="${ant.dir}/lib/catalina-ant.jar" />
 		</classpath>
 	</taskdef>
 
