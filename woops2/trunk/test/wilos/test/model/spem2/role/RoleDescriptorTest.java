@@ -8,6 +8,7 @@ import junit.framework.TestCase;
 import wilos.model.spem2.role.RoleDefinition;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
+import wilos.model.misc.wilosuser.Participant;
 
 public class RoleDescriptorTest extends TestCase {
 
@@ -284,7 +285,7 @@ public class RoleDescriptorTest extends TestCase {
 	 * Test method for {@link wilos.model.role.RoleDescriptor#addParticipant()}.
 	 * 
 	 */
-	/*public void testAddParticipant() {
+	public void testAddParticipant() {
 		Participant participant = new Participant() ;
 		
 		this.roleDescriptor.addParticipant(participant) ;
@@ -293,13 +294,13 @@ public class RoleDescriptorTest extends TestCase {
 		//TODO assertFalse(participant.getRolesListForAProject().isEmpty()) ;
 		assertTrue(this.roleDescriptor.getParticipants().size() == 1) ;
 		//TODO assertTrue(participant.getRolesListForAProject().size() == 1) ;
-	}*/
+	}
 	
 	/**
 	 * Test method for {@link wilos.model.role.RoleDescriptor#AddAllParticipants()}.
 	 * 
 	 */
-	/*public void testAddAllParticipants() {
+	public void testAddAllParticipants() {
 		Participant task = new Participant() ;
 		task.setName(NAME) ;
 		
@@ -313,13 +314,13 @@ public class RoleDescriptorTest extends TestCase {
 
 		assertFalse(this.roleDescriptor.getParticipants().isEmpty()) ;
 		assertTrue(this.roleDescriptor.getParticipants().size() == 2) ;
-	}*/
+	}
 	
 	/**
 	 * Test method for {@link wilos.model.role.RoleDescriptor#removeParticipant()}.
 	 * 
 	 */
-	/*public void testRemoveParticipant() {
+	public void testRemoveParticipant() {
 		Participant task = new Participant() ;
 		task.setName(NAME) ;
 		
@@ -330,13 +331,13 @@ public class RoleDescriptorTest extends TestCase {
 		this.roleDescriptor.removeParticipant(task) ;
 		assertTrue(this.roleDescriptor.getParticipants().isEmpty()) ;
 		//TODO assertTrue(task.getRolesListForAProject().isEmpty());
-	}*/
+	}
 	
 	/**
 	 * Test method for {@link wilos.model.role.RoleDescriptor#RemoveAllParticipants()}.
 	 * 
 	 */
-	/*public void testRemoveAllParticipants() {
+	public void testRemoveAllParticipants() {
 
 		Participant task = new Participant() ;
 		task.setName(NAME) ;
@@ -357,5 +358,5 @@ public class RoleDescriptorTest extends TestCase {
 		assertTrue(this.roleDescriptor.getParticipants().isEmpty()) ;
 		//TODO assertTrue(task.getRolesListForAProject().isEmpty());
 		//TODO assertTrue(tmp.getRolesListForAProject().isEmpty());
-	}*/
+	}
 }
