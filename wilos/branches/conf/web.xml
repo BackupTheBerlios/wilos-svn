@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-app_2_4.xsd"
     version="2.4">
 
-   <display-name>Wilos - Woops 2</display-name>
+   <display-name>Wilos</display-name>
     <description>
     </description>
     
@@ -70,26 +70,26 @@
     </servlet>
     
     <servlet>
-            <servlet-name>SpringContextServlet</servlet-name>
-            <servlet-class>
-                        org.springframework.web.context.ContextLoaderServlet
-                </servlet-class>
-            <load-on-startup>1</load-on-startup>
-         </servlet>
-         
-         <context-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>/WEB-INF/classes/applicationContext*.xml</param-value>
-          </context-param>
-         
+    	<servlet-name>SpringContextServlet</servlet-name>
+    	<servlet-class>
+			org.springframework.web.context.ContextLoaderServlet
+		</servlet-class>
+    	<load-on-startup>1</load-on-startup>
+ 	</servlet>
+ 	
+ 	<context-param>
+    	<param-name>contextConfigLocation</param-name>
+    	<param-value>/WEB-INF/classes/applicationContext*.xml</param-value>
+  	</context-param>
+ 	
     
     <!-- extension mapping -->
     
-        <servlet-mapping>
+	<servlet-mapping>
          <servlet-name>uploadServlet</servlet-name>
          <url-pattern>/uploadHtml</url-pattern>
     </servlet-mapping>   
-        
+	
     <servlet-mapping>
         <servlet-name>Persistent Faces Servlet</servlet-name>
         <url-pattern>*.iface</url-pattern>
