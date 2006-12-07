@@ -41,7 +41,6 @@ public class Phase extends Activity implements Cloneable{
 	 */
 	protected void copy(final Phase _phase) {
 		super.copy(_phase) ;
-		//this.phasePackage = _phase.getPhasePackage() ;
 	}
 
 	/*
