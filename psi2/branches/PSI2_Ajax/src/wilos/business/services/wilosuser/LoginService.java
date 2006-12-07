@@ -49,13 +49,13 @@ public class LoginService {
 	 * TODO Method description
 	 * 
 	 * @param _login
-	 * @param _password
+	 * @param Already hached _password
 	 * @return true if the login and the password exist
 	 */
 	public WilosUser getAuthentifiedUser(String _login, String _password) {
 		Set<WilosUser> wilosUsers = this.wilosUserDao.getAllWilosUsers() ;
 		for(WilosUser user : wilosUsers){
-			if(user.getLogin().equals(_login) && user.getPassword().equals(Security.encode(_password))){
+			if(user.getLogin().equals(_login) && user.getPassword().equals(_password)){
 				this.logger.debug("### connection OK ###") ;
 				return user ;
 			}

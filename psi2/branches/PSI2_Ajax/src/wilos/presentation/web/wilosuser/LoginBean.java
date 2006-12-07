@@ -6,6 +6,7 @@ import javax.faces.context.FacesContext ;
 import javax.servlet.http.* ;
 
 import wilos.business.services.wilosuser.LoginService ;
+import wilos.business.util.Security;
 import wilos.model.misc.wilosuser.Administrator ;
 import wilos.model.misc.wilosuser.Participant ;
 import wilos.model.misc.wilosuser.ProcessManager ;
@@ -92,7 +93,7 @@ public class LoginBean {
 	 */
 	public String authentificationAction() {
 		String url = "" ;
-		WilosUser user = this.loginService.getAuthentifiedUser(this.login, this.password) ;
+		WilosUser user = this.loginService.getAuthentifiedUser(this.login, Security.encode(this.password)) ;
 		if(user != null){
 			HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
 			HttpSession sess = req.getSession() ;

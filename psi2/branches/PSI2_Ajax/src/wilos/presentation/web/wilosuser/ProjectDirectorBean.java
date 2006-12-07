@@ -1,15 +1,14 @@
-
 package wilos.presentation.web.wilosuser ;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-import org.apache.commons.logging.Log ;
-import org.apache.commons.logging.LogFactory ;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.wilosuser.LoginService;
-import wilos.business.services.wilosuser.ProjectDirectorService ;
-import wilos.model.misc.wilosuser.ProjectDirector ;
+import wilos.business.services.wilosuser.ProjectDirectorService;
+import wilos.model.misc.wilosuser.ProjectDirector;
 
 /**
  * Managed-Bean link to projectDirector_create.jsp
