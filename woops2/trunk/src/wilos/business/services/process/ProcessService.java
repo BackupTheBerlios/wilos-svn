@@ -470,11 +470,13 @@ public class ProcessService {
 	
 	@Transactional(readOnly = true)
 	public DefaultTreeModel buildTree(String _id) {
-		Process process = this.buildProcess();
-		TreeBean tree = new TreeBean();
-		tree.setTreeProcessService(this);
+		Process process = null ; // this.buildProcess();
+		TreeBean tree = null; // new TreeBean();
+
 		logger.debug("### buildTree id = "+_id+" ###");
-		//if (_id != null) process = this.getProcessDao().getProcess(_id);
+		
+		process = this.getProcessDao().getProcess("ff8081810f5bef7c010f5bef95a70001");
+		
 		logger.debug("### buildTree process size = "+process.getBreakDownElements().size()+" ###");
 		DefaultMutableTreeNode rootTreeNode = new DefaultMutableTreeNode();
 		NodeUserObject rootObject = new NodeUserObject(rootTreeNode, tree);

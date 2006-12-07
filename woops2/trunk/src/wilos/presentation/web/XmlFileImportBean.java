@@ -53,7 +53,7 @@ public class XmlFileImportBean {
 	public File getFile() {
 		return file;
 	}
-
+	//FIXME verif methode parsing
 	public void action(ActionEvent event) {
 		InputFile inputFile = (InputFile) event.getSource();
 		if (inputFile.getStatus() == InputFile.SAVED) {
