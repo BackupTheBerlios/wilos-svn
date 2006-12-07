@@ -23,6 +23,6 @@ public class PersistentTransactionConsoleTest {
 		System.out.println("TestProcessPersistence p => "+p+" id="+p.getId());
 		System.out.println("#### p -> "+p.getIdEPF()+" "+p.getName());*/
 		
-		am.saveProcess(p);
+		System.out.println("id dans test -> "+am.saveProcess(p));
 	}
 }
