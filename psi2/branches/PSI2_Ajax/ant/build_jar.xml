@@ -4,10 +4,10 @@
 	A.GIULIANI
 -->
 <!-- Script for building jar application (without lib)-->
-<project name="Woops2 Core Services Jar Builder (no libs)" default="build.jar" basedir="../">
+<project name="PSI2 Core Services Jar Builder (no libs)" default="build.jar" basedir="../">
 
 	<!-- Configure the context path for this application -->
-	<property name="project.name" value="Woops2-core-services" />
+	<property name="project.name" value="PSI2-core-services" />
 	<property name="build.dir" value="${basedir}/tmp" />
 	<property name="src.dir" value="${basedir}/src" />
 	<property name="src.java.dir" value="${src.dir}" />
