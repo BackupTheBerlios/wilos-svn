@@ -20,6 +20,8 @@ public class AllTests {
 		suite.addTest(wilos.test.hibernate.spem2.workbreakdownelement.AllTests.suite()) ;
 		suite.addTest(wilos.test.hibernate.spem2.task.AllTests.suite()) ;
 		suite.addTest(wilos.test.hibernate.spem2.role.AllTests.suite()) ;
+		suite.addTest(wilos.test.hibernate.spem2.iteration.AllTests.suite()) ;
+		suite.addTest(wilos.test.hibernate.spem2.phase.AllTests.suite()) ;
 		// $JUnit-END$
 		return suite ;
 	}

@@ -43,6 +43,8 @@
 				<value>wilos/model/spem2/workbreakdownelement/WorkBreakdownElement.hbm.xml
 				</value>
 				<value>wilos/model/spem2/process/Process.hbm.xml</value>
+				<value>wilos/model/spem2/iteration/Iteration.hbm.xml</value>
+				<value>wilos/model/spem2/phase/Phase.hbm.xml</value>
 				<value>wilos/model/spem2/activity/Activity.hbm.xml</value>
 				<value>wilos/model/spem2/task/TaskDescriptor.hbm.xml</value>
 				<value>wilos/model/spem2/task/TaskDefinition.hbm.xml</value>
@@ -107,6 +109,15 @@
 	<!-- ========================= DAO Layer ========================= -->
 
 	<bean id="ProcessDao" class="wilos.hibernate.spem2.process.ProcessDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	
+	<bean id="IterationDao" class="wilos.hibernate.spem2.iteration.IterationDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	
+	<bean id="PhaseDao" class="wilos.hibernate.spem2.phase.PhaseDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 

@@ -20,6 +20,8 @@ public class AllTests {
 		suite.addTest(wilos.test.model.spem2.role.AllTests.suite()) ;
 		suite.addTest(wilos.test.model.spem2.task.AllTests.suite()) ;
 		suite.addTest(wilos.test.model.spem2.workbreakdownelement.AllTests.suite()) ;
+		suite.addTest(wilos.test.model.spem2.phase.AllTests.suite()) ;
+		suite.addTest(wilos.test.model.spem2.iteration.AllTests.suite()) ;
 		// $JUnit-END$
 		return suite ;
 	}
