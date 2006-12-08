@@ -2,7 +2,7 @@
 <!-- 
 	Ant Web Archive Script Building
 	Arnaud.GIULIANI
-	modifié par Nicolas CASTEL
+	modified by Nicolas CASTEL
 -->
 <!-- The target archive will be created in the dist folder -->
 <project name="Spelp Remote WAR Builder" default="build.war" basedir="../">
@@ -82,22 +82,22 @@
 		</javac>
 		
 		<!-- Generation des webservices -->
-		<!--<wsgen sourcedestdir="${build.generated.dir}/wsgen/service" resourcedestdir="${build.generated.dir}/wsgen/service" destdir="${build.classes.dir.real}" keep="false" genwsdl="true" sei="wilos.spelp.webservices.WizardServices">
-			<classpath path="${java.home}/../lib/tools.jar:${build.classes.dir.real}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
-		</wsgen>-->
+		<mkdir dir="${ant.dir}/tmp" />
 		
 		<apt
 		   debug="${debug}"
 		   verbose="${verbose}"
 		   destdir="${build.dir}/${project.name}/WEB-INF/classes"
+		   sourcedestdir="${ant.dir}/tmp"
 		   sourcepath="${src.java.dir}">
 		   <classpath refid="classpath" /> 
 		   <option key="r" value="${build.dir}/${project.name}/WEB-INF/"/>
 		   <source dir="${src.java.dir}">		  
 		      <include name="**/webservices/*.java"/>
-		   </source>
+		   </source>			
 		</apt>
 		
+		<delete dir="${ant.dir}/tmp" />		
 		
 		<copy todir="${build.dir}/${project.name}/WEB-INF/classes">
 			<fileset dir="${src.java.dir}">
