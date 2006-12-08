@@ -1,9 +1,10 @@
 package wilos.test.business.services.wilosuser;
 
-import wilos.test.configuration.TestConfiguration;
-import wilos.business.services.wilosuser.ParticipantService;
-import wilos.model.misc.wilosuser.Participant;
 import junit.framework.TestCase;
+import wilos.business.services.wilosuser.ParticipantService;
+import wilos.business.util.Security;
+import wilos.model.misc.wilosuser.Participant;
+import wilos.test.configuration.TestConfiguration;
 
 /**
  * @author Martial
@@ -24,6 +25,7 @@ public class ParticipantServiceTest extends TestCase {
 		p=new Participant();
 		p.setLogin("john");
 		p.setName("georges");
+		p.setPassword("pass") ;
 	}
 
 	/* (non-Javadoc)
@@ -54,5 +56,6 @@ public class ParticipantServiceTest extends TestCase {
 		assertNotNull(ParticipantTmp);
 		assertEquals(ParticipantTmp.getName(), "georges") ;
 		assertEquals(ParticipantTmp.getLogin(), "john") ;
+		assertEquals(ParticipantTmp.getPassword(), Security.encode("pass")) ;
 	}
 }

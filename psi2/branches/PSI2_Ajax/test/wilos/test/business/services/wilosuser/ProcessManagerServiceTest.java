@@ -1,9 +1,10 @@
 package wilos.test.business.services.wilosuser;
 
+import junit.framework.TestCase;
 import wilos.test.configuration.TestConfiguration;
 import wilos.business.services.wilosuser.ProcessManagerService;
+import wilos.business.util.Security;
 import wilos.model.misc.wilosuser.ProcessManager;
-import junit.framework.TestCase;
 
 /**
  * @author Martial
@@ -25,6 +26,7 @@ public class ProcessManagerServiceTest extends TestCase {
 		this.processManager=new ProcessManager();
 		this.processManager.setLogin("john");
 		this.processManager.setName("georges");
+		this.processManager.setPassword("pass") ;
 	}
 
 	/* (non-Javadoc)
@@ -44,6 +46,7 @@ public class ProcessManagerServiceTest extends TestCase {
 		assertNotNull(ProcessManagerTmp);
 		assertEquals(ProcessManagerTmp.getName(), "georges") ;
 		assertEquals(ProcessManagerTmp.getLogin(), "john") ;
+		assertEquals(ProcessManagerTmp.getPassword(), Security.encode("pass")) ;
 	}
 
 }

@@ -1,9 +1,10 @@
 package wilos.test.business.services.wilosuser;
 
+import junit.framework.TestCase;
 import wilos.business.services.wilosuser.ProjectDirectorService;
+import wilos.business.util.Security;
 import wilos.model.misc.wilosuser.ProjectDirector;
 import wilos.test.configuration.TestConfiguration;
-import junit.framework.TestCase;
 
 /**
  * @author Martial
@@ -25,6 +26,7 @@ public class ProjectDirectorServiceTest extends TestCase {
 		this.projectDirector=new ProjectDirector();
 		this.projectDirector.setLogin("john");
 		this.projectDirector.setName("georges");
+		this.projectDirector.setPassword("pass") ;
 	}
 
 	/* (non-Javadoc)
@@ -44,6 +46,7 @@ public class ProjectDirectorServiceTest extends TestCase {
 		assertNotNull(ProjectDirectorTmp);
 		assertEquals(ProjectDirectorTmp.getName(), "georges") ;
 		assertEquals(ProjectDirectorTmp.getLogin(), "john") ;
+		assertEquals(ProjectDirectorTmp.getPassword(), Security.encode("pass")) ;
 	}
 
 }
