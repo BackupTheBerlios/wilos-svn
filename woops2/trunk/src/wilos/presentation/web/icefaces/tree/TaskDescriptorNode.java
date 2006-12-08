@@ -2,7 +2,7 @@
  * 
  */
 
-package wilos.presentation.web ;
+package wilos.presentation.web.icefaces.tree ;
 
 import javax.swing.tree.DefaultMutableTreeNode ;
 

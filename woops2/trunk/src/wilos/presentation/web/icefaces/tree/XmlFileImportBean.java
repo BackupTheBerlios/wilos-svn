@@ -1,4 +1,4 @@
-package wilos.presentation.web;
+package wilos.presentation.web.icefaces.tree;
 
 import java.io.File;
 import java.io.IOException;

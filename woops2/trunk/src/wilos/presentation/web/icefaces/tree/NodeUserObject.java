@@ -31,7 +31,7 @@
  *
  */
 
-package wilos.presentation.web;
+package wilos.presentation.web.icefaces.tree;
 
 import com.icesoft.faces.component.tree.IceUserObject;
 
