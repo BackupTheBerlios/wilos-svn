@@ -1,50 +1,26 @@
 <?xml version="1.0"?>
 <!-- Sample build file used to retrieve svnant's sources -->
-<project name="svn-test" basedir="." default="checkoutThis">
-	<property name="dist.dir" value="${basedir}/dist" />
-	<!--  all properties are in build.properties -->
-	<property file="${basedir}/ant-svn.properties" />
+<project name="svn-test" basedir="." default="svnCheckout">
 	
-	
-	<path id="classpath">
-		<fileset dir="${basedir}/lib">
-			<include name="*.jar" />
-		</fileset>
-	</path>
-
-	<!-- 
-	<taskdef file="${basedir}/svntask.properties">
-		<classpath>
-			<pathelement path="${basedir}/lib/svnjavahl.jar" />
-			<pathelement path="${basedir}/lib/svnant.jar" />
-			<pathelement path="${basedir}/lib/svnClientAdapter.jar" />
-		</classpath>
-	</taskdef> -->
-	
-	<taskdef file="${basedir}/svntask.properties">
-		<classpath>
-			<pathelement path="${basedir}/lib/svnant.jar" />
-			<pathelement path="${basedir}/lib/svnClientAdapter.jar" />
-			<pathelement path="${basedir}/lib/svnjavahl.jar" />
-		</classpath>
-	</taskdef>
-	
-	
-	<target name="clean">
-		<delete dir="src_latest" />
-		<delete dir="src_${svnant.version}" />
-	</target>
-
-	<target name="checkoutLatest">
-		<svn username="${svnant.repository.user}" password="${svnant.repository.passwd}">
-			<checkout url="${svnant.latest.url}" revision="HEAD" destPath="src_latest" />
-		</svn>
-	</target>
-
-	<target name="checkoutThis">
-		<svn username="${svnant.repository.user}" password="${svnant.repository.passwd}">
-			<checkout url="${svnant.this.url}" revision="HEAD" destPath="src_${svnant.version}" />
-		</svn>
-	</target>
+	 <target name="svnCheckout">
+	 	
+	    <property name="source-root" value="${basedir}/dist"/>
+	    <property name="repository.URL" value="http://svn.berlios.de/svnroot/repos/wilos/woops2"/>
+	 	
+	    <java classname="org.tmatesoft.svn.cli.SVN"
+	       dir="${basedir}/dist" fork="true">
+	      <arg value="co"/>
+	      <arg value="--username"/>
+	      <arg value="admin"/>
+	      <arg value="--password"/>
+	      <arg value="admin"/>
+	      <arg value="${repository.URL}/trunk"/>
+	      <classpath>
+	        <pathelement location="${basedir}/lib/ganymed.jar" />
+	        <pathelement location="${basedir}/lib/svnkit.jar" />
+	        <pathelement location="${basedir}/lib/svnkit-cli.jar" />
+	      </classpath>
+	    </java>
+	  </target>
 
 </project>
