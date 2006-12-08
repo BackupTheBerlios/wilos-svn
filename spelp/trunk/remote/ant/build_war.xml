@@ -33,9 +33,6 @@
 	</path>
 
 	<!-- Taches webservices -->
-    <taskdef name="wsgen" classname="com.sun.tools.ws.ant.WsGen">
-    	 <classpath refid="classpath" />  
-    </taskdef>
 	<taskdef name="apt" classname="com.sun.tools.ws.ant.Apt">
 		   <classpath refid="classpath" />  
 	</taskdef>
