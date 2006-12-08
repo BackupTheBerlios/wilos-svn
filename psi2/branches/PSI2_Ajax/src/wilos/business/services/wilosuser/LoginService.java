@@ -8,7 +8,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import wilos.business.util.Security;
 import wilos.hibernate.misc.wilosuser.WilosUserDao;
 import wilos.model.misc.wilosuser.WilosUser;
 

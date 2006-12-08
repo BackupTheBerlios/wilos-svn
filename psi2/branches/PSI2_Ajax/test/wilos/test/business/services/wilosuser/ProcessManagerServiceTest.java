@@ -1,9 +1,7 @@
 package wilos.test.business.services.wilosuser;
 
 import wilos.test.configuration.TestConfiguration;
-import wilos.business.services.wilosuser.ParticipantService;
 import wilos.business.services.wilosuser.ProcessManagerService;
-import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.ProcessManager;
 import junit.framework.TestCase;
 

@@ -13,8 +13,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.role.RoleService;
-import wilos.business.services.wilosuser.ParticipantService;
-import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.role.RoleDescriptor;
 
 /**
