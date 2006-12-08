@@ -24,6 +24,12 @@
 	                   immediate="true">
 	   	<ice:outputText value="Créer un nouveau Project Director"/>
 	  	</ice:commandLink>
+	  	<ice:commandLink id="createProject"
+	                   action="project_create"
+	                   immediate="true">
+	   		<ice:outputText
+	                   value="Créer un nouveau Projet"/>
+	  	</ice:commandLink>
   	</ice:form>
   	</body>
 	</html>

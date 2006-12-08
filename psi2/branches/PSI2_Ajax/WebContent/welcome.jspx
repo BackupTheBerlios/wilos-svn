@@ -20,12 +20,7 @@
 	<ice:form id="connected_form">
 	<h1><ice:outputText value="Bienvenue dans Wilos"/></h1>
 		<br />
-		<ice:commandLink id="createProject"
-	                   action="project_create"
-	                   immediate="true">
-	   		<ice:outputText
-	                   value="Créer un nouveau Projet"/>
-	  	</ice:commandLink>
+		
 	  	<ice:commandLink id="modifyRole"
 	                   action="affect_roles"
 	                   immediate="true">

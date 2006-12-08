@@ -171,6 +171,11 @@
     		<to-view-id>/affect_roles.iface</to-view-id>
     		<redirect />
   		</navigation-case>
+  		<navigation-case>
+    		<from-outcome>createProject</from-outcome>
+    		<to-view-id>/project_create.iface</to-view-id>
+    		<redirect />
+  		</navigation-case>
 	</navigation-rule>
 
 </faces-config>

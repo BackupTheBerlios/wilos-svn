@@ -109,7 +109,7 @@ public class LoginBean {
 			}
 			else if(user instanceof ProjectDirector){
 				sess.setAttribute("role","projectDirector") ;
-				url = "welcome" ;
+				url = "createProject" ;
 			}
 			else if(user instanceof Administrator){
 				sess.setAttribute("role","admin") ;

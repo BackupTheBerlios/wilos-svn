@@ -25,8 +25,17 @@
 		<ice:panelGrid columns="2">
 			<ice:outputText value="Nom" />
 			<ice:inputText id="nom" value="#{ProjectBean.project.name}" required="true"/>
-			
+
+			<!-- Calendar Component -->
+				<ice:outputText value="Date de lancement">
+					<f:convertDateTime pattern="dd/MM/yyyy"/>
+				</ice:outputText>			
+				<ice:selectInputDate id="creationDate"
+					value="#{ProjectBean.project.creationDate}"
+					renderAsPopup="true"/>
+					
 		</ice:panelGrid>
+
 		<ice:panelGrid columns="2">
 			<ice:commandButton value="Enregistrer" action="#{ProjectBean.saveProjectAction}"/>
 			<ice:commandButton value="Retour" immediate="true" action="welcome"/>

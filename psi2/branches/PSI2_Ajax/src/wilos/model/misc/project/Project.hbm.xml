@@ -7,7 +7,10 @@
 
 	<class name="wilos.model.misc.project.Project" table="project" lazy="false">
 		<id name="name" type="string" column="name"></id>
-		
+		<property name="description" type="java.lang.String" column="description"
+			length="1024" />
+		<property name="creationDate" type="java.util.Date" column="creationDate"/>
+		<property name="launchingDate" type="java.util.Date" column="launchingDate"/>
 	</class>
 
 </hibernate-mapping>

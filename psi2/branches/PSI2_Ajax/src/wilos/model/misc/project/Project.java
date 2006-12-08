@@ -1,4 +1,7 @@
 package wilos.model.misc.project;
+
+import java.util.Date;
+
 /**
  * @author martial
  * 
@@ -7,41 +10,57 @@ package wilos.model.misc.project;
  */
 public class Project {
 	private String name ;
-
+	private String description;
+	private Date creationDate;
+	private Date launchingDate;
+	
 	/**
-	 * Constructor.
-	 * 
-	 * @param _name
+	 * @return the creationDate
 	 */
-	public Project(String _name) {
-		this.name = _name ;
+	public Date getCreationDate() {
+		return creationDate;
 	}
-	
 	/**
-	 * Default constructor.
-	 * 
+	 * @param creationDate the creationDate to set
 	 */
-	public Project() {
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
-	
-	
 	/**
-	 * Getter of name.
-	 *
-	 * @return the name.
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	/**
+	 * @return the launchingDate
+	 */
+	public Date getLaunchingDate() {
+		return launchingDate;
+	}
+	/**
+	 * @param launchingDate the launchingDate to set
+	 */
+	public void setLaunchingDate(Date launchingDate) {
+		this.launchingDate = launchingDate;
+	}
+	/**
+	 * @return the name
 	 */
 	public String getName() {
-		return this.name ;
+		return name;
 	}
-
 	/**
-	 * Setter of name.
-	 *
-	 * @param _name The name to set.
+	 * @param name the name to set
 	 */
-	public void setName(String _name) {
-		this.name = _name ;
+	public void setName(String name) {
+		this.name = name;
 	}
-	
 	
 }
