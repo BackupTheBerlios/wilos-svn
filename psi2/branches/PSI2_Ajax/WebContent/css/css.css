@@ -30,13 +30,13 @@
 #navigation{
 	background:#DAD3E2;
 	margin:0px 5px 5px 5px;
-	padding:0px 0px 0px 0px;
+	padding:5px 0px 0px 0px;
 	position:absolute;
-	/*height:300px;
-	width:190px;*/
+	/*height:300px;*/
+	width:190px;
 	/*max-height:25%;*/
 	float:left;
-	top:300px;
+	top:310px;
 }
 
 #banner{

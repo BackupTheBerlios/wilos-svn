@@ -1,7 +1,7 @@
 <f:view xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ice="http://www.icesoft.com/icefaces/component"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:jsp="http://java.sun.com/JSP/Page">
 
 <f:loadBundle basename="wilos.resources.messages" var="msgs" />
 
@@ -33,24 +33,21 @@
 			<jsp:directive.include file="./connect.jspx"/>
 		</div>
 		<div id="navigation">
-			<h4>Insertion du navigation tag</h4>
+			<!--  <ice:panelGroup id="navigation" styleClass="navigationMenu" >-->
+                        <f:subview id="menu" >
+                            <!-- Components Splash include -->
+                            <jsp:directive.include file="navigation.jspx" />
+                        </f:subview>
+           <!-- </ice:panelGroup>-->
 		</div>		
 		<div id="content">     
 			<div id="content_center">
-				<h4>Insertion du content tag</h4>
-				Ceci est du contenu non formate.<br/>
-				Ceci est du contenu non formate.<br/>
-				Ceci est du contenu non formate.<br/>
-				Ceci est du contenu non formate.<br/>
-				Ceci est du contenu non formate.<br/>
-				Ceci est du contenu non formate.<br/>
-				Ceci est du contenu non formate.<br/>
-				Ceci est du contenu non formate.<br/>
-				Ceci est du contenu non formate.<br/>
-				Ceci est du contenu non formate.<br/>
-				Ceci est du contenu non formate.<br/>
-				Ceci est du contenu non formate.<br/>
-				Ceci est du contenu non formate.<br/>
+				<ice:panelGroup id="content" styleClass="contentCenter" >
+                        <f:subview id="welcome" >
+                            <!-- Components Splash include -->
+                            <jsp:directive.include file="participantSubscribe.jspx" />
+                        </f:subview>
+                 </ice:panelGroup>
 			</div>
 		</div>		
 	</div>
