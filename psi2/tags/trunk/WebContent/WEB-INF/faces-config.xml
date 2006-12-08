@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+
+<faces-config>
+	<!--   Spring Variable resolver -->
+	<application>
+		<variable-resolver>
+			org.springframework.web.jsf.DelegatingVariableResolver
+		</variable-resolver>
+		<locale-config >
+			<default-locale>fr_FR</default-locale>
+		</locale-config>
+	</application>
+	
+	<!--       PSI2  -->
+	<managed-bean>
+		<managed-bean-name>ParticipantBean</managed-bean-name>
+		<managed-bean-class>woops2.presentation.wilosuser.ParticipantBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>participantService</property-name>
+			<value>#{ParticipantService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>loginService</property-name>
+			<value>#{LoginService}</value>
+		</managed-property>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>ProcessManagerBean</managed-bean-name>
+		<managed-bean-class>woops2.presentation.wilosuser.ProcessManagerBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>processManagerService</property-name>
+			<value>#{ProcessManagerService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>loginService</property-name>
+			<value>#{LoginService}</value>
+		</managed-property>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>ProjectDirectorBean</managed-bean-name>
+		<managed-bean-class>woops2.presentation.wilosuser.ProjectDirectorBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>projectDirectorService</property-name>
+			<value>#{ProjectDirectorService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>loginService</property-name>
+			<value>#{LoginService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>LoginBean</managed-bean-name>
+		<managed-bean-class>woops2.presentation.wilosuser.LoginBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>loginService</property-name>
+			<value>#{LoginService}</value>
+		</managed-property>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>ProjectBean</managed-bean-name>
+		<managed-bean-class>woops2.presentation.project.ProjectBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+	</managed-bean>
+	<validator>
+		<validator-id>emailValidator</validator-id>
+		<validator-class>
+			woops2.presentation.validators.EmailValidator
+		</validator-class>
+	</validator>
+	
+	<validator>
+		<validator-id>equalValidator</validator-id>
+		<validator-class>
+			woops2.presentation.validators.EqualValidator
+		</validator-class>
+	</validator>
+	
+	  <!-- PSI2  -->
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>createactivity</from-outcome>
+			<to-view-id>/activityform.jsf</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>activity</from-outcome>
+			<to-view-id>/activity.jsf</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!--       PSI2  -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>createParticipant</from-outcome>
+			<to-view-id>/participantSubscribe.jsf</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>connect</from-outcome>
+			<to-view-id>/connect.jsf</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>affect_role</from-outcome>
+			<to-view-id>/affect_role.jsf</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+  		<from-view-id>*</from-view-id>
+  		<navigation-case>
+    		<from-outcome>processManager_create</from-outcome>
+    		<to-view-id>/processManager_create.jsf</to-view-id>
+  		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+  		<from-view-id>*</from-view-id>
+  		<navigation-case>
+    		<from-outcome>projectDirector_create</from-outcome>
+    		<to-view-id>/projectDirector_create.jsf</to-view-id>
+  		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+  		<from-view-id>*</from-view-id>
+  		<navigation-case>
+    		<from-outcome>admin_main</from-outcome>
+    		<to-view-id>/admin_main.jsf</to-view-id>
+  		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+  		<from-view-id>*</from-view-id>
+  		<navigation-case>
+    		<from-outcome>welcome</from-outcome>
+    		<to-view-id>/welcome.jsf</to-view-id>
+  		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+  		<from-view-id>*</from-view-id>
+  		<navigation-case>
+    		<from-outcome>project_create</from-outcome>
+    		<to-view-id>/project_create.jsf</to-view-id>
+  		</navigation-case>
+	</navigation-rule>
+	
+</faces-config>
