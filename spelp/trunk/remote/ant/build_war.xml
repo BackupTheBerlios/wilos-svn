@@ -5,10 +5,10 @@
 	modifié par Nicolas CASTEL
 -->
 <!-- The target archive will be created in the dist folder -->
-<project name="Woops2 WAR Builder/Manager" default="build.war" basedir="../">
+<project name="Spelp Remote WAR Builder" default="build.war" basedir="../">
 
 	<!-- Configure the context path for this application -->
-	<property name="project.name" value="Woops2" />
+	<property name="project.name" value="remote" />
 	<property name="build.dir" value="${basedir}/tmp" />
 	<property name="src.dir" value="${basedir}/src" />
 	<property name="ant.dir" value="${basedir}/ant" />
