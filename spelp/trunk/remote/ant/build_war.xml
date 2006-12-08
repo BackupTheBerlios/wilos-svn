@@ -97,7 +97,8 @@
 		   </source>			
 		</apt>
 		
-		<delete dir="${ant.dir}/tmp" />		
+		<delete dir="${ant.dir}/tmp" />	
+		<!-- Fin Generation des webservices -->
 		
 		<copy todir="${build.dir}/${project.name}/WEB-INF/classes">
 			<fileset dir="${src.java.dir}">
