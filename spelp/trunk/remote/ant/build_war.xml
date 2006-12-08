@@ -19,19 +19,11 @@
 	<property file="${ant.dir}/tomcat.properties" />
 
 	<!-- Taches Tomcat -->
-	<taskdef file="${ant.dir}/tomcatTask.properties">
+	<!--<taskdef file="${ant.dir}/tomcatTask.properties">
 		<classpath>
 			<pathelement path="${ant.dir}/lib/catalina-ant.jar" />
 		</classpath>
-	</taskdef>
-	
-	<!-- Taches Tomcat webservices -->
-    <taskdef name="wsgen" classname="com.sun.tools.ws.ant.WsGen">
-        <classpath path="${ant.dir}/lib/jaxws-tools.jar"/>
-    </taskdef>
-	<taskdef name="apt" classname="com.sun.tools.ws.ant.Apt">
-		<classpath path="${ant.dir}/lib/jaxws-tools.jar"/>
-	</taskdef>
+	</taskdef>-->
 
 	<!-- Libraries Import -->
 	<path id="classpath">
@@ -40,6 +32,14 @@
 		</fileset>
 	</path>
 
+	<!-- Taches webservices -->
+    <taskdef name="wsgen" classname="com.sun.tools.ws.ant.WsGen">
+    	 <classpath refid="classpath" />  
+    </taskdef>
+	<taskdef name="apt" classname="com.sun.tools.ws.ant.Apt">
+		   <classpath refid="classpath" />  
+	</taskdef>
+	
 	<!-- Building space clean up -->
 	<target name="clean" depends="clean_dist">
 		<delete dir="${build.dir}" />
@@ -93,10 +93,10 @@
 		   debug="${debug}"
 		   verbose="${verbose}"
 		   destdir="${build.dir}/${project.name}/WEB-INF/classes"
-		   sourcedestdir="${build.dir}/${project.name}/WEB-INF/classes"
 		   sourcepath="${src.java.dir}">
-		   <classpath refid="classpath"/>		  
-		   <source dir="${src.java.dir}">
+		   <classpath refid="classpath" /> 
+		   <option key="r" value="${build.dir}/${project.name}/WEB-INF/"/>
+		   <source dir="${src.java.dir}">		  
 		      <include name="**/webservices/*.java"/>
 		   </source>
 		</apt>
