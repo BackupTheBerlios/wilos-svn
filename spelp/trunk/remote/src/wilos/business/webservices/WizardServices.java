@@ -165,7 +165,7 @@ public class WizardServices {
        LoginService ls = (LoginService) ctx.getBean("LoginService");
        
        WilosUser tmpwu = ls.getAuthentifiedUser(login,password);
-       if (wu == null)
+       if (tmpwu == null)
        {
            throw new Exception("le wilos user n'existe pas");
        }
