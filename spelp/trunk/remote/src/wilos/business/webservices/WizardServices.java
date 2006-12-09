@@ -89,15 +89,75 @@ public class WizardServices {
     
 
     @WebMethod
-    public ParticipantTO getParticipant(@WebParam(name="login") String login, @WebParam(name="password")  String password) throws Exception
+    public String getParticipant(@WebParam(name="login") String login, @WebParam(name="password")  String password) throws Exception
     {
-       ParticipantTO wu = null;
+       String result = "";
+       Participant wu = new Participant();
        System.out.println("APPEL DE LA METHODE getWilosUser");
        System.out.println("LOGIN : "+login);
        System.out.println("PASS : "+password);
        
+        if(login.equals("testSansBD")) {
+            Participant p = new Participant();
+            
+            RoleDescriptor aTmpRole;
+            TaskDescriptor aTmpTask;
 
-        // Getback the application context from the spring configuration file
+            aTmpRole = new RoleDescriptor();
+            aTmpTask = new TaskDescriptor();
+				
+            aTmpRole.setName("Developper");
+            aTmpRole.setDescription("Un gars qui developpe");
+
+            aTmpTask.setName("Coder le programme");
+            aTmpTask.setDescription("Un grand moment de solitude");
+            aTmpRole.addPrimaryTask(aTmpTask);
+            aTmpTask = new TaskDescriptor();
+            aTmpTask.setName("Aimer son programme");
+            aTmpTask.setDescription("Un grand moment d'amour");
+            aTmpRole.addPrimaryTask(aTmpTask);
+            aTmpTask = new TaskDescriptor();
+            aTmpTask.setName("Passer le balai");
+            aTmpTask.setDescription("Et c'est plus propre");
+            aTmpRole.addPrimaryTask(aTmpTask);
+
+            p.addToRoleDescriptor(aTmpRole);
+
+            aTmpRole = new RoleDescriptor();
+            aTmpTask = new TaskDescriptor();
+            aTmpRole.setName("Tester");
+            aTmpRole.setDescription("Faire des essais, en gros");
+            aTmpTask.setName("Tester le programme");
+            aTmpTask.setDescription("Un grand moment de solitude");
+            aTmpRole.addPrimaryTask(aTmpTask);
+            aTmpTask = new TaskDescriptor();
+            aTmpTask.setName("Detester le programme");
+            aTmpTask.setDescription("Un grand moment de haine");
+            aTmpRole.addPrimaryTask(aTmpTask);
+            aTmpTask = new TaskDescriptor();
+            aTmpTask.setName("Passer la serpilliere");
+            aTmpTask.setDescription("Un grand moment de solitude");
+            aTmpRole.addPrimaryTask(aTmpTask);
+
+            p.addToRoleDescriptor(aTmpRole);
+
+            aTmpRole = new RoleDescriptor();
+            aTmpTask = new TaskDescriptor();
+            aTmpRole.setName("Conceptualisateur");
+            aTmpTask = new TaskDescriptor();
+            aTmpTask.setName("Conceptualiser les concepts du programme");
+            aTmpRole.addPrimaryTask(aTmpTask);
+            aTmpTask = new TaskDescriptor();
+            aTmpTask.setName("Rever du programme");
+            aTmpRole.addPrimaryTask(aTmpTask);
+            aTmpTask = new TaskDescriptor();
+            aTmpTask.setName("Faire le cafe concept");
+            aTmpRole.addPrimaryTask(aTmpTask);
+            
+            p.addToRoleDescriptor(aTmpRole);
+            wu = new ParticipantTO(p);
+        } else {
+            // Getback the application context from the spring configuration file
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
         // Show what is in the factory
         System.out.println("factory => "+ctx);
@@ -121,7 +181,10 @@ public class WizardServices {
                 wu = new ParticipantTO((Participant) tmpwu);
            }
        }
-       return wu;
+        }
+        XStream xstream = new XStream();
+        result= xstream.toXML(wu);
+       return result;
     }
     
     @WebMethod
