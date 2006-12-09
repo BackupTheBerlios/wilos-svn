@@ -30,8 +30,8 @@ import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
-import wilos.presentation.web.NodeUserObject;
-import wilos.presentation.web.TreeBean;
+import wilos.presentation.web.icefaces.tree.NodeUserObject;
+import wilos.presentation.web.icefaces.tree.TreeBean;
 
 /**
  * ProcessService is a transactional class, that manage operations about process, requested by web
