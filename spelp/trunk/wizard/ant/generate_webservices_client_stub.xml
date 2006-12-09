@@ -2,7 +2,7 @@
 <project name="Ant generating Webservices client stub" default="generate" basedir=".">
     
     <!-- Configure the context path for this application -->
-    <property name="jar.name" value="Spelp-generated-client.jar" />
+    <property name="jar.name" value="Spelp-client-generated.jar" />
     <property name="ant.dir" value="${basedir}" />
     <property name="lib.dir" value="${basedir}/../lib" />
     <property file="${ant.dir}/server.properties" />
@@ -19,7 +19,12 @@
     </taskdef>
     
     <!-- Building space clean up -->
-    <target name="clean">
+    <target name="clean_tmp">
+            <delete dir="${basedir}/tmp" />
+    </target>
+    
+    <!-- Building space clean up -->
+    <target name="clean" depends="clean_tmp">
             <delete file="${lib.dir}/${jar.name}" />
     </target>
     
@@ -29,7 +34,7 @@
     </target>
     
     <!-- Build Target -->
-    <target name="generate" depends="clean,prepare,remove" description="Compile Java files and copy static files.">
+    <target name="generate" depends="prepare" description="Compile Java files and copy static files.">
             <wsimport
                 destdir="${basedir}/tmp"
                 debug="true"
@@ -38,10 +43,8 @@
             <jar
                 destfile="${lib.dir}/${jar.name}"
                 basedir="${basedir}/tmp"/>
-    </target>
-    
-    <!-- Remove temporary directory -->
-    <target name="remove" depends="clean" description="Create build directories.">
-	<delete dir="${basedir}/tmp" />	
+                
+            <!-- Remove temporary directory -->
+            <delete dir="${basedir}/tmp" />	
     </target>
 </project>
