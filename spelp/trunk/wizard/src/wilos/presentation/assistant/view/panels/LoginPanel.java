@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import wilos.business.util.Security;
 
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.presentation.assistant.ressources.Bundle;
@@ -165,8 +166,8 @@ public class LoginPanel extends JPanel {
 			connectionButton.setText(Bundle.getText("loginPanel.connection"));
                         connectionButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					
-                                        ArrayList<RoleDescriptor> rolesListe = WizardServicesProxy.getRolesByUser(loginTextField.getText(),new String(passwordPasswordField.getPassword()), adressTextField.getText());
+					String passcript =  Security.encode(new String(passwordPasswordField.getPassword()));
+                                        ArrayList<RoleDescriptor> rolesListe = WizardServicesProxy.getRolesByUser(loginTextField.getText(),passcript, adressTextField.getText());
                                         setVisible(false);
                                         mTaskPanel = new MainPanel(mframe,rolesListe);
                                         
