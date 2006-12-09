@@ -3,12 +3,9 @@ package wilos.presentation.assistant.view.htmlViewer;
 import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
 import wilos.presentation.assistant.ressources.Bundle;

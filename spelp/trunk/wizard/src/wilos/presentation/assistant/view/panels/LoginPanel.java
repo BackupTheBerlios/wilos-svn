@@ -1,35 +1,24 @@
-package wilos.presentation.assistant.view.main;
+package wilos.presentation.assistant.view.panels;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import javax.swing.BorderFactory;
-import wilos.presentation.assistant.ressources.ProfileReader;
-import java.io.IOException;
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.io.InputStream;
 import java.util.ArrayList;
-import javax.swing.JPanel;
 
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.Frame;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.Image;
-
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import java.awt.GridBagLayout;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import java.awt.GridBagConstraints;
-import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
-import wilos.presentation.assistant.ressources.Bundle;
-
-import java.awt.Button;
-import wilos.presentation.assistant.webservices.WizardServicesProxy;
 import wilos.model.spem2.role.RoleDescriptor;
+import wilos.presentation.assistant.ressources.Bundle;
+import wilos.presentation.assistant.ressources.ProfileReader;
+import wilos.presentation.assistant.view.main.MainFrame;
+import wilos.presentation.assistant.webservices.WizardServicesProxy;
 
 public class LoginPanel extends JPanel {
 
@@ -59,7 +48,7 @@ public class LoginPanel extends JPanel {
         
         private MainFrame mframe = null;
         
-        private TaskPanel mTaskPanel = null;
+        private MainPanel mTaskPanel = null;
         
         private ImagePanel iconPanel = null;
 
@@ -179,7 +168,7 @@ public class LoginPanel extends JPanel {
 					
                                         ArrayList<RoleDescriptor> rolesListe = WizardServicesProxy.getRolesByUser(loginTextField.getText(),new String(passwordPasswordField.getPassword()), adressTextField.getText());
                                         setVisible(false);
-                                        mTaskPanel = new TaskPanel(mframe,rolesListe);
+                                        mTaskPanel = new MainPanel(mframe,rolesListe);
                                         
                                         if (rolesListe.isEmpty())
                                         {

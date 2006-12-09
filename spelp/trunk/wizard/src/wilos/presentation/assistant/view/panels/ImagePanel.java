@@ -7,28 +7,14 @@
  * and open the template in the editor.
  */
 
-package wilos.presentation.assistant.view.main;
+package wilos.presentation.assistant.view.panels;
 
-import com.sun.xml.bind.v2.model.annotation.ClassLocatable;
-import com.thoughtworks.xstream.core.util.ClassLoaderReference;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
 import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
+
 import org.jdesktop.swingx.JXImagePanel;
-import java.lang.Exception;
-import org.omg.CORBA.portable.ApplicationException;
        
 
 

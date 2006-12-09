@@ -1,4 +1,4 @@
-package wilos.presentation.assistant.view.main;
+package wilos.presentation.assistant.view.panels.tabs;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -13,19 +13,21 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import wilos.presentation.assistant.ressources.Bundle;
-import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
-import wilos.presentation.assistant.webservices.WizardServicesProxy;
+import wilos.model.spem2.element.Element;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
-import javax.swing.JFrame;
+import wilos.presentation.assistant.ressources.Bundle;
+import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
+import wilos.presentation.assistant.view.main.MainFrame;
 
 public class TaskPanel extends JPanel implements TreeSelectionListener {
+	
+	public static Element selectedElement = null;
 	
 	private JTree taskTree = null;
 	private JPanel panelTree = null;
 	private MainFrame mainFrame = null;
-        private ArrayList<RoleDescriptor> roleList;
+    private ArrayList<RoleDescriptor> roleList;
 	
 	/**
 	 * TaskPanel Constructor
@@ -112,11 +114,13 @@ public class TaskPanel extends JPanel implements TreeSelectionListener {
 
         Object nodeInfo = node.getUserObject();
         if (nodeInfo instanceof TaskDescriptorInfo) {
+        	selectedElement = ((TaskDescriptorInfo)nodeInfo).getTaskDescriptor() ;
             TaskDescriptorInfo tmpTaskDescriptor = (TaskDescriptorInfo) nodeInfo;
             mainFrame.moveHTML();
             HTMLViewer.getInstance(null).setMessage(tmpTaskDescriptor.getTaskDescriptor().getDescription());
             
         } else if (nodeInfo instanceof RoleDescriptorInfo){
+        	selectedElement = null ;
         	RoleDescriptorInfo tmpRoleDescriptor = (RoleDescriptorInfo) nodeInfo;
         	mainFrame.moveHTML();
         	HTMLViewer.getInstance(null).setMessage(tmpRoleDescriptor.getRoleDescriptor().getDescription());

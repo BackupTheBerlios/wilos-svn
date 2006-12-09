@@ -1,4 +1,4 @@
-package wilos.presentation.assistant.view.main;
+package wilos.presentation.assistant.view.panels;
 
 import java.awt.BorderLayout;
 import java.awt.SystemColor;

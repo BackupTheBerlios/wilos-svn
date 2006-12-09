@@ -8,40 +8,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.awt.event.WindowStateListener;
-import java.beans.PropertyChangeListener;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
 
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreePath;
-import org.jdesktop.swingx.JXImagePanel;
-
-import wilos.model.spem2.role.RoleDescriptor;
-import wilos.model.spem2.task.TaskDescriptor;
-
-import org.jdesktop.swingx.JXTaskPane;
-import org.jdesktop.swingx.JXTaskPaneContainer;
-import org.jdesktop.swingx.JXTree;
 
 import wilos.presentation.assistant.ressources.Bundle;
-
-/*import parser.Parser;*/
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
+import wilos.presentation.assistant.view.panels.InfoPanel;
+import wilos.presentation.assistant.view.panels.LoginPanel;
+import wilos.presentation.assistant.view.panels.TreePanel;
 
 public class MainFrame extends JFrame{
 	private JMenuBar menu = null;

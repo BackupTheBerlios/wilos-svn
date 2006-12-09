@@ -1,4 +1,4 @@
-package wilos.presentation.assistant.view.main;
+package wilos.presentation.assistant.view.panels;
 
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneLayout;

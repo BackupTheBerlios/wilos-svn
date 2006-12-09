@@ -7,9 +7,11 @@
 
 package wilos.test.presentation.assistant.webservices;
 
-import junit.framework.*;
+import java.util.ArrayList;
+
+import junit.framework.TestCase;
 import wilos.model.spem2.role.RoleDescriptor;
-import wilos.presentation.assistant.webservices.*;
+import wilos.presentation.assistant.webservices.WizardServicesProxy;
 
 /**
  *
@@ -35,7 +37,7 @@ public class WizardServicesProxyTest extends TestCase {
         
         String login = "";
         String password = "";
-        String adresseServeur = "localhost:8084/remote";
+        String adresseServeur = "localhost:9014/remote";
         
 
         ArrayList<RoleDescriptor> result = WizardServicesProxy.getRolesByUser(login, password, adresseServeur);
@@ -44,7 +46,7 @@ public class WizardServicesProxyTest extends TestCase {
         
         login = "testSansBD";
         password = "testSansBD";
-        adresseServeur = "http://localhost:8084/remote";        
+        adresseServeur = "http://localhost:9014/remote";        
 
         result = WizardServicesProxy.getRolesByUser(login, password, adresseServeur);
         assertNotNull(result);

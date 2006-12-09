@@ -2,13 +2,12 @@ package wilos.presentation.assistant.applitest;
 
 import java.util.List;
 
-import com.thoughtworks.xstream.XStream;
+import wilos.business.webservices.WizardServices;
+import wilos.business.webservices.WizardServicesService;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
-import wilos.model.spem2.role.RoleDescriptor;
-import wilos.model.spem2.activity.Activity;
-import wilos.model.spem2.task.TaskDescriptor;
 import wilos.model.spem2.process.Process;
-import wilos.business.webservices.*;
+
+import com.thoughtworks.xstream.XStream;
 
 public class MainTest {
 

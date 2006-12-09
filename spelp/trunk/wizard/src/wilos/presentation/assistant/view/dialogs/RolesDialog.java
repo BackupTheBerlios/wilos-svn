@@ -1,37 +1,28 @@
-package wilos.presentation.assistant.view.main;
+package wilos.presentation.assistant.view.dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
-import java.awt.Rectangle;
+import java.awt.SystemColor;
+import java.awt.event.KeyEvent;
 import java.util.Collection;
 import java.util.Iterator;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
-import javax.swing.JEditorPane;
-import javax.swing.BorderFactory;
-import javax.swing.border.BevelBorder;
-
-/*import parser.Parser;*/
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import javax.swing.BoxLayout;
-import java.awt.event.KeyEvent;
+import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
-import wilos.presentation.assistant.ressources.Bundle;
-
 import wilos.model.spem2.role.RoleDescriptor;
-
-import java.awt.SystemColor;
-import java.awt.Font;
+import wilos.presentation.assistant.ressources.Bundle;
 
 public class RolesDialog extends JDialog {
 
