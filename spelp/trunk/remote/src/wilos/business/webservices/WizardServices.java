@@ -24,6 +24,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import wilos.business.services.process.ProcessService;
 import wilos.business.services.wilosuser.LoginService;
+import wilos.business.transfertobject.ParticipantTO;
+import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.role.RoleDescriptor;
@@ -87,24 +89,38 @@ public class WizardServices {
     
 
     @WebMethod
-    public WilosUser getWilosUser(@WebParam(name="login") String login, @WebParam(name="password")  String password)
+    public ParticipantTO getParticipant(@WebParam(name="login") String login, @WebParam(name="password")  String password) throws Exception
     {
-       WilosUser wu; 
+       ParticipantTO wu = null;
        System.out.println("APPEL DE LA METHODE getWilosUser");
        System.out.println("LOGIN : "+login);
        System.out.println("PASS : "+password);
-         
-       LoginService ls = new LoginService();
-       wu = ls.getAuthentifiedUser(login,password);
+       
+
+        // Getback the application context from the spring configuration file
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        // Show what is in the factory
+        System.out.println("factory => "+ctx);
+        // Get the LoginService Singleton for managing Activity data  
+       LoginService ls = (LoginService) ctx.getBean("LoginService");
+       
+       WilosUser tmpwu = ls.getAuthentifiedUser(login,password);
        if (wu == null)
        {
-           System.out.println("le wilos user n'existe pas");
+           throw new Exception("le wilos user n'existe pas");
        }
        else
        {
-           System.out.println("le wilos user existe");        
+           if (!(wu instanceof Participant))
+           {
+                 throw new Exception("le wilos user n'est pas un particpant");
+           }
+           else
+           {
+                System.out.println("Le user "+tmpwu.getName()+" est logge");
+                wu = new ParticipantTO((Participant) tmpwu);
+           }
        }
-       
        return wu;
     }
     
