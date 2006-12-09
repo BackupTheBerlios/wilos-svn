@@ -7,6 +7,7 @@
 
 package wilos.test.business.webservices;
 
+import com.thoughtworks.xstream.XStream;
 import java.security.Security;
 import javax.servlet.jsp.jstl.sql.Result;
 import junit.framework.*;
@@ -85,8 +86,33 @@ public class WizardServicesTest extends TestCase {
         
     }*/
     
+     public void testGetParticipantSansBD() {
+        System.out.println("GetParticipant");
+        System.out.println("testSansBD");
+        
+        WizardServices instance = new WizardServices();
+        
+        String passCrypt = wilos.business.util.Security.encode("test");
+        Participant pt = null;
+        String result = null;
+        try {
+            
+            result = instance.getParticipant("test", passCrypt);
+            XStream xstream = new XStream();     
+            pt = (Participant)xstream.fromXML(result);
+           
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        assertNotNull(result);
+        assertEquals(pt.getName(),"test");
+        
+        //assert
+     }
+    
+    
      public void testGetParticipant() {
-        System.out.println("getAllProcess");
+        System.out.println("GetParticipant");
         System.out.println("testBD");
         
         WizardServices instance = new WizardServices();
@@ -114,18 +140,20 @@ public class WizardServicesTest extends TestCase {
         ps.saveParticipant(p);
         
         
-        
         String passCrypt = wilos.business.util.Security.encode("test");
-        ParticipantTO result = null;
+        Participant pt = null;
+        String result = null;
         try {
             
             result = instance.getParticipant("test", passCrypt);
+            XStream xstream = new XStream();     
+            pt = (Participant)xstream.fromXML(result);
            
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         assertNotNull(result);
-        assertEquals(result.getName(),"test");
+        assertEquals(pt.getName(),"test");
         
         //assert
      }
