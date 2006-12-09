@@ -13,11 +13,13 @@ import javax.xml.xpath.XPathConstants;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import wilos.business.services.util.xml.fillers.FillerActivity;
 import wilos.business.services.util.xml.fillers.FillerRole;
 import wilos.business.services.util.xml.fillers.FillerRoleDescriptor;
 import wilos.business.services.util.xml.fillers.FillerStep;
 import wilos.business.services.util.xml.fillers.FillerTask;
 import wilos.business.services.util.xml.fillers.FillerTaskDescriptor;
+import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.process.Process;
 import wilos.model.spem2.role.RoleDefinition;
@@ -37,6 +39,8 @@ public class XMLParser {
 	private static String taskDescriptor = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:TaskDescriptor']";
 	private static String roleDefinition =  "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Role' ]";
 	private static String taskDefinition  = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Task']";
+	private static String deliveryProcess = "//Process[@*[namespace-uri() and local-name()='type']='uma:DeliveryProcess']";
+	
 	// sections
 	private static String task = "Task";
 	private static String role = "Role";
@@ -44,9 +48,24 @@ public class XMLParser {
 	private static String additionallyPerformedBy = "AdditionallyPerformedBy";
 	private static String step = "Section";
 	private static String presentation = "Presentation";
+	private static String breakdownElement = "BreakdownElement";
+	
+	// types
+	private static String phase = "uma:Phase";
+	private static String activity = "uma:Activity";
+	private static String task_descriptor = "uma:TaskDescriptor";
+	private static String role_descriptor = "uma:RoleDescriptor";
+	private static String id = "id";
+	
+	// attributes Names
+	private static String attr_name_xsitype = "xsi:type";
+	private static String attr_name_variabilityBasedOnElement = "variabilityBasedOnElement" ;
+	
 	
 	protected static Vector<TaskDefinition> TasksList = new Vector<TaskDefinition> ();
 	protected static Vector<RoleDefinition> RoleList = new Vector<RoleDefinition>() ;
+	protected static Set<RoleDescriptor> allRoleDescriptors ;
+	protected static Set<TaskDescriptor> allTaskDescriptors ;
 	
 	/**
 	 * Start 
@@ -55,6 +74,7 @@ public class XMLParser {
 	 */
 	private static void start() {
 		try {
+			
 			fillRoleDefinitionList();
 			fillTaskDefinitionList();
 		} catch (Exception e) {
@@ -82,6 +102,57 @@ public class XMLParser {
 			setStepByTaskDefinition(aTaskDefinition, aNode);
 			TasksList.add(aTaskDefinition);
 		}	
+	}
+	
+	protected static Set<Process> getAllProcesses_old(File f) throws Exception {
+		HashSet<Process> processReturned = new HashSet<Process>() ;
+		
+		XMLUtils.setDocument(f);
+		start();
+		allRoleDescriptors.clear();
+		allRoleDescriptors = getAllRoleDescriptors() ;
+		allTaskDescriptors.clear() ;
+		allTaskDescriptors = getAllTaskDescriptors(allRoleDescriptors);
+		
+		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(deliveryProcess,XPathConstants.NODESET);
+		if (nodeReturned == null){
+			throw new Exception ("NO DeliveryProcess FOUND");
+		}
+		
+		System.out.println("avant grand for");
+		
+		System.out.println("node returned : " + nodeReturned + " " + nodeReturned.getLength());
+		
+		Node aNode;
+		for(int i = 0; i < nodeReturned.getLength(); i++) {
+			Process tmpProcess = new Process();
+			// TODO filler deliveryprocess
+			aNode = nodeReturned.item(i);
+			NodeList myChildNodes = aNode.getChildNodes() ;
+			System.out.println("avant for");
+			for (int j = 0 ; j < myChildNodes.getLength() ; j ++){
+				
+				//System.out.println(myChildNodes.item(j).getNodeName());
+				if (myChildNodes.item(j).getNodeName().equals(breakdownElement)){
+					// We are in a DeliveryProcess's BreakDownElement
+					System.out.println("avant attr");
+					System.out.println(myChildNodes.item(j).getAttributes().getNamedItem(attr_name_xsitype).getNodeName());
+					Node workNode = myChildNodes.item(j).getAttributes().getNamedItem(attr_name_xsitype) ;
+					BreakdownElement bde = XMLParser.getBreakDownElementsFromNode(workNode);
+					if (bde instanceof Activity){
+						tmpProcess.addActivity((Activity) bde);
+					}
+					// TODO ROLE DESCRIPTOR
+					
+					System.out.println("ohe");
+					//idTask = myChildNodes.item(i).getTextContent();
+				}
+				
+				
+			}
+			processReturned.add(tmpProcess);
+		}
+		return processReturned;
 	}
 	
 	/**
@@ -338,6 +409,16 @@ public class XMLParser {
 		return null ;
 	}
 	
+	private static TaskDescriptor getTaskDescriptorById(Set<TaskDescriptor> aSet,String id){
+		for (Iterator i = aSet.iterator() ; i.hasNext() ;){
+			TaskDescriptor tmp = (TaskDescriptor) i .next();
+			if (tmp.getGuid().equals(id)){
+				return  tmp;
+			}
+		}
+		return null ;
+	}
+	
 	/**
 	 * getAllRoleDescriptors 
 	 * @return all the tasks descriptors
@@ -375,6 +456,82 @@ public class XMLParser {
 		}
 		return null ;
 	}
+	
+	private static BreakdownElement getBreakDownElementsFromNode (Node _node){
+		BreakdownElement bde ;
+		if (_node.getAttributes().getNamedItem(attr_name_variabilityBasedOnElement) != null){
+			// TODO capability
+			System.out.println("traitement des capability pattern");
+		}
+		else {
+			String bdeId = _node.getAttributes().getNamedItem(id).getNodeValue();
+			// creating the current breakdownelement
+			if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(phase)
+					|| _node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(activity)){
+				bde = new Activity();
+				// TODO FILLER ACTIVITY
+				for (int i = 0 ; i < _node.getChildNodes().getLength() ; i++){
+					if (_node.getChildNodes().item(i).getNodeName().equals(breakdownElement)){
+						BreakdownElement tmpBde = getBreakDownElementsFromNode(_node.getChildNodes().item(i));
+						if (tmpBde instanceof Activity){
+							bde.addActivity((Activity)tmpBde);
+							//bde.a
+						}
+						else {
+							// TODO ajouter le breakdownelement
+						}
+					}
+				}
+			}
+			else if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(task_descriptor)) {
+				bde = getTaskDescriptorById(allTaskDescriptors, bdeId);
+			}
+			else if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(role_descriptor)){
+				bde = getRoleDescriptorById(allRoleDescriptors, bdeId);
+			}
+		}
+		return null;
+	}
+	
+	public static Set<Process> getAllProcesses(File XMLFilePath) throws Exception {
+		Set<Process> processesReturned = new HashSet<Process>() ;
+		
+		if (XMLFilePath.exists()) {
+			XMLUtils.setDocument(XMLFilePath);
+			start();
+			//allRoleDescriptors.clear();
+			allRoleDescriptors = getAllRoleDescriptors() ;
+			//allTaskDescriptors.clear() ;
+			allTaskDescriptors = getAllTaskDescriptors(allRoleDescriptors);
+			
+			NodeList nodeReturned = (NodeList)XMLUtils.evaluate(deliveryProcess,XPathConstants.NODESET);
+			
+			Node aNode;
+			
+			for(int i = 0; i < nodeReturned.getLength(); i++) {
+				Process tmpProcess = new Process();
+				aNode = nodeReturned.item(i);
+				NodeList myChildNodes = aNode.getChildNodes() ;
+				
+				for (int j = 0 ; j < myChildNodes.getLength() ; j ++){
+					if (myChildNodes.item(j).getNodeName().equals(breakdownElement)){
+						// We are in a DeliveryProcess's BreakDownElement
+						Node workNode = myChildNodes.item(j).getAttributes().getNamedItem(attr_name_xsitype) ;
+						
+						if (myChildNodes.item(j).getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(phase)) {
+							Activity theActivity = new Activity();
+							FillerActivity aFiller = new FillerActivity(theActivity, myChildNodes.item(j));	
+							Activity theActivityFilled = (Activity)aFiller.getFilledElement();
+							
+							
+							tmpProcess.addActivity(theActivityFilled);
+						}
+					}
+				}
+				processesReturned.add(tmpProcess);
+			}
+		}
+		return processesReturned;
+	}
 }
-
 

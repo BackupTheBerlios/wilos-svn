@@ -4,6 +4,9 @@
       </ContentElement>
      <ContentElement xsi:type="uma:Task" name="Plan sprint" briefDescription="Planification du court terme" id="2" orderingGuide="" suppressed="false" presentationName="Planifier le sprint" variabilityType="na">
           <Section name="Definir le but du sprint" briefDescription="coucou" id="3" orderingGuide="" suppressed="false" sectionName="" variabilityType="na">
+          	<Description>
+          		Ceci est la Description de ma Section.
+          	</Description>
           </Section>
         <PerformedBy>5</PerformedBy>
         <AdditionallyPerformedBy>5</AdditionallyPerformedBy>
@@ -16,4 +19,6 @@
         <BreakdownElement xsi:type="uma:RoleDescriptor" name="ScrumMaster" briefDescription="" id="5" orderingGuide="" suppressed="false" presentationName="ScrumMaster" hasMultipleOccurrences="false" isOptional="false" isPlanned="true" prefix="" isSynchronizedWithSource="true">
           <Role>1</Role>
         </BreakdownElement>
+      <Process xsi:type="uma:DeliveryProcess">
+      </Process>  
 </uma:MethodLibrary>

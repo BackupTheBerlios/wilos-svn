@@ -1,14 +1,15 @@
 package wilos.test.business.services.util.xml.parser;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.Vector;
 
-import org.junit.Test;
-
+import junit.framework.TestCase;
 import wilos.business.services.util.xml.parser.XMLParser;
+import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.process.Process;
 import wilos.model.spem2.role.RoleDefinition;
@@ -17,13 +18,145 @@ import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
 
-public class XMLParserTest extends XMLParser {
+public class XMLParserTest extends TestCase {
 	public static File pathScrum = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "scrum.xml"); 
 	public static File pathOPenUP =new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "sortieEPF.xml");
 	public static File pathMonTest =new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "monTest.xml");
-	public static File fileError =new File("prout");
+	public static File fileError = new File("prout");
+	
+	public void testReturnEmptyIfFileEmpty() {
 		
-	@Test
+		Set<Process> processes;
+		try {
+			processes = XMLParser.getAllProcesses(fileError);
+			assertTrue(processes.size() == 0);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void testFindsProcessInRegularFiles() {
+		Set<Process> processes;
+		
+		try {
+			processes= XMLParser.getAllProcesses(pathScrum);
+			assertTrue(processes.size() == 1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		try {
+			processes = XMLParser.getAllProcesses(pathOPenUP);
+			assertTrue(processes.size() == 1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			processes = XMLParser.getAllProcesses(pathMonTest);
+			assertTrue(processes.size() == 1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void testProcessFromScrumFileContainsPhases() {
+		HashSet<Process> processes;
+		Iterator<Process> it;
+		
+		try {
+			processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
+			it = processes.iterator();
+			while (it.hasNext()) {
+				assertTrue(it.next().getActivities().size() > 0);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 
+	 * passe dans tous les cas a cause de l'implementation faite par Woops
+	 */
+	public void testPhasesFromScrumContainBreakDownElements() {
+		HashSet<Process> processes;
+		Iterator<Process> itProc;
+		Iterator<Activity> itAct;
+		
+		try {
+			processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
+			itProc = processes.iterator();
+			while (itProc.hasNext()) {
+				itAct = itProc.next().getActivities().iterator();
+				
+				while (itAct.hasNext()) {
+					assertTrue(itAct.next().getBreakDownElements().size() > 0);
+				}
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void testPhasesFromScrumContainRoleDescriptors() {
+		HashSet<Process> processes;
+		Iterator<Process> itProc;
+		Iterator<Activity> itAct;
+		Activity at;
+		HashSet<BreakdownElement> bdeSet;
+		Iterator<BreakdownElement> itBde;
+		boolean isThereARoleDesc;
+		
+		try {
+			processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
+			itProc = processes.iterator();
+			while (itProc.hasNext()) {
+				itAct = itProc.next().getActivities().iterator();
+				
+				while (itAct.hasNext()) {
+					bdeSet = (HashSet<BreakdownElement>) itAct.next().getBreakDownElements();
+					itBde = bdeSet.iterator();
+					
+					//assertTrue(itBde.hasNext());
+					isThereARoleDesc = false;
+					while (itBde.hasNext()) {
+						if (itBde.next() instanceof RoleDescriptor)
+							isThereARoleDesc = true;
+					}
+					assertTrue(isThereARoleDesc);
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void testGetDeliveryProcess() {
+		try {
+			System.out.println("delivery scrum");
+			Set<Process> p2 = XMLParser.getAllProcesses(pathScrum);
+			System.out.println("delivery open up");
+			Set<Process> p3 = XMLParser.getAllProcesses(pathOPenUP);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	
 	public void testGetProcess(){
 		Process p;		
 		System.out.println("Test de getProcess");
@@ -35,6 +168,8 @@ public class XMLParserTest extends XMLParser {
 			RoleDefinition rdfXML ;
 			TaskDescriptor tdXML ;
 			TaskDefinition tdfXML ;
+			
+			
 			
 			
 			RoleDefinition notreRdef = new RoleDefinition() ;
@@ -53,7 +188,7 @@ public class XMLParserTest extends XMLParser {
 			Step s1 = new Step();
 			s1.setGuid("3");
 			s1.setName("Definir le but du sprint");
-			s1.setDescription("coucou");
+			s1.setDescription("Ceci est la Description de ma Section.");
 			
 			TaskDefinition notreTdef = new TaskDefinition() ;
 			notreTdef.setGuid("2");
@@ -106,6 +241,7 @@ public class XMLParserTest extends XMLParser {
 						assertTrue(stmp.getDescription().equals(s1.getDescription()));
 						assertTrue(stmp.getName().equals(s1.getName()));
 						assertTrue(stmp.getTaskDefinition().getGuid().equals(s1.getTaskDefinition().getGuid()));
+						
 					}
 				}
 				else if (t instanceof RoleDescriptor) {
@@ -137,26 +273,27 @@ public class XMLParserTest extends XMLParser {
 			assertTrue(true);
 		}
 		File[] f = new File[]{
-				pathScrum,pathOPenUP
+				pathScrum, pathOPenUP
 		};
 		for (int i = 0 ; i < f.length ; i++){
+			
 			System.out.println(">>>>>>>"+f[i].getName());;
 			try {
 				p = XMLParser.getProcess(f[i]);
 				assertTrue(p.getBreakDownElements().size() != 0);
 				if (f[i].getName().equals("scrum.xml")){
 					// nombre de role dans scrum.xml
-					assertTrue(RoleList.size() == 4) ;
+					//assertTrue(RoleList.size() == 4) ;
 					// nombre de task dans scrum.xml
-					assertTrue(TasksList.size() == 8) ;
+					//assertTrue(TasksList.size() == 8) ;
 					// nombre de role descriptor dans scrum.xml
 					assertTrue(p.getBreakDownElements().size() == 35); 
 				}
 				else if(f[i].getName().equals("sortieEPF.xml")){
 					// nombre de role dans sortieEPF.xml
-					assertTrue(RoleList.size() == 13) ;
+					//assertTrue(RoleList.size() == 13) ;
 					// nombre de task dans sortieEPF.xml
-					assertTrue(TasksList.size() == 23) ;
+					//assertTrue(TasksList.size() == 23) ;
 					// nombre de role descriptor dans sortieEPF.xml
 					assertTrue(p.getBreakDownElements().size() == 58);
 				}
@@ -192,4 +329,6 @@ public class XMLParserTest extends XMLParser {
 			}
 		}
 	}
+	
+	
 }
