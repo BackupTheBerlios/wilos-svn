@@ -15,6 +15,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.jdesktop.swingx.JXImagePanel;
+import wilos.presentation.assistant.ressources.Bundle;
        
 
 
@@ -24,20 +25,20 @@ import org.jdesktop.swingx.JXImagePanel;
  */
 public class ImagePanel extends JXImagePanel {
     
-    private static String imagePath = "wilos/presentation/assistant/ressources/logo.png";
+    private static String imagePath = "wilos/presentation/assistant/ressources/images/";
     
     /** Creates a new instance of ImagePanel */
-    public ImagePanel() {
+    public ImagePanel(String pict) {
         
-        init();
+        init(pict);
     }
     
-    public void init() {
+    public void init(String pict) {
        Image image;
        
        try {
             // récupération de l'image que l'on applique au panel
-            image = ImageIO.read(ClassLoader.getSystemResource(imagePath));
+            image = ImageIO.read(ClassLoader.getSystemResource(imagePath+Bundle.getText(pict)));
             this.setImage(image);
        } catch (IOException ex) {
             ex.printStackTrace();
