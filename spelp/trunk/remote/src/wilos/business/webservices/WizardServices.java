@@ -26,8 +26,6 @@ import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
 import wilos.model.spem2.process.Process;
 import wilos.model.spem2.role.RoleDescriptor;
-import wilos.model.spem2.task.Step;
-import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
 
 import com.thoughtworks.xstream.XStream;
@@ -38,55 +36,7 @@ import com.thoughtworks.xstream.XStream;
  */
 @WebService()
 public class WizardServices {
-//    @WebMethod
-//	public List<RoleDescriptor> getRolesByUser (@WebParam(name="login") String login,@WebParam(name="password")  String password) {
-//		List<RoleDescriptor> r = new ArrayList<RoleDescriptor>();
-//		if(login.equals("toto") && password.equals("toto")) {
-//			ProcessService p = new ProcessService();
-//			List<Process> lp = p.getProcessesList(); 
-//			
-//			Set<BreakdownElement> bdes = new HashSet<BreakdownElement>();
-//			for (Process pr : lp) {
-//				bdes = pr.getBreakDownElements();
-//				for (BreakdownElement bd : bdes) {
-//					if (bd instanceof RoleDescriptor) {
-//						r.add((RoleDescriptor)bd);
-//					}
-//				}
-//			}
-//		}
-//		return r;
-//	}
-//    
-//     @WebMethod
-//	public List<String> getRolesByUserXstream (@WebParam(name="login") String login,@WebParam(name="password")  String password) {
-//                XStream xstream = new XStream();
-//		List<String> r = new ArrayList<String>();
-////		if(login.equals("toto") && password.equals("toto")) {
-////			ProcessService p = new ProcessService();
-////			List<Process> lp = p.getProcessesList(); 
-////			
-////			Set<BreakdownElement> bdes = new HashSet<BreakdownElement>();
-////			for (Process pr : lp) {
-////				bdes = pr.getBreakDownElements();
-////				for (BreakdownElement bd : bdes) {
-////					if (bd instanceof RoleDescriptor) {
-////						r.add(xstream.toXML((RoleDescriptor)bd));
-////					}
-////				}
-////			}
-////		}
-//                RoleDescriptor rd = new RoleDescriptor();
-//                rd.setName("TestRoleDescriptor");
-//                TaskDescriptor td = new TaskDescriptor();
-//                td.setMainRole(rd);
-//                td.setName("TestTaskDescriptor");
-//                rd.addPrimaryTask(td);
-//
-//                r.add(xstream.toXML(rd));
-//                return r;
-    
-
+	
     @WebMethod
     public String getParticipant(@WebParam(name="login") String login, @WebParam(name="password")  String password) throws Exception
     {
@@ -221,13 +171,13 @@ public class WizardServices {
         
         RoleDescriptor aTmpRole;
         TaskDescriptor aTmpTask;
-        Step aTmpStep;
-        TaskDefinition aTmpTaskDef;
+        /*Step aTmpStep;
+        TaskDefinition aTmpTaskDef;*/
 
         aTmpRole = new RoleDescriptor();
         aTmpTask = new TaskDescriptor();
-        aTmpTaskDef = new TaskDefinition();
-        aTmpStep = new Step();
+        /*aTmpTaskDef = new TaskDefinition();
+        aTmpStep = new Step();*/
 			
         aTmpRole.setName("Developper");
         aTmpRole.setDescription("Un gars qui developpe");
@@ -235,7 +185,7 @@ public class WizardServices {
         aTmpTask.setName("Coder le programme");
         aTmpTask.setDescription("Un grand moment de solitude");
 
-        aTmpTaskDef.setName("Coder le programme");
+        /*aTmpTaskDef.setName("Coder le programme");
         aTmpTaskDef.setDescription("Un grand moment de solitude");
         
         aTmpStep.setName("Ecrire la premiere ligne");
@@ -247,7 +197,7 @@ public class WizardServices {
         aTmpStep.setDescription("Ca marche plus");
         aTmpTaskDef.addStep(aTmpStep);
         
-        aTmpTask.addTaskDefinition(aTmpTaskDef);
+        aTmpTask.addTaskDefinition(aTmpTaskDef);*/
         
         aTmpRole.addPrimaryTask(aTmpTask);
         aTmpTask = new TaskDescriptor();
