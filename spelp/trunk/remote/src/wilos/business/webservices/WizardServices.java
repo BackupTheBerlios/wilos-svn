@@ -99,6 +99,7 @@ public class WizardServices {
        
         if(login.equals("testSansBD")) {
             Participant p = new Participant();
+            p.setName("testSansBD");
             
             RoleDescriptor aTmpRole;
             TaskDescriptor aTmpTask;
