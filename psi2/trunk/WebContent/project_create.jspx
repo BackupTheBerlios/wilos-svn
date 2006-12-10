@@ -27,13 +27,21 @@
 			<ice:inputText id="nom" value="#{ProjectBean.project.name}" required="true"/>
 			
 			<ice:outputText value="Description" />
-			<ice:inputTextarea id="description" value="#{ProjectBean.project.description}" required="false"/>
+			<ice:inputTextarea id="description" 
+						value="#{ProjectBean.project.description}" required="false"
+						cols="60"
+						rows="7"
+			/>
+						
 			
 			<ice:outputText value="Date de lancement">
 					<f:convertDateTime pattern="dd/MM/yyyy"/>
 			</ice:outputText>			
-			<ice:selectInputDate id="launchingDate" 			
-			value="#{ProjectBean.project.launchingDate}" renderAsPopup="true"/>
+			<ice:selectInputDate id="launchingDate"	
+						value="#{ProjectBean.project.launchingDate}" 
+						popupDateFormat="dd/MM/yyyy"
+						renderAsPopup="true"
+			/>
 		</ice:panelGrid>
 
 		<ice:panelGrid columns="2">

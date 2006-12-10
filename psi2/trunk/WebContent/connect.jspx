@@ -20,9 +20,9 @@
 	<ice:form id="form">
 		<ice:messages style="color:red;" showDetail="true"/>
 		<ice:panelGrid columns="2">			
-			<ice:outputLabel value="Pseudo"/>
+			<ice:outputLabel value="Login"/>
 			<ice:inputText size="15" immediate="true" value="#{LoginBean.login}" />
-			<ice:outputText value="Mot de Passe"/>
+			<ice:outputText value="Password"/>
 			<ice:inputSecret size="15" value="#{LoginBean.password}"/>
 		</ice:panelGrid>
 		<ice:panelGrid columns="1">

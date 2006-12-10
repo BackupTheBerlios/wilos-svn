@@ -4,7 +4,6 @@ package wilos.presentation.web.wilosuser ;
 import javax.faces.application.FacesMessage ;
 import javax.faces.context.FacesContext ;
 import javax.servlet.http.* ;
-
 import wilos.business.services.wilosuser.LoginService ;
 import wilos.business.util.Security;
 import wilos.model.misc.wilosuser.Administrator ;
@@ -12,6 +11,7 @@ import wilos.model.misc.wilosuser.Participant ;
 import wilos.model.misc.wilosuser.ProcessManager ;
 import wilos.model.misc.wilosuser.ProjectDirector ;
 import wilos.model.misc.wilosuser.WilosUser ;
+
 
 /**
  * @author Marseyeah
@@ -27,7 +27,7 @@ public class LoginBean {
 	private String password ;
 
 	private LoginService loginService ;
-
+	
 	/**
 	 * Getter of login.
 	 * 
@@ -143,5 +143,4 @@ public class LoginBean {
 		
 		return url ;
 	}
-
 }
