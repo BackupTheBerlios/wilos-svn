@@ -3,13 +3,15 @@ package wilos.model.misc.project ;
 
 import java.util.Date ;
 
+import org.apache.commons.lang.builder.EqualsBuilder ;
+import org.apache.commons.lang.builder.HashCodeBuilder ;
+
 /**
- * @author martial
- * 
  * This class represents a project.
  * 
+ * @author martial
  */
-public class Project {
+public class Project implements Cloneable {
 
 	private String name ;
 
@@ -18,15 +20,6 @@ public class Project {
 	private Date creationDate ;
 
 	private Date launchingDate ;
-
-	/**
-	 * Constructor.
-	 *
-	 */
-	public Project() {
-		// Project's Creation Date is current date time
-		this.creationDate = new Date() ;
-	}
 
 	/**
 	 * @return the creationDate
@@ -86,6 +79,55 @@ public class Project {
 	 */
 	public void setName(String name) {
 		this.name = name ;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 * @Override
+	 */
+	public Project clone() throws CloneNotSupportedException {
+		Project project = new Project() ;
+		project.copy(this) ;
+		return project ;
+	}
+
+	
+	/**
+	 * Copy the object.
+	 *
+	 * @param _project The project to copy.
+	 */
+	protected void copy(final Project _project) {
+		this.name = _project.name ;
+		this.description = _project.description ;
+		this.creationDate = _project.creationDate ;
+		this.launchingDate = _project.launchingDate ;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37).append(this.name).append(this.description).append(this.creationDate).append(this.launchingDate).toHashCode() ;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	public boolean equals(Object _obj) {
+		if(_obj instanceof Project == false){
+			return false ;
+		}
+		if(this == _obj){
+			return true ;
+		}
+		Project project = (Project) _obj ;
+		return new EqualsBuilder().append(this.name, project.name).append(this.description, project.description)
+				.append(this.creationDate, project.creationDate).append(this.launchingDate, project.launchingDate).isEquals() ;
 	}
 
 }
