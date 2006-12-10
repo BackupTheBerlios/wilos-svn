@@ -89,25 +89,25 @@ public class XmlFileImportBean {
 		logger.debug("### getRequestPathInfo = " + extCtx.getRequestPathInfo());
 		extCtx.getResourceAsStream("");
 
-		// file.renameTo(destFile);
-		// logger.debug("### Nouveau fichier = "+destFile.getPath()+" =>
-		// "+destFile.getName()+" ###");
-		String id = null;
+		//String id = null;
+		/*
 		TreeViewBean treeBean = null;
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		treeBean = (TreeViewBean) facesContext.getApplication()
+				.getVariableResolver().resolveVariable(facesContext,
+						"TreeViewBean");
+		*/
 		try {
 			Process p = processService.spelpParsingXML(file);
 			// save the process
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-			treeBean = (TreeViewBean) facesContext.getApplication()
-					.getVariableResolver().resolveVariable(facesContext,
-							"TreeViewBean");
 			logger.debug("###XmlFileImportBean ### action -> id=" + p.getId());
-			id = this.processService.saveProcess(p);
+			/* id = */
+			this.processService.saveProcess(p);
 		} catch (Exception e) {
 			logger.error("### XmlFileImportBean ### action -> " + e);
 		}
-		// TODO Recup id du process
-		treeBean.setProcessId(id);
+
+		//treeBean.setProcessId(id);
 	}
 
 	public void progress(EventObject event) {
