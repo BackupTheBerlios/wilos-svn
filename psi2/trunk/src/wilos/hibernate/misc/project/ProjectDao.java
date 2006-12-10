@@ -8,19 +8,19 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import wilos.model.misc.project.Project;
 
 /**
+ * ProjectDao manage requests from the system to store Project into the
+ * database.
+ * 
  * @author martial
- *
- * This class represents ... TODO
- *
  */
-public class ProjectDao extends HibernateDaoSupport{
+public class ProjectDao extends HibernateDaoSupport {
 	/**
 	 * Save or update an project.
 	 * 
 	 * @param _project
 	 */
 	public void saveOrUpdateProject(Project _project) {
-		this.getHibernateTemplate().saveOrUpdate(_project) ;
+		this.getHibernateTemplate().saveOrUpdate(_project);
 	}
 
 	/**
@@ -29,9 +29,9 @@ public class ProjectDao extends HibernateDaoSupport{
 	 * @return
 	 */
 	public Set<Project> getAllProject() {
-		Set<Project> loadAll = new HashSet<Project>() ;
-		loadAll.addAll(this.getHibernateTemplate().loadAll(Project.class)) ;
-		return loadAll ;
+		Set<Project> loadAll = new HashSet<Project>();
+		loadAll.addAll(this.getHibernateTemplate().loadAll(Project.class));
+		return loadAll;
 	}
 
 	/**
@@ -41,7 +41,7 @@ public class ProjectDao extends HibernateDaoSupport{
 	 * @return
 	 */
 	public Project getProject(String _id) {
-		return (Project) this.getHibernateTemplate().get(Project.class, _id) ;
+		return (Project) this.getHibernateTemplate().get(Project.class, _id);
 	}
 
 	/**
@@ -50,13 +50,14 @@ public class ProjectDao extends HibernateDaoSupport{
 	 * @param _project
 	 */
 	public void deleteProject(Project _project) {
-		try{
-			this.getHibernateTemplate().delete(_project) ;
-		}
-		catch(Exception sose){
-			// Catch normally errors when we delete an unexisting project into the db.
-			logger.error("#### ERROR #### --- ProjectDao => deleteProject : trying to delete unexisting object \n" + sose) ;
+		try {
+			this.getHibernateTemplate().delete(_project);
+		} catch (Exception sose) {
+			// Catch normally errors when we delete an unexisting project into
+			// the db.
+			logger
+					.error("#### ERROR #### --- ProjectDao => deleteProject : trying to delete unexisting object \n"
+							+ sose);
 		}
 	}
 }
-

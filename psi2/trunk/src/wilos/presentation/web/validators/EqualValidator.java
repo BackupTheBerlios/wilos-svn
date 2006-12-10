@@ -10,11 +10,10 @@ import org.apache.commons.logging.Log ;
 import org.apache.commons.logging.LogFactory ;
 
 /**
+ * This class represents a validator that allows to verify if two fields are the same
+ * 
  * @author l3isi25 (Martial)
  * @author Sakamakak
- *
- * This class represents a validator that allows to verify if two fields are the same
- *
  */
 public class EqualValidator implements Validator {
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;

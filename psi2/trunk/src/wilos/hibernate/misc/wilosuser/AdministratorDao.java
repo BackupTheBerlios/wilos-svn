@@ -1,5 +1,4 @@
-
-package wilos.hibernate.misc.wilosuser ;
+package wilos.hibernate.misc.wilosuser;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,9 +8,11 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import wilos.model.misc.wilosuser.Administrator;
 
 /**
- * AdministratorDao manage requests from the system to store Administrator to the database.
+ * AdministratorDao manage requests from the system to store Administrator into
+ * the database.
  * 
- * @author Yoann Lopes
+ * @author Yoann
+ * @author Lopes
  * @author Martial Lapeyre
  */
 public class AdministratorDao extends HibernateDaoSupport {
@@ -22,7 +23,7 @@ public class AdministratorDao extends HibernateDaoSupport {
 	 * @param _administrator
 	 */
 	public void saveOrUpdateAdministrator(Administrator _administrator) {
-		this.getHibernateTemplate().saveOrUpdate(_administrator) ;
+		this.getHibernateTemplate().saveOrUpdate(_administrator);
 	}
 
 	/**
@@ -31,9 +32,11 @@ public class AdministratorDao extends HibernateDaoSupport {
 	 * @return
 	 */
 	public Set<Administrator> getAllAdministrators() {
-		Set<Administrator> loadAll = new HashSet<Administrator>() ;
-		loadAll.addAll(this.getHibernateTemplate().loadAll(Administrator.class)) ;
-		return loadAll ;
+		Set<Administrator> loadAll = new HashSet<Administrator>();
+		loadAll
+				.addAll(this.getHibernateTemplate()
+						.loadAll(Administrator.class));
+		return loadAll;
 	}
 
 	/**
@@ -43,7 +46,8 @@ public class AdministratorDao extends HibernateDaoSupport {
 	 * @return
 	 */
 	public Administrator getAdministrator(String _id) {
-		return (Administrator) this.getHibernateTemplate().get(Administrator.class, _id) ;
+		return (Administrator) this.getHibernateTemplate().get(
+				Administrator.class, _id);
 	}
 
 	/**
@@ -52,12 +56,14 @@ public class AdministratorDao extends HibernateDaoSupport {
 	 * @param _administrator
 	 */
 	public void deleteAdministrator(Administrator _administrator) {
-		try{
-			this.getHibernateTemplate().delete(_administrator) ;
-		}
-		catch(Exception sose){
-			// Catch normally errors when we delete an unexisting administrator into the db.
-			logger.error("#### ERROR #### --- AdministratorDao => deleteAdministrator : trying to delete unexisting object \n" + sose) ;
+		try {
+			this.getHibernateTemplate().delete(_administrator);
+		} catch (Exception sose) {
+			// Catch normally errors when we delete an unexisting administrator
+			// into the db.
+			logger
+					.error("#### ERROR #### --- AdministratorDao => deleteAdministrator : trying to delete unexisting object \n"
+							+ sose);
 		}
 	}
 }

@@ -1,5 +1,4 @@
-
-package wilos.business.services.wilosuser ;
+package wilos.business.services.wilosuser;
 
 import java.util.Set;
 
@@ -11,32 +10,32 @@ import org.springframework.transaction.annotation.Transactional;
 import wilos.hibernate.misc.wilosuser.ParticipantDao;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.role.RoleDescriptor;
-import wilos.business.util.Security;;
+import wilos.business.util.Security;
 
 /**
- * This class represents ... TODO
+ * The services associated to the ProcessManager
  * 
  * @author BlackMilk
  * @author Mikamikaze
  * @author Sakamakak
  */
-@ Transactional (readOnly = false, propagation = Propagation.REQUIRED)
+@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class ParticipantService {
 
-	private ParticipantDao participantDao ;
+	private ParticipantDao participantDao;
 
-	protected final Log logger = LogFactory.getLog(this.getClass()) ;
+	protected final Log logger = LogFactory.getLog(this.getClass());
 
 	/**
 	 * Return participant roles
 	 * 
-	 * @return the roles 
+	 * @return the roles
 	 */
-	@ Transactional (readOnly = true)
+	@Transactional(readOnly = true)
 	public Set<RoleDescriptor> getRolesList() {
 		return this.participantDao.getAllRoles();
 	}
-	
+
 	/**
 	 * Save participant
 	 * 
@@ -44,7 +43,7 @@ public class ParticipantService {
 	 */
 	public void saveParticipant(Participant _participant) {
 		_participant.setPassword(Security.encode(_participant.getPassword()));
-		participantDao.saveOrUpdateParticipant(_participant) ;
+		participantDao.saveOrUpdateParticipant(_participant);
 	}
 
 	/**
@@ -54,10 +53,10 @@ public class ParticipantService {
 	 *            The participantDao to set.
 	 */
 	public void setParticipantDao(ParticipantDao _participantDao) {
-		this.participantDao = _participantDao ;
+		this.participantDao = _participantDao;
 	}
 
 	public ParticipantDao getParticipantDao() {
-		return this.participantDao ;
+		return this.participantDao;
 	}
 }

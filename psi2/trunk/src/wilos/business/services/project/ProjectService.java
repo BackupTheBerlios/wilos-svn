@@ -1,28 +1,27 @@
 package wilos.business.services.project;
+
 import java.util.Set;
 
-import org.apache.commons.logging.Log ;
-import org.apache.commons.logging.LogFactory ;
-import org.springframework.transaction.annotation.Propagation ;
-import org.springframework.transaction.annotation.Transactional ;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import wilos.hibernate.misc.project.ProjectDao;
 import wilos.model.misc.project.Project;
 
 /**
+ * The services associated to the Project
+ * 
  * @author martial
- *
- * This class represents ... TODO
- *
  */
 
-
-@ Transactional (readOnly = false, propagation = Propagation.REQUIRED)
+@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class ProjectService {
 
-	private ProjectDao projectDao ;
+	private ProjectDao projectDao;
 
-	protected final Log logger = LogFactory.getLog(this.getClass()) ;
+	protected final Log logger = LogFactory.getLog(this.getClass());
 
 	/**
 	 * Save processManager
@@ -30,14 +29,14 @@ public class ProjectService {
 	 * @param _processmanager
 	 */
 	public void saveProject(Project _project) {
-		this.projectDao.saveOrUpdateProject(_project) ;
+		this.projectDao.saveOrUpdateProject(_project);
 	}
-	
+
 	/**
 	 * Check if the project already exist
-	 *
+	 * 
 	 * @param _projectName
-	 * @return True is the _projectName is already present 
+	 * @return True is the _projectName is already present
 	 */
 	public boolean projectExist(String _projectName) {
 		boolean found = false;
@@ -60,20 +59,21 @@ public class ProjectService {
 
 	/**
 	 * Getter of projectDao.
-	 *
+	 * 
 	 * @return the projectDao.
 	 */
 	public ProjectDao getProjectDao() {
-		return this.projectDao ;
+		return this.projectDao;
 	}
 
 	/**
 	 * Setter of projectDao.
-	 *
-	 * @param _projectDao The projectDao to set.
+	 * 
+	 * @param _projectDao
+	 *            The projectDao to set.
 	 */
 	public void setProjectDao(ProjectDao _projectDao) {
-		this.projectDao = _projectDao ;
+		this.projectDao = _projectDao;
 	}
 
 }

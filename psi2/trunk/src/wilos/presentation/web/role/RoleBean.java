@@ -22,29 +22,29 @@ import wilos.model.spem2.role.RoleDescriptor;
  * @author Mikamikaze
  * @author Sakamakak
  */
-public class RoleBean{
+public class RoleBean {
 
 	private List<RoleDescriptor> rolesList;
-	
-	private HashMap<String,Boolean> rolesParticipant = new HashMap<String,Boolean>();
-	
+
+	private HashMap<String, Boolean> rolesParticipant = new HashMap<String, Boolean>();
+
 	private List<String> keysRolesParticipant = new ArrayList<String>();
-	
-	private RoleService roleService ;
 
-	private RoleDescriptor roleDescriptor ;
-	
-	private int project=1;
+	private RoleService roleService;
 
-	protected final Log logger = LogFactory.getLog(this.getClass()) ;
+	private RoleDescriptor roleDescriptor;
+
+	private int project = 1;
+
+	protected final Log logger = LogFactory.getLog(this.getClass());
 
 	/**
 	 * Constructor.
 	 * 
 	 */
 	public RoleBean() {
-		this.logger.debug("--- RoleBean --- == creating ..." + this) ;
-		this.roleDescriptor = new RoleDescriptor() ;
+		this.logger.debug("--- RoleBean --- == creating ..." + this);
+		this.roleDescriptor = new RoleDescriptor();
 	}
 
 	/**
@@ -53,15 +53,15 @@ public class RoleBean{
 	 * @return
 	 */
 	public String saveRoleAction() {
-		String url = "participant" ;
-		this.roleService.saveRoleDescriptor(this.roleDescriptor) ;
-		return url ;
+		String url = "participant";
+		this.roleService.saveRoleDescriptor(this.roleDescriptor);
+		return url;
 	}
-	
-	public void testTransactionActionListener(ActionEvent e){
-		//this.participantManager.Test();
+
+	public void testTransactionActionListener(ActionEvent e) {
+		// this.participantManager.Test();
 	}
-	
+
 	/**
 	 * Getter of rolesList.
 	 * 
@@ -70,8 +70,8 @@ public class RoleBean{
 	public List<RoleDescriptor> getRolesList() {
 		this.rolesList = new ArrayList<RoleDescriptor>();
 		rolesList.addAll(this.roleService.getRolesDescriptor());
-		this.logger.debug("roles list =" + this.rolesList) ;
-		return this.rolesList ;
+		this.logger.debug("roles list =" + this.rolesList);
+		return this.rolesList;
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class RoleBean{
 	 * @return the roleDescriptor.
 	 */
 	public RoleDescriptor getRoleDescriptor() {
-		return this.roleDescriptor ;
+		return this.roleDescriptor;
 	}
 
 	/**
@@ -90,8 +90,8 @@ public class RoleBean{
 	 *            The roleDescriptor to set.
 	 */
 	public void setRoleDescriptor(RoleDescriptor _roleDescriptor) {
-		this.logger.debug("### Participant = " + _roleDescriptor + " ###") ;
-		this.roleDescriptor = _roleDescriptor ;
+		this.logger.debug("### Participant = " + _roleDescriptor + " ###");
+		this.roleDescriptor = _roleDescriptor;
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class RoleBean{
 	 * @return the roleService.
 	 */
 	public RoleService getRoleService() {
-		return this.roleService ;
+		return this.roleService;
 	}
 
 	/**
@@ -110,88 +110,93 @@ public class RoleBean{
 	 *            The participantManager to set.
 	 */
 	public void setRoleService(RoleService _roleService) {
-		this.roleService = _roleService ;
+		this.roleService = _roleService;
 	}
 
 	/**
 	 * Getter of project.
-	 *
+	 * 
 	 * @return the project.
 	 */
 	public int getProject() {
-		return this.project ;
+		return this.project;
 	}
 
 	/**
 	 * Setter of project.
-	 *
-	 * @param _project The project to set.
+	 * 
+	 * @param _project
+	 *            The project to set.
 	 */
 	public void setProject(int _project) {
-		this.project = _project ;
+		this.project = _project;
 	}
 
 	/**
 	 * Setter of rolesList.
-	 *
-	 * @param _rolesList The rolesList to set.
+	 * 
+	 * @param _rolesList
+	 *            The rolesList to set.
 	 */
 	public void setRolesList(List<RoleDescriptor> _rolesList) {
-		this.rolesList = _rolesList ;
+		this.rolesList = _rolesList;
 	}
-	
+
 	/**
 	 * Save roles of a participant
-	 *
+	 * 
 	 */
-	public void saveRoleActionListener(ActionEvent _event){
-		//ajouter la sauvegarde du participant
+	public void saveRoleActionListener(ActionEvent _event) {
+		// ajouter la sauvegarde du participant
 	}
 
 	/**
 	 * Getter of rolesParticipant.
-	 *
+	 * 
 	 * @return the rolesParticipant.
 	 */
-	public HashMap<String,Boolean> getRolesParticipant() {
+	public HashMap<String, Boolean> getRolesParticipant() {
 		RoleDescriptor rd = null;
-		HashMap<RoleDescriptor,Boolean> hashTemp = this.roleService.getRolesForAParticipant();
-		for(Iterator iter = hashTemp.keySet().iterator(); iter.hasNext();){
+		HashMap<RoleDescriptor, Boolean> hashTemp = this.roleService
+				.getRolesForAParticipant();
+		for (Iterator iter = hashTemp.keySet().iterator(); iter.hasNext();) {
 			rd = (RoleDescriptor) iter.next();
-			this.rolesParticipant.put(rd.getName(),hashTemp.get(rd));
+			this.rolesParticipant.put(rd.getName(), hashTemp.get(rd));
 		}
-		return this.rolesParticipant ;
+		return this.rolesParticipant;
 	}
 
 	/**
 	 * Setter of rolesParticipant.
-	 *
-	 * @param _rolesParticipant The rolesParticipant to set.
+	 * 
+	 * @param _rolesParticipant
+	 *            The rolesParticipant to set.
 	 */
-	public void setRolesParticipant(HashMap<String,Boolean> _rolesParticipant) {
-		this.rolesParticipant = _rolesParticipant ;
+	public void setRolesParticipant(HashMap<String, Boolean> _rolesParticipant) {
+		this.rolesParticipant = _rolesParticipant;
 	}
 
 	/**
 	 * Getter of keysRolesParticipant.
-	 *
+	 * 
 	 * @return the keysRolesParticipant.
 	 */
 	public List<String> getKeysRolesParticipant() {
-		HashSet<String> os = new HashSet<String>((Set<String>)this.getRolesParticipant().keySet());
+		HashSet<String> os = new HashSet<String>((Set<String>) this
+				.getRolesParticipant().keySet());
 		for (Iterator iter = os.iterator(); iter.hasNext();) {
-			this.keysRolesParticipant.add((String)iter.next());
+			this.keysRolesParticipant.add((String) iter.next());
 		}
 		return this.keysRolesParticipant;
 	}
 
 	/**
 	 * Setter of keysRolesParticipant.
-	 *
-	 * @param _keysRolesParticipant The keysRolesParticipant to set.
+	 * 
+	 * @param _keysRolesParticipant
+	 *            The keysRolesParticipant to set.
 	 */
 	public void setKeysRolesParticipant(List<String> _keysRolesParticipant) {
 		this.keysRolesParticipant = _keysRolesParticipant;
 	}
 }
-

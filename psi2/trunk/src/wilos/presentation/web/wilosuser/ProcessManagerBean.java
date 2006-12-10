@@ -17,7 +17,6 @@ import wilos.model.misc.wilosuser.ProcessManager ;
  * @author Marseyeah
  */
 public class ProcessManagerBean {
-
 	private ProcessManagerService processManagerService ;
 
 	private ProcessManager processManager ;
@@ -113,7 +112,7 @@ public class ProcessManagerBean {
 
 	/**
 	 * Getter of loginService.
-	 *
+	 * 
 	 * @return the loginService.
 	 */
 	public LoginService getLoginService() {
@@ -122,8 +121,9 @@ public class ProcessManagerBean {
 
 	/**
 	 * Setter of loginService.
-	 *
-	 * @param _loginService The loginService to set.
+	 * 
+	 * @param _loginService
+	 *            The loginService to set.
 	 */
 	public void setLoginService(LoginService _loginService) {
 		this.loginService = _loginService ;

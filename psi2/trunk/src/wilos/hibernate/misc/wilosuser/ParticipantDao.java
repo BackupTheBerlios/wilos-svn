@@ -9,12 +9,12 @@ import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.role.RoleDescriptor;
 
 /**
+ * ParticipantDao manage requests from the system to store Participant into the
+ * database.
+ * 
  * @author BlackMilk
  * @author Mikamikaze
  * @author Sakamakak
- *
- * This class represents ... TODO
- *
  */
 public class ParticipantDao extends HibernateDaoSupport {
 
@@ -23,8 +23,8 @@ public class ParticipantDao extends HibernateDaoSupport {
 	 * 
 	 * @param _element
 	 */
-	public void saveOrUpdateParticipant (Participant _participant) {
-		this.getHibernateTemplate().saveOrUpdate(_participant) ;
+	public void saveOrUpdateParticipant(Participant _participant) {
+		this.getHibernateTemplate().saveOrUpdate(_participant);
 	}
 
 	/**
@@ -32,10 +32,11 @@ public class ParticipantDao extends HibernateDaoSupport {
 	 * 
 	 * @return
 	 */
-	public Set <RoleDescriptor> getAllRoles () {
-		Set <RoleDescriptor> loadAll = new HashSet<RoleDescriptor>() ;
-		loadAll.addAll(this.getHibernateTemplate().loadAll(RoleDescriptor.class)) ;
-		return loadAll ;
+	public Set<RoleDescriptor> getAllRoles() {
+		Set<RoleDescriptor> loadAll = new HashSet<RoleDescriptor>();
+		loadAll.addAll(this.getHibernateTemplate()
+				.loadAll(RoleDescriptor.class));
+		return loadAll;
 	}
 
 	/**
@@ -43,20 +44,21 @@ public class ParticipantDao extends HibernateDaoSupport {
 	 * 
 	 * @return
 	 */
-	public Set <Participant> getAllParticipants () {
-		Set <Participant> loadAll = new HashSet<Participant>() ;
-		loadAll.addAll(this.getHibernateTemplate().loadAll(Participant.class)) ;
-		return loadAll ;
+	public Set<Participant> getAllParticipants() {
+		Set<Participant> loadAll = new HashSet<Participant>();
+		loadAll.addAll(this.getHibernateTemplate().loadAll(Participant.class));
+		return loadAll;
 	}
-	
+
 	/**
 	 * Return the element which have the id _id.
 	 * 
 	 * @param _id
 	 * @return
 	 */
-	public Participant getParticipant (String _id) {
-		return (Participant) this.getHibernateTemplate().get(Participant.class, _id) ;
+	public Participant getParticipant(String _id) {
+		return (Participant) this.getHibernateTemplate().get(Participant.class,
+				_id);
 	}
 
 	/**
@@ -64,13 +66,15 @@ public class ParticipantDao extends HibernateDaoSupport {
 	 * 
 	 * @param _element
 	 */
-	public void deleteParticipant (Participant _participant) {
+	public void deleteParticipant(Participant _participant) {
 		try {
-			this.getHibernateTemplate().delete(_participant) ;
-		}
-		catch (Exception sose) {
-			// Catch normally errors when we delete an unexisting element into the db.
-			logger.error("#### ERROR #### --- ParticipantDao => deleteParticipant : trying to delete unexisting object \n" + sose) ;
+			this.getHibernateTemplate().delete(_participant);
+		} catch (Exception sose) {
+			// Catch normally errors when we delete an unexisting element into
+			// the db.
+			logger
+					.error("#### ERROR #### --- ParticipantDao => deleteParticipant : trying to delete unexisting object \n"
+							+ sose);
 		}
 	}
 }

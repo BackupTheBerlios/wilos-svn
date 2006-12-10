@@ -1,5 +1,4 @@
-
-package wilos.business.services.wilosuser ;
+package wilos.business.services.wilosuser;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -11,17 +10,16 @@ import wilos.hibernate.misc.wilosuser.ProcessManagerDao;
 import wilos.model.misc.wilosuser.ProcessManager;
 
 /**
+ * The services associated to the ProcessManager
+ * 
  * @author Marseyeah
- * 
- * This class represents ... TODO
- * 
  */
-@ Transactional (readOnly = false, propagation = Propagation.REQUIRED)
+@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class ProcessManagerService {
 
-	private ProcessManagerDao processManagerDao ;
+	private ProcessManagerDao processManagerDao;
 
-	protected final Log logger = LogFactory.getLog(this.getClass()) ;
+	protected final Log logger = LogFactory.getLog(this.getClass());
 
 	/**
 	 * Save processManager
@@ -29,8 +27,9 @@ public class ProcessManagerService {
 	 * @param _processmanager
 	 */
 	public void saveProcessManager(ProcessManager _processManager) {
-		_processManager.setPassword(Security.encode(_processManager.getPassword()));
-		this.processManagerDao.saveOrUpdateProcessManager(_processManager) ;
+		_processManager.setPassword(Security.encode(_processManager
+				.getPassword()));
+		this.processManagerDao.saveOrUpdateProcessManager(_processManager);
 	}
 
 	/**
@@ -40,15 +39,16 @@ public class ProcessManagerService {
 	 *            The processManagerDao to set.
 	 */
 	public void setProcessManagerDao(ProcessManagerDao _processManagerDao) {
-		this.processManagerDao = _processManagerDao ;
+		this.processManagerDao = _processManagerDao;
 	}
+
 	/**
 	 * Getter of processManagerDao.
 	 * 
-	 *            The processManagerDao to get.
+	 * The processManagerDao to get.
 	 */
 	public ProcessManagerDao getProcessManagerDao() {
-		return this.processManagerDao ;
+		return this.processManagerDao;
 	}
 
 }

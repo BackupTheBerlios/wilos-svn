@@ -1,22 +1,22 @@
-package wilos.presentation.web.wilosuser ;
+package wilos.presentation.web.wilosuser;
 
-import java.util.ArrayList ;
-import java.util.List ;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.faces.application.FacesMessage ;
-import javax.faces.context.FacesContext ;
-import javax.faces.event.ActionEvent ;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
-import org.apache.commons.logging.Log ;
-import org.apache.commons.logging.LogFactory ;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.wilosuser.LoginService;
-import wilos.business.services.wilosuser.ParticipantService ;
-import wilos.model.spem2.role.RoleDescriptor ;
-import wilos.model.misc.wilosuser.Participant ;
+import wilos.business.services.wilosuser.ParticipantService;
+import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.misc.wilosuser.Participant;
 
 /**
- * Managed-Bean link to participant_logging.jsp
+ * Managed-Bean link to participantSubscribe.jspx
  * 
  * @author BlackMilk
  * @author Mikamikaze
@@ -24,25 +24,25 @@ import wilos.model.misc.wilosuser.Participant ;
  */
 public class ParticipantBean {
 
-	private List<RoleDescriptor> rolesList ;
+	private List<RoleDescriptor> rolesList;
 
-	private ParticipantService participantService ;
+	private ParticipantService participantService;
 
-	private LoginService loginService ;
+	private LoginService loginService;
 
-	private Participant participant ;
+	private Participant participant;
 
-	private String passwordConfirmation ;
+	private String passwordConfirmation;
 
-	protected final Log logger = LogFactory.getLog(this.getClass()) ;
+	protected final Log logger = LogFactory.getLog(this.getClass());
 
 	/**
 	 * Constructor.
 	 * 
 	 */
 	public ParticipantBean() {
-		this.logger.debug("--- ParticipantBean --- == creating ..." + this) ;
-		this.participant = new Participant() ;
+		this.logger.debug("--- ParticipantBean --- == creating ..." + this);
+		this.participant = new Participant();
 	}
 
 	/**
@@ -51,21 +51,21 @@ public class ParticipantBean {
 	 * @return
 	 */
 	public String saveParticipantAction() {
-		String url = "connect" ;
-		boolean loginExists = this.loginService.loginExist(this.participant.getLogin()) ;
-		if(loginExists == true){
-			FacesMessage message = new FacesMessage() ;
-			message.setDetail("Ce Login existe deja") ;
-			message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
-			FacesContext facesContext = FacesContext.getCurrentInstance() ;
-			facesContext.addMessage(null, message) ;
-			url = "createParticipant" ;
+		String url = "connect";
+		boolean loginExists = this.loginService.loginExist(this.participant
+				.getLogin());
+		if (loginExists == true) {
+			FacesMessage message = new FacesMessage();
+			message.setDetail("Ce Login existe deja");
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			facesContext.addMessage(null, message);
+			url = "createParticipant";
+		} else {
+			this.participantService.saveParticipant(this.participant);
+			url = "connect";
 		}
-		else{
-			this.participantService.saveParticipant(this.participant) ;
-			url = "connect" ;
-		}
-		return url ;
+		return url;
 	}
 
 	public void testTransactionActionListener(ActionEvent e) {
@@ -78,10 +78,10 @@ public class ParticipantBean {
 	 * @return the rolesList.
 	 */
 	public List<RoleDescriptor> getRolesList() {
-		this.rolesList = new ArrayList<RoleDescriptor>() ;
-		rolesList.addAll(this.participantService.getRolesList()) ;
-		this.logger.debug("roles list =" + this.rolesList) ;
-		return this.rolesList ;
+		this.rolesList = new ArrayList<RoleDescriptor>();
+		rolesList.addAll(this.participantService.getRolesList());
+		this.logger.debug("roles list =" + this.rolesList);
+		return this.rolesList;
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class ParticipantBean {
 	 * @return the participant.
 	 */
 	public Participant getParticipant() {
-		return this.participant ;
+		return this.participant;
 	}
 
 	/**
@@ -100,8 +100,8 @@ public class ParticipantBean {
 	 *            The participant to set.
 	 */
 	public void setParticipant(Participant _participant) {
-		this.logger.debug("### Participant = " + _participant + " ###") ;
-		this.participant = _participant ;
+		this.logger.debug("### Participant = " + _participant + " ###");
+		this.participant = _participant;
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class ParticipantBean {
 	 * @return the participantService.
 	 */
 	public ParticipantService getParticipantService() {
-		return this.participantService ;
+		return this.participantService;
 	}
 
 	/**
@@ -120,23 +120,23 @@ public class ParticipantBean {
 	 *            The participantService to set.
 	 */
 	public void setParticipantService(ParticipantService _participantService) {
-		this.participantService = _participantService ;
+		this.participantService = _participantService;
 	}
 
 	public String getPasswordConfirmation() {
-		return passwordConfirmation ;
+		return passwordConfirmation;
 	}
 
 	public void setPasswordConfirmation(String passwordConfirmation) {
-		this.passwordConfirmation = passwordConfirmation ;
+		this.passwordConfirmation = passwordConfirmation;
 	}
 
 	public LoginService getLoginService() {
-		return this.loginService ;
+		return this.loginService;
 	}
 
 	public void setLoginService(LoginService _loginService) {
-		this.loginService = _loginService ;
+		this.loginService = _loginService;
 	}
 
 }

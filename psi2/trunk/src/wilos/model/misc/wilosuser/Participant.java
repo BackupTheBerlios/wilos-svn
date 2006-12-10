@@ -1,28 +1,29 @@
 
 package wilos.model.misc.wilosuser ;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashSet ;
+import java.util.Set ;
 
-import wilos.model.spem2.role.RoleDescriptor;
+import org.apache.commons.lang.builder.EqualsBuilder ;
+import org.apache.commons.lang.builder.HashCodeBuilder ;
+
+import wilos.model.spem2.role.RoleDescriptor ;
 
 /**
- * @author BlackMilk
- * @author Mikamikaze
- * @author Sakamakak
- * 
  * This class represents a participant of a project This type of user can work on projects and
  * select a role from the process defined in relation with a project
  * 
+ * @author BlackMilk
+ * @author Mikamikaze
+ * @author Sakamakak
  */
-public class Participant extends WilosUser {
+public class Participant extends WilosUser implements Cloneable {
 
 	private Set<RoleDescriptor> rolesListForAProject ;
-	
-	public Participant()
-	{
-		super();
-		rolesListForAProject=new HashSet<RoleDescriptor>();
+
+	public Participant() {
+		super() ;
+		rolesListForAProject = new HashSet<RoleDescriptor>() ;
 	}
 
 	/**
@@ -51,7 +52,7 @@ public class Participant extends WilosUser {
 	 */
 	public void addToRoleDescriptor(RoleDescriptor _roleDesc) {
 		this.rolesListForAProject.add(_roleDesc) ;
-		_roleDesc.getParticipants().add(this);
+		_roleDesc.getParticipants().add(this) ;
 	}
 
 	/**
@@ -61,7 +62,7 @@ public class Participant extends WilosUser {
 	 */
 	public void removeFromRoleDescriptor(RoleDescriptor _roleDesc) {
 		this.rolesListForAProject.remove(_roleDesc) ;
-		_roleDesc.getParticipants().remove(this);
+		_roleDesc.getParticipants().remove(this) ;
 	}
 
 	/**
@@ -70,7 +71,7 @@ public class Participant extends WilosUser {
 	 */
 	public void removeAllRoleDescriptors() {
 		for(RoleDescriptor _roleD : this.rolesListForAProject){
-			//_roleD.removeFromParticipant(this);
+			// _roleD.removeFromParticipant(this);
 		}
 		this.rolesListForAProject.clear() ;
 	}
@@ -84,4 +85,51 @@ public class Participant extends WilosUser {
 			this.removeFromRoleDescriptor(_roleD) ;
 		}
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 * @Override
+	 */
+	public Participant clone() throws CloneNotSupportedException {
+		Participant participant = new Participant() ;
+		participant.copy(this) ;
+		return participant ;
+	}
+
+	/**
+	 * Copy the object.
+	 * 
+	 * @param _administrator
+	 *            The administrator to copy.
+	 */
+	protected void copy(final Participant _participant) {
+		super.copy(_participant) ;
+		this.setRolesListForAProject(_participant.getRolesListForAProject()) ;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	public boolean equals(Object _obj) {
+		if(_obj instanceof Participant == false){
+			return false ;
+		}
+		if(this == _obj){
+			return true ;
+		}
+		Participant participant = (Participant) _obj ;
+		return new EqualsBuilder().appendSuper(super.equals(participant)).append(this.rolesListForAProject, participant.rolesListForAProject).isEquals() ;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.rolesListForAProject).toHashCode() ;
+	}
+
 }

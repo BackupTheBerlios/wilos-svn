@@ -1,5 +1,4 @@
-
-package wilos.business.services.wilosuser ;
+package wilos.business.services.wilosuser;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -11,17 +10,16 @@ import wilos.hibernate.misc.wilosuser.ProjectDirectorDao;
 import wilos.model.misc.wilosuser.ProjectDirector;
 
 /**
+ * The services associated to the ProjectDirector
+ * 
  * @author Marseyeah
- * 
- * This class represents ... TODO
- * 
  */
-@ Transactional (readOnly = false, propagation = Propagation.REQUIRED)
+@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class ProjectDirectorService {
 
-	private ProjectDirectorDao projectDirectorDao ;
+	private ProjectDirectorDao projectDirectorDao;
 
-	protected final Log logger = LogFactory.getLog(this.getClass()) ;
+	protected final Log logger = LogFactory.getLog(this.getClass());
 
 	/**
 	 * Save projectDirector
@@ -29,8 +27,9 @@ public class ProjectDirectorService {
 	 * @param _projectdirector
 	 */
 	public void saveProjectDirector(ProjectDirector _processmanager) {
-		_processmanager.setPassword(Security.encode(_processmanager.getPassword()));
-		this.projectDirectorDao.saveOrUpdateProjectDirector(_processmanager) ;
+		_processmanager.setPassword(Security.encode(_processmanager
+				.getPassword()));
+		this.projectDirectorDao.saveOrUpdateProjectDirector(_processmanager);
 	}
 
 	/**
@@ -40,16 +39,16 @@ public class ProjectDirectorService {
 	 *            The projectDirectorDao to set.
 	 */
 	public void setProjectDirectorDao(ProjectDirectorDao _projectDirectorDao) {
-		this.projectDirectorDao = _projectDirectorDao ;
+		this.projectDirectorDao = _projectDirectorDao;
 	}
 
 	/**
 	 * Getter of projectDirectorDao.
-	 *
+	 * 
 	 * @return the projectDirectorDao.
 	 */
 	public ProjectDirectorDao getProjectDirectorDao() {
-		return this.projectDirectorDao ;
+		return this.projectDirectorDao;
 	}
 
 }

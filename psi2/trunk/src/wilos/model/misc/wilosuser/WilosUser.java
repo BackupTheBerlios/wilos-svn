@@ -1,13 +1,15 @@
 
 package wilos.model.misc.wilosuser ;
 
+import org.apache.commons.lang.builder.EqualsBuilder ;
+import org.apache.commons.lang.builder.HashCodeBuilder ;
+
 /**
- * @author Yoann Lopes
- * 
  * This class represents a user of Wilos.
  * 
+ * @author Yoann Lopes
  */
-public abstract class WilosUser {
+public abstract class WilosUser implements Cloneable{
 
 	private String name ;
 
@@ -21,10 +23,11 @@ public abstract class WilosUser {
 
 	/**
 	 * Default Constructor.
-	 *
+	 * 
 	 */
-	public WilosUser() {}
-	
+	public WilosUser() {
+	}
+
 	/**
 	 * Constructor.
 	 * 
@@ -135,6 +138,47 @@ public abstract class WilosUser {
 	 */
 	public void setPassword(String _password) {
 		this.password = _password ;
+	}
+
+	/**
+	 * Copy the object.
+	 * 
+	 * @param _element
+	 *            The element to copy.
+	 */
+	protected void copy(final WilosUser _wilosUser) {
+		this.name = _wilosUser.name ;
+		this.firstname = _wilosUser.firstname ;
+		this.emailAddress = _wilosUser.emailAddress ;
+		this.login = _wilosUser.login ;
+		this.password = _wilosUser.password ;
+		
+	}
+		
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	public boolean equals(Object obj) {
+		if(obj instanceof WilosUser == false){
+			return false ;
+		}
+		if(this == obj){
+			return true ;
+		}
+		WilosUser wilosUser = (WilosUser) obj ;
+		return new EqualsBuilder().append(this.name, wilosUser.name).append(this.firstname, wilosUser.firstname).append(this.emailAddress,
+				wilosUser.emailAddress).append(this.login, wilosUser.login).append(this.password, wilosUser.password).isEquals() ;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode() ;
 	}
 
 }

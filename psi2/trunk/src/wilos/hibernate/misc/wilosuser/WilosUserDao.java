@@ -1,5 +1,4 @@
-
-package wilos.hibernate.misc.wilosuser ;
+package wilos.hibernate.misc.wilosuser;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,7 +8,8 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import wilos.model.misc.wilosuser.WilosUser;
 
 /**
- * WilosUserDao manage requests from the system to store WilosUser to the database.
+ * WilosUserDao manage requests from the system to store WilosUser into the
+ * database.
  * 
  * @author Yoann Lopes
  * @author Martial Lapeyre
@@ -22,7 +22,7 @@ public class WilosUserDao extends HibernateDaoSupport {
 	 * @param _wilosuser
 	 */
 	public void saveOrUpdateWilosUser(WilosUser _wilosuser) {
-		this.getHibernateTemplate().saveOrUpdate(_wilosuser) ;
+		this.getHibernateTemplate().saveOrUpdate(_wilosuser);
 	}
 
 	/**
@@ -31,9 +31,9 @@ public class WilosUserDao extends HibernateDaoSupport {
 	 * @return
 	 */
 	public Set<WilosUser> getAllWilosUsers() {
-		Set<WilosUser> loadAll = new HashSet<WilosUser>() ;
-		loadAll.addAll(this.getHibernateTemplate().loadAll(WilosUser.class)) ;
-		return loadAll ;
+		Set<WilosUser> loadAll = new HashSet<WilosUser>();
+		loadAll.addAll(this.getHibernateTemplate().loadAll(WilosUser.class));
+		return loadAll;
 	}
 
 	/**
@@ -43,7 +43,8 @@ public class WilosUserDao extends HibernateDaoSupport {
 	 * @return
 	 */
 	public WilosUser getWilosUser(String _id) {
-		return (WilosUser) this.getHibernateTemplate().get(WilosUser.class, _id) ;
+		return (WilosUser) this.getHibernateTemplate()
+				.get(WilosUser.class, _id);
 	}
 
 	/**
@@ -52,12 +53,14 @@ public class WilosUserDao extends HibernateDaoSupport {
 	 * @param _wilosuser
 	 */
 	public void deleteWilosUser(WilosUser _wilosuser) {
-		try{
-			this.getHibernateTemplate().delete(_wilosuser) ;
-		}
-		catch(Exception sose){
-			// Catch normally errors when we delete an unexisting wilosuser into the db.
-			logger.error("#### ERROR #### --- WilosUserDao => deleteWilosUser : trying to delete unexisting object \n" + sose) ;
+		try {
+			this.getHibernateTemplate().delete(_wilosuser);
+		} catch (Exception sose) {
+			// Catch normally errors when we delete an unexisting wilosuser into
+			// the db.
+			logger
+					.error("#### ERROR #### --- WilosUserDao => deleteWilosUser : trying to delete unexisting object \n"
+							+ sose);
 		}
 	}
 }
