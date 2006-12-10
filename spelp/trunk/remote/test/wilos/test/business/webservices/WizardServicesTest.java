@@ -17,8 +17,6 @@ import wilos.business.services.wilosuser.ParticipantService;
 import wilos.business.util.Security;
 import wilos.business.webservices.WizardServices;
 import wilos.model.misc.wilosuser.Participant;
-import wilos.model.spem2.role.RoleDescriptor;
-import wilos.model.spem2.task.TaskDescriptor;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -121,7 +119,7 @@ public class WizardServicesTest extends TestCase {
          
          
          try {             
-            String result = instance.getParticipant(p.getLogin(), p.getPassword());            
+        	 instance.getParticipant(p.getLogin(), p.getPassword());            
             assertFalse(true);
          } catch (Exception ex) {
              assertTrue(true);

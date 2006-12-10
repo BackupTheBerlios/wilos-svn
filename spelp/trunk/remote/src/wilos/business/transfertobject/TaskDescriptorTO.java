@@ -10,9 +10,6 @@
 package wilos.business.transfertobject;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import org.hibernate.mapping.Set;
-import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
 
 /**

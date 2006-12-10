@@ -15,9 +15,8 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.util.ArrayList;
 
-import java.util.HashSet;
+
 import java.util.List;
-import java.util.Set;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -27,9 +26,7 @@ import wilos.business.services.wilosuser.LoginService;
 import wilos.business.transfertobject.ParticipantTO;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
-import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.role.RoleDescriptor;
-import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.process.Process;
 import wilos.model.spem2.task.TaskDescriptor;
 

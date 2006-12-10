@@ -11,9 +11,7 @@
 package wilos.business.transfertobject;
 
 import java.io.Serializable;
-import java.util.Set;
 import wilos.model.spem2.task.Step;
-import wilos.model.spem2.task.TaskDefinition;
 
 /**
  *
