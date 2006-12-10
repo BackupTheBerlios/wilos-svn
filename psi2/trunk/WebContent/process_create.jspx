@@ -1,0 +1,27 @@
+<f:view xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<f:loadBundle basename="wilos.resources.messages" var="msgs" />
+
+	<ice:outputDeclaration doctypeRoot="HTML"
+		doctypePublic="-//W3C//DTD HTML 4.01 Transitional//EN"
+		doctypeSystem="http://www.w3.org/TR/html4/loose.dtd" />
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></meta>
+	<title>Welcome</title>
+
+	<ice:outputText style="padding-top:0px; padding-bottom:0px;"
+		value="#{styleBean.style}" escape="false" />
+	<link href="css/css.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+	<ice:form id="process_create_form">
+		<h1><ice:outputText value="Wilos" /></h1>
+		<ice:outputText value="Ajout d'un nouveau Processus -" style="h1" />
+ 		<ice:messages style="color:red;" showDetail="true"/>
+	</ice:form>
+</body>
+</html>
+</f:view>

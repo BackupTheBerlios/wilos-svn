@@ -105,11 +105,11 @@ public class LoginBean {
 			}
 			else if(user instanceof ProcessManager){
 				sess.setAttribute("role","processManager") ;
-				url = "welcome" ;
+				url = "welcomeProcessManager" ;
 			}
 			else if(user instanceof ProjectDirector){
 				sess.setAttribute("role","projectDirector") ;
-				url = "createProject" ;
+				url = "welcomeProjectDirector" ;
 			}
 			else if(user instanceof Administrator){
 				sess.setAttribute("role","admin") ;

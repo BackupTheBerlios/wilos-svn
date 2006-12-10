@@ -152,6 +152,16 @@
     		<redirect />
   		</navigation-case>
   		<navigation-case>
+    		<from-outcome>welcomeProjectDirector</from-outcome>
+    		<to-view-id>/welcomeProjectDirector.iface</to-view-id>
+    		<redirect />
+  		</navigation-case>
+  		<navigation-case>
+    		<from-outcome>welcomeProcessManager</from-outcome>
+    		<to-view-id>/welcomeProcessManager.iface</to-view-id>
+    		<redirect />
+  		</navigation-case>
+  		<navigation-case>
     		<from-outcome>processManager_create</from-outcome>
     		<to-view-id>/processManager_create.iface</to-view-id>
     		<redirect />
@@ -164,6 +174,11 @@
   		<navigation-case>
     		<from-outcome>project_create</from-outcome>
     		<to-view-id>/project_create.iface</to-view-id>
+    		<redirect />
+  		</navigation-case>
+  		<navigation-case>
+    		<from-outcome>process_create</from-outcome>
+    		<to-view-id>/process_create.iface</to-view-id>
     		<redirect />
   		</navigation-case>
   		<navigation-case>

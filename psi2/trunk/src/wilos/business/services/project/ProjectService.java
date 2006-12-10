@@ -48,11 +48,11 @@ public class ProjectService {
 			projectName = project.getName().toUpperCase();
 			if(projectName.equals(_projectName.toUpperCase()))
 			{
-				this.logger.debug("### new login "+projectName+" already exists ###") ;
+				this.logger.debug("### new project "+projectName+" already exists ###") ;
 				return true ;
 			}
 			else{
-				this.logger.debug("### new login "+projectName+" is ok ###") ;
+				this.logger.debug("### new project "+projectName+" is ok ###") ;
 			}
 		}
 		return found;

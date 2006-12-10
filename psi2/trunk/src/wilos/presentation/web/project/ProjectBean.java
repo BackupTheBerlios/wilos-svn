@@ -1,45 +1,46 @@
-package wilos.presentation.web.project;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+package wilos.presentation.web.project ;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import javax.faces.application.FacesMessage ;
+import javax.faces.context.FacesContext ;
 
-import wilos.business.services.project.ProjectService;
-import wilos.model.misc.project.Project;
+import org.apache.commons.logging.Log ;
+import org.apache.commons.logging.LogFactory ;
 
+import wilos.business.services.project.ProjectService ;
+import wilos.model.misc.project.Project ;
 
 /**
  * @author martial
- *
+ * 
  * This class represents ... TODO
- *
+ * 
  */
 public class ProjectBean {
 
-	private ProjectService projectService;
-	
-	private Project project;
-	
+	private ProjectService projectService ;
+
+	private Project project ;
+
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
-	
-	
+
+	/**
+	 * Constructor.
+	 * 
+	 */
 	public ProjectBean() {
 		this.logger.debug("--- Project --- == creating ..." + this) ;
 		this.project = new Project() ;
 	}
-	
+
 	/**
 	 * Method for saving project data from form
 	 * 
 	 * @return
 	 */
 	public String saveProjectAction() {
-		String url = "welcome" ;
-		this.logger.debug("--------------------saveProjectAction------------\n") ;
+		String url = "" ;
 		if(this.projectService.projectExist(this.project.getName())){
-			this.logger.debug("if\n") ;
 			FacesMessage message = new FacesMessage() ;
 			message.setDetail("Ce Projet existe deja") ;
 			message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
@@ -48,16 +49,15 @@ public class ProjectBean {
 			url = "project_create" ;
 		}
 		else{
-			this.logger.debug("else\n") ;
 			this.projectService.saveProject(this.project) ;
-			url = "welcome" ;
+			url = "welcomeProjectDirector" ;
 		}
 		return url ;
 	}
 
 	/**
 	 * Getter of project.
-	 *
+	 * 
 	 * @return the project.
 	 */
 	public Project getProject() {
@@ -66,8 +66,9 @@ public class ProjectBean {
 
 	/**
 	 * Setter of project.
-	 *
-	 * @param _project The project to set.
+	 * 
+	 * @param _project
+	 *            The project to set.
 	 */
 	public void setProject(Project _project) {
 		this.project = _project ;
@@ -75,7 +76,7 @@ public class ProjectBean {
 
 	/**
 	 * Getter of projectService.
-	 *
+	 * 
 	 * @return the projectService.
 	 */
 	public ProjectService getProjectService() {
@@ -84,12 +85,11 @@ public class ProjectBean {
 
 	/**
 	 * Setter of projectService.
-	 *
-	 * @param _projectService The projectService to set.
+	 * 
+	 * @param _projectService
+	 *            The projectService to set.
 	 */
 	public void setProjectService(ProjectService _projectService) {
 		this.projectService = _projectService ;
 	}
-
 }
-
