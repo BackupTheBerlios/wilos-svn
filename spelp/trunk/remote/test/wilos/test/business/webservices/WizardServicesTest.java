@@ -7,31 +7,20 @@
 
 package wilos.test.business.webservices;
 
-import com.thoughtworks.xstream.XStream;
-import java.security.Security;
-import javax.servlet.jsp.jstl.sql.Result;
-import junit.framework.*;
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
-import javax.jws.WebService;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import junit.framework.TestCase;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import wilos.business.services.process.ProcessService;
+
+import wilos.business.services.wilosuser.LoginService;
 import wilos.business.services.wilosuser.ParticipantService;
-import wilos.business.transfertobject.ParticipantTO;
-import wilos.hibernate.spem2.activity.ActivityDao;
-import wilos.hibernate.spem2.role.RoleDescriptorDao;
+import wilos.business.util.Security;
+import wilos.business.webservices.WizardServices;
 import wilos.model.misc.wilosuser.Participant;
-import wilos.model.misc.wilosuser.WilosUser;
 import wilos.model.spem2.role.RoleDescriptor;
-import wilos.model.spem2.breakdownelement.BreakdownElement;
-import wilos.model.spem2.process.Process;
-import  wilos.business.webservices.WizardServices;
 import wilos.model.spem2.task.TaskDescriptor;
+
+import com.thoughtworks.xstream.XStream;
 
 /**
  *
@@ -97,7 +86,7 @@ public class WizardServicesTest extends TestCase {
         String result = null;
         try {
             
-            result = instance.getParticipant("test", passCrypt);
+            result = instance.getParticipant("testSansBD", passCrypt);
             XStream xstream = new XStream();     
             pt = (Participant)xstream.fromXML(result);
            
@@ -105,11 +94,40 @@ public class WizardServicesTest extends TestCase {
             ex.printStackTrace();
         }
         assertNotNull(result);
-        assertEquals(pt.getName(),"test");
-        
-        //assert
+        assertEquals(pt.getName(),"testSansBD");
      }
-    
+     
+     public void testGetParticipantException() {
+         System.out.println("GetParticipant");
+         System.out.println("testException");
+         
+         WizardServices instance = new WizardServices();
+    	 
+    	 ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");     
+
+         LoginService ls = (LoginService)ctx.getBean("LoginService");
+
+         ParticipantService ps = (ParticipantService)ctx.getBean("ParticipantService");
+         
+    	 Participant p = new Participant();
+         p.setLogin("test");
+         p.setPassword(Security.encode("testtest"));
+         p.setName("test");
+         p.setEmailAddress("test@test.com");
+         p.setFirstname("test");
+         
+         if (ls.getAuthentifiedUser(p.getLogin(), p.getPassword()) != null) 
+     		ps.getParticipantDao().deleteParticipant(p);
+         
+         
+         try {             
+            String result = instance.getParticipant(p.getLogin(), p.getPassword());            
+            assertFalse(true);
+         } catch (Exception ex) {
+             assertTrue(true);
+         }
+         
+     }
     
      public void testGetParticipant() {
         System.out.println("GetParticipant");
@@ -119,33 +137,38 @@ public class WizardServicesTest extends TestCase {
         
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
         
+        LoginService ls = (LoginService)ctx.getBean("LoginService");
+
         ParticipantService ps = (ParticipantService)ctx.getBean("ParticipantService");
         
+
+        		
         Participant p = new Participant();
         p.setLogin("test");
-        p.setPassword("testtest");
+        p.setPassword(Security.encode("testtest"));
         p.setName("test");
         p.setEmailAddress("test@test.com");
         p.setFirstname("test");
         
-        RoleDescriptor rd = new RoleDescriptor();
+        /*RoleDescriptor rd = new RoleDescriptor();
         rd.setName("testRole");
         
         TaskDescriptor td = new TaskDescriptor();
         td.setName("testTask");
         
         rd.addPrimaryTask(td);
-        p.addToRoleDescriptor(rd);
+        p.addToRoleDescriptor(rd);*/
         
-        ps.saveParticipant(p);
-        
-        
-        String passCrypt = wilos.business.util.Security.encode("test");
+        if (ls.getAuthentifiedUser(p.getLogin(), p.getPassword()) != null) 
+    		ps.getParticipantDao().deleteParticipant(p);
+      
+        ps.getParticipantDao().saveOrUpdateParticipant(p);
+
         Participant pt = null;
         String result = null;
         try {
             
-            result = instance.getParticipant("test", passCrypt);
+            result = instance.getParticipant(p.getLogin(), p.getPassword());
             XStream xstream = new XStream();     
             pt = (Participant)xstream.fromXML(result);
            
@@ -155,7 +178,9 @@ public class WizardServicesTest extends TestCase {
         assertNotNull(result);
         assertEquals(pt.getName(),"test");
         
-        //assert
+        if (ls.getAuthentifiedUser(p.getLogin(), p.getPassword()) != null) 
+    		ps.getParticipantDao().deleteParticipant(p);
+
      }
     
 }
