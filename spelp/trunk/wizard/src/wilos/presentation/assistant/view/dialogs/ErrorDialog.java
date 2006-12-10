@@ -7,7 +7,7 @@
  * and open the template in the editor.
  */
 
-package wilos.presentation.assistant.view.dialog;
+package wilos.presentation.assistant.view.dialogs;
 
 import com.sun.imageio.plugins.jpeg.JPEG;
 import com.sun.tools.xjc.api.ErrorListener;
