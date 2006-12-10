@@ -18,6 +18,7 @@ import wilos.business.util.Security;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ProfileReader;
+import wilos.presentation.assistant.view.dialog.ErrorDialog;
 import wilos.presentation.assistant.view.main.MainFrame;
 import wilos.presentation.assistant.webservices.WizardServicesProxy;
 
@@ -100,7 +101,7 @@ public class LoginPanel extends JPanel {
         private ImagePanel getImagePanel() {
             if (iconPanel == null)
             {
-                iconPanel = new ImagePanel();     
+                iconPanel = new ImagePanel("images.wilos");     
                 iconPanel.setLayout(new GridBagLayout());		
             }
             return this.iconPanel;
@@ -173,13 +174,16 @@ public class LoginPanel extends JPanel {
                                         
                                         if (rolesListe.isEmpty())
                                         {
-                                            setVisible(true);                                        
+                                            setVisible(true);
+                                            ErrorDialog Err = new ErrorDialog("Gestion des erreurs à faire !!");
                                         }  
                                         else
                                         {
                                             mframe.setContentPane(mTaskPanel);
                                             mTaskPanel.setVisible(true);                                         
                                         }
+                                        
+                                        
 				}
 			});
 		}
