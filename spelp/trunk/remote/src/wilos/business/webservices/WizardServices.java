@@ -9,26 +9,28 @@
 
 package wilos.business.webservices;
 
-import com.thoughtworks.xstream.XStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
-import java.util.ArrayList;
 
-
-import java.util.List;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 
 import wilos.business.services.process.ProcessService;
 import wilos.business.services.wilosuser.LoginService;
 import wilos.business.transfertobject.ParticipantTO;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
-import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.process.Process;
+import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.task.Step;
+import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
+
+import com.thoughtworks.xstream.XStream;
 
 /**
  *
@@ -94,66 +96,8 @@ public class WizardServices {
        System.out.println("LOGIN : "+login);
        System.out.println("PASS : "+password);
        
-        if(login.equals("testSansBD")) {
-            Participant p = new Participant();
-            p.setName("testSansBD");
-            
-            RoleDescriptor aTmpRole;
-            TaskDescriptor aTmpTask;
-
-            aTmpRole = new RoleDescriptor();
-            aTmpTask = new TaskDescriptor();
-				
-            aTmpRole.setName("Developper");
-            aTmpRole.setDescription("Un gars qui developpe");
-
-            aTmpTask.setName("Coder le programme");
-            aTmpTask.setDescription("Un grand moment de solitude");
-            aTmpRole.addPrimaryTask(aTmpTask);
-            aTmpTask = new TaskDescriptor();
-            aTmpTask.setName("Aimer son programme");
-            aTmpTask.setDescription("Un grand moment d'amour");
-            aTmpRole.addPrimaryTask(aTmpTask);
-            aTmpTask = new TaskDescriptor();
-            aTmpTask.setName("Passer le balai");
-            aTmpTask.setDescription("Et c'est plus propre");
-            aTmpRole.addPrimaryTask(aTmpTask);
-
-            p.addToRoleDescriptor(aTmpRole);
-
-            aTmpRole = new RoleDescriptor();
-            aTmpTask = new TaskDescriptor();
-            aTmpRole.setName("Tester");
-            aTmpRole.setDescription("Faire des essais, en gros");
-            aTmpTask.setName("Tester le programme");
-            aTmpTask.setDescription("Un grand moment de solitude");
-            aTmpRole.addPrimaryTask(aTmpTask);
-            aTmpTask = new TaskDescriptor();
-            aTmpTask.setName("Detester le programme");
-            aTmpTask.setDescription("Un grand moment de haine");
-            aTmpRole.addPrimaryTask(aTmpTask);
-            aTmpTask = new TaskDescriptor();
-            aTmpTask.setName("Passer la serpilliere");
-            aTmpTask.setDescription("Un grand moment de solitude");
-            aTmpRole.addPrimaryTask(aTmpTask);
-
-            p.addToRoleDescriptor(aTmpRole);
-
-            aTmpRole = new RoleDescriptor();
-            aTmpTask = new TaskDescriptor();
-            aTmpRole.setName("Conceptualisateur");
-            aTmpTask = new TaskDescriptor();
-            aTmpTask.setName("Conceptualiser les concepts du programme");
-            aTmpRole.addPrimaryTask(aTmpTask);
-            aTmpTask = new TaskDescriptor();
-            aTmpTask.setName("Rever du programme");
-            aTmpRole.addPrimaryTask(aTmpTask);
-            aTmpTask = new TaskDescriptor();
-            aTmpTask.setName("Faire le cafe concept");
-            aTmpRole.addPrimaryTask(aTmpTask);
-            
-            p.addToRoleDescriptor(aTmpRole);
-            wu = new ParticipantTO(p);
+        if(login.equals("testSansBD")) {            
+            wu = new ParticipantTO(getParticipantExample());
         } else {
             // Getback the application context from the spring configuration file
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
@@ -269,5 +213,87 @@ public class WizardServices {
             }
         }
         return result;
+    }
+    
+    private Participant getParticipantExample () {
+    	Participant p = new Participant();
+        p.setName("testSansBD");
+        
+        RoleDescriptor aTmpRole;
+        TaskDescriptor aTmpTask;
+        Step aTmpStep;
+        TaskDefinition aTmpTaskDef;
+
+        aTmpRole = new RoleDescriptor();
+        aTmpTask = new TaskDescriptor();
+        aTmpTaskDef = new TaskDefinition();
+        aTmpStep = new Step();
+			
+        aTmpRole.setName("Developper");
+        aTmpRole.setDescription("Un gars qui developpe");
+
+        aTmpTask.setName("Coder le programme");
+        aTmpTask.setDescription("Un grand moment de solitude");
+
+        aTmpTaskDef.setName("Coder le programme");
+        aTmpTaskDef.setDescription("Un grand moment de solitude");
+        
+        aTmpStep.setName("Ecrire la premiere ligne");
+        aTmpStep.setDescription("Un grand moment de joie");
+        aTmpTaskDef.addStep(aTmpStep);
+        
+        aTmpStep = new Step();
+        aTmpStep.setName("Ecrire la seconde ligne");
+        aTmpStep.setDescription("Ca marche plus");
+        aTmpTaskDef.addStep(aTmpStep);
+        
+        aTmpTask.addTaskDefinition(aTmpTaskDef);
+        
+        aTmpRole.addPrimaryTask(aTmpTask);
+        aTmpTask = new TaskDescriptor();
+        aTmpTask.setName("Aimer son programme");
+        aTmpTask.setDescription("Un grand moment d'amour");
+        aTmpRole.addPrimaryTask(aTmpTask);
+        aTmpTask = new TaskDescriptor();
+        aTmpTask.setName("Passer le balai");
+        aTmpTask.setDescription("Et c'est plus propre");
+        aTmpRole.addPrimaryTask(aTmpTask);
+
+        p.addToRoleDescriptor(aTmpRole);
+
+        aTmpRole = new RoleDescriptor();
+        aTmpTask = new TaskDescriptor();
+        aTmpRole.setName("Tester");
+        aTmpRole.setDescription("Faire des essais, en gros");
+        aTmpTask.setName("Tester le programme");
+        aTmpTask.setDescription("Un grand moment de solitude");
+        aTmpRole.addPrimaryTask(aTmpTask);
+        aTmpTask = new TaskDescriptor();
+        aTmpTask.setName("Detester le programme");
+        aTmpTask.setDescription("Un grand moment de haine");
+        aTmpRole.addPrimaryTask(aTmpTask);
+        aTmpTask = new TaskDescriptor();
+        aTmpTask.setName("Passer la serpilliere");
+        aTmpTask.setDescription("Un grand moment de solitude");
+        aTmpRole.addPrimaryTask(aTmpTask);
+
+        p.addToRoleDescriptor(aTmpRole);
+
+        aTmpRole = new RoleDescriptor();
+        aTmpTask = new TaskDescriptor();
+        aTmpRole.setName("Conceptualisateur");
+        aTmpTask = new TaskDescriptor();
+        aTmpTask.setName("Conceptualiser les concepts du programme");
+        aTmpRole.addPrimaryTask(aTmpTask);
+        aTmpTask = new TaskDescriptor();
+        aTmpTask.setName("Rever du programme");
+        aTmpRole.addPrimaryTask(aTmpTask);
+        aTmpTask = new TaskDescriptor();
+        aTmpTask.setName("Faire le cafe concept");
+        aTmpRole.addPrimaryTask(aTmpTask);
+        
+        p.addToRoleDescriptor(aTmpRole);
+        
+        return p;
     }
 }
