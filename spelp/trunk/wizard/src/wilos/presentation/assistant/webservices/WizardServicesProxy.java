@@ -39,17 +39,19 @@ public class WizardServicesProxy {
             return myRoleListe;
 	}
         
-        public static Participant getParticipant(String login, String password, String address)
+        private static Participant getParticipant(String login, String password, String address)
         {
             Participant myParticipant = null;
             try { 
-                Service service = Service.create(new URL(address+ENDPOINT), new QName(URLWebService, nameWebService));
-                WizardServices port = service.getPort(WizardServices.class);
+            	WizardServicesService service = new WizardServicesService(new URL(address+ENDPOINT), new QName(URLWebService, nameWebService));            	
+                WizardServices port = service.getWizardServicesPort();
                 //myWilosUser = port.getWilosUser(login,password);
                   XStream xstream = new XStream(); 
                   xstream.alias("wilos.business.transfertobject.ParticipantTO",Participant.class);
                   xstream.alias("wilos.business.transfertobject.RoleDescriptorTO",RoleDescriptor.class);
                   xstream.alias("wilos.business.transfertobject.TaskDescriptorTO",TaskDescriptor.class);
+                  xstream.alias("wilos.business.transfertobject.TaskDefinitionTO",TaskDescriptor.class);
+                  xstream.alias("wilos.business.transfertobject.StepTO",TaskDescriptor.class);
                   String result = port.getParticipant(login,password);
                   /*System.out.println(result);*/
                 myParticipant = (Participant)xstream.fromXML(result);
@@ -59,13 +61,13 @@ public class WizardServicesProxy {
             }
             return myParticipant;
         }
-        private static List<Process> getAllProcess(String login, String password, String adresseServeur) {
+        
+        private static List<Process> getAllProcess(String login, String password, String address) {
              ArrayList<Process> pros = new  ArrayList<Process>();
              try { 
-                Service service = Service.create(new URL(adresseServeur+ENDPOINT), new QName(URLWebService, nameWebService));
+            	 WizardServicesService service = new WizardServicesService(new URL(address+ENDPOINT), new QName(URLWebService, nameWebService));  
                 // Call Web Service Operation
-                //services.WizardServicesService service = new services.WizardServicesService();
-                WizardServices port = service.getPort(WizardServices.class);
+            	 WizardServices port = service.getWizardServicesPort();
                 java.util.List<String> result = port.getAllProcess(login, password);
                 XStream xstream = new XStream();     
                 for (String strxml : result) {
