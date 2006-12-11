@@ -121,13 +121,32 @@ public class WizardServicesProxy {
             aTmpTask.addTaskDefinition(aTmpTaskDef);
             
             aTmpRole.addPrimaryTask(aTmpTask);
+            
             aTmpTask = new TaskDescriptor();
             aTmpTask.setName("Aimer son programme");
             aTmpTask.setDescription("Un grand moment d'amour");
+            
+            aTmpTaskDef = new TaskDefinition();
+            aTmpTaskDef.setName("Aimer son programme");
+            aTmpTaskDef.setDescription("Un grand moment d'amour");
+            
+            aTmpStep = new Step();
+            aTmpStep.setName("Debugger son programme");
+            aTmpStep.setDescription("Une imcomprehension croissante");
+            aTmpTaskDef.addStep(aTmpStep);
+            
+            aTmpStep = new Step();
+            aTmpStep.setName("Trouver la solution");
+            aTmpStep.setDescription("Ca marche !!");
+            aTmpTaskDef.addStep(aTmpStep);
+            
+            aTmpTask.addTaskDefinition(aTmpTaskDef);
+            
             aTmpRole.addPrimaryTask(aTmpTask);
+            
             aTmpTask = new TaskDescriptor();
             aTmpTask.setName("Passer le balai");
-            aTmpTask.setDescription("Et c'est plus propre");
+            aTmpTask.setDescription("Et c'est plus propre");        
             aTmpRole.addPrimaryTask(aTmpTask);
 
             p.addToRoleDescriptor(aTmpRole);
@@ -137,6 +156,23 @@ public class WizardServicesProxy {
             aTmpRole.setName("Tester");
             aTmpRole.setDescription("Faire des essais, en gros");
             aTmpTask.setName("Tester le programme");
+            
+            aTmpTaskDef = new TaskDefinition();
+            aTmpTaskDef.setName("Ecrire le test");
+            aTmpTaskDef.setDescription("Je devais faire quoi?");
+            
+            aTmpStep = new Step();
+            aTmpStep.setName("Lancer le test");
+            aTmpStep.setDescription("Mais qu'est ce qui se passe?");
+            aTmpTaskDef.addStep(aTmpStep);
+            
+            aTmpStep = new Step();
+            aTmpStep.setName("Trouver la solution");
+            aTmpStep.setDescription("Ca marche !!");
+            aTmpTaskDef.addStep(aTmpStep);
+            
+            aTmpTask.addTaskDefinition(aTmpTaskDef);
+            
             aTmpTask.setDescription("Un grand moment de solitude");
             aTmpRole.addPrimaryTask(aTmpTask);
             aTmpTask = new TaskDescriptor();
