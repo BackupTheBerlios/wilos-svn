@@ -55,10 +55,10 @@ public class WizardServicesProxy {
                       xstream.alias("wilos.business.transfertobject.ParticipantTO",Participant.class);
                       xstream.alias("wilos.business.transfertobject.RoleDescriptorTO",RoleDescriptor.class);
                       xstream.alias("wilos.business.transfertobject.TaskDescriptorTO",TaskDescriptor.class);
-                      xstream.alias("wilos.business.transfertobject.TaskDefinitionTO",TaskDescriptor.class);
-                      xstream.alias("wilos.business.transfertobject.StepTO",TaskDescriptor.class);
+                      xstream.alias("wilos.business.transfertobject.TaskDefinitionTO",TaskDefinition.class);
+                      xstream.alias("wilos.business.transfertobject.StepTO",Step.class);
                       String result = port.getParticipant(login,password);
-                      /*System.out.println(result);*/
+                      System.out.println(result);
                     myParticipant = (Participant)xstream.fromXML(result);
             	}
             }
