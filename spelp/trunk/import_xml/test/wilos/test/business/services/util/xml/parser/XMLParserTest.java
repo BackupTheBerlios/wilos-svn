@@ -4,18 +4,15 @@ package wilos.test.business.services.util.xml.parser;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
-import java.util.Vector;
 
 import junit.framework.TestCase;
 import wilos.business.services.util.xml.parser.XMLParser;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.iteration.Iteration;
+import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.process.Process;
-import wilos.model.spem2.role.RoleDefinition;
 import wilos.model.spem2.role.RoleDescriptor;
-import wilos.model.spem2.task.Step;
-import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
 
 public class XMLParserTest extends TestCase {
@@ -23,7 +20,7 @@ public class XMLParserTest extends TestCase {
 	public static File pathOPenUP =new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "sortieEPF.xml");
 	public static File pathMonTest =new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "monTest.xml");
 	public static File fileError = new File("prout");
-	
+	/*
 	public void testReturnEmptyIfFileEmpty() {
 		
 		Set<Process> processes;
@@ -79,7 +76,7 @@ public class XMLParserTest extends TestCase {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
 	/**
 	 * 
@@ -107,7 +104,7 @@ public class XMLParserTest extends TestCase {
 		}
 	}
 	
-	public void testPhasesFromScrumContainRoleDescriptors() {
+	public void testPhase1FromScrumContainsRoleDescriptors() {
 		HashSet<Process> processes;
 		Iterator<Process> itProc;
 		Iterator<Activity> itAct;
@@ -122,24 +119,161 @@ public class XMLParserTest extends TestCase {
 			while (itProc.hasNext()) {
 				itAct = itProc.next().getActivities().iterator();
 				
-				while (itAct.hasNext()) {
-					bdeSet = (HashSet<BreakdownElement>) itAct.next().getBreakDownElements();
-					itBde = bdeSet.iterator();
-					
-					//assertTrue(itBde.hasNext());
-					isThereARoleDesc = false;
-					while (itBde.hasNext()) {
-						if (itBde.next() instanceof RoleDescriptor)
-							isThereARoleDesc = true;
+					// Only the first Phase has role Descriptors !!!
+					Activity tmpAct = itAct.next();
+					if (tmpAct instanceof Phase) {
+						bdeSet = (HashSet<BreakdownElement>) tmpAct.getBreakDownElements();
+						itBde = bdeSet.iterator();
+						
+						//assertTrue(itBde.hasNext());
+						isThereARoleDesc = false;
+						while (itBde.hasNext()) {
+							if (itBde.next() instanceof RoleDescriptor)
+								isThereARoleDesc = true;
+						}
+						assertTrue(isThereARoleDesc);
 					}
-					assertTrue(isThereARoleDesc);
-				}
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
+	public void testPhase1FromScrumContainsTaskDescriptors() {
+		HashSet<Process> processes;
+		Iterator<Process> itProc;
+		Iterator<Activity> itAct;
+		Activity at;
+		HashSet<BreakdownElement> bdeSet;
+		Iterator<BreakdownElement> itBde;
+		boolean isThereATaskDesc;
+		
+		try {
+			processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
+			itProc = processes.iterator();
+			while (itProc.hasNext()) {
+				itAct = itProc.next().getActivities().iterator();
+				
+					// Only the first Phase has role Descriptors !!!
+					Activity tmpAct = itAct.next();
+					if (tmpAct instanceof Phase) {
+						bdeSet = (HashSet<BreakdownElement>) tmpAct.getBreakDownElements();
+						itBde = bdeSet.iterator();
+						
+						//assertTrue(itBde.hasNext());
+						isThereATaskDesc = false;
+						while (itBde.hasNext()) {
+							if (itBde.next() instanceof TaskDescriptor)
+								isThereATaskDesc = true;
+						}
+						assertTrue(isThereATaskDesc);
+					}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void testPhase2FromScrumContains1Iteration() {
+		HashSet<Process> processes;
+		Iterator<Process> itProc;
+		Iterator<Activity> itAct;
+		HashSet<Activity> actSet;
+		Iterator<Activity> itAct2;
+		
+		try {
+			processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
+			itProc = processes.iterator();
+			while (itProc.hasNext()) {
+				// Iterator on the set of the two Phases of Scrum
+				itAct = itProc.next().getActivities().iterator();
+				
+				// We skip the first phase !!!
+				itAct.next();
+				
+				// We work on the second Phase
+				Phase secondPhase = (Phase) itAct.next();
+				// We get the set of activities of the second Phase
+				actSet = (HashSet<Activity>) secondPhase.getActivities();
+				// And an iterator on it
+				itAct2 = actSet.iterator();
+				
+				// There is only one Iteration in the second Phase
+				assertTrue(itAct2.hasNext());
+				assertTrue(itAct2.next() instanceof Iteration);
+				assertTrue(! itAct2.hasNext());
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void testPhase2IterationFromScrumContainsAllExpected() {
+		HashSet<Process> processes;
+		Iterator<Process> itProc;
+		Iterator<Activity> itAct;
+		HashSet<Activity> secondPhaseActivities;
+		Iterator<Activity> secondPhaseActivitiesIterator;
+		
+		HashSet<String> expectedResults = new HashSet<String>();
+		expectedResults.add("Retrospective");
+		expectedResults.add("Product Owner");
+		expectedResults.add("ScrumMaster");
+		expectedResults.add("Update product backlog");
+		expectedResults.add("StakeHolder");
+		expectedResults.add("Team");
+		expectedResults.add("Manage problems");
+		expectedResults.add("Review sprint");
+		expectedResults.add("Scrum daily meeting");
+		expectedResults.add("Daily work");
+		expectedResults.add("Plan sprint");
+		expectedResults.add("Sprint Phase");
+		
+		int expectedNumber = 12;
+		
+		
+		try {
+			processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
+			itProc = processes.iterator();
+			while (itProc.hasNext()) {
+				// Iterator on the set of the two Phases of Scrum
+				itAct = itProc.next().getActivities().iterator();
+				
+				// We skip the first phase !!!
+				itAct.next();
+				
+				// We work on the second Phase
+				Phase secondPhase = (Phase) itAct.next();
+				// We get the set of activities of the second Phase
+				secondPhaseActivities = (HashSet<Activity>) secondPhase.getActivities();
+				// And an iterator on it
+				secondPhaseActivitiesIterator = secondPhaseActivities.iterator();
+				
+				assertTrue(secondPhaseActivitiesIterator.hasNext());
+				
+				Iteration secondPhaseIteration = (Iteration) secondPhaseActivitiesIterator.next();
+				
+				Iterator<BreakdownElement> it;
+				
+				it = secondPhaseIteration.getBreakDownElements().iterator();
+				
+				int i = 0;
+				while (it.hasNext()) {
+					assertTrue(expectedResults.contains( ((BreakdownElement) it.next()).getName() ) );
+					i += 1;
+				}
+				
+				assertTrue(i == expectedNumber);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	
 	
 	

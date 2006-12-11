@@ -9,7 +9,6 @@ public class FillerProcess extends FillerActivity {
 	public FillerProcess(Element _e, Node _aNode) {
 		super(_e, _aNode);
 		this.fill();
-		System.out.println("Process, my name : " + this.getFilledElement().getName());
 	}
 	
 	protected void fill() {

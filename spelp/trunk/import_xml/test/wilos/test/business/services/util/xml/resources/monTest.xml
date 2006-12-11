@@ -19,6 +19,6 @@
         <BreakdownElement xsi:type="uma:RoleDescriptor" name="ScrumMaster" briefDescription="" id="5" orderingGuide="" suppressed="false" presentationName="ScrumMaster" hasMultipleOccurrences="false" isOptional="false" isPlanned="true" prefix="" isSynchronizedWithSource="true">
           <Role>1</Role>
         </BreakdownElement>
-      <Process xsi:type="uma:DeliveryProcess">
+      <Process xsi:type="uma:DeliveryProcess" id="fake_id" name="monTest Processs" briefDescription="un faux process">
       </Process>  
 </uma:MethodLibrary>

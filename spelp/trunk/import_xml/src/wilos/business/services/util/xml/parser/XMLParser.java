@@ -13,8 +13,8 @@ import javax.xml.xpath.XPathConstants;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import wilos.business.services.util.xml.fillers.FillerActivity;
 import wilos.business.services.util.xml.fillers.FillerElement;
+import wilos.business.services.util.xml.fillers.FillerIteration;
 import wilos.business.services.util.xml.fillers.FillerPhase;
 import wilos.business.services.util.xml.fillers.FillerProcess;
 import wilos.business.services.util.xml.fillers.FillerRole;
@@ -62,9 +62,10 @@ public class XMLParser {
 	private static final String activity = "uma:Activity";
 	private static final String task_descriptor = "uma:TaskDescriptor";
 	private static final String role_descriptor = "uma:RoleDescriptor";
-	private static final String id = "id";
+	private static final String iteration = "uma:Iteration";
 	
 	// Attributes Names
+	private static final String id = "id";
 	private static final String attr_name_xsitype = "xsi:type";
 	private static final String attr_name_variabilityBasedOnElement = "variabilityBasedOnElement" ;
 	
@@ -536,16 +537,19 @@ public class XMLParser {
 		
 		returnedBde = null;
 		
+		
 		bdeId = _node.getAttributes().getNamedItem(id).getNodeValue();
-		for (int i = 0; i < _node.getAttributes().getLength(); i ++) {
-			System.out.println(_node.getAttributes().item(i).getNodeName());
-		}
-		System.out.println("\n");
+//		System.out.println("--- avant liste attributs");
+//		for (int i = 0; i < _node.getAttributes().getLength(); i ++) {
+//			//System.out.println(_node.getAttributes().item(i).getNodeName());
+//		}
+//		System.out.println("--- apres liste attributs");
+//		System.out.println("\n");
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(phase)) {
-//			returnedBde = new Phase();
-//			BdeFiller = new FillerPhase(returnedBde, _node);	
-//			returnedBde = (Phase) BdeFiller.getFilledElement();
+			returnedBde = new Phase();
+			BdeFiller = new FillerPhase(returnedBde, _node);	
+			returnedBde = (Phase) BdeFiller.getFilledElement();
 			
 			returnedBde = getPhaseById(allPhases, bdeId);
 			System.out.println("its a phase");
@@ -559,28 +563,48 @@ public class XMLParser {
 			System.out.println("its a process");
 		}
 		
-		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(role_descriptor)) {
-			returnedBde = new RoleDescriptor();
-			BdeFiller = new FillerRoleDescriptor(returnedBde, _node);	
-			returnedBde = (RoleDescriptor) BdeFiller.getFilledElement();
-			
-			System.out.println("On passe par Role Descriptor");
+		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(role_descriptor)) {			
+			returnedBde = getRoleDescriptorById(allRoleDescriptors, bdeId);
 		}
 		
+		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(task_descriptor)) {
+			returnedBde = getTaskDescriptorById(allTaskDescriptors, bdeId);
+		}
+		
+		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(iteration)) {
+			returnedBde = new Iteration();
+			BdeFiller = new FillerIteration(returnedBde, _node);	
+			returnedBde = (Iteration) BdeFiller.getFilledElement();
+			
+			returnedBde = getIterationById(allIterations, bdeId);
+			
+			System.out.println("On passe par Iteration");
+		}
+		
+		
 		// We're getting with the included elements
-		if (returnedBde instanceof Activity) {
-			for (int i = 0 ; i < _node.getChildNodes().getLength() ; i++) {
-				System.out.println("enfant : " + _node.getChildNodes().item(i).getChildNodes().item(i).getNodeName());
-				tmpBde = getBreakDownElementsFromNode(_node.getChildNodes().item(i));
-				System.out.println(tmpBde.getName());
-				System.out.println("\n");
-				System.out.println("ok");
-				
-				if (tmpBde instanceof Activity) {
-					((Activity) returnedBde).addActivity((Activity) tmpBde);
+		if ((returnedBde != null) && returnedBde instanceof Activity) {
+			NodeList listNode = _node.getChildNodes();
+			
+//			System.out.println("Taille de la liste : " + listNode.getLength());
+			for (int i = 0 ; i < listNode.getLength() ; i++) {
+				if (listNode.item(i).getNodeName().equals(breakdownElement)) {
+					System.out.println("enfant : " + listNode.item(i).getNodeName());
+					tmpBde = getBreakDownElementsFromNode(listNode.item(i));
+					
+					if (tmpBde != null) {
+						System.out.println(tmpBde.getName());
+//						System.out.println("\n");
+//						System.out.println("ok");
+						
+						if (tmpBde instanceof Activity) {
+							((Activity) returnedBde).addActivity((Activity) tmpBde);
+						}
+						else {
+							((Activity) returnedBde).addBreakdownElement(tmpBde);
+						}
+					}
 				}
-				else
-					((Activity) returnedBde).addBreakdownElement(tmpBde);
 			}
 		}
 		
@@ -623,6 +647,11 @@ public class XMLParser {
 		*/
 	}
 	
+	private static BreakdownElement getIterationById(Set<Iteration> allIterations2, String bdeId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	private static BreakdownElement getPhaseById(Set<Phase> allPhases2, String bdeId) {
 		// TODO Auto-generated method stub
 		return null;
@@ -638,7 +667,7 @@ public class XMLParser {
 	 */
 	public static Set<Process> getAllProcesses(File XMLFilePath) throws Exception {
 		Set<Process> processesReturned = new HashSet<Process>() ;
-		
+		System.out.println("\n\n\nDEBUT DE PARSING");
 		if (XMLFilePath.exists()) {
 			XMLUtils.setDocument(XMLFilePath);
 			start(); // initializes the elements sets
@@ -672,7 +701,12 @@ public class XMLParser {
 						
 					}
 				}*/
-				tmpProcess = (Process) getBreakDownElementsFromNode(aNode);
+				
+				if (aNode != null) {
+					tmpProcess = (Process) getBreakDownElementsFromNode(aNode);
+				}
+				else System.out.println("PBBBBBBBBBBBBBBBBBBBBBBBB");
+				
 				
 				processesReturned.add(tmpProcess);
 			}
