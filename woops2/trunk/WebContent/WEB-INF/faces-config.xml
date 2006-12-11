@@ -80,7 +80,7 @@
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
 			<property-name>roleDescriptorService</property-name>
-			<value>#{RoleDEscriptorService}</value>
+			<value>#{RoleDescriptorService}</value>
 		</managed-property>
 	</managed-bean>
 

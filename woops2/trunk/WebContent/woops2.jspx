@@ -123,8 +123,7 @@
 			                                        <ice:outputText
 			                                                value="#{msgs['component.tableactivity.column3']}"/>
 			                                </f:facet>
-										<ice:selectBooleanCheckbox value="#{roledescriptor.name}"
-											disabled="true" />
+											<ice:outputText value="#{roledescriptor.name}" />
 										</ice:column>
 										
 										<ice:column>
@@ -132,8 +131,7 @@
 			                                        <ice:outputText
 			                                                value="#{msgs['component.tableactivity.column4']}"/>
 			                                </f:facet>
-										<ice:selectBooleanCheckbox value="#{roledescriptor.description}"
-											disabled="true" />
+											<ice:outputText value="#{roledescriptor.description}" />
 										</ice:column>
 										
 									</ice:dataTable>

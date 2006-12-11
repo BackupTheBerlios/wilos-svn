@@ -41,8 +41,12 @@ public class RoleDescriptorBean {
 	 */
 	public List<RoleDescriptor> getRoleDescriptorList(String _id) {
 		this.roleDescriptorList = new ArrayList<RoleDescriptor>();
-		roleDescriptorList.addAll(this.roleDescriptorService.getRoleDescriptorsFromProcess(_id));
-		//this.logger.debug("acti list =" + this.activitiesList) ;
+		try {
+			roleDescriptorList.addAll(this.roleDescriptorService.getRoleDescriptorsFromProcess(_id));
+		} catch (Exception e) {
+			logger.error("### RoleDescriptorBean ### "+e);
+		}
+		this.logger.debug("roleDescriptorList =" + this.roleDescriptorList) ;
 		return this.roleDescriptorList ;
 	}
 
