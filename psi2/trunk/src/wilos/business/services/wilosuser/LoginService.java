@@ -1,14 +1,15 @@
-package wilos.business.services.wilosuser;
 
-import java.util.Set;
+package wilos.business.services.wilosuser ;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.Set ;
 
-import wilos.hibernate.misc.wilosuser.WilosUserDao;
-import wilos.model.misc.wilosuser.WilosUser;
+import org.apache.commons.logging.Log ;
+import org.apache.commons.logging.LogFactory ;
+import org.springframework.transaction.annotation.Propagation ;
+import org.springframework.transaction.annotation.Transactional ;
+
+import wilos.hibernate.misc.wilosuser.WilosUserDao ;
+import wilos.model.misc.wilosuser.WilosUser ;
 
 /**
  * The services used by any WilosUser to log into the application
@@ -16,12 +17,12 @@ import wilos.model.misc.wilosuser.WilosUser;
  * @author Marseyeah
  * @author Sakamakak
  */
-@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+@Transactional (readOnly = false, propagation = Propagation.REQUIRED)
 public class LoginService {
 
-	private WilosUserDao wilosUserDao;
+	private WilosUserDao wilosUserDao ;
 
-	protected final Log logger = LogFactory.getLog(this.getClass());
+	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
 	/**
 	 * Getter of wilosUserDao.
@@ -29,7 +30,7 @@ public class LoginService {
 	 * @return the wilosUserDao.
 	 */
 	public WilosUserDao getWilosUserDao() {
-		return this.wilosUserDao;
+		return this.wilosUserDao ;
 	}
 
 	/**
@@ -39,29 +40,29 @@ public class LoginService {
 	 *            The wilosUserDao to set.
 	 */
 	public void setWilosUserDao(WilosUserDao _wilosUserDao) {
-		this.wilosUserDao = _wilosUserDao;
+		this.wilosUserDao = _wilosUserDao ;
 	}
 
 	/**
-	 * TODO Method description
+	 * This method is checking if the pair user/passwd is present
 	 * 
 	 * @param _login
-	 * @param Already
-	 *            hached _password
-	 * @return true if the login and the password exist
+	 * @param _password
+	 *            Already hached password
+	 * @return The WilosUser if the login and the password matches, and null if not.
 	 */
 	public WilosUser getAuthentifiedUser(String _login, String _password) {
-		Set<WilosUser> wilosUsers = this.wilosUserDao.getAllWilosUsers();
-		for (WilosUser user : wilosUsers) {
-			if (user.getLogin().equals(_login)
-					&& user.getPassword().equals(_password)) {
-				this.logger.debug("### connection OK ###");
-				return user;
-			} else {
-				this.logger.debug("### connection PAS OK ###");
+		Set<WilosUser> wilosUsers = this.wilosUserDao.getAllWilosUsers() ;
+		for(WilosUser user : wilosUsers){
+			if(user.getLogin().equals(_login) && user.getPassword().equals(_password)){
+				this.logger.debug("### connection OK ###") ;
+				return user ;
+			}
+			else{
+				this.logger.debug("### connection PAS OK ###") ;
 			}
 		}
-		return null;
+		return null ;
 	}
 
 	/**
@@ -71,19 +72,19 @@ public class LoginService {
 	 * @return True is the login is already present
 	 */
 	public boolean loginExist(String _login) {
-		boolean found = false;
-		String userLogin;
-		Set<WilosUser> wilosUsers = this.wilosUserDao.getAllWilosUsers();
-		for (WilosUser user : wilosUsers) {
-			userLogin = user.getLogin().toUpperCase();
-			if (userLogin.equals(_login.toUpperCase())) {
-				this.logger.debug("### new login " + userLogin
-						+ " already exists ###");
-				return true;
-			} else {
-				this.logger.debug("### new login " + userLogin + " is ok ###");
+		boolean found = false ;
+		String userLogin ;
+		Set<WilosUser> wilosUsers = this.wilosUserDao.getAllWilosUsers() ;
+		for(WilosUser user : wilosUsers){
+			userLogin = user.getLogin().toUpperCase() ;
+			if(userLogin.equals(_login.toUpperCase())){
+				this.logger.debug("### new login " + userLogin + " already exists ###") ;
+				return true ;
+			}
+			else{
+				this.logger.debug("### new login " + userLogin + " is ok ###") ;
 			}
 		}
-		return found;
+		return found ;
 	}
 }

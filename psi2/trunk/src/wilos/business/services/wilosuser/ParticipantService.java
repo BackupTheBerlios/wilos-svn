@@ -13,7 +13,7 @@ import wilos.model.spem2.role.RoleDescriptor;
 import wilos.business.util.Security;
 
 /**
- * The services associated to the ProcessManager
+ * The services associated to the Participant
  * 
  * @author BlackMilk
  * @author Mikamikaze

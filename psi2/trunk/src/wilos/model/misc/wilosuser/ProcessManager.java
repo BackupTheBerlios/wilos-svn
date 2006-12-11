@@ -9,7 +9,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder ;
  * 
  * @author Yoann Lopes
  */
-public class ProcessManager extends WilosUser implements Cloneable{
+public class ProcessManager extends WilosUser implements Cloneable {
 
 	/**
 	 * Default Constructor.
@@ -29,6 +29,28 @@ public class ProcessManager extends WilosUser implements Cloneable{
 	 */
 	public ProcessManager(String _name, String _fName, String _email, String _login, String _password) {
 		super(_name, _fName, _email, _login, _password) ;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#clone()
+	 */
+	@ Override
+	public ProcessManager clone() throws CloneNotSupportedException {
+		ProcessManager processManager = new ProcessManager() ;
+		processManager.copy(this) ;
+		return processManager ;
+	}
+
+	/**
+	 * Copy the object.
+	 * 
+	 * @param _processManager
+	 *            The ProcessManager to copy.
+	 */
+	protected void copy(final ProcessManager _processManager) {
+		super.copy(_processManager) ;
 	}
 
 	/*

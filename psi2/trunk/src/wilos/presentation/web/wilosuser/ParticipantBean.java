@@ -80,7 +80,7 @@ public class ParticipantBean {
 	 */
 	public void changeContentPage(String url) {
 		// TODO factoriser cette fonction pr eviter de l'avoir
-		//dans chaque Bean ;)
+		// dans chaque Bean ;)
 		FacesContext facesContext = FacesContext.getCurrentInstance() ;
 		Object menuObject =
             facesContext.getApplication()

@@ -9,7 +9,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder ;
  * 
  * @author Yoann Lopes
  */
-public abstract class WilosUser implements Cloneable{
+public abstract class WilosUser implements Cloneable {
 
 	private String name ;
 
@@ -152,9 +152,8 @@ public abstract class WilosUser implements Cloneable{
 		this.emailAddress = _wilosUser.emailAddress ;
 		this.login = _wilosUser.login ;
 		this.password = _wilosUser.password ;
-		
 	}
-		
+
 	/*
 	 * (non-Javadoc)
 	 * 

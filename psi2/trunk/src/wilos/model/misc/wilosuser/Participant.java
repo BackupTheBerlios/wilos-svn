@@ -88,8 +88,8 @@ public class Participant extends WilosUser implements Cloneable {
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#clone()
-	 * @Override
 	 */
+	@ Override
 	public Participant clone() throws CloneNotSupportedException {
 		Participant participant = new Participant() ;
 		participant.copy(this) ;

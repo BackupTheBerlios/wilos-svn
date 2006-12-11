@@ -1,24 +1,25 @@
-package wilos.presentation.web.project;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+package wilos.presentation.web.project ;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import javax.faces.application.FacesMessage ;
+import javax.faces.context.FacesContext ;
 
-import wilos.business.services.project.ProjectService;
-import wilos.model.misc.project.Project;
+import org.apache.commons.logging.Log ;
+import org.apache.commons.logging.LogFactory ;
+
+import wilos.business.services.project.ProjectService ;
+import wilos.model.misc.project.Project ;
 
 /**
- * This class represents ... TODO
+ * Managed-Bean link to project_create.jspx
  * 
  * @author martial
  */
 public class ProjectBean {
 
-	private ProjectService projectService;
+	private ProjectService projectService ;
 
-	private Project project;
+	private Project project ;
 
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
@@ -27,8 +28,8 @@ public class ProjectBean {
 	 * 
 	 */
 	public ProjectBean() {
-		this.logger.debug("--- Project --- == creating ..." + this);
-		this.project = new Project();
+		this.logger.debug("--- Project --- == creating ..." + this) ;
+		this.project = new Project() ;
 	}
 
 	/**
@@ -59,7 +60,7 @@ public class ProjectBean {
 	 * @return the project.
 	 */
 	public Project getProject() {
-		return this.project;
+		return this.project ;
 	}
 
 	/**

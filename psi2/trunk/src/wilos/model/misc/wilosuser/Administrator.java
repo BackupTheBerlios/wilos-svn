@@ -32,7 +32,9 @@ public class Administrator extends WilosUser implements Cloneable {
 		super(_name, _fName, _email, _login, _password) ;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#clone()
 	 */
 	@ Override
@@ -42,11 +44,11 @@ public class Administrator extends WilosUser implements Cloneable {
 		return administrator ;
 	}
 
-	
 	/**
 	 * Copy the object.
-	 *
-	 * @param _administrator The administrator to copy.
+	 * 
+	 * @param _administrator
+	 *            The administrator to copy.
 	 */
 	protected void copy(final Administrator _administrator) {
 		super.copy(_administrator) ;
