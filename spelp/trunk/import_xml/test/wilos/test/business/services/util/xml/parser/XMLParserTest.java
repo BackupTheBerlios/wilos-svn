@@ -142,11 +142,11 @@ public class XMLParserTest extends TestCase {
 	}
 	
 	
+	
+	/*// OLDER TEST FUNCTIONS DEPRECATED
 	public void testGetDeliveryProcess() {
 		try {
-			System.out.println("delivery scrum");
 			Set<Process> p2 = XMLParser.getAllProcesses(pathScrum);
-			System.out.println("delivery open up");
 			Set<Process> p3 = XMLParser.getAllProcesses(pathOPenUP);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -159,11 +159,9 @@ public class XMLParserTest extends TestCase {
 	
 	public void testGetProcess(){
 		Process p;		
-		System.out.println("Test de getProcess");
 //		 test avec un fichier XML a nous
 		try {
 			p = XMLParser.getProcess(pathMonTest );
-			System.out.println("Test avec mon test");
 			RoleDescriptor rdXML ;
 			RoleDefinition rdfXML ;
 			TaskDescriptor tdXML ;
@@ -277,7 +275,7 @@ public class XMLParserTest extends TestCase {
 		};
 		for (int i = 0 ; i < f.length ; i++){
 			
-			System.out.println(">>>>>>>"+f[i].getName());;
+			//System.out.println(">>>>>>>"+f[i].getName());;
 			try {
 				p = XMLParser.getProcess(f[i]);
 				assertTrue(p.getBreakDownElements().size() != 0);
@@ -328,7 +326,7 @@ public class XMLParserTest extends TestCase {
 				fail();
 			}
 		}
-	}
+	}*/
 	
 	
 }

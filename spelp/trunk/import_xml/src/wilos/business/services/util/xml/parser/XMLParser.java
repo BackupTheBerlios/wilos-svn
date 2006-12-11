@@ -14,6 +14,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import wilos.business.services.util.xml.fillers.FillerActivity;
+import wilos.business.services.util.xml.fillers.FillerElement;
+import wilos.business.services.util.xml.fillers.FillerPhase;
+import wilos.business.services.util.xml.fillers.FillerProcess;
 import wilos.business.services.util.xml.fillers.FillerRole;
 import wilos.business.services.util.xml.fillers.FillerRoleDescriptor;
 import wilos.business.services.util.xml.fillers.FillerStep;
@@ -21,6 +24,8 @@ import wilos.business.services.util.xml.fillers.FillerTask;
 import wilos.business.services.util.xml.fillers.FillerTaskDescriptor;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.iteration.Iteration;
+import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.process.Process;
 import wilos.model.spem2.role.RoleDefinition;
 import wilos.model.spem2.role.RoleDescriptor;
@@ -30,80 +35,149 @@ import wilos.model.spem2.task.TaskDescriptor;
 
 /**
  * Class XMLParser
- * a static class designed to Parse an XLM File
- * @author faure
- *
+ * a static class designed to Parse an XML File
+ * @author SPELP Team
  */
 public class XMLParser {
-	private static String roleDescriptor = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:RoleDescriptor']";
-	private static String taskDescriptor = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:TaskDescriptor']";
-	private static String roleDefinition =  "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Role' ]";
-	private static String taskDefinition  = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Task']";
-	private static String deliveryProcess = "//Process[@*[namespace-uri() and local-name()='type']='uma:DeliveryProcess']";
+	/* Constants used to parse the XML File */
+	// XPaths Paths
+	private static final String roleDescriptor = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:RoleDescriptor']";
+	private static final String taskDescriptor = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:TaskDescriptor']";
+	private static final String roleDefinition =  "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Role' ]";
+	private static final String taskDefinition  = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Task']";
+	private static final String deliveryProcess = "//Process[@*[namespace-uri() and local-name()='type']='uma:DeliveryProcess']";
 	
-	// sections
-	private static String task = "Task";
-	private static String role = "Role";
-	private static String performedPrimarilyBy = "PerformedPrimarilyBy";
-	private static String additionallyPerformedBy = "AdditionallyPerformedBy";
-	private static String step = "Section";
-	private static String presentation = "Presentation";
-	private static String breakdownElement = "BreakdownElement";
+	// Sections
+	private static final String task = "Task";
+	private static final String role = "Role";
+	private static final String performedPrimarilyBy = "PerformedPrimarilyBy";
+	private static final String additionallyPerformedBy = "AdditionallyPerformedBy";
+	private static final String step = "Section";
+	private static final String presentation = "Presentation";
+	private static final String breakdownElement = "BreakdownElement";
 	
-	// types
-	private static String phase = "uma:Phase";
-	private static String activity = "uma:Activity";
-	private static String task_descriptor = "uma:TaskDescriptor";
-	private static String role_descriptor = "uma:RoleDescriptor";
-	private static String id = "id";
+	// Types
+	private static final String process = "uma:DeliveryProcess";
+	private static final String phase = "uma:Phase";
+	private static final String activity = "uma:Activity";
+	private static final String task_descriptor = "uma:TaskDescriptor";
+	private static final String role_descriptor = "uma:RoleDescriptor";
+	private static final String id = "id";
 	
-	// attributes Names
-	private static String attr_name_xsitype = "xsi:type";
-	private static String attr_name_variabilityBasedOnElement = "variabilityBasedOnElement" ;
+	// Attributes Names
+	private static final String attr_name_xsitype = "xsi:type";
+	private static final String attr_name_variabilityBasedOnElement = "variabilityBasedOnElement" ;
 	
+	/* Variables recording elements */
+	// Filled by fillTaskDefinitionsList and fillRoleDefinitionsList
+	protected static Vector<TaskDefinition> TaskDefinitionsList = new Vector<TaskDefinition> ();
+	protected static Vector<RoleDefinition> RoleDefinitionsList = new Vector<RoleDefinition>() ;
 	
-	protected static Vector<TaskDefinition> TasksList = new Vector<TaskDefinition> ();
-	protected static Vector<RoleDefinition> RoleList = new Vector<RoleDefinition>() ;
+	// this variables contain all the Elements that concern them
 	protected static Set<RoleDescriptor> allRoleDescriptors ;
 	protected static Set<TaskDescriptor> allTaskDescriptors ;
+	protected static Set<Phase> allPhases;
+	protected static Set<Iteration> allIterations;
+	protected static Set<Activity> allActivities;
 	
 	/**
-	 * Start 
-	 * initializes the List in memory
-	 * to launch before everything
+	 * initializes the Lists in memory
+	 * to launch before everything by the parsing method
 	 */
 	private static void start() {
 		try {
+			RoleDefinitionsList = fillRoleDefinitionsList();
+			TaskDefinitionsList = fillTaskDefinitionsList();
 			
-			fillRoleDefinitionList();
-			fillTaskDefinitionList();
+			allRoleDescriptors = getAllRoleDescriptors() ;
+			allTaskDescriptors = getAllTaskDescriptors(allRoleDescriptors);
+			allPhases = getAllPhases();
+			allIterations = getAllIterations();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	/**
-	 * fillTaskDefinitionList
-	 * fill the taskslist with task definition
+	 * fills the taskslist with task definition
+	 * 
+	 * Used By the start method
+	 * @return a list of all the TaskDefinition of the XML File
 	 * @throws Exception
 	 */
-	private static void fillTaskDefinitionList() throws Exception{
-		TasksList.clear();
+	private static Vector<TaskDefinition> fillTaskDefinitionsList() throws Exception{
+		Vector<TaskDefinition> theTaskDefinitionsList; // the return of the function
+		
+		// initializes the List
+		theTaskDefinitionsList = new Vector<TaskDefinition>();
+		theTaskDefinitionsList.clear();
+		
+		// gets all the nodes containing taskDefinions
 		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(taskDefinition,XPathConstants.NODESET);
 		if (nodeReturned == null){
 			throw new Exception ("NO TASKS DEFINITIONS FOUND");
 		}
+		
+		// For each node...
 		Node aNode;
-		for(int i=0;i<nodeReturned.getLength();i++){
+		for (int i = 0; i < nodeReturned.getLength(); i++) {
 			aNode = nodeReturned.item(i);
-			TaskDefinition  aTaskDefinition = new TaskDefinition();
+			
+			// Fills the TaskDefinition from the node
+			TaskDefinition aTaskDefinition = new TaskDefinition();
 			FillerTask aFiller = new FillerTask(aTaskDefinition,aNode);	
 			aTaskDefinition = (TaskDefinition)aFiller.getFilledElement();
 			setStepByTaskDefinition(aTaskDefinition, aNode);
-			TasksList.add(aTaskDefinition);
-		}	
+			
+			theTaskDefinitionsList.add(aTaskDefinition);
+		}
+		
+		return theTaskDefinitionsList;
 	}
 	
+	/**
+	 * fills the RolesList with RoleDefinition
+	 * Used by the start Method
+	 * @return a list of all the RoleDefinition of the XML File
+	 * @throws Exception
+	 */
+	private static Vector<RoleDefinition> fillRoleDefinitionsList () throws Exception {
+		Vector<RoleDefinition> theRoleDefinitionsList; // the return of the function
+		
+		// initializes the List
+		theRoleDefinitionsList = new Vector<RoleDefinition>();
+		theRoleDefinitionsList.clear();
+		
+		// gets all the nodes containing roleDefinions
+		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(roleDefinition,XPathConstants.NODESET);
+		if (nodeReturned == null){
+			throw new Exception ("NO ROLE DEFINITIONS FOUND");
+		}
+		
+		// For each node...
+		Node aNode;
+		for(int i=0;i<nodeReturned.getLength();i++){
+			aNode = nodeReturned.item(i);
+			
+			// Fills the RoleDefinition from the node
+			RoleDefinition  aRoleDefinition = new RoleDefinition();
+			FillerRole aFiller = new FillerRole(aRoleDefinition,aNode);	
+			aRoleDefinition = (RoleDefinition)aFiller.getFilledElement();
+			
+			theRoleDefinitionsList.add(aRoleDefinition);
+		}	
+		return theRoleDefinitionsList;
+	}
+	
+	/** 
+	 * getAllProcesses_old
+	 * First Version of the getAllProcesses Function
+	 * 
+	 * @deprecated
+	 * @param f the XML File t use
+	 * @return a Set containing all the processes of the Files
+	 * @throws Exception
+	 */
 	protected static Set<Process> getAllProcesses_old(File f) throws Exception {
 		HashSet<Process> processReturned = new HashSet<Process>() ;
 		
@@ -156,29 +230,10 @@ public class XMLParser {
 	}
 	
 	/**
-	 * fillRoleDefinitionList
-	 * fill the RolesList with RoleDefinition
-	 * @throws Exception
-	 */
-	private static void fillRoleDefinitionList () throws Exception {
-		RoleList.clear();
-		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(roleDefinition,XPathConstants.NODESET);
-		if (nodeReturned == null){
-			throw new Exception ("NO ROLE DEFINITIONS FOUND");
-		}
-		Node aNode;
-		for(int i=0;i<nodeReturned.getLength();i++){
-			aNode = nodeReturned.item(i);
-			RoleDefinition  aRoleDefinition = new RoleDefinition();
-			FillerRole aFiller = new FillerRole(aRoleDefinition,aNode);	
-			aRoleDefinition = (RoleDefinition)aFiller.getFilledElement();
-			RoleList.add(aRoleDefinition);
-		}	
-	}
-	
-	/**
 	 * getProcess
 	 * Return a Process from a file
+	 * Deprecated, use getAllProcesses instead
+	 * @deprecated
 	 * @param f a XML file
 	 * @return the process
 	 * @throws Exception 
@@ -201,12 +256,12 @@ public class XMLParser {
 		try{			
 			// get all the roles descriptor
 			Set<RoleDescriptor> ensRole = getAllRoleDescriptors() ;
-			for (Iterator i = ensRole.iterator() ; i.hasNext() ;){
+			for (Iterator i = ensRole.iterator() ; i.hasNext() ;) {
 				p.addBreakdownElement((BreakdownElement) i.next());
 			}
 			// get all the tasks descriptor
 			Set<TaskDescriptor> allTasks = getAllTaskDescriptors(ensRole);
-			for (Iterator i = allTasks.iterator() ; i.hasNext() ;){
+			for (Iterator i = allTasks.iterator() ; i.hasNext() ;) {
 				p.addBreakdownElement((BreakdownElement) i.next());
 			}
 		}
@@ -285,9 +340,9 @@ public class XMLParser {
 	}
 	
 	private static TaskDefinition getTaskDefinitionByID(String _id){
-		for (int i = 0 ; i < TasksList.size() ; i ++){
-			if (TasksList.get(i).getGuid().equals(_id)){
-				return TasksList.get(i);
+		for (int i = 0 ; i < TaskDefinitionsList.size() ; i ++){
+			if (TaskDefinitionsList.get(i).getGuid().equals(_id)){
+				return TaskDefinitionsList.get(i);
 			}
 		}
 		return null ;
@@ -316,7 +371,6 @@ public class XMLParser {
 	}
 	
 	/**
-	 * TODO PAUL
 	 * @param _t
 	 * @param _n
 	 * @param _s
@@ -348,7 +402,7 @@ public class XMLParser {
 	 * @param _s the set of roleDescriptor available
 	 * @throws Exception
 	 */
-	private static void setMainRoleByTaskDescriptor(TaskDescriptor _t,Node _n,Set<RoleDescriptor> _s) throws Exception {
+	private static void setMainRoleByTaskDescriptor(TaskDescriptor _t, Node _n, Set<RoleDescriptor> _s) throws Exception {
 		// getting the id of the role
 		String idRole = "" ;
 		NodeList listOfTdNodes = _n.getChildNodes() ;
@@ -399,7 +453,7 @@ public class XMLParser {
 		}
 	}
 	
-	private static RoleDescriptor getRoleDescriptorById(Set<RoleDescriptor> aSet,String id){
+	private static RoleDescriptor getRoleDescriptorById(Set<RoleDescriptor> aSet, String id){
 		for (Iterator i = aSet.iterator() ; i.hasNext() ;){
 			RoleDescriptor tmp = (RoleDescriptor) i .next();
 			if (tmp.getGuid().equals(id)){
@@ -417,6 +471,16 @@ public class XMLParser {
 			}
 		}
 		return null ;
+	}
+	
+	private static Set<Iteration> getAllIterations() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private static Set<Phase> getAllPhases() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	/**
@@ -448,17 +512,82 @@ public class XMLParser {
 		return roleList;
 	}
 	
-	private static RoleDefinition getRoleDefinitionByID(String _id){
-		for (int i = 0 ; i < RoleList.size() ; i ++){
-			if (RoleList.get(i).getGuid().equals(_id)){
-				return RoleList.get(i);
+	private static RoleDefinition getRoleDefinitionByID(String _id) {
+		for (int i = 0 ; i < RoleDefinitionsList.size() ; i ++){
+			if (RoleDefinitionsList.get(i).getGuid().equals(_id)){
+				return RoleDefinitionsList.get(i);
 			}
 		}
 		return null ;
 	}
 	
-	private static BreakdownElement getBreakDownElementsFromNode (Node _node){
-		BreakdownElement bde ;
+	/**
+	 * Returns the BreakdownElement filled from the node, with all the BreakdownElements that
+	 * belong to it
+	 * @param _node The Node containing the main info of the BreakdownElement
+	 * @return the BreakdownELement filled
+	 */
+	private static BreakdownElement getBreakDownElementsFromNode (Node _node) {
+		BreakdownElement returnedBde ; // the BreakdownElement Returned by the function
+		BreakdownElement tmpBde; // used to receive the temp result of this function
+									// when called recursively
+		FillerElement BdeFiller; // Filler used to fill Elements;
+		String bdeId; // used when calling one of the getElementById functions (ex : getPhase by id);
+		
+		returnedBde = null;
+		
+		bdeId = _node.getAttributes().getNamedItem(id).getNodeValue();
+		for (int i = 0; i < _node.getAttributes().getLength(); i ++) {
+			System.out.println(_node.getAttributes().item(i).getNodeName());
+		}
+		System.out.println("\n");
+		
+		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(phase)) {
+//			returnedBde = new Phase();
+//			BdeFiller = new FillerPhase(returnedBde, _node);	
+//			returnedBde = (Phase) BdeFiller.getFilledElement();
+			
+			returnedBde = getPhaseById(allPhases, bdeId);
+			System.out.println("its a phase");
+		}
+		
+		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(process)) {
+			returnedBde = new Process();
+			BdeFiller = new FillerProcess(returnedBde, _node);	
+			returnedBde = (Process) BdeFiller.getFilledElement();
+			
+			System.out.println("its a process");
+		}
+		
+		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(role_descriptor)) {
+			returnedBde = new RoleDescriptor();
+			BdeFiller = new FillerRoleDescriptor(returnedBde, _node);	
+			returnedBde = (RoleDescriptor) BdeFiller.getFilledElement();
+			
+			System.out.println("On passe par Role Descriptor");
+		}
+		
+		// We're getting with the included elements
+		if (returnedBde instanceof Activity) {
+			for (int i = 0 ; i < _node.getChildNodes().getLength() ; i++) {
+				System.out.println("enfant : " + _node.getChildNodes().item(i).getChildNodes().item(i).getNodeName());
+				tmpBde = getBreakDownElementsFromNode(_node.getChildNodes().item(i));
+				System.out.println(tmpBde.getName());
+				System.out.println("\n");
+				System.out.println("ok");
+				
+				if (tmpBde instanceof Activity) {
+					((Activity) returnedBde).addActivity((Activity) tmpBde);
+				}
+				else
+					((Activity) returnedBde).addBreakdownElement(tmpBde);
+			}
+		}
+		
+		return returnedBde;
+		
+		
+		/*
 		if (_node.getAttributes().getNamedItem(attr_name_variabilityBasedOnElement) != null){
 			// TODO capability
 			System.out.println("traitement des capability pattern");
@@ -468,13 +597,13 @@ public class XMLParser {
 			// creating the current breakdownelement
 			if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(phase)
 					|| _node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(activity)){
-				bde = new Activity();
+				returnedBde = new Activity();
 				// TODO FILLER ACTIVITY
-				for (int i = 0 ; i < _node.getChildNodes().getLength() ; i++){
+				for (int i = 0 ; i < _node.getChildNodes().getLength() ; i++) {
 					if (_node.getChildNodes().item(i).getNodeName().equals(breakdownElement)){
 						BreakdownElement tmpBde = getBreakDownElementsFromNode(_node.getChildNodes().item(i));
 						if (tmpBde instanceof Activity){
-							bde.addActivity((Activity)tmpBde);
+							returnedBde.addActivity((Activity)tmpBde);
 							//bde.a
 						}
 						else {
@@ -484,33 +613,45 @@ public class XMLParser {
 				}
 			}
 			else if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(task_descriptor)) {
-				bde = getTaskDescriptorById(allTaskDescriptors, bdeId);
+				returnedBde = getTaskDescriptorById(allTaskDescriptors, bdeId);
 			}
 			else if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(role_descriptor)){
-				bde = getRoleDescriptorById(allRoleDescriptors, bdeId);
+				returnedBde = getRoleDescriptorById(allRoleDescriptors, bdeId);
 			}
 		}
 		return null;
+		*/
 	}
 	
+	private static BreakdownElement getPhaseById(Set<Phase> allPhases2, String bdeId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * getAllProcesses
+	 * Returns a Set of the processes contained in the XML File
+	 * 
+	 * @param XMLFilePath Path of the XML File
+	 * @return Set of the processes
+	 * @throws Exception
+	 */
 	public static Set<Process> getAllProcesses(File XMLFilePath) throws Exception {
 		Set<Process> processesReturned = new HashSet<Process>() ;
 		
 		if (XMLFilePath.exists()) {
 			XMLUtils.setDocument(XMLFilePath);
-			start();
-			//allRoleDescriptors.clear();
-			allRoleDescriptors = getAllRoleDescriptors() ;
-			//allTaskDescriptors.clear() ;
-			allTaskDescriptors = getAllTaskDescriptors(allRoleDescriptors);
+			start(); // initializes the elements sets
 			
+			// The List of all the nodes containing Processes
 			NodeList nodeReturned = (NodeList)XMLUtils.evaluate(deliveryProcess,XPathConstants.NODESET);
 			
-			Node aNode;
-			
+			Node aNode;			
 			for(int i = 0; i < nodeReturned.getLength(); i++) {
 				Process tmpProcess = new Process();
 				aNode = nodeReturned.item(i);
+				
+				/*
 				NodeList myChildNodes = aNode.getChildNodes() ;
 				
 				for (int j = 0 ; j < myChildNodes.getLength() ; j ++){
@@ -526,8 +667,13 @@ public class XMLParser {
 							
 							tmpProcess.addActivity(theActivityFilled);
 						}
+						
+						//tmpProcess = getBreakDownElementsFromNode();
+						
 					}
-				}
+				}*/
+				tmpProcess = (Process) getBreakDownElementsFromNode(aNode);
+				
 				processesReturned.add(tmpProcess);
 			}
 		}
