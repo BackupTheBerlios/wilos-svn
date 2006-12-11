@@ -329,7 +329,7 @@ em {
 } 
  .iceOutConStatInactive {
      position: absolute; 
-     background-image: url( ../images/connect_idle.gif ); 
+     background-image: url( ../images/connect_idle_tsp.gif ); 
      background-position: top; 
      background-repeat: no-repeat; 
      background-color:#BEB4CC;
@@ -338,7 +338,7 @@ em {
 } 
  .iceOutConStatActive { 
      position: absolute; 
-     background-image: url( ../images/connect_active.gif ); 
+     background-image: url( ../images/connect_active_tsp.gif ); 
      background-position: top; 
      background-repeat: no-repeat; 
      width: 25px; 
@@ -346,7 +346,7 @@ em {
 } 
  .iceOutConStatCaution { 
      position: absolute; 
-     background-image: url( ../images/connect_caution.gif ); 
+     background-image: url( ../images/connect_caution_tsp.gif ); 
      background-position: top; 
      background-repeat: no-repeat; 
      width: 25px; 
@@ -354,7 +354,7 @@ em {
 }
  .iceOutConStatDisconnect { 
      position: absolute;
-     background-image: url( ../images/connect_disconnected.gif ); 
+     background-image: url( ../images/connect_disconnected_tsp.gif ); 
      background-position: top; 
      background-repeat: no-repeat; 
      width: 25px; 

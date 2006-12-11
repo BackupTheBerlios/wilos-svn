@@ -140,6 +140,51 @@ public class ParticipantBean {
 	}
 
 	/**
+	 * Getter of loginService.
+	 *
+	 * @return the loginService.
+	 */
+	public LoginService getLoginService() {
+		return this.loginService ;
+	}
+
+	/**
+	 * Setter of loginService.
+	 *
+	 * @param _loginService The loginService to set.
+	 */
+	public void setLoginService(LoginService _loginService) {
+		this.loginService = _loginService ;
+	}
+
+	/**
+	 * Getter of passwordConfirmation.
+	 *
+	 * @return the passwordConfirmation.
+	 */
+	public String getPasswordConfirmation() {
+		return this.passwordConfirmation ;
+	}
+
+	/**
+	 * Setter of passwordConfirmation.
+	 *
+	 * @param _passwordConfirmation The passwordConfirmation to set.
+	 */
+	public void setPasswordConfirmation(String _passwordConfirmation) {
+		this.passwordConfirmation = _passwordConfirmation ;
+	}
+
+	/**
+	 * Setter of rolesList.
+	 *
+	 * @param _rolesList The rolesList to set.
+	 */
+	public void setRolesList(List<RoleDescriptor> _rolesList) {
+		this.rolesList = _rolesList ;
+	}
+
+	/**
 	 * Setter of participantService.
 	 * 
 	 * @param _participantService
@@ -147,22 +192,6 @@ public class ParticipantBean {
 	 */
 	public void setParticipantService(ParticipantService _participantService) {
 		this.participantService = _participantService;
-	}
-
-	public String getPasswordConfirmation() {
-		return passwordConfirmation;
-	}
-
-	public void setPasswordConfirmation(String passwordConfirmation) {
-		this.passwordConfirmation = passwordConfirmation;
-	}
-
-	public LoginService getLoginService() {
-		return this.loginService;
-	}
-
-	public void setLoginService(LoginService _loginService) {
-		this.loginService = _loginService;
 	}
 
 }

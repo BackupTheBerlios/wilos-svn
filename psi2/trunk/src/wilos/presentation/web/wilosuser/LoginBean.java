@@ -13,7 +13,6 @@ import wilos.model.misc.wilosuser.ProjectDirector ;
 import wilos.model.misc.wilosuser.WilosUser ;
 import wilos.presentation.web.template.ConnectViewBean ;
 import wilos.presentation.web.template.MenuBean ;
-import wilos.presentation.web.template.PageContentBean ;
 
 /**
  * Managed-Bean link to participantSubscribe.jspx
@@ -131,6 +130,12 @@ public class LoginBean {
 		return "" ;
 	}
 
+	
+	/**
+	 * TODO Method description
+	 *
+	 * @param b
+	 */
 	public void changeConnectView(boolean b) {
 		FacesContext facesContext = FacesContext.getCurrentInstance() ;
 		Object connectObject = facesContext.getApplication().createValueBinding("#{connect}").getValue(facesContext) ;

@@ -7,16 +7,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import com.icesoft.faces.component.ext.HtmlDataTable;
-import com.icesoft.faces.component.ext.HtmlPanelGroup;
-import com.icesoft.faces.component.ext.HtmlSelectBooleanCheckbox;
-import com.icesoft.faces.component.ext.UIColumns;
 
 import wilos.business.services.role.RoleService;
 import wilos.model.spem2.role.RoleDescriptor;
@@ -158,12 +154,8 @@ public class RoleBean {
 	
 	public void addRoleChangeListener(ValueChangeEvent newRole)
 	{
-		HtmlSelectBooleanCheckbox checkBox = (HtmlSelectBooleanCheckbox)newRole.getComponent();
-		HtmlPanelGroup hpg = (HtmlPanelGroup)checkBox.getParent();
-		UIColumns column = (UIColumns)hpg.getParent();
-		String roleName = column.getVar();
+		String roleName = (String)FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("roleD");
 		this.rolesParticipant.put(roleName,(Boolean)newRole.getNewValue());
-		System.out.println(roleName);
 	}
 
 	/**
@@ -177,7 +169,8 @@ public class RoleBean {
 				.getRolesForAParticipant();
 		for (Iterator iter = hashTemp.keySet().iterator(); iter.hasNext();) {
 			rd = (RoleDescriptor) iter.next();
-			this.rolesParticipant.put(rd.getName(), hashTemp.get(rd));
+			if(!this.rolesParticipant.containsKey(rd.getName()))
+				this.rolesParticipant.put(rd.getName(), hashTemp.get(rd));
 		}
 		return this.rolesParticipant;
 	}
@@ -201,7 +194,9 @@ public class RoleBean {
 		HashSet<String> os = new HashSet<String>((Set<String>) this
 				.getRolesParticipant().keySet());
 		for (Iterator iter = os.iterator(); iter.hasNext();) {
-			this.keysRolesParticipant.add((String) iter.next());
+			String roleName = (String) iter.next();
+			if(!this.keysRolesParticipant.contains(roleName))
+				this.keysRolesParticipant.add(roleName);
 		}
 		return this.keysRolesParticipant;
 	}

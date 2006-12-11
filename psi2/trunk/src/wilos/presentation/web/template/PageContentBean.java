@@ -41,11 +41,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * <p>The PageContentBean class is responsible for holding state information
- * which will allow a TreeNavigation and NavigationBean display dynamic content.
- * </p>
- *
- * @since 0.3.0
+ * TODO
  */
 public class PageContentBean extends IceUserObject {
 

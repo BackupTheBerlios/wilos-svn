@@ -1,14 +1,10 @@
 package wilos.presentation.web.template;
 
 /**
- * <p>The MenuBean class is responsible for storing the state of the two
- * panel stacks which display dynamic content.  </p>
- *
- * @since 0.3.0
+ * TODO
  */
 public class ConnectViewBean {
 
-    // selected page content bean.
     private ConnectContentBean selectedPanel;
 
     /**
@@ -31,6 +27,13 @@ public class ConnectViewBean {
         }
     }
     
+    
+    /**
+     * TODO Method description
+     *
+     * @param connected
+     * @return
+     */
     public String connected(boolean connected){
     	ConnectContentBean connectContent = new ConnectContentBean();
     	if(connected)

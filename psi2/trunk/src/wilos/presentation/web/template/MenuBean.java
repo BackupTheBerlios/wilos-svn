@@ -1,14 +1,10 @@
 package wilos.presentation.web.template;
 
 /**
- * <p>The MenuBean class is responsible for storing the state of the two
- * panel stacks which display dynamic content.  </p>
- *
- * @since 0.3.0
+ * TODO
  */
 public class MenuBean {
 
-    // selected page content bean.
     private PageContentBean selectedPanel;
 
     /**
@@ -31,6 +27,12 @@ public class MenuBean {
         }
     }
     
+    
+    /**
+     * TODO Method description
+     *
+     * @return
+     */
     public String welcome(){
     	PageContentBean pcb = new PageContentBean();
     	pcb.setTemplateName("welcome");
@@ -39,6 +41,12 @@ public class MenuBean {
     	return "";
     }
     
+    
+    /**
+     * TODO Method description
+     *
+     * @return
+     */
     public String subscribe(){
     	PageContentBean pcb = new PageContentBean();
     	pcb.setTemplateName("subscribe");
@@ -47,6 +55,12 @@ public class MenuBean {
     	return "";
     }
     
+    
+    /**
+     * TODO Method description
+     *
+     * @return
+     */
     public String wilos(){
     	PageContentBean pcb = new PageContentBean();
     	pcb.setTemplateName("wilos");
@@ -55,6 +69,12 @@ public class MenuBean {
     	return "";
     }
 
+	
+	/**
+	 * TODO Method description
+	 *
+	 * @param url
+	 */
 	public void changePage(String url) {
 		PageContentBean pcb = new PageContentBean();
     	pcb.setTemplateName(url);

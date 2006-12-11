@@ -14,7 +14,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import wilos.business.services.wilosuser.ParticipantService;
 import wilos.hibernate.misc.wilosuser.ParticipantDao;
 import wilos.hibernate.spem2.role.RoleDescriptorDao;
 import wilos.model.misc.wilosuser.Participant;
@@ -83,49 +82,39 @@ public class RoleService {
 		this.roleDescriptorDao = _roleDescriptorDao;
 	}
 	
+	
+	/**
+	 * TODO Method description
+	 *
+	 * @return
+	 */
 	@Transactional(readOnly = true)
 	public HashMap<RoleDescriptor,Boolean> getRolesForAParticipant()
 	{
 		RoleDescriptor globalRoleTemp;
-		//RoleDescriptor partRoleTemp;
 		Boolean test;
 		HashMap<RoleDescriptor,Boolean> participantRoles = new HashMap<RoleDescriptor,Boolean>();
-		/*for(Iterator iter = this.getRolesDescriptor().iterator(); iter.hasNext();){
-			roleTemp = (RoleDescriptor)iter.next();
-			participantRoles.put(roleTemp,test);//,false);			
-		}*/
 		
 		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
 		HttpSession sess = req.getSession() ;
 		WilosUser user = (WilosUser) sess.getAttribute("wilosUser") ;
 		String user_login = user.getLogin();
-		/*if(user instanceof Participant)
-		{*/
-			Participant currentParticipant = this.participantDao.getParticipant(user_login);
-			for(Iterator globalRolesIter = this.getRolesDescriptor().iterator(); globalRolesIter.hasNext();)
+		Participant currentParticipant = this.participantDao.getParticipant(user_login);
+		for(Iterator globalRolesIter = this.getRolesDescriptor().iterator(); globalRolesIter.hasNext();)
+		{
+			globalRoleTemp = (RoleDescriptor)globalRolesIter.next();
+			
+			if(currentParticipant.getRolesListForAProject().contains(globalRoleTemp))
 			{
-				globalRoleTemp = (RoleDescriptor)globalRolesIter.next();
-				
-				if(currentParticipant.getRolesListForAProject().contains(globalRoleTemp))
-				{
-					test = new Boolean(true);
+				test = new Boolean(true);
+				if(!participantRoles.containsKey(globalRoleTemp))
 					participantRoles.put(globalRoleTemp, test);
-				} else {
-					test = new Boolean(false);
+			} else {
+				test = new Boolean(false);
+				if(!participantRoles.containsKey(globalRoleTemp))
 					participantRoles.put(globalRoleTemp, test);
-				}
 			}
-		//}
-		/*Recuperation du participant dans la session*/
-		/*Participant currentParticipant = FacesContext.getCurrentInstance();
-		 *for(Iterator iter = currentParticipant.getRolesListForAProject();iter.hasNext();)
-		 *{
-		 *	roleTemp = (RoleDescriptor)iter.next();
-		 *	if(participantRoles.containsKey(roleTemp))
-		 *	{
-		 *		participantRoles.put(roleTemp,true);
-		 *	}
-		 *}*/
+		}
 		return participantRoles;
 	}
 
@@ -158,7 +147,7 @@ public class RoleService {
 	}
 
 	/**
-	 * Save roles affectation for a participant.
+	 * TODO Save roles affectation for a participant.
 	 *
 	 *	@return the page name where navigation has to be redirected to
 	 */
@@ -171,12 +160,32 @@ public class RoleService {
 		
 		for (Iterator rolesIter = rolesParticipant.keySet().iterator(); rolesIter.hasNext();) {
 			String roleName = (String) rolesIter.next();
-			if(rolesParticipant.get(roleName).booleanValue())
+			RoleDescriptor roleDescriptor = this.getRoleDescriptorByName(roleName);
+			if(roleDescriptor!=null)
 			{
-				RoleDescriptor roleDescriptor = this.roleDescriptorDao.getRoleDescriptor(roleName);
-				currentParticipant.addToRoleDescriptor(roleDescriptor);
+				if(rolesParticipant.get(roleName).booleanValue())		
+					currentParticipant.addToRoleDescriptor(roleDescriptor);
+				else
+					currentParticipant.removeFromRoleDescriptor(roleDescriptor);
 			}
 		}
-		return "welcome";
+		return "";
+	}
+	
+	
+	/**
+	 * TODO Method description
+	 *
+	 * @param roleName
+	 * @return
+	 */
+	public RoleDescriptor getRoleDescriptorByName(String roleName){
+		for(Iterator roleIter = this.getRolesDescriptor().iterator(); roleIter.hasNext();){
+			RoleDescriptor roleDescriptor = (RoleDescriptor) roleIter.next() ;
+			if(roleDescriptor.getName().equals(roleName))
+				return roleDescriptor;			
+		}
+		return null;
+		
 	}
 }

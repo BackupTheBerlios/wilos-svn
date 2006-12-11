@@ -15,7 +15,7 @@
         <ice:outputText style="padding-top:0px; padding-bottom:0px;" value="" escape="false" />
         <link href="css/ice.css" rel="stylesheet" type="text/css" />
     </head>
-    <body bgcolor="#ded9e6">
+    <body>
     <div id="body">
     <!--
             This is the main formating table which represents a layout view for
@@ -56,22 +56,22 @@
 
                 <div class="demoWindow">
                     <ice:panelStack id="panelStack"
-                        styleClass=""
+                        styleClass="componentContentPanelStack"
                         selectedPanel="#{menu.selectedPanel.templateName}">
 
-					<ice:panelGroup id="wilos" styleClass="" >
+					<ice:panelGroup id="wilos" styleClass="contentIncludePanelGroup" >
                         <f:subview id="wilos_view">
                             <jsp:directive.include file="wilos.jspx" />
                         </f:subview>
                     </ice:panelGroup>
                     
-                    <ice:panelGroup id="welcome" styleClass="" >
+                    <ice:panelGroup id="welcome" styleClass="contentIncludePanelGroup" >
                         <f:subview id="welcome_view">
                             <jsp:directive.include file="welcome.jspx" />
                         </f:subview>
                     </ice:panelGroup>
 
-                    <ice:panelGroup id="subscribe" styleClass="" >
+                    <ice:panelGroup id="subscribe" styleClass="contentIncludePanelGroup" >
                         <f:subview id="subscribe_view">
                             <jsp:directive.include file="participantSubscribe.jspx" />
                         </f:subview>

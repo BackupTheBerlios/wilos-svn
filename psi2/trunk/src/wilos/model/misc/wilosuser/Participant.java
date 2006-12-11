@@ -71,7 +71,7 @@ public class Participant extends WilosUser implements Cloneable {
 	 */
 	public void removeAllRoleDescriptors() {
 		for(RoleDescriptor _roleD : this.rolesListForAProject){
-			// _roleD.removeFromParticipant(this);
+			_roleD.removeParticipant(this);
 		}
 		this.rolesListForAProject.clear() ;
 	}
