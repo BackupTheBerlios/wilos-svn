@@ -197,12 +197,6 @@
 								</ice:panelGrid>
 							</ice:panelTab>
 							
-							<ice:panelTab label="Display Imported Process File">
-								<ice:panelGroup label="Process Display">
-									<br />
-								</ice:panelGroup>
-
-							</ice:panelTab>
 						</ice:panelTabSet>
 					</ice:panelGrid>
 				</ice:form>

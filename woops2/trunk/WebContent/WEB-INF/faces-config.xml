@@ -87,7 +87,7 @@
 	<managed-bean>
 		<managed-bean-name>XmlFileImportBean</managed-bean-name>
 		<managed-bean-class>
-			wilos.presentation.web.icefaces.tree.XmlFileImportBean
+			wilos.presentation.web.XmlFileImportBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
@@ -95,7 +95,7 @@
 			<value>#{ProcessService}</value>
 		</managed-property>
 	</managed-bean>
-
+	<!--  
 	<managed-bean>
 		<managed-bean-name>TreeViewBean</managed-bean-name>
 		<managed-bean-class>
@@ -107,6 +107,7 @@
 			<value>#{ProcessService}</value>
 		</managed-property>
 	</managed-bean>
+	-->
 
 	<navigation-rule>
 		<description>Theme Reload</description>

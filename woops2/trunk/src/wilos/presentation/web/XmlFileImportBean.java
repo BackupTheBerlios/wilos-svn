@@ -1,4 +1,4 @@
-package wilos.presentation.web.icefaces.tree;
+package wilos.presentation.web;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.process.ProcessService;
 import wilos.model.spem2.process.Process;
+import wilos.presentation.web.icefaces.tree.TreeBean;
 
 import com.icesoft.faces.component.inputfile.InputFile;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
