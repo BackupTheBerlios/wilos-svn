@@ -4,10 +4,12 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
+ *
+ * This class represents all tests concerning Wilos users DAO classes.
+ *
  * @author Martial
- *
- * This class represents ... TODO
- *
+ * @author Marseyeah
+ * 
  */
 public class AllTests {
 
@@ -15,6 +17,10 @@ public class AllTests {
 		TestSuite suite = new TestSuite("Test for hibernate") ;
 		//$JUnit-BEGIN$
 		suite.addTestSuite(ParticipantDaoTest.class) ;
+		suite.addTestSuite(AdministratorDaoTest.class) ;
+		suite.addTestSuite(ProcessManagerDaoTest.class) ;
+		suite.addTestSuite(ProjectDirectorDaoTest.class) ;
+		suite.addTestSuite(WilosUserDaoTest.class) ;
 		//$JUnit-END$
 		return suite ;
 	}
