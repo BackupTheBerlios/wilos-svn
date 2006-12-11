@@ -104,6 +104,20 @@
 		</managed-property>
 	</managed-bean>
 	
+	<!-- Managed Bean for menu interaction -->
+	<managed-bean>
+		<managed-bean-name>menu</managed-bean-name>
+		<managed-bean-class>wilos.presentation.web.template.MenuBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>treeMenu</managed-bean-name>
+		<managed-bean-class>wilos.presentation.web.template.TreeMenu</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	
 	<!-- Managed Bean for dynamic style examples -->
 	<managed-bean>
 		<managed-bean-name>styleBean</managed-bean-name>

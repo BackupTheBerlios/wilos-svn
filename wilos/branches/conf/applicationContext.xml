@@ -220,6 +220,7 @@
 	<bean id="RoleService"
 		class="wilos.business.services.role.RoleService">
 		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
+		<property name="participantDao" ref="ParticipantDao" />
 	</bean>
 	
 	<bean id="ProcessService"
