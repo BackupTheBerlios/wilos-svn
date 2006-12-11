@@ -8,9 +8,15 @@ import java.util.List;
 import java.util.Set;
 
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import com.icesoft.faces.component.ext.HtmlDataTable;
+import com.icesoft.faces.component.ext.HtmlPanelGroup;
+import com.icesoft.faces.component.ext.HtmlSelectBooleanCheckbox;
+import com.icesoft.faces.component.ext.UIColumns;
 
 import wilos.business.services.role.RoleService;
 import wilos.model.spem2.role.RoleDescriptor;
@@ -30,13 +36,13 @@ public class RoleBean {
 
 	private List<String> keysRolesParticipant = new ArrayList<String>();
 
+	private RoleDescriptor roleDescriptor ;
+	
 	private RoleService roleService;
+	
+	private int project=1;
 
-	private RoleDescriptor roleDescriptor;
-
-	private int project = 1;
-
-	protected final Log logger = LogFactory.getLog(this.getClass());
+	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
 	/**
 	 * Constructor.
@@ -146,8 +152,18 @@ public class RoleBean {
 	 * Save roles of a participant
 	 * 
 	 */
-	public void saveRoleActionListener(ActionEvent _event) {
-		// ajouter la sauvegarde du participant
+	public void saveParticipantRoles(){
+		this.roleService.saveParticipantRoles(this.getRolesParticipant());
+	}
+	
+	public void addRoleChangeListener(ValueChangeEvent newRole)
+	{
+		HtmlSelectBooleanCheckbox checkBox = (HtmlSelectBooleanCheckbox)newRole.getComponent();
+		HtmlPanelGroup hpg = (HtmlPanelGroup)checkBox.getParent();
+		UIColumns column = (UIColumns)hpg.getParent();
+		String roleName = column.getVar();
+		this.rolesParticipant.put(roleName,(Boolean)newRole.getNewValue());
+		System.out.println(roleName);
 	}
 
 	/**

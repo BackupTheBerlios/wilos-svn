@@ -1,0 +1,3 @@
+<div class="wilos">
+   <h1><ice:outputText value="Page d'accueil de Wilos"/></h1>
+</div>

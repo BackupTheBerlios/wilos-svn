@@ -17,7 +17,7 @@
 	<link href="css/css.css" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
-	<ice:form id="form">
+	<ice:form id="connect_form">
 		<ice:messages style="color:red;" showDetail="true"/>
 		<ice:panelGrid columns="2">			
 			<ice:outputLabel value="Login"/>

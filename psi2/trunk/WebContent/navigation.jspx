@@ -1,31 +1,36 @@
-<f:view xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ice="http://www.icesoft.com/icefaces/component">
+<ice:form
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component"
+        id="navigationMenuForm">
 
-<f:loadBundle basename="wilos.resources.messages" var="msgs" />
+    <div class="navTree">
+        <ice:tree
+                value="#{treeMenu.model}"
+                var="item"
+                hideRootNode="false"
+                binding="#{treeMenu.treeComponent}"
+                imageDir="#{styleBean.imageDirectory}">
+            <ice:treeNode>
 
-	<ice:outputDeclaration doctypeRoot="HTML"
-		doctypePublic="-//W3C//DTD HTML 4.01 Transitional//EN"
-		doctypeSystem="http://www.w3.org/TR/html4/loose.dtd" />
-	<html>
-	<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></meta>
-	<title>Wilos</title>
+                <f:facet name="icon">
+                    <ice:panelGroup style="display: inline">
+                        <ice:graphicImage value="#{item.userObject.icon}"/>
+                    </ice:panelGroup>
+                </f:facet>
 
-	<ice:outputText style="padding-top:0px; padding-bottom:0px;"
-		value="#{styleBean.style}" escape="false" />
-	<link href="css/css.css" rel="stylesheet" type="text/css" />
-	</head>
-	<body>
-	<ice:form id="form">
-		<ice:commandLink immediate="true" type="submit" value="S'inscrire" action="createParticipant"/>
-		<ice:commandLink immediate="true" type="submit" value="S'inscrire" action="createParticipant"/>
-		<ice:commandLink immediate="true" type="submit" value="S'inscrire" action="createParticipant"/>
-		<ice:commandLink immediate="true" type="submit" value="S'inscrire" action="createParticipant"/>
-		<ice:commandLink immediate="true" type="submit" value="S'inscrire" action="createParticipant"/>
-		<ice:commandLink immediate="true" type="submit" value="S'inscrire" action="createParticipant"/>
-		<ice:commandLink immediate="true" type="submit" value="S'inscrire" action="createParticipant"/>	
-	</ice:form>
-	</body>
-	</html>
-</f:view>
+                <f:facet name="content">
+                    <ice:panelGroup style="display: inline">
+                        <ice:commandLink
+                                actionListener="#{item.userObject.contentVisibleAction}">
+                            <ice:outputText
+                                    value="#{item.userObject.menuDisplayText}"/>
+                        </ice:commandLink>
+                    </ice:panelGroup>
+                </f:facet>
+
+            </ice:treeNode>
+        </ice:tree>
+    </div>
+
+</ice:form>

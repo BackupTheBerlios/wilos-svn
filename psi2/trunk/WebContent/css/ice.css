@@ -1,0 +1,363 @@
+#body{
+	border:3px solid #FFFFFF;
+	padding: 0px 10px 0px 0px;  
+	margin:20px 0px 0px 20px;
+	background-color:#BEB4CC;
+	outline:#8B82A2 solid medium;
+	overflow:hidden;
+}
+
+/*
+ Permanently enable Scroll Bars for smoother page transitions
+*/
+html {
+    overflow:scroll;
+}
+
+/*
+ Generic site wide changes
+
+body {
+    background-color: #FFFFFF;
+    color: #666666;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    margin: 0px;
+    padding: 0px;
+}
+*/
+/*table{ font-size:1em; }*/
+
+/* controls the appearance of links throughout the application */
+a:link, a:hover, a:visited, a:active {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+/* demo titles */
+h2 {
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    font-size: 1.5em;
+}
+
+/* description of each component example */
+h3 {
+    font-size: 1em;
+    margin-bottom: 5px;
+    font-weight: bold;
+    margin: 0px;
+}
+
+/* sub-description used directly underneath h3 */
+h4 {
+    margin: 0px;
+    margin-bottom: 10px;
+    padding: 0px;
+    font-size: 1em;
+    font-weight: normal;
+}
+
+/* table labels in examples */
+h5 {
+    margin: 5px;
+    margin-left: 0px;
+    padding: 0px;
+    font-weight: normal;
+    font-size: 1em;
+}
+
+/* table header labels */
+h6 {
+    padding: 0px;
+    margin: 0px;
+    margin-top: 10px;
+    margin-bottom: 2px;
+    font-size: 1em;
+}
+
+.propertyLabel {
+    font-weight: bold; /*font-size:0.9em;*/
+}
+
+.componentPropertySelection td label {
+    vertical-align: middle;
+    padding: 0px;
+}
+
+/* backing bean labels */
+.valueHeader {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-right: 2px;
+    font-style: oblique;
+}
+
+.valueText {
+    font-size: x-small;
+}
+
+em {
+/*font-size:14px;*/
+}
+
+/* vertical alignment of labels */
+.formBorderHighlight td input,
+    .formBorderHighlight td label {
+    vertical-align: middle;
+}
+
+/* Component tabset labels */
+.componentPanelTabSetLayout .MiddleMiddle{
+    font-weight: bold;
+    font-size: 12px;
+}
+
+/*
+ Controls the appearance of the header section of the document including the
+ application logo
+*/
+#headerDiv {
+    text-align: left;
+    width: 100%;
+}
+
+/* Direct to DOM logo (top right) */
+#logoD2D {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+/* Showcase logo */
+#logoShowcase {
+    position: absolute;
+    right: 119px;
+    top: 0px;
+}
+
+/*
+ Navigation
+*/
+.navTree {
+    overflow: auto;
+    height: 250px;
+}
+
+.navThemeChange, .navTree {
+    border: 1px solid #dedede;
+    margin: 5px;
+    /*padding: 5px;*/
+    margin-top: 0;
+    width: 250px;
+}
+
+.navConnectionStatus {
+    position: absolute;
+    top: 90px;
+    right: 0px;
+}
+
+.navThemeChange .themeSelector {
+    text-align: right;
+}
+
+.labelSelector {
+    font-size: 12px;
+    text-align: center;
+}
+
+.labelSelector h3 {
+    font-size: 12px;
+
+}
+
+.themeSelector input {
+    font-size: 12px;
+}
+
+.attributeColumnLabel {
+    vertical-align: middle;
+}
+
+.attributeColumnValue {
+
+}
+
+/*
+ The following styles are used by showcase.jsp and componentTemplate.jsp
+ for generic application layout.
+ */
+.headerDivBackground {
+    text-align: left;
+}
+
+.includeIframe {
+    border: 1px solid #DEDEDE;
+    width: 99%;
+    height: 450px;
+}
+
+.componentContentPanelStack {
+    vertical-align: top;
+    width: 100%;
+}
+
+/* override default panel stack state */
+.icePnlStkRow, .icePnlStkCol {
+    vertical-align: top;
+    width: 100%;
+}
+
+.contentLayoutGridStyle {
+    width: 100%; /* fixed height of content demos*/
+    height: 600px;
+}
+
+.contentLayoutGridStyle td {
+    vertical-align: top;
+}
+
+.componentLayoutRootTable {
+    table-layout: fixed;
+    vertical-align: top;
+}
+
+.contentLayoutGridColumn {
+    vertical-align: top;
+}
+
+.iceNavigationtLayout {
+    width: 100%; /*table-layout: fixed;*/
+}
+
+.formBorderHighlight, .treeNodeControlButtonsBorder, .effectsControlsBorder {
+    vertical-align: top; /*width: 100%;*/
+    border: 1px solid #CCCCCC;
+    padding: 10px;
+}
+
+.calBorderHighlight {
+    vertical-align: top;
+    border: 1px solid #CCCCCC;
+    padding: 10px;
+}
+
+/* label alignment */
+.componentPropertySelection td {
+    vertical-align: top;
+}
+
+.componentPropertySelection td {
+    vertical-align: top;
+    padding-right: 5px;
+    padding-bottom: 10px;
+}
+
+.iceMainRightLayout {
+    vertical-align: top;
+}
+
+.iceTabbedPaneCustom {
+    width: 100%;
+}
+
+/* Main border layout for template */
+.mainBorderLayout {
+	border:border:3px solid;
+    vertical-align: top;
+    width: 100%;
+    background-color:#BEB4CC;
+}
+
+/* over ride default theme */
+.icePageNorth {
+	border:border:3px solid;
+	background-color:#BEB4CC;
+    vertical-align: top;
+    text-align: left;
+    margin: 0px;
+    padding: 0px;
+    border-collapse: collapse;
+}
+
+.icePageWest {
+	border:border:3px solid;
+	background-color:#BEB4CC;
+    vertical-align: top;
+    width: 10%;
+}
+
+.icePageCenter {
+	background-color:#BEB4CC;
+	border:border:3px solid;
+    vertical-align: top;
+    margin: 50px 5px 5px 5px;
+    width: 80%
+}
+
+/* encapsulates the demo tab panel */
+.demoWindow {
+    clear: right;
+}
+
+/* copyright information displayed at end of page */
+.showcaseFooter {
+    text-align: center;
+}
+
+/*
+  Connection status page
+*/
+.connectionStatusGraphics {
+    text-align: center;
+}
+
+.connectionStatusGraphics td {
+    font-weight: bold; /*font-size:1em;*/
+    padding: 5px;
+}
+
+.iceOutConStat { 
+     margin: 10px; 
+     width: 25px; 
+     height: 25px; 
+     border: none; 
+     font-size: .5em; 
+     background-color:#BEB4CC;
+} 
+ .iceOutConStatInactive {
+     position: absolute; 
+     background-image: url( ../images/connect_idle.gif ); 
+     background-position: top; 
+     background-repeat: no-repeat; 
+     background-color:#BEB4CC;
+     width: 25px; 
+     height: 25px;
+} 
+ .iceOutConStatActive { 
+     position: absolute; 
+     background-image: url( ../images/connect_active.gif ); 
+     background-position: top; 
+     background-repeat: no-repeat; 
+     width: 25px; 
+     height: 25px;
+} 
+ .iceOutConStatCaution { 
+     position: absolute; 
+     background-image: url( ../images/connect_caution.gif ); 
+     background-position: top; 
+     background-repeat: no-repeat; 
+     width: 25px; 
+     height: 25px; 
+}
+ .iceOutConStatDisconnect { 
+     position: absolute;
+     background-image: url( ../images/connect_disconnected.gif ); 
+     background-position: top; 
+     background-repeat: no-repeat; 
+     width: 25px; 
+     height: 25px; 
+}

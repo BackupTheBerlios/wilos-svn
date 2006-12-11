@@ -31,11 +31,11 @@
             				</ice:panelGroup>
             			</f:facet>
             			<ice:panelGroup style="text-align: center; white-space: nowrap;" >            			
-            				<ice:selectBooleanCheckbox value="#{RoleBean.rolesParticipant[roleD]}" valueChangeListener="#{ParticipantViewer.addRoleChangeListener}"/>
+            				<ice:selectBooleanCheckbox value="#{RoleBean.rolesParticipant[roleD]}" valueChangeListener="#{RoleBean.addRoleChangeListener}"/>
             			</ice:panelGroup>
 					</ice:columns>						
 				</ice:dataTable>
-				<ice:commandButton value="saveRoles" actionListener="#{RoleBean.saveRoleActionListener}"/>
+				<ice:commandButton value="saveRoles" action="#{RoleBean.saveParticipantRoles}"/>
 			</ice:form>
 		</f:facet>
 	</ice:panelBorder>

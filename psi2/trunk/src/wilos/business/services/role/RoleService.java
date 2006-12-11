@@ -14,6 +14,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import wilos.business.services.wilosuser.ParticipantService;
+import wilos.hibernate.misc.wilosuser.ParticipantDao;
 import wilos.hibernate.spem2.role.RoleDescriptorDao;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
@@ -29,7 +31,8 @@ import wilos.model.spem2.role.RoleDescriptor;
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class RoleService {
 
-	private RoleDescriptorDao roleDescriptorDao;
+	private RoleDescriptorDao roleDescriptorDao ;
+	private ParticipantDao participantDao;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -40,8 +43,8 @@ public class RoleService {
 	 */
 	@Transactional(readOnly = true)
 	public List<RoleDescriptor> getRolesDescriptor() {
-		return new ArrayList<RoleDescriptor>(this.roleDescriptorDao
-				.getAllRoleDescriptor());
+		ArrayList<RoleDescriptor> rolesList = new ArrayList<RoleDescriptor>(this.roleDescriptorDao.getAllRoleDescriptor());
+		return rolesList;
 	}
 
 	/**
@@ -79,30 +82,32 @@ public class RoleService {
 	public void setRoleDescriptorDao(RoleDescriptorDao _roleDescriptorDao) {
 		this.roleDescriptorDao = _roleDescriptorDao;
 	}
-
-	public HashMap<RoleDescriptor, Boolean> getRolesForAParticipant() {
+	
+	@Transactional(readOnly = true)
+	public HashMap<RoleDescriptor,Boolean> getRolesForAParticipant()
+	{
 		RoleDescriptor globalRoleTemp;
-		RoleDescriptor partRoleTemp;
+		//RoleDescriptor partRoleTemp;
 		Boolean test;
-		HashMap<RoleDescriptor, Boolean> participantRoles = new HashMap<RoleDescriptor, Boolean>();
-		/*
-		 * for(Iterator iter = this.getRolesDescriptor().iterator();
-		 * iter.hasNext();){ roleTemp = (RoleDescriptor)iter.next();
-		 * participantRoles.put(roleTemp,test);//,false); }
-		 */
-
-		HttpServletRequest req = (HttpServletRequest) FacesContext
-				.getCurrentInstance().getExternalContext().getRequest();
-		HttpSession sess = req.getSession();
-		WilosUser user = (WilosUser) sess.getAttribute("wilosUser");
-		if (user instanceof Participant) {
-			Participant currentParticipant = (Participant) user;
-			for (Iterator globalRolesIter = this.getRolesDescriptor()
-					.iterator(); globalRolesIter.hasNext();) {
-				globalRoleTemp = (RoleDescriptor) globalRolesIter.next();
-
-				if (currentParticipant.getRolesListForAProject().contains(
-						globalRoleTemp)) {
+		HashMap<RoleDescriptor,Boolean> participantRoles = new HashMap<RoleDescriptor,Boolean>();
+		/*for(Iterator iter = this.getRolesDescriptor().iterator(); iter.hasNext();){
+			roleTemp = (RoleDescriptor)iter.next();
+			participantRoles.put(roleTemp,test);//,false);			
+		}*/
+		
+		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
+		HttpSession sess = req.getSession() ;
+		WilosUser user = (WilosUser) sess.getAttribute("wilosUser") ;
+		String user_login = user.getLogin();
+		/*if(user instanceof Participant)
+		{*/
+			Participant currentParticipant = this.participantDao.getParticipant(user_login);
+			for(Iterator globalRolesIter = this.getRolesDescriptor().iterator(); globalRolesIter.hasNext();)
+			{
+				globalRoleTemp = (RoleDescriptor)globalRolesIter.next();
+				
+				if(currentParticipant.getRolesListForAProject().contains(globalRoleTemp))
+				{
 					test = new Boolean(true);
 					participantRoles.put(globalRoleTemp, test);
 				} else {
@@ -110,16 +115,68 @@ public class RoleService {
 					participantRoles.put(globalRoleTemp, test);
 				}
 			}
-		}
-		/* Recuperation du participant dans la session */
-		/*
-		 * Participant currentParticipant = FacesContext.getCurrentInstance();
-		 * for(Iterator iter =
-		 * currentParticipant.getRolesListForAProject();iter.hasNext();) {
-		 * roleTemp = (RoleDescriptor)iter.next();
-		 * if(participantRoles.containsKey(roleTemp)) {
-		 * participantRoles.put(roleTemp,true); } }
-		 */
+		//}
+		/*Recuperation du participant dans la session*/
+		/*Participant currentParticipant = FacesContext.getCurrentInstance();
+		 *for(Iterator iter = currentParticipant.getRolesListForAProject();iter.hasNext();)
+		 *{
+		 *	roleTemp = (RoleDescriptor)iter.next();
+		 *	if(participantRoles.containsKey(roleTemp))
+		 *	{
+		 *		participantRoles.put(roleTemp,true);
+		 *	}
+		 *}*/
 		return participantRoles;
+	}
+
+	/**
+	 * Getter of participantDao.
+	 *
+	 * @return the participantDao.
+	 */
+	public ParticipantDao getParticipantDao() {
+		return participantDao;
+	}
+
+	/**
+	 * Setter of participantDao.
+	 * 
+	 * @param participantDao
+	 *            The participantDao to set.
+	 */
+	public void setParticipantDao(ParticipantDao participantDao) {
+		this.participantDao = participantDao;
+	}
+
+	/**
+	 * Getter of roleDescriptorDao.
+	 *
+	 * @return the roleDescriptorDao.
+	 */
+	public RoleDescriptorDao getRoleDescriptorDao() {
+		return roleDescriptorDao;
+	}
+
+	/**
+	 * Save roles affectation for a participant.
+	 *
+	 *	@return the page name where navigation has to be redirected to
+	 */
+	public String saveParticipantRoles(HashMap<String, Boolean> rolesParticipant) {
+		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
+		HttpSession sess = req.getSession() ;
+		WilosUser user = (WilosUser) sess.getAttribute("wilosUser") ;
+		String user_login = user.getLogin();
+		Participant currentParticipant = this.participantDao.getParticipant(user_login);
+		
+		for (Iterator rolesIter = rolesParticipant.keySet().iterator(); rolesIter.hasNext();) {
+			String roleName = (String) rolesIter.next();
+			if(rolesParticipant.get(roleName).booleanValue())
+			{
+				RoleDescriptor roleDescriptor = this.roleDescriptorDao.getRoleDescriptor(roleName);
+				currentParticipant.addToRoleDescriptor(roleDescriptor);
+			}
+		}
+		return "welcome";
 	}
 }
