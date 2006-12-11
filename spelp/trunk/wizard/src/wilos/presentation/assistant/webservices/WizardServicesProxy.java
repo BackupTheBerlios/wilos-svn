@@ -13,6 +13,8 @@ import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.process.Process;
 import wilos.business.webservices.*;
+import wilos.model.spem2.task.Step;
+import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
 
 public class WizardServicesProxy {
@@ -43,18 +45,22 @@ public class WizardServicesProxy {
         {
             Participant myParticipant = null;
             try { 
-            	WizardServicesService service = new WizardServicesService(new URL(address+ENDPOINT), new QName(URLWebService, nameWebService));            	
-                WizardServices port = service.getWizardServicesPort();
-                //myWilosUser = port.getWilosUser(login,password);
-                  XStream xstream = new XStream(); 
-                  xstream.alias("wilos.business.transfertobject.ParticipantTO",Participant.class);
-                  xstream.alias("wilos.business.transfertobject.RoleDescriptorTO",RoleDescriptor.class);
-                  xstream.alias("wilos.business.transfertobject.TaskDescriptorTO",TaskDescriptor.class);
-                  xstream.alias("wilos.business.transfertobject.TaskDefinitionTO",TaskDescriptor.class);
-                  xstream.alias("wilos.business.transfertobject.StepTO",TaskDescriptor.class);
-                  String result = port.getParticipant(login,password);
-                  /*System.out.println(result);*/
-                myParticipant = (Participant)xstream.fromXML(result);
+            	if (login.equalsIgnoreCase("testIHM")) {
+            		myParticipant = getParticipantExample();
+            	} else {
+                	WizardServicesService service = new WizardServicesService(new URL(address+ENDPOINT), new QName(URLWebService, nameWebService));            	
+                    WizardServices port = service.getWizardServicesPort();
+                    //myWilosUser = port.getWilosUser(login,password);
+                      XStream xstream = new XStream(); 
+                      xstream.alias("wilos.business.transfertobject.ParticipantTO",Participant.class);
+                      xstream.alias("wilos.business.transfertobject.RoleDescriptorTO",RoleDescriptor.class);
+                      xstream.alias("wilos.business.transfertobject.TaskDescriptorTO",TaskDescriptor.class);
+                      xstream.alias("wilos.business.transfertobject.TaskDefinitionTO",TaskDescriptor.class);
+                      xstream.alias("wilos.business.transfertobject.StepTO",TaskDescriptor.class);
+                      String result = port.getParticipant(login,password);
+                      /*System.out.println(result);*/
+                    myParticipant = (Participant)xstream.fromXML(result);
+            	}
             }
             catch (java.lang.Exception e) {
                 e.printStackTrace();
@@ -78,5 +84,87 @@ public class WizardServicesProxy {
                 ex.printStackTrace();
             }
              return pros;
+        }
+        
+        private static Participant getParticipantExample () {
+        	Participant p = new Participant();
+            p.setName("testSansBD");
+            
+            RoleDescriptor aTmpRole;
+            TaskDescriptor aTmpTask;
+            Step aTmpStep;
+            TaskDefinition aTmpTaskDef;
+
+            aTmpRole = new RoleDescriptor();
+            aTmpTask = new TaskDescriptor();
+            aTmpTaskDef = new TaskDefinition();
+            aTmpStep = new Step();
+    			
+            aTmpRole.setName("Developper");
+            aTmpRole.setDescription("Un gars qui developpe");
+
+            aTmpTask.setName("Coder le programme");
+            aTmpTask.setDescription("Un grand moment de solitude");
+
+            aTmpTaskDef.setName("Coder le programme");
+            aTmpTaskDef.setDescription("Un grand moment de solitude");
+            
+            aTmpStep.setName("Ecrire la premiere ligne");
+            aTmpStep.setDescription("Un grand moment de joie");
+            aTmpTaskDef.addStep(aTmpStep);
+            
+            aTmpStep = new Step();
+            aTmpStep.setName("Ecrire la seconde ligne");
+            aTmpStep.setDescription("Ca marche plus");
+            aTmpTaskDef.addStep(aTmpStep);
+            
+            aTmpTask.addTaskDefinition(aTmpTaskDef);
+            
+            aTmpRole.addPrimaryTask(aTmpTask);
+            aTmpTask = new TaskDescriptor();
+            aTmpTask.setName("Aimer son programme");
+            aTmpTask.setDescription("Un grand moment d'amour");
+            aTmpRole.addPrimaryTask(aTmpTask);
+            aTmpTask = new TaskDescriptor();
+            aTmpTask.setName("Passer le balai");
+            aTmpTask.setDescription("Et c'est plus propre");
+            aTmpRole.addPrimaryTask(aTmpTask);
+
+            p.addToRoleDescriptor(aTmpRole);
+
+            aTmpRole = new RoleDescriptor();
+            aTmpTask = new TaskDescriptor();
+            aTmpRole.setName("Tester");
+            aTmpRole.setDescription("Faire des essais, en gros");
+            aTmpTask.setName("Tester le programme");
+            aTmpTask.setDescription("Un grand moment de solitude");
+            aTmpRole.addPrimaryTask(aTmpTask);
+            aTmpTask = new TaskDescriptor();
+            aTmpTask.setName("Detester le programme");
+            aTmpTask.setDescription("Un grand moment de haine");
+            aTmpRole.addPrimaryTask(aTmpTask);
+            aTmpTask = new TaskDescriptor();
+            aTmpTask.setName("Passer la serpilliere");
+            aTmpTask.setDescription("Un grand moment de solitude");
+            aTmpRole.addPrimaryTask(aTmpTask);
+
+            p.addToRoleDescriptor(aTmpRole);
+
+            aTmpRole = new RoleDescriptor();
+            aTmpTask = new TaskDescriptor();
+            aTmpRole.setName("Conceptualisateur");
+            aTmpTask = new TaskDescriptor();
+            aTmpTask.setName("Conceptualiser les concepts du programme");
+            aTmpRole.addPrimaryTask(aTmpTask);
+            aTmpTask = new TaskDescriptor();
+            aTmpTask.setName("Rever du programme");
+            aTmpRole.addPrimaryTask(aTmpTask);
+            aTmpTask = new TaskDescriptor();
+            aTmpTask.setName("Faire le cafe concept");
+            aTmpRole.addPrimaryTask(aTmpTask);
+            
+            p.addToRoleDescriptor(aTmpRole);
+            
+            return p;
         }
 }
