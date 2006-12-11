@@ -547,11 +547,13 @@ public class XMLParser {
 //		System.out.println("\n");
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(phase)) {
+			returnedBde = getPhaseById(allPhases, bdeId);
+			
 			returnedBde = new Phase();
 			BdeFiller = new FillerPhase(returnedBde, _node);	
 			returnedBde = (Phase) BdeFiller.getFilledElement();
 			
-			returnedBde = getPhaseById(allPhases, bdeId);
+			
 			System.out.println("its a phase");
 		}
 		
@@ -572,11 +574,13 @@ public class XMLParser {
 		}
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(iteration)) {
+			returnedBde = getIterationById(allIterations, bdeId);
+			
 			returnedBde = new Iteration();
 			BdeFiller = new FillerIteration(returnedBde, _node);	
 			returnedBde = (Iteration) BdeFiller.getFilledElement();
 			
-			returnedBde = getIterationById(allIterations, bdeId);
+			
 			
 			System.out.println("On passe par Iteration");
 		}

@@ -4,6 +4,7 @@ package wilos.test.business.services.util.xml.parser;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import junit.framework.TestCase;
 import wilos.business.services.util.xml.parser.XMLParser;
@@ -20,7 +21,7 @@ public class XMLParserTest extends TestCase {
 	public static File pathOPenUP =new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "sortieEPF.xml");
 	public static File pathMonTest =new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "monTest.xml");
 	public static File fileError = new File("prout");
-	/*
+	
 	public void testReturnEmptyIfFileEmpty() {
 		
 		Set<Process> processes;
@@ -76,7 +77,7 @@ public class XMLParserTest extends TestCase {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}*/
+	}
 	
 	/**
 	 * 
