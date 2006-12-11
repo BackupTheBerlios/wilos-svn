@@ -1,7 +1,7 @@
 package wilos.presentation.web.template;
 
 /**
- * <p>The NavigationBean class is responsible for storing the state of the two
+ * <p>The MenuBean class is responsible for storing the state of the two
  * panel stacks which display dynamic content.  </p>
  *
  * @since 0.3.0
@@ -30,5 +30,36 @@ public class MenuBean {
             this.selectedPanel = selectedPanel;
         }
     }
+    
+    public String welcome(){
+    	PageContentBean pcb = new PageContentBean();
+    	pcb.setTemplateName("welcome");
+    	pcb.setNavigationSelection(this);
+    	this.selectedPanel = pcb;
+    	return "";
+    }
+    
+    public String subscribe(){
+    	PageContentBean pcb = new PageContentBean();
+    	pcb.setTemplateName("subscribe");
+    	pcb.setNavigationSelection(this);
+    	this.selectedPanel = pcb;
+    	return "";
+    }
+    
+    public String wilos(){
+    	PageContentBean pcb = new PageContentBean();
+    	pcb.setTemplateName("wilos");
+    	pcb.setNavigationSelection(this);
+    	this.selectedPanel = pcb;
+    	return "";
+    }
+
+	public void changePage(String url) {
+		PageContentBean pcb = new PageContentBean();
+    	pcb.setTemplateName(url);
+    	pcb.setNavigationSelection(this);
+    	this.selectedPanel = pcb;
+	}
 
 }

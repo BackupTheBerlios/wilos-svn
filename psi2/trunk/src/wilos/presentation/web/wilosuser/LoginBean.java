@@ -11,6 +11,9 @@ import wilos.model.misc.wilosuser.Participant ;
 import wilos.model.misc.wilosuser.ProcessManager ;
 import wilos.model.misc.wilosuser.ProjectDirector ;
 import wilos.model.misc.wilosuser.WilosUser ;
+import wilos.presentation.web.template.ConnectViewBean;
+import wilos.presentation.web.template.MenuBean;
+import wilos.presentation.web.template.PageContentBean;
 
 
 /**
@@ -112,6 +115,9 @@ public class LoginBean {
 				sess.setAttribute("role", "admin") ;
 				url = "admin_main" ;
 			}
+			/*Test de la navigation*/
+			changeContentPage(url);
+			changeConnectView(true);
 		}
 		else{
 			FacesMessage message = new FacesMessage() ;
@@ -122,7 +128,41 @@ public class LoginBean {
 			facesContext.addMessage(null, message) ;
 			url = "connect" ;
 		}
-		return url ;
+		//return url;
+		return "" ;
+	}
+
+	public void changeConnectView(boolean b) {
+		FacesContext facesContext = FacesContext.getCurrentInstance() ;
+		Object connectObject =
+            facesContext.getApplication()
+                    .createValueBinding("#{connect}")
+                    .getValue(facesContext);
+		if (connectObject != null &&
+				connectObject instanceof ConnectViewBean) {
+			
+                ConnectViewBean connectBean = (ConnectViewBean) connectObject;
+                connectBean.connected(b);
+		}
+	}
+
+	/**
+	 * Method designed to change main page content depending on
+	 * user's role
+	 * @param url
+	 */
+	public void changeContentPage(String url) {
+		FacesContext facesContext = FacesContext.getCurrentInstance() ;
+		Object menuObject =
+            facesContext.getApplication()
+                    .createValueBinding("#{menu}")
+                    .getValue(facesContext);
+		if (menuObject != null &&
+                menuObject instanceof MenuBean) {
+			
+                MenuBean menuBean = (MenuBean) menuObject;
+                menuBean.changePage(url);
+		}
 	}
 
 	/**
@@ -131,8 +171,10 @@ public class LoginBean {
 	 * @return
 	 */
 	public String logoutAction() {
-		String url = "connect" ;
-
+		//String url = "connect" ;
+		String url = "wilos";
+		changeContentPage(url);
+		changeConnectView(false);
 		/*
 		 * HttpServletRequest req =
 		 * (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;

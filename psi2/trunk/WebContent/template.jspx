@@ -76,6 +76,24 @@
                             <jsp:directive.include file="participantSubscribe.jspx" />
                         </f:subview>
                     </ice:panelGroup>
+                    
+                    <ice:panelGroup id="admin_main" styleClass="" >
+                        <f:subview id="admin_view">
+                            <jsp:directive.include file="admin_main.jspx" />
+                        </f:subview>
+                    </ice:panelGroup>
+                    
+                    <ice:panelGroup id="welcomeProjectDirector" styleClass="" >
+                        <f:subview id="projectDirector_view">
+                            <jsp:directive.include file="welcomeProjectDirector.jspx" />
+                        </f:subview>
+                    </ice:panelGroup>
+                    
+                    <ice:panelGroup id="welcomeProcessManager" styleClass="" >
+                        <f:subview id="processManager_view">
+                            <jsp:directive.include file="welcomeProcessManager.jspx" />
+                        </f:subview>
+                    </ice:panelGroup>
                 </ice:panelStack></div>
                 <br />
             </ice:panelGroup>

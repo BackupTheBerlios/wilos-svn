@@ -1,0 +1,35 @@
+<f:view xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<f:loadBundle basename="wilos.resources.messages" var="msgs" />
+
+	<ice:outputDeclaration doctypeRoot="HTML"
+		doctypePublic="-//W3C//DTD HTML 4.01 Transitional//EN"
+		doctypeSystem="http://www.w3.org/TR/html4/loose.dtd" />
+	<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></meta>
+	<title>Wilos</title>
+
+	<ice:outputText style="padding-top:0px; padding-bottom:0px;"
+		value="#{styleBean.style}" escape="false" />
+	<link href="css/css.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+	<ice:form id="connect_form">
+		<ice:messages style="color:red;" showDetail="true"/>
+		<ice:panelGrid columns="2">			
+			<ice:outputLabel value="Login"/>
+			<ice:inputText size="15" immediate="true" value="#{LoginBean.login}" />
+			<ice:outputText value="Password"/>
+			<ice:inputSecret size="15" value="#{LoginBean.password}"/>
+		</ice:panelGrid>
+		<ice:panelGrid columns="1">
+			<ice:commandButton type="submit" value="Connexion" action="#{LoginBean.authentificationAction}"/>
+			<ice:commandLink immediate="true" type="submit" value="S'inscrire" action="createParticipant"/>
+		</ice:panelGrid>	
+	</ice:form>
+	</body>
+	</html>
+</f:view>

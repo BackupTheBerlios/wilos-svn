@@ -117,6 +117,13 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	
+	<!-- Managed Bean for connection view management -->
+	<managed-bean>
+		<managed-bean-name>connect</managed-bean-name>
+		<managed-bean-class>wilos.presentation.web.template.ConnectViewBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
 	<validator>
 		<validator-id>emailValidator</validator-id>
 		<validator-class>

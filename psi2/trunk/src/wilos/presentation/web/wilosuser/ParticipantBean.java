@@ -14,6 +14,7 @@ import wilos.business.services.wilosuser.LoginService;
 import wilos.business.services.wilosuser.ParticipantService;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.misc.wilosuser.Participant;
+import wilos.presentation.web.template.MenuBean;
 
 /**
  * Managed-Bean link to participantSubscribe.jspx
@@ -60,12 +61,37 @@ public class ParticipantBean {
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.addMessage(null, message);
-			url = "createParticipant";
+			url = "createParticipant";			
 		} else {
 			this.participantService.saveParticipant(this.participant);
-			url = "connect";
+			//url = "connect";
+			url="wilos"; //Passer eventuellement sur une page de confirmation
+			changeContentPage(url);
 		}
-		return url;
+		//return url;
+		/*Navigation*/
+		return "";
+	}
+
+	/**
+	 * Method designed to change main page content after
+	 * participant subscription
+	 * @param url
+	 */
+	public void changeContentPage(String url) {
+		// TODO factoriser cette fonction pr eviter de l'avoir
+		//dans chaque Bean ;)
+		FacesContext facesContext = FacesContext.getCurrentInstance() ;
+		Object menuObject =
+            facesContext.getApplication()
+                    .createValueBinding("#{menu}")
+                    .getValue(facesContext);
+		if (menuObject != null &&
+                menuObject instanceof MenuBean) {
+			
+                MenuBean menuBean = (MenuBean) menuObject;
+                menuBean.changePage(url);
+		}
 	}
 
 	public void testTransactionActionListener(ActionEvent e) {

@@ -147,11 +147,10 @@ em {
 }
 
 .navThemeChange, .navTree {
-    border: 1px solid #dedede;
     margin: 5px;
     /*padding: 5px;*/
     margin-top: 0;
-    width: 250px;
+    width: 190px;
 }
 
 .navConnectionStatus {
@@ -291,7 +290,7 @@ em {
 }
 
 .icePageCenter {
-	background-color:#BEB4CC;
+	background-color:#9681B7;
 	border:border:3px solid;
     vertical-align: top;
     margin: 50px 5px 5px 5px;

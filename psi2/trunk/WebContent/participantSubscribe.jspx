@@ -42,7 +42,7 @@
 		</ice:panelGrid>
 		<ice:panelGrid columns="2">
 			<ice:commandButton value="S'enregistrer" action="#{ParticipantBean.saveParticipantAction}"/>
-			<ice:commandButton immediate="true" value="Retour" action="connect"/>
+			<ice:commandButton immediate="true" value="Retour" action="#{menu.wilos}"/>
 		</ice:panelGrid>	
 	</ice:form>
 	</body>
