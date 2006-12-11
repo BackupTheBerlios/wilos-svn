@@ -1,13 +1,14 @@
-package wilos.hibernate.spem2.role;
 
-import java.util.ArrayList;
-import java.util.List;
+package wilos.hibernate.spem2.role ;
 
-import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import java.util.ArrayList ;
+import java.util.List ;
 
-import wilos.model.spem2.role.RoleDescriptor;
+import org.hibernate.exception.ConstraintViolationException ;
+import org.springframework.dao.DataIntegrityViolationException ;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
+
+import wilos.model.spem2.role.RoleDescriptor ;
 
 /**
  * RoleDefinitionDao manage requests from the system to store RoleDefinition to the database
@@ -24,7 +25,7 @@ public class RoleDescriptorDao extends HibernateDaoSupport {
 	public void saveOrUpdateRoleDescriptor(RoleDescriptor _RoleDescriptor) {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_RoleDescriptor) ;
-			//this.getHibernateTemplate().flush() ;
+			// this.getHibernateTemplate().flush() ;
 
 		}
 		catch(DataIntegrityViolationException e){
@@ -40,15 +41,35 @@ public class RoleDescriptorDao extends HibernateDaoSupport {
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
+	@ SuppressWarnings ("unchecked")
 	public List<RoleDescriptor> getAllRoleDescriptor() {
-		List<RoleDescriptor> loadAll = new ArrayList<RoleDescriptor>();
-		try {
-			loadAll.addAll(this.getHibernateTemplate().loadAll(RoleDescriptor.class));
-		} catch (Exception e) {
-			logger.error("###RoleDescriptorDao ### --> "+e);
+		List<RoleDescriptor> loadAll = new ArrayList<RoleDescriptor>() ;
+		try{
+			loadAll.addAll(this.getHibernateTemplate().loadAll(RoleDescriptor.class)) ;
 		}
-		return loadAll;
+		catch(Exception e){
+			logger.error("###RoleDescriptorDao ### --> " + e) ;
+		}
+		return loadAll ;
+	}
+
+	/**
+	 * Return a set of RoleDescriptor
+	 * 
+	 * @return
+	 */
+	@ SuppressWarnings ("unchecked")
+	public List<RoleDescriptor> getRoleDescriptorsFromProcess(String _id) {
+		List<RoleDescriptor> loadAll = new ArrayList<RoleDescriptor>() ;
+		try{
+			loadAll.addAll(this.getHibernateTemplate().findByNamedParam(
+					"SELECT rd FROM roledescriptor AS rd, nesting AS n WHERE rd.roledescriptor_id = n.breakdownelement_id AND n.activity_id = :id",
+					"id", _id)) ;
+		}
+		catch(Exception e){
+			logger.error("###RoleDescriptorDao ### --> " + e) ;
+		}
+		return loadAll ;
 	}
 
 	/**
@@ -58,8 +79,7 @@ public class RoleDescriptorDao extends HibernateDaoSupport {
 	 * @return
 	 */
 	public RoleDescriptor getRoleDescriptor(String _id) {
-		return (RoleDescriptor) this.getHibernateTemplate().get(
-				RoleDescriptor.class, _id);
+		return (RoleDescriptor) this.getHibernateTemplate().get(RoleDescriptor.class, _id) ;
 	}
 
 	/**
@@ -68,13 +88,13 @@ public class RoleDescriptorDao extends HibernateDaoSupport {
 	 * @param _RoleDescriptor
 	 */
 	public void deleteRoleDescriptor(RoleDescriptor _RoleDescriptor) {
-		try {
-			this.getHibernateTemplate().delete(_RoleDescriptor);
-		} catch (Exception sose) {
+		try{
+			this.getHibernateTemplate().delete(_RoleDescriptor) ;
+		}
+		catch(Exception sose){
 			// Catch normally errors when we delete an unexisting RoleDescriptor
 			// into the db.
-			logger.error("#### ERROR #### --- RoleDescriptorDao => deleteRoleDescriptor : trying to delete unexisting object \n"
-							+ sose);
+			logger.error("#### ERROR #### --- RoleDescriptorDao => deleteRoleDescriptor : trying to delete unexisting object \n" + sose) ;
 		}
 	}
 }

@@ -185,5 +185,10 @@
 		class="wilos.business.services.activity.ActivityService">
 		<property name="activityDao" ref="ActivityDao" />
 	</bean>
+	
+	<bean id="RoleDescriptorService"
+		class="wilos.business.services.role.RoleDescriptorService">
+		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
+	</bean>
 
 </beans>

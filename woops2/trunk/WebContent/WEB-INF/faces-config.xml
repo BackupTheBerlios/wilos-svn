@@ -71,6 +71,18 @@
 			<value>#{ActivityService}</value>
 		</managed-property>
 	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>RoleDescriptorBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.RoleDescriptorBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>roleDescriptorService</property-name>
+			<value>#{RoleDEscriptorService}</value>
+		</managed-property>
+	</managed-bean>
 
 	<managed-bean>
 		<managed-bean-name>XmlFileImportBean</managed-bean-name>

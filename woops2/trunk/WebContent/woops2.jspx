@@ -48,7 +48,8 @@
 			                                        <ice:outputText
 			                                                value="#{msgs['component.tableactivity.column1']}"/>
 			                                </f:facet>
-											<ice:outputText value="#{activity.id}" />
+											<ice:commandLink value="#{activity.id}" param="processID" />
+											<!--  <ice:outputText value="" />  -->
 										</ice:column>
 																			
 										<ice:column>
@@ -83,6 +84,63 @@
 	                			</table>
 								
 								<br />
+								<br />
+							</ice:panelTab>
+							<ice:panelTab label="RoleDescriptor and TaskDescriptor Panel">
+								<br />
+								<br />
+						 
+								<ice:outputText value="RoleDescriptor Table :" />
+								
+								<table cellpadding="0" cellspacing="0">
+	                    		<tr>
+	                        		<td>
+	                        		<ice:dataTable var="roledescriptor"
+	                                           value="#{RoleDescriptorBean.roleDescriptorList}"
+	                                           columnClasses="tableCol"
+	                                           scrollable="#{table.scrollable}"
+	                                           scrollHeight="#{table.scrollableHeight}"
+	                                           columnWidths="150px,150px,150px,150px">					
+										
+										<ice:column>
+											<f:facet name="header">
+			                                        <ice:outputText
+			                                                value="#{msgs['component.tableactivity.column1']}"/>
+			                                </f:facet>
+											<ice:outputText value="#{roledescriptor.id}" />
+										</ice:column>
+																			
+										<ice:column>
+											<f:facet name="header">
+			                                        <ice:outputText
+			                                                value="#{msgs['component.tableactivity.column2']}"/>
+			                                </f:facet>
+											<ice:outputText value="#{roledescriptor.guid}" />
+										</ice:column>
+										
+										<ice:column>
+											<f:facet name="header">
+			                                        <ice:outputText
+			                                                value="#{msgs['component.tableactivity.column3']}"/>
+			                                </f:facet>
+										<ice:selectBooleanCheckbox value="#{roledescriptor.name}"
+											disabled="true" />
+										</ice:column>
+										
+										<ice:column>
+											<f:facet name="header">
+			                                        <ice:outputText
+			                                                value="#{msgs['component.tableactivity.column4']}"/>
+			                                </f:facet>
+										<ice:selectBooleanCheckbox value="#{roledescriptor.description}"
+											disabled="true" />
+										</ice:column>
+										
+									</ice:dataTable>
+									</td>
+	                    		</tr>
+	                			</table>
+	               				<br />
 								<br />
 							</ice:panelTab>
 							
