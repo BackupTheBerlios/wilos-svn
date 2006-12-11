@@ -174,6 +174,7 @@ public class WizardServicesTest extends TestCase {
             ex.printStackTrace();
         }
         assertNotNull(result);
+        assertNotNull(pt);
         assertEquals(pt.getName(),"test");
         
         if (ls.getAuthentifiedUser(p.getLogin(), p.getPassword()) != null) 
