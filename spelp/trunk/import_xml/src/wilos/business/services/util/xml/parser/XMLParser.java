@@ -41,11 +41,14 @@ import wilos.model.spem2.task.TaskDescriptor;
 public class XMLParser {
 	/* Constants used to parse the XML File */
 	// XPaths Paths
-	private static final String roleDescriptor = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:RoleDescriptor']";
-	private static final String taskDescriptor = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:TaskDescriptor']";
-	private static final String roleDefinition =  "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Role' ]";
-	private static final String taskDefinition  = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Task']";
-	private static final String deliveryProcess = "//Process[@*[namespace-uri() and local-name()='type']='uma:DeliveryProcess']";
+	private static final String xpath_roleDescriptor = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:RoleDescriptor']";
+	private static final String xpath_taskDescriptor = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:TaskDescriptor']";
+	private static final String xpath_roleDefinition =  "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Role' ]";
+	private static final String xpath_taskDefinition  = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Task']";
+	private static final String xpath_deliveryProcess = "//Process[@*[namespace-uri() and local-name()='type']='uma:DeliveryProcess']";
+	private static final String xpath_iteration = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Iteration']";
+	private static final String xpath_phase = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Phase']";
+	
 	
 	// Sections
 	private static final String task = "Task";
@@ -114,7 +117,7 @@ public class XMLParser {
 		theTaskDefinitionsList.clear();
 		
 		// gets all the nodes containing taskDefinions
-		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(taskDefinition,XPathConstants.NODESET);
+		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_taskDefinition,XPathConstants.NODESET);
 		if (nodeReturned == null){
 			throw new Exception ("NO TASKS DEFINITIONS FOUND");
 		}
@@ -150,7 +153,7 @@ public class XMLParser {
 		theRoleDefinitionsList.clear();
 		
 		// gets all the nodes containing roleDefinions
-		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(roleDefinition,XPathConstants.NODESET);
+		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_roleDefinition,XPathConstants.NODESET);
 		if (nodeReturned == null){
 			throw new Exception ("NO ROLE DEFINITIONS FOUND");
 		}
@@ -189,7 +192,7 @@ public class XMLParser {
 		allTaskDescriptors.clear() ;
 		allTaskDescriptors = getAllTaskDescriptors(allRoleDescriptors);
 		
-		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(deliveryProcess,XPathConstants.NODESET);
+		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_deliveryProcess,XPathConstants.NODESET);
 		if (nodeReturned == null){
 			throw new Exception ("NO DeliveryProcess FOUND");
 		}
@@ -283,7 +286,7 @@ public class XMLParser {
 		// gets all the roles in the file
 		HashSet<TaskDescriptor> taskList = new HashSet<TaskDescriptor>();
 		try {
-			NodeList taskDescriptors = (NodeList)XMLUtils.evaluate(taskDescriptor,XPathConstants.NODESET);
+			NodeList taskDescriptors = (NodeList)XMLUtils.evaluate(xpath_taskDescriptor,XPathConstants.NODESET);
 			if (taskDescriptors == null){
 				throw new Exception ("NO TASK DESCRIPTORS FOUND");
 			}
@@ -340,6 +343,11 @@ public class XMLParser {
 		}
 	}
 	
+	/**
+	 * getTaskDefinitionByID
+	 * @param _id
+	 * @return
+	 */
 	private static TaskDefinition getTaskDefinitionByID(String _id){
 		for (int i = 0 ; i < TaskDefinitionsList.size() ; i ++){
 			if (TaskDefinitionsList.get(i).getGuid().equals(_id)){
@@ -349,7 +357,12 @@ public class XMLParser {
 		return null ;
 	}
 	
-	
+	/**
+	 * setStepByTaskDefinition
+	 * @param _taskd
+	 * @param _n
+	 * @throws Exception
+	 */
 	private static void setStepByTaskDefinition(TaskDefinition _taskd,Node _n) throws Exception {
 		// getting the id of the role
 		NodeList listOfTdNodes = _n.getChildNodes() ;
@@ -372,6 +385,7 @@ public class XMLParser {
 	}
 	
 	/**
+	 * setAddiotionalRoleByTaskDescriptor
 	 * @param _t
 	 * @param _n
 	 * @param _s
@@ -426,7 +440,7 @@ public class XMLParser {
 		}
 	}
 	/**
-	 * 
+	 * setRoleByRoleDescriptor
 	 * @param r
 	 * @param n
 	 * @return
@@ -454,6 +468,12 @@ public class XMLParser {
 		}
 	}
 	
+	/**
+	 * getRoleDescriptorById
+	 * @param aSet
+	 * @param id
+	 * @return RoleDescriptor
+	 */
 	private static RoleDescriptor getRoleDescriptorById(Set<RoleDescriptor> aSet, String id){
 		for (Iterator i = aSet.iterator() ; i.hasNext() ;){
 			RoleDescriptor tmp = (RoleDescriptor) i .next();
@@ -464,6 +484,12 @@ public class XMLParser {
 		return null ;
 	}
 	
+	/**
+	 * getTaskDescriptorById
+	 * @param aSet
+	 * @param id
+	 * @return TaskDescriptor
+	 */
 	private static TaskDescriptor getTaskDescriptorById(Set<TaskDescriptor> aSet,String id){
 		for (Iterator i = aSet.iterator() ; i.hasNext() ;){
 			TaskDescriptor tmp = (TaskDescriptor) i .next();
@@ -474,14 +500,60 @@ public class XMLParser {
 		return null ;
 	}
 	
+	/**
+	 * getAllIterations
+	 * @return Set
+	 */
 	private static Set<Iteration> getAllIterations() {
-		// TODO Auto-generated method stub
-		return null;
+		LinkedHashSet<Iteration> iterationList = new LinkedHashSet<Iteration>();
+		/* evaluate the XPAth request and return the nodeList*/
+		NodeList iterations = (NodeList)XMLUtils.evaluate(xpath_iteration,XPathConstants.NODESET);
+		if (iterations == null){
+			System.out.println("Pas d'itérations");
+		}
+		else {
+		/* there is one or several iterations */
+			Node aNode;
+			for(int i=0;i<iterations.getLength();i++){
+				/* for each list element , get the list item */
+				aNode = iterations.item(i);
+				Iteration aIteration = new Iteration();
+				/* Filler for the iteration and the item (node)*/
+				FillerIteration itFiller = new FillerIteration(aIteration, aNode);	
+				Iteration returnedIterationFilled = (Iteration) itFiller.getFilledElement();
+				/* Add the filled object in the result List */
+				iterationList.add(returnedIterationFilled) ;
+			}			
+		}
+		return iterationList;
 	}
 
+	/**
+	 * getAllPhases
+	 * @return Set
+	 */
 	private static Set<Phase> getAllPhases() {
-		// TODO Auto-generated method stub
-		return null;
+		LinkedHashSet<Phase> phaseList = new LinkedHashSet<Phase>();
+		/* evaluate the XPAth request and return the nodeList*/
+		NodeList phases = (NodeList)XMLUtils.evaluate(xpath_phase,XPathConstants.NODESET);
+		if (phases == null){
+			System.out.println("Pas de phases");
+		}
+		else {
+		/* there is one or several phase */
+			Node aNode;
+			for(int i=0;i<phases.getLength();i++){
+				/* for each list element , get the list item */
+				aNode = phases.item(i);
+				Phase aPhase = new Phase();
+				/* Filler for the phase and the item (node)*/
+				FillerPhase phFiller = new FillerPhase(aPhase, aNode);	
+				Phase returnedPhaseFilled = (Phase) phFiller.getFilledElement();
+				/* Add the filled object in the result List */
+				phaseList.add(returnedPhaseFilled) ;
+			}			
+		}
+		return phaseList;
 	}
 	
 	/**
@@ -492,7 +564,7 @@ public class XMLParser {
 	private static Set<RoleDescriptor> getAllRoleDescriptors() throws Exception {
 		LinkedHashSet<RoleDescriptor> roleList = new LinkedHashSet<RoleDescriptor>();
 		try {
-			NodeList roleDescriptors = (NodeList)XMLUtils.evaluate(roleDescriptor,XPathConstants.NODESET);
+			NodeList roleDescriptors = (NodeList)XMLUtils.evaluate(xpath_roleDescriptor,XPathConstants.NODESET);
 			if (roleDescriptors == null){
 				throw new Exception ("NO ROLE DESCRIPTORS FOUND");
 			}
@@ -513,6 +585,11 @@ public class XMLParser {
 		return roleList;
 	}
 	
+	/**
+	 * getRoleDefinitionByID
+	 * @param _id
+	 * @return
+	 */
 	private static RoleDefinition getRoleDefinitionByID(String _id) {
 		for (int i = 0 ; i < RoleDefinitionsList.size() ; i ++){
 			if (RoleDefinitionsList.get(i).getGuid().equals(_id)){
@@ -548,12 +625,6 @@ public class XMLParser {
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(phase)) {
 			returnedBde = getPhaseById(allPhases, bdeId);
-			
-			returnedBde = new Phase();
-			BdeFiller = new FillerPhase(returnedBde, _node);	
-			returnedBde = (Phase) BdeFiller.getFilledElement();
-			
-			
 			System.out.println("its a phase");
 		}
 		
@@ -575,16 +646,8 @@ public class XMLParser {
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(iteration)) {
 			returnedBde = getIterationById(allIterations, bdeId);
-			
-			returnedBde = new Iteration();
-			BdeFiller = new FillerIteration(returnedBde, _node);	
-			returnedBde = (Iteration) BdeFiller.getFilledElement();
-			
-			
-			
 			System.out.println("On passe par Iteration");
 		}
-		
 		
 		// We're getting with the included elements
 		if ((returnedBde != null) && returnedBde instanceof Activity) {
@@ -651,14 +714,36 @@ public class XMLParser {
 		*/
 	}
 	
-	private static BreakdownElement getIterationById(Set<Iteration> allIterations2, String bdeId) {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * getIterationById
+	 * @param allIterations2
+	 * @param bdeId
+	 * @return
+	 */
+	private static BreakdownElement getIterationById(Set<Iteration> aSetIteration, String bdeId) {
+		for (Iterator i = aSetIteration.iterator() ; i.hasNext() ;){
+			Iteration tmp = (Iteration) i .next();
+			if (tmp.getGuid().equals(bdeId)){
+				return  tmp;
+			}
+		}
+		return null ;
 	}
 
+	/**
+	 * getPhaseById
+	 * @param allPhases2
+	 * @param bdeId
+	 * @return
+	 */
 	private static BreakdownElement getPhaseById(Set<Phase> allPhases2, String bdeId) {
-		// TODO Auto-generated method stub
-		return null;
+		for (Iterator i = allPhases2.iterator() ; i.hasNext() ;){
+			Phase tmp = (Phase) i .next();
+			if (tmp.getGuid().equals(bdeId)){
+				return tmp;
+			}
+		}
+		return null ;
 	}
 
 	/**
@@ -677,7 +762,7 @@ public class XMLParser {
 			start(); // initializes the elements sets
 			
 			// The List of all the nodes containing Processes
-			NodeList nodeReturned = (NodeList)XMLUtils.evaluate(deliveryProcess,XPathConstants.NODESET);
+			NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_deliveryProcess,XPathConstants.NODESET);
 			
 			Node aNode;			
 			for(int i = 0; i < nodeReturned.getLength(); i++) {
