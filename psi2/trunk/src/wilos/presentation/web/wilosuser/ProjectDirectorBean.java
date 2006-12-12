@@ -129,5 +129,4 @@ public class ProjectDirectorBean {
 	public void setLoginService(LoginService _loginService) {
 		this.loginService = _loginService;
 	}
-
 }

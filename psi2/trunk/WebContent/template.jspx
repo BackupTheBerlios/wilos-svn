@@ -12,7 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></meta>
         <title><ice:outputText value="" /></title>
-        <ice:outputText style="padding-top:0px; padding-bottom:0px;" value="" escape="false" />
+        <ice:outputText style="padding-top:0px; padding-bottom:0px;" value="#{styleBean.style}" escape="false" />-->
         <link href="css/ice.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
@@ -62,6 +62,12 @@
 					<ice:panelGroup id="wilos" styleClass="contentIncludePanelGroup" >
                         <f:subview id="wilos_view">
                             <jsp:directive.include file="wilos.jspx" />
+                        </f:subview>
+                    </ice:panelGroup>
+                    
+                    <ice:panelGroup id="test" styleClass="contentIncludePanelGroup" >
+                        <f:subview id="test_view">
+                            <jsp:directive.include file="test.jspx" />
                         </f:subview>
                     </ice:panelGroup>
                     
@@ -122,6 +128,9 @@
             'images/connect_caution.gif',
             'images/connect_disconnected.gif',
             'images/connect_idle.gif'
+            'images/tab-off.gif'
+            'images/tab-on.gif'
+            'images/tab-over.gif'
     );
 
     // -->

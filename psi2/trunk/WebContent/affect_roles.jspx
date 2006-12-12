@@ -4,7 +4,7 @@
         		columns="1" border="0">
         		
 		<ice:panelTabSet id="panelTabSet_participant" styleClass="componentPanelTabSetLayout">
-			<ice:panelTab id="panelTab_participant_roles">
+			<ice:panelTab id="panelTab_participant_roles" label="test" imageDir="images">
 				<ice:panelGroup id="rolesPanelGroup" styleClass="contentIncludePanelGroup">
 					<ice:dataTable value="#{RoleBean.project}" border="1" var="project">
 						<ice:column>

@@ -22,10 +22,10 @@
 	  	<ice:commandLink id="addProject" action="project_create" immediate="true">
 			<ice:outputText value="Ajouter un projet"/>
 	  	</ice:commandLink>
-		<br />
-		<ice:commandLink id="logout" action="#{LoginBean.logoutAction}" immediate="true">
-			<ice:outputText value="Se déconnecter"/>
-		</ice:commandLink>
+	  	
+	  	<ice:commandLink id="test" action="#{menu.subscribe}" immediate="true">
+			<ice:outputText value="test"/>
+	  	</ice:commandLink>
 	</ice:form>
 </body>
 </html>
