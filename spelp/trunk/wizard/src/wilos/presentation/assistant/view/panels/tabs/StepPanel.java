@@ -1,30 +1,40 @@
 package wilos.presentation.assistant.view.panels.tabs;
 
+import java.awt.GridLayout;
 import java.util.Iterator;
 import java.util.SortedSet;
 
 import javax.swing.JPanel;
 import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import wilos.model.spem2.element.Element;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
+import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 
 
 
-public class StepPanel extends JPanel {
-	private static StepPanel panel = null ;
-	private TaskDescriptor currentElement = null ;
+public class StepPanel extends JPanel implements TreeSelectionListener {
 	private JTree stepTree = null;
+	private static StepPanel panel = null ;
+
 	DefaultMutableTreeNode rootNode;
 	DefaultMutableTreeNode taskNode;
+
+	private TaskDescriptor currentElement = null ;
+	public static Element selectedElement = null;
 
 	
 	private StepPanel() {
 		super();
 		this.setVisible(false);
+		this.setLayout(new GridLayout());
 	}
+
 
 	public static StepPanel getInstance() {
 		if(panel == null) {
@@ -33,12 +43,11 @@ public class StepPanel extends JPanel {
 		return panel;
 	}
 
+	
 	public TaskDescriptor getCurrentElement() {
 		return currentElement;
 	}
 
-	
-	
 	/**
 	 * create the tree of the new TaskDescriptor
 	 * @param currentElement : the new TaskDescriptor
@@ -61,11 +70,47 @@ public class StepPanel extends JPanel {
 				Iterator itSteps = stepList.iterator();
 			
 				while(itSteps.hasNext()) {
-					taskNode= new DefaultMutableTreeNode(((Step)itSteps.next()).getName(),false);
+					StepInfo tmpStep = new StepInfo((Step)itSteps.next());
+					taskNode= new DefaultMutableTreeNode(tmpStep,false);
 					rootNode.add(taskNode);
 				}
 			}
 		}
 		this.add(stepTree);
+		stepTree.addTreeSelectionListener(this);
 	}
+
+	public void valueChanged(TreeSelectionEvent e) {
+		
+		DefaultMutableTreeNode node = (DefaultMutableTreeNode) 
+        		stepTree.getLastSelectedPathComponent();
+		
+		if (node == null) return;
+
+        Object nodeInfo = node.getUserObject();
+        if (nodeInfo instanceof StepInfo) {
+        	selectedElement = ((StepInfo)nodeInfo).getStep() ;
+        	StepInfo tmpStep = (StepInfo) nodeInfo;
+     //       mainFrame.moveHTML();	// TODO JF : verifier
+            HTMLViewer.getInstance(null).setMessage(tmpStep.getStep().getDescription());
+            
+        }
+	}
+	
+	private class StepInfo {
+		private Step myStep;
+		
+		public StepInfo(Step s) {
+			myStep = s;
+		}
+
+		public String toString() {
+			return myStep.getName();
+		}
+		
+		public Step getStep() {
+			return myStep;
+		}
+	}
+
 }
