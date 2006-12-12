@@ -227,22 +227,58 @@ public class XMLParserTest extends TestCase {
 		}
 	}
 	
-	
-	
-	
-	// OLDER TEST FUNCTIONS DEPRECATED
-	public void testGetDeliveryProcess() {
-		try {
-			Set<Process> p2 = XMLParser.getAllProcesses(pathScrum);
-			Set<Process> p3 = XMLParser.getAllProcesses(pathOPenUP);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void testOpenUPContains4Activities() {
+		HashSet<Process> processes;
+		Iterator<Process> itProc;
+		Iterator<Activity> itAct;
 		
+		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathOPenUP);
+		itProc = processes.iterator();
+		while (itProc.hasNext()) {
+			// Iterator on the set of the four Phases of OpenUP
+			itAct = itProc.next().getActivities().iterator();
+			
+			// Activity 1
+			assertTrue(itAct.hasNext());
+			itAct.next();
+			
+//			 Activity 2
+			assertTrue(itAct.hasNext());
+			itAct.next();
+			
+//			 Activity 3
+			assertTrue(itAct.hasNext());
+			itAct.next();
+			
+//			 Activity 4
+			assertTrue(itAct.hasNext());
+			itAct.next();
+		}
 		
 	}
 	
+	public void testOpenUPTopLevelActivitiesContainActivities() {
+		HashSet<Process> processes;
+		Iterator<Process> itProc;
+		Iterator<Activity> itTopLevelAct;
+		Activity topLevelActivity;
+		final int nbMiniSndLevelActivities = 4;
+		final int nbMaxiSndLevelActivities = 6;
+		
+		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathOPenUP);
+		itProc = processes.iterator();
+		while (itProc.hasNext()) {
+			// Iterator on the set of the four Phases of OpenUP
+			itTopLevelAct = itProc.next().getActivities().iterator();
+			
+			// Activity 1
+			while (itTopLevelAct.hasNext()) {
+				topLevelActivity = itTopLevelAct.next();				
+				assertTrue(topLevelActivity.getActivities().size() >= nbMiniSndLevelActivities);
+				assertTrue(topLevelActivity.getActivities().size() <= nbMaxiSndLevelActivities);
+			}
+		}
+	}
 	
 	public void testGetProcess(){
 		Process p;		

@@ -2,7 +2,6 @@ package wilos.business.services.util.xml.parser;
 
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -14,6 +13,7 @@ import javax.xml.xpath.XPathConstants;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import wilos.business.services.util.xml.fillers.FillerActivity;
 import wilos.business.services.util.xml.fillers.FillerElement;
 import wilos.business.services.util.xml.fillers.FillerIteration;
 import wilos.business.services.util.xml.fillers.FillerPhase;
@@ -49,6 +49,7 @@ public class XMLParser {
 	private static final String xpath_deliveryProcess = "//Process[@*[namespace-uri() and local-name()='type']='uma:DeliveryProcess']";
 	private static final String xpath_iteration = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Iteration']";
 	private static final String xpath_phase = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Phase']";
+	private static final String xpath_activity = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Activity']";
 	
 	
 	
@@ -99,11 +100,35 @@ public class XMLParser {
 			allTaskDescriptors = getAllTaskDescriptors(allRoleDescriptors);
 			allPhases = getAllPhases();
 			allIterations = getAllIterations();
+			allActivities = getAllActivities();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
+	private static Set<Activity> getAllActivities() {
+		Set<Activity> activitiesList = new LinkedHashSet<Activity>();
+		
+		/* evaluate the XPAth request and return the nodeList*/
+		NodeList activities = (NodeList)XMLUtils.evaluate(xpath_activity,XPathConstants.NODESET);
+		
+
+		/* For each node */
+		Node aNode;
+		for(int i = 0 ; i < activities.getLength(); i++){
+			/* for each list element , get the list item */
+			aNode = activities.item(i);
+			Activity anActivity = new Iteration();
+			/* Filler for the iteration and the item (node)*/
+			FillerActivity itFiller = new FillerActivity(anActivity, aNode);	
+			Activity returnedActivityFilled = (Activity) itFiller.getFilledElement();
+			/* Add the filled object in the result List */
+			activitiesList.add(returnedActivityFilled) ;
+		}			
+
+		return activitiesList;
+	}
+
 	/**
 	 * fills the taskslist with task definition
 	 * 
@@ -500,7 +525,7 @@ public class XMLParser {
 		/* evaluate the XPAth request and return the nodeList*/
 		NodeList iterations = (NodeList)XMLUtils.evaluate(xpath_iteration,XPathConstants.NODESET);
 		if (iterations == null){
-			System.out.println("Pas d'it�rations");
+			System.out.println("Pas d'iterations");
 		}
 		else {
 		/* there is one or several iterations */
@@ -626,6 +651,21 @@ public class XMLParser {
 			returnedBde = getIterationById(allIterations, bdeId);
 		}
 		
+		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(activity)) {
+			returnedBde = getActivityById(allActivities, bdeId);
+			
+			if (_node.getAttributes().getNamedItem(attr_name_variabilityBasedOnElement) != null) {
+				String parentElementID = _node.getAttributes().getNamedItem(attr_name_variabilityBasedOnElement).getNodeValue();
+				String xpath_parentElement = "//Process[@*[namespace-uri() and local-name()='type']='uma:CapabilityPattern' and @id='" + parentElementID + "']";
+				
+				NodeList parentElement = (NodeList)XMLUtils.evaluate(xpath_parentElement,XPathConstants.NODESET);
+				
+				if (parentElement.getLength() == 1) {
+					_node = parentElement.item(0);
+				}
+			}
+		}
+		
 		// We're getting with the included elements
 		if ((returnedBde != null) && returnedBde instanceof Activity) {
 			NodeList listNode = _node.getChildNodes();
@@ -647,51 +687,25 @@ public class XMLParser {
 		}
 		
 		return returnedBde;
-		
-		
-		/*
-		if (_node.getAttributes().getNamedItem(attr_name_variabilityBasedOnElement) != null){
-			// TODO capability
-			System.out.println("traitement des capability pattern");
-		}
-		else {
-			String bdeId = _node.getAttributes().getNamedItem(id).getNodeValue();
-			// creating the current breakdownelement
-			if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(phase)
-					|| _node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(activity)){
-				returnedBde = new Activity();
-				// TODO FILLER ACTIVITY
-				for (int i = 0 ; i < _node.getChildNodes().getLength() ; i++) {
-					if (_node.getChildNodes().item(i).getNodeName().equals(breakdownElement)){
-						BreakdownElement tmpBde = getBreakDownElementsFromNode(_node.getChildNodes().item(i));
-						if (tmpBde instanceof Activity){
-							returnedBde.addActivity((Activity)tmpBde);
-							//bde.a
-						}
-						else {
-							// TODO ajouter le breakdownelement
-						}
-					}
-				}
-			}
-			else if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(task_descriptor)) {
-				returnedBde = getTaskDescriptorById(allTaskDescriptors, bdeId);
-			}
-			else if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(role_descriptor)){
-				returnedBde = getRoleDescriptorById(allRoleDescriptors, bdeId);
-			}
-		}
-		return null;
-		*/
 	}
 	
+	private static Activity getActivityById(Set<Activity> aSetActivity, String bdeId) {
+		for (Iterator i = aSetActivity.iterator() ; i.hasNext() ;){
+			Activity tmp = (Activity) i .next();
+			if (tmp.getGuid().equals(bdeId)){
+				return  tmp;
+			}
+		}
+		return null ;
+	}
+
 	/**
 	 * getIterationById
 	 * @param allIterations2
 	 * @param bdeId
 	 * @return
 	 */
-	private static BreakdownElement getIterationById(Set<Iteration> aSetIteration, String bdeId) {
+	private static Iteration getIterationById(Set<Iteration> aSetIteration, String bdeId) {
 		for (Iterator i = aSetIteration.iterator() ; i.hasNext() ;){
 			Iteration tmp = (Iteration) i .next();
 			if (tmp.getGuid().equals(bdeId)){
@@ -707,7 +721,7 @@ public class XMLParser {
 	 * @param bdeId
 	 * @return
 	 */
-	private static BreakdownElement getPhaseById(Set<Phase> allPhases2, String bdeId) {
+	private static Phase getPhaseById(Set<Phase> allPhases2, String bdeId) {
 		for (Iterator i = allPhases2.iterator() ; i.hasNext() ;){
 			Phase tmp = (Phase) i .next();
 			if (tmp.getGuid().equals(bdeId)){
