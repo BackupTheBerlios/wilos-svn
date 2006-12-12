@@ -77,7 +77,7 @@
 		<managed-bean-class>
 			wilos.presentation.web.RoleDescriptorBean
 		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>roleDescriptorService</property-name>
 			<value>#{RoleDescriptorService}</value>

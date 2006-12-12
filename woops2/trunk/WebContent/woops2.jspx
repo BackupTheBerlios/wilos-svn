@@ -48,8 +48,9 @@
 			                                        <ice:outputText
 			                                                value="#{msgs['component.tableactivity.column1']}"/>
 			                                </f:facet>
-											<ice:commandLink value="#{activity.id}" param="processID" />
-											<!--  <ice:outputText value="" />  -->
+											<ice:commandLink value="#{activity.id}" actionListener="#{ActivityBean.chooseProcessActionListener}" >
+												<f:param  name="process_id" value="#{activity.id}"/>
+											</ice:commandLink>
 										</ice:column>
 																			
 										<ice:column>

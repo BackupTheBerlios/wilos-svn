@@ -8,6 +8,7 @@ import org.hibernate.exception.ConstraintViolationException ;
 import org.springframework.dao.DataIntegrityViolationException ;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
 
+import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.role.RoleDescriptor ;
 
 /**
@@ -60,15 +61,36 @@ public class RoleDescriptorDao extends HibernateDaoSupport {
 	 */
 	@ SuppressWarnings ("unchecked")
 	public List<RoleDescriptor> getRoleDescriptorsFromProcess(String _id) {
-		List<RoleDescriptor> loadAll = new ArrayList<RoleDescriptor>() ;
+		logger.debug("###RoleDescriptorDao ### getRoleDescriptorsFromProcess id = "+_id);
+		List<RoleDescriptor> loadAll = new ArrayList<RoleDescriptor>();
+		boolean flag = false;
+		/*
 		try{
-			loadAll.addAll(this.getHibernateTemplate().findByNamedParam(
+			/*loadAll.addAll(this.getHibernateTemplate().findByNamedParam(
 					"SELECT rd FROM roledescriptor AS rd, nesting AS n WHERE rd.roledescriptor_id = n.breakdownelement_id AND n.activity_id = :id",
-					"id", _id)) ;
+					"id", _id)) ;*/
+			/*
+			loadAll.addAll(this.getHibernateTemplate().find("from BreakdownElement bde join bde.activities as activity where bde.class = RoleDescriptor and activity.id = ?", _id));
 		}
 		catch(Exception e){
 			logger.error("###RoleDescriptorDao ### --> " + e) ;
+		}*/
+		List<RoleDescriptor> liste = this.getAllRoleDescriptor();
+		logger.debug("###RoleDescriptorDao ### liste size = "+liste.size());
+		for (RoleDescriptor rd : liste) {
+			flag = false;
+			for (Activity a : rd.getActivities()) {
+				if (a.getId().equals(_id)) {
+					flag = true;
+					break;
+				}
+			}
+			if (flag){
+				loadAll.add(rd);
+				logger.debug("###RoleDescriptorDao ### added => "+rd);
+			}	
 		}
+		
 		return loadAll ;
 	}
 
