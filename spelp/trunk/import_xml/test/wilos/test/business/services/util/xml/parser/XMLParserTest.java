@@ -25,7 +25,7 @@ public class XMLParserTest extends TestCase {
 	public static File pathOPenUP =new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "sortieEPF.xml");
 	public static File pathMonTest =new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "monTest.xml");
 	public static File fileError = new File("prout");
-/*	
+
 	public void testReturnEmptyIfFileEmpty() {
 		Set<Process> processes;
 		processes = XMLParser.getAllProcesses(fileError);
@@ -40,9 +40,6 @@ public class XMLParserTest extends TestCase {
 		
 		processes = XMLParser.getAllProcesses(pathOPenUP);
 		assertTrue(processes.size() == 1);
-
-		processes = XMLParser.getAllProcesses(pathMonTest);
-		assertTrue(processes.size() == 1);
 	}
 	
 	public void testProcessFromScrumFileContainsPhases() {
@@ -55,13 +52,13 @@ public class XMLParserTest extends TestCase {
 			assertTrue(it.next().getActivities().size() > 0);
 		}
 		
-	}*/
+	}
 	
 	/**
 	 * 
 	 * passe dans tous les cas a cause de l'implementation faite par Woops
 	 */
-	/*public void testPhasesFromScrumContainBreakDownElements() {
+	public void testPhasesFromScrumContainBreakDownElements() {
 		HashSet<Process> processes;
 		Iterator<Process> itProc;
 		Iterator<Activity> itAct;
@@ -92,7 +89,13 @@ public class XMLParserTest extends TestCase {
 			itAct = itProc.next().getActivities().iterator();
 			
 				// Only the first Phase has role Descriptors !!!
+				assertTrue(itAct.hasNext());
 				Activity tmpAct = itAct.next();
+				if (! tmpAct.getPresentationName().equals("Phase de préparation")) {
+					assertTrue(itAct.hasNext());
+					tmpAct = itAct.next();
+				}
+				
 				if (tmpAct instanceof Phase) {
 					bdeSet = (HashSet<BreakdownElement>) tmpAct.getBreakDownElements();
 					itBde = bdeSet.iterator();
@@ -123,7 +126,13 @@ public class XMLParserTest extends TestCase {
 			itAct = itProc.next().getActivities().iterator();
 			
 				// Only the first Phase has role Descriptors !!!
+				assertTrue(itAct.hasNext());
 				Activity tmpAct = itAct.next();
+				if (! tmpAct.getPresentationName().equals("Phase de préparation")) {
+					assertTrue(itAct.hasNext());
+					tmpAct = itAct.next();
+				}
+			
 				if (tmpAct instanceof Phase) {
 					bdeSet = (HashSet<BreakdownElement>) tmpAct.getBreakDownElements();
 					itBde = bdeSet.iterator();
@@ -152,11 +161,14 @@ public class XMLParserTest extends TestCase {
 			// Iterator on the set of the two Phases of Scrum
 			itAct = itProc.next().getActivities().iterator();
 			
-			// We skip the first phase !!!
-			itAct.next();
+//			 We work on the second Phase
+			Activity tmpAct = itAct.next();
+			if (tmpAct.getPresentationName().equals("Phase de préparation")) {
+				assertTrue(itAct.hasNext());
+				tmpAct = itAct.next();
+			}
 			
-			// We work on the second Phase
-			Phase secondPhase = (Phase) itAct.next();
+			Phase secondPhase = (Phase) tmpAct;
 			// We get the set of activities of the second Phase
 			actSet = (HashSet<Activity>) secondPhase.getActivities();
 			// And an iterator on it
@@ -199,11 +211,14 @@ public class XMLParserTest extends TestCase {
 			// Iterator on the set of the two Phases of Scrum
 			itAct = itProc.next().getActivities().iterator();
 			
-			// We skip the first phase !!!
-			itAct.next();
+//			 We work on the second Phase
+			Activity tmpAct = itAct.next();
+			if (tmpAct.getPresentationName().equals("Phase de préparation")) {
+				assertTrue(itAct.hasNext());
+				tmpAct = itAct.next();
+			}
 			
-			// We work on the second Phase
-			Phase secondPhase = (Phase) itAct.next();
+			Phase secondPhase = (Phase) tmpAct;
 			// We get the set of activities of the second Phase
 			secondPhaseActivities = (HashSet<Activity>) secondPhase.getActivities();
 			// And an iterator on it
@@ -278,7 +293,7 @@ public class XMLParserTest extends TestCase {
 				assertTrue(topLevelActivity.getActivities().size() <= nbMaxiSndLevelActivities);
 			}
 		}
-	}*/
+	}
 	
 	public void testOpenUPInitiateProjectContainsExpectedRoleDescriptors() {
 		HashSet<Process> processes;
@@ -305,7 +320,15 @@ public class XMLParserTest extends TestCase {
 			
 			// Activity 1
 			assertTrue(itTopLevelAct.hasNext());
-			topLevelActivity = itTopLevelAct.next();	
+			
+			topLevelActivity = null;
+			// We want the third Phase : Construction Iteration
+			while (itTopLevelAct.hasNext()) {
+				topLevelActivity = itTopLevelAct.next();
+				if (topLevelActivity.getPresentationName().equals("Inception Iteration [1..n]")) {
+					break;
+				}
+			}
 			
 			itSecondLevelAct = topLevelActivity.getActivities().iterator();
 			
@@ -383,9 +406,7 @@ public class XMLParserTest extends TestCase {
 				}
 			}
 			assertTrue(rentreDansManageRequirements);
-			
 		}		
-		
 	}
 	
 	public void testGetProcess(){
@@ -555,6 +576,5 @@ public class XMLParserTest extends TestCase {
 			}
 		}
 	}
-	
 	
 }
