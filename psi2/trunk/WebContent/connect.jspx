@@ -38,7 +38,7 @@
 			<f:subview id="connected_view">
 				<ice:form id="connected_form">
 					<ice:panelGrid columns="2">			
-						<ice:outputLabel value="Login"/>
+						<ice:outputLabel value="Bienvenue"/>
 						<ice:outputLabel value="#{LoginBean.login}"/>
 					</ice:panelGrid>
 					<ice:panelGrid columns="1">

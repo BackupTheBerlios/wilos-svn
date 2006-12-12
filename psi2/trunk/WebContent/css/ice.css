@@ -1,5 +1,5 @@
 #body{
-	border:3px solid #FFFFFF;
+	border:3px solid #CAC0D6;
 	padding: 0px 10px 0px 0px;  
 	margin:20px 0px 0px 20px;
 	background-color:#BEB4CC;
@@ -112,6 +112,7 @@ em {
 /* Component tabset labels */
 .componentPanelTabSetLayout .MiddleMiddle{
     font-weight: bold;
+    background-color:#CAC0D6;
     font-size: 16px;
 }
 

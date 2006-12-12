@@ -14,7 +14,6 @@ public class ConnectContentBean extends IceUserObject {
 
     private String templateName = "";
 
-
     // True indicates that there is content associated with link and as a
     // result templateName and contentPanelName can be used
     private boolean pageContent = true;

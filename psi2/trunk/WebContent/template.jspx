@@ -43,14 +43,9 @@
                     <!-- Connection Status -->
                     <ice:outputConnectionStatus style="iceOutConStat"/>
                 </ice:panelGrid>
-                 
-
-                <!-- Demo Title -->
-                <h2>
-                	<ice:outputText value=""/>
-				</h2> 
-
-
+                
+				<ice:messages styleClass="h2"/>
+				
                 <div class="demoWindow">
                     <ice:panelStack id="panelStack"
                         styleClass="componentContentPanelStack"
@@ -80,19 +75,19 @@
                         </f:subview>
                     </ice:panelGroup>
                     
-                    <ice:panelGroup id="admin_main" styleClass="" >
+                    <ice:panelGroup id="admin_main" styleClass="contentIncludePanelGroup" >
                         <f:subview id="admin_view">
                             <jsp:directive.include file="admin_main.jspx" />
                         </f:subview>
                     </ice:panelGroup>
                     
-                    <ice:panelGroup id="welcomeProjectDirector" styleClass="" >
+                    <ice:panelGroup id="welcomeProjectDirector" styleClass="contentIncludePanelGroup" >
                         <f:subview id="projectDirector_view">
                             <jsp:directive.include file="welcomeProjectDirector.jspx" />
                         </f:subview>
                     </ice:panelGroup>
                     
-                    <ice:panelGroup id="welcomeProcessManager" styleClass="" >
+                    <ice:panelGroup id="welcomeProcessManager" styleClass="contentIncludePanelGroup" >
                         <f:subview id="processManager_view">
                             <jsp:directive.include file="welcomeProcessManager.jspx" />
                         </f:subview>

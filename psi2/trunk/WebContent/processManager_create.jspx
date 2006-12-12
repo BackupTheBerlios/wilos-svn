@@ -1,53 +1,77 @@
-<f:view xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ice="http://www.icesoft.com/icefaces/component">
+<!--TODO : finri la page en fesant un partial submit entre les 2 onglets -->
+<ice:form id="roles_form">
+	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
+		<ice:panelTabSet id="panelTabSet_adminAdd" styleClass="componentPanelTabSetLayout">
+			<ice:panelTab id="panelTab_processManager" label="Process Manager" imageDir="images">
 
-<f:loadBundle basename="wilos.resources.messages" var="msgs" />
-
-	<ice:outputDeclaration doctypeRoot="HTML"
-		doctypePublic="-//W3C//DTD HTML 4.01 Transitional//EN"
-		doctypeSystem="http://www.w3.org/TR/html4/loose.dtd" />
-	<html>
-	<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></meta>
-	<title>Welcome</title>
-
-	<ice:outputText style="padding-top:0px; padding-bottom:0px;"
-		value="#{styleBean.style}" escape="false" />
-	<link href="css/showcase_style.css" rel="stylesheet" type="text/css" />
-	</head>
-	<body>
-	<ice:form id="processManager_form">
-		<h1><ice:outputText value="Wilos - Administration" /></h1>
-		<ice:outputText value="- Ajout d'un nouveau Process Manager -" style="h1" />
- 		
-		<ice:panelGrid columns="2">
-			<ice:outputText value="Nom" />
-			<ice:inputText id="nom" value="#{ProcessManagerBean.processManager.name}" required="true"/>
+				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
+					<ice:panelGroup id="processManagerCreateGroup" styleClass="contentIncludePanelGroup">
+				
+						<ice:panelGrid columns="2">
+							<ice:outputText value="Nom" />
+							<ice:inputText id="nompm" value="#{ProcessManagerBean.processManager.name}" required="true"/>
+									
+							<ice:outputText value="Prénom"/>
+							<ice:inputText id="prenompm" value="#{ProcessManagerBean.processManager.firstname}" required="true"/>
 					
-			<ice:outputText value="Prénom"/>
-			<ice:inputText id="prenom" value="#{ProcessManagerBean.processManager.firstname}" required="true"/>
-
-			<ice:outputText value="Pseudo"/>
-			<ice:inputText id="login" value="#{ProcessManagerBean.processManager.login}" required="true"/>
+							<ice:outputText value="Pseudo"/>
+							<ice:inputText id="loginpm" value="#{ProcessManagerBean.processManager.login}" required="true"/>
+							
+							<ice:outputText value="Mot de passe"/>
+							<ice:inputSecret id="equal1pm" value="#{ProcessManagerBean.processManager.password}" required="true">		
+								<f:validateLength minimum="6" />
+							</ice:inputSecret>
+				
+							<ice:outputText value="Confirmer le mot de passe"/>
+							<ice:inputSecret id="equal2pm" value="#{ProcessManagerBean.passwordConfirmation}">
+								<f:validateLength minimum="6" />
+								<f:validator validatorId="equalValidator"/>
+							</ice:inputSecret>
+						</ice:panelGrid>
+				
+						<ice:panelGrid columns="2">
+							<ice:commandButton value="S'enregistrer" action="#{ProcessManagerBean.saveProcessManagerAction}"/>
+							<ice:commandButton value="Retour" immediate="true" action="admin_main"/>
+						</ice:panelGrid>	
+				
+					</ice:panelGroup>
+				</ice:panelGrid>
+			</ice:panelTab>
 			
-			<ice:outputText value="Mot de passe"/>
-			<ice:inputSecret id="equal1" value="#{ProcessManagerBean.processManager.password}" required="true">		
-				<f:validateLength minimum="6" />
-			</ice:inputSecret>
-			
-			<ice:outputText value="Confirmer le mot de passe"/>
-			<ice:inputSecret id="equal2" value="#{ProcessManagerBean.passwordConfirmation}">
-				<f:validateLength minimum="6" />
-				<f:validator validatorId="equalValidator"/>
-			</ice:inputSecret>
-			
-		</ice:panelGrid>
-		<ice:panelGrid columns="2">
-			<ice:commandButton value="S'enregistrer" action="#{ProcessManagerBean.saveProcessManagerAction}"/>
-			<ice:commandButton value="Retour" immediate="true" action="admin_main"/>
-		</ice:panelGrid>	
-	</ice:form>
-</body>
-</html>
-</f:view>
+			<ice:panelTab id="panelTab_projectDirector" label="Project Director" imageDir="images">
+				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
+						<ice:panelGroup id="projectDirectorCreateGroup" styleClass="contentIncludePanelGroup">
+				
+							<ice:panelGrid columns="2">
+									<ice:outputText value="Nom" />
+									<ice:inputText id="nompd" value="#{ProjectDirectorBean.projectDirector.name}" required="true"/>
+											
+									<ice:outputText value="Prénom"/>
+									<ice:inputText id="prenompd" value="#{ProjectDirectorBean.projectDirector.firstname}" required="true"/>
+						
+									<ice:outputText value="Pseudo"/>
+									<ice:inputText id="loginpd" value="#{ProjectDirectorBean.projectDirector.login}" required="true"/>
+									
+									<ice:outputText value="Mot de passe"/>
+									<ice:inputSecret id="equal1pd" value="#{ProjectDirectorBean.projectDirector.password}" required="true">
+										<f:validateLength minimum="6" />
+									</ice:inputSecret>
+									
+									<ice:outputText value="Confirmer le mot de passe"/>
+									<ice:inputSecret id="equal2pd" value="#{ProjectDirectorBean.passwordConfirmation}">
+										<f:validateLength minimum="6" />
+										<f:validator validatorId="equalValidator"/>
+									</ice:inputSecret>
+									
+								</ice:panelGrid>
+								<ice:panelGrid columns="2">
+									<ice:commandButton value="S'enregistrer" action="#{ProjectDirectorBean.saveProjectDirectorAction}"/>
+									<ice:commandButton value="Retour" immediate="true" action="admin_main"/>
+								</ice:panelGrid>
+				
+						</ice:panelGroup>
+				</ice:panelGrid>
+			</ice:panelTab>			
+		</ice:panelTabSet>
+	</ice:panelGrid>
+</ice:form>

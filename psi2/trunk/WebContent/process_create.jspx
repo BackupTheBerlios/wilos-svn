@@ -14,7 +14,7 @@
 
 	<ice:outputText style="padding-top:0px; padding-bottom:0px;"
 		value="#{styleBean.style}" escape="false" />
-	<link href="css/css.css" rel="stylesheet" type="text/css" />
+	<link href="css/ice.css" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
 	<ice:form id="process_create_form">

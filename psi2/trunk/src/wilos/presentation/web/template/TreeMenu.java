@@ -43,16 +43,13 @@ public class TreeMenu {
     public TreeMenu() {
         // build root node so that children can be attached
         PageContentBean rootObject = new PageContentBean();
-        rootObject
-                .setMenuDisplayText("wilos");
-        rootObject.setMenuContentTitle(
-                "wilos");
+        rootObject.setMenuDisplayText("wilos");
+        rootObject.setMenuContentTitle("wilos");
         rootObject.setTemplateName("wilos");
         rootObject.setNavigationSelection(navigationBean);
         rootObject.setPageContent(true);
         rootTreeNode = new DefaultMutableTreeNode(rootObject);
         rootObject.setWrapper(rootTreeNode);
-
         model = new DefaultTreeModel(rootTreeNode);
     }
     
@@ -64,28 +61,20 @@ public class TreeMenu {
         isInitiated = true;
 
         if (rootTreeNode != null) {
-
             // get the navigation bean from the faces context
             FacesContext facesContext = FacesContext.getCurrentInstance();
-            Object navigationObject =
-                    facesContext.getApplication()
-                            .createValueBinding("#{menu}")
-                            .getValue(facesContext);
+            Object navigationObject =  
+            	facesContext.getApplication().createValueBinding("#{menu}").getValue(facesContext);
 
-
-            if (navigationObject != null &&
-                navigationObject instanceof MenuBean) {
-
+            if (navigationObject != null && navigationObject instanceof MenuBean) {
                 // set bean callback for root
-                PageContentBean branchObject =
-                        (PageContentBean) rootTreeNode.getUserObject();
+                PageContentBean branchObject = (PageContentBean) rootTreeNode.getUserObject();
 
                 // assign the initialized navigation bean, so that we can enable panel navigation
                 navigationBean = (MenuBean) navigationObject;
 
                 // set this node as the default page to view
-                navigationBean.setSelectedPanel(
-                        (PageContentBean) rootTreeNode.getUserObject());
+                navigationBean.setSelectedPanel((PageContentBean) rootTreeNode.getUserObject());
                 branchObject.setNavigationSelection(navigationBean);
 
                 /**
@@ -93,12 +82,13 @@ public class TreeMenu {
                  */               
                 
                 // component menu -> Tree
+                /*
                 branchObject = new PageContentBean();
-                branchObject.setMenuDisplayText(
-                        "subscribe");
-                branchObject.setMenuContentTitle(
-                        "subscribe");
+                branchObject.setMenuDisplayText("subscribe");
+                branchObject.setMenuContentTitle("subscribe");
                 branchObject.setTemplateName("subscribe");
+                */
+                
                 branchObject.setNavigationSelection(navigationBean);
                 DefaultMutableTreeNode leafNode = new DefaultMutableTreeNode(branchObject);
                 branchObject.setWrapper(leafNode);
