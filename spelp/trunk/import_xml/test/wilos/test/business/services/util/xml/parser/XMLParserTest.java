@@ -27,60 +27,34 @@ public class XMLParserTest extends TestCase {
 	public static File fileError = new File("prout");
 	
 	public void testReturnEmptyIfFileEmpty() {
-		
 		Set<Process> processes;
-		try {
-			processes = XMLParser.getAllProcesses(fileError);
-			assertTrue(processes.size() == 0);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		processes = XMLParser.getAllProcesses(fileError);
+		assertTrue(processes.size() == 0);
 	}
 	
 	public void testFindsProcessInRegularFiles() {
 		Set<Process> processes;
 		
-		try {
-			processes= XMLParser.getAllProcesses(pathScrum);
-			assertTrue(processes.size() == 1);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		processes= XMLParser.getAllProcesses(pathScrum);
+		assertTrue(processes.size() == 1);
 		
+		processes = XMLParser.getAllProcesses(pathOPenUP);
+		assertTrue(processes.size() == 1);
 
-		try {
-			processes = XMLParser.getAllProcesses(pathOPenUP);
-			assertTrue(processes.size() == 1);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		try {
-			processes = XMLParser.getAllProcesses(pathMonTest);
-			assertTrue(processes.size() == 1);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		processes = XMLParser.getAllProcesses(pathMonTest);
+		assertTrue(processes.size() == 1);
 	}
 	
 	public void testProcessFromScrumFileContainsPhases() {
 		HashSet<Process> processes;
 		Iterator<Process> it;
 		
-		try {
-			processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
-			it = processes.iterator();
-			while (it.hasNext()) {
-				assertTrue(it.next().getActivities().size() > 0);
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
+		it = processes.iterator();
+		while (it.hasNext()) {
+			assertTrue(it.next().getActivities().size() > 0);
 		}
+		
 	}
 	
 	/**
@@ -92,20 +66,14 @@ public class XMLParserTest extends TestCase {
 		Iterator<Process> itProc;
 		Iterator<Activity> itAct;
 		
-		try {
-			processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
-			itProc = processes.iterator();
-			while (itProc.hasNext()) {
-				itAct = itProc.next().getActivities().iterator();
-				
-				while (itAct.hasNext()) {
-					assertTrue(itAct.next().getBreakDownElements().size() > 0);
-				}
-			}
+		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
+		itProc = processes.iterator();
+		while (itProc.hasNext()) {
+			itAct = itProc.next().getActivities().iterator();
 			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			while (itAct.hasNext()) {
+				assertTrue(itAct.next().getBreakDownElements().size() > 0);
+			}
 		}
 	}
 	
@@ -118,30 +86,25 @@ public class XMLParserTest extends TestCase {
 		Iterator<BreakdownElement> itBde;
 		boolean isThereARoleDesc;
 		
-		try {
-			processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
-			itProc = processes.iterator();
-			while (itProc.hasNext()) {
-				itAct = itProc.next().getActivities().iterator();
-				
-					// Only the first Phase has role Descriptors !!!
-					Activity tmpAct = itAct.next();
-					if (tmpAct instanceof Phase) {
-						bdeSet = (HashSet<BreakdownElement>) tmpAct.getBreakDownElements();
-						itBde = bdeSet.iterator();
-						
-						//assertTrue(itBde.hasNext());
-						isThereARoleDesc = false;
-						while (itBde.hasNext()) {
-							if (itBde.next() instanceof RoleDescriptor)
-								isThereARoleDesc = true;
-						}
-						assertTrue(isThereARoleDesc);
+		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
+		itProc = processes.iterator();
+		while (itProc.hasNext()) {
+			itAct = itProc.next().getActivities().iterator();
+			
+				// Only the first Phase has role Descriptors !!!
+				Activity tmpAct = itAct.next();
+				if (tmpAct instanceof Phase) {
+					bdeSet = (HashSet<BreakdownElement>) tmpAct.getBreakDownElements();
+					itBde = bdeSet.iterator();
+					
+					//assertTrue(itBde.hasNext());
+					isThereARoleDesc = false;
+					while (itBde.hasNext()) {
+						if (itBde.next() instanceof RoleDescriptor)
+							isThereARoleDesc = true;
 					}
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					assertTrue(isThereARoleDesc);
+				}
 		}
 	}
 	
@@ -154,30 +117,25 @@ public class XMLParserTest extends TestCase {
 		Iterator<BreakdownElement> itBde;
 		boolean isThereATaskDesc;
 		
-		try {
-			processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
-			itProc = processes.iterator();
-			while (itProc.hasNext()) {
-				itAct = itProc.next().getActivities().iterator();
-				
-					// Only the first Phase has role Descriptors !!!
-					Activity tmpAct = itAct.next();
-					if (tmpAct instanceof Phase) {
-						bdeSet = (HashSet<BreakdownElement>) tmpAct.getBreakDownElements();
-						itBde = bdeSet.iterator();
-						
-						//assertTrue(itBde.hasNext());
-						isThereATaskDesc = false;
-						while (itBde.hasNext()) {
-							if (itBde.next() instanceof TaskDescriptor)
-								isThereATaskDesc = true;
-						}
-						assertTrue(isThereATaskDesc);
+		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
+		itProc = processes.iterator();
+		while (itProc.hasNext()) {
+			itAct = itProc.next().getActivities().iterator();
+			
+				// Only the first Phase has role Descriptors !!!
+				Activity tmpAct = itAct.next();
+				if (tmpAct instanceof Phase) {
+					bdeSet = (HashSet<BreakdownElement>) tmpAct.getBreakDownElements();
+					itBde = bdeSet.iterator();
+					
+					//assertTrue(itBde.hasNext());
+					isThereATaskDesc = false;
+					while (itBde.hasNext()) {
+						if (itBde.next() instanceof TaskDescriptor)
+							isThereATaskDesc = true;
 					}
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					assertTrue(isThereATaskDesc);
+				}
 		}
 	}
 	
@@ -188,31 +146,26 @@ public class XMLParserTest extends TestCase {
 		HashSet<Activity> actSet;
 		Iterator<Activity> itAct2;
 		
-		try {
-			processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
-			itProc = processes.iterator();
-			while (itProc.hasNext()) {
-				// Iterator on the set of the two Phases of Scrum
-				itAct = itProc.next().getActivities().iterator();
-				
-				// We skip the first phase !!!
-				itAct.next();
-				
-				// We work on the second Phase
-				Phase secondPhase = (Phase) itAct.next();
-				// We get the set of activities of the second Phase
-				actSet = (HashSet<Activity>) secondPhase.getActivities();
-				// And an iterator on it
-				itAct2 = actSet.iterator();
-				
-				// There is only one Iteration in the second Phase
-				assertTrue(itAct2.hasNext());
-				assertTrue(itAct2.next() instanceof Iteration);
-				assertTrue(! itAct2.hasNext());
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
+		itProc = processes.iterator();
+		while (itProc.hasNext()) {
+			// Iterator on the set of the two Phases of Scrum
+			itAct = itProc.next().getActivities().iterator();
+			
+			// We skip the first phase !!!
+			itAct.next();
+			
+			// We work on the second Phase
+			Phase secondPhase = (Phase) itAct.next();
+			// We get the set of activities of the second Phase
+			actSet = (HashSet<Activity>) secondPhase.getActivities();
+			// And an iterator on it
+			itAct2 = actSet.iterator();
+			
+			// There is only one Iteration in the second Phase
+			assertTrue(itAct2.hasNext());
+			assertTrue(itAct2.next() instanceof Iteration);
+			assertTrue(! itAct2.hasNext());
 		}
 	}
 	
@@ -240,42 +193,37 @@ public class XMLParserTest extends TestCase {
 		int expectedNumber = 12;
 		
 		
-		try {
-			processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
-			itProc = processes.iterator();
-			while (itProc.hasNext()) {
-				// Iterator on the set of the two Phases of Scrum
-				itAct = itProc.next().getActivities().iterator();
-				
-				// We skip the first phase !!!
-				itAct.next();
-				
-				// We work on the second Phase
-				Phase secondPhase = (Phase) itAct.next();
-				// We get the set of activities of the second Phase
-				secondPhaseActivities = (HashSet<Activity>) secondPhase.getActivities();
-				// And an iterator on it
-				secondPhaseActivitiesIterator = secondPhaseActivities.iterator();
-				
-				assertTrue(secondPhaseActivitiesIterator.hasNext());
-				
-				Iteration secondPhaseIteration = (Iteration) secondPhaseActivitiesIterator.next();
-				
-				Iterator<BreakdownElement> it;
-				
-				it = secondPhaseIteration.getBreakDownElements().iterator();
-				
-				int i = 0;
-				while (it.hasNext()) {
-					assertTrue(expectedResults.contains( ((BreakdownElement) it.next()).getName() ) );
-					i += 1;
-				}
-				
-				assertTrue(i == expectedNumber);
+		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
+		itProc = processes.iterator();
+		while (itProc.hasNext()) {
+			// Iterator on the set of the two Phases of Scrum
+			itAct = itProc.next().getActivities().iterator();
+			
+			// We skip the first phase !!!
+			itAct.next();
+			
+			// We work on the second Phase
+			Phase secondPhase = (Phase) itAct.next();
+			// We get the set of activities of the second Phase
+			secondPhaseActivities = (HashSet<Activity>) secondPhase.getActivities();
+			// And an iterator on it
+			secondPhaseActivitiesIterator = secondPhaseActivities.iterator();
+			
+			assertTrue(secondPhaseActivitiesIterator.hasNext());
+			
+			Iteration secondPhaseIteration = (Iteration) secondPhaseActivitiesIterator.next();
+			
+			Iterator<BreakdownElement> it;
+			
+			it = secondPhaseIteration.getBreakDownElements().iterator();
+			
+			int i = 0;
+			while (it.hasNext()) {
+				assertTrue(expectedResults.contains( ((BreakdownElement) it.next()).getName() ) );
+				i += 1;
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			assertTrue(i == expectedNumber);
 		}
 	}
 	
