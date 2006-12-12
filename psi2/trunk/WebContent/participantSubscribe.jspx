@@ -11,8 +11,6 @@
 	<ice:form id="form">
 		<h1><ice:outputText value="Wilos"/></h1>
 		<ice:outputText value="- Inscrivez vous -" style="h1" />
-		<ice:messages style="color:red;" showDetail="true"/>
-		
 		<ice:panelGrid columns="2">
 			<ice:outputText value="Nom" />
 			<ice:inputText id="nom" value="#{ParticipantBean.participant.name}" required="true"/>

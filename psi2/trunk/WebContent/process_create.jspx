@@ -20,7 +20,6 @@
 	<ice:form id="process_create_form">
 		<h1><ice:outputText value="Wilos" /></h1>
 		<ice:outputText value="Ajout d'un nouveau Processus -" style="h1" />
- 		<ice:messages style="color:red;" showDetail="true"/>
 	</ice:form>
 </body>
 </html>

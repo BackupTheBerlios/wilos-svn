@@ -20,7 +20,6 @@
 	<ice:form id="projectD_form">
 		<h1><ice:outputText value="Wilos - Administration" /></h1>
 		<ice:outputText value="- Ajout d'un nouveau Project Director -" style="h1" />
- 		<ice:messages style="color:red;" showDetail="true"/>
  		
 		<ice:panelGrid columns="2">
 			<ice:outputText value="Nom" />

@@ -105,20 +105,6 @@ public class TreeMenu {
                 //branchObject.setLeaf(true);
                 // finally add the new custom component branch
                 rootTreeNode.add(leafNode);
-
-                // component menu -> Panel Series
-                branchObject = new PageContentBean();
-                branchObject.setMenuDisplayText(
-                        "welcome");
-                branchObject.setMenuContentTitle(
-                        "welcome");
-                branchObject.setTemplateName("welcome");
-                branchObject.setNavigationSelection(navigationBean);
-                leafNode = new DefaultMutableTreeNode(branchObject);
-                branchObject.setWrapper(leafNode);
-                //branchObject.setLeaf(true);
-                // finally add the new custom component branch
-                rootTreeNode.add(leafNode);
             }
 
         }

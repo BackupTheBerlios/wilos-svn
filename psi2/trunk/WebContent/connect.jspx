@@ -12,9 +12,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></meta>
 	<title>Wilos</title>
 
-	<ice:outputText style="padding-top:0px; padding-bottom:0px;"
-		value="#{styleBean.style}" escape="false" />
-	<link href="css/css.css" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
 	
@@ -24,11 +21,10 @@
 		<ice:panelGroup id="not_connected">
 			<f:subview id="not_connected_view">
 				<ice:form id="connect_form">
-					<ice:messages style="color:red;" showDetail="true"/>
 					<ice:panelGrid columns="2">			
-						<ice:outputLabel value="Login"/>
+						<ice:outputLabel value="Pseudo" style="iceInputtext"/>
 						<ice:inputText size="15" immediate="true" value="#{LoginBean.login}" />
-						<ice:outputText value="Password"/>
+						<ice:outputText value="Mot de passe"/>
 						<ice:inputSecret size="15" value="#{LoginBean.password}"/>
 					</ice:panelGrid>
 					<ice:panelGrid columns="2">
