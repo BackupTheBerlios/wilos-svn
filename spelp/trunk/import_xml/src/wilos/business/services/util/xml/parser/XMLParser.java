@@ -619,15 +619,67 @@ public class XMLParser {
 	 * @return the BreakdownELement filled
 	 */
 	private static BreakdownElement getBreakDownElementsFromNode (Node _node) {
-		BreakdownElement returnedBde ; // the BreakdownElement Returned by the function
-		BreakdownElement tmpBde; // used to receive the temp result of this function
-									// when called recursively
-		FillerElement BdeFiller; // Filler used to fill Elements;
-		String bdeId; // used when calling one of the getElementById functions (ex : getPhase by id);
+		//BreakdownElement returnedBde ; // the BreakdownElement Returned by the function
 		
-		returnedBde = null;
+		 // Filler used to fill Elements;
+		// bdeId; // used when calling one of the getElementById functions (ex : getPhase by id);
 		
-		bdeId = _node.getAttributes().getNamedItem(id).getNodeValue();
+		BreakdownElement returnedBde = null;
+		//FillerElement BdeFiller;
+		
+		
+		returnedBde = getFillerBDE(_node, returnedBde);
+		
+		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(activity)) {
+			if (_node.getAttributes().getNamedItem(attr_name_variabilityBasedOnElement) != null) {
+				String parentElementID = _node.getAttributes().getNamedItem(attr_name_variabilityBasedOnElement).getNodeValue();
+				/* Xpath request to get the activity list by the id: variabilityBasedOnElement*/
+				
+				String xpath_parentElement = "//Process[@*[namespace-uri() and local-name()='type']='uma:CapabilityPattern' and @id='" + parentElementID + "']";
+				
+				NodeList parentElement = (NodeList)XMLUtils.evaluate(xpath_parentElement,XPathConstants.NODESET);
+				
+				if (parentElement.getLength() == 1) {
+					_node = parentElement.item(0);
+				}
+			}
+		}
+		
+		// We're getting with the included elements
+		if ((returnedBde != null) && returnedBde instanceof Activity) {
+			BreakdownElement tmpBde; // used to receive the temp result of this function
+											// when called recursively
+			NodeList listNode = _node.getChildNodes();
+			
+			for (int i = 0 ; i < listNode.getLength() ; i++) {
+				if (listNode.item(i).getNodeName().equals(breakdownElement)) {
+					tmpBde = getBreakDownElementsFromNode(listNode.item(i));
+					
+					if (tmpBde != null) {					
+						if (tmpBde instanceof Activity) {
+							((Activity) returnedBde).addActivity((Activity) tmpBde);
+						}
+						else {
+							((Activity) returnedBde).addBreakdownElement(tmpBde);
+						}
+					}
+				}
+			}
+		}
+		
+		return returnedBde;
+	}
+
+	/**
+	 * getFillerBDE
+	 * @param _node
+	 * @param returnedBde
+	 * @param bdeId
+	 * @return BreakdownElement
+	 */
+	private static BreakdownElement getFillerBDE(Node _node, BreakdownElement returnedBde) {
+		FillerElement BdeFiller;		
+		String bdeId = _node.getAttributes().getNamedItem(id).getNodeValue();
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(phase)) {
 			returnedBde = getPhaseById(allPhases, bdeId);
@@ -653,39 +705,7 @@ public class XMLParser {
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(activity)) {
 			returnedBde = getActivityById(allActivities, bdeId);
-			
-			if (_node.getAttributes().getNamedItem(attr_name_variabilityBasedOnElement) != null) {
-				String parentElementID = _node.getAttributes().getNamedItem(attr_name_variabilityBasedOnElement).getNodeValue();
-				String xpath_parentElement = "//Process[@*[namespace-uri() and local-name()='type']='uma:CapabilityPattern' and @id='" + parentElementID + "']";
-				
-				NodeList parentElement = (NodeList)XMLUtils.evaluate(xpath_parentElement,XPathConstants.NODESET);
-				
-				if (parentElement.getLength() == 1) {
-					_node = parentElement.item(0);
-				}
-			}
 		}
-		
-		// We're getting with the included elements
-		if ((returnedBde != null) && returnedBde instanceof Activity) {
-			NodeList listNode = _node.getChildNodes();
-			
-			for (int i = 0 ; i < listNode.getLength() ; i++) {
-				if (listNode.item(i).getNodeName().equals(breakdownElement)) {
-					tmpBde = getBreakDownElementsFromNode(listNode.item(i));
-					
-					if (tmpBde != null) {					
-						if (tmpBde instanceof Activity) {
-							((Activity) returnedBde).addActivity((Activity) tmpBde);
-						}
-						else {
-							((Activity) returnedBde).addBreakdownElement(tmpBde);
-						}
-					}
-				}
-			}
-		}
-		
 		return returnedBde;
 	}
 	

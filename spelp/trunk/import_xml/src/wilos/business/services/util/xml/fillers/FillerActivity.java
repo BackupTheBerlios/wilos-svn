@@ -6,7 +6,7 @@ import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.element.Element;
 
-public class FillerActivity extends FillerElement {
+public class FillerActivity extends FillerBreakDownElement {
 
 	public FillerActivity(Element _e, Node _aNode) {
 		super(_e, _aNode);

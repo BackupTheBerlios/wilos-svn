@@ -25,7 +25,7 @@ public class XMLParserTest extends TestCase {
 	public static File pathOPenUP =new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "sortieEPF.xml");
 	public static File pathMonTest =new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "monTest.xml");
 	public static File fileError = new File("prout");
-	
+/*	
 	public void testReturnEmptyIfFileEmpty() {
 		Set<Process> processes;
 		processes = XMLParser.getAllProcesses(fileError);
@@ -55,13 +55,13 @@ public class XMLParserTest extends TestCase {
 			assertTrue(it.next().getActivities().size() > 0);
 		}
 		
-	}
+	}*/
 	
 	/**
 	 * 
 	 * passe dans tous les cas a cause de l'implementation faite par Woops
 	 */
-	public void testPhasesFromScrumContainBreakDownElements() {
+	/*public void testPhasesFromScrumContainBreakDownElements() {
 		HashSet<Process> processes;
 		Iterator<Process> itProc;
 		Iterator<Activity> itAct;
@@ -278,6 +278,114 @@ public class XMLParserTest extends TestCase {
 				assertTrue(topLevelActivity.getActivities().size() <= nbMaxiSndLevelActivities);
 			}
 		}
+	}*/
+	
+	public void testOpenUPInitiateProjectContainsExpectedRoleDescriptors() {
+		HashSet<Process> processes;
+		Iterator<Process> itProc;
+		Iterator<Activity> itTopLevelAct,itSecondLevelAct;
+		Activity topLevelActivity,secondLevelActivity;
+		boolean rentreDansInitiateProject;
+		int nbRoleDescriptors;
+		Iterator<BreakdownElement> BdeIterator;
+		BreakdownElement tmpBde;
+		
+		HashSet<String> expectedResults = new HashSet<String>();
+		expectedResults.add("Stakeholder");
+		expectedResults.add("Project Manager");
+		expectedResults.add("Analyst");
+		expectedResults.add("Tester");
+		expectedResults.add("Architect");
+		
+		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathOPenUP);
+		itProc = processes.iterator();
+		while (itProc.hasNext()) {
+			// Iterator on the set of the four Phases of OpenUP
+			itTopLevelAct = itProc.next().getActivities().iterator();
+			
+			// Activity 1
+			assertTrue(itTopLevelAct.hasNext());
+			topLevelActivity = itTopLevelAct.next();	
+			
+			itSecondLevelAct = topLevelActivity.getActivities().iterator();
+			
+			rentreDansInitiateProject = false;
+			while (itSecondLevelAct.hasNext()) {
+				secondLevelActivity = itSecondLevelAct.next();
+				if (secondLevelActivity.getPresentationName().equals("Initiate Project")) {
+					rentreDansInitiateProject = true;
+					BdeIterator = secondLevelActivity.getBreakDownElements().iterator();
+					nbRoleDescriptors = 0;
+					while (BdeIterator.hasNext()) {
+						tmpBde = BdeIterator.next();
+						if (tmpBde instanceof RoleDescriptor) {
+							nbRoleDescriptors++;
+							tmpBde = (RoleDescriptor) tmpBde;
+							assertTrue(expectedResults.contains( tmpBde.getPresentationName() ) );
+							//System.out.println(tmpBde.getPresentationName());
+						}
+					}
+					assertTrue(nbRoleDescriptors == 5);
+				}
+			}
+			assertTrue(rentreDansInitiateProject);
+		}		
+	}
+	
+	public void testOpenUPManageRequirementsContainsExpectedTaskDescriptors() {
+		HashSet<Process> processes;
+		Iterator<Process> itProc;
+		Iterator<Activity> itTopLevelAct,itSecondLevelAct;
+		Activity topLevelActivity,secondLevelActivity;
+		boolean rentreDansManageRequirements;
+		int nbTaskDescriptors;
+		Iterator<BreakdownElement> BdeIterator;
+		BreakdownElement tmpBde;
+		
+		HashSet<String> expectedResults = new HashSet<String>();
+		expectedResults.add("Find and Outline Requirements");
+		expectedResults.add("Detail Requirements");
+		expectedResults.add("Create Test Cases");
+		
+		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathOPenUP);
+		itProc = processes.iterator();
+		while (itProc.hasNext()) {
+			// Iterator on the set of the four Phases of OpenUP
+			itTopLevelAct = itProc.next().getActivities().iterator();
+			
+			topLevelActivity = null;
+			// We want the third Phase : Construction Iteration
+			while (itTopLevelAct.hasNext()) {
+				topLevelActivity = itTopLevelAct.next();
+				if (topLevelActivity.getPresentationName().equals("Construction Iteration [1..n]")) {
+					break;
+				}
+			}
+			
+			itSecondLevelAct = topLevelActivity.getActivities().iterator();
+			
+			rentreDansManageRequirements = false;
+			while (itSecondLevelAct.hasNext()) {
+				secondLevelActivity = itSecondLevelAct.next();
+				if (secondLevelActivity.getPresentationName().equals("Manage Requirements")) {
+					rentreDansManageRequirements = true;
+					BdeIterator = secondLevelActivity.getBreakDownElements().iterator();
+					nbTaskDescriptors = 0;
+					while (BdeIterator.hasNext()) {
+						tmpBde = BdeIterator.next();
+						if (tmpBde instanceof TaskDescriptor) {
+							nbTaskDescriptors++;
+							tmpBde = (TaskDescriptor) tmpBde;
+							assertTrue(expectedResults.contains( tmpBde.getPresentationName() ) );
+						}
+					}
+					assertTrue(nbTaskDescriptors == 3);
+				}
+			}
+			assertTrue(rentreDansManageRequirements);
+			
+		}		
+		
 	}
 	
 	public void testGetProcess(){
