@@ -1,5 +1,7 @@
 package wilos.business.services.util.xml.parser;
 
+// TODO Virer les exceptions en cas de non element
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashSet;
@@ -48,6 +50,7 @@ public class XMLParser {
 	private static final String xpath_deliveryProcess = "//Process[@*[namespace-uri() and local-name()='type']='uma:DeliveryProcess']";
 	private static final String xpath_iteration = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Iteration']";
 	private static final String xpath_phase = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Phase']";
+	
 	
 	
 	// Sections
@@ -253,18 +256,19 @@ public class XMLParser {
 	
 	/**
 	 * getProcess
+	 * @deprecated
 	 * @return the process
 	 */
 	private static Process getProcess (){
 		Process p = new Process() ;
 		try{			
 			// get all the roles descriptor
-			Set<RoleDescriptor> ensRole = getAllRoleDescriptors() ;
+			Set<RoleDescriptor> ensRole = allRoleDescriptors ;
 			for (Iterator i = ensRole.iterator() ; i.hasNext() ;) {
 				p.addBreakdownElement((BreakdownElement) i.next());
 			}
 			// get all the tasks descriptor
-			Set<TaskDescriptor> allTasks = getAllTaskDescriptors(ensRole);
+			Set<TaskDescriptor> allTasks = allTaskDescriptors;
 			for (Iterator i = allTasks.iterator() ; i.hasNext() ;) {
 				p.addBreakdownElement((BreakdownElement) i.next());
 			}
@@ -303,7 +307,7 @@ public class XMLParser {
 				// affect the main role to the current task
 				setMainRoleByTaskDescriptor(taskDescriptorfilled, aNode, allRoles);
 				
-				// affect the additional roles to the current task TODO PAUL
+				// affect the additional roles to the current task 
 				setAddiotionalRoleByTaskDescriptor(taskDescriptorfilled, aNode, allRoles);
 				
 				taskList.add(taskDescriptorfilled);
@@ -509,7 +513,7 @@ public class XMLParser {
 		/* evaluate the XPAth request and return the nodeList*/
 		NodeList iterations = (NodeList)XMLUtils.evaluate(xpath_iteration,XPathConstants.NODESET);
 		if (iterations == null){
-			System.out.println("Pas d'itérations");
+			System.out.println("Pas d'itï¿½rations");
 		}
 		else {
 		/* there is one or several iterations */
@@ -563,6 +567,7 @@ public class XMLParser {
 	 */
 	private static Set<RoleDescriptor> getAllRoleDescriptors() throws Exception {
 		LinkedHashSet<RoleDescriptor> roleList = new LinkedHashSet<RoleDescriptor>();
+		
 		try {
 			NodeList roleDescriptors = (NodeList)XMLUtils.evaluate(xpath_roleDescriptor,XPathConstants.NODESET);
 			if (roleDescriptors == null){
@@ -582,6 +587,7 @@ public class XMLParser {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		
 		return roleList;
 	}
 	
@@ -614,26 +620,16 @@ public class XMLParser {
 		
 		returnedBde = null;
 		
-		
 		bdeId = _node.getAttributes().getNamedItem(id).getNodeValue();
-//		System.out.println("--- avant liste attributs");
-//		for (int i = 0; i < _node.getAttributes().getLength(); i ++) {
-//			//System.out.println(_node.getAttributes().item(i).getNodeName());
-//		}
-//		System.out.println("--- apres liste attributs");
-//		System.out.println("\n");
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(phase)) {
 			returnedBde = getPhaseById(allPhases, bdeId);
-			System.out.println("its a phase");
 		}
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(process)) {
 			returnedBde = new Process();
 			BdeFiller = new FillerProcess(returnedBde, _node);	
 			returnedBde = (Process) BdeFiller.getFilledElement();
-			
-			System.out.println("its a process");
 		}
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(role_descriptor)) {			
@@ -646,24 +642,17 @@ public class XMLParser {
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(iteration)) {
 			returnedBde = getIterationById(allIterations, bdeId);
-			System.out.println("On passe par Iteration");
 		}
 		
 		// We're getting with the included elements
 		if ((returnedBde != null) && returnedBde instanceof Activity) {
 			NodeList listNode = _node.getChildNodes();
 			
-//			System.out.println("Taille de la liste : " + listNode.getLength());
 			for (int i = 0 ; i < listNode.getLength() ; i++) {
 				if (listNode.item(i).getNodeName().equals(breakdownElement)) {
-					System.out.println("enfant : " + listNode.item(i).getNodeName());
 					tmpBde = getBreakDownElementsFromNode(listNode.item(i));
 					
-					if (tmpBde != null) {
-						System.out.println(tmpBde.getName());
-//						System.out.println("\n");
-//						System.out.println("ok");
-						
+					if (tmpBde != null) {					
 						if (tmpBde instanceof Activity) {
 							((Activity) returnedBde).addActivity((Activity) tmpBde);
 						}
@@ -756,7 +745,6 @@ public class XMLParser {
 	 */
 	public static Set<Process> getAllProcesses(File XMLFilePath) throws Exception {
 		Set<Process> processesReturned = new HashSet<Process>() ;
-		System.out.println("\n\n\nDEBUT DE PARSING");
 		if (XMLFilePath.exists()) {
 			XMLUtils.setDocument(XMLFilePath);
 			start(); // initializes the elements sets
@@ -794,8 +782,6 @@ public class XMLParser {
 				if (aNode != null) {
 					tmpProcess = (Process) getBreakDownElementsFromNode(aNode);
 				}
-				else System.out.println("PBBBBBBBBBBBBBBBBBBBBBBBB");
-				
 				
 				processesReturned.add(tmpProcess);
 			}

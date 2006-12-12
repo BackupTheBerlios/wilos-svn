@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.Vector;
 
 import junit.framework.TestCase;
 import wilos.business.services.util.xml.parser.XMLParser;
@@ -13,7 +14,10 @@ import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.process.Process;
+import wilos.model.spem2.role.RoleDefinition;
 import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.task.Step;
+import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
 
 public class XMLParserTest extends TestCase {
@@ -278,7 +282,7 @@ public class XMLParserTest extends TestCase {
 	
 	
 	
-	/*// OLDER TEST FUNCTIONS DEPRECATED
+	// OLDER TEST FUNCTIONS DEPRECATED
 	public void testGetDeliveryProcess() {
 		try {
 			Set<Process> p2 = XMLParser.getAllProcesses(pathScrum);
@@ -301,9 +305,6 @@ public class XMLParserTest extends TestCase {
 			RoleDefinition rdfXML ;
 			TaskDescriptor tdXML ;
 			TaskDefinition tdfXML ;
-			
-			
-			
 			
 			RoleDefinition notreRdef = new RoleDefinition() ;
 			notreRdef.setGuid("1");
@@ -391,7 +392,7 @@ public class XMLParserTest extends TestCase {
 					assertTrue(td.getRoleDefinition().getDescription().equals(notreRdesc.getRoleDefinition().getDescription()));
 					assertTrue(td.getRoleDefinition().getName().equals(notreRdesc.getRoleDefinition().getName()));
 					for (RoleDescriptor def : td.getRoleDefinition().getRoleDescriptors()){
-						assertTrue(def.equals(rdXML));
+						assertTrue(def.equals(rdXML)); 
 					}
 				}
 			}
@@ -461,7 +462,7 @@ public class XMLParserTest extends TestCase {
 				fail();
 			}
 		}
-	}*/
+	}
 	
 	
 }
