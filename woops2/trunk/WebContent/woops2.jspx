@@ -31,7 +31,7 @@
 								<br />
 								<br />
 						 
-								<ice:outputText value="Activity Table :" />
+								<ice:outputText value="Process Table :" />
 								
 								<table cellpadding="0" cellspacing="0">
 	                    		<tr>
@@ -85,7 +85,7 @@
 								<br />
 							</ice:panelTab>
 							
-							<ice:panelTab label="RoleDescriptor and TaskDescriptor Panel">
+							<ice:panelTab label="RoleDescriptor Panel">
 								<br />
 								<br />
 						 
@@ -104,7 +104,7 @@
 										<ice:column>
 											<f:facet name="header">
 			                                        <ice:outputText
-			                                                value="#{msgs['component.tableactivity.column1']}"/>
+			                                                value="#{msgs['component.tableroledescriptor.column1']}"/>
 			                                </f:facet>
 											<ice:outputText value="#{roledescriptor.id}" />
 										</ice:column>
@@ -112,7 +112,7 @@
 										<ice:column>
 											<f:facet name="header">
 			                                        <ice:outputText
-			                                                value="#{msgs['component.tableactivity.column2']}"/>
+			                                                value="#{msgs['component.tableroledescriptor.column2']}"/>
 			                                </f:facet>
 											<ice:outputText value="#{roledescriptor.guid}" />
 										</ice:column>
@@ -120,7 +120,7 @@
 										<ice:column>
 											<f:facet name="header">
 			                                        <ice:outputText
-			                                                value="#{msgs['component.tableactivity.column3']}"/>
+			                                                value="#{msgs['component.tableroledescriptor.column3']}"/>
 			                                </f:facet>
 											<ice:outputText value="#{roledescriptor.name}" />
 										</ice:column>
@@ -128,7 +128,7 @@
 										<ice:column>
 											<f:facet name="header">
 			                                        <ice:outputText
-			                                                value="#{msgs['component.tableactivity.column4']}"/>
+			                                                value="#{msgs['component.tableroledescriptor.column4']}"/>
 			                                </f:facet>
 											<ice:outputText value="#{roledescriptor.description}" />
 										</ice:column>
@@ -141,7 +141,7 @@
 								<br />
 							</ice:panelTab>
 							
-							<ice:panelTab label="New Activity">
+							<ice:panelTab label="Load Process">
 								<br />
 								<ice:outputText value="Valeur prefix : " />
 								<ice:inputText value="#{ActivityBean.activity.prefix}" />
