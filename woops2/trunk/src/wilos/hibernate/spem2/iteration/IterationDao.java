@@ -67,13 +67,7 @@ public class IterationDao  extends HibernateDaoSupport{
 	 * @param _iteration
 	 */
 	public void deleteIteration(Iteration _iteration) {
-		try{
+		if(this.getIteration(_iteration.getId()) != null)
 			this.getHibernateTemplate().delete(_iteration) ;
-		}
-		catch(Exception sose){
-			// Catch normally errors when we delete an unexisting iteration into
-			// the db.
-			logger.error("#### ERROR #### --- IterationDao => deleteIteration : trying to delete unexisting object \n" + sose) ;
-		}
 	}
 }

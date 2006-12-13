@@ -71,13 +71,7 @@ public class ProcessDao extends HibernateDaoSupport {
 	 * @param _process
 	 */
 	public void deleteProcess(Process _process) {
-		try{
+		if(this.getProcess(_process.getId()) != null)
 			this.getHibernateTemplate().delete(_process) ;
-		}
-		catch(Exception sose){
-			// Catch normally errors when we delete an unexisting process into
-			// the db.
-			logger.error("#### ERROR #### --- ProcessDao => deleteProcess : trying to delete unexisting object \n" + sose) ;
-		}
 	}
 }

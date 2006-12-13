@@ -68,13 +68,7 @@ public class RoleDefinitionDao extends HibernateDaoSupport {
 	 * @param _roleDefinition
 	 */
 	public void deleteRole(RoleDefinition _roleDefinition) {
-		try{
+		if(this.getRole(_roleDefinition.getId()) != null)
 			this.getHibernateTemplate().delete(_roleDefinition) ;
-		}
-		catch(Exception e){
-			// Catch normally errors when we delete an unexisting role into the
-			// db.
-			logger.error("#### ERROR #### --- RoleDefinitionDao => deleteRole : trying to delete unexisting object \n" + e) ;
-		}
 	}
 }

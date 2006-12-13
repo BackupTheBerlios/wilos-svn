@@ -109,7 +109,7 @@ public class PhaseDaoTest extends TestCase{
 	/*
 	 * Test method for {@link woops2.hibernate.process.ProcessDao#getProcess(java.lang.String)}.
 	 */
-	public final void testGetPhases() {
+	public final void testGetPhase() {
 		//Rk: the setUp method is called here.
 
 		// Add properties to the activity.

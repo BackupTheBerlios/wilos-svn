@@ -69,13 +69,7 @@ public class BreakdownElementDao extends HibernateDaoSupport {
 	 * @param _bde
 	 */
 	public void deleteBreakdownElement(BreakdownElement _bde) {
-		try {
+		if(this.getBreakdownElement(_bde.getId()) != null)
 			this.getHibernateTemplate().delete(_bde);
-		} catch (Exception sose) {
-			// Catch normally errors when we delete an unexisting element into
-			// the db.
-			logger.error("#### ERROR #### --- BreakdownElementdao => deleteBreakdownElement : trying to delete unexisting object \n"
-							+ sose);
-		}
 	}
 }

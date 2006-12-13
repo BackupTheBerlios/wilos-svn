@@ -67,13 +67,7 @@ public class PhaseDao extends HibernateDaoSupport {
 	 * @param _phase
 	 */
 	public void deletePhase(Phase _phase) {
-		try{
+		if(this.getPhase(_phase.getId()) != null)
 			this.getHibernateTemplate().delete(_phase) ;
-		}
-		catch(Exception sose){
-			// Catch normally errors when we delete an unexisting process into
-			// the db.
-			logger.error("#### ERROR #### --- PhaseDao => deletePhase : trying to delete unexisting object \n" + sose) ;
-		}
 	}
 }

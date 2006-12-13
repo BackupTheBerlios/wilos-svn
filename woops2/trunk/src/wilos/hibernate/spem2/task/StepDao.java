@@ -64,13 +64,7 @@ public class StepDao extends HibernateDaoSupport {
 	 * @param _step
 	 */
 	public void deleteStep(Step _step) {
-		try{
+		if(this.getStep(_step.getId()) != null)
 			this.getHibernateTemplate().delete(_step) ;
-		}
-		catch(Exception e){
-			// Catch normally errors when we delete an unexisting activity into
-			// the db.
-			logger.error("#### ERROR #### --- StepDao => deleteStep : trying to delete unexisting object \n" + e) ;
-		}
 	}
 }

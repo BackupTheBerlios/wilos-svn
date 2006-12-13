@@ -68,12 +68,7 @@ public class ElementDao extends HibernateDaoSupport {
 	 * @param _element
 	 */
 	public void deleteElement (Element _element) {
-		try {
+		if(this.getElement(_element.getId()) != null)
 			this.getHibernateTemplate().delete(_element) ;
-		}
-		catch (Exception sose) {
-			// Catch normally errors when we delete an unexisting element into the db.
-			logger.error("#### ERROR #### --- ElementDao => deleteElement : trying to delete unexisting object \n" + sose) ;
-		}
 	}
 }

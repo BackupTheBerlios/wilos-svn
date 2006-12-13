@@ -85,14 +85,7 @@ public class ActivityDao extends HibernateDaoSupport {
 	 * @param _activity
 	 */
 	public void deleteActivity(Activity _activity) {
-		try {
+		if(this.getActivity(_activity.getId()) != null)
 			this.getHibernateTemplate().delete(_activity);
-		} catch (Exception sose) {
-			// Catch normally errors when we delete an unexisting activity into
-			// the db.
-			logger
-					.error("#### ERROR #### --- ActivityDao => deleteActivity : trying to delete unexisting object \n"
-							+ sose);
-		}
 	}
 }
