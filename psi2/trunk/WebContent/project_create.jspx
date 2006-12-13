@@ -1,6 +1,6 @@
 <ice:form id="project_create_form">
 <ice:panelTabSet id="panelTabSet_project" styleClass="componentPanelTabSetLayout">
-	<ice:panelTab id="panelTab_project_create" label="test" imageDir="images">
+	<ice:panelTab id="panelTab_project_create" label="Creation d'un Projet" imageDir="images">
 		<ice:panelGroup id="project_create_PanelGroup" styleClass="contentIncludePanelGroup">
 			<ice:panelGrid columns="2">
 				<ice:outputText value="Nom" />
@@ -14,11 +14,10 @@
 					<f:convertDateTime pattern="dd/MM/yyyy"/>
 				</ice:outputText>			
 				<ice:selectInputDate id="launchingDate"	value="#{ProjectBean.project.launchingDate}" 
-						popupDateFormat="dd/MM/yyyy" renderAsPopup="true"/>
+						popupDateFormat="dd/MM/yyyy" renderAsPopup="true" required="true"/>
 			</ice:panelGrid>
 			<ice:panelGrid columns="2">
 				<ice:commandButton value="Enregistrer" action="#{ProjectBean.saveProjectAction}"/>
-				<ice:commandButton value="Retour" immediate="true" action="welcomeProjectDirector"/>
 			</ice:panelGrid>	
 		</ice:panelGroup>
 	</ice:panelTab>

@@ -119,7 +119,7 @@ public class LoginBean {
 		}
 		else{
 			FacesMessage message = new FacesMessage() ;
-			message.setDetail("Login ou Mot de passe incorrects") ;
+			message.setSummary("Login ou Mot de passe incorrects") ;
 			message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 
 			FacesContext facesContext = FacesContext.getCurrentInstance() ;

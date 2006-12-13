@@ -1,7 +1,9 @@
 package wilos.presentation.web.wilosuser;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -56,7 +58,36 @@ public class ProjectDirectorBean {
 		facesContext.addMessage(null, message);
 		return url;
 	}
+	/**
+	 * 
+	 * methode qui controle que les deux mots de passes sont identiques 
+	 *
+	 * @param _context
+	 * @param _toValidate
+	 * @param _value
+	 * @throws ValidatorException
+	 */
+	public void passwordEqualValidation(FacesContext _context, UIComponent _toValidate, Object _value) throws ValidatorException
+	{
+		String passConfirm = (String) _value;
 
+		//TODO : recuperer le nom de laure champs de password via une f:param
+		/*ExternalContext ec = (ExternalContext)_context.getExternalContext();
+		HashMap hm = new HashMap(ec.getRequestParameterMap());
+		String passName = (String)hm.get("forPassword");
+		UIComponent passcomponent = _toValidate.findComponent(passName) ;*/
+		
+		UIComponent passcomponent = _toValidate.findComponent("equal1PD") ;
+		String passValue = (String) passcomponent.getAttributes().get("value");
+		
+		if(!passConfirm.equals(passValue))
+		{
+			FacesMessage message = new FacesMessage();
+			message.setSummary("Les 2 mots de passe ne sont pas identiques");
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
+			throw new ValidatorException(message) ;
+		}
+	}
 	/**
 	 * Getter of projectDirector.
 	 * 
