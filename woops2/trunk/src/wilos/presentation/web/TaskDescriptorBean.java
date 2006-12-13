@@ -9,6 +9,11 @@ import org.apache.commons.logging.LogFactory;
 import wilos.business.services.task.TaskDescriptorService;
 import wilos.model.spem2.task.TaskDescriptor;
 
+/**
+ * TaskDescriptorBean
+ * @author Soosuske
+ *
+ */
 public class TaskDescriptorBean {
 
 	private List<TaskDescriptor> taskDescriptorList;
@@ -66,20 +71,10 @@ public class TaskDescriptorBean {
 	}
 
 	/**
-	 * Getter of taskDescriptorList.
+	 * Setter of taskDescriptorList.
 	 * 
-	 * @return the taskDescriptorList.
-	 */
-	/*
-	 * public List<RoleDescriptor> getRoleDescriptorList() { return
-	 * this.roleDescriptorList ; }
-	 */
-
-	/**
-	 * Setter of roleDescriptorList.
-	 * 
-	 * @param _roleDescriptorList
-	 *            The roleDescriptorList to set.
+	 * @param _taskDescriptorList
+	 *            The taskDescriptorList to set.
 	 */
 	public void setTaskDescriptorList(List<TaskDescriptor> _taskDescriptorList) {
 		this.taskDescriptorList = _taskDescriptorList;
@@ -95,10 +90,10 @@ public class TaskDescriptorBean {
 	}
 
 	/**
-	 * Setter of roleDescriptorService.
+	 * Setter of taskDescriptorService.
 	 * 
-	 * @param _roleDescriptorService
-	 *            The roleDescriptorService to set.
+	 * @param _taskDescriptorService
+	 *            The taskDescriptorService to set.
 	 */
 	public void setTaskDescriptorService(
 			TaskDescriptorService _taskDescriptorService) {

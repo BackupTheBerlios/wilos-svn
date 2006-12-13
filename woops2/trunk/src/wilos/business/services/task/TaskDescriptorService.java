@@ -12,6 +12,11 @@ import wilos.hibernate.spem2.task.TaskDescriptorDao;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.task.TaskDescriptor;
 
+/**
+ * 
+ * @author Soosuske
+ *
+ */
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class TaskDescriptorService {
 	
