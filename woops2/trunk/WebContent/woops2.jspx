@@ -128,7 +128,7 @@
 										<ice:column>
 											<f:facet name="header">
 			                                        <ice:outputText
-			                                                value="TDef"/>
+			                                                value="RDefId"/>
 			                                </f:facet>
 											<ice:outputText value="#{roledescriptor.roleDefinition.id}" />
 										</ice:column>
@@ -179,6 +179,65 @@
 			                                                value="#{msgs['component.tabletaskdescriptor.column3']}"/>
 			                                </f:facet>
 											<ice:outputText value="#{taskdescriptor.description}" />
+										</ice:column>
+										
+										<ice:column>
+											<f:facet name="header">
+			                                        <ice:outputText
+			                                                value="#{msgs['component.tabletaskdescriptor.column4']}"/>
+			                                </f:facet>
+			                                <ice:commandLink value="#{taskdescriptor.taskDefinition.id}" actionListener="#{TaskDefinitionBean.chooseTaskDefinitionActionListener}" >
+												<f:param  name="taskdefinition_id" value="#{taskdescriptor.taskDefinition.id}"/>
+											</ice:commandLink>
+											<!-- <ice:outputText value="#{taskdescriptor.taskDefinition.id}" /> -->
+										</ice:column>
+										
+									</ice:dataTable>
+									</td>
+	                    		</tr>
+	                			</table>
+	               				<br />
+								<br />
+							</ice:panelTab>
+							
+							<ice:panelTab label="Step">
+								<br />
+								<br />
+						 
+								<ice:outputText value="Step Table :" />
+								
+								<table cellpadding="0" cellspacing="0">
+	                    		<tr>
+	                        		<td>
+	                        		<ice:dataTable var="step"
+	                                           value="#{StepBean.stepList}"
+	                                           columnClasses="tableCol"
+	                                           scrollable="#{table.scrollable}"
+	                                           scrollHeight="#{table.scrollableHeight}"
+	                                           columnWidths="150px,150px,150px,150px">					
+										
+										<ice:column>
+											<f:facet name="header">
+			                                        <ice:outputText
+			                                                value="#{msgs['component.tablestep.column1']}"/>
+			                                </f:facet>
+											<ice:outputText value="#{step.id}" />
+										</ice:column>
+																			
+										<ice:column>
+											<f:facet name="header">
+			                                        <ice:outputText
+			                                                value="#{msgs['component.tablestep.column2']}"/>
+			                                </f:facet>
+											<ice:outputText value="#{step.name}" />
+										</ice:column>
+										
+										<ice:column>
+											<f:facet name="header">
+			                                        <ice:outputText
+			                                                value="#{msgs['component.tablestep.column3']}"/>
+			                                </f:facet>
+											<ice:outputText value="#{step.description}" />
 										</ice:column>
 										
 									</ice:dataTable>

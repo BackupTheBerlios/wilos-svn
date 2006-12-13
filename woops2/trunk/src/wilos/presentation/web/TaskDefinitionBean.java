@@ -13,7 +13,7 @@ public class TaskDefinitionBean {
 
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 	
-	public void chooseTaskDefintionActionListener(ActionEvent e){
+	public void chooseTaskDefinitionActionListener(ActionEvent e){
 		FacesContext context = FacesContext.getCurrentInstance(); 
 		Map map = context.getExternalContext().getRequestParameterMap();
 		String taskId = (String) map.get("taskdefinition_id");

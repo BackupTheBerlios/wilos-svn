@@ -2,15 +2,11 @@ package wilos.presentation.web;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import wilos.business.services.step.StepService;
+import wilos.business.services.task.StepService;
 import wilos.model.spem2.task.Step;
 
 /**
@@ -45,10 +41,10 @@ public class StepBean {
 	 */
 	public List<Step> getStepList() {
 		this.stepList = new ArrayList<Step>();
-		logger.debug("### TaskDescriptorBean ### getTaskDescriptorList id= "
+		logger.debug("### StepBean ### getStepList id= "
 				+ this.taskDefinitionid);
 		stepList.addAll(this.stepService
-				.getStepsFromTask("02f871620f7b976f010f7b99b2ea0043"));
+				.getStepsFromTask(this.taskDefinitionid));
 		this.logger.debug("### StepBean ### stepList ="
 				+ this.stepList);
 		return this.stepList;

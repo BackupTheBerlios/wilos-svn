@@ -49,7 +49,7 @@ public class RoleDescriptorService {
 				}
 			}
 			if (flag){
-				rd.setRoleDefinition(this.getRoleDefinitionFromRoleDescriptor(rd.getId()));
+				//rd.setRoleDefinition(this.getRoleDefinitionFromRoleDescriptor(rd.getId()));
 				returnedList.add(rd);
 				logger.debug("###RoleDescriptorDao ### added => "+rd);
 			}	

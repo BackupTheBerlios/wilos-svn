@@ -95,7 +95,28 @@
 			<value>#{TaskDescriptorService}</value>
 		</managed-property>
 	</managed-bean>
-
+	
+	<managed-bean>
+		<managed-bean-name>TaskDefinitionBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.TaskDefinitionBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>StepBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.StepBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>stepService</property-name>
+			<value>#{StepService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	
 	<managed-bean>
 		<managed-bean-name>XmlFileImportBean</managed-bean-name>
 		<managed-bean-class>
