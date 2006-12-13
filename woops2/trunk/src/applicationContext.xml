@@ -190,5 +190,10 @@
 		class="wilos.business.services.role.RoleDescriptorService">
 		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
 	</bean>
+	
+	<bean id="TaskDescriptorService"
+		class="wilos.business.services.task.TaskDescriptorService">
+		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
+	</bean>
 
 </beans>

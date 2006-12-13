@@ -141,6 +141,62 @@
 								<br />
 							</ice:panelTab>
 							
+							<ice:panelTab label="TaskDescriptor Panel">
+								<br />
+								<br />
+						 
+								<ice:outputText value="TaskDescriptor Table :" />
+								
+								<table cellpadding="0" cellspacing="0">
+	                    		<tr>
+	                        		<td>
+	                        		<ice:dataTable var="taskdescriptor"
+	                                           value="#{TaskDescriptorBean.taskDescriptorList}"
+	                                           columnClasses="tableCol"
+	                                           scrollable="#{table.scrollable}"
+	                                           scrollHeight="#{table.scrollableHeight}"
+	                                           columnWidths="150px,150px,150px,150px">					
+										
+										<ice:column>
+											<f:facet name="header">
+			                                        <ice:outputText
+			                                                value="#{msgs['component.tabletaskdescriptor.column1']}"/>
+			                                </f:facet>
+											<ice:outputText value="#{taskdescriptor.id}" />
+										</ice:column>
+																			
+										<ice:column>
+											<f:facet name="header">
+			                                        <ice:outputText
+			                                                value="#{msgs['component.tabletaskdescriptor.column2']}"/>
+			                                </f:facet>
+											<ice:outputText value="#{taskdescriptor.guid}" />
+										</ice:column>
+										
+										<ice:column>
+											<f:facet name="header">
+			                                        <ice:outputText
+			                                                value="#{msgs['component.tabletaskdescriptor.column3']}"/>
+			                                </f:facet>
+											<ice:outputText value="#{taskdescriptor.name}" />
+										</ice:column>
+										
+										<ice:column>
+											<f:facet name="header">
+			                                        <ice:outputText
+			                                                value="#{msgs['component.tabletaskdescriptor.column4']}"/>
+			                                </f:facet>
+											<ice:outputText value="#{taskdescriptor.description}" />
+										</ice:column>
+										
+									</ice:dataTable>
+									</td>
+	                    		</tr>
+	                			</table>
+	               				<br />
+								<br />
+							</ice:panelTab>
+							
 							<ice:panelTab label="Load Process">
 								<br />
 								<ice:outputText value="Valeur prefix : " />

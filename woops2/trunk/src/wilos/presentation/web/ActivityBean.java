@@ -75,8 +75,11 @@ public class ActivityBean {
 		String processId = (String) map.get("process_id");
 		RoleDescriptorBean roleDescriptorBean = (RoleDescriptorBean) context.getApplication()
 		.getVariableResolver().resolveVariable(context,"RoleDescriptorBean");
+		TaskDescriptorBean taskDescriptorBean = (TaskDescriptorBean) context.getApplication()
+		.getVariableResolver().resolveVariable(context,"TaskDescriptorBean");
 		logger.debug("### ActivityBean ### chooseProcessActionListener id = "+processId);
 		roleDescriptorBean.setProcessId(processId);
+		taskDescriptorBean.setProcessId(processId);
 	}
 	
 	/**
