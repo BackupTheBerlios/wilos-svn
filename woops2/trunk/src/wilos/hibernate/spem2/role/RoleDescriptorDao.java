@@ -1,14 +1,14 @@
 
 package wilos.hibernate.spem2.role ;
 
-import java.util.ArrayList ;
-import java.util.List ;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.hibernate.exception.ConstraintViolationException ;
-import org.springframework.dao.DataIntegrityViolationException ;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import wilos.model.spem2.role.RoleDescriptor ;
+import wilos.model.spem2.role.RoleDescriptor;
 
 /**
  * RoleDefinitionDao manage requests from the system to store RoleDefinition to the database
@@ -53,25 +53,31 @@ public class RoleDescriptorDao extends HibernateDaoSupport {
 		return loadAll ;
 	}
 
-	/**
-	 * Return a set of RoleDescriptor
-	 * 
-	 * @return
-	 */
-	@ SuppressWarnings ("unchecked")
+	/*
 	public List<RoleDescriptor> getRoleDescriptorsFromProcess(String _id) {
-		List<RoleDescriptor> loadAll = new ArrayList<RoleDescriptor>() ;
-		try{
-			loadAll.addAll(this.getHibernateTemplate().findByNamedParam(
-					"SELECT rd FROM roledescriptor AS rd, nesting AS n WHERE rd.roledescriptor_id = n.breakdownelement_id AND n.activity_id = :id",
-					"id", _id)) ;
+		logger.debug("###RoleDescriptorDao ### getRoleDescriptorsFromProcess id = "+_id);
+		List<RoleDescriptor> loadAll = new ArrayList<RoleDescriptor>();
+		boolean flag = false;
+		List<RoleDescriptor> liste = this.getAllRoleDescriptor();
+		logger.debug("###RoleDescriptorDao ### liste size = "+liste.size());
+		for (RoleDescriptor rd : liste) {
+			flag = false;
+			for (Activity a : rd.getActivities()) {
+				if (a.getId().equals(_id)) {
+					flag = true;
+					break;
+				}
+			}
+			if (flag){
+				loadAll.add(rd);
+				logger.debug("###RoleDescriptorDao ### added => "+rd);
+			}	
 		}
-		catch(Exception e){
-			logger.error("###RoleDescriptorDao ### --> " + e) ;
-		}
+		
 		return loadAll ;
 	}
-
+	*/
+	
 	/**
 	 * Return the RoleDescriptor which have the id _id
 	 * 

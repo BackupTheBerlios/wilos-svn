@@ -65,7 +65,7 @@
 		<managed-bean-class>
 			wilos.presentation.web.ActivityBean
 		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>activityService</property-name>
 			<value>#{ActivityService}</value>
@@ -77,7 +77,7 @@
 		<managed-bean-class>
 			wilos.presentation.web.RoleDescriptorBean
 		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>roleDescriptorService</property-name>
 			<value>#{RoleDescriptorService}</value>
@@ -114,22 +114,6 @@
 		<navigation-case>
 			<from-outcome>reload</from-outcome>
 			<to-view-id>/index.jsp</to-view-id>
-			<redirect />
-		</navigation-case>
-	</navigation-rule>
-
-
-	<navigation-rule>
-		<description>Custom Page for Woops2</description>
-
-		<navigation-case>
-			<from-outcome>page2</from-outcome>
-			<to-view-id>/page2.iface</to-view-id>
-			<redirect />
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>page1</from-outcome>
-			<to-view-id>/page1.iface</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>

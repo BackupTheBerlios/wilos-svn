@@ -48,22 +48,21 @@
 			                                        <ice:outputText
 			                                                value="#{msgs['component.tableactivity.column1']}"/>
 			                                </f:facet>
-											<ice:commandLink value="#{activity.id}" param="processID" />
-											<!--  <ice:outputText value="" />  -->
+											<ice:commandLink value="#{activity.id}" actionListener="#{ActivityBean.chooseProcessActionListener}" >
+												<f:param  name="process_id" value="#{activity.id}"/>
+											</ice:commandLink>
 										</ice:column>
 																			
 										<ice:column>
 											<f:facet name="header">
-			                                        <ice:outputText
-			                                                value="#{msgs['component.tableactivity.column2']}"/>
+			                                        <ice:outputText  value="#{msgs['component.tableactivity.column2']}"/>
 			                                </f:facet>
 											<ice:outputText value="#{activity.prefix}" />
 										</ice:column>
 										
 										<ice:column>
 											<f:facet name="header">
-			                                        <ice:outputText
-			                                                value="#{msgs['component.tableactivity.column3']}"/>
+			                                        <ice:outputText value="#{msgs['component.tableactivity.column3']}"/>
 			                                </f:facet>
 										<ice:selectBooleanCheckbox value="#{activity.isPlanned}"
 											disabled="true" />
@@ -71,8 +70,7 @@
 										
 										<ice:column>
 											<f:facet name="header">
-			                                        <ice:outputText
-			                                                value="#{msgs['component.tableactivity.column4']}"/>
+			                                        <ice:outputText value="#{msgs['component.tableactivity.column4']}"/>
 			                                </f:facet>
 										<ice:selectBooleanCheckbox value="#{activity.isOptional}"
 											disabled="true" />
@@ -86,6 +84,7 @@
 								<br />
 								<br />
 							</ice:panelTab>
+							
 							<ice:panelTab label="RoleDescriptor and TaskDescriptor Panel">
 								<br />
 								<br />

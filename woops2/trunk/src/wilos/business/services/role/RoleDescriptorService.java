@@ -1,12 +1,15 @@
 package wilos.business.services.role;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import wilos.hibernate.spem2.role.RoleDescriptorDao;
+import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.role.RoleDescriptor;
 
 /**
@@ -15,6 +18,7 @@ import wilos.model.spem2.role.RoleDescriptor;
  * This class represents ... TODO
  *
  */
+@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class RoleDescriptorService {
 	
 	private RoleDescriptorDao roleDescriptorDao ;
@@ -28,7 +32,24 @@ public class RoleDescriptorService {
 	 */
 	@Transactional(readOnly = true)
 	public List<RoleDescriptor> getRoleDescriptorsFromProcess(String _id) {
-		return this.roleDescriptorDao.getRoleDescriptorsFromProcess(_id) ;
+		List<RoleDescriptor> tempList =  this.roleDescriptorDao.getAllRoleDescriptor() ;
+		List<RoleDescriptor> returnedList =  new ArrayList<RoleDescriptor>();
+		boolean flag = false;
+		
+		for (RoleDescriptor rd : tempList) {
+			flag = false;
+			for (Activity a : rd.getActivities()) {
+				if (a.getId().equals(_id)) {
+					flag = true;
+					break;
+				}
+			}
+			if (flag){
+				returnedList.add(rd);
+				logger.debug("###RoleDescriptorDao ### added => "+rd);
+			}	
+		}
+		return returnedList;
 	}
 
 	/**

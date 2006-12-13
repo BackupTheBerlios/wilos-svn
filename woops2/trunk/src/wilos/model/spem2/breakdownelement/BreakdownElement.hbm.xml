@@ -26,13 +26,13 @@
 		<property name="isOptional" type="java.lang.Boolean"
 			column="isOptional" length="1" />
 
-		<!-- Associations 
+		<!-- Associations -->
 		<set name="activities" table="nesting" lazy="true">
 			<key column="breakdownelement_id"></key>
 			<many-to-many class="wilos.model.spem2.activity.Activity"
 				column="activity_id">
 			</many-to-many>
-		</set> -->
+		</set> 
 		
 	</joined-subclass>
 </hibernate-mapping>

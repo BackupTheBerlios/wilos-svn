@@ -22,6 +22,8 @@ public class RoleDescriptorBean {
 	private RoleDescriptor roleDescriptor;
 	
 	private RoleDescriptorService roleDescriptorService;
+	
+	private String processId = "";
 
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 	
@@ -39,15 +41,12 @@ public class RoleDescriptorBean {
 	 * 
 	 * @return the activitiesList.
 	 */
-	public List<RoleDescriptor> getRoleDescriptorList(String _id) {
+	public List<RoleDescriptor> getRoleDescriptorList() {
 		this.roleDescriptorList = new ArrayList<RoleDescriptor>();
-		try {
-			roleDescriptorList.addAll(this.roleDescriptorService.getRoleDescriptorsFromProcess(_id));
-		} catch (Exception e) {
-			logger.error("### RoleDescriptorBean ### "+e);
-		}
-		this.logger.debug("roleDescriptorList =" + this.roleDescriptorList) ;
-		return this.roleDescriptorList ;
+		logger.debug("### RoleDescriptorBean ### getRoleDescriptorList id= " + this.processId);
+		roleDescriptorList.addAll(this.roleDescriptorService.getRoleDescriptorsFromProcess(this.processId));
+		this.logger.debug("### RoleDescriptorBean ### roleDescriptorList =" + this.roleDescriptorList);
+		return this.roleDescriptorList;
 	}
 
 	/**
@@ -102,6 +101,14 @@ public class RoleDescriptorBean {
 	 */
 	public void setRoleDescriptorService(RoleDescriptorService _roleDescriptorService) {
 		this.roleDescriptorService = _roleDescriptorService ;
+	}
+
+	public String getProcessId() {
+		return processId;
+	}
+
+	public void setProcessId(String processId) {
+		this.processId = processId;
 	}
 	
 }

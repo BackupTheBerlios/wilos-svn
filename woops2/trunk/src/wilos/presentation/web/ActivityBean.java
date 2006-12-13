@@ -3,7 +3,9 @@ package wilos.presentation.web ;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import org.apache.commons.logging.Log;
@@ -66,7 +68,17 @@ public class ActivityBean {
 	public void testTransactionActionListener(ActionEvent e){
 		this.activityService.Test();
 	}
-
+	
+	public void chooseProcessActionListener(ActionEvent e){
+		FacesContext context = FacesContext.getCurrentInstance(); 
+		Map map = context.getExternalContext().getRequestParameterMap();
+		String processId = (String) map.get("process_id");
+		RoleDescriptorBean roleDescriptorBean = (RoleDescriptorBean) context.getApplication()
+		.getVariableResolver().resolveVariable(context,"RoleDescriptorBean");
+		logger.debug("### ActivityBean ### chooseProcessActionListener id = "+processId);
+		roleDescriptorBean.setProcessId(processId);
+	}
+	
 	/**
 	 * Getter of activitiesList.
 	 * 
