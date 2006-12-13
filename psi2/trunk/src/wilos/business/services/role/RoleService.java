@@ -34,7 +34,7 @@ public class RoleService {
 	private ParticipantDao participantDao;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
-
+	
 	/**
 	 * Return participant roles
 	 * 
