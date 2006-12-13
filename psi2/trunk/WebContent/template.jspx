@@ -44,7 +44,7 @@
                     <ice:outputConnectionStatus style="iceOutConStat"/>
                 </ice:panelGrid>
                 
-				<ice:messages styleClass="h2"/>
+				<ice:messages styleClass="pageHeader"/>
 				
                 <div class="demoWindow">
                     <ice:panelStack id="panelStack"

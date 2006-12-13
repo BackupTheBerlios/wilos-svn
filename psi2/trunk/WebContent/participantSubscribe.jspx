@@ -2,28 +2,28 @@
 	<h1><ice:outputText value="Inscrivez vous" style="h1" /></h1>
 	<ice:panelGrid columns="2">
 		<ice:outputText value="Nom" />
-		<ice:inputText id="nom" value="#{ParticipantBean.participant.name}" required="true"/>
+		<ice:inputText id="nom" value="#{ParticipantBean.participant.name}" required="false"/>
 				
 		<ice:outputText value="Prénom"/>
-		<ice:inputText id="prenom" value="#{ParticipantBean.participant.firstname}" required="true"/>
+		<ice:inputText id="prenom" value="#{ParticipantBean.participant.firstname}" required="false"/>
 		
 		<ice:outputText value="Adresse Email"/>
-		<ice:inputText id="email" size="30" value="#{ParticipantBean.participant.emailAddress}" required="true">
-			<f:validator validatorId="emailValidator"/>
+		<ice:inputText id="email" size="30" value="#{ParticipantBean.participant.emailAddress}" required="false">
+			<!--<f:validator validatorId="emailValidator"/>-->
 		</ice:inputText>
 
 		<ice:outputText value="Pseudo"/>
-		<ice:inputText id="login" value="#{ParticipantBean.participant.login}" required="true"/>
+		<ice:inputText id="login" value="#{ParticipantBean.participant.login}" required="false"/>
 
 		<ice:outputText value="Mot de passe"/>
-		<ice:inputSecret id="equal1" value="#{ParticipantBean.participant.password}" required="true">	
-			<f:validateLength minimum="6" />
+		<ice:inputSecret id="equal1" value="#{ParticipantBean.participant.password}" required="false">	
+			<!--<f:validateLength minimum="6" />-->
 		</ice:inputSecret>
 		
 		<ice:outputText value="Confirmez votre mot de passe"/>
-		<ice:inputSecret id="equal2" value="#{ParticipantBean.passwordConfirmation}" required="true">
-			<f:validateLength minimum="6" />
-			<f:validator validatorId="equalValidator"/>
+		<ice:inputSecret id="equal2" value="#{ParticipantBean.passwordConfirmation}" required="false">
+			<!--<f:validateLength minimum="6" />
+			<f:validator validatorId="equalValidator"/>-->
 		</ice:inputSecret>
 		
 	</ice:panelGrid>

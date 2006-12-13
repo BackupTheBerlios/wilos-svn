@@ -52,24 +52,20 @@ public class ParticipantBean {
 	 * @return
 	 */
 	public String saveParticipantAction() {
-		String url = "connect";
-		boolean loginExists = this.loginService.loginExist(this.participant
-				.getLogin());
-		if (loginExists == true) {
-			FacesMessage message = new FacesMessage();
-			message.setDetail("Ce Login existe deja");
+		String url = "";
+		FacesMessage message = new FacesMessage();
+		if (this.loginService.loginExist(this.participant.getLogin())) {
+			message.setSummary("Ce Login existe deja");
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-			facesContext.addMessage(null, message);
-			url = "createParticipant";			
 		} else {
 			this.participantService.saveParticipant(this.participant);
-			//url = "connect";
-			url="wilos"; //Passer eventuellement sur une page de confirmation
+			message.setSummary("Participant bien enregistré");
+			message.setSeverity(FacesMessage.SEVERITY_INFO);
+			url="wilos"; //TODO :Passer eventuellement sur une page de confirmation
 			changeContentPage(url);
 		}
-		//return url;
-		/*Navigation*/
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		facesContext.addMessage(null, message);
 		return "";
 	}
 

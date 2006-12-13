@@ -42,19 +42,19 @@ public class ProcessManagerBean {
 	 * @return
 	 */
 	public String saveProcessManagerAction() {
-		String url = "admin_main" ;
+		String url = "" ;
+		FacesMessage message = new FacesMessage() ;
 		if(this.loginService.loginExist(this.processManager.getLogin())){
-			FacesMessage message = new FacesMessage() ;
-			message.setDetail("Ce Login existe deja") ;
+			message.setSummary("Ce Login existe deja");
 			message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
-			FacesContext facesContext = FacesContext.getCurrentInstance() ;
-			facesContext.addMessage(null, message) ;
-			url = "processManager_create" ;
 		}
 		else{
 			this.processManagerService.saveProcessManager(this.processManager) ;
-			url = "admin_main" ;
+			message.setSummary("Process Manager bien enregistré");
+			message.setSeverity(FacesMessage.SEVERITY_INFO) ;
 		}
+		FacesContext facesContext = FacesContext.getCurrentInstance() ;
+		facesContext.addMessage(null, message) ;
 		return url ;
 	}
 

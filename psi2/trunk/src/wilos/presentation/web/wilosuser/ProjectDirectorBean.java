@@ -42,19 +42,18 @@ public class ProjectDirectorBean {
 	 * @return
 	 */
 	public String saveProjectDirectorAction() {
-		String url = "admin_main";
-		if (this.loginService.loginExist(this.projectDirector.getLogin())) {
-			FacesMessage message = new FacesMessage();
-			message.setDetail("Ce Login existe deja");
+		String url = "";
+		FacesMessage message = new FacesMessage();
+		if (this.loginService.loginExist(this.projectDirector.getLogin())) {			
+			message.setSummary("Ce Login existe deja");
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-			facesContext.addMessage(null, message);
-			url = "projectDirector_create";
 		} else {
-			this.projectDirectorService
-					.saveProjectDirector(this.projectDirector);
-			url = "admin_main";
+			this.projectDirectorService.saveProjectDirector(this.projectDirector);
+			message.setSummary("Project Director bien enregistré");
+			message.setSeverity(FacesMessage.SEVERITY_INFO);
 		}
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		facesContext.addMessage(null, message);
 		return url;
 	}
 
