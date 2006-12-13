@@ -126,6 +126,9 @@ public class RoleDescriptorTest extends TestCase {
 
 		this.roleDescriptor.addRoleDefinition(role) ;
 		assertNotNull(this.roleDescriptor.getRoleDefinition()) ;
+		//String id = this.ro
+		System.out.println("id rdef : "+this.roleDescriptor.getRoleDefinition().getId()) ;
+		//assertEquals()
 		assertTrue(role.getRoleDescriptors().size() == 1) ;
 
 		this.roleDescriptor.removeRoleDefinition(role) ;

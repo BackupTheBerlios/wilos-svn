@@ -6,7 +6,7 @@
 <hibernate-mapping>
 	<joined-subclass name="wilos.model.spem2.role.RoleDescriptor"
 		extends="wilos.model.spem2.breakdownelement.BreakdownElement"
-		table="roledescriptor" lazy="true">
+		table="roledescriptor" lazy="false">
 		<key column="roledescriptor_id"></key>
 
 		<many-to-one name="roleDefinition" class="wilos.model.spem2.role.RoleDefinition"

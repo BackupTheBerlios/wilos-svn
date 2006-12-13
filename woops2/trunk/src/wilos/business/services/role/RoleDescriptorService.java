@@ -30,7 +30,7 @@ public class RoleDescriptorService {
 	 * 
 	 * @return
 	 */
-	@Transactional(readOnly = true)
+	//@Transactional(readOnly = true)
 	public List<RoleDescriptor> getRoleDescriptorsFromProcess(String _id) {
 		List<RoleDescriptor> tempList =  this.roleDescriptorDao.getAllRoleDescriptor() ;
 		List<RoleDescriptor> returnedList =  new ArrayList<RoleDescriptor>();
