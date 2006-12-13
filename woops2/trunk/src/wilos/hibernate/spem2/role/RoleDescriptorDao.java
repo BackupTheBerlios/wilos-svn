@@ -87,14 +87,8 @@ public class RoleDescriptorDao extends HibernateDaoSupport {
 	 * 
 	 * @param _RoleDescriptor
 	 */
-	public void deleteRoleDescriptor(RoleDescriptor _RoleDescriptor) {
-		try{
-			this.getHibernateTemplate().delete(_RoleDescriptor) ;
-		}
-		catch(Exception sose){
-			// Catch normally errors when we delete an unexisting RoleDescriptor
-			// into the db.
-			logger.error("#### ERROR #### --- RoleDescriptorDao => deleteRoleDescriptor : trying to delete unexisting object \n" + sose) ;
-		}
+	public void deleteRoleDescriptor(RoleDescriptor _roleDescriptor) {
+		if(this.getRoleDescriptor(_roleDescriptor.getId()) != null)
+			this.getHibernateTemplate().delete(_roleDescriptor) ;
 	}
 }
