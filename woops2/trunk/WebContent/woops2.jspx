@@ -125,6 +125,14 @@
 											<ice:outputText value="#{roledescriptor.description}" />
 										</ice:column>
 										
+										<ice:column>
+											<f:facet name="header">
+			                                        <ice:outputText
+			                                                value="TDef"/>
+			                                </f:facet>
+											<ice:outputText value="#{roledescriptor.roleDefinition.id}" />
+										</ice:column>
+										
 									</ice:dataTable>
 									</td>
 	                    		</tr>

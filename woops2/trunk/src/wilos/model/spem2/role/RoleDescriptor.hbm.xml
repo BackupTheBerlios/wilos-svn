@@ -10,7 +10,7 @@
 		<key column="roledescriptor_id"></key>
 
 		<many-to-one name="roleDefinition" class="wilos.model.spem2.role.RoleDefinition"
-			column="roledefinition_id">
+			column="roledefinition_id" lazy="false">
 		</many-to-one>
 		
 		<set name="primaryTasks" lazy="true">

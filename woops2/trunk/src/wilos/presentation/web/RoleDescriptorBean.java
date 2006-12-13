@@ -2,11 +2,15 @@ package wilos.presentation.web;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import javax.faces.context.FacesContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.role.RoleDescriptorService;
+import wilos.model.spem2.role.RoleDefinition;
 import wilos.model.spem2.role.RoleDescriptor;
 
 /**
@@ -48,7 +52,17 @@ public class RoleDescriptorBean {
 		this.logger.debug("### RoleDescriptorBean ### roleDescriptorList =" + this.roleDescriptorList);
 		return this.roleDescriptorList;
 	}
-
+	/*
+	public String getRoledefinitionId(){
+		FacesContext context = FacesContext.getCurrentInstance(); 
+		Map map = context.getExternalContext().getRequestParameterMap();
+		String roledescriptorId = (String) map.get("roledescriptor_id");
+		RoleDefinition rd = this.getRoleDescriptorService().getRoleDefinitionFromRoleDescriptor(roledescriptorId);
+		logger.debug("### getRoledefinitionId ### id="+rd.getId());
+		if (rd.getId() != null) return rd.getId();
+		else return "";
+	}*/
+	
 	/**
 	 * Getter of roleDescriptor.
 	 *
