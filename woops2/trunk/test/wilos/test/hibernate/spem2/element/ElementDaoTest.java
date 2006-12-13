@@ -2,6 +2,9 @@ package wilos.test.hibernate.spem2.element;
 
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import junit.framework.TestCase;
 import wilos.hibernate.spem2.element.ElementDao;
 import wilos.model.spem2.element.Element;
@@ -13,6 +16,8 @@ import wilos.test.TestConfiguration;
  * @author deder
  */
 public class ElementDaoTest extends TestCase {
+	
+	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 	
 	private ElementDao elementDao = null;
 
@@ -48,12 +53,7 @@ public class ElementDaoTest extends TestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown();
 
-		// Delete the tmp element from the database.
-		try {
-			this.elementDao.getHibernateTemplate().delete(this.element);
-		} catch (Exception exception) {
-			// None.
-		}
+		this.elementDao.deleteElement(this.element);
 	}
 
 	/**
@@ -91,6 +91,7 @@ public class ElementDaoTest extends TestCase {
 		// of the set is >= 1.
 		List<Element> elements = this.elementDao.getAllElements();
 		assertNotNull(elements);
+		logger.error("####### ElementDaoTest.testgetAllElements ####### --> elements.sze() == " + elements.size());
 		assertTrue(elements.size() >= 1);
 
 		// Rk: the tearDown method is called here.

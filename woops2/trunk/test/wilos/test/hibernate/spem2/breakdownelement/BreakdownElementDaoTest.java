@@ -61,13 +61,7 @@ public class BreakdownElementDaoTest extends TestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown();
 
-		// Delete the tmp breakdownElement from the database.
-		try {
-			this.breakdownElementDao.getHibernateTemplate().delete(
-					this.breakdownElement);
-		} catch (Exception exception) {
-			// None.
-		}
+		this.breakdownElementDao.deleteBreakdownElement(this.breakdownElement);
 	}
 
 	/**

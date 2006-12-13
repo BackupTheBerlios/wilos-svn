@@ -50,7 +50,7 @@ public class ActivityDaoTest extends TestCase {
 		// Get the ActivityDao Singleton for managing Activity data
 		this.activityDao = (ActivityDao) TestConfiguration.getInstance().getApplicationContext().getBean("ActivityDao") ;
 
-		// Create empty Activity
+		// Create empty Activity.
 		this.activity = new Activity() ;
 	}
 
@@ -63,13 +63,7 @@ public class ActivityDaoTest extends TestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown() ;
 
-		// Delete the tmp activity from the database.
-		try{
-			this.activityDao.deleteActivity(this.activity) ;
-		}
-		catch(Exception exception){
-			System.err.println("exception e ="+exception);
-		}
+		this.activityDao.deleteActivity(this.activity) ;
 	}
 
 	/*

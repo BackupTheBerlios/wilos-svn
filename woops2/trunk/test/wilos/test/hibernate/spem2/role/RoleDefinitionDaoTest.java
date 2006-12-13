@@ -47,12 +47,7 @@ public class RoleDefinitionDaoTest extends TestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown();
 
-		// Delete the tmp roleDefinition from the database.
-		try {
-			this.roleDefinitionDao.getHibernateTemplate().delete(this.roleDefinition);
-		} catch (Exception exception) {
-			// None.
-		}
+		this.roleDefinitionDao.deleteRole(this.roleDefinition);
 	}
 
 	/**

@@ -55,13 +55,7 @@ public class StepDaoTest extends TestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown() ;
 
-		// Delete the tmp task from the database.
-		try{
-			this.stepDao.getHibernateTemplate().delete(this.step) ;
-		}
-		catch(Exception exception){
-			exception.printStackTrace() ;
-		}
+		this.stepDao.deleteStep(this.step) ;
 	}
 
 	public void testSaveOrUpdateTask() {

@@ -63,13 +63,7 @@ public class IterationDaoTest extends TestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown() ;
 
-		// Delete the tmp activity from the database.
-		try{
-			this.iterationDao.deleteIteration(this.iteration) ;
-		}
-		catch(Exception exception){
-			System.err.println("exception e ="+exception);
-		}
+		this.iterationDao.deleteIteration(this.iteration) ;
 	}
 
 	/*

@@ -1,12 +1,13 @@
-package wilos.test.hibernate.spem2.workbreakdownelement;
 
-import java.util.List;
+package wilos.test.hibernate.spem2.workbreakdownelement ;
 
-import junit.framework.TestCase;
-import wilos.hibernate.spem2.workbreakdownelement.WorkBreakdownElementDao;
-import wilos.model.spem2.breakdownelement.BreakdownElement;
-import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
-import wilos.test.TestConfiguration;
+import java.util.List ;
+
+import junit.framework.TestCase ;
+import wilos.hibernate.spem2.workbreakdownelement.WorkBreakdownElementDao ;
+import wilos.model.spem2.breakdownelement.BreakdownElement ;
+import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement ;
+import wilos.test.TestConfiguration ;
 
 /**
  * @author Sebastien
@@ -16,43 +17,43 @@ import wilos.test.TestConfiguration;
  */
 public class WorkBreakdownElementDaoTest extends TestCase {
 
-	private WorkBreakdownElementDao workBreakdownElementDao = null;
+	private WorkBreakdownElementDao workBreakdownElementDao = null ;
 
-	private WorkBreakdownElement workBreakdownElement = null;
+	private WorkBreakdownElement workBreakdownElement = null ;
 
-	public static final String NAME = "thisWBdE";
+	public static final String NAME = "thisWBdE" ;
 
-	public static final String DESCRIPTION = "wbde description";
+	public static final String DESCRIPTION = "wbde description" ;
 
-	public static final String PREFIX = "prefix";
+	public static final String PREFIX = "prefix" ;
 
-	public static final Boolean IS_OPTIONAL = true;
+	public static final Boolean IS_OPTIONAL = true ;
 
-	public static final Boolean HAS_MULTIPLE_OCCURENCES = true;
+	public static final Boolean HAS_MULTIPLE_OCCURENCES = true ;
 
-	public static final Boolean IS_PLANNED = true;
+	public static final Boolean IS_PLANNED = true ;
 
-	public static final Boolean IS_REPEATABLE = true;
+	public static final Boolean IS_REPEATABLE = true ;
 
-	public static final Boolean IS_ONGOING = true;
+	public static final Boolean IS_ONGOING = true ;
 
-	public static final Boolean IS_EVEN_DRIVEN = true;
+	public static final Boolean IS_EVEN_DRIVEN = true ;
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see junit.framework.TestCase#setUp()
 	 */
-	@Override
+	@ Override
 	protected void setUp() throws Exception {
-		super.setUp();
+		super.setUp() ;
 
 		// Get the BreakdownElementDao Singleton for managing BreakdownElement
 		// data
-		this.workBreakdownElementDao = (WorkBreakdownElementDao) TestConfiguration.getInstance().getApplicationContext().getBean("WorkBreakdownElementDao");
+		this.workBreakdownElementDao = (WorkBreakdownElementDao) TestConfiguration.getInstance().getApplicationContext().getBean("WorkBreakdownElementDao") ;
 
 		// Create empty WorkBreakdownElement
-		this.workBreakdownElement = new WorkBreakdownElement();
+		this.workBreakdownElement = new WorkBreakdownElement() ;
 	}
 
 	/*
@@ -60,17 +61,11 @@ public class WorkBreakdownElementDaoTest extends TestCase {
 	 * 
 	 * @see junit.framework.TestCase#tearDown()
 	 */
-	@Override
+	@ Override
 	protected void tearDown() throws Exception {
-		super.tearDown();
+		super.tearDown() ;
 
-		// Delete the tmp breakdownElement from the database.
-		try {
-			this.workBreakdownElementDao.getHibernateTemplate().delete(
-					this.workBreakdownElementDao);
-		} catch (Exception exception) {
-			// None.
-		}
+		this.workBreakdownElementDao.deleteWorkBreakdownElement(this.workBreakdownElement) ;
 	}
 
 	/**
@@ -82,14 +77,12 @@ public class WorkBreakdownElementDaoTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		// Save the workbreakdownElement with the method to test.
-		this.workBreakdownElementDao
-				.saveOrUpdateWorkBreakdownElement(this.workBreakdownElement);
+		this.workBreakdownElementDao.saveOrUpdateWorkBreakdownElement(this.workBreakdownElement) ;
 
 		// Check the saving.
-		String id = this.workBreakdownElement.getId();
-		WorkBreakdownElement wbdeTmp = (WorkBreakdownElement) this.workBreakdownElementDao
-				.getHibernateTemplate().load(WorkBreakdownElement.class, id);
-		assertNotNull(wbdeTmp);
+		String id = this.workBreakdownElement.getId() ;
+		WorkBreakdownElement wbdeTmp = (WorkBreakdownElement) this.workBreakdownElementDao.getHibernateTemplate().load(WorkBreakdownElement.class, id) ;
+		assertNotNull(wbdeTmp) ;
 
 		// Rk: the tearDown method is called here.
 	}
@@ -103,14 +96,13 @@ public class WorkBreakdownElementDaoTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		// Save the workBreakdownElement into the database.
-		this.workBreakdownElementDao.getHibernateTemplate().saveOrUpdate(
-				this.workBreakdownElement);
+		this.workBreakdownElementDao.getHibernateTemplate().saveOrUpdate(this.workBreakdownElement) ;
 
 		// Look if this bde is also into the database and look if the size of
 		// the set is >= 1.
-		List<WorkBreakdownElement> wbdes = this.workBreakdownElementDao.getAllWorkBreakdownElements();
-		assertNotNull(wbdes);
-		assertTrue(wbdes.size() >= 1);
+		List<WorkBreakdownElement> wbdes = this.workBreakdownElementDao.getAllWorkBreakdownElements() ;
+		assertNotNull(wbdes) ;
+		assertTrue(wbdes.size() >= 1) ;
 
 		// Rk: the tearDown method is called here.
 	}
@@ -124,44 +116,39 @@ public class WorkBreakdownElementDaoTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		// Add properties to the workBreakdownElement.
-		this.workBreakdownElement.setName(NAME);
-		this.workBreakdownElement.setDescription(DESCRIPTION);
-		this.workBreakdownElement.setPrefix(PREFIX);
-		this.workBreakdownElement
-				.setHasMultipleOccurrences(HAS_MULTIPLE_OCCURENCES);
-		this.workBreakdownElement.setIsOptional(IS_OPTIONAL);
-		this.workBreakdownElement.setIsPlanned(IS_PLANNED);
-		this.workBreakdownElement.setIsRepeatable(IS_REPEATABLE);
-		this.workBreakdownElement.setIsOngoing(IS_ONGOING);
-		this.workBreakdownElement.setIsEvenDriven(IS_EVEN_DRIVEN);
+		this.workBreakdownElement.setName(NAME) ;
+		this.workBreakdownElement.setDescription(DESCRIPTION) ;
+		this.workBreakdownElement.setPrefix(PREFIX) ;
+		this.workBreakdownElement.setHasMultipleOccurrences(HAS_MULTIPLE_OCCURENCES) ;
+		this.workBreakdownElement.setIsOptional(IS_OPTIONAL) ;
+		this.workBreakdownElement.setIsPlanned(IS_PLANNED) ;
+		this.workBreakdownElement.setIsRepeatable(IS_REPEATABLE) ;
+		this.workBreakdownElement.setIsOngoing(IS_ONGOING) ;
+		this.workBreakdownElement.setIsEvenDriven(IS_EVEN_DRIVEN) ;
 
 		// Save the workBreakdownElement into the database.
-		this.workBreakdownElementDao.getHibernateTemplate().saveOrUpdate(
-				this.workBreakdownElement);
-		String id = this.workBreakdownElement.getId();
+		this.workBreakdownElementDao.getHibernateTemplate().saveOrUpdate(this.workBreakdownElement) ;
+		String id = this.workBreakdownElement.getId() ;
 
 		// Test the method getWorkBreakdownElement with an existing
 		// workBreakdownElement.
-		WorkBreakdownElement wbdeTmp = this.workBreakdownElementDao
-				.getWorkBreakdownElement(id);
-		assertNotNull(wbdeTmp);
-		assertEquals("Name", wbdeTmp.getName(), NAME);
-		assertEquals("Description", wbdeTmp.getDescription(), DESCRIPTION);
-		assertEquals("Prefix", wbdeTmp.getPrefix(), PREFIX);
-		assertEquals("HasMultipleOccurences", wbdeTmp
-				.getHasMultipleOccurrences(), HAS_MULTIPLE_OCCURENCES);
-		assertEquals("IsOptional", wbdeTmp.getIsOptional(), IS_OPTIONAL);
-		assertEquals("IsPlanned", wbdeTmp.getIsPlanned(), IS_PLANNED);
-		assertEquals("IsRepeatable", wbdeTmp.getIsRepeatable(), IS_REPEATABLE);
-		assertEquals("IsOngoing", wbdeTmp.getIsOngoing(), IS_ONGOING);
-		assertEquals("IsEvenDriven", wbdeTmp.getIsEvenDriven(), IS_EVEN_DRIVEN);
+		WorkBreakdownElement wbdeTmp = this.workBreakdownElementDao.getWorkBreakdownElement(id) ;
+		assertNotNull(wbdeTmp) ;
+		assertEquals("Name", wbdeTmp.getName(), NAME) ;
+		assertEquals("Description", wbdeTmp.getDescription(), DESCRIPTION) ;
+		assertEquals("Prefix", wbdeTmp.getPrefix(), PREFIX) ;
+		assertEquals("HasMultipleOccurences", wbdeTmp.getHasMultipleOccurrences(), HAS_MULTIPLE_OCCURENCES) ;
+		assertEquals("IsOptional", wbdeTmp.getIsOptional(), IS_OPTIONAL) ;
+		assertEquals("IsPlanned", wbdeTmp.getIsPlanned(), IS_PLANNED) ;
+		assertEquals("IsRepeatable", wbdeTmp.getIsRepeatable(), IS_REPEATABLE) ;
+		assertEquals("IsOngoing", wbdeTmp.getIsOngoing(), IS_ONGOING) ;
+		assertEquals("IsEvenDriven", wbdeTmp.getIsEvenDriven(), IS_EVEN_DRIVEN) ;
 
 		// Test the method getWorkBreakdownElement with an unexisting
 		// workBreakdownElement.
-		this.workBreakdownElementDao.getHibernateTemplate().delete(
-				this.workBreakdownElement);
-		wbdeTmp = this.workBreakdownElementDao.getWorkBreakdownElement(id);
-		assertNull(wbdeTmp);
+		this.workBreakdownElementDao.getHibernateTemplate().delete(this.workBreakdownElement) ;
+		wbdeTmp = this.workBreakdownElementDao.getWorkBreakdownElement(id) ;
+		assertNull(wbdeTmp) ;
 
 		// Rk: the tearDown method is called here.
 	}
@@ -175,25 +162,21 @@ public class WorkBreakdownElementDaoTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		// Save the BreakdownElement into the database.
-		this.workBreakdownElementDao.getHibernateTemplate().saveOrUpdate(
-				this.workBreakdownElement);
-		String id = this.workBreakdownElement.getId();
+		this.workBreakdownElementDao.getHibernateTemplate().saveOrUpdate(this.workBreakdownElement) ;
+		String id = this.workBreakdownElement.getId() ;
 
 		// Test the method deleteBreakdownElement with an BreakdownElement
 		// existing into the db.
-		this.workBreakdownElementDao
-				.deleteWorkBreakdownElement(this.workBreakdownElement);
+		this.workBreakdownElementDao.deleteWorkBreakdownElement(this.workBreakdownElement) ;
 
 		// See if this.breakdownElement is now absent in the db.
-		BreakdownElement wbdeTmp = (BreakdownElement) this.workBreakdownElementDao
-				.getHibernateTemplate().get(WorkBreakdownElement.class, id);
-		assertNull(wbdeTmp);
+		BreakdownElement wbdeTmp = (BreakdownElement) this.workBreakdownElementDao.getHibernateTemplate().get(WorkBreakdownElement.class, id) ;
+		assertNull(wbdeTmp) ;
 
 		// Test the method deleteBreakdownElement with an BreakdownElement
 		// unexisting into the db.
 		// Normally here there are no exception thrown.
-		this.workBreakdownElementDao
-				.deleteWorkBreakdownElement(this.workBreakdownElement);
+		this.workBreakdownElementDao.deleteWorkBreakdownElement(this.workBreakdownElement) ;
 
 		// Rk: the tearDown method is called here.
 	}

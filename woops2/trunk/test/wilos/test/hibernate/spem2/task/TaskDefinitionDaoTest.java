@@ -53,12 +53,7 @@ public class TaskDefinitionDaoTest extends TestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown();
 
-		// Delete the tmp taskDefinition from the database.
-		try {
-			this.taskDefinitionDao.getHibernateTemplate().delete(this.taskDefinition);
-		} catch (Exception exception) {
-			exception.printStackTrace();
-		}
+		this.taskDefinitionDao.deleteTask(this.taskDefinition);
 	}
 
 	/**

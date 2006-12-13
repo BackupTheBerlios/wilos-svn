@@ -55,13 +55,7 @@ public class RoleDescriptorDaoTest extends TestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown();
 
-		// Delete the tmp roleDescriptor from the database.
-		try {
-			this.roleDescriptorDao.getHibernateTemplate().delete(
-					this.roleDescriptor);
-		} catch (Exception exception) {
-			// None.
-		}
+		this.roleDescriptorDao.deleteRoleDescriptor(this.roleDescriptor);
 	}
 
 	/**

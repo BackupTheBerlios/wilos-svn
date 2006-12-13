@@ -64,13 +64,7 @@ public class ProcessDaoTest extends TestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown() ;
 
-		// Delete the tmp activity from the database.
-		try{
-			this.processDao.deleteProcess(this.process) ;
-		}
-		catch(Exception exception){
-			System.err.println("exception e ="+exception);
-		}
+		this.processDao.deleteProcess(this.process) ;
 	}
 
 	/*
