@@ -19,11 +19,11 @@
 	<property file="${ant.dir}/tomcat.properties" />
 
 	<!-- Taches Tomcat -->
-	<!--<taskdef file="${ant.dir}/tomcatTask.properties">
+	<taskdef file="${ant.dir}/tomcatTask.properties">
 		<classpath>
 			<pathelement path="${ant.dir}/lib/catalina-ant.jar" />
 		</classpath>
-	</taskdef>-->
+	</taskdef>
 
 	<!-- Libraries Import -->
 	<path id="classpath">
