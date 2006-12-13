@@ -191,6 +191,11 @@
 	
 	
 	<!-- ========================= Business Layer ========================= -->
+	
+	<bean id="AssistantService"
+		class="wilos.business.services.assistant.AssistantService">
+		<property name="participantDao" ref="ParticipantDao" />
+	</bean>
 
 	<bean id="ParticipantService"
 		class="wilos.business.services.wilosuser.ParticipantService">

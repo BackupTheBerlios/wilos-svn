@@ -19,9 +19,13 @@ import javax.jws.WebService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import wilos.business.services.assistant.AssistantService;
 import wilos.business.services.process.ProcessService;
+import wilos.business.services.role.RoleService;
 import wilos.business.services.wilosuser.LoginService;
+import wilos.business.services.wilosuser.ParticipantService;
 import wilos.business.transfertobject.ParticipantTO;
+import wilos.hibernate.misc.wilosuser.ParticipantDao;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
 import wilos.model.spem2.process.Process;
@@ -57,6 +61,8 @@ public class WizardServices {
         System.out.println("factory => "+ctx);
         // Get the LoginService Singleton for managing Activity data  
        LoginService ls = (LoginService) ctx.getBean("LoginService");
+       AssistantService as = (AssistantService) ctx.getBean("AssistantService");
+       
        
        WilosUser tmpwu = ls.getAuthentifiedUser(login,password);
        if (tmpwu == null)
@@ -72,7 +78,7 @@ public class WizardServices {
            else
            {
                 System.out.println("Le user "+tmpwu.getName()+" est logge");
-                wu = new ParticipantTO((Participant) tmpwu);
+                wu =  as.getParticipantTO(tmpwu.getLogin());               
            }
        }
         }
