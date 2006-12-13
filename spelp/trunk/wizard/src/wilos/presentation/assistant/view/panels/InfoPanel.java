@@ -1,11 +1,8 @@
 package wilos.presentation.assistant.view.panels;
 
 import java.awt.BorderLayout;
-import java.awt.SystemColor;
 
-import javax.swing.JEditorPane;
 import javax.swing.JLabel;
-import javax.swing.JScrollPane;
 
 import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXTaskPane;

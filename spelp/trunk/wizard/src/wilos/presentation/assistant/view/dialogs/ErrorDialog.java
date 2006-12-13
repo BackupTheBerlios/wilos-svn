@@ -9,30 +9,9 @@
 
 package wilos.presentation.assistant.view.dialogs;
 
-import com.sun.imageio.plugins.jpeg.JPEG;
-import com.sun.tools.xjc.api.ErrorListener;
-import com.sun.tools.xjc.api.J2SJAXBModel;
-import com.sun.tools.xjc.api.Reference;
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.GridBagLayout;
-import java.io.IOException;
-import java.util.List;
-import javax.swing.Icon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.xml.bind.SchemaOutputResolver;
-import javax.xml.namespace.QName;
+
 import wilos.presentation.assistant.ressources.Bundle;
-import wilos.presentation.assistant.ressources.ImagesService;
-import wilos.presentation.assistant.view.panels.ImagePanel;
 
 /**
  *

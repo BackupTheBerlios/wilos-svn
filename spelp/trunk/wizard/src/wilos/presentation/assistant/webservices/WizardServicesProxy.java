@@ -1,21 +1,21 @@
 package wilos.presentation.assistant.webservices;
 
-import com.thoughtworks.xstream.XStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.namespace.QName;
-import javax.xml.ws.Service;
-import wilos.model.misc.wilosuser.Participant;
-import wilos.model.misc.wilosuser.WilosUser;
 
-import wilos.model.spem2.breakdownelement.BreakdownElement;
-import wilos.model.spem2.role.RoleDescriptor;
+import javax.xml.namespace.QName;
+
+import wilos.business.webservices.WizardServices;
+import wilos.business.webservices.WizardServicesService;
+import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.process.Process;
-import wilos.business.webservices.*;
+import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
+
+import com.thoughtworks.xstream.XStream;
 
 public class WizardServicesProxy {
         public static String ENDPOINT = "/WizardServices?wsdl";

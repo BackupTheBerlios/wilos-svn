@@ -23,7 +23,7 @@ public class ActionBar extends JToolBar {
 		this.setLayout(new FlowLayout());
 		runButton = createButton(null,
 				Bundle.getText("ActionBar.tooltip.run"), 
-				ImagesService.getIcon("images.run"));
+				ImagesService.getImageIcon("images.run"));
 		this.add(runButton);
 		runButton.addActionListener(
 				new ActionListener(){

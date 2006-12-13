@@ -10,22 +10,19 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 import wilos.presentation.assistant.view.panels.InfoPanel;
 import wilos.presentation.assistant.view.panels.LoginPanel;
-import wilos.presentation.assistant.view.panels.TreePanel;
 
 public class MainFrame extends JFrame{
-	private JMenuBar menu = null;
+/*	private JMenuBar menu = null;
 	private JMenu menuFichier = null;
 	private JMenuItem itemFichier = null ;
-	private JMenuItem itemExit = null ;
-	private TreePanel tp = null ;
+*/	private JMenuItem itemExit = null ;
+//	private TreePanel tp = null ;
 	private InfoPanel southpanel = null ;
 	
 	

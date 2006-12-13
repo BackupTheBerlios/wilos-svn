@@ -175,7 +175,7 @@ public class LoginPanel extends JPanel {
                                         if (rolesListe.isEmpty())
                                         {
                                             setVisible(true);
-                                            ErrorDialog Err = new ErrorDialog("Gestion des erreurs à faire !!");
+                                            ErrorDialog Err = new ErrorDialog("L'utilisateur n'existe pas");
                                         }  
                                         else
                                         {
