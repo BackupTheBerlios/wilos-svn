@@ -9,7 +9,7 @@
 
 	<application>
 		<locale-config>
-			<default-locale>en_US</default-locale>
+			<default-locale>fr</default-locale>
 		</locale-config>
 	</application>
 
@@ -103,6 +103,11 @@
 			<value>#{RoleService}</value>
 		</managed-property>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>styleBean</managed-bean-name>
+		<managed-bean-class>wilos.presentation.web.template.StyleBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
 	
 	<!-- Managed Bean for menu interaction -->
 	<managed-bean>
@@ -123,119 +128,6 @@
 		<managed-bean-class>wilos.presentation.web.template.ConnectViewBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
-	
-	
-	<!-- Managed Bean for dynamic style examples -->
-	<managed-bean>
-		<managed-bean-name>styleBean</managed-bean-name>
-		<managed-bean-class>wilos.presentation.web.util.StyleBean</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
-
-	<managed-bean>
-		<description>
-			Backing bean that controls which content will be displayed
-			and the MenuGroupBeans that make up the left navigation of
-			the application
-		</description>
-		<managed-bean-name>navigation</managed-bean-name>
-		<managed-bean-class>
-			wilos.presentation.web.util.NavigationBean
-		</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
-
-	<managed-bean>
-		<managed-bean-name>treeNavigation</managed-bean-name>
-		<managed-bean-class>
-			wilos.presentation.web.util.TreeNavigation
-		</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
-
-
-
-	<!-- OutputProgress Render Manager-->
-	<managed-bean>
-		<managed-bean-name>renderManager</managed-bean-name>
-		<managed-bean-class>
-			com.icesoft.faces.async.render.RenderManager
-		</managed-bean-class>
-		<managed-bean-scope>application</managed-bean-scope>
-	</managed-bean>
-	
-	
-	<!-- Woops2 Beans -->
-	<managed-bean>
-		<managed-bean-name>ActivityBean</managed-bean-name>
-		<managed-bean-class>
-			wilos.presentation.web.ActivityBean
-		</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-		<managed-property>
-			<property-name>activityService</property-name>
-			<value>#{ActivityService}</value>
-		</managed-property>
-	</managed-bean>
-	
-	<managed-bean>
-		<managed-bean-name>RoleDescriptorBean</managed-bean-name>
-		<managed-bean-class>
-			wilos.presentation.web.RoleDescriptorBean
-		</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-		<managed-property>
-			<property-name>roleDescriptorService</property-name>
-			<value>#{RoleDescriptorService}</value>
-		</managed-property>
-	</managed-bean>
-	
-	<managed-bean>
-		<managed-bean-name>TaskDescriptorBean</managed-bean-name>
-		<managed-bean-class>
-			wilos.presentation.web.TaskDescriptorBean
-		</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-		<managed-property>
-			<property-name>taskDescriptorService</property-name>
-			<value>#{TaskDescriptorService}</value>
-		</managed-property>
-	</managed-bean>
-	
-	<managed-bean>
-		<managed-bean-name>TaskDefinitionBean</managed-bean-name>
-		<managed-bean-class>
-			wilos.presentation.web.TaskDefinitionBean
-		</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
-	
-	<managed-bean>
-		<managed-bean-name>StepBean</managed-bean-name>
-		<managed-bean-class>
-			wilos.presentation.web.StepBean
-		</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-		<managed-property>
-			<property-name>stepService</property-name>
-			<value>#{StepService}</value>
-		</managed-property>
-	</managed-bean>
-	
-	
-	<managed-bean>
-		<managed-bean-name>XmlFileImportBean</managed-bean-name>
-		<managed-bean-class>
-			wilos.presentation.web.XmlFileImportBean
-		</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-		<managed-property>
-			<property-name>processService</property-name>
-			<value>#{ProcessService}</value>
-		</managed-property>
-	</managed-bean>
-	
-	
 	
 	<validator>
 		<validator-id>emailValidator</validator-id>
@@ -259,9 +151,10 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
+
+
 	<navigation-rule>
-		<description>Custom Page for PSI2</description>
+		<description>Custom Pgae for Wilos</description>
 
 		<navigation-case>
 			<from-outcome>connect</from-outcome>
@@ -284,6 +177,16 @@
     		<redirect />
   		</navigation-case>
   		<navigation-case>
+    		<from-outcome>welcomeProjectDirector</from-outcome>
+    		<to-view-id>/welcomeProjectDirector.iface</to-view-id>
+    		<redirect />
+  		</navigation-case>
+  		<navigation-case>
+    		<from-outcome>welcomeProcessManager</from-outcome>
+    		<to-view-id>/welcomeProcessManager.iface</to-view-id>
+    		<redirect />
+  		</navigation-case>
+  		<navigation-case>
     		<from-outcome>processManager_create</from-outcome>
     		<to-view-id>/processManager_create.iface</to-view-id>
     		<redirect />
@@ -299,9 +202,20 @@
     		<redirect />
   		</navigation-case>
   		<navigation-case>
+    		<from-outcome>process_create</from-outcome>
+    		<to-view-id>/process_create.iface</to-view-id>
+    		<redirect />
+  		</navigation-case>
+  		<navigation-case>
     		<from-outcome>affect_roles</from-outcome>
     		<to-view-id>/affect_roles.iface</to-view-id>
     		<redirect />
   		</navigation-case>
+  		<navigation-case>
+    		<from-outcome>createProject</from-outcome>
+    		<to-view-id>/project_create.iface</to-view-id>
+    		<redirect />
+  		</navigation-case>
 	</navigation-rule>
+
 </faces-config>
