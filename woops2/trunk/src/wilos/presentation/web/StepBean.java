@@ -2,6 +2,10 @@ package wilos.presentation.web;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -49,7 +53,7 @@ public class StepBean {
 				+ this.stepList);
 		return this.stepList;
 	}
-
+	
 	/**
 	 * Getter of step.
 	 * 
