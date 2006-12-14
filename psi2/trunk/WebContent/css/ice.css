@@ -461,7 +461,7 @@ body, table {
     display: block;
     text-decoration: none;
     background-color: transparent;
-    background-image: url( "../images/xpimages/cal_button.gif" );
+    background-image: url( "../images/xpwilos/cal_button.gif" );
     background-repeat: no-repeat;
     text-align: center;
     border: none;
@@ -473,7 +473,7 @@ body, table {
     display: block;
     text-decoration: none;
     background-color: transparent;
-    background-image: url( "../images/xpimages/cal_off.gif" );
+    background-image: url( "../images/xpwilos/cal_off.gif" );
     background-repeat: no-repeat;
     text-align: center;
     border: none;
@@ -483,7 +483,7 @@ body, table {
 
 .iceCalMonthYear {
     background-color: #EFEFEF;
-    background-image: url( "../images/xpimages/table_col_header.gif" );
+    background-image: url( "../images/xpwilos/table_col_header.gif" );
     background-position: bottom;
     background-repeat: repeat-x;
     font-weight: normal;
@@ -503,7 +503,7 @@ body, table {
     text-decoration: none;
     display: block;
     background-color: transparent;
-    background-image: url( "../images/xpimages/cal_arrow_left.gif" );
+    background-image: url( "../images/xpwilos/cal_arrow_left.gif" );
     background-repeat: no-repeat;
     text-align: center;
     border: none;
@@ -515,7 +515,7 @@ body, table {
     text-decoration: none;
     display: block;
     background-color: transparent;
-    background-image: url( "../images/xpimages/cal_arrow_right.gif" );
+    background-image: url( "../images/xpwilos/cal_arrow_right.gif" );
     background-repeat: no-repeat;
     text-align: center;
     border: none;
@@ -583,7 +583,7 @@ body, table {
 .iceTblHeader {
 /*the header of a data tables */
     background-color: #EFEFEF;
-    background-image: url( "../images/xpimages/table_col_header.gif" );
+    background-image: url( "../images/xpwilos/table_col_header.gif" );
     background-position: bottom;
     background-repeat: repeat-x;
     font-weight: normal;
@@ -1121,7 +1121,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOffBottom .LeftTop {
     background-color: transparent;
-    background-image: url( "../images/xpimages/tbot-off-left-top.gif" );
+    background-image: url( "../images/xpwilos/tbot-off-left-top.gif" );
     background-repeat: no-repeat;
     text-align: center;
     border: none;
@@ -1129,7 +1129,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOffBottom .MiddleTop {
     background-color: transparent;
-    background-image: url( "../images/xpimages/tbot-off-mid-top.gif" );
+    background-image: url( "../images/xpwilos/tbot-off-mid-top.gif" );
     background-repeat: repeat-x;
     text-align: center;
     border: none;
@@ -1137,7 +1137,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOffBottom .RightTop {
     background-color: transparent;
-    background-image: url( "../images/xpimages/tbot-off-right-top.gif" );
+    background-image: url( "../images/xpwilos/tbot-off-right-top.gif" );
     background-repeat: no-repeat;
     text-align: center;
     border: none;
@@ -1145,7 +1145,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOffBottom .LeftMiddle {
     background-color: transparent;
-    background-image: url( "../images/xpimages/off-left-mid.gif" );
+    background-image: url( "../images/xpwilos/off-left-mid.gif" );
     background-repeat: no-repeat;
     text-align: center;
     padding-top: 5px;
@@ -1154,7 +1154,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOffBottom .MiddleMiddle {
     background-color: transparent;
-    background-image: url( "../images/xpimages/off-mid-mid.gif" );
+    background-image: url( "../images/xpwilos/off-mid-mid.gif" );
     background-repeat: repeat-x;
     text-align: center;
     border: none;
@@ -1177,7 +1177,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOffBottom .RightMiddle {
     background-color: transparent;
-    background-image: url( "../images/xpimages/off-right-mid.gif" );
+    background-image: url( "../images/xpwilos/off-right-mid.gif" );
     background-repeat: no-repeat;
     text-align: center;
     padding-top: 5px;
@@ -1186,7 +1186,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOffBottom .LeftBottom {
     background-color: transparent;
-    background-image: url( "../images/xpimages/tbot-off-left-bot.gif" );
+    background-image: url( "../images/xpwilos/tbot-off-left-bot.gif" );
     background-repeat: no-repeat;
     padding-bottom: 5px;
     border: none;
@@ -1194,7 +1194,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOffBottom .MiddleBottom {
     background-color: transparent;
-    background-image: url( "../images/xpimages/tbot-off-mid-bot.gif" );
+    background-image: url( "../images/xpwilos/tbot-off-mid-bot.gif" );
     background-repeat: repeat-x;
     padding-bottom: 5px;
     border: none;
@@ -1202,7 +1202,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOffBottom .RightBottom {
     background-color: transparent;
-    background-image: url( "../images/xpimages/tbot-off-right-bot.gif" );
+    background-image: url( "../images/xpwilos/tbot-off-right-bot.gif" );
     background-repeat: no-repeat;
     padding-bottom: 5px;
     border: none;
@@ -1216,7 +1216,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOverBottom .LeftTop {
     background-color: transparent;
-    background-image: url( "../images/xpimages/tbot-over-left-top.gif" );
+    background-image: url( "../images/xpwilos/tbot-over-left-top.gif" );
     background-repeat: no-repeat;
     text-align: center;
     border: none;
@@ -1224,7 +1224,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOverBottom .MiddleTop {
     background-color: transparent;
-    background-image: url( "../images/xpimages/tbot-over-mid-top.gif" );
+    background-image: url( "../images/xpwilos/tbot-over-mid-top.gif" );
     background-repeat: repeat-x;
     text-align: center;
     border: none;
@@ -1232,7 +1232,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOverBottom .RightTop {
     background-color: transparent;
-    background-image: url( "../images/xpimages/tbot-over-right-top.gif" );
+    background-image: url( "../images/xpwilos/tbot-over-right-top.gif" );
     background-repeat: no-repeat;
     text-align: center;
     border: none;
@@ -1240,7 +1240,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOverBottom .LeftMiddle {
     background-color: transparent;
-    background-image: url( "../images/xpimages/over-left-mid.gif" );
+    background-image: url( "../images/xpwilos/over-left-mid.gif" );
     background-repeat: repeat-y;
     text-align: center;
     padding-top: 5px;
@@ -1249,7 +1249,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOverBottom .MiddleMiddle {
     background-color: transparent;
-    background-image: url( "../images/xpimages/over-mid-mid.gif" );
+    background-image: url( "../images/xpwilos/over-mid-mid.gif" );
     background-repeat: repeat;
     text-align: center;
     border: none;
@@ -1272,7 +1272,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOverBottom .RightMiddle {
     background-color: transparent;
-    background-image: url( "../images/xpimages/over-right-mid.gif" );
+    background-image: url( "../images/xpwilos/over-right-mid.gif" );
     background-repeat: repeat-y;
     text-align: center;
     padding-top: 5px;
@@ -1281,7 +1281,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOverBottom .LeftBottom {
     background-color: transparent;
-    background-image: url( "../images/xpimages/tbot-over-left-bot.gif" );
+    background-image: url( "../images/xpwilos/tbot-over-left-bot.gif" );
     background-repeat: no-repeat;
     padding-bottom: 5px;
     border: none;
@@ -1289,7 +1289,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOverBottom .MiddleBottom {
     background-color: transparent;
-    background-image: url( "../images/xpimages/tbot-over-mid-bot.gif" );
+    background-image: url( "../images/xpwilos/tbot-over-mid-bot.gif" );
     background-repeat: repeat-x;
     padding-bottom: 5px;
     border: none;
@@ -1297,7 +1297,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOverBottom .RightBottom {
     background-color: transparent;
-    background-image: url( "../images/xpimages/tbot-over-right-bot.gif" );
+    background-image: url( "../images/xpwilos/tbot-over-right-bot.gif" );
     background-repeat: no-repeat;
     padding-bottom: 5px;
     border: none;
@@ -1429,7 +1429,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
     width: 100%;
     background-color: #2A6CC2;
     color: #FFFFFF;
-    background-image: url( ../images/xpimages/cal_arrow_right.gif );
+    background-image: url( ../images/xpwilos/cal_arrow_right.gif );
     background-position: center right;
     background-repeat: no-repeat;
 }
@@ -1457,7 +1457,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 }
 
 .iceOutputProgressFill {
-    background-color: #026AFF; /* background-image:url(../images/xpimages/window_top.gif);*/
+    background-color: #026AFF; /* background-image:url(../images/xpwilos/window_top.gif);*/
     background-position: top left;
     background-repeat: repeat-x;
     display: block;
@@ -1816,7 +1816,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .icePanelPopupHeader {
     background-color: #DEDEDE;
-    background-image: url( "../images/xpimages/window_top.gif" );
+    background-image: url( "../images/xpwilos/window_top.gif" );
     background-position: top;
     background-repeat: repeat-x;
     height: 2.0em;
@@ -1946,7 +1946,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOff .LeftTop-dis {
     background-color: transparent;
-    background-image: url( "../images/xpimages/off-left-top-dis.gif" );
+    background-image: url( "../images/xpwilos/off-left-top-dis.gif" );
     background-repeat: no-repeat;
     background-position: bottom;
     text-align: center;
@@ -1957,7 +1957,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOff .MiddleTop-dis {
     background-color: #DEDEDE;
-    background-image: url( '../images/xpimages/off-mid-top-dis.gif' );
+    background-image: url( '../images/xpwilos/off-mid-top-dis.gif' );
     background-repeat: repeat-x;
     text-align: center;
     padding-top: 1px;
@@ -1966,7 +1966,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOff .RightTop-dis {
     background-color: transparent;
-    background-image: url( "../images/xpimages/off-right-top-dis.gif" );
+    background-image: url( "../images/xpwilos/off-right-top-dis.gif" );
     background-repeat: no-repeat;
     background-position: bottom;
     text-align: center;
@@ -1976,7 +1976,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOff .LeftMiddle-dis {
     background-color: #DEDEDE;
-    /*    background-image: url("../images/xpimages/off-left-mid.gif");
+    /*    background-image: url("../images/xpwilos/off-left-mid.gif");
     background-repeat:no-repeat;*/
     text-align: center;
     padding-top: 15px;
@@ -1985,7 +1985,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOff .MiddleMiddle-dis {
     background-color: #DEDEDE;
-    /*    background-image: url("../images/xpimages/off-mid-mid.gif");
+    /*    background-image: url("../images/xpwilos/off-mid-mid.gif");
     background-repeat:repeat-x;*/
     text-align: center;
     padding-top: 5px;
@@ -2004,7 +2004,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOff .RightMiddle-dis {
     background-color: #DEDEDE;
-    /*    background-image: url("../images/xpimages/off-right-mid.gif");
+    /*    background-image: url("../images/xpwilos/off-right-mid.gif");
     background-repeat:no-repeat;*/
     text-align: center;
     padding-top: 15px;
@@ -2013,21 +2013,21 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOff .LeftBottom-dis {
     background-color: transparent;
-    background-image: url( "../images/xpimages/off-left-bot.gif" );
+    background-image: url( "../images/xpwilos/off-left-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
 
 .iceTabSetTabOff .MiddleBottom-dis {
     background-color: transparent;
-    background-image: url( "../images/xpimages/off-mid-bot.gif" );
+    background-image: url( "../images/xpwilos/off-mid-bot.gif" );
     background-repeat: repeat-x;
     border: none;
 }
 
 .iceTabSetTabOff .RightBottom-dis {
     background-color: transparent;
-    background-image: url( "../images/xpimages/off-right-bot.gif" );
+    background-image: url( "../images/xpwilos/off-right-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
@@ -2039,7 +2039,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOn .LeftTop-dis {
     background-color: transparent;
-    background-image: url( "../images/xpimages/off-left-top-dis.gif" );
+    background-image: url( "../images/xpwilos/off-left-top-dis.gif" );
     background-repeat: no-repeat;
     background-position: bottom;
     text-align: center;
@@ -2050,7 +2050,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOn .MiddleTop-dis {
     background-color: #DEDEDE;
-    background-image: url( '../images/xpimages/off-mid-top-dis.gif' );
+    background-image: url( '../images/xpwilos/off-mid-top-dis.gif' );
     background-repeat: repeat-x;
     text-align: center;
     padding-top: 1px;
@@ -2059,7 +2059,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOn .RightTop-dis {
     background-color: transparent;
-    background-image: url( "../images/xpimages/off-right-top-dis.gif" );
+    background-image: url( "../images/xpwilos/off-right-top-dis.gif" );
     background-repeat: no-repeat;
     background-position: bottom;
     text-align: center;
@@ -2069,7 +2069,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOn .LeftMiddle-dis {
     background-color: #DEDEDE;
-    /*    background-image: url("../images/xpimages/off-left-mid.gif");
+    /*    background-image: url("../images/xpwilos/off-left-mid.gif");
     background-repeat:no-repeat;*/
     text-align: center;
     padding-top: 15px;
@@ -2078,7 +2078,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOn .MiddleMiddle-dis {
     background-color: #DEDEDE;
-    /*    background-image: url("../images/xpimages/off-mid-mid.gif");
+    /*    background-image: url("../images/xpwilos/off-mid-mid.gif");
     background-repeat:repeat-x;*/
     text-align: center;
     padding-top: 5px;
@@ -2097,7 +2097,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOn .RightMiddle-dis {
     background-color: #DEDEDE;
-    /*    background-image: url("../images/xpimages/off-right-mid.gif");
+    /*    background-image: url("../images/xpwilos/off-right-mid.gif");
     background-repeat:no-repeat;*/
     text-align: center;
     padding-top: 15px;
@@ -2106,21 +2106,21 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceTabSetTabOn .LeftBottom-dis {
     background-color: transparent;
-    background-image: url( "../images/xpimages/off-left-bot.gif" );
+    background-image: url( "../images/xpwilos/off-left-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
 
 .iceTabSetTabOn .MiddleBottom-dis {
     background-color: transparent;
-    background-image: url( "../images/xpimages/off-mid-bot.gif" );
+    background-image: url( "../images/xpwilos/off-mid-bot.gif" );
     background-repeat: repeat-x;
     border: none;
 }
 
 .iceTabSetTabOn .RightBottom-dis {
     background-color: transparent;
-    background-image: url( "../images/xpimages/off-right-bot.gif" );
+    background-image: url( "../images/xpwilos/off-right-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
@@ -2184,7 +2184,7 @@ Disabled classes for the calendar controls
 
 .iceCalMonthYear-dis {
     background-color: #EFEFEF;
-    /*    background-image: url("../images/xpimages/table_col_header.gif");
+    /*    background-image: url("../images/xpwilos/table_col_header.gif");
     background-position:bottom;
     background-repeat:repeat-x;*/
     font-weight: normal;

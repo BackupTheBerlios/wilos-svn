@@ -42,6 +42,22 @@ public class RoleService {
 	 */
 	@Transactional(readOnly = true)
 	public List<RoleDescriptor> getRolesDescriptor() {
+		
+		/*//TODO enlever cette portion de code : jeux de test pour les Roles
+		RoleDescriptor tachatte = new RoleDescriptor();
+		tachatte.setName("Chef de Projet");
+		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(tachatte);
+		tachatte.setName("Architecte");
+		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(tachatte);
+		tachatte.setName("Developpeur");
+		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(tachatte);
+		tachatte.setName("Testeur");
+		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(tachatte);
+		tachatte.setName("Manager");
+		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(tachatte);
+		tachatte.setName("Analyste");
+		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(tachatte);*/
+		
 		ArrayList<RoleDescriptor> rolesList = new ArrayList<RoleDescriptor>(this.roleDescriptorDao.getAllRoleDescriptor());
 		return rolesList;
 	}
