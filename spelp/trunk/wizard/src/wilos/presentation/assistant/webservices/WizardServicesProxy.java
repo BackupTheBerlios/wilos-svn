@@ -10,6 +10,7 @@ import wilos.business.webservices.WizardServices;
 import wilos.business.webservices.WizardServicesService;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.process.Process;
+import wilos.model.spem2.role.RoleDefinition;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;
@@ -57,6 +58,7 @@ public class WizardServicesProxy {
                       xstream.alias("wilos.business.transfertobject.TaskDescriptorTO",TaskDescriptor.class);
                       xstream.alias("wilos.business.transfertobject.TaskDefinitionTO",TaskDefinition.class);
                       xstream.alias("wilos.business.transfertobject.StepTO",Step.class);
+                      xstream.alias("wilos.business.transfertobject.RoleDefinitionTO",RoleDefinition.class);
                       String result = port.getParticipant(login,password);
                       System.out.println(result);
                     myParticipant = (Participant)xstream.fromXML(result);
