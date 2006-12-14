@@ -21,9 +21,7 @@ import wilos.model.spem2.task.TaskDescriptor;
  * @author toine
  */
 public class RoleDescriptorTO extends RoleDescriptor implements Serializable{
-    
-            
-            
+                
     /** Creates a new instance of RoleDescriptorTO */
     public RoleDescriptorTO() {
     }
@@ -45,7 +43,8 @@ public class RoleDescriptorTO extends RoleDescriptor implements Serializable{
             taskDescriptorATos.add(new TaskDescriptorTO(td));
         }
         this.addAllAdditionalTasks(taskDescriptorATos);
-        
+        if(myRoleDescriptor.getRoleDefinition() != null) this.setRoleDefinition(new RoleDefinitionTO(myRoleDescriptor.getRoleDefinition()));
+        if(this.getRoleDefinition() != null && this.getDescription().length()==0)  this.setDescription(this.getRoleDefinition().getDescription());
     }
     
 }
