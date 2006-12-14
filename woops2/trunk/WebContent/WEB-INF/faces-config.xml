@@ -128,20 +128,15 @@
 			<value>#{ProcessService}</value>
 		</managed-property>
 	</managed-bean>
-	<!--  
+	
 	<managed-bean>
-		<managed-bean-name>TreeViewBean</managed-bean-name>
+		<managed-bean-name>TreeBean</managed-bean-name>
 		<managed-bean-class>
-			wilos.presentation.web.icefaces.tree.TreeViewBean
+			wilos.presentation.web.icefaces.tree.TreeBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
-		<managed-property>
-			<property-name>processService</property-name>
-			<value>#{ProcessService}</value>
-		</managed-property>
 	</managed-bean>
-	-->
-
+	
 	<navigation-rule>
 		<description>Theme Reload</description>
 		<navigation-case>
