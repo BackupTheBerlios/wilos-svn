@@ -103,11 +103,6 @@
 			<value>#{RoleService}</value>
 		</managed-property>
 	</managed-bean>
-	<managed-bean>
-		<managed-bean-name>styleBean</managed-bean-name>
-		<managed-bean-class>wilos.presentation.web.template.StyleBean</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
 	
 	<!-- Managed Bean for menu interaction -->
 	<managed-bean>

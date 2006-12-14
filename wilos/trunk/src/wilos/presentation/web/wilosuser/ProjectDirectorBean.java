@@ -1,7 +1,9 @@
 package wilos.presentation.web.wilosuser;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -42,22 +44,50 @@ public class ProjectDirectorBean {
 	 * @return
 	 */
 	public String saveProjectDirectorAction() {
-		String url = "admin_main";
-		if (this.loginService.loginExist(this.projectDirector.getLogin())) {
-			FacesMessage message = new FacesMessage();
-			message.setDetail("Ce Login existe deja");
+		String url = "";
+		FacesMessage message = new FacesMessage();
+		if (this.loginService.loginExist(this.projectDirector.getLogin())) {			
+			message.setSummary("Ce Login existe deja");
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-			facesContext.addMessage(null, message);
-			url = "projectDirector_create";
 		} else {
-			this.projectDirectorService
-					.saveProjectDirector(this.projectDirector);
-			url = "admin_main";
+			this.projectDirectorService.saveProjectDirector(this.projectDirector);
+			message.setSummary("Project Director bien enregistré");
+			message.setSeverity(FacesMessage.SEVERITY_INFO);
 		}
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		facesContext.addMessage(null, message);
 		return url;
 	}
+	/**
+	 * 
+	 * methode qui controle que les deux mots de passes sont identiques 
+	 *
+	 * @param _context
+	 * @param _toValidate
+	 * @param _value
+	 * @throws ValidatorException
+	 */
+	public void passwordEqualValidation(FacesContext _context, UIComponent _toValidate, Object _value) throws ValidatorException
+	{
+		String passConfirm = (String) _value;
 
+		//TODO : recuperer le nom de laure champs de password via une f:param
+		/*ExternalContext ec = (ExternalContext)_context.getExternalContext();
+		HashMap hm = new HashMap(ec.getRequestParameterMap());
+		String passName = (String)hm.get("forPassword");
+		UIComponent passcomponent = _toValidate.findComponent(passName) ;*/
+		
+		UIComponent passcomponent = _toValidate.findComponent("equal1PD") ;
+		String passValue = (String) passcomponent.getAttributes().get("value");
+		
+		if(!passConfirm.equals(passValue))
+		{
+			FacesMessage message = new FacesMessage();
+			message.setSummary("Les 2 mots de passe ne sont pas identiques");
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
+			throw new ValidatorException(message) ;
+		}
+	}
 	/**
 	 * Getter of projectDirector.
 	 * 

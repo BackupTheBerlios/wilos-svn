@@ -1,11 +1,17 @@
 package wilos.presentation.web.wilosuser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.validator.ValidatorException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -52,24 +58,20 @@ public class ParticipantBean {
 	 * @return
 	 */
 	public String saveParticipantAction() {
-		String url = "connect";
-		boolean loginExists = this.loginService.loginExist(this.participant
-				.getLogin());
-		if (loginExists == true) {
-			FacesMessage message = new FacesMessage();
-			message.setDetail("Ce Login existe deja");
+		String url = "";
+		FacesMessage message = new FacesMessage();
+		if (this.loginService.loginExist(this.participant.getLogin())) {
+			message.setSummary("Ce Login existe deja");
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-			facesContext.addMessage(null, message);
-			url = "createParticipant";			
 		} else {
 			this.participantService.saveParticipant(this.participant);
-			//url = "connect";
-			url="wilos"; //Passer eventuellement sur une page de confirmation
+			message.setSummary("Participant bien enregistré");
+			message.setSeverity(FacesMessage.SEVERITY_INFO);
+			url="wilos"; //TODO :Passer eventuellement sur une page de confirmation
 			changeContentPage(url);
 		}
-		//return url;
-		/*Navigation*/
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		facesContext.addMessage(null, message);
 		return "";
 	}
 
@@ -109,7 +111,63 @@ public class ParticipantBean {
 		this.logger.debug("roles list =" + this.rolesList);
 		return this.rolesList;
 	}
+	
+	/**
+	 * 
+	 * methode qui controle que les deux mots de passes sont identiques 
+	 *
+	 * @param _context
+	 * @param _toValidate
+	 * @param _value
+	 * @throws ValidatorException
+	 */
+	public void emailValidation(FacesContext _context, UIComponent _toValidate, Object _value) throws ValidatorException
+	{
+		String enteredEmail = (String) _value ;
+		// Set the email pattern string
+		Pattern p = Pattern.compile(".+@.+\\.[a-z]+") ;
+		// Match the given string with the pattern
+		Matcher m = p.matcher(enteredEmail) ;
+		// Check whether match is found
+		boolean matchFound = m.matches() ;
+		if(!matchFound){
+			FacesMessage message = new FacesMessage() ;
+			message.setSummary("L'email est invalide");
+			message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			throw new ValidatorException(message) ;
+		}
+	}
+	/**
+	 * 
+	 * methode qui controle que les deux mots de passes sont identiques 
+	 *
+	 * @param _context
+	 * @param _toValidate
+	 * @param _value
+	 * @throws ValidatorException
+	 */
+	public void passwordEqualValidation(FacesContext _context, UIComponent _toValidate, Object _value) throws ValidatorException
+	{
+		String passConfirm = (String) _value;
 
+		//TODO : recuperer le nom de laure champs de password via une f:param
+		/*ExternalContext ec = (ExternalContext)_context.getExternalContext();
+		HashMap hm = new HashMap(ec.getRequestParameterMap());
+		String passName = (String)hm.get("forPassword");
+		UIComponent passcomponent = _toValidate.findComponent(passName) ;*/
+		
+		UIComponent passcomponent = _toValidate.findComponent("equal1") ;
+		String passValue = (String) passcomponent.getAttributes().get("value");
+		
+		if(!passConfirm.equals(passValue))
+		{
+			FacesMessage message = new FacesMessage();
+			message.setSummary("Les 2 mots de passe ne sont pas identiques");
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
+			throw new ValidatorException(message) ;
+		}
+	}
+	
 	/**
 	 * Getter of participant.
 	 * 

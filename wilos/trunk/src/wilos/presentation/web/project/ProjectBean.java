@@ -39,18 +39,18 @@ public class ProjectBean {
 	 */
 	public String saveProjectAction() {
 		String url = "" ;
+		FacesMessage message = new FacesMessage();
 		if(this.projectService.projectExist(this.project.getName())){
-			FacesMessage message = new FacesMessage() ;
-			message.setDetail("Ce Projet existe deja") ;
+			message.setSummary("Ce Projet existe déjà");
 			message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
-			FacesContext facesContext = FacesContext.getCurrentInstance() ;
-			facesContext.addMessage(null, message) ;
-			url = "project_create" ;
 		}
 		else{
 			this.projectService.saveProject(this.project) ;
-			url = "welcomeProjectDirector" ;
+			message.setSummary("Le Projet a bien été créé");
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 		}
+		FacesContext facesContext = FacesContext.getCurrentInstance() ;
+		facesContext.addMessage(null, message) ;
 		return url ;
 	}
 

@@ -23,8 +23,10 @@
 
         <f:facet name="north">
             <ice:panelGroup>  
-					<img src="images/logo_wilos.png" />
+					<img src="images/logo_wilos.png"/>
             </ice:panelGroup>
+            
+            
         </f:facet>
 
         <f:facet name="west">
@@ -32,7 +34,9 @@
 					<div id="connection">
 					<jsp:directive.include file="connect.jspx"/>
 					</div>
+					<div id="menu">
                     <jsp:directive.include file="navigation.jspx" />
+                    </div>
             </ice:panelGroup>
         </f:facet>
 
@@ -44,7 +48,7 @@
                     <ice:outputConnectionStatus style="iceOutConStat"/>
                 </ice:panelGrid>
                 
-				<ice:messages styleClass="h2"/>
+				<ice:messages styleClass="pageHeader"/>
 				
                 <div class="demoWindow">
                     <ice:panelStack id="panelStack"
@@ -94,12 +98,6 @@
                     </ice:panelGroup>
                 </ice:panelStack></div>
                 <br />
-            </ice:panelGroup>
-        </f:facet>
-
-        <f:facet name="south">
-            <ice:panelGroup>
-            <!-- Footer -->
             </ice:panelGroup>
         </f:facet>
     </ice:panelBorder>

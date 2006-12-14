@@ -1,10 +1,22 @@
 #body{
-	border:3px solid #CAC0D6;
+	border:3px solid #FFFFFF;
 	padding: 0px 10px 0px 0px;  
-	margin:20px 0px 0px 20px;
+	margin:10px 0px 0px 10px;
 	background-color:#BEB4CC;
 	outline:#8B82A2 solid medium;
 	overflow:hidden;
+}
+
+#connection { 
+	width:190px;
+	border-right:2px solid #FFFFFF;
+	border-top:2px solid #FFFFFF;
+	border-bottom:2px solid #FFFFFF;
+}
+
+#menu { 
+	width:190px;
+	border-right:2px solid #FFFFFF;
 }
 
 /*
@@ -113,7 +125,7 @@ em {
 .componentPanelTabSetLayout .MiddleMiddle{
     font-weight: bold;
     background-color:#CAC0D6;
-    font-size: 16px;
+    font-size: 12px;
 }
 
 /*
@@ -148,7 +160,7 @@ em {
 }
 
 .navThemeChange, .navTree {
-    margin: 5px;
+    margin: 0px;
     /*padding: 5px;*/
     margin-top: 0;
     width: 190px;
@@ -217,7 +229,7 @@ em {
 
 .contentLayoutGridStyle {
     width: 100%; /* fixed height of content demos*/
-    height: 600px;
+    height: 200px;
 }
 
 .contentLayoutGridStyle td {
@@ -289,7 +301,7 @@ em {
 
 .icePageWest {
 	border:border:3px solid;
-	background-color:#BEB4CC;
+	background-color:#CAC0D6;
     vertical-align: top;
     width: 10%;
 }
@@ -449,7 +461,7 @@ body, table {
     display: block;
     text-decoration: none;
     background-color: transparent;
-    background-image: url( "./css-images/cal_button.gif" );
+    background-image: url( "../images/xpwilos/cal_button.gif" );
     background-repeat: no-repeat;
     text-align: center;
     border: none;
@@ -461,7 +473,7 @@ body, table {
     display: block;
     text-decoration: none;
     background-color: transparent;
-    background-image: url( "./css-images/cal_off.gif" );
+    background-image: url( "../images/xpwilos/cal_off.gif" );
     background-repeat: no-repeat;
     text-align: center;
     border: none;
@@ -471,7 +483,7 @@ body, table {
 
 .iceCalMonthYear {
     background-color: #EFEFEF;
-    background-image: url( "./css-images/table_col_header.gif" );
+    background-image: url( "../images/xpwilos/table_col_header.gif" );
     background-position: bottom;
     background-repeat: repeat-x;
     font-weight: normal;
@@ -491,7 +503,7 @@ body, table {
     text-decoration: none;
     display: block;
     background-color: transparent;
-    background-image: url( "./css-images/cal_arrow_left.gif" );
+    background-image: url( "../images/xpwilos/cal_arrow_left.gif" );
     background-repeat: no-repeat;
     text-align: center;
     border: none;
@@ -503,7 +515,7 @@ body, table {
     text-decoration: none;
     display: block;
     background-color: transparent;
-    background-image: url( "./css-images/cal_arrow_right.gif" );
+    background-image: url( "../images/xpwilos/cal_arrow_right.gif" );
     background-repeat: no-repeat;
     text-align: center;
     border: none;
@@ -571,7 +583,7 @@ body, table {
 .iceTblHeader {
 /*the header of a data tables */
     background-color: #EFEFEF;
-    background-image: url( "./css-images/table_col_header.gif" );
+    background-image: url( "../images/xpwilos/table_col_header.gif" );
     background-position: bottom;
     background-repeat: repeat-x;
     font-weight: normal;
@@ -701,12 +713,12 @@ body, table {
 /* tabOn style classes */
 
 .iceTabSetTabOn {
-
+/*background-image:url("../images/xpwilos/tab-on.gif");*/
 }
 
 .iceTabSetTabOn .LeftTop {
     background-color: transparent;
-    background-image: url( "./css-images/on-left-top.gif" );
+    background-image: url( "../images/xpwilos/on-left-top.gif" );
     background-repeat: no-repeat;
     text-align: center;
     padding-top: 5px;
@@ -715,7 +727,7 @@ body, table {
 
 .iceTabSetTabOn .MiddleTop {
     background-color: transparent;
-    background-image: url( "./css-images/on-mid-top.gif" );
+    background-image: url( "../images/xpwilos/on-mid-top.gif" );
     background-repeat: repeat-x;
     text-align: center;
     padding-top: 5px;
@@ -724,7 +736,7 @@ body, table {
 
 .iceTabSetTabOn .RightTop {
     background-color: transparent;
-    background-image: url( "./css-images/on-right-top.gif" );
+    background-image: url( "../images/xpwilos/on-right-top.gif" );
     background-repeat: no-repeat;
     text-align: center;
     padding-top: 5px;
@@ -733,7 +745,7 @@ body, table {
 
 .iceTabSetTabOn .LeftMiddle {
     background-color: transparent;
-    background-image: url( "./css-images/on-left-mid.gif" );
+    background-image: url( "../images/xpwilos/on-left-mid.gif" );
     background-repeat: repeat-y;
     text-align: center;
     padding-top: 5px;
@@ -742,7 +754,7 @@ body, table {
 
 .iceTabSetTabOn .MiddleMiddle {
     background-color: transparent;
-    background-image: url( "./css-images/on-mid-mid.gif" );
+    background-image: url( "../images/xpwilos/on-mid-mid.gif" );
     background-repeat: repeat;
     text-align: center;
     border: none;
@@ -767,7 +779,7 @@ body, table {
 
 .iceTabSetTabOn .RightMiddle {
     background-color: transparent;
-    background-image: url( "./css-images/on-right-mid.gif" );
+    background-image: url( "../images/xpwilos/on-right-mid.gif" );
     background-repeat: repeat-y;
     text-align: center;
     padding-top: 5px;
@@ -776,21 +788,21 @@ body, table {
 
 .iceTabSetTabOn .LeftBottom {
     background-color: transparent;
-    background-image: url( "./css-images/on-left-bot.gif" );
+    background-image: url( "../images/xpwilos/on-left-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
 
 .iceTabSetTabOn .MiddleBottom {
     background-color: transparent;
-    background-image: url( "./css-images/on-mid-bot.gif" );
+    background-image: url( "../images/xpwilos/on-mid-bot.gif" );
     background-repeat: repeat-x;
     border: none;
 }
 
 .iceTabSetTabOn .RightBottom {
     background-color: transparent;
-    background-image: url( "./css-images/on-right-bot.gif" );
+    background-image: url( "../images/xpwilos/on-right-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
@@ -798,12 +810,12 @@ body, table {
 /* tabOff style classes */
 
 .iceTabSetTabOff {
-
+background-image:url("../images/xpwilos/tab-off.gif");
 }
 
 .iceTabSetTabOff .LeftTop {
     background-color: transparent;
-    background-image: url( "./css-images/off-left-top.gif" );
+    background-image: url( "../images/xpwilos/off-left-top.gif" );
     background-repeat: no-repeat;
     text-align: center;
     padding-top: 5px;
@@ -812,7 +824,7 @@ body, table {
 
 .iceTabSetTabOff .MiddleTop {
     background-color: transparent;
-    background-image: url( "./css-images/off-mid-top.gif" );
+    background-image: url( "../images/xpwilos/off-mid-top.gif" );
     background-repeat: repeat-x;
     text-align: center;
     padding-top: 5px;
@@ -821,7 +833,7 @@ body, table {
 
 .iceTabSetTabOff .RightTop {
     background-color: transparent;
-    background-image: url( "./css-images/off-right-top.gif" );
+    background-image: url( "../images/xpwilos/off-right-top.gif" );
     background-repeat: no-repeat;
     text-align: center;
     padding-top: 5px;
@@ -830,7 +842,7 @@ body, table {
 
 .iceTabSetTabOff .LeftMiddle {
     background-color: transparent;
-    background-image: url( "./css-images/off-left-mid.gif" );
+    background-image: url( "../images/xpwilos/off-left-mid.gif" );
     background-repeat: no-repeat;
     text-align: center;
     padding-top: 5px;
@@ -839,7 +851,7 @@ body, table {
 
 .iceTabSetTabOff .MiddleMiddle {
     background-color: transparent;
-    background-image: url( "./css-images/off-mid-mid.gif" );
+    background-image: url( "../images/xpwilos/off-mid-mid.gif" );
     background-repeat: repeat-x;
     text-align: center;
     border: none;
@@ -862,7 +874,7 @@ body, table {
 
 .iceTabSetTabOff .RightMiddle {
     background-color: transparent;
-    background-image: url( "./css-images/off-right-mid.gif" );
+    background-image: url( "../images/xpwilos/off-right-mid.gif" );
     background-repeat: no-repeat;
     text-align: center;
     padding-top: 5px;
@@ -871,21 +883,21 @@ body, table {
 
 .iceTabSetTabOff .LeftBottom {
     background-color: transparent;
-    background-image: url( "./css-images/off-left-bot.gif" );
+    background-image: url( "../images/xpwilos/off-left-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
 
 .iceTabSetTabOff .MiddleBottom {
     background-color: transparent;
-    background-image: url( "./css-images/off-mid-bot.gif" );
+    background-image: url( "../images/xpwilos/off-mid-bot.gif" );
     background-repeat: repeat-x;
     border: none;
 }
 
 .iceTabSetTabOff .RightBottom {
     background-color: transparent;
-    background-image: url( "./css-images/off-right-bot.gif" );
+    background-image: url( "../images/xpwilos/off-right-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
@@ -893,12 +905,12 @@ body, table {
 /* tabOver style classes */
 
 .iceTabSetTabOver {
-
+background-image:url("../images/xpwilos/tab-over.gif");
 }
 
 .iceTabSetTabOver .LeftTop {
     background-color: transparent;
-    background-image: url( "./css-images/over-left-top.gif" );
+    background-image: url( "../images/xpwilos/over-left-top.gif" );
     background-repeat: no-repeat;
     text-align: center;
     padding-top: 5px;
@@ -907,7 +919,7 @@ body, table {
 
 .iceTabSetTabOver .MiddleTop {
     background-color: transparent;
-    background-image: url( "./css-images/over-mid-top.gif" );
+    background-image: url( "../images/xpwilos/over-mid-top.gif" );
     background-repeat: repeat-x;
     text-align: center;
     padding-top: 5px;
@@ -916,7 +928,7 @@ body, table {
 
 .iceTabSetTabOver .RightTop {
     background-color: transparent;
-    background-image: url( "./css-images/over-right-top.gif" );
+    background-image: url( "../images/xpwilos/over-right-top.gif" );
     background-repeat: no-repeat;
     text-align: center;
     padding-top: 5px;
@@ -925,7 +937,7 @@ body, table {
 
 .iceTabSetTabOver .LeftMiddle {
     background-color: transparent;
-    background-image: url( "./css-images/over-left-mid.gif" );
+    background-image: url( "../images/xpwilos/over-left-mid.gif" );
     background-repeat: repeat-y;
     text-align: center;
     padding-top: 5px;
@@ -934,7 +946,7 @@ body, table {
 
 .iceTabSetTabOver .MiddleMiddle {
     background-color: transparent;
-    background-image: url( "./css-images/over-mid-mid.gif" );
+    background-image: url( "../images/xpwilos/over-mid-mid.gif" );
     background-repeat: repeat;
     text-align: center;
     border: none;
@@ -957,7 +969,7 @@ body, table {
 
 .iceTabSetTabOver .RightMiddle {
     background-color: transparent;
-    background-image: url( "./css-images/over-right-mid.gif" );
+    background-image: url( "../images/xpwilos/over-right-mid.gif" );
     background-repeat: repeat-y;
     text-align: center;
     padding-top: 5px;
@@ -966,21 +978,21 @@ body, table {
 
 .iceTabSetTabOver .LeftBottom {
     background-color: transparent;
-    background-image: url( "./css-images/over-left-bot.gif" );
+    background-image: url( "../images/xpwilos/over-left-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
 
 .iceTabSetTabOver .MiddleBottom {
     background-color: transparent;
-    background-image: url( "./css-images/over-mid-bot.gif" );
+    background-image: url( "../images/xpwilos/over-mid-bot.gif" );
     background-repeat: repeat-x;
     border: none;
 }
 
 .iceTabSetTabOver .RightBottom {
     background-color: transparent;
-    background-image: url( "./css-images/over-right-bot.gif" );
+    background-image: url( "../images/xpwilos/over-right-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
@@ -1014,7 +1026,7 @@ body, table {
 
 .iceTabSetTabOnBottom .LeftTop {
     background-color: transparent;
-    background-image: url( "./css-images/tbot-on-left-top.gif" );
+    background-image: url( "../images/xpwilos/tbot-on-left-top.gif" );
     background-repeat: no-repeat;
     text-align: center;
     border: none;
@@ -1022,7 +1034,7 @@ body, table {
 
 .iceTabSetTabOnBottom .MiddleTop {
     background-color: transparent;
-    background-image: url( "./css-images/tbot-on-mid-top.gif" );
+    background-image: url( "../images/xpwilos/tbot-on-mid-top.gif" );
     background-repeat: repeat-x;
     text-align: center;
     border: none;
@@ -1030,7 +1042,7 @@ body, table {
 
 .iceTabSetTabOnBottom .RightTop {
     background-color: transparent;
-    background-image: url( "./css-images/tbot-on-right-top.gif" );
+    background-image: url( "../images/xpwilos/tbot-on-right-top.gif" );
     background-repeat: no-repeat;
     text-align: center;
     border: none;
@@ -1038,7 +1050,7 @@ body, table {
 
 .iceTabSetTabOnBottom .LeftMiddle {
     background-color: transparent;
-    background-image: url( "./css-images/on-left-mid.gif" );
+    background-image: url( "../images/xpwilos/on-left-mid.gif" );
     background-repeat: repeat-y;
     text-align: center;
     padding-top: 5px;
@@ -1047,7 +1059,7 @@ body, table {
 
 .iceTabSetTabOnBottom .MiddleMiddle {
     background-color: transparent;
-    background-image: url( "./css-images/on-mid-mid.gif" );
+    background-image: url( "../images/xpwilos/on-mid-mid.gif" );
     background-repeat: repeat;
     text-align: center;
     border: none;
@@ -1070,7 +1082,7 @@ body, table {
 
 .iceTabSetTabOnBottom .RightMiddle {
     background-color: transparent;
-    background-image: url( "./css-images/on-right-mid.gif" );
+    background-image: url( "../images/xpwilos/on-right-mid.gif" );
     background-repeat: repeat-y;
     text-align: center;
     padding-top: 5px;
@@ -1079,7 +1091,7 @@ body, table {
 
 .iceTabSetTabOnBottom .LeftBottom {
     background-color: transparent;
-    background-image: url( "./css-images/tbot-on-left-bot.gif" );
+    background-image: url( "../images/xpwilos/tbot-on-left-bot.gif" );
     background-repeat: no-repeat;
     padding-bottom: 5px;
     border: none;
@@ -1087,7 +1099,7 @@ body, table {
 
 .iceTabSetTabOnBottom .MiddleBottom {
     background-color: transparent;
-    background-image: url( "./css-images/tbot-on-mid-bot.gif" );
+    background-image: url( "../images/xpwilos/tbot-on-mid-bot.gif" );
     background-repeat: repeat-x;
     padding-bottom: 5px;
     border: none;
@@ -1095,7 +1107,7 @@ body, table {
 
 .iceTabSetTabOnBottom .RightBottom {
     background-color: transparent;
-    background-image: url( "./css-images/tbot-on-right-bot.gif" );
+    background-image: url( "../images/xpwilos/tbot-on-right-bot.gif" );
     background-repeat: no-repeat;
     padding-bottom: 5px;
     border: none;
@@ -1109,7 +1121,7 @@ body, table {
 
 .iceTabSetTabOffBottom .LeftTop {
     background-color: transparent;
-    background-image: url( "./css-images/tbot-off-left-top.gif" );
+    background-image: url( "../images/xpwilos/tbot-off-left-top.gif" );
     background-repeat: no-repeat;
     text-align: center;
     border: none;
@@ -1117,7 +1129,7 @@ body, table {
 
 .iceTabSetTabOffBottom .MiddleTop {
     background-color: transparent;
-    background-image: url( "./css-images/tbot-off-mid-top.gif" );
+    background-image: url( "../images/xpwilos/tbot-off-mid-top.gif" );
     background-repeat: repeat-x;
     text-align: center;
     border: none;
@@ -1125,7 +1137,7 @@ body, table {
 
 .iceTabSetTabOffBottom .RightTop {
     background-color: transparent;
-    background-image: url( "./css-images/tbot-off-right-top.gif" );
+    background-image: url( "../images/xpwilos/tbot-off-right-top.gif" );
     background-repeat: no-repeat;
     text-align: center;
     border: none;
@@ -1133,7 +1145,7 @@ body, table {
 
 .iceTabSetTabOffBottom .LeftMiddle {
     background-color: transparent;
-    background-image: url( "./css-images/off-left-mid.gif" );
+    background-image: url( "../images/xpwilos/off-left-mid.gif" );
     background-repeat: no-repeat;
     text-align: center;
     padding-top: 5px;
@@ -1142,7 +1154,7 @@ body, table {
 
 .iceTabSetTabOffBottom .MiddleMiddle {
     background-color: transparent;
-    background-image: url( "./css-images/off-mid-mid.gif" );
+    background-image: url( "../images/xpwilos/off-mid-mid.gif" );
     background-repeat: repeat-x;
     text-align: center;
     border: none;
@@ -1165,7 +1177,7 @@ body, table {
 
 .iceTabSetTabOffBottom .RightMiddle {
     background-color: transparent;
-    background-image: url( "./css-images/off-right-mid.gif" );
+    background-image: url( "../images/xpwilos/off-right-mid.gif" );
     background-repeat: no-repeat;
     text-align: center;
     padding-top: 5px;
@@ -1174,7 +1186,7 @@ body, table {
 
 .iceTabSetTabOffBottom .LeftBottom {
     background-color: transparent;
-    background-image: url( "./css-images/tbot-off-left-bot.gif" );
+    background-image: url( "../images/xpwilos/tbot-off-left-bot.gif" );
     background-repeat: no-repeat;
     padding-bottom: 5px;
     border: none;
@@ -1182,7 +1194,7 @@ body, table {
 
 .iceTabSetTabOffBottom .MiddleBottom {
     background-color: transparent;
-    background-image: url( "./css-images/tbot-off-mid-bot.gif" );
+    background-image: url( "../images/xpwilos/tbot-off-mid-bot.gif" );
     background-repeat: repeat-x;
     padding-bottom: 5px;
     border: none;
@@ -1190,7 +1202,7 @@ body, table {
 
 .iceTabSetTabOffBottom .RightBottom {
     background-color: transparent;
-    background-image: url( "./css-images/tbot-off-right-bot.gif" );
+    background-image: url( "../images/xpwilos/tbot-off-right-bot.gif" );
     background-repeat: no-repeat;
     padding-bottom: 5px;
     border: none;
@@ -1204,7 +1216,7 @@ body, table {
 
 .iceTabSetTabOverBottom .LeftTop {
     background-color: transparent;
-    background-image: url( "./css-images/tbot-over-left-top.gif" );
+    background-image: url( "../images/xpwilos/tbot-over-left-top.gif" );
     background-repeat: no-repeat;
     text-align: center;
     border: none;
@@ -1212,7 +1224,7 @@ body, table {
 
 .iceTabSetTabOverBottom .MiddleTop {
     background-color: transparent;
-    background-image: url( "./css-images/tbot-over-mid-top.gif" );
+    background-image: url( "../images/xpwilos/tbot-over-mid-top.gif" );
     background-repeat: repeat-x;
     text-align: center;
     border: none;
@@ -1220,7 +1232,7 @@ body, table {
 
 .iceTabSetTabOverBottom .RightTop {
     background-color: transparent;
-    background-image: url( "./css-images/tbot-over-right-top.gif" );
+    background-image: url( "../images/xpwilos/tbot-over-right-top.gif" );
     background-repeat: no-repeat;
     text-align: center;
     border: none;
@@ -1228,7 +1240,7 @@ body, table {
 
 .iceTabSetTabOverBottom .LeftMiddle {
     background-color: transparent;
-    background-image: url( "./css-images/over-left-mid.gif" );
+    background-image: url( "../images/xpwilos/over-left-mid.gif" );
     background-repeat: repeat-y;
     text-align: center;
     padding-top: 5px;
@@ -1237,7 +1249,7 @@ body, table {
 
 .iceTabSetTabOverBottom .MiddleMiddle {
     background-color: transparent;
-    background-image: url( "./css-images/over-mid-mid.gif" );
+    background-image: url( "../images/xpwilos/over-mid-mid.gif" );
     background-repeat: repeat;
     text-align: center;
     border: none;
@@ -1260,7 +1272,7 @@ body, table {
 
 .iceTabSetTabOverBottom .RightMiddle {
     background-color: transparent;
-    background-image: url( "./css-images/over-right-mid.gif" );
+    background-image: url( "../images/xpwilos/over-right-mid.gif" );
     background-repeat: repeat-y;
     text-align: center;
     padding-top: 5px;
@@ -1269,7 +1281,7 @@ body, table {
 
 .iceTabSetTabOverBottom .LeftBottom {
     background-color: transparent;
-    background-image: url( "./css-images/tbot-over-left-bot.gif" );
+    background-image: url( "../images/xpwilos/tbot-over-left-bot.gif" );
     background-repeat: no-repeat;
     padding-bottom: 5px;
     border: none;
@@ -1277,7 +1289,7 @@ body, table {
 
 .iceTabSetTabOverBottom .MiddleBottom {
     background-color: transparent;
-    background-image: url( "./css-images/tbot-over-mid-bot.gif" );
+    background-image: url( "../images/xpwilos/tbot-over-mid-bot.gif" );
     background-repeat: repeat-x;
     padding-bottom: 5px;
     border: none;
@@ -1285,7 +1297,7 @@ body, table {
 
 .iceTabSetTabOverBottom .RightBottom {
     background-color: transparent;
-    background-image: url( "./css-images/tbot-over-right-bot.gif" );
+    background-image: url( "../images/xpwilos/tbot-over-right-bot.gif" );
     background-repeat: no-repeat;
     padding-bottom: 5px;
     border: none;
@@ -1417,7 +1429,7 @@ body, table {
     width: 100%;
     background-color: #2A6CC2;
     color: #FFFFFF;
-    background-image: url( ./css-images/cal_arrow_right.gif );
+    background-image: url( ../images/xpwilos/cal_arrow_right.gif );
     background-position: center right;
     background-repeat: no-repeat;
 }
@@ -1445,7 +1457,7 @@ body, table {
 }
 
 .iceOutputProgressFill {
-    background-color: #026AFF; /* background-image:url(./css-images/window_top.gif);*/
+    background-color: #026AFF; /* background-image:url(../images/xpwilos/window_top.gif);*/
     background-position: top left;
     background-repeat: repeat-x;
     display: block;
@@ -1804,7 +1816,7 @@ body, table {
 
 .icePanelPopupHeader {
     background-color: #DEDEDE;
-    background-image: url( "./css-images/window_top.gif" );
+    background-image: url( "../images/xpwilos/window_top.gif" );
     background-position: top;
     background-repeat: repeat-x;
     height: 2.0em;
@@ -1934,7 +1946,7 @@ body, table {
 
 .iceTabSetTabOff .LeftTop-dis {
     background-color: transparent;
-    background-image: url( "./css-images/off-left-top-dis.gif" );
+    background-image: url( "../images/xpwilos/off-left-top-dis.gif" );
     background-repeat: no-repeat;
     background-position: bottom;
     text-align: center;
@@ -1945,7 +1957,7 @@ body, table {
 
 .iceTabSetTabOff .MiddleTop-dis {
     background-color: #DEDEDE;
-    background-image: url( './css-images/off-mid-top-dis.gif' );
+    background-image: url( '../images/xpwilos/off-mid-top-dis.gif' );
     background-repeat: repeat-x;
     text-align: center;
     padding-top: 1px;
@@ -1954,7 +1966,7 @@ body, table {
 
 .iceTabSetTabOff .RightTop-dis {
     background-color: transparent;
-    background-image: url( "./css-images/off-right-top-dis.gif" );
+    background-image: url( "../images/xpwilos/off-right-top-dis.gif" );
     background-repeat: no-repeat;
     background-position: bottom;
     text-align: center;
@@ -1964,7 +1976,7 @@ body, table {
 
 .iceTabSetTabOff .LeftMiddle-dis {
     background-color: #DEDEDE;
-    /*    background-image: url("./css-images/off-left-mid.gif");
+    /*    background-image: url("../images/xpwilos/off-left-mid.gif");
     background-repeat:no-repeat;*/
     text-align: center;
     padding-top: 15px;
@@ -1973,7 +1985,7 @@ body, table {
 
 .iceTabSetTabOff .MiddleMiddle-dis {
     background-color: #DEDEDE;
-    /*    background-image: url("./css-images/off-mid-mid.gif");
+    /*    background-image: url("../images/xpwilos/off-mid-mid.gif");
     background-repeat:repeat-x;*/
     text-align: center;
     padding-top: 5px;
@@ -1992,7 +2004,7 @@ body, table {
 
 .iceTabSetTabOff .RightMiddle-dis {
     background-color: #DEDEDE;
-    /*    background-image: url("./css-images/off-right-mid.gif");
+    /*    background-image: url("../images/xpwilos/off-right-mid.gif");
     background-repeat:no-repeat;*/
     text-align: center;
     padding-top: 15px;
@@ -2001,21 +2013,21 @@ body, table {
 
 .iceTabSetTabOff .LeftBottom-dis {
     background-color: transparent;
-    background-image: url( "./css-images/off-left-bot.gif" );
+    background-image: url( "../images/xpwilos/off-left-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
 
 .iceTabSetTabOff .MiddleBottom-dis {
     background-color: transparent;
-    background-image: url( "./css-images/off-mid-bot.gif" );
+    background-image: url( "../images/xpwilos/off-mid-bot.gif" );
     background-repeat: repeat-x;
     border: none;
 }
 
 .iceTabSetTabOff .RightBottom-dis {
     background-color: transparent;
-    background-image: url( "./css-images/off-right-bot.gif" );
+    background-image: url( "../images/xpwilos/off-right-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
@@ -2027,7 +2039,7 @@ body, table {
 
 .iceTabSetTabOn .LeftTop-dis {
     background-color: transparent;
-    background-image: url( "./css-images/off-left-top-dis.gif" );
+    background-image: url( "../images/xpwilos/off-left-top-dis.gif" );
     background-repeat: no-repeat;
     background-position: bottom;
     text-align: center;
@@ -2038,7 +2050,7 @@ body, table {
 
 .iceTabSetTabOn .MiddleTop-dis {
     background-color: #DEDEDE;
-    background-image: url( './css-images/off-mid-top-dis.gif' );
+    background-image: url( '../images/xpwilos/off-mid-top-dis.gif' );
     background-repeat: repeat-x;
     text-align: center;
     padding-top: 1px;
@@ -2047,7 +2059,7 @@ body, table {
 
 .iceTabSetTabOn .RightTop-dis {
     background-color: transparent;
-    background-image: url( "./css-images/off-right-top-dis.gif" );
+    background-image: url( "../images/xpwilos/off-right-top-dis.gif" );
     background-repeat: no-repeat;
     background-position: bottom;
     text-align: center;
@@ -2057,7 +2069,7 @@ body, table {
 
 .iceTabSetTabOn .LeftMiddle-dis {
     background-color: #DEDEDE;
-    /*    background-image: url("./css-images/off-left-mid.gif");
+    /*    background-image: url("../images/xpwilos/off-left-mid.gif");
     background-repeat:no-repeat;*/
     text-align: center;
     padding-top: 15px;
@@ -2066,7 +2078,7 @@ body, table {
 
 .iceTabSetTabOn .MiddleMiddle-dis {
     background-color: #DEDEDE;
-    /*    background-image: url("./css-images/off-mid-mid.gif");
+    /*    background-image: url("../images/xpwilos/off-mid-mid.gif");
     background-repeat:repeat-x;*/
     text-align: center;
     padding-top: 5px;
@@ -2085,7 +2097,7 @@ body, table {
 
 .iceTabSetTabOn .RightMiddle-dis {
     background-color: #DEDEDE;
-    /*    background-image: url("./css-images/off-right-mid.gif");
+    /*    background-image: url("../images/xpwilos/off-right-mid.gif");
     background-repeat:no-repeat;*/
     text-align: center;
     padding-top: 15px;
@@ -2094,21 +2106,21 @@ body, table {
 
 .iceTabSetTabOn .LeftBottom-dis {
     background-color: transparent;
-    background-image: url( "./css-images/off-left-bot.gif" );
+    background-image: url( "../images/xpwilos/off-left-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
 
 .iceTabSetTabOn .MiddleBottom-dis {
     background-color: transparent;
-    background-image: url( "./css-images/off-mid-bot.gif" );
+    background-image: url( "../images/xpwilos/off-mid-bot.gif" );
     background-repeat: repeat-x;
     border: none;
 }
 
 .iceTabSetTabOn .RightBottom-dis {
     background-color: transparent;
-    background-image: url( "./css-images/off-right-bot.gif" );
+    background-image: url( "../images/xpwilos/off-right-bot.gif" );
     background-repeat: no-repeat;
     border: none;
 }
@@ -2172,7 +2184,7 @@ Disabled classes for the calendar controls
 
 .iceCalMonthYear-dis {
     background-color: #EFEFEF;
-    /*    background-image: url("./css-images/table_col_header.gif");
+    /*    background-image: url("../images/xpwilos/table_col_header.gif");
     background-position:bottom;
     background-repeat:repeat-x;*/
     font-weight: normal;

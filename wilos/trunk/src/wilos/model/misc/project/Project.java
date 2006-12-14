@@ -20,6 +20,11 @@ public class Project implements Cloneable {
 	private Date creationDate ;
 
 	private Date launchingDate ;
+	
+	public Project()
+	{
+		this.creationDate = new Date();
+	}
 
 	/**
 	 * @return the creationDate

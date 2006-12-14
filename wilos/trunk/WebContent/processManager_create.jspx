@@ -1,4 +1,3 @@
-<!--TODO : finri la page en fesant un partial submit entre les 2 onglets -->
 <ice:form id="roles_form">
 	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
 		<ice:panelTabSet id="panelTabSet_adminAdd" styleClass="componentPanelTabSetLayout">
@@ -6,32 +5,33 @@
 
 				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
 					<ice:panelGroup id="processManagerCreateGroup" styleClass="contentIncludePanelGroup">
-				
+						<h2><ice:outputText value="Ajouter un Process Manager" /></h2>
 						<ice:panelGrid columns="2">
 							<ice:outputText value="Nom" />
-							<ice:inputText id="nompm" value="#{ProcessManagerBean.processManager.name}" required="true"/>
+							<ice:inputText id="nomPM" value="#{ProcessManagerBean.processManager.name}" required="false"/>
 									
 							<ice:outputText value="Prénom"/>
-							<ice:inputText id="prenompm" value="#{ProcessManagerBean.processManager.firstname}" required="true"/>
+							<ice:inputText id="prenomPM" value="#{ProcessManagerBean.processManager.firstname}" required="false"/>
 					
 							<ice:outputText value="Pseudo"/>
-							<ice:inputText id="loginpm" value="#{ProcessManagerBean.processManager.login}" required="true"/>
+							<ice:inputText id="loginPM" value="#{ProcessManagerBean.processManager.login}" required="false"/>
 							
 							<ice:outputText value="Mot de passe"/>
-							<ice:inputSecret id="equal1pm" value="#{ProcessManagerBean.processManager.password}" required="true">		
-								<f:validateLength minimum="6" />
+							<ice:inputSecret id="equal1PM" value="#{ProcessManagerBean.processManager.password}" required="false">		
+								<!--<f:validateLength minimum="6" />-->
 							</ice:inputSecret>
 				
 							<ice:outputText value="Confirmer le mot de passe"/>
-							<ice:inputSecret id="equal2pm" value="#{ProcessManagerBean.passwordConfirmation}">
-								<f:validateLength minimum="6" />
-								<f:validator validatorId="equalValidator"/>
+							<ice:inputSecret id="equal2PM" value="#{ProcessManagerBean.passwordConfirmation}"
+								validator="#{ProcessManagerBean.passwordEqualValidation}"
+								required="false">
+							  	<!--  <f:validateLength minimum="6" />
+								<f:validator validatorId="equalValidator"/>-->
 							</ice:inputSecret>
 						</ice:panelGrid>
 				
 						<ice:panelGrid columns="2">
 							<ice:commandButton value="S'enregistrer" action="#{ProcessManagerBean.saveProcessManagerAction}"/>
-							<ice:commandButton value="Retour" immediate="true" action="admin_main"/>
 						</ice:panelGrid>	
 				
 					</ice:panelGroup>
@@ -41,32 +41,33 @@
 			<ice:panelTab id="panelTab_projectDirector" label="Project Director" imageDir="images">
 				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
 						<ice:panelGroup id="projectDirectorCreateGroup" styleClass="contentIncludePanelGroup">
-				
+							<h2><ice:outputText value="Ajouter un Project Director"/></h2>
 							<ice:panelGrid columns="2">
 									<ice:outputText value="Nom" />
-									<ice:inputText id="nompd" value="#{ProjectDirectorBean.projectDirector.name}" required="true"/>
+									<ice:inputText id="nomPD" value="#{ProjectDirectorBean.projectDirector.name}" required="false"/>
 											
 									<ice:outputText value="Prénom"/>
-									<ice:inputText id="prenompd" value="#{ProjectDirectorBean.projectDirector.firstname}" required="true"/>
+									<ice:inputText id="prenomPD" value="#{ProjectDirectorBean.projectDirector.firstname}" required="false"/>
 						
 									<ice:outputText value="Pseudo"/>
-									<ice:inputText id="loginpd" value="#{ProjectDirectorBean.projectDirector.login}" required="true"/>
+									<ice:inputText id="loginPD" value="#{ProjectDirectorBean.projectDirector.login}" required="false"/>
 									
 									<ice:outputText value="Mot de passe"/>
-									<ice:inputSecret id="equal1pd" value="#{ProjectDirectorBean.projectDirector.password}" required="true">
-										<f:validateLength minimum="6" />
+									<ice:inputSecret id="equal1PD" value="#{ProjectDirectorBean.projectDirector.password}" required="false">
+										<!--<f:validateLength minimum="6" />-->
 									</ice:inputSecret>
 									
 									<ice:outputText value="Confirmer le mot de passe"/>
-									<ice:inputSecret id="equal2pd" value="#{ProjectDirectorBean.passwordConfirmation}">
-										<f:validateLength minimum="6" />
-										<f:validator validatorId="equalValidator"/>
+									<ice:inputSecret id="equal2PD" value="#{ProjectDirectorBean.passwordConfirmation}"
+										validator="#{ProjectDirectorBean.passwordEqualValidation}"
+										required="false">
+										<!--<f:validateLength minimum="6" />
+										<f:validator validatorId="equalValidator"/>-->
 									</ice:inputSecret>
 									
 								</ice:panelGrid>
 								<ice:panelGrid columns="2">
 									<ice:commandButton value="S'enregistrer" action="#{ProjectDirectorBean.saveProjectDirectorAction}"/>
-									<ice:commandButton value="Retour" immediate="true" action="admin_main"/>
 								</ice:panelGrid>
 				
 						</ice:panelGroup>
