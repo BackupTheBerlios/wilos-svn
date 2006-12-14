@@ -169,8 +169,7 @@ public class LoginPanel extends JPanel {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					String passcript =  Security.encode(new String(passwordPasswordField.getPassword()));
                                         ArrayList<RoleDescriptor> rolesListe = WizardServicesProxy.getRolesByUser(loginTextField.getText(),passcript, adressTextField.getText());
-                                        setVisible(false);
-                                        mTaskPanel = new MainPanel(mframe,rolesListe);
+                                        setVisible(false);                               
                                         
                                         if (rolesListe.isEmpty())
                                         {
@@ -179,6 +178,7 @@ public class LoginPanel extends JPanel {
                                         }  
                                         else
                                         {
+                                        	mTaskPanel = new MainPanel(mframe,rolesListe);
                                             mframe.setContentPane(mTaskPanel);
                                             mTaskPanel.setVisible(true);                                         
                                         }
