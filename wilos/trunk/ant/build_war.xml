@@ -15,8 +15,11 @@
 	<property name="src.java.dir" value="${src.dir}" />
 	<property name="web.dir" value="${basedir}/WebContent" />
 	<property name="lib.dir" value="${basedir}/WebContent/WEB-INF/lib" />
-	<property name="dist.dir" value="${basedir}/dist" />
+	<!--
+	<property name="dist.dir" value="${basedir}/dist" /> 
+	-->
 	<property file="${ant.dir}/tomcat.properties" />
+	<property name="dist.dir" value="${wilos.dist.dir}" />
 
 	<!-- Taches Tomcat -->
 	<taskdef file="${ant.dir}/tomcatTask.properties">
