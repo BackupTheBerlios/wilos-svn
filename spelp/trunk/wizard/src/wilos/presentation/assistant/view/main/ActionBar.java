@@ -8,7 +8,7 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 
-import wilos.model.spem2.task.TaskDescriptor;
+import wilos.model.spem2.task.TaskDefinition;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
 import wilos.presentation.assistant.view.panels.WorkTabbedPane;
@@ -30,7 +30,7 @@ public class ActionBar extends JToolBar {
 					public void actionPerformed(ActionEvent e) {
 						if (TaskPanel.selectedElement != null){
 							WorkTabbedPane.getInstance().displayTask(WorkTabbedPane.getInstance().getTabCount() == 1);
-							StepPanel.getInstance().setCurrentElement((TaskDescriptor) TaskPanel.selectedElement);
+							StepPanel.getInstance().setCurrentElement((TaskDefinition) TaskPanel.selectedElement);
 						}
 						
 					}

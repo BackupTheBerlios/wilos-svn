@@ -13,7 +13,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import wilos.model.spem2.element.Element;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;
-import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 
 
@@ -25,7 +24,7 @@ public class StepPanel extends JPanel implements TreeSelectionListener {
 	DefaultMutableTreeNode rootNode;
 	DefaultMutableTreeNode taskNode;
 
-	private TaskDescriptor currentElement = null ;
+	private TaskDefinition currentElement = null ;
 	public static Element selectedElement = null;
 
 	
@@ -44,7 +43,7 @@ public class StepPanel extends JPanel implements TreeSelectionListener {
 	}
 
 	
-	public TaskDescriptor getCurrentElement() {
+	public TaskDefinition getCurrentElement() {
 		return currentElement;
 	}
 
@@ -52,7 +51,7 @@ public class StepPanel extends JPanel implements TreeSelectionListener {
 	 * create the tree of the new TaskDescriptor
 	 * @param currentElement : the new TaskDescriptor
 	 */
-	public void setCurrentElement(TaskDescriptor currentElement) {
+	public void setCurrentElement(TaskDefinition currentElement) {
 		this.currentElement = currentElement;
 
 		// if stepTree exists, we remove it to replace it
@@ -63,7 +62,7 @@ public class StepPanel extends JPanel implements TreeSelectionListener {
 		rootNode = new DefaultMutableTreeNode(currentElement.getName());
 		stepTree = new JTree(rootNode);
 	
-		TaskDefinition td = currentElement.getTaskDefinition();
+		TaskDefinition td = currentElement;
 		if(td != null) {
 			SortedSet stepList = td.getSteps();
 			if(stepList != null) {

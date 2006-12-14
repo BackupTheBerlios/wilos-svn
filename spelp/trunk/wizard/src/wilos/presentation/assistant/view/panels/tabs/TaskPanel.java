@@ -15,6 +15,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import wilos.model.spem2.element.Element;
 import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
@@ -77,7 +78,7 @@ public class TaskPanel extends JPanel implements TreeSelectionListener {
 		JTree aJTree;
 		
 		RoleDescriptorInfo tmpRoleDescriptor;
-		TaskDescriptorInfo tmpTaskDescriptor;
+		TaskDefinitionInfo tmpTaskDefinition;
 		HashSet<TaskDescriptor> tasksListe;
 		Iterator it;
 		
@@ -95,9 +96,13 @@ public class TaskPanel extends JPanel implements TreeSelectionListener {
 			tasksListe = (HashSet<TaskDescriptor>) tmpRoleDescriptor.getPrimaryTasks();
 			it = tasksListe.iterator();
 			while (it.hasNext()) {
-				tmpTaskDescriptor = new TaskDescriptorInfo((TaskDescriptor) it.next());
-				taskNode = new DefaultMutableTreeNode(tmpTaskDescriptor, true );
-				roleNode.add(taskNode);
+				TaskDescriptor tDes = (TaskDescriptor) it.next();
+
+				if(tDes.getTaskDefinition() != null) {
+					tmpTaskDefinition = new TaskDefinitionInfo(tDes.getTaskDefinition());
+					taskNode = new DefaultMutableTreeNode(tmpTaskDefinition, true );
+					roleNode.add(taskNode);
+				}
 			}
 			
 			rootNode.add(roleNode);
@@ -113,11 +118,11 @@ public class TaskPanel extends JPanel implements TreeSelectionListener {
 		if (node == null) return;
 
         Object nodeInfo = node.getUserObject();
-        if (nodeInfo instanceof TaskDescriptorInfo) {
-        	selectedElement = ((TaskDescriptorInfo)nodeInfo).getTaskDescriptor() ;
-            TaskDescriptorInfo tmpTaskDescriptor = (TaskDescriptorInfo) nodeInfo;
+        if (nodeInfo instanceof TaskDefinitionInfo) {
+        	selectedElement = ((TaskDefinitionInfo)nodeInfo).getTaskDefinition() ;
+        	TaskDefinitionInfo tmpTaskDefinition = (TaskDefinitionInfo) nodeInfo;
             mainFrame.moveHTML();
-            HTMLViewer.getInstance(null).setMessage(tmpTaskDescriptor.getTaskDescriptor().getDescription());
+            HTMLViewer.getInstance(null).setMessage(tmpTaskDefinition.getTaskDefinition().getDescription());
             
         } else if (nodeInfo instanceof RoleDescriptorInfo){
         	selectedElement = null ;
@@ -128,7 +133,23 @@ public class TaskPanel extends JPanel implements TreeSelectionListener {
         }
 	}
 	
-	private class TaskDescriptorInfo {
+	private class TaskDefinitionInfo {
+		private TaskDefinition myTaskDefinition;
+		
+		public TaskDefinitionInfo(TaskDefinition definition) {
+			myTaskDefinition = definition;
+		}
+
+		public String toString() {
+			return myTaskDefinition.getName();
+		}
+		
+		public TaskDefinition getTaskDefinition() {
+			return myTaskDefinition;
+		}
+	}
+	
+/*	private class TaskDescriptorInfo {
 		private TaskDescriptor myTaskDescriptor;
 		
 		public TaskDescriptorInfo(TaskDescriptor descriptor) {
@@ -143,7 +164,7 @@ public class TaskPanel extends JPanel implements TreeSelectionListener {
 			return myTaskDescriptor;
 		}
 	}
-	
+*/	
 	private class RoleDescriptorInfo {
 		private RoleDescriptor myRoleDescriptor;
 		
