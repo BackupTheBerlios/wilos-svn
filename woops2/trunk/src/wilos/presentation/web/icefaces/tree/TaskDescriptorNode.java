@@ -1,13 +1,10 @@
-/**
- * 
- */
 
 package wilos.presentation.web.icefaces.tree ;
 
 import javax.swing.tree.DefaultMutableTreeNode ;
 
-import wilos.model.spem2.task.TaskDefinition;
-import wilos.model.spem2.task.TaskDescriptor;
+import wilos.model.spem2.task.TaskDefinition ;
+import wilos.model.spem2.task.TaskDescriptor ;
 
 import com.icesoft.faces.component.tree.IceUserObject ;
 
@@ -25,20 +22,18 @@ public class TaskDescriptorNode extends DefaultMutableTreeNode {
 	 * @param _parentTree
 	 */
 	public TaskDescriptorNode(TaskDescriptor _taskDescriptor) {
-
-		DefaultMutableTreeNode branchNode = new DefaultMutableTreeNode() ;
-		IceUserObject iceUserObject = new IceUserObject(branchNode) ;
-		branchNode.setUserObject(iceUserObject) ;
+		super() ;
+		IceUserObject iceUserObject = new IceUserObject(this) ;
+		this.setUserObject(iceUserObject) ;
 
 		iceUserObject.setText(_taskDescriptor.getName()) ;
 		iceUserObject.setLeaf(false) ;
-		iceUserObject.setBranchContractedIcon("xmlhttp/css/xp/css-images/tree_folder_close.gif") ;
-		iceUserObject.setBranchExpandedIcon("xmlhttp/css/xp/css-images/tree_folder_open.gif") ;
-		iceUserObject.setExpanded(true) ;
+		iceUserObject.setBranchContractedIcon("images/icon_taskdescriptor.gif") ;
+		iceUserObject.setBranchExpandedIcon("images/icon_taskdescriptor.gif") ;
 
 		TaskDefinition taskDefinition = _taskDescriptor.getTaskDefinition() ;
 		if(taskDefinition != null){
-			branchNode.add(new TaskDefinitionNode(taskDefinition));
+			this.add(new TaskDefinitionNode(taskDefinition)) ;
 		}
 	}
 

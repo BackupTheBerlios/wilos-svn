@@ -4,9 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
@@ -30,8 +27,6 @@ import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
-import wilos.presentation.web.icefaces.tree.NodeUserObject;
-import wilos.presentation.web.icefaces.tree.TreeBean;
 
 /**
  * ProcessService is a transactional class, that manage operations about process, requested by web
@@ -287,123 +282,6 @@ public class ProcessService {
 		return id_process;
 	}
 	
-	public Process buildProcess() {
-		Process process = new Process();
-		process.setGuid("myProcess");
-		process.setName("TheProceSS");
-
-		TaskDescriptor tskdes1 = new TaskDescriptor();
-		tskdes1.setGuid("tsk1");
-		tskdes1.setName("tsk1Name");
-		process.addBreakdownElement(tskdes1);
-
-		TaskDefinition taskDefinition = new TaskDefinition();
-		taskDefinition.setName("tskdef1Name");
-		tskdes1.addTaskDefinition(taskDefinition);
-
-		Step step1 = new Step();
-		step1.setName("step1");
-		taskDefinition.addStep(step1);
-
-		TaskDescriptor tskdes2 = new TaskDescriptor();
-		tskdes2.setGuid("tsk2");
-		tskdes2.setName("tsk2Name");
-		process.addBreakdownElement(tskdes2);
-
-		RoleDescriptor rdes1 = new RoleDescriptor();
-		rdes1.setGuid("rdes1");
-		rdes1.setName("rdes1Name");
-		process.addBreakdownElement(rdes1);
-
-		RoleDefinition roleDefinition = new RoleDefinition();
-		roleDefinition.setName("rdef1Name");
-		rdes1.addRoleDefinition(roleDefinition);
-
-		return process;
-	}
-	
-	@Transactional(readOnly = true)
-	public DefaultTreeModel buildTree(String _id) {
-		Process process = null ; // this.buildProcess();
-		TreeBean tree = null; // new TreeBean();
-
-		logger.debug("### buildTree id = "+_id+" ###");
-		
-		process = this.getProcessDao().getProcess("ff8081810f5bef7c010f5bef95a70001");
-		
-		logger.debug("### buildTree process size = "+process.getBreakDownElements().size()+" ###");
-		DefaultMutableTreeNode rootTreeNode = new DefaultMutableTreeNode();
-		NodeUserObject rootObject = new NodeUserObject(rootTreeNode, tree);
-		rootObject.setText(process.getName());
-		rootTreeNode.setUserObject(rootObject);
-		DefaultTreeModel model = new DefaultTreeModel(rootTreeNode);
-
-		// add element of process in elements
-		for (BreakdownElement breakdownElement : process.getBreakDownElements()) {
-			if (breakdownElement instanceof TaskDescriptor) {
-				TaskDescriptor taskDescriptor = (TaskDescriptor) breakdownElement;
-				DefaultMutableTreeNode branchTaskDescriptorNode = new DefaultMutableTreeNode();
-				NodeUserObject branchTaskDescriptorObject = new NodeUserObject(
-						branchTaskDescriptorNode, tree);
-				branchTaskDescriptorNode
-						.setUserObject(branchTaskDescriptorObject);
-				branchTaskDescriptorObject.setText(taskDescriptor.getName());
-				rootTreeNode.insert(branchTaskDescriptorNode, 0);
-
-				TaskDefinition taskDefinition = taskDescriptor
-						.getTaskDefinition();
-				if (taskDefinition != null) {
-					DefaultMutableTreeNode branchTaskDefinitionNode = new DefaultMutableTreeNode();
-					NodeUserObject branchTaskDefinitionObject = new NodeUserObject(
-							branchTaskDefinitionNode, tree);
-					branchTaskDefinitionNode
-							.setUserObject(branchTaskDefinitionObject);
-					branchTaskDefinitionObject
-							.setText(taskDefinition.getName());
-					branchTaskDescriptorNode
-							.insert(branchTaskDefinitionNode, 0);
-
-					for (Step step : taskDefinition.getSteps()) {
-						if (step != null) {
-							DefaultMutableTreeNode branchStepNode = new DefaultMutableTreeNode();
-							NodeUserObject branchStepObject = new NodeUserObject(
-									branchStepNode, tree);
-							branchStepNode.setUserObject(branchStepObject);
-							branchStepObject.setLeaf(true);
-							branchStepObject.setText(step.getName());
-							branchTaskDefinitionNode.insert(branchStepNode, 0);
-						}
-					}
-				}
-			} else if (breakdownElement instanceof RoleDescriptor) {
-				RoleDescriptor roleDescriptor = (RoleDescriptor) breakdownElement;
-				DefaultMutableTreeNode branchRoleDescriptorNode = new DefaultMutableTreeNode();
-				NodeUserObject branchRoleDescriptorObject = new NodeUserObject(
-						branchRoleDescriptorNode, tree);
-				branchRoleDescriptorNode
-						.setUserObject(branchRoleDescriptorObject);
-				branchRoleDescriptorObject.setText(roleDescriptor.getName());
-				rootTreeNode.insert(branchRoleDescriptorNode, 0);
-
-				RoleDefinition roleDefinition = roleDescriptor
-						.getRoleDefinition();
-				if (roleDefinition != null) {
-					DefaultMutableTreeNode branchRoleDefinitionNode = new DefaultMutableTreeNode();
-					NodeUserObject branchRoleDefinitionObject = new NodeUserObject(
-							branchRoleDefinitionNode, tree);
-					branchRoleDefinitionNode
-							.setUserObject(branchRoleDefinitionObject);
-					branchRoleDefinitionObject
-							.setText(roleDefinition.getName());
-					branchRoleDefinitionObject.setLeaf(true);
-					branchRoleDescriptorNode
-							.insert(branchRoleDefinitionNode, 0);
-				}
-			}
-		}
-		return model;
-	}
-
 	/**
 	 * Return processes list
 	 * 
@@ -413,7 +291,6 @@ public class ProcessService {
 	public List<Process> getProcessesList() {
 		return this.processDao.getAllProcesses();
 	}
-	
 	
 	public String TestPersistence(){
 		Process p = new Process();
