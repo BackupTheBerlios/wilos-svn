@@ -13,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.activity.ActivityService;
 import wilos.model.spem2.activity.Activity;
+import wilos.presentation.web.icefaces.tree.TreeBean;
 
 /**
  * Managed-Bean link to activity.jsp and activitform.jsp
@@ -77,9 +78,11 @@ public class ActivityBean {
 		.getVariableResolver().resolveVariable(context,"RoleDescriptorBean");
 		TaskDescriptorBean taskDescriptorBean = (TaskDescriptorBean) context.getApplication()
 		.getVariableResolver().resolveVariable(context,"TaskDescriptorBean");
-		logger.debug("### ActivityBean ### chooseProcessActionListener id = "+processId);
+		TreeBean treeBean = (TreeBean) context.getApplication()
+		.getVariableResolver().resolveVariable(context,"TreeBean");
 		roleDescriptorBean.setProcessId(processId);
 		taskDescriptorBean.setProcessId(processId);
+		treeBean.setProcessId(processId);
 	}
 	
 	/**

@@ -1,12 +1,12 @@
 
 package wilos.presentation.web.icefaces.tree ;
 
-import javax.swing.tree.DefaultMutableTreeNode ;
+import javax.swing.tree.DefaultMutableTreeNode;
 
-import com.icesoft.faces.component.tree.IceUserObject ;
+import wilos.model.spem2.task.Step;
+import wilos.model.spem2.task.TaskDefinition;
 
-import wilos.model.spem2.task.Step ;
-import wilos.model.spem2.task.TaskDefinition ;
+import com.icesoft.faces.component.tree.IceUserObject;
 
 /**
  * @author deder

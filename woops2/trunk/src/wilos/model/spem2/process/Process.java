@@ -14,8 +14,6 @@ import wilos.model.spem2.activity.Activity;
  * special types of Processes for different process management applications and different situations
  * of process reuse.
  * 
- * TODO add the mapping hibernate for the processPackage field.
- * 
  * @author deder
  * 
  */

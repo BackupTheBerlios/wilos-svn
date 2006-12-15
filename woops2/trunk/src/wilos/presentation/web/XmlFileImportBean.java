@@ -53,7 +53,6 @@ public class XmlFileImportBean {
 		return file;
 	}
 
-	// FIXME verif methode parsing
 	public void action(ActionEvent event) {
 		InputFile inputFile = (InputFile) event.getSource();
 		if (inputFile.getStatus() == InputFile.SAVED) {
@@ -81,7 +80,6 @@ public class XmlFileImportBean {
 		try {
 			logger.debug("### getCanonicalPath = " + file.getCanonicalPath());
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		logger.debug("### getAbsoluteFile = " + file.getAbsoluteFile());

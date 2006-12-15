@@ -179,6 +179,15 @@
 		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
 		<property name="workBreakdownElementDao"
 			ref="WorkBreakdownElementDao" />
+		<property name="breakdownElementService"
+			ref="BreakdownElementService" />
+		<property name="stepService"
+			ref="StepService" />
+	</bean>
+	
+	<bean id="BreakdownElementService"
+		class="wilos.business.services.breakdownelement.BreakdownElementService">
+		<property name="breakdownElementDao" ref="BreakdownElementDao" />
 	</bean>
 
 	<bean id="ActivityService"

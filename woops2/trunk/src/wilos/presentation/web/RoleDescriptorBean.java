@@ -2,15 +2,11 @@ package wilos.presentation.web;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import javax.faces.context.FacesContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.role.RoleDescriptorService;
-import wilos.model.spem2.role.RoleDefinition;
 import wilos.model.spem2.role.RoleDescriptor;
 
 /**
