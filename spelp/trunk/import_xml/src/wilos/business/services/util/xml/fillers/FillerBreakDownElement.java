@@ -11,7 +11,7 @@ public class FillerBreakDownElement extends FillerElement {
 	private static String hasMultipleOccurrences = "hasMultipleOccurrences" ;
 	private static String isOptional = "isOptional" ;
 	private static String presentationName = "presentationName";
-		
+	
 	public FillerBreakDownElement(Element _e, Node _aNode) {
 		super(_e, _aNode);
 		fill() ;

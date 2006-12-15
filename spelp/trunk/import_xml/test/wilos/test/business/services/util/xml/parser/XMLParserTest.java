@@ -42,12 +42,45 @@ public class XMLParserTest extends TestCase {
 		assertTrue(processes.size() == 1);
 	}
 	
+	public void testProcessFromOpenUPHasTheRightName() {
+		HashSet<Process> processes;
+		Iterator<Process> it;
+		
+		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathOPenUP);
+		it = processes.iterator();
+		assertTrue(it.hasNext());
+		assertTrue(it.next().getPresentationName().equals("OpenUP/Basic Lifecycle"));
+	}
+	
+	public void testProcessFromScrumHasTheRightName() {
+		HashSet<Process> processes;
+		Iterator<Process> it;
+		Process theScrumProcess;
+		
+		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
+		it = processes.iterator();
+		assertTrue(it.hasNext());
+		theScrumProcess = it.next();
+		assertTrue( theScrumProcess.getPresentationName().equals("Cycle de vie Scrum") );
+		assertTrue( theScrumProcess.getName().equals("Scrum") );
+		assertTrue( theScrumProcess.getIsPlanned() );
+		assertTrue( ! theScrumProcess.getIsOptional() );
+		assertTrue( theScrumProcess.getIsRepeatable() );
+		assertTrue( ! theScrumProcess.getIsOngoing() );
+		assertTrue( theScrumProcess.getPrefix().equals("") );
+		assertTrue( theScrumProcess.getDescription().equals("Les phases, les sprints et les tâches dans la production d'une release") );
+		assertTrue( theScrumProcess.getGuid().equals("_9llsAQAvEdubGMceRDupFQ") );
+		assertTrue( ! theScrumProcess.getHasMultipleOccurrences() );
+		assertTrue( ! theScrumProcess.getIsEvenDriven() );		
+	}
+	
 	public void testProcessFromScrumFileContainsPhases() {
 		HashSet<Process> processes;
 		Iterator<Process> it;
 		
 		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
 		it = processes.iterator();
+		assertTrue(it.hasNext());
 		while (it.hasNext()) {
 			assertTrue(it.next().getActivities().size() > 0);
 		}
@@ -65,6 +98,7 @@ public class XMLParserTest extends TestCase {
 		
 		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
 		itProc = processes.iterator();
+		assertTrue(itProc.hasNext());
 		while (itProc.hasNext()) {
 			itAct = itProc.next().getActivities().iterator();
 			
@@ -85,6 +119,7 @@ public class XMLParserTest extends TestCase {
 		
 		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
 		itProc = processes.iterator();
+		assertTrue(itProc.hasNext());
 		while (itProc.hasNext()) {
 			itAct = itProc.next().getActivities().iterator();
 			
@@ -108,6 +143,9 @@ public class XMLParserTest extends TestCase {
 					}
 					assertTrue(isThereARoleDesc);
 				}
+				else {
+					fail();
+				}
 		}
 	}
 	
@@ -122,6 +160,7 @@ public class XMLParserTest extends TestCase {
 		
 		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
 		itProc = processes.iterator();
+		assertTrue(itProc.hasNext());
 		while (itProc.hasNext()) {
 			itAct = itProc.next().getActivities().iterator();
 			
@@ -157,6 +196,7 @@ public class XMLParserTest extends TestCase {
 		
 		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
 		itProc = processes.iterator();
+		assertTrue(itProc.hasNext());
 		while (itProc.hasNext()) {
 			// Iterator on the set of the two Phases of Scrum
 			itAct = itProc.next().getActivities().iterator();
@@ -207,6 +247,7 @@ public class XMLParserTest extends TestCase {
 		
 		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
 		itProc = processes.iterator();
+		assertTrue(itProc.hasNext());
 		while (itProc.hasNext()) {
 			// Iterator on the set of the two Phases of Scrum
 			itAct = itProc.next().getActivities().iterator();
@@ -249,6 +290,7 @@ public class XMLParserTest extends TestCase {
 		
 		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathOPenUP);
 		itProc = processes.iterator();
+		assertTrue(itProc.hasNext());
 		while (itProc.hasNext()) {
 			// Iterator on the set of the four Phases of OpenUP
 			itAct = itProc.next().getActivities().iterator();
@@ -282,6 +324,7 @@ public class XMLParserTest extends TestCase {
 		
 		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathOPenUP);
 		itProc = processes.iterator();
+		assertTrue(itProc.hasNext());
 		while (itProc.hasNext()) {
 			// Iterator on the set of the four Phases of OpenUP
 			itTopLevelAct = itProc.next().getActivities().iterator();
@@ -314,6 +357,7 @@ public class XMLParserTest extends TestCase {
 		
 		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathOPenUP);
 		itProc = processes.iterator();
+		assertTrue(itProc.hasNext());
 		while (itProc.hasNext()) {
 			// Iterator on the set of the four Phases of OpenUP
 			itTopLevelAct = itProc.next().getActivities().iterator();
@@ -372,6 +416,7 @@ public class XMLParserTest extends TestCase {
 		
 		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathOPenUP);
 		itProc = processes.iterator();
+		assertTrue(itProc.hasNext());
 		while (itProc.hasNext()) {
 			// Iterator on the set of the four Phases of OpenUP
 			itTopLevelAct = itProc.next().getActivities().iterator();

@@ -773,33 +773,10 @@ public class XMLParser {
 				Process tmpProcess = new Process();
 				aNode = nodeReturned.item(i);
 				
-				/*
-				NodeList myChildNodes = aNode.getChildNodes() ;
-				
-				for (int j = 0 ; j < myChildNodes.getLength() ; j ++){
-					if (myChildNodes.item(j).getNodeName().equals(breakdownElement)){
-						// We are in a DeliveryProcess's BreakDownElement
-						Node workNode = myChildNodes.item(j).getAttributes().getNamedItem(attr_name_xsitype) ;
-						
-						if (myChildNodes.item(j).getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(phase)) {
-							Activity theActivity = new Activity();
-							FillerActivity aFiller = new FillerActivity(theActivity, myChildNodes.item(j));	
-							Activity theActivityFilled = (Activity)aFiller.getFilledElement();
-							
-							
-							tmpProcess.addActivity(theActivityFilled);
-						}
-						
-						//tmpProcess = getBreakDownElementsFromNode();
-						
-					}
-				}*/
-				
 				if (aNode != null) {
 					tmpProcess = (Process) getBreakDownElementsFromNode(aNode);
-				}
-				
-				processesReturned.add(tmpProcess);
+					processesReturned.add(tmpProcess);
+				}				
 			}
 		}
 		return processesReturned;
