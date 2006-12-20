@@ -21,12 +21,13 @@ import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
 
 public class XMLParserTest extends TestCase {
-	public static File pathScrum = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "scrum.xml"); 
+	public static File pathScrum = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "scrum.xml");
+	public static File pathScrumWithArte = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "scrum_with_ArteF.xml"); 
 	public static File pathOPenUP =new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "sortieEPF.xml");
 	public static File pathMonTest =new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "monTest.xml");
-	public static File fileError = new File("prout");
+	public static File fileError = new File("noFile");
 
-	public void testReturnEmptyIfFileEmpty() {
+	public void testReturnEmptyIfNoFile() {
 		Set<Process> processes;
 		processes = XMLParser.getAllProcesses(fileError);
 		assertTrue(processes.size() == 0);
@@ -452,6 +453,82 @@ public class XMLParserTest extends TestCase {
 			}
 			assertTrue(rentreDansManageRequirements);
 		}		
+	}
+	
+	public void testScrumWithArteWorks() {
+		Set<Process> processes;
+		processes = XMLParser.getAllProcesses(pathScrumWithArte);
+		assertTrue(processes.size() != 0);
+		
+		Process p;
+		try {
+			p = XMLParser.getProcess(pathScrumWithArte );
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}	
+	
+	public void testPhase2IterationFromScrumWithArteContainsAllExpected() {
+		HashSet<Process> processes;
+		Iterator<Process> itProc;
+		Iterator<Activity> itAct;
+		HashSet<Activity> secondPhaseActivities;
+		Iterator<Activity> secondPhaseActivitiesIterator;
+		
+		HashSet<String> expectedResults = new HashSet<String>();
+		expectedResults.add("Retrospective");
+		expectedResults.add("Product Owner");
+		expectedResults.add("ScrumMaster");
+		expectedResults.add("Update product backlog");
+		expectedResults.add("StakeHolder");
+		expectedResults.add("Team");
+		expectedResults.add("Manage problems");
+		expectedResults.add("Review sprint");
+		expectedResults.add("Scrum daily meeting");
+		expectedResults.add("Daily work");
+		expectedResults.add("Plan sprint");
+		expectedResults.add("Sprint Phase");
+		
+		int expectedNumber = 12;
+		
+		
+		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrumWithArte);
+		itProc = processes.iterator();
+		assertTrue(itProc.hasNext());
+		while (itProc.hasNext()) {
+			// Iterator on the set of the two Phases of Scrum
+			itAct = itProc.next().getActivities().iterator();
+			
+//			 We work on the second Phase
+			Activity tmpAct = itAct.next();
+			if (tmpAct.getPresentationName().equals("Phase de préparation")) {
+				assertTrue(itAct.hasNext());
+				tmpAct = itAct.next();
+			}
+			
+			Phase secondPhase = (Phase) tmpAct;
+			// We get the set of activities of the second Phase
+			secondPhaseActivities = (HashSet<Activity>) secondPhase.getActivities();
+			// And an iterator on it
+			secondPhaseActivitiesIterator = secondPhaseActivities.iterator();
+			
+			assertTrue(secondPhaseActivitiesIterator.hasNext());
+			
+			Iteration secondPhaseIteration = (Iteration) secondPhaseActivitiesIterator.next();
+			
+			Iterator<BreakdownElement> it;
+			
+			it = secondPhaseIteration.getBreakDownElements().iterator();
+			
+			int i = 0;
+			while (it.hasNext()) {
+				assertTrue(expectedResults.contains( ((BreakdownElement) it.next()).getName() ) );
+				i += 1;
+			}
+			
+			assertTrue(i == expectedNumber);
+		}
 	}
 	
 	public void testGetProcess(){
