@@ -1,14 +1,14 @@
 
 package wilos.hibernate.spem2.role ;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayList ;
+import java.util.List ;
 
-import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.hibernate.exception.ConstraintViolationException ;
+import org.springframework.dao.DataIntegrityViolationException ;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
 
-import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.role.RoleDescriptor ;
 
 /**
  * RoleDefinitionDao manage requests from the system to store RoleDefinition to the database
@@ -25,8 +25,6 @@ public class RoleDescriptorDao extends HibernateDaoSupport {
 	public void saveOrUpdateRoleDescriptor(RoleDescriptor _RoleDescriptor) {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_RoleDescriptor) ;
-			// this.getHibernateTemplate().flush() ;
-
 		}
 		catch(DataIntegrityViolationException e){
 			System.out.print("save in RoleDescriptorDao: The Exception is " + e.getClass().getName() + "\n") ;
@@ -42,7 +40,7 @@ public class RoleDescriptorDao extends HibernateDaoSupport {
 	 * @return
 	 */
 	@ SuppressWarnings ("unchecked")
-	public List<RoleDescriptor> getAllRoleDescriptor() {
+	public List<RoleDescriptor> getAllRoleDescriptors() {
 		List<RoleDescriptor> loadAll = new ArrayList<RoleDescriptor>() ;
 		try{
 			loadAll.addAll(this.getHibernateTemplate().loadAll(RoleDescriptor.class)) ;
@@ -53,31 +51,6 @@ public class RoleDescriptorDao extends HibernateDaoSupport {
 		return loadAll ;
 	}
 
-	/*
-	public List<RoleDescriptor> getRoleDescriptorsFromProcess(String _id) {
-		logger.debug("###RoleDescriptorDao ### getRoleDescriptorsFromProcess id = "+_id);
-		List<RoleDescriptor> loadAll = new ArrayList<RoleDescriptor>();
-		boolean flag = false;
-		List<RoleDescriptor> liste = this.getAllRoleDescriptor();
-		logger.debug("###RoleDescriptorDao ### liste size = "+liste.size());
-		for (RoleDescriptor rd : liste) {
-			flag = false;
-			for (Activity a : rd.getActivities()) {
-				if (a.getId().equals(_id)) {
-					flag = true;
-					break;
-				}
-			}
-			if (flag){
-				loadAll.add(rd);
-				logger.debug("###RoleDescriptorDao ### added => "+rd);
-			}	
-		}
-		
-		return loadAll ;
-	}
-	*/
-	
 	/**
 	 * Return the RoleDescriptor which have the id _id
 	 * 
@@ -94,7 +67,12 @@ public class RoleDescriptorDao extends HibernateDaoSupport {
 	 * @param _RoleDescriptor
 	 */
 	public void deleteRoleDescriptor(RoleDescriptor _roleDescriptor) {
-		if(this.getRoleDescriptor(_roleDescriptor.getId()) != null)
+		try{
 			this.getHibernateTemplate().delete(_roleDescriptor) ;
+		}
+		catch(Exception exception){
+			//None. 
+			//To inhibit the StaleObjectStateException.
+		}
 	}
 }

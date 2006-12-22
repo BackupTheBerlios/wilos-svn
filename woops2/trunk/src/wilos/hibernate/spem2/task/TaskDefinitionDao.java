@@ -26,12 +26,9 @@ public class TaskDefinitionDao extends HibernateDaoSupport {
 	public void saveOrUpdateTaskDefinition(TaskDefinition _taskDefinition) {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_taskDefinition) ;
-			//this.getHibernateTemplate().flush() ;
-
 		}
 		catch(DataIntegrityViolationException e){
 			System.out.print("save in TaskDefinitionDao: The Exception is " + e.getClass().getName() + "\n") ;
-
 		}
 		catch(ConstraintViolationException ex){
 			System.out.print("save in TaskDefinitionDao: The Exception is " + ex.getClass().getName() + "\n") ;
@@ -42,7 +39,7 @@ public class TaskDefinitionDao extends HibernateDaoSupport {
 	 * @return set <TaskDefinition>
 	 */
 	@SuppressWarnings("unchecked")
-	public List<TaskDefinition> getAllTask() {
+	public List<TaskDefinition> getAllTaskDefinitions() {
 		List<TaskDefinition> loadAll = new ArrayList<TaskDefinition>();
 		try {
 			loadAll.addAll(this.getHibernateTemplate().loadAll(TaskDefinition.class));
@@ -56,7 +53,7 @@ public class TaskDefinitionDao extends HibernateDaoSupport {
 	 * @param _id
 	 * @return TaskDefinition
 	 */
-	public TaskDefinition getTask(String _id) {
+	public TaskDefinition getTaskDefinition(String _id) {
 		return (TaskDefinition) this.getHibernateTemplate().get(TaskDefinition.class, _id) ;
 	}
 
@@ -65,8 +62,13 @@ public class TaskDefinitionDao extends HibernateDaoSupport {
 	 * 
 	 * @param _taskDefinition
 	 */
-	public void deleteTask(TaskDefinition _taskDefinition) {
-		if(this.getTask(_taskDefinition.getId()) != null)
-			this.getHibernateTemplate().delete(_taskDefinition) ;
+	public void deleteTaskDefinition(TaskDefinition _roleDescriptor) {
+		try{
+			this.getHibernateTemplate().delete(_roleDescriptor) ;
+		}
+		catch(Exception exception){
+			//None. 
+			//To inhibit the StaleObjectStateException.
+		}
 	}
 }

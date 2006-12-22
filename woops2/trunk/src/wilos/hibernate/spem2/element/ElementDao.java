@@ -1,14 +1,14 @@
 
 package wilos.hibernate.spem2.element ;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayList ;
+import java.util.List ;
 
-import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.hibernate.exception.ConstraintViolationException ;
+import org.springframework.dao.DataIntegrityViolationException ;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
 
-import wilos.model.spem2.element.Element;
+import wilos.model.spem2.element.Element ;
 
 /**
  * ElementDao manage requests from the system to store Element to the database.
@@ -22,11 +22,9 @@ public class ElementDao extends HibernateDaoSupport {
 	 * 
 	 * @param _element
 	 */
-	public void saveOrUpdateElement (Element _element) {
+	public void saveOrUpdateElement(Element _element) {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_element) ;
-			//this.getHibernateTemplate().flush() ;
-
 		}
 		catch(DataIntegrityViolationException e){
 			System.out.print("save in ElementDao: The Exception is " + e.getClass().getName() + "\n") ;
@@ -41,13 +39,14 @@ public class ElementDao extends HibernateDaoSupport {
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
-	public List<Element> getAllElements () {
-		List<Element> loadAll = new ArrayList<Element>();
-		try {
-			loadAll.addAll(this.getHibernateTemplate().loadAll(Element.class));
-		} catch (Exception e) {
-			logger.error("###ElementDao ### --> "+e);
+	@ SuppressWarnings ("unchecked")
+	public List<Element> getAllElements() {
+		List<Element> loadAll = new ArrayList<Element>() ;
+		try{
+			loadAll.addAll(this.getHibernateTemplate().loadAll(Element.class)) ;
+		}
+		catch(Exception e){
+			logger.error("###ElementDao ### --> " + e) ;
 		}
 		return loadAll ;
 	}
@@ -58,7 +57,7 @@ public class ElementDao extends HibernateDaoSupport {
 	 * @param _id
 	 * @return
 	 */
-	public Element getElement (String _id) {
+	public Element getElement(String _id) {
 		return (Element) this.getHibernateTemplate().get(Element.class, _id) ;
 	}
 
@@ -67,8 +66,13 @@ public class ElementDao extends HibernateDaoSupport {
 	 * 
 	 * @param _element
 	 */
-	public void deleteElement (Element _element) {
-		if(this.getElement(_element.getId()) != null)
+	public void deleteElement(Element _element) {
+		try{
 			this.getHibernateTemplate().delete(_element) ;
+		}
+		catch(Exception exception){
+			//None. 
+			//To inhibit the StaleObjectStateException.
+		}
 	}
 }

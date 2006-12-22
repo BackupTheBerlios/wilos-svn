@@ -25,8 +25,6 @@ public class RoleDefinitionDao extends HibernateDaoSupport {
 	public void saveOrUpdateRoleDefinition(RoleDefinition _roleDefinition) {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_roleDefinition) ;
-			//this.getHibernateTemplate().flush() ;
-
 		}
 		catch(DataIntegrityViolationException e){
 			System.out.print("save in RoleDefinitionDao: The Exception is " + e.getClass().getName() + "\n") ;
@@ -42,7 +40,7 @@ public class RoleDefinitionDao extends HibernateDaoSupport {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<RoleDefinition> getAllRole() {
+	public List<RoleDefinition> getAllRoleDefinitions() {
 		List<RoleDefinition> loadAll = new ArrayList<RoleDefinition>();
 		try {
 			loadAll.addAll(this.getHibernateTemplate().loadAll(RoleDefinition.class));
@@ -58,7 +56,7 @@ public class RoleDefinitionDao extends HibernateDaoSupport {
 	 * @param _id
 	 * @return
 	 */
-	public RoleDefinition getRole(String _id) {
+	public RoleDefinition getRoleDefinition(String _id) {
 		return (RoleDefinition) this.getHibernateTemplate().get(RoleDefinition.class, _id) ;
 	}
 
@@ -67,8 +65,13 @@ public class RoleDefinitionDao extends HibernateDaoSupport {
 	 * 
 	 * @param _roleDefinition
 	 */
-	public void deleteRole(RoleDefinition _roleDefinition) {
-		if(this.getRole(_roleDefinition.getId()) != null)
+	public void deleteRoleDefinition(RoleDefinition _roleDefinition) {
+		try{
 			this.getHibernateTemplate().delete(_roleDefinition) ;
+		}
+		catch(Exception exception){
+			//None. 
+			//To inhibit the StaleObjectStateException.
+		}
 	}
 }

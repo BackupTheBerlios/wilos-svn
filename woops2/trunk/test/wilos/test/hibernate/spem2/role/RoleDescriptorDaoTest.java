@@ -100,7 +100,7 @@ public class RoleDescriptorDaoTest extends TestCase {
 
 		// Look if this roleDescriptor is also into the database and look if the
 		// size of the set is >= 1.
-		List<RoleDescriptor> roleDescriptors = this.roleDescriptorDao.getAllRoleDescriptor();
+		List<RoleDescriptor> roleDescriptors = this.roleDescriptorDao.getAllRoleDescriptors();
 		assertNotNull(roleDescriptors);
 		assertTrue(roleDescriptors.size() >= 1);
 

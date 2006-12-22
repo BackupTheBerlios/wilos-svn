@@ -53,7 +53,7 @@ public class TaskDefinitionDaoTest extends TestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown();
 
-		this.taskDefinitionDao.deleteTask(this.taskDefinition);
+		this.taskDefinitionDao.deleteTaskDefinition(this.taskDefinition);
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class TaskDefinitionDaoTest extends TestCase {
 	 * test. Then look for the database to check if this tmp taskDefinition exists. To
 	 * finish delete this tmp taskDefinition from the database.
 	 */
-	public void testSaveOrUpdateTask() {
+	public void testSaveTaskDefinition() {
 		// Rk: the setUp method is called here.
 
 		// Save the taskDefinition with the method to test.
@@ -87,7 +87,7 @@ public class TaskDefinitionDaoTest extends TestCase {
 	 * size of the activities set got is >= 1. To finish delete this tmp taskDefinition
 	 * from the database.
 	 */
-	public void testGetAllTasks() {
+	public void testGetAllTaskDefinitions() {
 		// Rk: the setUp method is called here.
 
 		// Save the taskDefinition into the database.
@@ -95,7 +95,7 @@ public class TaskDefinitionDaoTest extends TestCase {
 
 		// Look if this taskDefinition is also into the database and look if the size of
 		// the set is >= 1.
-		List<TaskDefinition> taskDefinitions = this.taskDefinitionDao.getAllTask();
+		List<TaskDefinition> taskDefinitions = this.taskDefinitionDao.getAllTaskDefinitions();
 		assertNotNull(taskDefinitions);
 		assertTrue(taskDefinitions.size() >= 1);
 
@@ -118,14 +118,14 @@ public class TaskDefinitionDaoTest extends TestCase {
 		String id = this.taskDefinition.getId();
 
 		// Test the method getTask with an existing taskDefinition.
-		TaskDefinition taskTmp = this.taskDefinitionDao.getTask(id);
+		TaskDefinition taskTmp = this.taskDefinitionDao.getTaskDefinition(id);
 		assertNotNull(taskTmp);
 		assertEquals("Name", taskTmp.getName(), NAME);
 		assertEquals("Description", taskTmp.getDescription(), DESCRIPTION);
 
 		// Test the method getTask with an unexisting taskDefinition.
 		this.taskDefinitionDao.getHibernateTemplate().delete(taskDefinition);
-		taskTmp = this.taskDefinitionDao.getTask(id);
+		taskTmp = this.taskDefinitionDao.getTaskDefinition(id);
 		assertNull(taskTmp);
 
 		// Rk: the tearDown method is called here.
@@ -143,7 +143,7 @@ public class TaskDefinitionDaoTest extends TestCase {
 		String id = this.taskDefinition.getId();
 
 		// Test the method deleteTask with an acitivity existing into the db.
-		this.taskDefinitionDao.deleteTask(this.taskDefinition);
+		this.taskDefinitionDao.deleteTaskDefinition(this.taskDefinition);
 
 		// See if this.task is now absent in the db.
 		TaskDefinition taskTmp = (TaskDefinition) this.taskDefinitionDao.getHibernateTemplate().get(
@@ -152,7 +152,7 @@ public class TaskDefinitionDaoTest extends TestCase {
 
 		// Test the method deleteTask with a taskDefinition unexisting into the db.
 		// Normally here there are no exception thrown.
-		this.taskDefinitionDao.deleteTask(this.taskDefinition);
+		this.taskDefinitionDao.deleteTaskDefinition(this.taskDefinition);
 
 		// Rk: the tearDown method is called here.
 	}

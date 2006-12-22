@@ -1,17 +1,17 @@
-package wilos.hibernate.spem2.breakdownelement;
 
-import java.util.ArrayList;
-import java.util.List;
+package wilos.hibernate.spem2.breakdownelement ;
 
-import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import java.util.ArrayList ;
+import java.util.List ;
 
-import wilos.model.spem2.breakdownelement.BreakdownElement;
+import org.hibernate.exception.ConstraintViolationException ;
+import org.springframework.dao.DataIntegrityViolationException ;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
+
+import wilos.model.spem2.breakdownelement.BreakdownElement ;
 
 /**
- * BreakdownElementDao manage requests from the system to store BreakdownElement
- * to the database.
+ * BreakdownElementDao manage requests from the system to store BreakdownElement to the database.
  * 
  * @author deder
  */
@@ -25,8 +25,6 @@ public class BreakdownElementDao extends HibernateDaoSupport {
 	public void saveOrUpdateBreakdownElement(BreakdownElement _bde) {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_bde) ;
-			//this.getHibernateTemplate().flush() ;
-
 		}
 		catch(DataIntegrityViolationException e){
 			System.out.print("save in BreakdownElementDao: The Exception is " + e.getClass().getName() + "\n") ;
@@ -41,15 +39,16 @@ public class BreakdownElementDao extends HibernateDaoSupport {
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
+	@ SuppressWarnings ("unchecked")
 	public List<BreakdownElement> getAllBreakdownElements() {
-		List<BreakdownElement> loadAll = new ArrayList<BreakdownElement>();
-		try {
-			loadAll.addAll(this.getHibernateTemplate().loadAll(BreakdownElement.class));
-		} catch (Exception e) {
-			logger.error("###BreakdownElementDao ### --> "+e);
+		List<BreakdownElement> loadAll = new ArrayList<BreakdownElement>() ;
+		try{
+			loadAll.addAll(this.getHibernateTemplate().loadAll(BreakdownElement.class)) ;
 		}
-		return loadAll;
+		catch(Exception e){
+			logger.error("###BreakdownElementDao ### --> " + e) ;
+		}
+		return loadAll ;
 	}
 
 	/**
@@ -59,8 +58,7 @@ public class BreakdownElementDao extends HibernateDaoSupport {
 	 * @return
 	 */
 	public BreakdownElement getBreakdownElement(String _id) {
-		return (BreakdownElement) this.getHibernateTemplate().get(
-				BreakdownElement.class, _id);
+		return (BreakdownElement) this.getHibernateTemplate().get(BreakdownElement.class, _id) ;
 	}
 
 	/**
@@ -69,7 +67,12 @@ public class BreakdownElementDao extends HibernateDaoSupport {
 	 * @param _bde
 	 */
 	public void deleteBreakdownElement(BreakdownElement _bde) {
-		if(this.getBreakdownElement(_bde.getId()) != null)
-			this.getHibernateTemplate().delete(_bde);
+		try{
+			this.getHibernateTemplate().delete(_bde) ;
+		}
+		catch(Exception exception){
+			//None. 
+			//To inhibit the StaleObjectStateException.
+		}
 	}
 }

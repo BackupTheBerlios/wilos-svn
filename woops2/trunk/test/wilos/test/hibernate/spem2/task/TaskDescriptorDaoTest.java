@@ -114,7 +114,7 @@ public class TaskDescriptorDaoTest extends TestCase {
 
 		// Look if this taskDescriptor is also into the database and look if the
 		// size of the set is >= 1.
-		List<TaskDescriptor> taskDescriptors = this.taskDescriptorDao.getAllTaskDescriptor() ;
+		List<TaskDescriptor> taskDescriptors = this.taskDescriptorDao.getAllTaskDescriptors() ;
 		assertNotNull(taskDescriptors) ;
 		assertTrue(taskDescriptors.size() >= 1) ;
 

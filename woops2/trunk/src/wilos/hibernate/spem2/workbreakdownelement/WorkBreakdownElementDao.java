@@ -73,7 +73,12 @@ public class WorkBreakdownElementDao extends HibernateDaoSupport {
 	 * @param _activity
 	 */
 	public void deleteWorkBreakdownElement(WorkBreakdownElement _workBreakdownElement) {
-		if(this.getWorkBreakdownElement(_workBreakdownElement.getId()) != null)
+		try{
 			this.getHibernateTemplate().delete(_workBreakdownElement) ;
+		}
+		catch(Exception exception){
+			//None. 
+			//To inhibit the StaleObjectStateException.
+		}
 	}
 }

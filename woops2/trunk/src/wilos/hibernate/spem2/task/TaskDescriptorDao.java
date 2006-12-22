@@ -1,17 +1,17 @@
-package wilos.hibernate.spem2.task;
 
-import java.util.ArrayList;
-import java.util.List;
+package wilos.hibernate.spem2.task ;
 
-import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import java.util.ArrayList ;
+import java.util.List ;
 
-import wilos.model.spem2.task.TaskDescriptor;
+import org.hibernate.exception.ConstraintViolationException ;
+import org.springframework.dao.DataIntegrityViolationException ;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
+
+import wilos.model.spem2.task.TaskDescriptor ;
 
 /**
- * TaskDescriptorDao manage requests from the system to store TaskDescriptor to
- * the database
+ * TaskDescriptorDao manage requests from the system to store TaskDescriptor to the database
  * 
  * @author eperico
  * 
@@ -26,8 +26,6 @@ public class TaskDescriptorDao extends HibernateDaoSupport {
 	public void saveOrUpdateTaskDescriptor(TaskDescriptor _taskdescriptor) {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_taskdescriptor) ;
-			//this.getHibernateTemplate().flush() ;
-
 		}
 		catch(DataIntegrityViolationException e){
 			System.out.print("save in TaskDescriptorDao The Exception is " + e.getClass().getName() + "\n") ;
@@ -42,15 +40,16 @@ public class TaskDescriptorDao extends HibernateDaoSupport {
 	 * 
 	 * @return set <TaskDescriptor>
 	 */
-	@SuppressWarnings("unchecked")
-	public List<TaskDescriptor> getAllTaskDescriptor() {
-		List<TaskDescriptor> loadAll = new ArrayList<TaskDescriptor>();
-		try {
-			loadAll.addAll(this.getHibernateTemplate().loadAll(TaskDescriptor.class));
-		} catch (Exception e) {
-			logger.error("###TaskDescriptorDao ### --> "+e);
+	@ SuppressWarnings ("unchecked")
+	public List<TaskDescriptor> getAllTaskDescriptors() {
+		List<TaskDescriptor> loadAll = new ArrayList<TaskDescriptor>() ;
+		try{
+			loadAll.addAll(this.getHibernateTemplate().loadAll(TaskDescriptor.class)) ;
 		}
-		return loadAll;
+		catch(Exception e){
+			logger.error("###TaskDescriptorDao ### --> " + e) ;
+		}
+		return loadAll ;
 	}
 
 	/**
@@ -60,8 +59,7 @@ public class TaskDescriptorDao extends HibernateDaoSupport {
 	 * @return TaskDescriptor
 	 */
 	public TaskDescriptor getTaskDescriptor(String _id) {
-		return (TaskDescriptor) this.getHibernateTemplate().get(
-				TaskDescriptor.class, _id);
+		return (TaskDescriptor) this.getHibernateTemplate().get(TaskDescriptor.class, _id) ;
 	}
 
 	/**
@@ -70,7 +68,12 @@ public class TaskDescriptorDao extends HibernateDaoSupport {
 	 * @param _taskdescriptor
 	 */
 	public void deleteTaskDescriptor(TaskDescriptor _taskdescriptor) {
-		if(this.getTaskDescriptor(_taskdescriptor.getId()) != null)
-			this.getHibernateTemplate().delete(_taskdescriptor);
+		try{
+			this.getHibernateTemplate().delete(_taskdescriptor) ;
+		}
+		catch(Exception exception){
+			//None. 
+			//To inhibit the StaleObjectStateException.
+		}
 	}
 }

@@ -1,14 +1,14 @@
 
 package wilos.hibernate.spem2.process ;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayList ;
+import java.util.List ;
 
-import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.hibernate.exception.ConstraintViolationException ;
+import org.springframework.dao.DataIntegrityViolationException ;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
 
-import wilos.model.spem2.process.Process;
+import wilos.model.spem2.process.Process ;
 
 /**
  * ProcessDao manage requests from the system to store Acitivties to the database
@@ -26,8 +26,6 @@ public class ProcessDao extends HibernateDaoSupport {
 	public void saveOrUpdateProcess(Process _process) {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_process) ;
-			//this.getHibernateTemplate().flush() ;
-
 		}
 		catch(DataIntegrityViolationException e){
 			System.out.print("save in ProcessDao: The Exception is " + e.getClass().getName() + "\n") ;
@@ -71,7 +69,12 @@ public class ProcessDao extends HibernateDaoSupport {
 	 * @param _process
 	 */
 	public void deleteProcess(Process _process) {
-		if(this.getProcess(_process.getId()) != null)
+		try{
 			this.getHibernateTemplate().delete(_process) ;
+		}
+		catch(Exception exception){
+			//None. 
+			//To inhibit the StaleObjectStateException.
+		}
 	}
 }

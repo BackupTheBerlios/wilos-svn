@@ -36,7 +36,7 @@ public class RoleDescriptorService {
 	 */
 	//@Transactional(readOnly = true)
 	public List<RoleDescriptor> getRoleDescriptorsFromProcess(String _id) {
-		List<RoleDescriptor> tempList =  this.roleDescriptorDao.getAllRoleDescriptor() ;
+		List<RoleDescriptor> tempList =  this.roleDescriptorDao.getAllRoleDescriptors() ;
 		List<RoleDescriptor> returnedList =  new ArrayList<RoleDescriptor>();
 		boolean flag = false;
 		
@@ -60,7 +60,7 @@ public class RoleDescriptorService {
 	public RoleDefinition getRoleDefinitionFromRoleDescriptor(String _id){
 		RoleDefinition rdf = null;
 		boolean found = false;
-		List<RoleDefinition> listRdf = this.roleDefinitionDao.getAllRole();
+		List<RoleDefinition> listRdf = this.roleDefinitionDao.getAllRoleDefinitions();
 		for (RoleDefinition r : listRdf){
 			for(RoleDescriptor rd : r.getRoleDescriptors()){
 				if (rd.getId().equals(_id)){

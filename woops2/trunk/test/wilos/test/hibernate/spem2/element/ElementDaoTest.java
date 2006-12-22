@@ -109,7 +109,7 @@ public class ElementDaoTest extends TestCase {
 		this.element.setDescription(DESCRIPTION);
 
 		// Save the element into the database.
-		this.elementDao.getHibernateTemplate().saveOrUpdate(this.element);
+		this.elementDao.saveOrUpdateElement(this.element);
 		String id = this.element.getId();
 
 		// Test the method getElement with an existing element.
@@ -119,7 +119,7 @@ public class ElementDaoTest extends TestCase {
 		assertEquals("Description", elementTmp.getDescription(), DESCRIPTION);
 
 		// Test the method getElement with an unexisting element.
-		this.elementDao.getHibernateTemplate().delete(this.element);
+		this.elementDao.deleteElement(this.element);
 		elementTmp = this.elementDao.getElement(id);
 		assertNull(elementTmp);
 
@@ -135,15 +135,14 @@ public class ElementDaoTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		// Save the element into the database.
-		this.elementDao.getHibernateTemplate().saveOrUpdate(this.element);
+		this.elementDao.saveOrUpdateElement(this.element);
 		String id = this.element.getId();
 
 		// Test the method deleteElement with an element existing into the db.
 		this.elementDao.deleteElement(this.element);
 
 		// See if this.element is now absent in the db.
-		Element elementTmp = (Element) this.elementDao.getHibernateTemplate()
-				.get(Element.class, id);
+		Element elementTmp = (Element) this.elementDao.getElement(id);
 		assertNull(elementTmp);
 
 		// Test the method deleteElement with an element unexisting into the db.

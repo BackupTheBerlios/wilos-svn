@@ -47,7 +47,7 @@ public class RoleDefinitionDaoTest extends TestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown();
 
-		this.roleDefinitionDao.deleteRole(this.roleDefinition);
+		this.roleDefinitionDao.deleteRoleDefinition(this.roleDefinition);
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class RoleDefinitionDaoTest extends TestCase {
 
 		// Look if this roleDefinition is also into the database and look if the size of
 		// the set is >= 1.
-		List<RoleDefinition> roleDefinitions = this.roleDefinitionDao.getAllRole();
+		List<RoleDefinition> roleDefinitions = this.roleDefinitionDao.getAllRoleDefinitions();
 		assertNotNull(roleDefinitions);
 		assertTrue(roleDefinitions.size() >= 1);
 
@@ -111,14 +111,14 @@ public class RoleDefinitionDaoTest extends TestCase {
 		String id = this.roleDefinition.getId();
 
 		// Test the method getActivity with an existing activity.
-		RoleDefinition roleTmp = this.roleDefinitionDao.getRole(id);
+		RoleDefinition roleTmp = this.roleDefinitionDao.getRoleDefinition(id);
 		assertNotNull(roleTmp);
 		assertEquals("Name", roleTmp.getName(), NAME);
 		assertEquals("Description", roleTmp.getDescription(), DESCRIPTION);
 
 		// Test the method getRole with an unexisting roleDefinition.
 		this.roleDefinitionDao.getHibernateTemplate().delete(roleDefinition);
-		roleTmp = this.roleDefinitionDao.getRole(id);
+		roleTmp = this.roleDefinitionDao.getRoleDefinition(id);
 		assertNull(roleTmp);
 
 		// Rk: the tearDown method is called here.
@@ -136,7 +136,7 @@ public class RoleDefinitionDaoTest extends TestCase {
 		String id = this.roleDefinition.getId();
 
 		// Test the method deleteRole with an roleDefinition existing into the db.
-		this.roleDefinitionDao.deleteRole(this.roleDefinition);
+		this.roleDefinitionDao.deleteRoleDefinition(this.roleDefinition);
 
 		// See if this.role is now absent in the db.
 		RoleDefinition roleTmp = (RoleDefinition) this.roleDefinitionDao.getHibernateTemplate().get(
@@ -145,7 +145,7 @@ public class RoleDefinitionDaoTest extends TestCase {
 
 		// Test the method deleteRole with an roleDefinition unexisting into the db.
 		// Normally here there are no exception thrown.
-		this.roleDefinitionDao.deleteRole(this.roleDefinition);
+		this.roleDefinitionDao.deleteRoleDefinition(this.roleDefinition);
 
 		// Rk: the tearDown method is called here.
 	}

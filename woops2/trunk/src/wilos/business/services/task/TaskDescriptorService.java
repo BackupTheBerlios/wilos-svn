@@ -31,7 +31,7 @@ public class TaskDescriptorService {
 	 */
 	@Transactional(readOnly = true)
 	public List<TaskDescriptor> getTaskDescriptorsFromProcess(String _id) {
-		List<TaskDescriptor> tempList =  this.taskDescriptorDao.getAllTaskDescriptor() ;
+		List<TaskDescriptor> tempList =  this.taskDescriptorDao.getAllTaskDescriptors() ;
 		List<TaskDescriptor> returnedList =  new ArrayList<TaskDescriptor>();
 		boolean flag = false;
 		

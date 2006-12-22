@@ -1,20 +1,21 @@
-package wilos.hibernate.spem2.iteration;
 
-import java.util.ArrayList;
-import java.util.List;
+package wilos.hibernate.spem2.iteration ;
 
-import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import java.util.ArrayList ;
+import java.util.List ;
 
-import wilos.model.spem2.iteration.Iteration;
+import org.hibernate.exception.ConstraintViolationException ;
+import org.springframework.dao.DataIntegrityViolationException ;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
+
+import wilos.model.spem2.iteration.Iteration ;
 
 /**
  * IterationDao manage requests from the system to store iterations to the database
  * 
  * @author soosuske
  */
-public class IterationDao  extends HibernateDaoSupport{
+public class IterationDao extends HibernateDaoSupport {
 	/**
 	 * Save or update an iteration
 	 * 
@@ -23,7 +24,6 @@ public class IterationDao  extends HibernateDaoSupport{
 	public void saveOrUpdateIteration(Iteration _iteration) {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_iteration) ;
-
 		}
 		catch(DataIntegrityViolationException e){
 			System.out.print("save in IterationDao: The Exception is " + e.getClass().getName() + "\n") ;
@@ -67,7 +67,12 @@ public class IterationDao  extends HibernateDaoSupport{
 	 * @param _iteration
 	 */
 	public void deleteIteration(Iteration _iteration) {
-		if(this.getIteration(_iteration.getId()) != null)
+		try{
 			this.getHibernateTemplate().delete(_iteration) ;
+		}
+		catch(Exception exception){
+			//None. 
+			//To inhibit the StaleObjectStateException.
+		}
 	}
 }

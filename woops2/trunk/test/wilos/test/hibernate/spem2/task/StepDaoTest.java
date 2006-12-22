@@ -58,7 +58,7 @@ public class StepDaoTest extends TestCase {
 		this.stepDao.deleteStep(this.step) ;
 	}
 
-	public void testSaveOrUpdateTask() {
+	public void testSaveOrUpdateStep() {
 		// Rk: the setUp method is called here.
 
 		// Save the task with the method to test.
@@ -72,7 +72,7 @@ public class StepDaoTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	public void testGetAllTasks() {
+	public void testGetAllSteps() {
 		// Rk: the setUp method is called here.
 
 		// Save the task into the database.
@@ -87,7 +87,7 @@ public class StepDaoTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	public void testGetTask() {
+	public void testGetStep() {
 		// Rk: the setUp method is called here.
 
 		// Add prooperties to the task.
@@ -116,15 +116,15 @@ public class StepDaoTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		// Save the task into the database.
-		this.stepDao.getHibernateTemplate().saveOrUpdate(this.step) ;
+		this.stepDao.saveOrUpdateStep(this.step) ;
 		String id = this.step.getId() ;
 
 		// Test the method deleteTask with an acitivity existing into the db.
 		this.stepDao.deleteStep(this.step) ;
 
-		// See if this.task is now absent in the db.
-		TaskDefinition taskTmp = (TaskDefinition) this.stepDao.getHibernateTemplate().get(TaskDefinition.class, id) ;
-		assertNull(taskTmp) ;
+		// See if the step is now absent in the db.
+		Step stepTmp = (Step) this.stepDao.getStep(id) ;
+		assertNull(stepTmp) ;
 
 		// Test the method deleteTask with a task unexisting into the db.
 		// Normally here there are no exception thrown.

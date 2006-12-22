@@ -1,17 +1,19 @@
-package wilos.hibernate.spem2.phase;
 
-import java.util.ArrayList;
-import java.util.List;
+package wilos.hibernate.spem2.phase ;
 
-import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import java.util.ArrayList ;
+import java.util.List ;
 
-import wilos.model.spem2.phase.Phase;
+import org.hibernate.exception.ConstraintViolationException ;
+import org.springframework.dao.DataIntegrityViolationException ;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
+
+import wilos.model.spem2.phase.Phase ;
+
 /**
  * 
  * @author Soosuske
- *
+ * 
  */
 public class PhaseDao extends HibernateDaoSupport {
 	/**
@@ -22,8 +24,6 @@ public class PhaseDao extends HibernateDaoSupport {
 	public void saveOrUpdatePhase(Phase _phase) {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_phase) ;
-			//this.getHibernateTemplate().flush() ;
-
 		}
 		catch(DataIntegrityViolationException e){
 			System.out.print("save in PhaseDao: The Exception is " + e.getClass().getName() + "\n") ;
@@ -67,7 +67,12 @@ public class PhaseDao extends HibernateDaoSupport {
 	 * @param _phase
 	 */
 	public void deletePhase(Phase _phase) {
-		if(this.getPhase(_phase.getId()) != null)
+		try{
 			this.getHibernateTemplate().delete(_phase) ;
+		}
+		catch(Exception exception){
+			//None. 
+			//To inhibit the StaleObjectStateException.
+		}
 	}
 }
