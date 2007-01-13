@@ -74,6 +74,7 @@ public class ActivityBean {
 		FacesContext context = FacesContext.getCurrentInstance(); 
 		Map map = context.getExternalContext().getRequestParameterMap();
 		String processId = (String) map.get("process_id");
+		String roleId = (String) map.get("role_id");
 		RoleDescriptorBean roleDescriptorBean = (RoleDescriptorBean) context.getApplication()
 		.getVariableResolver().resolveVariable(context,"RoleDescriptorBean");
 		TaskDescriptorBean taskDescriptorBean = (TaskDescriptorBean) context.getApplication()
@@ -83,6 +84,7 @@ public class ActivityBean {
 		roleDescriptorBean.setProcessId(processId);
 		taskDescriptorBean.setProcessId(processId);
 		treeBean.setProcessId(processId);
+		treeBean.setRoleId(roleId);
 	}
 	
 	/**

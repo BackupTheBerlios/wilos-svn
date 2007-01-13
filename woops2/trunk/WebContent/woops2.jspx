@@ -50,6 +50,7 @@
 			                                </f:facet>
 											<ice:commandLink value="#{activity.id}" actionListener="#{ActivityBean.chooseProcessActionListener}" >
 												<f:param  name="process_id" value="#{activity.id}"/>
+												<f:param  name="role_id" value="#{activity.id}"/>
 											</ice:commandLink>
 										</ice:column>
 																			

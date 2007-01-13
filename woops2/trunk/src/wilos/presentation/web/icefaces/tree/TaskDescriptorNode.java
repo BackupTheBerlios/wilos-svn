@@ -1,12 +1,11 @@
 
 package wilos.presentation.web.icefaces.tree ;
 
-import javax.swing.tree.DefaultMutableTreeNode ;
+import javax.swing.tree.DefaultMutableTreeNode;
 
-import wilos.model.spem2.task.TaskDefinition ;
-import wilos.model.spem2.task.TaskDescriptor ;
+import wilos.model.spem2.task.TaskDescriptor;
 
-import com.icesoft.faces.component.tree.IceUserObject ;
+import com.icesoft.faces.component.tree.IceUserObject;
 
 /**
  * @author deder
@@ -27,14 +26,15 @@ public class TaskDescriptorNode extends DefaultMutableTreeNode {
 		this.setUserObject(iceUserObject) ;
 
 		iceUserObject.setText(_taskDescriptor.getName()) ;
-		iceUserObject.setLeaf(false) ;
-		iceUserObject.setBranchContractedIcon("images/icon_taskdescriptor.gif") ;
-		iceUserObject.setBranchExpandedIcon("images/icon_taskdescriptor.gif") ;
+		iceUserObject.setLeaf(true) ;
+		//iceUserObject.setBranchContractedIcon("images/icon_taskdescriptor.gif") ;
+		//iceUserObject.setBranchExpandedIcon("images/icon_taskdescriptor.gif") ;
+		iceUserObject.setLeafIcon("images/icon_taskdescriptor.gif") ;
 
-		TaskDefinition taskDefinition = _taskDescriptor.getTaskDefinition() ;
+		/*TaskDefinition taskDefinition = _taskDescriptor.getTaskDefinition() ;
 		if(taskDefinition != null){
 			this.add(new TaskDefinitionNode(taskDefinition)) ;
-		}
+		}*/
 	}
 
 }

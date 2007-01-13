@@ -1,15 +1,15 @@
 
 package wilos.presentation.web.icefaces.tree ;
 
-import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.DefaultTreeModel ;
 
-import wilos.business.services.process.ProcessService;
-import wilos.model.spem2.process.Process;
-import wilos.model.spem2.role.RoleDefinition;
-import wilos.model.spem2.role.RoleDescriptor;
-import wilos.model.spem2.task.Step;
-import wilos.model.spem2.task.TaskDefinition;
-import wilos.model.spem2.task.TaskDescriptor;
+import wilos.business.services.process.ProcessService ;
+import wilos.model.spem2.process.Process ;
+import wilos.model.spem2.role.RoleDefinition ;
+import wilos.model.spem2.role.RoleDescriptor ;
+import wilos.model.spem2.task.Step ;
+import wilos.model.spem2.task.TaskDefinition ;
+import wilos.model.spem2.task.TaskDescriptor ;
 
 /**
  * <p/> A basic backing bean for a ice:tree component. The only instance variable needed is a
@@ -20,18 +20,20 @@ import wilos.model.spem2.task.TaskDescriptor;
  * </p>
  */
 public class TreeBean {
+
+	private ProcessService processService ;
+
+	String processId = "" ;
 	
-	private ProcessService processService;
-	
-	String processId = "";
+	String roleId = "";
 
 	boolean alreadyBuilt = false ;
 
 	// tree default model, used as a value for the tree component
-	private DefaultTreeModel model ;
+	private DefaultTreeModel model = null ;
 
 	public TreeBean() {
-		//None.
+		// None.
 	}
 
 	/**
@@ -41,11 +43,12 @@ public class TreeBean {
 	 */
 	public DefaultTreeModel getModel() {
 		if(!this.alreadyBuilt){
-			//Process process = buildProcess() ;
-			Process process = this.processService.getEntireProcess(this.processId);
-			
-			this.model = new DefaultTreeModel(new ProcessNode(process)) ;
-			this.alreadyBuilt = true;
+			// Process process = buildProcess() ;
+			this.processId = "ff8080810fb0c4b4010fb0c4c4650001";
+			Process process = this.processService.getEntireProcess(this.processId) ;
+			ProcessNode processNode = new ProcessNode(process);
+			this.model = new DefaultTreeModel(processNode.obtainTasksForARoleFromProcess()) ;
+			this.alreadyBuilt = true ;
 		}
 		return this.model ;
 	}
@@ -94,11 +97,28 @@ public class TreeBean {
 
 	/**
 	 * Setter of processId.
-	 *
-	 * @param _processId The processId to set.
+	 * 
+	 * @param _processId
+	 *            The processId to set.
 	 */
 	public void setProcessId(String _processId) {
 		this.processId = _processId ;
+	}
+
+	/**
+	 * @return the roleId
+	 */
+	public String getRoleId() {
+		return this.roleId ;
+	}
+
+	/**
+	 * Setter of roleId.
+	 *
+	 * @param _roleId The roleId to set.
+	 */
+	public void setRoleId(String _roleId) {
+		this.roleId = _roleId ;
 	}
 
 	/**
@@ -110,8 +130,9 @@ public class TreeBean {
 
 	/**
 	 * Setter of processService.
-	 *
-	 * @param _processService The processService to set.
+	 * 
+	 * @param _processService
+	 *            The processService to set.
 	 */
 	public void setProcessService(ProcessService _processService) {
 		this.processService = _processService ;
