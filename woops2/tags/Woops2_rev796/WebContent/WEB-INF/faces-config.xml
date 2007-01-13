@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+
+<!DOCTYPE faces-config PUBLIC
+        "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+        "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+
+<faces-config>
+
+	<application>
+		<locale-config>
+			<default-locale>en_US</default-locale>
+		</locale-config>
+	</application>
+
+	<!--   Spring Variable resolver -->
+	<application>
+		<variable-resolver>
+			org.springframework.web.jsf.DelegatingVariableResolver
+		</variable-resolver>
+		<locale-config />
+	</application>
+
+	<!-- Managed Bean for dynamic style examples -->
+	<managed-bean>
+		<managed-bean-name>styleBean</managed-bean-name>
+		<managed-bean-class>wilos.presentation.web.util.StyleBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<description>
+			Backing bean that controls which content will be displayed
+			and the MenuGroupBeans that make up the left navigation of
+			the application
+		</description>
+		<managed-bean-name>navigation</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.util.NavigationBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>treeNavigation</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.util.TreeNavigation
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+
+
+	<!-- OutputProgress Render Manager-->
+	<managed-bean>
+		<managed-bean-name>renderManager</managed-bean-name>
+		<managed-bean-class>
+			com.icesoft.faces.async.render.RenderManager
+		</managed-bean-class>
+		<managed-bean-scope>application</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>ActivityBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.ActivityBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>activityService</property-name>
+			<value>#{ActivityService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>RoleDescriptorBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.RoleDescriptorBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>roleDescriptorService</property-name>
+			<value>#{RoleDescriptorService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>TaskDescriptorBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.TaskDescriptorBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>taskDescriptorService</property-name>
+			<value>#{TaskDescriptorService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>TaskDefinitionBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.TaskDefinitionBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>StepBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.StepBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>stepService</property-name>
+			<value>#{StepService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	
+	<managed-bean>
+		<managed-bean-name>XmlFileImportBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.XmlFileImportBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>processService</property-name>
+			<value>#{ProcessService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>TreeBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.icefaces.tree.TreeBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>processService</property-name>
+			<value>#{ProcessService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<navigation-rule>
+		<description>Theme Reload</description>
+		<navigation-case>
+			<from-outcome>reload</from-outcome>
+			<to-view-id>/index.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+</faces-config>
