@@ -206,6 +206,11 @@
 		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
 	</bean>
 	
+	<bean id="TaskDefinitionService"
+		class="wilos.business.services.task.TaskDefinitionService">
+		<property name="taskDefinitionDao" ref="TaskDefinitionDao" />
+	</bean>
+	
 	<bean id="StepService"
 		class="wilos.business.services.task.StepService">
 		<property name="stepDao" ref="StepDao" />

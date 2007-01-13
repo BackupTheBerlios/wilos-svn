@@ -51,7 +51,7 @@ public class StepServiceTest extends TestCase {
 	 */
 	protected void tearDown() throws Exception {
 		super.tearDown() ;
-		this.taskDefinitionDao.deleteTaskDefinition(taskDefinition) ;
+		this.taskDefinitionDao.deleteTaskDefinition(this.taskDefinition) ;
 		this.stepService.deleteStep(this.step) ;
 
 	}
