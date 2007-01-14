@@ -5,10 +5,12 @@ import java.util.ArrayList ;
 import java.util.List ;
 
 import org.hibernate.exception.ConstraintViolationException ;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException ;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
 
 import wilos.model.spem2.phase.Phase ;
+import wilos.utils.ExceptionManager;
 
 /**
  * 
@@ -25,11 +27,11 @@ public class PhaseDao extends HibernateDaoSupport {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_phase) ;
 		}
-		catch(DataIntegrityViolationException e){
-			System.out.print("save in PhaseDao: The Exception is " + e.getClass().getName() + "\n") ;
+		catch(DataIntegrityViolationException _e){
+			ExceptionManager.getInstance().manageDataIntegrityViolationException(this.getClass().getName(), "saveOrUpdatePhase", _e);
 		}
-		catch(ConstraintViolationException ex){
-			System.out.print("save in PhaseDao: The Exception is " + ex.getClass().getName() + "\n") ;
+		catch(ConstraintViolationException _ex){
+			ExceptionManager.getInstance().manageConstraintViolationException(this.getClass().getName(), "saveOrUpdatePhase", _ex);
 		}
 	}
 
@@ -45,8 +47,8 @@ public class PhaseDao extends HibernateDaoSupport {
 			loadAll.addAll(this.getHibernateTemplate().loadAll(Phase.class)) ;
 
 		}
-		catch(Exception e){
-			logger.error("###PhaseDao ### --> " + e) ;
+		catch(DataAccessException _e){
+			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "getAllPhases", _e);
 		}
 		return loadAll ;
 	}
@@ -70,9 +72,8 @@ public class PhaseDao extends HibernateDaoSupport {
 		try{
 			this.getHibernateTemplate().delete(_phase) ;
 		}
-		catch(Exception exception){
-			//None. 
-			//To inhibit the StaleObjectStateException.
+		catch(DataAccessException _e){
+			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "deletePhase", _e);
 		}
 	}
 }

@@ -5,10 +5,12 @@ import java.util.ArrayList ;
 import java.util.List ;
 
 import org.hibernate.exception.ConstraintViolationException ;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException ;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
 
 import wilos.model.spem2.element.Element ;
+import wilos.utils.ExceptionManager;
 
 /**
  * ElementDao manage requests from the system to store Element to the database.
@@ -26,11 +28,11 @@ public class ElementDao extends HibernateDaoSupport {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_element) ;
 		}
-		catch(DataIntegrityViolationException e){
-			System.out.print("save in ElementDao: The Exception is " + e.getClass().getName() + "\n") ;
+		catch(DataIntegrityViolationException _e){
+			ExceptionManager.getInstance().manageDataIntegrityViolationException(this.getClass().getName(), "saveOrUpdateElement", _e);
 		}
-		catch(ConstraintViolationException ex){
-			System.out.print("save in ElementDao: The Exception is " + ex.getClass().getName() + "\n") ;
+		catch(ConstraintViolationException _ex){
+			ExceptionManager.getInstance().manageConstraintViolationException(this.getClass().getName(), "saveOrUpdateElement", _ex);
 		}
 	}
 
@@ -45,8 +47,8 @@ public class ElementDao extends HibernateDaoSupport {
 		try{
 			loadAll.addAll(this.getHibernateTemplate().loadAll(Element.class)) ;
 		}
-		catch(Exception e){
-			logger.error("###ElementDao ### --> " + e) ;
+		catch(DataAccessException _e){
+			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "getAllElements", _e);
 		}
 		return loadAll ;
 	}
@@ -70,9 +72,8 @@ public class ElementDao extends HibernateDaoSupport {
 		try{
 			this.getHibernateTemplate().delete(_element) ;
 		}
-		catch(Exception exception){
-			//None. 
-			//To inhibit the StaleObjectStateException.
+		catch(DataAccessException _e){
+			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "deleteElement", _e);
 		}
 	}
 }

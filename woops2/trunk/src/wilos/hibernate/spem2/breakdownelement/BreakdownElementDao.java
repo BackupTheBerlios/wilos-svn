@@ -1,14 +1,16 @@
 
 package wilos.hibernate.spem2.breakdownelement ;
 
-import java.util.ArrayList ;
-import java.util.List ;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.hibernate.exception.ConstraintViolationException ;
-import org.springframework.dao.DataIntegrityViolationException ;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import wilos.model.spem2.breakdownelement.BreakdownElement ;
+import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.utils.ExceptionManager;
 
 /**
  * BreakdownElementDao manage requests from the system to store BreakdownElement to the database.
@@ -26,11 +28,11 @@ public class BreakdownElementDao extends HibernateDaoSupport {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_bde) ;
 		}
-		catch(DataIntegrityViolationException e){
-			System.out.print("save in BreakdownElementDao: The Exception is " + e.getClass().getName() + "\n") ;
+		catch(DataIntegrityViolationException _e){
+			ExceptionManager.getInstance().manageDataIntegrityViolationException(this.getClass().getName(), "saveOrUpdateBreakdownElement", _e);
 		}
-		catch(ConstraintViolationException ex){
-			System.out.print("save in BreakdownElementDao: The Exception is " + ex.getClass().getName() + "\n") ;
+		catch(ConstraintViolationException _ex){
+			ExceptionManager.getInstance().manageConstraintViolationException(this.getClass().getName(), "saveOrUpdateBreakdownElement", _ex);
 		}
 	}
 
@@ -45,8 +47,8 @@ public class BreakdownElementDao extends HibernateDaoSupport {
 		try{
 			loadAll.addAll(this.getHibernateTemplate().loadAll(BreakdownElement.class)) ;
 		}
-		catch(Exception e){
-			logger.error("###BreakdownElementDao ### --> " + e) ;
+		catch(DataAccessException _e){
+			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "getAllBreakdownElements", _e);
 		}
 		return loadAll ;
 	}
@@ -70,9 +72,8 @@ public class BreakdownElementDao extends HibernateDaoSupport {
 		try{
 			this.getHibernateTemplate().delete(_bde) ;
 		}
-		catch(Exception exception){
-			//None. 
-			//To inhibit the StaleObjectStateException.
+		catch(DataAccessException _e){
+			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "deleteBreakdownElement", _e);
 		}
 	}
 }

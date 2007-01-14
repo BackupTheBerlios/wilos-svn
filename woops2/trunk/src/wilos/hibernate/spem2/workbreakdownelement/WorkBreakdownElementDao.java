@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException ;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
 
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement ;
+import wilos.utils.ExceptionManager;
 
 /**
  * @author Sebastien
@@ -30,13 +31,11 @@ public class WorkBreakdownElementDao extends HibernateDaoSupport {
 			// this.getHibernateTemplate().flush() ;
 
 		}
-		catch(DataIntegrityViolationException e){
-			System.out.print("save in WBdEDao: The Exception is " + e.getClass().getName() + "\n") ;
-			// e.printStackTrace() ;
+		catch(DataIntegrityViolationException _e){
+			ExceptionManager.getInstance().manageDataIntegrityViolationException(this.getClass().getName(), "saveOrUpdateWorkBreakdownElement", _e);
 		}
-		catch(ConstraintViolationException ex){
-			System.out.print("save in WBdEDao: The Exception is " + ex.getClass().getName() + "\n") ;
-			// ex.printStackTrace() ;
+		catch(ConstraintViolationException _ex){
+			ExceptionManager.getInstance().manageConstraintViolationException(this.getClass().getName(), "saveOrUpdateWorkBreakdownElement", _ex);
 		}
 	}
 
@@ -51,8 +50,8 @@ public class WorkBreakdownElementDao extends HibernateDaoSupport {
 		try{
 			loadAll.addAll(this.getHibernateTemplate().loadAll(WorkBreakdownElement.class)) ;
 		}
-		catch(DataAccessException e){
-			logger.error("###WorkBreakdownElementDao ### --> " + e) ;
+		catch(DataAccessException _e){
+			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "getAllWorkBreakdownElements", _e);
 		}
 		return loadAll ;
 	}
@@ -76,9 +75,8 @@ public class WorkBreakdownElementDao extends HibernateDaoSupport {
 		try{
 			this.getHibernateTemplate().delete(_workBreakdownElement) ;
 		}
-		catch(Exception exception){
-			//None. 
-			//To inhibit the StaleObjectStateException.
+		catch(DataAccessException _e){
+			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "deleteWorkBreakdownElement", _e);
 		}
 	}
 }

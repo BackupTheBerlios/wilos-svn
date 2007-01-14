@@ -5,10 +5,12 @@ import java.util.ArrayList ;
 import java.util.List ;
 
 import org.hibernate.exception.ConstraintViolationException ;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException ;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
 
 import wilos.model.spem2.task.Step ;
+import wilos.utils.ExceptionManager;
 
 /**
  * A Step is a Section and Work Definition that is used to organize Tasks into parts or subunits of
@@ -27,11 +29,11 @@ public class StepDao extends HibernateDaoSupport {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_step) ;
 		}
-		catch(DataIntegrityViolationException e){
-			System.out.print("save in StepDao: The Exception is " + e.getClass().getName() + "\n") ;
+		catch(DataIntegrityViolationException _e){
+			ExceptionManager.getInstance().manageDataIntegrityViolationException(this.getClass().getName(), "saveOrUpdateStep", _e);
 		}
-		catch(ConstraintViolationException ex){
-			System.out.print("save in StepDao: The Exception is " + ex.getClass().getName() + "\n") ;
+		catch(ConstraintViolationException _ex){
+			ExceptionManager.getInstance().manageConstraintViolationException(this.getClass().getName(), "saveOrUpdateStep", _ex);
 		}
 	}
 
@@ -46,8 +48,8 @@ public class StepDao extends HibernateDaoSupport {
 		try{
 			loadAll.addAll(this.getHibernateTemplate().loadAll(Step.class)) ;
 		}
-		catch(Exception e){
-			logger.error("###StepDao ### --> " + e) ;
+		catch(DataAccessException _e){
+			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "getAllSteps", _e);
 		}
 		return loadAll ;
 	}
@@ -71,9 +73,8 @@ public class StepDao extends HibernateDaoSupport {
 		try{
 			this.getHibernateTemplate().delete(_step) ;
 		}
-		catch(Exception exception){
-			//None. 
-			//To inhibit the StaleObjectStateException.
+		catch(DataAccessException _e){
+			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "deleteStep", _e);
 		}
 	}
 }

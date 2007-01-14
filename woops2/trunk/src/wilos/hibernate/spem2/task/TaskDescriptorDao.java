@@ -5,10 +5,12 @@ import java.util.ArrayList ;
 import java.util.List ;
 
 import org.hibernate.exception.ConstraintViolationException ;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException ;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
 
 import wilos.model.spem2.task.TaskDescriptor ;
+import wilos.utils.ExceptionManager;
 
 /**
  * TaskDescriptorDao manage requests from the system to store TaskDescriptor to the database
@@ -27,11 +29,11 @@ public class TaskDescriptorDao extends HibernateDaoSupport {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_taskdescriptor) ;
 		}
-		catch(DataIntegrityViolationException e){
-			System.out.print("save in TaskDescriptorDao The Exception is " + e.getClass().getName() + "\n") ;
+		catch(DataIntegrityViolationException _e){
+			ExceptionManager.getInstance().manageDataIntegrityViolationException(this.getClass().getName(), "saveOrUpdateTaskDescriptor", _e);
 		}
-		catch(ConstraintViolationException ex){
-			System.out.print("save in TaskDescriptorDao: The Exception is " + ex.getClass().getName() + "\n") ;
+		catch(ConstraintViolationException _ex){
+			ExceptionManager.getInstance().manageConstraintViolationException(this.getClass().getName(), "saveOrUpdateTaskDescriptor", _ex);
 		}
 	}
 
@@ -46,8 +48,8 @@ public class TaskDescriptorDao extends HibernateDaoSupport {
 		try{
 			loadAll.addAll(this.getHibernateTemplate().loadAll(TaskDescriptor.class)) ;
 		}
-		catch(Exception e){
-			logger.error("###TaskDescriptorDao ### --> " + e) ;
+		catch(DataAccessException _e){
+			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "getAllTaskDescriptors", _e);
 		}
 		return loadAll ;
 	}
@@ -71,9 +73,8 @@ public class TaskDescriptorDao extends HibernateDaoSupport {
 		try{
 			this.getHibernateTemplate().delete(_taskdescriptor) ;
 		}
-		catch(Exception exception){
-			//None. 
-			//To inhibit the StaleObjectStateException.
+		catch(DataAccessException _e){
+			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "deleteTaskDescriptor", _e);
 		}
 	}
 }

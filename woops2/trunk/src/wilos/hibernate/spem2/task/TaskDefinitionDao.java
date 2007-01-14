@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import wilos.model.spem2.task.TaskDefinition;
+import wilos.utils.ExceptionManager;
 
 /**
  * /** TaskDefinitionDao manage requests from the system to store TaskDefinition to the database
@@ -27,11 +28,11 @@ public class TaskDefinitionDao extends HibernateDaoSupport {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_taskDefinition) ;
 		}
-		catch(DataIntegrityViolationException e){
-			System.out.print("save in TaskDefinitionDao: The Exception is " + e.getClass().getName() + "\n") ;
+		catch(DataIntegrityViolationException _e){
+			ExceptionManager.getInstance().manageDataIntegrityViolationException(this.getClass().getName(), "saveOrUpdateTaskDefinition", _e);
 		}
-		catch(ConstraintViolationException ex){
-			System.out.print("save in TaskDefinitionDao: The Exception is " + ex.getClass().getName() + "\n") ;
+		catch(ConstraintViolationException _ex){
+			ExceptionManager.getInstance().manageConstraintViolationException(this.getClass().getName(), "saveOrUpdateTaskDefinition", _ex);
 		}
 	}
 
@@ -43,8 +44,9 @@ public class TaskDefinitionDao extends HibernateDaoSupport {
 		List<TaskDefinition> loadAll = new ArrayList<TaskDefinition>();
 		try {
 			loadAll.addAll(this.getHibernateTemplate().loadAll(TaskDefinition.class));
-		} catch (DataAccessException e) {
-			logger.error("###TaskDefinitionDao ### --> "+e);
+		} 
+		catch(DataAccessException _e){
+			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "getAllTaskDefinitions", _e);
 		}
 		return loadAll ;
 	}
@@ -66,9 +68,8 @@ public class TaskDefinitionDao extends HibernateDaoSupport {
 		try{
 			this.getHibernateTemplate().delete(_roleDescriptor) ;
 		}
-		catch(Exception exception){
-			//None. 
-			//To inhibit the StaleObjectStateException.
+		catch(DataAccessException _e){
+			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "deleteTaskDefinition", _e);
 		}
 	}
 }

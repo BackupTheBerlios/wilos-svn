@@ -5,10 +5,12 @@ import java.util.ArrayList ;
 import java.util.List ;
 
 import org.hibernate.exception.ConstraintViolationException ;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException ;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
 
 import wilos.model.spem2.activity.Activity ;
+import wilos.utils.ExceptionManager;
 
 /**
  * ActivityDao manage requests from the system to store Acitivties to the database
@@ -27,11 +29,11 @@ public class ActivityDao extends HibernateDaoSupport {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_activity) ;
 		}
-		catch(DataIntegrityViolationException e){
-			System.out.print("save in ActivityDao: The Exception is " + e.getClass().getName() + "\n") ;
+		catch(DataIntegrityViolationException _e){
+			ExceptionManager.getInstance().manageDataIntegrityViolationException(this.getClass().getName(), "saveOrUpdateActivity", _e);
 		}
-		catch(ConstraintViolationException ex){
-			System.out.print("save in ActivityDao: The Exception is " + ex.getClass().getName() + "\n") ;
+		catch(ConstraintViolationException _ex){
+			ExceptionManager.getInstance().manageConstraintViolationException(this.getClass().getName(), "saveOrUpdateActivity", _ex);
 		}
 	}
 
@@ -46,8 +48,8 @@ public class ActivityDao extends HibernateDaoSupport {
 		try{
 			loadAll.addAll(this.getHibernateTemplate().loadAll(Activity.class)) ;
 		}
-		catch(Exception e){
-			logger.error("###ActivityDao ### --> " + e) ;
+		catch(DataAccessException _e){
+			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "getAllActivities", _e);
 		}
 		return loadAll ;
 	}
@@ -86,9 +88,8 @@ public class ActivityDao extends HibernateDaoSupport {
 		try{
 			this.getHibernateTemplate().delete(_activity) ;
 		}
-		catch(Exception exception){
-			//None. 
-			//To inhibit the StaleObjectStateException.
+		catch(DataAccessException _e){
+			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "deleteActivity", _e);
 		}
 	}
 }
