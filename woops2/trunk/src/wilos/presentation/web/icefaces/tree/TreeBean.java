@@ -31,10 +31,6 @@ public class TreeBean {
 
 	String processId = "" ;
 	
-	String roleId = "";
-
-	boolean alreadyBuilt = false ;
-
 	// tree default model, used as a value for the tree component
 	private DefaultTreeModel model = null ;
 
@@ -55,11 +51,10 @@ public class TreeBean {
 	 */
 	
 	private void buildModel(){
-		logger.debug("### TreeBean ### buildModel  processId = "+this.processId);
 		if(!this.processId.equals("")){
 			Process process = this.processService.getTaskDescriptorFromProcess(this.processId) ;
 			ProcessNode processNode = new ProcessNode(process);
-			this.model = new DefaultTreeModel(processNode.obtainTasksForARoleFromProcess()) ;
+			this.model = new DefaultTreeModel(processNode) ;
 		}
 	}
 	
@@ -77,7 +72,6 @@ public class TreeBean {
 	}
 	
 	public void changeTreeActionListener(ActionEvent evt) {
-		logger.debug("### TreeBean ### changeTreeActionListener - id ="+this.processId);
 		this.buildModel();
 	}
 	
@@ -104,22 +98,6 @@ public class TreeBean {
 	 */
 	public void setProcessId(String _processId) {
 		this.processId = _processId ;
-	}
-
-	/**
-	 * @return the roleId
-	 */
-	public String getRoleId() {
-		return this.roleId ;
-	}
-
-	/**
-	 * Setter of roleId.
-	 *
-	 * @param _roleId The roleId to set.
-	 */
-	public void setRoleId(String _roleId) {
-		this.roleId = _roleId ;
 	}
 
 	/**

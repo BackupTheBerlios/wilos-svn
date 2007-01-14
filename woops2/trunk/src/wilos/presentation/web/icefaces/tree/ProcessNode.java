@@ -31,26 +31,11 @@ public class ProcessNode extends BasicNode {
 		iceUserObject.setBranchContractedIcon("images/icon_process.gif") ;
 		iceUserObject.setBranchExpandedIcon("images/icon_process.gif") ;
 
-		
-	}
-	
-	public ProcessNode obtainTasksFromProcess(){
 		for(BreakdownElement breakdownElement : this.process.getBreakDownElements()){
 			if(breakdownElement instanceof TaskDescriptor){
 				TaskDescriptor taskDescriptor = (TaskDescriptor) breakdownElement ;
 				this.add(new TaskDescriptorNode(taskDescriptor)) ;
 			}
 		}
-		return this;
-	}
-	
-	public ProcessNode obtainTasksForARoleFromProcess(){
-		for(BreakdownElement breakdownElement : this.process.getBreakDownElements()){
-			if(breakdownElement instanceof TaskDescriptor){
-				TaskDescriptor taskDescriptor = (TaskDescriptor) breakdownElement ;
-				this.add(new TaskDescriptorNode(taskDescriptor)) ;
-			}
-		}
-		return this;
 	}
 }
