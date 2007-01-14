@@ -1,6 +1,15 @@
 package wilos.business.services.project;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
+
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -9,6 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import wilos.hibernate.misc.project.ProjectDao;
 import wilos.model.misc.project.Project;
+import wilos.model.misc.wilosuser.Participant;
+import wilos.model.misc.wilosuser.WilosUser;
+import wilos.model.spem2.role.RoleDescriptor;
 
 /**
  * The services associated to the Project
@@ -75,5 +87,17 @@ public class ProjectService {
 	public void setProjectDao(ProjectDao _projectDao) {
 		this.projectDao = _projectDao;
 	}
-
+	
+	/**
+	 * TODO Method description
+	 *
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Set<Project> getAllProjects()
+	{
+		HashSet<Project> projectList = new HashSet<Project>();
+		projectList = (HashSet)this.projectDao.getAllProject();
+		return projectList;
+	}
 }

@@ -43,41 +43,9 @@ public class RoleService {
 	@Transactional(readOnly = true)
 	public List<RoleDescriptor> getRolesDescriptor() {
 		
-		/*//TODO enlever cette portion de code : jeux de test pour les Roles
-		RoleDescriptor tachatte = new RoleDescriptor();
-		tachatte.setName("Chef de Projet");
-		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(tachatte);
-		tachatte.setName("Architecte");
-		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(tachatte);
-		tachatte.setName("Developpeur");
-		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(tachatte);
-		tachatte.setName("Testeur");
-		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(tachatte);
-		tachatte.setName("Manager");
-		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(tachatte);
-		tachatte.setName("Analyste");
-		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(tachatte);*/
-		
 		ArrayList<RoleDescriptor> rolesList = new ArrayList<RoleDescriptor>(this.roleDescriptorDao.getAllRoleDescriptors());
 		return rolesList;
 	}
-
-	/**
-	 * Function that make some test on transactionnal lazy loadings
-	 * 
-	 * 
-	 * public void Test(){ Activity a =
-	 * this.participantDao.getActivityFromPrefix("test"); if (a == null){ a =
-	 * new Activity(); a.setPrefix("test");
-	 * this.activityDao.saveOrUpdateActivity(a); BreakdownElement b = new
-	 * BreakdownElement(); this.activityDao.getHibernateTemplate().save(b);
-	 * a.getBreakDownElements().add(b);
-	 * this.activityDao.saveOrUpdateActivity(a); } List<BreakdownElement> liste =
-	 * new ArrayList<BreakdownElement>(a.getBreakDownElements());
-	 * logger.debug("### ActivityManager - TEST ### liste size =
-	 * "+liste.size()); for (BreakdownElement b : liste){
-	 * System.out.println("b="+b); } }
-	 */
 
 	/**
 	 * Save roleDescriptor

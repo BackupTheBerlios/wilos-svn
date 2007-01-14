@@ -1,6 +1,9 @@
 
 package wilos.presentation.web.project ;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.faces.application.FacesMessage ;
 import javax.faces.context.FacesContext ;
 
@@ -20,6 +23,8 @@ public class ProjectBean {
 	private ProjectService projectService ;
 
 	private Project project ;
+	
+	private HashSet<Project> projectList = new HashSet<Project>();
 
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
@@ -30,6 +35,11 @@ public class ProjectBean {
 	public ProjectBean() {
 		this.logger.debug("--- Project --- == creating ..." + this) ;
 		this.project = new Project() ;
+		
+		/*this.projectList = (HashSet<Project>)this.projectService.getAllProjects();
+		for(Project projectTmp : this.projectList){
+			this.logger.debug("### Project"+projectTmp.getName()+" ###") ;
+		}*/
 	}
 
 	/**
@@ -90,6 +100,34 @@ public class ProjectBean {
 	 */
 	public void setProjectService(ProjectService _projectService) {
 		this.projectService = _projectService ;
+	}
+	
+	/**
+	 * 
+	 * TODO Method description
+	 *
+	 */
+	public Set<Project> getAllProjects()
+	{
+		return this.projectService.getAllProjects();
+	}
+
+	/**
+	 * Getter of projectList.
+	 *
+	 * @return the projectList.
+	 */
+	public HashSet<Project> getProjectList() {
+		return this.projectList ;
+	}
+
+	/**
+	 * Setter of projectList.
+	 *
+	 * @param _projectList The projectList to set.
+	 */
+	public void setProjectList(HashSet<Project> _projectList) {
+		this.projectList = _projectList ;
 	}
 
 }
