@@ -88,15 +88,15 @@
 		<mkdir dir="${libgroups.dir}" />
 	</target>
 
-	<!-- import Jar from SVN -->
-	<target name="_ImportJars" depends="_CreateImportsDir">
+	<!-- import Jar from SVN --> <!-- depends="_CreateImportsDir" -->
+	<target name="_ImportJars" depends="_DeleteImportsDir">
 		<!-- Wilos Jars -->
 		<svn javahl="true">
-			<checkout url="${depot.wilos_branches_serverjars}" destPath="${lib.dir}" />
+			<export srcurl="${depot.wilos_branches_serverjars}" destPath="${lib.dir}" />
 		</svn>
 		<!-- SubGroups Jar -->
 		<svn javahl="true">
-			<checkout  url="${depot.wilos_subgroupsjars}" destPath="${libgroups.dir}" />
+			<export  srcurl="${depot.wilos_subgroupsjars}" destPath="${libgroups.dir}" />
 		</svn>
 		<!-- Deleting Woops2 Jar -->
 		<delete dir="${libgroups.dir}">
