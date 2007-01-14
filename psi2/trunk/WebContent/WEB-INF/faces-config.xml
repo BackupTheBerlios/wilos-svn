@@ -97,7 +97,7 @@
 	<managed-bean>
 		<managed-bean-name>RoleBean</managed-bean-name>
 		<managed-bean-class>wilos.presentation.web.role.RoleBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>roleService</property-name>
 			<value>#{RoleService}</value>
@@ -122,6 +122,76 @@
 		<managed-bean-name>connect</managed-bean-name>
 		<managed-bean-class>wilos.presentation.web.template.ConnectViewBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<!-- Woops2 -->
+	<managed-bean>
+		<managed-bean-name>ActivityBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.ActivityBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>activityService</property-name>
+			<value>#{ActivityService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>RoleDescriptorBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.RoleDescriptorBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>roleDescriptorService</property-name>
+			<value>#{RoleDescriptorService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>TaskDescriptorBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.TaskDescriptorBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>taskDescriptorService</property-name>
+			<value>#{TaskDescriptorService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>TaskDefinitionBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.TaskDefinitionBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>StepBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.StepBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>stepService</property-name>
+			<value>#{StepService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	
+	<managed-bean>
+		<managed-bean-name>XmlFileImportBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.XmlFileImportBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>processService</property-name>
+			<value>#{ProcessService}</value>
+		</managed-property>
 	</managed-bean>
 	
 	<validator>

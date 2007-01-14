@@ -16,7 +16,7 @@
 						    	</ice:panelGroup>
 						   	</f:facet>
 						    <ice:panelGroup style="text-align: center; white-space: nowrap;" >            			
-						    	<ice:selectBooleanCheckbox partialSubmit="true" valueChangeListener="#{RoleBean.addRoleChangeListener}" value="#{RoleBean.rolesParticipant[roleD]}">
+						    	<ice:selectBooleanCheckbox partialSubmit="false" valueChangeListener="#{RoleBean.addRoleChangeListener}" value="#{RoleBean.rolesParticipant[roleD]}">
 						        	<f:param name="columnId" value="#{roleD}"/>
 						    	</ice:selectBooleanCheckbox>
 						    </ice:panelGroup>

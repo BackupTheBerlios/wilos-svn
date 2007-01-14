@@ -58,7 +58,7 @@ public class RoleService {
 		tachatte.setName("Analyste");
 		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(tachatte);*/
 		
-		ArrayList<RoleDescriptor> rolesList = new ArrayList<RoleDescriptor>(this.roleDescriptorDao.getAllRoleDescriptor());
+		ArrayList<RoleDescriptor> rolesList = new ArrayList<RoleDescriptor>(this.roleDescriptorDao.getAllRoleDescriptors());
 		return rolesList;
 	}
 
