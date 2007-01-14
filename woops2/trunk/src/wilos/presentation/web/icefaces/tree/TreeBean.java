@@ -3,9 +3,7 @@ package wilos.presentation.web.icefaces.tree ;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -16,11 +14,6 @@ import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.process.ProcessService;
 import wilos.model.spem2.process.Process;
-import wilos.model.spem2.role.RoleDefinition;
-import wilos.model.spem2.role.RoleDescriptor;
-import wilos.model.spem2.task.Step;
-import wilos.model.spem2.task.TaskDefinition;
-import wilos.model.spem2.task.TaskDescriptor;
 
 import com.icesoft.faces.component.tree.IceUserObject;
 
@@ -89,10 +82,11 @@ public class TreeBean {
 	}
 	
 	public void selectNodeActionListener(ActionEvent evt) {
-		FacesContext context = FacesContext.getCurrentInstance(); 
+		//FIXME
+		/*FacesContext context = FacesContext.getCurrentInstance(); 
 		Map map = context.getExternalContext().getRequestParameterMap();
 		String basicNodeId = (String) map.get("basicNode_id");
-		logger.debug("### TreeBean ### selectNodeActionListener - basicNodeId ="+basicNodeId);
+		logger.debug("### TreeBean ### selectNodeActionListener - basicNodeId ="+basicNodeId);*/
 	}
 
 	/**
