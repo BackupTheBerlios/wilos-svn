@@ -23,18 +23,25 @@
 	<property name="depot.wilos_branches_serverjars" value="${depot.wilos_branches}/lib_server/" />
 	<property name="depot.wilos_subgroupsjars" value="${depot.wilos_branches}/jar/" />
 	<property name="libgroups.dir" value="${ant.dir}/jars_groups" />
-	
+
 	<property file="${ant.dir}/tomcat.properties" />
 	<property file="${ant.dir}/user.properties" />
-	
-	
+
+
+
+	<!-- Libraries import to classpath-->
+	<path id="classpath">
+		<fileset dir="${ant.dir}/lib">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<!-- Ant SVN Tasks -->
+	<taskdef resource="svntask.properties" classpathref="classpath" />
 
 	<!-- Libraries import to classpath-->
 	<path id="classpath">
 		<fileset dir="${lib.dir}">
-			<include name="**/*.jar" />
-		</fileset>
-		<fileset dir="${ant.dir}/lib">
 			<include name="**/*.jar" />
 		</fileset>
 	</path>
@@ -55,9 +62,6 @@
 		</classpath>
 	</taskdef>
 
-	<!-- Ant SVN Tasks -->
-	<taskdef resource="svntask.properties" classpathref="classpath" />
-
 	<!-- Prepare all directories -->
 	<target name="prepare" depends="clean" description="Create build directories.">
 		<mkdir dir="${build.dir}/${project.name}" />
@@ -72,16 +76,20 @@
 		<mkdir dir="${dist.dir}" />
 	</target>
 
-	<!-- Clean lib dir -->
-	<target name="cleanImports">
+	<!-- Delete lib dir -->
+	<target name="_DeleteImportsDir">
 		<delete dir="${lib.dir}" />
-				<mkdir dir="${lib.dir}" />
-				<delete dir="${libgroups.dir}" />
-				<mkdir dir="${libgroups.dir}" />
+		<delete dir="${libgroups.dir}"/>
 	</target>
-	
+
+	<!-- Make lib dir -->
+	<target name="_CreateImportsDir" depends="_DeleteImportsDir">
+		<mkdir dir="${lib.dir}" />
+		<mkdir dir="${libgroups.dir}" />
+	</target>
+
 	<!-- import Jar from SVN -->
-	<target name="_ImportJars">
+	<target name="_ImportJars" depends="_CreateImportsDir">
 		<!-- Wilos Jars -->
 		<svn javahl="true">
 			<checkout url="${depot.wilos_branches_serverjars}" destPath="${lib.dir}" />
@@ -106,7 +114,7 @@
 	<!--
 		WARNING : ImportJars task must be executed before ... 
 	-->
-	<target name="copyJars">
+	<target name="copyJars" depends="_ImportJars">
 		<copy todir="${build.dir}/${project.name}/WEB-INF/lib">
 			<fileset dir="${lib.dir}">
 				<include name="*.jar" />
