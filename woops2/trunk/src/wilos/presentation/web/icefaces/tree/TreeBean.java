@@ -1,15 +1,28 @@
 
 package wilos.presentation.web.icefaces.tree ;
 
-import javax.swing.tree.DefaultTreeModel ;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-import wilos.business.services.process.ProcessService ;
-import wilos.model.spem2.process.Process ;
-import wilos.model.spem2.role.RoleDefinition ;
-import wilos.model.spem2.role.RoleDescriptor ;
-import wilos.model.spem2.task.Step ;
-import wilos.model.spem2.task.TaskDefinition ;
-import wilos.model.spem2.task.TaskDescriptor ;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.faces.model.SelectItem;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import wilos.business.services.process.ProcessService;
+import wilos.model.spem2.process.Process;
+import wilos.model.spem2.role.RoleDefinition;
+import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.task.Step;
+import wilos.model.spem2.task.TaskDefinition;
+import wilos.model.spem2.task.TaskDescriptor;
+
+import com.icesoft.faces.component.tree.IceUserObject;
 
 /**
  * <p/> A basic backing bean for a ice:tree component. The only instance variable needed is a
@@ -32,8 +45,14 @@ public class TreeBean {
 	// tree default model, used as a value for the tree component
 	private DefaultTreeModel model = null ;
 
+	protected final Log logger = LogFactory.getLog(this.getClass()) ;
+
 	public TreeBean() {
-		// None.
+		DefaultMutableTreeNode defaultTree = new DefaultMutableTreeNode();
+		IceUserObject iceUserObject = new IceUserObject(defaultTree) ;
+		iceUserObject.setText("Choose a project ...") ;
+		defaultTree.setUserObject(iceUserObject) ;
+		this.model = new DefaultTreeModel(defaultTree) ;
 	}
 
 	/**
@@ -41,51 +60,39 @@ public class TreeBean {
 	 * 
 	 * @return tree model.
 	 */
-	public DefaultTreeModel getModel() {
-		if(!this.alreadyBuilt){
-			// Process process = buildProcess() ;
-			this.processId = "ff8080810fb0c4b4010fb0c4c4650001";
-			Process process = this.processService.getEntireProcess(this.processId) ;
+	
+	private void buildModel(){
+		logger.debug("### TreeBean ### buildModel  processId = "+this.processId);
+		if(!this.processId.equals("")){
+			Process process = this.processService.getTaskDescriptorFromProcess(this.processId) ;
 			ProcessNode processNode = new ProcessNode(process);
 			this.model = new DefaultTreeModel(processNode.obtainTasksForARoleFromProcess()) ;
-			this.alreadyBuilt = true ;
 		}
+	}
+	
+	public DefaultTreeModel getModel() {
 		return this.model ;
 	}
-
-	public Process buildProcess() {
-		Process process = new Process() ;
-		process.setGuid("myProcess") ;
-		process.setName("TheProceSS") ;
-
-		TaskDescriptor tskdes1 = new TaskDescriptor() ;
-		tskdes1.setGuid("tsk1") ;
-		tskdes1.setName("tsk1Name") ;
-		process.addBreakdownElement(tskdes1) ;
-
-		TaskDefinition taskDefinition = new TaskDefinition() ;
-		taskDefinition.setName("tskdef1Name") ;
-		tskdes1.addTaskDefinition(taskDefinition) ;
-
-		Step step1 = new Step() ;
-		step1.setName("step1") ;
-		taskDefinition.addStep(step1) ;
-
-		TaskDescriptor tskdes2 = new TaskDescriptor() ;
-		tskdes2.setGuid("tsk2") ;
-		tskdes2.setName("tsk2Name") ;
-		process.addBreakdownElement(tskdes2) ;
-
-		RoleDescriptor rdes1 = new RoleDescriptor() ;
-		rdes1.setGuid("rdes1") ;
-		rdes1.setName("rdes1Name") ;
-		process.addBreakdownElement(rdes1) ;
-
-		RoleDefinition roleDefinition = new RoleDefinition() ;
-		roleDefinition.setName("rdef1Name") ;
-		rdes1.addRoleDefinition(roleDefinition) ;
-
-		return process ;
+	
+	public List<SelectItem> getProjects(){
+		List<SelectItem> projectsList = new ArrayList<SelectItem>();
+		for (Process process : this.processService.getProcessesList()) {
+			projectsList.add(new SelectItem(process.getId(), process.getName()));
+		}
+		projectsList.add(new SelectItem("", ""));
+		return projectsList;
+	}
+	
+	public void changeTreeActionListener(ActionEvent evt) {
+		logger.debug("### TreeBean ### changeTreeActionListener - id ="+this.processId);
+		this.buildModel();
+	}
+	
+	public void selectNodeActionListener(ActionEvent evt) {
+		FacesContext context = FacesContext.getCurrentInstance(); 
+		Map map = context.getExternalContext().getRequestParameterMap();
+		String basicNodeId = (String) map.get("basicNode_id");
+		logger.debug("### TreeBean ### selectNodeActionListener - basicNodeId ="+basicNodeId);
 	}
 
 	/**

@@ -512,6 +512,21 @@ public class ProcessService {
 		}
 		return process ;
 	}
+	
+	@ Transactional (readOnly = true)
+	public Process getTaskDescriptorFromProcess(String _processId) {
+		Process process = this.processDao.getProcess(_processId) ;
+		Set<BreakdownElement> bdes = new HashSet<BreakdownElement>() ;
+		bdes.addAll(this.breakdownElementService.getBreakdownElementsFromProcess(_processId)) ;
+		Set<BreakdownElement> taskDescriptors = new HashSet<BreakdownElement>() ;
+		for(BreakdownElement bde : bdes){
+			if(bde instanceof TaskDescriptor){
+				taskDescriptors.add(bde);
+			}
+		}
+		process.addAllBreakdownElements(taskDescriptors) ;
+		return process ;
+	}
 
 	public String TestPersistence() {
 		Process p = new Process() ;
