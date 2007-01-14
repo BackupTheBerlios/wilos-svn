@@ -188,64 +188,6 @@
 		</war>
 		<delete dir="${build.dir}" />
 	</target>
-
-
-
-	<!-- ============================================================================= -->
-
-	<!-- Starting Tomcat -->
-	<target name="tomcat_run_win">
-		<exec command="${tomcat.bin.dir}/startup.bat" dir="${tomcat.bin.dir}" />
-	</target>
-
-	<target name="tomcat_shutdown_win">
-		<exec command="${tomcat.bin.dir}/shutdown.bat" dir="${tomcat.bin.dir}" />
-	</target>
-
-	<target name="tomcat_run_linux">
-		<exec command="${tomcat.bin.dir}/startup.sh" dir="${tomcat.bin.dir}" />
-	</target>
-
-	<target name="tomcat_shutdown_linux">
-		<exec command="${tomcat.bin.dir}/shutdown.sh" dir="${tomcat.bin.dir}" />
-	</target>
-
-	<!-- Tomcat Management -->
-	<target name="tomcat_deploy" description="Install application in Tomcat" depends="build.war">
-		<deploy url="${tomcat.manager.url}" username="${tomcat.username}" password="${tomcat.password}" path="/${project.name}" war="file:${dist.dir}/${project.name}.war" />
-	</target>
-
-	<target name="tomcat_undeploy" description="Remove application in Tomcat">
-		<undeploy url="${tomcat.manager.url}" username="${tomcat.username}" password="${tomcat.password}" path="/${project.name}" />
-	</target>
-
-	<target name="tomcat_redeploy" description="Remove application in Tomcat" depends="build.war">
-		<undeploy url="${tomcat.manager.url}" username="${tomcat.username}" password="${tomcat.password}" path="/${project.name}" />
-		<deploy url="${tomcat.manager.url}" username="${tomcat.username}" password="${tomcat.password}" path="/${project.name}" war="file:${dist.dir}/${project.name}.war" />
-	</target>
-
-	<target name="tomcat_reload" description="Reload application in Tomcat">
-		<reload url="${tomcat.manager.url}" username="${tomcat.username}" password="${tomcat.password}" path="/${project.name}" />
-	</target>
-	<!--
-	<target name="tomcat_start" description="Start Tomcat application">
-		<start url="${tomcat.manager.url}"
-	            username="${tomcat.username}"
-	            password="${tomcat.password}"
-	            path="/${project.name}"/>
-	</target>
 	
-	 
-	<target name="tomcat_stop" description="Stop Tomcat application">
-		<stop url="${tomcat.manager.url}"
-	            username="${tomcat.username}"
-	            password="${tomcat.password}"
-	            path="/${project.name}"/>
-	</target>
-	-->
-	<target name="tomcat_listapp" description="List Tomcat applications">
-		<list url="${tomcat.manager.url}" username="${tomcat.username}" password="${tomcat.password}" />
-	</target>
-
 </project>
 
