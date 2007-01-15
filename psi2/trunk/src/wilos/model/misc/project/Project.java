@@ -24,6 +24,7 @@ public class Project implements Cloneable {
 	public Project()
 	{
 		this.creationDate = new Date();
+		this.launchingDate=new Date();
 	}
 
 	/**
