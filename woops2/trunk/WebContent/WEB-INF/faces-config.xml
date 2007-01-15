@@ -203,7 +203,7 @@
                         wilos.presentation.web.icefaces.tree.TreeBean
                 </managed-bean-class>
                 <managed-bean-scope>session</managed-bean-scope>
-                <managed-property>
+                 <managed-property>
                         <property-name>processService</property-name>
                         <value>#{ProcessService}</value>
                 </managed-property>

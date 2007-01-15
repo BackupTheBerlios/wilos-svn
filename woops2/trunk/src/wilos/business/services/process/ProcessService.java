@@ -513,6 +513,7 @@ public class ProcessService {
 		return process ;
 	}
 	
+	// TODO PROBLEME : fonction peut etre inutile ?!
 	@ Transactional (readOnly = true)
 	public Process getTaskDescriptorFromProcess(String _processId) {
 		Process process = this.processDao.getProcess(_processId) ;
