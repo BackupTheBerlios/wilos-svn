@@ -41,9 +41,6 @@
     <listener>
         <listener-class>com.icesoft.faces.util.event.servlet.ContextEventRepeater</listener-class>
     </listener>
-    <listener>
-        <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
-    </listener>
     
     <!-- file upload Servlet -->
     <servlet>
@@ -80,12 +77,6 @@
     	<load-on-startup>1</load-on-startup>
  	</servlet>
  	
- 	<servlet>
-        <servlet-name>WizardServices</servlet-name>
-        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
- 	
  	<context-param>
     	<param-name>contextConfigLocation</param-name>
     	<param-value>/WEB-INF/classes/applicationContext*.xml</param-value>
@@ -112,12 +103,7 @@
     <servlet-mapping>
         <servlet-name>Blocking Servlet</servlet-name>
         <url-pattern>/block/*</url-pattern>
-    </servlet-mapping>
-    
-    <servlet-mapping>
-        <servlet-name>WizardServices</servlet-name>
-        <url-pattern>/WizardServices</url-pattern>
-    </servlet-mapping>
+  </servlet-mapping>
   
     <session-config>
       <session-timeout>15</session-timeout>

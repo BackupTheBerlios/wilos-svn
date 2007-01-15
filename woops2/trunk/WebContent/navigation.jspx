@@ -5,23 +5,36 @@
         id="navigationMenuForm">
 
     <div class="navTree">
-        <ice:tree value="#{treeMenu.model}" var="item" hideRootNode="false" binding="#{treeMenu.treeComponent}">
-            <ice:treeNode>
-                <f:facet name="icon">
-                    <ice:panelGroup style="display: inline">
-                        <ice:graphicImage value="#{item.userObject.icon}"/>
-                    </ice:panelGroup>
-                </f:facet>
-                <f:facet name="content">
-                    <ice:panelGroup style="display: inline">
-                        <ice:commandLink
-                                actionListener="#{item.userObject.contentVisibleAction}">
-                            <ice:outputText
-                                    value="#{item.userObject.menuDisplayText}"/>
-                        </ice:commandLink>
-                    </ice:panelGroup>
-                </f:facet>
-            </ice:treeNode>
-        </ice:tree>
+        <ice:messages style="color:red;" showDetail="true"/>
+
+                <!-- The projects combobox -->
+                <ice:outputText value="Project : " />
+                <ice:selectOneMenu value="#{TreeBean.processId}">
+                        <f:selectItems value="#{TreeBean.projects}" />
+                </ice:selectOneMenu>
+                <ice:commandButton type="submit" value="Change Project" actionListener="#{TreeBean.changeTreeActionListener}"/>
+
+                <br />
+                <br />
+                
+                <!-- The process tree with its taskDescriptors -->
+                <ice:tree id="tree" value="#{TreeBean.model}" var="item"
+                        hideRootNode="false" hideNavigation="false"
+                        imageDir="./xmlhttp/css/xp/css-images/">
+                        <ice:treeNode>
+                                <f:facet name="icon">
+                                        <ice:panelGroup style="display: inline">
+                                                <h:graphicImage value="#{item.userObject.icon}" />
+                                        </ice:panelGroup>
+                                </f:facet>
+                                <f:facet name="content">
+                                        <ice:panelGroup style="display: inline">
+                                                <ice:commandLink value="#{item.userObject.text}" actionListener="#{TreeBean.selectNodeActionListener}">
+                                                        <!-- <f:param name="basicNode_id" value="#{item.basicNodeId}" />  -->
+                                                </ice:commandLink>
+                                        </ice:panelGroup>
+                                </f:facet>
+                        </ice:treeNode>
+                </ice:tree>
     </div>
 </ice:form>
