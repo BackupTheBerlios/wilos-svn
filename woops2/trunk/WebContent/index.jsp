@@ -1,8 +1,5 @@
 <html>
-    <head>
-        <title>Wilos - Woops2 - feat. ajax</title>
-    </head>
-    <body>
+    <body bgcolor="#CAC0D6">
         <jsp:forward page="template.iface" />
     </body>
 </html>
