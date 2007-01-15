@@ -36,10 +36,11 @@ public class ProjectBean {
 		this.logger.debug("--- Project --- == creating ..." + this) ;
 		this.project = new Project() ;
 		
-		/*this.projectList = (HashSet<Project>)this.projectService.getAllProjects();
-		for(Project projectTmp : this.projectList){
-			this.logger.debug("### Project"+projectTmp.getName()+" ###") ;
-		}*/
+		/*
+		 * this.projectList = (HashSet<Project>)this.projectService.getAllProjects(); for(Project
+		 * projectTmp : this.projectList){ this.logger.debug("### Project"+projectTmp.getName()+"
+		 * ###") ; }
+		 */
 	}
 
 	/**
@@ -49,18 +50,43 @@ public class ProjectBean {
 	 */
 	public String saveProjectAction() {
 		String url = "" ;
+		boolean error=false;
 		FacesMessage message = new FacesMessage();
-		if(this.projectService.projectExist(this.project.getName())){
-			message.setSummary("Ce Projet existe déjà");
-			message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
-		}
-		else{
-			this.projectService.saveProject(this.project) ;
-			message.setSummary("Le Projet a bien été créé");
-			message.setSeverity(FacesMessage.SEVERITY_ERROR);
-		}
 		FacesContext facesContext = FacesContext.getCurrentInstance() ;
+	// test if the fields are correctly completed
+		if (this.project.getName().trim().length()==0)
+		{
+			FacesMessage errName = new FacesMessage() ;
+			errName.setSummary("Le champ nom est obligatoire");
+			errName.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			error=true;
+			facesContext.addMessage(null, errName) ;
+		}
+		
+		if (this.project.getLaunchingDate()==null)
+		{
+			FacesMessage errDate = new FacesMessage() ;
+			errDate.setSummary("La date de lancement est obligatoire");
+			errDate.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			error=true;
+			facesContext.addMessage(null, errDate) ;
+		}
+		if(!error)
+		{
+			if(this.projectService.projectExist(this.project.getName())){
+			
+				message.setSummary("Ce Projet existe déjà");
+				message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			}
+			else{
+				this.projectService.saveProject(this.project) ;
+				message.setSummary("Le Projet a bien été créé");
+				message.setSeverity(FacesMessage.SEVERITY_ERROR);
+			}
+		
 		facesContext.addMessage(null, message) ;
+		}
+	
 		return url ;
 	}
 
@@ -105,7 +131,7 @@ public class ProjectBean {
 	/**
 	 * 
 	 * TODO Method description
-	 *
+	 * 
 	 */
 	public Set<Project> getAllProjects()
 	{
@@ -114,7 +140,7 @@ public class ProjectBean {
 
 	/**
 	 * Getter of projectList.
-	 *
+	 * 
 	 * @return the projectList.
 	 */
 	public HashSet<Project> getProjectList() {
@@ -123,8 +149,9 @@ public class ProjectBean {
 
 	/**
 	 * Setter of projectList.
-	 *
-	 * @param _projectList The projectList to set.
+	 * 
+	 * @param _projectList
+	 *            The projectList to set.
 	 */
 	public void setProjectList(HashSet<Project> _projectList) {
 		this.projectList = _projectList ;
