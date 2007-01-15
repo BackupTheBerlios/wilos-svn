@@ -59,19 +59,75 @@ public class ParticipantBean {
 	 */
 	public String saveParticipantAction() {
 		String url = "";
+		boolean error=false;
 		FacesMessage message = new FacesMessage();
-		if (this.loginService.loginExist(this.participant.getLogin())) {
-			message.setSummary("Ce Login existe deja");
-			message.setSeverity(FacesMessage.SEVERITY_ERROR);
-		} else {
-			this.participantService.saveParticipant(this.participant);
-			message.setSummary("Participant bien enregistré");
-			message.setSeverity(FacesMessage.SEVERITY_INFO);
-			url="wilos"; //TODO :Passer eventuellement sur une page de confirmation
-			changeContentPage(url);
+		FacesContext facesContext = FacesContext.getCurrentInstance() ;
+		//		test if the fields are correctly completed 
+		if (this.participant.getName().trim().length()==0)
+		{
+			FacesMessage errName = new FacesMessage() ;
+			errName.setSummary("Le champ nom est obligatoire");
+			errName.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			error=true;
+			facesContext.addMessage(null, errName) ;
 		}
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		facesContext.addMessage(null, message);
+		
+		if (this.participant.getFirstname().trim().length()==0)
+		{
+			FacesMessage errFirstName = new FacesMessage() ;
+			errFirstName.setSummary("Le champ prénom est obligatoire");
+			errFirstName.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			error=true;
+			facesContext.addMessage(null, errFirstName) ;
+		}
+		if (this.participant.getEmailAddress().trim().length()==0)
+		{
+			FacesMessage errMail = new FacesMessage() ;
+			errMail.setSummary("Le champ adrese e-mail est obligatoire");
+			errMail.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			error=true;
+			facesContext.addMessage(null, errMail) ;
+		}
+		if (this.participant.getLogin().trim().length()==0)
+		{
+			FacesMessage errLogin = new FacesMessage() ;
+			errLogin.setSummary("Le champ login est obligatoire");
+			errLogin.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			error=true;
+			facesContext.addMessage(null, errLogin) ;
+		}
+		if (this.participant.getPassword().trim().length()==0)
+		{
+			FacesMessage errpasswd = new FacesMessage() ;
+			errpasswd.setSummary("Le champ password est obligatoire");
+			errpasswd.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			error=true;
+			facesContext.addMessage(null, errpasswd) ;
+		}
+		if (this.passwordConfirmation.trim().length()==0)
+		{
+			FacesMessage errConfirmation = new FacesMessage() ;
+			errConfirmation.setSummary("Le champ de confirmation du password est obligatoire");
+			errConfirmation.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			error=true;
+			facesContext.addMessage(null, errConfirmation) ;
+		}
+		
+		if (!error)
+		{
+			if (this.loginService.loginExist(this.participant.getLogin())) {
+				message.setSummary("Ce Login existe deja");
+				message.setSeverity(FacesMessage.SEVERITY_ERROR);
+				facesContext.addMessage(null, message);
+			} else {
+				this.participantService.saveParticipant(this.participant);
+				message.setSummary("Participant bien enregistré");
+				message.setSeverity(FacesMessage.SEVERITY_INFO);
+				facesContext.addMessage(null, message);
+				url="wilos"; //TODO :Passer eventuellement sur une page de confirmation
+				changeContentPage(url);
+			}
+		}
 		return "";
 	}
 

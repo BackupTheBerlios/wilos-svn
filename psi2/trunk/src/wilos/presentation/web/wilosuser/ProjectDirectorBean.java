@@ -45,17 +45,65 @@ public class ProjectDirectorBean {
 	 */
 	public String saveProjectDirectorAction() {
 		String url = "";
+		boolean error=false;
 		FacesMessage message = new FacesMessage();
-		if (this.loginService.loginExist(this.projectDirector.getLogin())) {			
-			message.setSummary("Ce Login existe deja");
-			message.setSeverity(FacesMessage.SEVERITY_ERROR);
-		} else {
-			this.projectDirectorService.saveProjectDirector(this.projectDirector);
-			message.setSummary("Project Director bien enregistré");
-			message.setSeverity(FacesMessage.SEVERITY_INFO);
+		FacesContext facesContext = FacesContext.getCurrentInstance() ;
+		//		test if the fields are correctly completed 
+		if (this.projectDirector.getName().trim().length()==0)
+		{
+			FacesMessage errName = new FacesMessage() ;
+			errName.setSummary("Le champ nom est obligatoire");
+			errName.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			error=true;
+			facesContext.addMessage(null, errName) ;
 		}
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		facesContext.addMessage(null, message);
+		
+		if (this.projectDirector.getFirstname().trim().length()==0)
+		{
+			FacesMessage errFirstName = new FacesMessage() ;
+			errFirstName.setSummary("Le champ prénom est obligatoire");
+			errFirstName.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			error=true;
+			facesContext.addMessage(null, errFirstName) ;
+		}
+		if (this.projectDirector.getLogin().trim().length()==0)
+		{
+			FacesMessage errLogin = new FacesMessage() ;
+			errLogin.setSummary("Le champ login est obligatoire");
+			errLogin.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			error=true;
+			facesContext.addMessage(null, errLogin) ;
+		}
+		if (this.projectDirector.getPassword().trim().length()==0)
+		{
+			FacesMessage errpasswd = new FacesMessage() ;
+			errpasswd.setSummary("Le champ password est obligatoire");
+			errpasswd.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			error=true;
+			facesContext.addMessage(null, errpasswd) ;
+		}
+		if (this.passwordConfirmation.trim().length()==0)
+		{
+			FacesMessage errConfirmation = new FacesMessage() ;
+			errConfirmation.setSummary("Le champ de confirmation du password est obligatoire");
+			errConfirmation.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			error=true;
+			facesContext.addMessage(null, errConfirmation) ;
+		}
+		
+		if (!error)
+		{
+			if (this.loginService.loginExist(this.projectDirector.getLogin())) {			
+				message.setSummary("Ce Login existe deja");
+				message.setSeverity(FacesMessage.SEVERITY_ERROR);
+			} else {
+				this.projectDirectorService.saveProjectDirector(this.projectDirector);
+				message.setSummary("Project Director bien enregistré");
+				message.setSeverity(FacesMessage.SEVERITY_INFO);
+			}
+			facesContext.addMessage(null, message);
+		}	
+		
 		return url;
 	}
 	/**
