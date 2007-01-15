@@ -1,3 +1,4 @@
+<!-- 
 <f:view xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ice="http://www.icesoft.com/icefaces/component">
@@ -17,7 +18,14 @@
 	<link href="css/css.css" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
-	<ice:form id="form">
+	-->
+	<ice:form
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component"
+        id="navigationMenuForm">
+	
+		<div class="navTree">
 		<ice:messages style="color:red;" showDetail="true"/>
 
 		<!-- The projects combobox -->
@@ -49,7 +57,5 @@
 				</f:facet>
 			</ice:treeNode>
 		</ice:tree>
+		</div>
 	</ice:form>
-	</body>
-	</html>
-</f:view>
