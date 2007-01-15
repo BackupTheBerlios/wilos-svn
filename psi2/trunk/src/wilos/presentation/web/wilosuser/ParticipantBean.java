@@ -40,6 +40,8 @@ public class ParticipantBean {
 	private Participant participant;
 
 	private String passwordConfirmation;
+	
+	private List<Participant> participantsList;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -306,6 +308,26 @@ public class ParticipantBean {
 	 */
 	public void setParticipantService(ParticipantService _participantService) {
 		this.participantService = _participantService;
+	}
+
+	/**
+	 * Getter of participantsList.
+	 *
+	 * @return the participantsList.
+	 */
+	public List<Participant> getParticipantsList() {
+		this.participantsList = new ArrayList<Participant>();
+		participantsList.addAll(this.participantService.getParticipants());
+		return this.participantsList ;
+	}
+
+	/**
+	 * Setter of participantsList.
+	 *
+	 * @param _participantsList The participantsList to set.
+	 */
+	public void setParticipantsList(List<Participant> _participantsList) {
+		this.participantsList = _participantsList ;
 	}
 
 }

@@ -72,7 +72,37 @@
 				
 						</ice:panelGroup>
 				</ice:panelGrid>
-			</ice:panelTab>			
+			</ice:panelTab>		
+			<ice:panelTab id="panelTab_participant_list" label="Liste des participants" imageDir="images">
+				<ice:panelGroup id="participantPanelGroup" styleClass="contentIncludePanelGroup">
+					<ice:dataTable value="#{ParticipantBean.participantsList}" border="1" var="participant">
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="Login"/>
+						    </f:facet>
+						    <ice:outputText value="#{participant.login}"/>
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="Nom"/>
+						    </f:facet>
+						    <ice:outputText value="#{participant.name}"/>
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="Prenom"/>
+						    </f:facet>
+						    <ice:outputText value="#{participant.firstname}"/>
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="Email"/>
+						    </f:facet>
+						    <ice:outputText value="#{participant.emailAddress}"/>
+						</ice:column>
+					</ice:dataTable>
+				</ice:panelGroup>
+			</ice:panelTab>	
 		</ice:panelTabSet>
 	</ice:panelGrid>
 </ice:form>

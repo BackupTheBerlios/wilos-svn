@@ -35,6 +35,16 @@ public class ParticipantService {
 	public Set<RoleDescriptor> getRolesList() {
 		return this.participantDao.getAllRoles();
 	}
+	
+	/**
+	 * Return participants list
+	 * 
+	 * @return the list of participants
+	 */
+	@Transactional(readOnly = true)
+	public Set<Participant> getParticipants() {
+		return this.participantDao.getAllParticipants();
+	}
 
 	/**
 	 * Save participant
