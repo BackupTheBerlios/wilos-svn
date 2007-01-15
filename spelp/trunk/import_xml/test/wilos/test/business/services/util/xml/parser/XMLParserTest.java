@@ -21,13 +21,12 @@ import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
 
 public class XMLParserTest extends TestCase {
-	public static File pathScrum = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "scrum.xml");
-	public static File pathScrumWithArte = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "scrum_with_ArteF.xml"); 
+	public static File pathScrum = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "scrum.xml"); 
 	public static File pathOPenUP =new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "sortieEPF.xml");
 	public static File pathMonTest =new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "monTest.xml");
-	public static File fileError = new File("noFile");
+	public static File fileError = new File("prout");
 
-	public void testReturnEmptyIfNoFile() {
+	public void testReturnEmptyIfFileEmpty() {
 		Set<Process> processes;
 		processes = XMLParser.getAllProcesses(fileError);
 		assertTrue(processes.size() == 0);
@@ -455,82 +454,62 @@ public class XMLParserTest extends TestCase {
 		}		
 	}
 	
-	public void testScrumWithArteWorks() {
-		Set<Process> processes;
-		processes = XMLParser.getAllProcesses(pathScrumWithArte);
-		assertTrue(processes.size() != 0);
-		
-		Process p;
-		try {
-			p = XMLParser.getProcess(pathScrumWithArte );
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}	
+
 	
-	public void testPhase2IterationFromScrumWithArteContainsAllExpected() {
-		HashSet<Process> processes;
-		Iterator<Process> itProc;
-		Iterator<Activity> itAct;
-		HashSet<Activity> secondPhaseActivities;
-		Iterator<Activity> secondPhaseActivitiesIterator;
+	public void testOpenUPManageRequirementsContainsExpectedTaskDescriptors2() {
+		Process theTestedProcess;
+		Iterator<Activity> itTopLevelAct,itSecondLevelAct;
+		Activity topLevelActivity,secondLevelActivity;
+		boolean rentreDansManageRequirements;
+		int nbTaskDescriptors;
+		Iterator<BreakdownElement> BdeIterator;
+		BreakdownElement tmpBde;
 		
 		HashSet<String> expectedResults = new HashSet<String>();
-		expectedResults.add("Retrospective");
-		expectedResults.add("Product Owner");
-		expectedResults.add("ScrumMaster");
-		expectedResults.add("Update product backlog");
-		expectedResults.add("StakeHolder");
-		expectedResults.add("Team");
-		expectedResults.add("Manage problems");
-		expectedResults.add("Review sprint");
-		expectedResults.add("Scrum daily meeting");
-		expectedResults.add("Daily work");
-		expectedResults.add("Plan sprint");
-		expectedResults.add("Sprint Phase");
+		expectedResults.add("Find and Outline Requirements");
+		expectedResults.add("Detail Requirements");
+		expectedResults.add("Create Test Cases");
 		
-		int expectedNumber = 12;
-		
-		
-		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrumWithArte);
-		itProc = processes.iterator();
-		assertTrue(itProc.hasNext());
-		while (itProc.hasNext()) {
-			// Iterator on the set of the two Phases of Scrum
-			itAct = itProc.next().getActivities().iterator();
+		theTestedProcess = XMLParser.getProcess(pathOPenUP);
+		assertNotNull(theTestedProcess);
+		if (theTestedProcess != null) {
+			// Iterator on the set of the four Phases of OpenUP
+			itTopLevelAct = theTestedProcess.getActivities().iterator();
 			
-//			 We work on the second Phase
-			Activity tmpAct = itAct.next();
-			if (tmpAct.getPresentationName().equals("Phase de préparation")) {
-				assertTrue(itAct.hasNext());
-				tmpAct = itAct.next();
+			topLevelActivity = null;
+			// We want the third Phase : Construction Iteration
+			while (itTopLevelAct.hasNext()) {
+				topLevelActivity = itTopLevelAct.next();
+				if (topLevelActivity.getPresentationName().equals("Construction Iteration [1..n]")) {
+					break;
+				}
 			}
 			
-			Phase secondPhase = (Phase) tmpAct;
-			// We get the set of activities of the second Phase
-			secondPhaseActivities = (HashSet<Activity>) secondPhase.getActivities();
-			// And an iterator on it
-			secondPhaseActivitiesIterator = secondPhaseActivities.iterator();
+			itSecondLevelAct = topLevelActivity.getActivities().iterator();
 			
-			assertTrue(secondPhaseActivitiesIterator.hasNext());
-			
-			Iteration secondPhaseIteration = (Iteration) secondPhaseActivitiesIterator.next();
-			
-			Iterator<BreakdownElement> it;
-			
-			it = secondPhaseIteration.getBreakDownElements().iterator();
-			
-			int i = 0;
-			while (it.hasNext()) {
-				assertTrue(expectedResults.contains( ((BreakdownElement) it.next()).getName() ) );
-				i += 1;
+			rentreDansManageRequirements = false;
+			while (itSecondLevelAct.hasNext()) {
+				secondLevelActivity = itSecondLevelAct.next();
+				if (secondLevelActivity.getPresentationName().equals("Manage Requirements")) {
+					rentreDansManageRequirements = true;
+					BdeIterator = secondLevelActivity.getBreakDownElements().iterator();
+					nbTaskDescriptors = 0;
+					while (BdeIterator.hasNext()) {
+						tmpBde = BdeIterator.next();
+						if (tmpBde instanceof TaskDescriptor) {
+							nbTaskDescriptors++;
+							tmpBde = (TaskDescriptor) tmpBde;
+							assertTrue(expectedResults.contains( tmpBde.getPresentationName() ) );
+						}
+					}
+					assertTrue(nbTaskDescriptors == 3);
+				}
 			}
-			
-			assertTrue(i == expectedNumber);
-		}
+			assertTrue(rentreDansManageRequirements);
+		}		
 	}
 	
+	/*
 	public void testGetProcess(){
 		Process p;		
 //		 test avec un fichier XML a nous
@@ -698,5 +677,51 @@ public class XMLParserTest extends TestCase {
 			}
 		}
 	}
+	
+}
+			//assertTrue(TasksList.size() == 8) ;
+					// nombre de role descriptor dans scrum.xml
+					assertTrue(p.getBreakDownElements().size() == 35); 
+				}
+				else if(f[i].getName().equals("sortieEPF.xml")){
+					// nombre de role dans sortieEPF.xml
+					//assertTrue(RoleList.size() == 13) ;
+					// nombre de task dans sortieEPF.xml
+					//assertTrue(TasksList.size() == 23) ;
+					// nombre de role descriptor dans sortieEPF.xml
+					assertTrue(p.getBreakDownElements().size() == 58);
+				}
+				// nombre de taskdef dans les taskdescriptor
+				Vector<TaskDefinition > vectorTaskDef = new Vector () ;
+				Vector<Step> vectorStep = new Vector() ;
+				Vector<RoleDefinition > vectorRoleDef = new Vector () ;
+				for (BreakdownElement t : p.getBreakDownElements()){
+					if (t instanceof TaskDescriptor){
+						TaskDescriptor td = (TaskDescriptor) t ;
+						TaskDefinition tdef = td.getTaskDefinition() ;
+						if (tdef != null){
+							vectorTaskDef.add(td.getTaskDefinition());
+							for (Step s : td.getTaskDefinition().getSteps()){
+								//System.out.println(s.getIdEPF()) ;
+								vectorStep.add(s);
+							}
+						}
+					}
+					else if (t instanceof RoleDescriptor){
+						RoleDescriptor td = (RoleDescriptor) t ;
+						RoleDefinition tdef = td.getRoleDefinition() ;
+						if (tdef != null){
+							vectorRoleDef.add(td.getRoleDefinition());
+						}
+					}
+				}
+				assertTrue(vectorTaskDef.size()!=0);
+				assertTrue(vectorStep.size()!=0);
+				assertTrue(vectorRoleDef.size()!=0);
+			} catch (Exception e) {
+				fail();
+			}
+		}
+	}*/
 	
 }
