@@ -1,0 +1,25 @@
+<ice:form id="project_create_form">
+<ice:panelTabSet id="panelTabSet_project" styleClass="componentPanelTabSetLayout">
+	<ice:panelTab id="panelTab_project_create" label="Creation d'un Projet" imageDir="images">
+		<ice:panelGroup id="project_create_PanelGroup" styleClass="contentIncludePanelGroup">
+			<ice:panelGrid columns="2">
+				<ice:outputText value="Nom" />
+				<ice:inputText id="nom" value="#{ProjectBean.project.name}" required="true"/>
+		
+				<ice:outputText value="Description" />
+				<ice:inputTextarea id="description" value="#{ProjectBean.project.description}" 
+								required="false" cols="60"	rows="7"/>
+		
+				<ice:outputText value="Date de lancement">
+					<f:convertDateTime pattern="dd/MM/yyyy"/>
+				</ice:outputText>			
+				<ice:selectInputDate id="launchingDate"	value="#{ProjectBean.project.launchingDate}" 
+						popupDateFormat="dd/MM/yyyy" renderAsPopup="true" required="true"/>
+			</ice:panelGrid>
+			<ice:panelGrid columns="2">
+				<ice:commandButton value="Enregistrer" action="#{ProjectBean.saveProjectAction}"/>
+			</ice:panelGrid>	
+		</ice:panelGroup>
+	</ice:panelTab>
+</ice:panelTabSet>
+</ice:form>

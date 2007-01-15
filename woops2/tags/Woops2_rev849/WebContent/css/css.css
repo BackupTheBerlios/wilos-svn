@@ -1,0 +1,73 @@
+#container{
+	border:3px solid #FFFFFF;
+	padding: 0px 10px 0px 0px;  
+	margin:20px 0px 0px 20px;
+	/*min-width: 800px;*/
+	min-width:95%;
+	height: 560px;
+	background-color:#BEB4CC;
+	outline:#8B82A2 solid medium;
+	overflow:hidden;
+}
+
+#logo { 
+	margin:5px 5px 5px 5px;
+	padding:0px 0px 0px 0px;
+	float: left;
+}
+
+#connection{
+	background: #CAC0D6;
+	margin:150px 5px 5px 5px;
+	padding:0px 0px 0px 0px;
+	position:absolute;
+	/*height: 130px;
+	width:190px;*/
+	/*max-height:25%;*/
+	float:left;	
+}
+
+#navigation{
+	background:#DAD3E2;
+	margin:0px 5px 5px 5px;
+	padding:5px 0px 0px 0px;
+	position:absolute;
+	/*height:300px;*/
+	width:190px;
+	/*max-height:25%;*/
+	float:left;
+	top:310px;
+}
+
+#banner{
+	border:1px solid #8B82A2;
+	margin:5px 0px 0px 200px;
+	padding:0px 0px 0px 0px;
+	position:absolute;
+	top:23px;
+	float:right;
+	background:#8B82A2;
+	/*height:30px;*/
+	max-height:30px;
+	/*width:50%;*/
+	overflow:hidden;
+}
+
+#content{ 
+	margin:5px 0px 0px 140px;
+	padding:0px 0px 0px 0px;
+	position: absolute;  	
+	top:63px;
+	/*height:518px;
+	width:620px;
+	width:70%;*/
+	background:#BEB4CC;	
+}
+
+#content_center{
+	text-align: center;
+}
+
+#bgObject{
+	bgcolor:#ded9e6;
+}
