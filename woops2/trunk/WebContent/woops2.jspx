@@ -1,0 +1,323 @@
+<f:view xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:ice="http://www.icesoft.com/icefaces/component" bgcolor="#BEB4CC">
+
+	<f:loadBundle basename="wilos.resources.wilosmessages" var="msgs" />
+	<body bgcolor="#BEB4CC">
+
+	<ice:panelBorder layout="hide east" border="0" cellpadding="0"
+		cellspacing="0" styleClass="mainBorderLayout">
+
+		<f:facet name="center">
+			<ice:panelGroup>
+
+				<ice:panelGrid styleClass="navConnectionStatus"
+					columnClasses="statusLeft, statusRight" columns="2">
+					<!-- Connection Status -->
+					<ice:outputConnectionStatus />
+				</ice:panelGrid>
+
+				<!-- Demo Title -->
+				<h2><ice:outputText value="Wilos / Woops2 - Feat. Ajax" /></h2>
+
+				<ice:form>
+					<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1"
+						border="0" bgcolor="#BEB4CC">
+
+						<ice:panelTabSet bgcolor="#BEB4CC">
+
+							<ice:panelTab label="Processes" bgcolor="#BEB4CC">
+								<br />
+								<br />
+
+								<ice:outputText value="Process Table :" />
+
+								<table cellpadding="0" cellspacing="0">
+									<tr>
+										<td><ice:dataTable var="activity"
+											value="#{ActivityBean.activitiesList}"
+											columnClasses="tableCol" scrollable="#{table.scrollable}"
+											scrollHeight="#{table.scrollableHeight}"
+											columnWidths="150px,150px,150px,150px">
+
+											<ice:column>
+												<f:facet name="header">
+													<ice:outputText
+														value="#{msgs['component.tableactivity.column1']}" />
+												</f:facet>
+												<ice:commandLink value="#{activity.id}"
+													actionListener="#{ActivityBean.chooseProcessActionListener}">
+													<f:param name="process_id" value="#{activity.id}" />
+													<f:param name="role_id" value="#{activity.id}" />
+												</ice:commandLink>
+											</ice:column>
+
+											<ice:column>
+												<f:facet name="header">
+													<ice:outputText
+														value="#{msgs['component.tableactivity.column2']}" />
+												</f:facet>
+												<ice:outputText value="#{activity.prefix}" />
+											</ice:column>
+
+											<ice:column>
+												<f:facet name="header">
+													<ice:outputText
+														value="#{msgs['component.tableactivity.column3']}" />
+												</f:facet>
+												<ice:selectBooleanCheckbox value="#{activity.isPlanned}"
+													disabled="true" />
+											</ice:column>
+
+											<ice:column>
+												<f:facet name="header">
+													<ice:outputText
+														value="#{msgs['component.tableactivity.column4']}" />
+												</f:facet>
+												<ice:selectBooleanCheckbox value="#{activity.isOptional}"
+													disabled="true" />
+											</ice:column>
+
+										</ice:dataTable></td>
+									</tr>
+								</table>
+
+								<br />
+								<br />
+							</ice:panelTab>
+
+							<ice:panelTab label="TaskDescriptor">
+								<br />
+								<br />
+
+								<ice:outputText value="TaskDescriptor Table :" />
+
+								<table cellpadding="0" cellspacing="0">
+									<tr>
+										<td><ice:dataTable var="taskdescriptor"
+											value="#{TaskDescriptorBean.taskDescriptorList}"
+											columnClasses="tableCol" scrollable="#{table.scrollable}"
+											scrollHeight="#{table.scrollableHeight}"
+											columnWidths="150px,150px,150px,150px">
+
+											<ice:column>
+												<f:facet name="header">
+													<ice:outputText
+														value="#{msgs['component.tabletaskdescriptor.column1']}" />
+												</f:facet>
+												<ice:outputText value="#{taskdescriptor.id}" />
+											</ice:column>
+
+											<ice:column>
+												<f:facet name="header">
+													<ice:outputText
+														value="#{msgs['component.tabletaskdescriptor.column2']}" />
+												</f:facet>
+												<ice:outputText value="#{taskdescriptor.name}" />
+											</ice:column>
+
+											<ice:column>
+												<f:facet name="header">
+													<ice:outputText
+														value="#{msgs['component.tabletaskdescriptor.column3']}" />
+												</f:facet>
+												<ice:outputText value="#{taskdescriptor.description}" />
+											</ice:column>
+
+											<ice:column>
+												<f:facet name="header">
+													<ice:outputText
+														value="#{msgs['component.tabletaskdescriptor.column4']}" />
+												</f:facet>
+												<ice:commandLink value="#{taskdescriptor.taskDefinition.id}"
+													actionListener="#{TaskDefinitionBean.chooseTaskDefinitionActionListener}">
+													<f:param name="taskdefinition_id"
+														value="#{taskdescriptor.taskDefinition.id}" />
+												</ice:commandLink>
+												<!-- <ice:outputText value="#{taskdescriptor.taskDefinition.id}" /> -->
+											</ice:column>
+
+										</ice:dataTable></td>
+									</tr>
+								</table>
+								<br />
+								<br />
+							</ice:panelTab>
+
+							<ice:panelTab label="Step">
+								<br />
+								<br />
+
+								<ice:outputText value="Step Table :" />
+
+								<table cellpadding="0" cellspacing="0">
+									<tr>
+										<td><ice:dataTable var="step"
+											value="#{StepBean.stepList}" columnClasses="tableCol"
+											scrollable="#{table.scrollable}"
+											scrollHeight="#{table.scrollableHeight}"
+											columnWidths="150px,150px,150px,150px">
+
+											<ice:column>
+												<f:facet name="header">
+													<ice:outputText
+														value="#{msgs['component.tablestep.column1']}" />
+												</f:facet>
+												<ice:outputText value="#{step.id}" />
+											</ice:column>
+
+											<ice:column>
+												<f:facet name="header">
+													<ice:outputText
+														value="#{msgs['component.tablestep.column2']}" />
+												</f:facet>
+												<ice:outputText value="#{step.name}" />
+											</ice:column>
+
+											<ice:column>
+												<f:facet name="header">
+													<ice:outputText
+														value="#{msgs['component.tablestep.column3']}" />
+												</f:facet>
+												<ice:outputText value="#{step.description}" />
+											</ice:column>
+
+										</ice:dataTable></td>
+									</tr>
+								</table>
+								<br />
+								<br />
+							</ice:panelTab>
+
+							<ice:panelTab label="Create Activity">
+								<br />
+								<ice:outputText value="Valeur prefix : " />
+								<ice:inputText value="#{ActivityBean.activity.prefix}" />
+								<br />
+								<br />
+								<ice:outputText value="isPlanned : " />
+								<ice:selectBooleanCheckbox
+									value="#{ActivityBean.activity.isPlanned}" />
+								<br />
+								<ice:outputText value="isOptional : " />
+								<ice:selectBooleanCheckbox
+									value="#{ActivityBean.activity.isOptional}" />
+								<br />
+								<br />
+								<ice:outputText value="Status : #{ActivityBean.viewerMessage}" />
+								<br />
+								<br />
+								<ice:commandButton value="Create Activity"
+									actionListener="#{ActivityBean.saveActivityActionListener}" />
+								<ice:commandButton value="New/Reset Activity"
+									actionListener="#{ActivityBean.resetActivityActionListener}" />
+							</ice:panelTab>
+
+							<ice:panelTab label="Import Process File">
+
+								<ice:panelGrid styleClass="componentLayoutRootTable" columns="1">
+									<ice:panelGroup styleClass="formBorderHighlight"
+										style="text-align:left">
+										<br />
+
+										<br />
+										<ice:outputText value="Add your file :" />
+										<br />
+										<ice:inputFile style="border:none; width:400px; height:70px;"
+											progressListener="#{XmlFileImportBean.progress}"
+											actionListener="#{XmlFileImportBean.action}"
+											uniqueFolder="false" file="#{XmlFileImportBean.file}"
+											immediate="true" />
+										<ice:outputProgress id="pro"
+											value="#{XmlFileImportBean.percent}" />
+										<ice:outputText
+											value="File Name: #{XmlFileImportBean.fileName}" />
+										<br />
+										<ice:outputText
+											value="Content Type: #{XmlFileImportBean.contentType}" />
+										<ice:messages />
+									</ice:panelGroup>
+
+									<br />
+
+								</ice:panelGrid>
+							</ice:panelTab>
+						</ice:panelTabSet>
+					</ice:panelGrid>
+				</ice:form>
+
+				<br />
+			</ice:panelGroup>
+		</f:facet>
+	</ice:panelBorder>
+
+	<!--
+  PRELOAD IMAGES need for roleovers and layout in general, javascript is only
+  loaded once per refresh which is good enough.  This improves overall user
+  experience as they shouldn't have to wait for images to show up after the
+  initial load. -->
+
+	<script language="JavaScript">
+    <![CDATA[
+    <!--
+    var preloaded = new Array();
+    function preload_images() {
+        for (var i = 0; i < arguments.length; i++){
+            preloaded[i] = document.createElement('img');
+            preloaded[i].setAttribute('src',arguments[i]);
+        };
+    };
+    preload_images(
+            './xmlhttp/css/xp/css-images/spacer.gif',
+            './xmlhttp/css/xp/css-images/on-left-top.gif',
+            './xmlhttp/css/xp/css-images/on-mid-top.gif',
+            './xmlhttp/css/xp/css-images/on-right-top.gif',
+            './xmlhttp/css/xp/css-images/on-left-mid.gif',
+            './xmlhttp/css/xp/css-images/on-mid-mid.gif',
+            './xmlhttp/css/xp/css-images/on-right-mid.gif',
+            './xmlhttp/css/xp/css-images/on-left-bot.gif',
+            './xmlhttp/css/xp/css-images/on-mid-bot.gif',
+            './xmlhttp/css/xp/css-images/on-right-bot.gif',
+            './xmlhttp/css/xp/css-images/off-left-top.gif',
+            './xmlhttp/css/xp/css-images/off-mid-top.gif',
+            './xmlhttp/css/xp/css-images/off-right-top.gif',
+            './xmlhttp/css/xp/css-images/off-left-mid.gif',
+            './xmlhttp/css/xp/css-images/off-mid-mid.gif',
+            './xmlhttp/css/xp/css-images/off-right-mid.gif',
+            './xmlhttp/css/xp/css-images/off-left-bot.gif',
+            './xmlhttp/css/xp/css-images/off-mid-bot.gif',
+            './xmlhttp/css/xp/css-images/off-right-bot.gif',
+            './xmlhttp/css/xp/css-images/over-left-top.gif',
+            './xmlhttp/css/xp/css-images/over-mid-top.gif',
+            './xmlhttp/css/xp/css-images/over-right-top.gif',
+            './xmlhttp/css/xp/css-images/over-left-mid.gif',
+            './xmlhttp/css/xp/css-images/over-mid-mid.gif',
+            './xmlhttp/css/xp/css-images/over-right-mid.gif',
+            './xmlhttp/css/xp/css-images/over-left-bot.gif',
+            './xmlhttp/css/xp/css-images/over-mid-bot.gif',
+            './xmlhttp/css/xp/css-images/over-right-bot.gif',
+            './xmlhttp/css/xp/css-images/connect_active.gif',
+            './xmlhttp/css/xp/css-images/connect_caution.gif',
+            './xmlhttp/css/xp/css-images/connect_disconnected.gif',
+            './xmlhttp/css/xp/css-images/connect_idle.gif',
+            './xmlhttp/css/xp/css-images/tbot-off-left-top.gif',
+            './xmlhttp/css/xp/css-images/tbot-off-mid-top.gif',
+            './xmlhttp/css/xp/css-images/tbot-off-right-top.gif',
+            './xmlhttp/css/xp/css-images/tbot-off-left-bot.gif',
+            './xmlhttp/css/xp/css-images/tbot-off-mid-bot.gif',
+            './xmlhttp/css/xp/css-images/tbot-off-right-bot.gif',
+            './xmlhttp/css/xp/css-images/tbot-on-left-top.gif',
+            './xmlhttp/css/xp/css-images/tbot-on-mid-top.gif',
+            './xmlhttp/css/xp/css-images/tbot-on-right-top.gif',
+            './xmlhttp/css/xp/css-images/tbot-on-left-bot.gif',
+            './xmlhttp/css/xp/css-images/tbot-on-mid-bot.gif',
+            './xmlhttp/css/xp/css-images/tbot-on-right-bot.gif'
+    ); 
+
+    // -->
+    ]]> 
+
+</script>
+	</body>
+</f:view>
