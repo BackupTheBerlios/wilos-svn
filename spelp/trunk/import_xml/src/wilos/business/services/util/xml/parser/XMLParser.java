@@ -194,82 +194,35 @@ public class XMLParser {
 		return theRoleDefinitionsList;
 	}
 	
-	/** 
-	 * getAllProcesses_old
-	 * First Version of the getAllProcesses Function
-	 * 
-	 * @deprecated
-	 * @param f the XML File t use
-	 * @return a Set containing all the processes of the Files
-	 * @throws Exception
-	 */
-	protected static Set<Process> getAllProcesses_old(File f) throws Exception {
-		HashSet<Process> processReturned = new HashSet<Process>() ;
-		
-		XMLUtils.setDocument(f);
-		start();
-		allRoleDescriptors.clear();
-		allRoleDescriptors = getAllRoleDescriptors() ;
-		allTaskDescriptors.clear() ;
-		allTaskDescriptors = getAllTaskDescriptors(allRoleDescriptors);
-		
-		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_deliveryProcess,XPathConstants.NODESET);
-		if (nodeReturned == null){
-			throw new Exception ("NO DeliveryProcess FOUND");
-		}
-		
-		System.out.println("avant grand for");
-		
-		System.out.println("node returned : " + nodeReturned + " " + nodeReturned.getLength());
-		
-		Node aNode;
-		for(int i = 0; i < nodeReturned.getLength(); i++) {
-			Process tmpProcess = new Process();
-			// TODO filler deliveryprocess
-			aNode = nodeReturned.item(i);
-			NodeList myChildNodes = aNode.getChildNodes() ;
-			System.out.println("avant for");
-			for (int j = 0 ; j < myChildNodes.getLength() ; j ++){
-				
-				//System.out.println(myChildNodes.item(j).getNodeName());
-				if (myChildNodes.item(j).getNodeName().equals(breakdownElement)){
-					// We are in a DeliveryProcess's BreakDownElement
-					System.out.println("avant attr");
-					System.out.println(myChildNodes.item(j).getAttributes().getNamedItem(attr_name_xsitype).getNodeName());
-					Node workNode = myChildNodes.item(j).getAttributes().getNamedItem(attr_name_xsitype) ;
-					BreakdownElement bde = XMLParser.getBreakDownElementsFromNode(workNode);
-					if (bde instanceof Activity){
-						tmpProcess.addActivity((Activity) bde);
-					}
-					// TODO ROLE DESCRIPTOR
-					
-					System.out.println("ohe");
-					//idTask = myChildNodes.item(i).getTextContent();
-				}
-				
-				
-			}
-			processReturned.add(tmpProcess);
-		}
-		return processReturned;
-	}
 	
 	/**
 	 * getProcess
 	 * Return a Process from a file
 	 * Deprecated, use getAllProcesses instead
-	 * @deprecated
 	 * @param f a XML file
 	 * @return the process
 	 * @throws Exception 
 	 */
-	public static Process getProcess(File f) throws Exception{
-		if(!f.exists()){
-			throw new Exception("FILE DOESN'T EXIST");
+	public static Process getProcess(File XMLFilePath) {		
+		Process theProcess = null;
+		if (XMLFilePath.exists()) {
+			XMLUtils.setDocument(XMLFilePath);
+			start(); // initializes the elements sets
+			
+			// The List of all the nodes containing Processes
+			NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_deliveryProcess,XPathConstants.NODESET);
+			
+			Node aNode;			
+			if ( nodeReturned.getLength()!= 0) {
+				theProcess = new Process();
+				aNode = nodeReturned.item(0);
+				
+				if (aNode != null) {
+					theProcess = (Process) getBreakDownElementsFromNode(aNode);
+				}				
+			}
 		}
-		XMLUtils.setDocument(f);
-		start();
-		return (getProcess());
+		return theProcess;
 	}
 	
 	/**
@@ -754,7 +707,7 @@ public class XMLParser {
 	/**
 	 * getAllProcesses
 	 * Returns a Set of the processes contained in the XML File
-	 * 
+	 * @deprecated
 	 * @param XMLFilePath Path of the XML File
 	 * @return Set of the processes
 	 * @throws Exception
