@@ -14,11 +14,15 @@ import wilos.model.spem2.activity.Activity;
  * special types of Processes for different process management applications and different situations
  * of process reuse.
  * 
+ * @author soosuske
  * @author deder
+ * 
  * 
  */
 public class Process extends Activity implements Cloneable {
 
+	// The Project of Process
+	//	private Project project;
 	/**
 	 * Default constructor
 	 * 
@@ -73,4 +77,22 @@ public class Process extends Activity implements Cloneable {
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode() ;
 	}
+	
+	/**
+	 * methode to Add a process to a project
+	 * @param project
+	 */
+	/*public addProject(Project project){
+		   this.project = project;
+		   project.getProcesss().add(this);
+		}*/ 
+	/**
+	 * methode to remove a process to a project
+	 * @param project
+	 */
+	/*
+	public removeFromProject(Project project){
+		   this.project = null;
+		   project.getProcesss().remove(this);
+		}*/ 
 }
