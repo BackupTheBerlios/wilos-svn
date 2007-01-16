@@ -20,11 +20,12 @@ public class Project implements Cloneable {
 	private Date creationDate ;
 
 	private Date launchingDate ;
-	
-	public Project()
-	{
-		this.creationDate = new Date();
-		this.launchingDate=new Date();
+
+	private Process process ;
+
+	public Project() {
+		this.creationDate = new Date() ;
+		this.launchingDate = new Date() ;
 	}
 
 	/**
@@ -32,6 +33,24 @@ public class Project implements Cloneable {
 	 */
 	public Date getCreationDate() {
 		return creationDate ;
+	}
+
+	/**
+	 * @param _process
+	 *            the process to be linked to
+	 */
+	public void addToProcess(Process _process) {
+		this.process = _process ;
+		// _process.getProjects().add(this);
+	}
+
+	/**
+	 * @param _process
+	 *            the process to be unlinked to
+	 */
+	public void removeFromProcess(Process _process) {
+		this.process = null ;
+		// _process.getProjects().remove(this);
 	}
 
 	/**
@@ -87,9 +106,10 @@ public class Project implements Cloneable {
 		this.name = name ;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#clone()
-	 * @Override
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#clone() @Override
 	 */
 	public Project clone() throws CloneNotSupportedException {
 		Project project = new Project() ;
@@ -97,11 +117,11 @@ public class Project implements Cloneable {
 		return project ;
 	}
 
-	
 	/**
 	 * Copy the object.
-	 *
-	 * @param _project The project to copy.
+	 * 
+	 * @param _project
+	 *            The project to copy.
 	 */
 	protected void copy(final Project _project) {
 		this.name = _project.name ;
@@ -134,6 +154,24 @@ public class Project implements Cloneable {
 		Project project = (Project) _obj ;
 		return new EqualsBuilder().append(this.name, project.name).append(this.description, project.description)
 				.append(this.creationDate, project.creationDate).append(this.launchingDate, project.launchingDate).isEquals() ;
+	}
+
+	/**
+	 * Getter of process.
+	 *
+	 * @return the process.
+	 */
+	public Process getProcess() {
+		return this.process ;
+	}
+
+	/**
+	 * Setter of process.
+	 *
+	 * @param _process The process to set.
+	 */
+	public void setProcess(Process _process) {
+		this.process = _process ;
 	}
 
 }
