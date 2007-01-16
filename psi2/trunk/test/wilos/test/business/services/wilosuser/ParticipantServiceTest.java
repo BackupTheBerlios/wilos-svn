@@ -51,7 +51,7 @@ public class ParticipantServiceTest extends TestCase {
 		HashMap<String, Boolean> roles = new HashMap<String, Boolean>();
 		roles.put("Tester", true);
 		roles.put("Developpeur", false);
-		rs.saveParticipantRoles(roles);
+		rs.saveParticipantRoles(roles,"mika");
 		assertTrue(true);
 	}
 
