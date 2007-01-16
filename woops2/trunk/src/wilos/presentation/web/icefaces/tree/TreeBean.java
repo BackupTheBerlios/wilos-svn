@@ -52,7 +52,7 @@ public class TreeBean {
 	
 	private void buildModel(){
 		if(!this.processId.equals("")){
-			Process process = this.processService.getEntireProcess(this.processId) ;
+			Process process = this.processService.getProcessWithOnlyTaskDescriptors(this.processId) ;
 			ProcessNode processNode = new ProcessNode(process);
 			this.model = new DefaultTreeModel(processNode) ;
 		}
