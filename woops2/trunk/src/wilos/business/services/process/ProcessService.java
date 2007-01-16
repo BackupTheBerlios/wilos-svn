@@ -515,7 +515,7 @@ public class ProcessService {
 	
 	// TODO PROBLEME : fonction peut etre inutile ?!
 	@ Transactional (readOnly = true)
-	public Process getTaskDescriptorFromProcess(String _processId) {
+	public Process getProcessWithOnlyTaskDescriptors(String _processId) {
 		Process process = this.processDao.getProcess(_processId) ;
 		Set<BreakdownElement> bdes = new HashSet<BreakdownElement>() ;
 		bdes.addAll(this.breakdownElementService.getBreakdownElementsFromProcess(_processId)) ;
@@ -527,88 +527,6 @@ public class ProcessService {
 		}
 		process.addAllBreakdownElements(taskDescriptors) ;
 		return process ;
-	}
-
-	public String TestPersistence() {
-		Process p = new Process() ;
-		p.setGuid("epf-test") ;
-		p.setName("test_process") ;
-		logger.debug("TestPersistence p => " + p + " id=" + p.getId()) ;
-		logger.debug("TestPersistence p => " + p + " id=" + p.getId()) ;
-		logger.debug("#### p -> " + p.getGuid() + " " + p.getName()) ;
-		this.processDao.saveOrUpdateProcess(p) ;
-		logger.debug("TestPersistence p => " + p + " id=" + p.getId()) ;
-		logger.debug("#### p -> " + p.getGuid() + " " + p.getName()) ;
-		return p.getId() ;
-	}
-
-	public void TestProcessPersistence(String _id) {
-
-		Process p = this.processDao.getProcess(_id) ;
-		logger.debug("TestProcessPersistence p => " + p + " id=" + p.getId()) ;
-		logger.debug("#### p -> " + p.getGuid() + " " + p.getName()) ;
-	}
-
-	public void TestEmptyObjectDBSave() {
-
-		Process p = new Process() ;
-		p.setGuid("processGuID") ;
-		p.setName("processName") ;
-		p.setPrefix("processPrefix") ;
-		logger.debug("#### p -> " + p.getGuid() + " " + p.getName()) ;
-
-		RoleDescriptor rd = new RoleDescriptor() ;
-		rd.setGuid("roledescriptorGuID") ;
-		rd.setName("roledescriptorName") ;
-		rd.setPrefix("roledescriptorPrefix") ;
-		logger.debug("#### rd -> " + rd.getGuid() + " " + rd.getName()) ;
-
-		TaskDescriptor td = new TaskDescriptor() ;
-		td.setGuid("taskdescriptorGuID") ;
-		td.setName("tddesriptorName") ;
-		td.setPrefix("taskdescriptorPrefix") ;
-		logger.debug("#### td -> " + td.getGuid() + " " + td.getName()) ;
-
-		RoleDefinition rddef = new RoleDefinition() ;
-		rddef.setGuid("roledefinitionGuID") ;
-		rddef.setName("roledefinitionName") ;
-		logger.debug("#### rddef -> " + rddef.getGuid() + " " + rddef.getName()) ;
-
-		TaskDefinition tddef = new TaskDefinition() ;
-		tddef.setGuid("taskdefinitionGuID") ;
-		tddef.setName("taskdefinitionName") ;
-		logger.debug("#### tddef -> " + tddef.getGuid() + " " + tddef.getName()) ;
-
-		Step s1 = new Step() ;
-		s1.setGuid("taskdefinitionGuID") ;
-		s1.setName("taskdefinitionName") ;
-		logger.debug("#### s1 -> " + s1.getGuid() + " " + s1.getName()) ;
-
-		Step s2 = new Step() ;
-		s2.setGuid("taskdefinitionGuID") ;
-		s2.setName("taskdefinitionName") ;
-		logger.debug("#### s2 -> " + s2.getGuid() + " " + s2.getName()) ;
-
-		this.processDao.saveOrUpdateProcess(p) ;
-		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(rd) ;
-		this.taskDescriptorDao.saveOrUpdateTaskDescriptor(td) ;
-		this.roleDefinitionDao.saveOrUpdateRoleDefinition(rddef) ;
-		this.taskDefinitionDao.saveOrUpdateTaskDefinition(tddef) ;
-		this.stepDao.saveOrUpdateStep(s1) ;
-		this.stepDao.saveOrUpdateStep(s2) ;
-
-		System.out.println("TestProcessPersistence -> ca sauvegarde") ;
-
-		rddef.addRoleDescriptor(rd) ;
-		s1.addTaskDefinition(tddef) ;
-		s2.addTaskDefinition(tddef) ;
-		tddef.addTaskDescriptor(td) ;
-		rd.addAdditionalTask(td) ;
-		p.addBreakdownElement(rd) ;
-		p.addBreakdownElement(td) ;
-
-		System.out.println("TestProcessPersistence -> ca update les objets") ;
-
 	}
 
 	/**
