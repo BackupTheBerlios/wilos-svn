@@ -7,6 +7,7 @@ import java.util.Set ;
 import org.apache.commons.lang.builder.EqualsBuilder ;
 import org.apache.commons.lang.builder.HashCodeBuilder ;
 
+import wilos.model.misc.project.Project;
 import wilos.model.spem2.role.RoleDescriptor ;
 
 /**
@@ -20,10 +21,13 @@ import wilos.model.spem2.role.RoleDescriptor ;
 public class Participant extends WilosUser implements Cloneable {
 
 	private Set<RoleDescriptor> rolesListForAProject ;
+	
+	private Set<Project> affectedProjectList;
 
 	public Participant() {
 		super() ;
 		rolesListForAProject = new HashSet<RoleDescriptor>() ;
+		affectedProjectList = new HashSet<Project>() ;
 	}
 
 	/**
@@ -86,6 +90,49 @@ public class Participant extends WilosUser implements Cloneable {
 		}
 	}
 
+	/**
+	 * add participant to project
+	 * 
+	 * @param project
+	 * 				the project to add to
+	 */
+	public void addToProject(Project project) {
+		this.affectedProjectList.add(project) ;
+		project.getParticipants().add(this) ;
+	}
+	
+	/**
+	 * remove a participant from a project 
+	 * 
+	 * @param project
+	 * 			the project to remove from
+	 */
+	public void removeFromProject(Project project) {
+		this.affectedProjectList.remove(project) ;
+		project.getParticipants().remove(this) ;
+	}
+
+	/**
+	 * remove the participant from all the project
+	 * 
+	 */
+	public void removeAllProject() {
+		for(Project project : this.affectedProjectList){
+			project.removeFromParticipant(this) ;
+		}
+		this.affectedProjectList.clear() ;
+	}
+	
+	/**
+	 * remove all the project from the list
+	 *
+	 */
+	public void removeFromAllProject() {
+		for(Project project : this.affectedProjectList){
+			this.removeFromProject(project) ;
+		}
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#clone()
 	 */
@@ -132,4 +179,22 @@ public class Participant extends WilosUser implements Cloneable {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.rolesListForAProject).toHashCode() ;
 	}
 
+	/**
+	 * Getter of affectedProjectList.
+	 *
+	 * @return the affectedProjectList.
+	 */
+	public Set<Project> getAffectedProjectList() {
+		return this.affectedProjectList ;
+	}
+
+	/**
+	 * Setter of affectedProjectList.
+	 *
+	 * @param _affectedProjectList The affectedProjectList to set.
+	 */
+	public void setAffectedProjectList(Set<Project> _affectedProjectList) {
+		this.affectedProjectList = _affectedProjectList ;
+	}
+	
 }

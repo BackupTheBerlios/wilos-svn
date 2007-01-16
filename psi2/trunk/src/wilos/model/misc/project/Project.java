@@ -2,9 +2,14 @@
 package wilos.model.misc.project ;
 
 import java.util.Date ;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder ;
 import org.apache.commons.lang.builder.HashCodeBuilder ;
+
+import wilos.model.misc.wilosuser.Participant;
+import wilos.model.spem2.role.RoleDescriptor;
 
 /**
  * This class represents a project.
@@ -22,10 +27,13 @@ public class Project implements Cloneable {
 	private Date launchingDate ;
 
 	private Process process ;
+	
+	private Set<Participant> participants;
 
 	public Project() {
 		this.creationDate = new Date() ;
 		this.launchingDate = new Date() ;
+		this.participants = new HashSet<Participant>() ;
 	}
 
 	/**
@@ -174,4 +182,64 @@ public class Project implements Cloneable {
 		this.process = _process ;
 	}
 
+	/**
+	 * Getter of participants.
+	 *
+	 * @return the participants.
+	 */
+	public Set<Participant> getParticipants() {
+		return this.participants ;
+	}
+
+	/**
+	 * Setter of participants.
+	 *
+	 * @param _participants The participants to set.
+	 */
+	public void setParticipants(Set<Participant> _participants) {
+		this.participants = _participants ;
+	}
+
+	/**
+	 * add participant to this project
+	 * 
+	 * @param participant
+	 * 				the participant to add
+	 */
+	public void addToParticipant(Participant participant) {
+		this.participants.add(participant) ;
+		participant.getAffectedProjectList().add(this) ;
+	}
+
+	/**
+	 * remove a project from a participant
+	 * 
+	 * @param participant
+	 * 			the participant to remove from
+	 */
+	public void removeFromParticipant(Participant participant) {
+		this.participants.remove(participant) ;
+		participant.getAffectedProjectList().remove(this) ;
+	}
+
+	/**
+	 * remove the project from all the participants
+	 * 
+	 */
+	public void removeAllParticipant() {
+		for(Participant participant : this.participants){
+			participant.removeFromProject(this) ;
+		}
+		this.participants.clear() ;
+	}
+
+	/**
+	 * remove all the participants from the list
+	 *
+	 */
+	public void removeFromAllParticipant() {
+		for(Participant participant : this.participants){
+			this.removeFromParticipant(participant) ;
+		}
+	}
 }
