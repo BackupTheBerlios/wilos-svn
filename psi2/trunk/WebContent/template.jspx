@@ -23,9 +23,6 @@
 
         <f:facet name="north">
             <ice:panelGroup>  
-					<div id="connection">
-					<jsp:directive.include file="connect.jspx"/>
-					</div>				
 					<img src="images/logo_wilos.png"/>						
             </ice:panelGroup>
             
@@ -34,6 +31,9 @@
 
         <f:facet name="west">
             <ice:panelGroup>
+            <div id="connection">
+					<jsp:directive.include file="connect.jspx"/>
+			</div>
             	<div id="menu">
                 	<jsp:directive.include file="navigation.jspx" />
                 </div>

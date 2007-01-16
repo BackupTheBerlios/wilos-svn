@@ -8,8 +8,10 @@
 }
 
 #connection { 
-position: absolute;
-	left: 210px;
+	width:190px;
+	border-right:2px solid #FFFFFF;
+	border-top:2px solid #FFFFFF;
+	border-bottom:2px solid #FFFFFF;
 }
 
 #roles_actions {
@@ -20,7 +22,6 @@ position: absolute;
 
 #menu { 
 	width:190px;
-	border-top:2px solid #FFFFFF;
 	border-right:2px solid #FFFFFF;
 }
 
