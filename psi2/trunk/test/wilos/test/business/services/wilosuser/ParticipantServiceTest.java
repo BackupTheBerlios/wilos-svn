@@ -1,6 +1,9 @@
 package wilos.test.business.services.wilosuser;
 
+import java.util.HashMap;
+
 import junit.framework.TestCase;
+import wilos.business.services.role.RoleService;
 import wilos.business.services.wilosuser.ParticipantService;
 import wilos.business.util.Security;
 import wilos.model.misc.wilosuser.Participant;
@@ -15,6 +18,7 @@ import wilos.test.configuration.TestConfiguration;
 public class ParticipantServiceTest extends TestCase {
 
 	private ParticipantService ps;
+	private RoleService rs;
 	private Participant p ;
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#setUp()
@@ -22,6 +26,7 @@ public class ParticipantServiceTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp() ;
 		this.ps = (ParticipantService) TestConfiguration.getInstance().getApplicationContext().getBean("ParticipantService") ;
+		this.rs = (RoleService) TestConfiguration.getInstance().getApplicationContext().getBean("RoleService") ;
 		p=new Participant();
 		p.setLogin("john");
 		p.setName("georges");
@@ -42,8 +47,12 @@ public class ParticipantServiceTest extends TestCase {
 	 * Test method for {@link woops2.business.wilosuser.ParticipantService#getRolesList()}.
 	 */
 	public void testGetRolesList() {
-	//	TODO...	 
-	assertTrue(true);
+	//	TODO...	
+		HashMap<String, Boolean> roles = new HashMap<String, Boolean>();
+		roles.put("Tester", true);
+		roles.put("Developpeur", false);
+		rs.saveParticipantRoles(roles);
+		assertTrue(true);
 	}
 
 	/**

@@ -152,6 +152,10 @@ public class RoleBean {
 		this.roleService.saveParticipantRoles(this.getRolesParticipant());
 	}
 	
+	/**
+	 * TODO
+	 * @param newRole
+	 */
 	public void addRoleChangeListener(ValueChangeEvent newRole)
 	{
 		String roleName = (String)FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("roleD");

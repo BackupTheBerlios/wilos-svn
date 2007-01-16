@@ -4,8 +4,9 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * @author martial
+ * This class represents the test suite that launch all tests.
  * 
+ * @author martial
  */
 public class AllTests {
 

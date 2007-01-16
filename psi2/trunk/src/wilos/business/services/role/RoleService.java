@@ -131,9 +131,10 @@ public class RoleService {
 	}
 
 	/**
-	 * TODO Save roles affectation for a participant.
+	 * Save roles affectation for a participant.
 	 *
-	 *	@return the page name where navigation has to be redirected to
+	 * @return the page name where navigation has to be redirected to
+	 * TODO: voir un peu ce retour qui craint
 	 */
 	public String saveParticipantRoles(HashMap<String, Boolean> rolesParticipant) {
 		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;

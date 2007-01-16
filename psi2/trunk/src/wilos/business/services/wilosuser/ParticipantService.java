@@ -69,6 +69,10 @@ public class ParticipantService {
 		this.participantDao = _participantDao;
 	}
 
+	/**
+	 * TODO
+	 * @return
+	 */
 	public ParticipantDao getParticipantDao() {
 		return this.participantDao;
 	}

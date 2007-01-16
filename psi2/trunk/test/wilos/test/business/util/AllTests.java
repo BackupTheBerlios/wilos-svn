@@ -5,7 +5,7 @@ import junit.framework.Test ;
 import junit.framework.TestSuite ;
 
 /**
- * This class represents all tests conecerning util package's classes.
+ * This class represents all tests concerning util package's classes.
  * 
  * @author Marseyeah
  * 

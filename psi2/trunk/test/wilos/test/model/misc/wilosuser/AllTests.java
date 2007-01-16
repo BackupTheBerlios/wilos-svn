@@ -4,10 +4,9 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
+ * This class represents the test suite for the wilosUsers models.
+ *
  * @author Martial
- *
- * This class represents ... TODO
- *
  */
 public class AllTests {
 
