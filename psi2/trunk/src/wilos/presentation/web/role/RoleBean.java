@@ -10,11 +10,15 @@ import java.util.Set;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.role.RoleService;
+import wilos.model.misc.wilosuser.Participant;
+import wilos.model.misc.wilosuser.WilosUser;
 import wilos.model.spem2.role.RoleDescriptor;
 
 /**
@@ -149,7 +153,11 @@ public class RoleBean {
 	 * 
 	 */
 	public void saveParticipantRoles(){
-		this.roleService.saveParticipantRoles(this.getRolesParticipant());
+		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
+		HttpSession sess = req.getSession() ;
+		WilosUser user = (WilosUser) sess.getAttribute("wilosUser") ;
+		String user_login = user.getLogin();
+		this.roleService.saveParticipantRoles(this.getRolesParticipant(),user_login);
 	}
 	
 	/**
@@ -169,8 +177,13 @@ public class RoleBean {
 	 */
 	public HashMap<String, Boolean> getRolesParticipant() {
 		RoleDescriptor rd = null;
+		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
+		HttpSession sess = req.getSession() ;
+		WilosUser user = (WilosUser) sess.getAttribute("wilosUser") ;
+		String user_login = user.getLogin();
+		
 		HashMap<RoleDescriptor, Boolean> hashTemp = this.roleService
-				.getRolesForAParticipant();
+				.getRolesForAParticipant(user_login);
 		for (Iterator iter = hashTemp.keySet().iterator(); iter.hasNext();) {
 			rd = (RoleDescriptor) iter.next();
 			if(!this.rolesParticipant.containsKey(rd.getName()))

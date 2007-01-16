@@ -73,17 +73,13 @@ public class RoleService {
 	 * @return
 	 */
 	@Transactional(readOnly = true)
-	public HashMap<RoleDescriptor,Boolean> getRolesForAParticipant()
+	public HashMap<RoleDescriptor,Boolean> getRolesForAParticipant(String _user_login)
 	{
 		RoleDescriptor globalRoleTemp;
 		Boolean test;
 		HashMap<RoleDescriptor,Boolean> participantRoles = new HashMap<RoleDescriptor,Boolean>();
 		
-		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
-		HttpSession sess = req.getSession() ;
-		WilosUser user = (WilosUser) sess.getAttribute("wilosUser") ;
-		String user_login = user.getLogin();
-		Participant currentParticipant = this.participantDao.getParticipant(user_login);
+		Participant currentParticipant = this.participantDao.getParticipant(_user_login);
 		for(Iterator globalRolesIter = this.getRolesDescriptor().iterator(); globalRolesIter.hasNext();)
 		{
 			globalRoleTemp = (RoleDescriptor)globalRolesIter.next();
@@ -136,12 +132,8 @@ public class RoleService {
 	 * @return the page name where navigation has to be redirected to
 	 * TODO: voir un peu ce retour qui craint
 	 */
-	public String saveParticipantRoles(HashMap<String, Boolean> rolesParticipant) {
-		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
-		HttpSession sess = req.getSession() ;
-		WilosUser user = (WilosUser) sess.getAttribute("wilosUser") ;
-		String user_login = user.getLogin();
-		Participant currentParticipant = this.participantDao.getParticipant(user_login);
+	public String saveParticipantRoles(HashMap<String, Boolean> rolesParticipant,String _user_login) {
+		Participant currentParticipant = this.participantDao.getParticipant(_user_login);
 		
 		for (Iterator rolesIter = rolesParticipant.keySet().iterator(); rolesIter.hasNext();) {
 			String roleName = (String) rolesIter.next();
