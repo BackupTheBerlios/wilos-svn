@@ -26,7 +26,7 @@ public class Project implements Cloneable {
 
 	private Date launchingDate ;
 
-	private Process process ;
+	private wilos.model.spem2.process.Process process ;
 	
 	private Set<Participant> participants;
 
@@ -47,7 +47,7 @@ public class Project implements Cloneable {
 	 * @param _process
 	 *            the process to be linked to
 	 */
-	public void addToProcess(Process _process) {
+	public void addToProcess(wilos.model.spem2.process.Process _process) {
 		this.process = _process ;
 		// _process.getProjects().add(this);
 	}
@@ -56,7 +56,7 @@ public class Project implements Cloneable {
 	 * @param _process
 	 *            the process to be unlinked to
 	 */
-	public void removeFromProcess(Process _process) {
+	public void removeFromProcess(wilos.model.spem2.process.Process _process) {
 		this.process = null ;
 		// _process.getProjects().remove(this);
 	}
@@ -169,7 +169,7 @@ public class Project implements Cloneable {
 	 *
 	 * @return the process.
 	 */
-	public Process getProcess() {
+	public wilos.model.spem2.process.Process getProcess() {
 		return this.process ;
 	}
 
@@ -178,7 +178,7 @@ public class Project implements Cloneable {
 	 *
 	 * @param _process The process to set.
 	 */
-	public void setProcess(Process _process) {
+	public void setProcess(wilos.model.spem2.process.Process _process) {
 		this.process = _process ;
 	}
 
