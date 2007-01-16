@@ -7,7 +7,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import wilos.hibernate.misc.project.ProjectDao;
 import wilos.hibernate.misc.wilosuser.ParticipantDao;
+import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.business.util.Security;
@@ -23,6 +25,7 @@ import wilos.business.util.Security;
 public class ParticipantService {
 
 	private ParticipantDao participantDao;
+	private ProjectDao projectDao;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -68,5 +71,36 @@ public class ParticipantService {
 
 	public ParticipantDao getParticipantDao() {
 		return this.participantDao;
+	}
+	
+	/**
+	 * 
+	 * return the list of project where a participant is affected to
+	 *
+	 * @param participant
+	 * 				the participant which the affected to project are returned
+	 * @return list of project where the participant is affected to
+	 */
+	public Set<Project> getProjects(Participant participant)
+	{
+		return participant.getAffectedProjectList();
+	}
+
+	/**
+	 * Getter of projectDao.
+	 *
+	 * @return the projectDao.
+	 */
+	public ProjectDao getProjectDao() {
+		return this.projectDao ;
+	}
+
+	/**
+	 * Setter of projectDao.
+	 *
+	 * @param _projectDao The projectDao to set.
+	 */
+	public void setProjectDao(ProjectDao _projectDao) {
+		this.projectDao = _projectDao ;
 	}
 }

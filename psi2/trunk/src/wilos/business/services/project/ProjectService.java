@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import wilos.hibernate.misc.project.ProjectDao;
+import wilos.hibernate.misc.wilosuser.ParticipantDao;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
@@ -32,6 +33,7 @@ import wilos.model.spem2.role.RoleDescriptor;
 public class ProjectService {
 
 	private ProjectDao projectDao;
+	private ParticipantDao participantDao;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -99,5 +101,49 @@ public class ProjectService {
 		HashSet<Project> projectList = new HashSet<Project>();
 		projectList = (HashSet)this.projectDao.getAllProject();
 		return projectList;
+	}
+
+	/**
+	 * Getter of participantDao.
+	 *
+	 * @return the participantDao.
+	 */
+	public ParticipantDao getParticipantDao() {
+		return this.participantDao ;
+	}
+
+	/**
+	 * Setter of participantDao.
+	 *
+	 * @param _participantDao The participantDao to set.
+	 */
+	public void setParticipantDao(ParticipantDao _participantDao) {
+		this.participantDao = _participantDao ;
+	}
+	
+	/**
+	 * 
+	 * return the participants affected to the project
+	 *
+	 * @param project
+	 * @return the list of participants affected to the project parameter
+	 */
+	public Set<Participant> getParticipants(Project project)
+	{
+		return project.getParticipants();
+	}
+	
+	/**
+	 * 
+	 * add a participant to a project
+	 *
+	 * @param participant
+	 * 				the participant to add
+	 * @param project
+	 * 				the project where the participant will be affected to
+	 */
+	public void addParticipant(Participant participant, Project project)
+	{
+		project.addToParticipant(participant);
 	}
 }
