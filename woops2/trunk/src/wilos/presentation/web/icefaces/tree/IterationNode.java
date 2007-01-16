@@ -26,8 +26,8 @@ public class IterationNode extends DefaultMutableTreeNode {
 
 		iceUserObject.setText(_iteration.getName()) ;
 		iceUserObject.setLeaf(false) ;
-		iceUserObject.setBranchContractedIcon("images/icon_iteration.gif") ;
-		iceUserObject.setBranchExpandedIcon("images/icon_iteration.gif") ;
+		iceUserObject.setBranchContractedIcon("images/tree/icon_iteration.gif") ;
+		iceUserObject.setBranchExpandedIcon("images/tree/icon_iteration.gif") ;
 
 		for(BreakdownElement breakdownElement : _iteration.getBreakDownElements()){
 			if(breakdownElement instanceof Activity){

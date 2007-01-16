@@ -23,8 +23,8 @@ public class RoleDescriptorNode extends DefaultMutableTreeNode {
 
 		iceUserObject.setText(_roleDescriptor.getName()) ;
 		iceUserObject.setLeaf(false) ;
-		iceUserObject.setBranchContractedIcon("images/icon_roledescriptor.gif") ;
-		iceUserObject.setBranchExpandedIcon("images/icon_roledescriptor.gif") ;
+		iceUserObject.setBranchContractedIcon("images/tree/icon_roledescriptor.gif") ;
+		iceUserObject.setBranchExpandedIcon("images/tree/icon_roledescriptor.gif") ;
 
 		RoleDefinition roleDefinition = _roleDescriptor.getRoleDefinition() ;
 		if(roleDefinition != null){

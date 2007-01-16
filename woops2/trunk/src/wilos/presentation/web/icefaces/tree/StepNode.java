@@ -22,7 +22,7 @@ public class StepNode extends DefaultMutableTreeNode {
 
 		iceUserObject.setText(_step.getName()) ;
 		iceUserObject.setLeaf(true) ;
-		iceUserObject.setLeafIcon("images/icon_step.gif") ;
+		iceUserObject.setLeafIcon("images/tree/icon_step.gif") ;
 	}
 
 }

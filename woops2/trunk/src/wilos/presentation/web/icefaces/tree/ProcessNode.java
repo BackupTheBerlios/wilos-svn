@@ -28,8 +28,8 @@ public class ProcessNode extends BasicNode {
 		iceUserObject.setExpanded(true);
 		iceUserObject.setText(this.process.getName()) ;
 		iceUserObject.setLeaf(false) ;
-		iceUserObject.setBranchContractedIcon("images/icon_process.gif") ;
-		iceUserObject.setBranchExpandedIcon("images/icon_process.gif") ;
+		iceUserObject.setBranchContractedIcon("images/tree/icon_process.gif") ;
+		iceUserObject.setBranchExpandedIcon("images/tree/icon_process.gif") ;
 
 		for(BreakdownElement breakdownElement : this.process.getBreakDownElements()){
 			if(breakdownElement instanceof TaskDescriptor){

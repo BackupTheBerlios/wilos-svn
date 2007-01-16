@@ -21,7 +21,7 @@ public class RoleDefinitionNode extends DefaultMutableTreeNode{
 
 		iceUserObject.setText(_roleDefinition.getName()) ;
 		iceUserObject.setLeaf(true) ;
-		iceUserObject.setLeafIcon("images/icon_role.gif");
+		iceUserObject.setLeafIcon("images/tree/icon_role.gif");
 	}
 	
 }

@@ -25,8 +25,8 @@ public class ActivityNode extends DefaultMutableTreeNode {
 
 		iceUserObject.setText(_activity.getName()) ;
 		iceUserObject.setLeaf(false) ;
-		iceUserObject.setBranchContractedIcon("images/icon_activity.gif") ;
-		iceUserObject.setBranchExpandedIcon("images/icon_activity.gif") ;
+		iceUserObject.setBranchContractedIcon("images/tree/icon_activity.gif") ;
+		iceUserObject.setBranchExpandedIcon("images/tree/icon_activity.gif") ;
 
 		for(BreakdownElement breakdownElement : _activity.getBreakDownElements()){
 			if(breakdownElement instanceof Activity){

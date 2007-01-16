@@ -28,7 +28,7 @@ public class TaskDescriptorNode extends BasicNode {
 		iceUserObject.setLeaf(true) ;
 		//iceUserObject.setBranchContractedIcon("images/icon_taskdescriptor.gif") ;
 		//iceUserObject.setBranchExpandedIcon("images/icon_taskdescriptor.gif") ;
-		iceUserObject.setLeafIcon("images/icon_taskdescriptor.gif") ;
+		iceUserObject.setLeafIcon("images/tree/icon_taskdescriptor.gif") ;
 
 		/*TaskDefinition taskDefinition = _taskDescriptor.getTaskDefinition() ;
 		if(taskDefinition != null){

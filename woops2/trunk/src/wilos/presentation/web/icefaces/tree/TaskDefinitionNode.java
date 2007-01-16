@@ -23,8 +23,8 @@ public class TaskDefinitionNode extends DefaultMutableTreeNode {
 
 		iceUserObject.setText(_taskDefinition.getName()) ;
 		iceUserObject.setLeaf(false) ;
-		iceUserObject.setBranchContractedIcon("images/icon_task.gif") ;
-		iceUserObject.setBranchExpandedIcon("images/icon_task.gif") ;
+		iceUserObject.setBranchContractedIcon("images/tree/icon_task.gif") ;
+		iceUserObject.setBranchExpandedIcon("images/tree/icon_task.gif") ;
 
 		for(Step step : _taskDefinition.getSteps()){
 			if(step != null){
