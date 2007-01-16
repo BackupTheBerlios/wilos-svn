@@ -1,0 +1,3 @@
+<ice:form id="rolesActionsForm">
+        <ice:commandLink id="AffectProcess" value="Affecter un processus a un role" action="" />
+</ice:form>

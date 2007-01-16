@@ -1,6 +1,6 @@
 #body{
 	border:3px solid #FFFFFF;
-	padding: 0px 10px 0px 0px;  
+	padding: 0px 0px 0px 0px;  
 	margin:10px 0px 0px 10px;
 	background-color:#BEB4CC;
 	outline:#8B82A2 solid medium;
@@ -8,15 +8,50 @@
 }
 
 #connection { 
+position: absolute;
+	left: 210px;
+}
+
+#roles_actions {
 	width:190px;
-	border-right:2px solid #FFFFFF;
 	border-top:2px solid #FFFFFF;
-	border-bottom:2px solid #FFFFFF;
+	border-right:2px solid #FFFFFF;
 }
 
 #menu { 
 	width:190px;
+	border-top:2px solid #FFFFFF;
 	border-right:2px solid #FFFFFF;
+}
+
+/* Main border layout for template */
+.mainBorderLayout {
+    vertical-align: top;
+    width: 100%;
+    background-color:#BEB4CC;
+}
+
+/* over ride default theme */
+.icePageNorth {
+	background-color:#BEB4CC;
+    vertical-align: top;
+    text-align: left;
+    margin: 0px;
+    padding: 0px;
+    border-collapse: collapse;
+}
+
+.icePageWest {
+	background-color:#CAC0D6;
+    vertical-align: top;
+    width: 10%;
+}
+
+.icePageCenter {
+	background-color:#CAC0D6;
+    vertical-align: top;
+    margin: 50px 5px 5px 5px;
+    width: 80%;
 }
 
 /*
@@ -198,9 +233,6 @@ em {
 
 }
 
-#connection{
-	background: #CAC0D6;
-}
 /*
  The following styles are used by showcase.jsp and componentTemplate.jsp
  for generic application layout.
@@ -280,39 +312,7 @@ em {
     width: 100%;
 }
 
-/* Main border layout for template */
-.mainBorderLayout {
-	border:border:3px solid;
-    vertical-align: top;
-    width: 100%;
-    background-color:#BEB4CC;
-}
 
-/* over ride default theme */
-.icePageNorth {
-	border:border:3px solid;
-	background-color:#BEB4CC;
-    vertical-align: top;
-    text-align: left;
-    margin: 0px;
-    padding: 0px;
-    border-collapse: collapse;
-}
-
-.icePageWest {
-	border:border:3px solid;
-	background-color:#CAC0D6;
-    vertical-align: top;
-    width: 10%;
-}
-
-.icePageCenter {
-	background-color:#CAC0D6;
-	border:border:3px solid;
-    vertical-align: top;
-    margin: 50px 5px 5px 5px;
-    width: 80%
-}
 
 /* encapsulates the demo tab panel */
 .demoWindow {

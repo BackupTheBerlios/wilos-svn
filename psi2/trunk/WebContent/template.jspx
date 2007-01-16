@@ -23,20 +23,23 @@
 
         <f:facet name="north">
             <ice:panelGroup>  
-					<img src="images/logo_wilos.png"/>
+					<div id="connection">
+					<jsp:directive.include file="connect.jspx"/>
+					</div>				
+					<img src="images/logo_wilos.png"/>						
             </ice:panelGroup>
             
             
         </f:facet>
 
         <f:facet name="west">
-            <ice:panelGroup>     
-					<div id="connection">
-					<jsp:directive.include file="connect.jspx"/>
-					</div>
-					<div id="menu">
-                    <jsp:directive.include file="navigation.jspx" />
-                    </div>
+            <ice:panelGroup>
+            	<div id="menu">
+                	<jsp:directive.include file="navigation.jspx" />
+                </div>
+                <div id="roles_actions">
+                	<jsp:directive.include file="roles_actions.jspx" />
+                </div>
             </ice:panelGroup>
         </f:facet>
 
@@ -49,8 +52,6 @@
                 </ice:panelGrid>
                 
 				<ice:messages styleClass="pageHeader"/>
-				
-                <div class="demoWindow">
                     <ice:panelStack id="panelStack"
                         styleClass="componentContentPanelStack"
                         selectedPanel="#{menu.selectedPanel.templateName}">
@@ -96,7 +97,7 @@
                             <jsp:directive.include file="welcomeProcessManager.jspx" />
                         </f:subview>
                     </ice:panelGroup>
-                </ice:panelStack></div>
+                </ice:panelStack>
                 <br />
             </ice:panelGroup>
         </f:facet>
