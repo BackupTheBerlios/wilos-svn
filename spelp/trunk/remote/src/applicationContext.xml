@@ -54,6 +54,8 @@
 			<value>wilos/model/spem2/task/Step.hbm.xml</value>
 			<value>wilos/model/spem2/role/RoleDescriptor.hbm.xml</value>
 			<value>wilos/model/spem2/role/RoleDefinition.hbm.xml</value>
+			<!-- SPELP -->
+			<value>wilos/model/spem2/guide/Guideline.hbm.xml</value>
 				
 			</list>
 		</property>
