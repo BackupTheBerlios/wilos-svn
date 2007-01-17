@@ -14,6 +14,7 @@ public class AllTests {
 		TestSuite suite = new TestSuite("Test for wilos.test.hibernate") ;
 		// $JUnit-BEGIN$
 		suite.addTest(wilos.test.hibernate.spem2.AllTests.suite()) ;
+		suite.addTest(wilos.test.hibernate.misc.AllTests.suite()) ;
 		// $JUnit-END$
 		return suite ;
 	}
