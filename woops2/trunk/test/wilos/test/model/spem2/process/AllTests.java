@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 public class AllTests {
 
 	public static Test suite () {
-		TestSuite suite = new TestSuite("Test for wilos.test.model.process") ;
+		TestSuite suite = new TestSuite("Test for wilos.test.model.spem2.process") ;
 		//$JUnit-BEGIN$
 		suite.addTestSuite(ProcessTest.class) ;
 		//$JUnit-END$
