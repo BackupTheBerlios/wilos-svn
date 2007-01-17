@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 public class AllTests {
 
 	public static Test suite () {
-		TestSuite suite = new TestSuite("Test for wilos.test.hibernate.activity") ;
+		TestSuite suite = new TestSuite("Test for wilos.test.hibernate.spem2.activity") ;
 		//$JUnit-BEGIN$
 		suite.addTestSuite(ActivityDaoTest.class) ;
 		//$JUnit-END$
