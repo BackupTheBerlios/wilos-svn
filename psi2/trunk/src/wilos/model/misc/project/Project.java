@@ -252,5 +252,4 @@ public class Project implements Cloneable {
 	public void setProject_id(String project_id) {
 		this.project_id = project_id;
 	}
-
 }

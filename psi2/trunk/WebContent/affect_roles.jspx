@@ -25,6 +25,41 @@
 					<ice:commandButton value="saveRoles" action="#{RoleBean.saveParticipantRoles}"/>
 				</ice:panelGroup>
 			</ice:panelTab>
+			
+			
+			<ice:panelTab id="panelTab_participant_project" label="Affectation à un Projet" imageDir="images">
+				<ice:panelGroup id="projectPanelGroup" styleClass="contentIncludePanelGroup">
+					<ice:dataTable value="#{ProjectBean.projectList}" border="1" var="project1">
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="Nom"/>
+						    </f:facet>
+						    <ice:outputText value="#{project1.name}"/>
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="Date de creation"/>
+						    </f:facet>
+						    <ice:outputText value="#{project1.creationDate}"/>
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="Date de lancement"/>
+						    </f:facet>
+						    <ice:outputText value="#{project1.launchingDate}"/>
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="Description"/>
+						    </f:facet>
+						    <ice:outputText value="#{project1.description}"/>
+						</ice:column>
+					</ice:dataTable>
+					
+				</ice:panelGroup>
+			</ice:panelTab>
+			
+			
 		</ice:panelTabSet>
 	</ice:panelGrid>
 </ice:form>

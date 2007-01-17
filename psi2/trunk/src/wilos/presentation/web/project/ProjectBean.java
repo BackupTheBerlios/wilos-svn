@@ -1,7 +1,9 @@
 
 package wilos.presentation.web.project ;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+
+import java.util.List;
 import java.util.Set;
 
 import javax.faces.application.FacesMessage ;
@@ -12,6 +14,7 @@ import org.apache.commons.logging.LogFactory ;
 
 import wilos.business.services.project.ProjectService ;
 import wilos.model.misc.project.Project ;
+
 
 /**
  * Managed-Bean link to project_create.jspx
@@ -24,7 +27,7 @@ public class ProjectBean {
 
 	private Project project ;
 	
-	private HashSet<Project> projectList = new HashSet<Project>();
+	private List<Project> projectList ;
 
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
@@ -86,6 +89,7 @@ public class ProjectBean {
 		
 		facesContext.addMessage(null, message) ;
 		}
+		this.project = new Project() ;
 	
 		return url ;
 	}
@@ -143,7 +147,15 @@ public class ProjectBean {
 	 * 
 	 * @return the projectList.
 	 */
-	public HashSet<Project> getProjectList() {
+	public List<Project> getProjectList() {
+		this.projectList = new ArrayList<Project>();
+		projectList.addAll(this.projectService.getAllProjects());
+		
+		for(Project project : projectList)
+		{
+			this.logger.debug("### Projet : "+project.getName()+"###");
+		}
+		
 		return this.projectList ;
 	}
 
@@ -153,7 +165,7 @@ public class ProjectBean {
 	 * @param _projectList
 	 *            The projectList to set.
 	 */
-	public void setProjectList(HashSet<Project> _projectList) {
+	public void setProjectList(List<Project> _projectList) {
 		this.projectList = _projectList ;
 	}
 
