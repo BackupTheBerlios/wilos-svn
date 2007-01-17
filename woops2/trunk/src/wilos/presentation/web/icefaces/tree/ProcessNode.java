@@ -22,7 +22,7 @@ public class ProcessNode extends BasicNode {
 		super.setBasicNodeId(_process.getId());
 		this.process = _process;
 		
-		IceUserObject iceUserObject = new IceUserObject(this) ;
+		WilosObjectNode iceUserObject = new WilosObjectNode(this) ;
 		this.setUserObject(iceUserObject) ;
 
 		iceUserObject.setExpanded(true);
@@ -30,7 +30,7 @@ public class ProcessNode extends BasicNode {
 		iceUserObject.setLeaf(false) ;
 		iceUserObject.setBranchContractedIcon("images/tree/icon_process.gif") ;
 		iceUserObject.setBranchExpandedIcon("images/tree/icon_process.gif") ;
-
+		iceUserObject.setObjectId(_process.getId());
 		for(BreakdownElement breakdownElement : this.process.getBreakDownElements()){
 			if(breakdownElement instanceof TaskDescriptor){
 				TaskDescriptor taskDescriptor = (TaskDescriptor) breakdownElement ;

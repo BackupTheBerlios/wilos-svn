@@ -21,7 +21,7 @@ public class TaskDescriptorNode extends BasicNode {
 	public TaskDescriptorNode(TaskDescriptor _taskDescriptor) {
 		super() ;
 		super.setBasicNodeId(_taskDescriptor.getId());
-		IceUserObject iceUserObject = new IceUserObject(this) ;
+		WilosObjectNode iceUserObject = new WilosObjectNode(this) ;
 		this.setUserObject(iceUserObject) ;
 
 		iceUserObject.setText(_taskDescriptor.getName()) ;
@@ -29,7 +29,7 @@ public class TaskDescriptorNode extends BasicNode {
 		//iceUserObject.setBranchContractedIcon("images/icon_taskdescriptor.gif") ;
 		//iceUserObject.setBranchExpandedIcon("images/icon_taskdescriptor.gif") ;
 		iceUserObject.setLeafIcon("images/tree/icon_taskdescriptor.gif") ;
-
+		iceUserObject.setObjectId(_taskDescriptor.getId());
 		/*TaskDefinition taskDefinition = _taskDescriptor.getTaskDefinition() ;
 		if(taskDefinition != null){
 			this.add(new TaskDefinitionNode(taskDefinition)) ;

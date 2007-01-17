@@ -3,7 +3,9 @@ package wilos.presentation.web.icefaces.tree ;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -14,8 +16,6 @@ import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.process.ProcessService;
 import wilos.model.spem2.process.Process;
-
-import com.icesoft.faces.component.tree.IceUserObject;
 
 /**
  * <p/> A basic backing bean for a ice:tree component. The only instance variable needed is a
@@ -31,6 +31,8 @@ public class TreeBean {
 
 	String processId = "" ;
 	
+	String selectedId = "";
+	
 	// tree default model, used as a value for the tree component
 	private DefaultTreeModel model = null ;
 
@@ -38,7 +40,7 @@ public class TreeBean {
 
 	public TreeBean() {
 		DefaultMutableTreeNode defaultTree = new DefaultMutableTreeNode();
-		IceUserObject iceUserObject = new IceUserObject(defaultTree) ;
+		WilosObjectNode iceUserObject = new WilosObjectNode(defaultTree) ;
 		iceUserObject.setText("Choose a project ...") ;
 		defaultTree.setUserObject(iceUserObject) ;
 		this.model = new DefaultTreeModel(defaultTree) ;
@@ -76,11 +78,11 @@ public class TreeBean {
 	}
 	
 	public void selectNodeActionListener(ActionEvent evt) {
-		//FIXME
-		/*FacesContext context = FacesContext.getCurrentInstance(); 
+		FacesContext context = FacesContext.getCurrentInstance(); 
 		Map map = context.getExternalContext().getRequestParameterMap();
 		String basicNodeId = (String) map.get("basicNode_id");
-		logger.debug("### TreeBean ### selectNodeActionListener - basicNodeId ="+basicNodeId);*/
+		this.selectedId = basicNodeId;
+		logger.debug("### TreeBean ### selectNodeActionListener - basicNodeId ="+basicNodeId);
 	}
 
 	/**
@@ -115,5 +117,13 @@ public class TreeBean {
 	 */
 	public void setProcessService(ProcessService _processService) {
 		this.processService = _processService ;
+	}
+
+	public String getSelectedId() {
+		return selectedId;
+	}
+
+	public void setSelectedId(String selectedId) {
+		this.selectedId = selectedId;
 	}
 }
