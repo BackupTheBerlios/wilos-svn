@@ -28,7 +28,11 @@ public class ProjectBean {
 	private Project project ;
 	
 	private List<Project> projectList ;
+	
+	private List<Project> projectListWithoutProcess = new ArrayList<Project>();
 
+	private List<Project> projectListWithProcess = new ArrayList<Project>();
+	
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
 	/**
@@ -167,6 +171,24 @@ public class ProjectBean {
 	 */
 	public void setProjectList(List<Project> _projectList) {
 		this.projectList = _projectList ;
+	}
+
+	public List<Project> getProjectListWithoutProcess() {
+		this.projectListWithoutProcess.addAll(this.projectService.getAllProjectsWithNoProcess());
+		return projectListWithoutProcess;
+	}
+
+	public void setProjectListWithoutProcess(List<Project> projectListWithoutProcess) {
+		this.projectListWithoutProcess = projectListWithoutProcess;
+	}
+
+	public List<Project> getProjectListWithProcess() {
+		this.projectListWithProcess.addAll(this.projectService.getAllProjectsWithProcess());
+		return projectListWithProcess;
+	}
+
+	public void setProjectListWithProcess(List<Project> projectListWithProcess) {
+		this.projectListWithProcess = projectListWithProcess;
 	}
 
 }

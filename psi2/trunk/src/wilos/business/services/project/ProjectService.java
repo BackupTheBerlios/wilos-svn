@@ -102,7 +102,48 @@ public class ProjectService {
 		projectList = (HashSet)this.projectDao.getAllProject();
 		return projectList;
 	}
+	
+	/**
+	 * TODO Method description
+	 *
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Set<Project> getAllProjectsWithNoProcess()
+	{
+		HashSet<Project> projectList = new HashSet<Project>();
+		HashSet<Project> tmpList = new HashSet<Project>();
+		tmpList = (HashSet)this.projectDao.getAllProject();
+		for (Iterator iter = tmpList.iterator(); iter.hasNext();) {
+			Project project = (Project) iter.next();
+			if(project.getProcess() == null)
+				projectList.add(project);
+		}
+		
+		return projectList;
+	}
 
+	/**
+	 * TODO Method description
+	 *
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Set<Project> getAllProjectsWithProcess()
+	{
+		HashSet<Project> projectList = new HashSet<Project>();
+		HashSet<Project> tmpList = new HashSet<Project>();
+		tmpList = (HashSet)this.projectDao.getAllProject();
+		for (Iterator iter = tmpList.iterator(); iter.hasNext();) {
+			Project project = (Project) iter.next();
+			if(project.getProcess() != null)
+				projectList.add(project);
+		}
+		
+		return projectList;
+	}
+	
+	
 	/**
 	 * Getter of participantDao.
 	 *
