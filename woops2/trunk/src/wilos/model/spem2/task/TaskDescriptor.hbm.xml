@@ -24,5 +24,10 @@
 			</many-to-many>
 		</set>
 		
+		<set name="concreteTaskDescriptors" lazy="true">
+			<key column="concretetaskdescriptor_id" />
+			<one-to-many class="wilos.model.misc.concretetask.ConcreteTaskDescriptor"></one-to-many>
+		</set>
+		
 	</joined-subclass>
 </hibernate-mapping>

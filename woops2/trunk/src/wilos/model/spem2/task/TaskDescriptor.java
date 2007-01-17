@@ -1,12 +1,13 @@
 
 package wilos.model.spem2.task ;
 
-import java.util.HashSet ;
-import java.util.Set ;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.apache.commons.lang.builder.EqualsBuilder ;
-import org.apache.commons.lang.builder.HashCodeBuilder ;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
+import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 
@@ -38,6 +39,11 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 	 * The main role of the taskDefinition
 	 */
 	private RoleDescriptor mainRole ;
+	
+	/**
+	 * The corresponding concrete task descriptors.
+	 */
+	private Set<ConcreteTaskDescriptor> concreteTaskDescriptors;
 
 	/**
 	 * Default constructor.
@@ -45,6 +51,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 	public TaskDescriptor() {
 		super() ;
 		this.additionalRoles = new HashSet<RoleDescriptor>() ;
+		this.concreteTaskDescriptors = new HashSet<ConcreteTaskDescriptor>();
 	}
 
 	/*
@@ -65,6 +72,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 	protected void copy(final TaskDescriptor _taskDescriptor) {
 		super.copy(_taskDescriptor) ;
 		this.setAdditionalRoles(_taskDescriptor.getAdditionalRoles()) ;
+		this.setConcreteTaskDescriptors(_taskDescriptor.getConcreteTaskDescriptors());
 		this.setTaskDefinition(_taskDescriptor.getTaskDefinition()) ;
 		this.setMainRole(_taskDescriptor.getMainRole()) ;
 	}
@@ -83,7 +91,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 		}
 		TaskDescriptor taskDescriptor = (TaskDescriptor) obj ;
 		return new EqualsBuilder().appendSuper(super.equals(taskDescriptor)).append(this.taskDefinition, taskDescriptor.taskDefinition).append(
-				this.additionalRoles, taskDescriptor.additionalRoles).append(this.mainRole, taskDescriptor.mainRole).isEquals() ;
+				this.additionalRoles, taskDescriptor.additionalRoles).append(this.mainRole, taskDescriptor.mainRole).append(this.concreteTaskDescriptors, taskDescriptor.concreteTaskDescriptors).isEquals() ;
 	}
 
 	/*
@@ -93,6 +101,27 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.taskDefinition).append(this.mainRole).toHashCode() ;
+	}
+	
+	/*
+	 * relation between TaskDescriptor and ConcreteTaskDescriptor.
+	 * 
+	 */
+	
+	/**
+	 * @param _roleDescriptor
+	 */
+	public void addConcreteTaskDescriptor(ConcreteTaskDescriptor _concreteTaskDescriptor) {
+		this.concreteTaskDescriptors.add(_concreteTaskDescriptor) ;
+		_concreteTaskDescriptor.addTaskDescriptor(this) ;
+	}
+
+	/**
+	 * @param _roleDescriptor
+	 */
+	public void removeAdditionalRole(ConcreteTaskDescriptor _concreteTaskDescriptor) {
+		_concreteTaskDescriptor.removeTaskDescriptor(this) ;
+		this.concreteTaskDescriptors.remove(_concreteTaskDescriptor) ;
 	}
 
 	/*
@@ -240,5 +269,14 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 	 */
 	public void setMainRole(RoleDescriptor _mainRole) {
 		this.mainRole = _mainRole ;
+	}
+
+	public Set<ConcreteTaskDescriptor> getConcreteTaskDescriptors() {
+		return concreteTaskDescriptors;
+	}
+
+	public void setConcreteTaskDescriptors(
+			Set<ConcreteTaskDescriptor> concreteTaskDescriptors) {
+		this.concreteTaskDescriptors = concreteTaskDescriptors;
 	}
 }
