@@ -4,10 +4,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
+ * This class represents a singleton to get the applicationContext for the tests.
+ * 
  * @author Martial
- *
- * This class represents ... TODO
- *
  */
 public class TestConfiguration {
 

@@ -14,7 +14,7 @@ import junit.framework.TestCase;
 /**
  * @author Michaël
  *
- * This class represents ... TODO
+ * This class represents the TestCase for the LoginService class.  
  *
  */
 public class LoginServiceTest extends TestCase {

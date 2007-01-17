@@ -1,7 +1,7 @@
 package wilos.presentation.web.template;
 
 /**
- * TODO
+ * TODO Method description
  */
 public class MenuBean {
 

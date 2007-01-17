@@ -34,8 +34,7 @@ public class ParticipantDao extends HibernateDaoSupport {
 	 */
 	public Set<RoleDescriptor> getAllRoles() {
 		Set<RoleDescriptor> loadAll = new HashSet<RoleDescriptor>();
-		loadAll.addAll(this.getHibernateTemplate()
-				.loadAll(RoleDescriptor.class));
+		loadAll.addAll(this.getHibernateTemplate().loadAll(RoleDescriptor.class));
 		return loadAll;
 	}
 
@@ -57,8 +56,7 @@ public class ParticipantDao extends HibernateDaoSupport {
 	 * @return
 	 */
 	public Participant getParticipant(String _id) {
-		return (Participant) this.getHibernateTemplate().get(Participant.class,
-				_id);
+		return (Participant) this.getHibernateTemplate().get(Participant.class, _id);
 	}
 
 	/**
@@ -70,11 +68,8 @@ public class ParticipantDao extends HibernateDaoSupport {
 		try {
 			this.getHibernateTemplate().delete(_participant);
 		} catch (Exception sose) {
-			// Catch normally errors when we delete an unexisting element into
-			// the db.
-			logger
-					.error("#### ERROR #### --- ParticipantDao => deleteParticipant : trying to delete unexisting object \n"
-							+ sose);
+			// Catch normally errors when we delete an unexisting element into the db.
+			logger.error("#### ERROR #### --- ParticipantDao => deleteParticipant : trying to delete unexisting object \n" + sose);
 		}
 	}
 }

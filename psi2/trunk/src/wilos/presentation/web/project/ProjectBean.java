@@ -128,13 +128,13 @@ public class ProjectBean {
 		this.projectService = _projectService ;
 	}
 	
+
 	/**
+	 * Return all the Projects
 	 * 
-	 * TODO Method description
-	 * 
+	 * @return A set of Project
 	 */
-	public Set<Project> getAllProjects()
-	{
+	public Set<Project> getAllProjects(){
 		return this.projectService.getAllProjects();
 	}
 

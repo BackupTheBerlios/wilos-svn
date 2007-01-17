@@ -8,7 +8,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * TODO
+ * TODO Method description
  */
 public class ConnectContentBean extends IceUserObject {
 
@@ -26,7 +26,7 @@ public class ConnectContentBean extends IceUserObject {
     private ConnectViewBean navigationBean;
 
     /**
-     * TODO
+     * TODO Method description
      */
     public ConnectContentBean() {
         super(null);
@@ -70,7 +70,7 @@ public class ConnectContentBean extends IceUserObject {
     }
 
     /**
-     * TODO.
+     * TODO Method description.
      *
      * @return panel stack template name.
      */
@@ -79,7 +79,7 @@ public class ConnectContentBean extends IceUserObject {
     }
 
     /**
-     * TODO
+     * TODO Method description
      *
      * @param templateName valid panel name
      */
@@ -88,7 +88,7 @@ public class ConnectContentBean extends IceUserObject {
     }
 
     /**
-     * TODO
+     * TODO Method description
      *
      * @return true if the page contains content; otherwise, false.
      */
@@ -106,7 +106,6 @@ public class ConnectContentBean extends IceUserObject {
     }
 
     /**
-     * TODO
      * Sets the navigationSelectionBeans selected state
      */
     public void contentVisibleAction(ActionEvent event) {

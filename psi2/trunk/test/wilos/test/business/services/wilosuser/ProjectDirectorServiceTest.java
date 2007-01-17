@@ -9,7 +9,7 @@ import wilos.test.configuration.TestConfiguration;
 /**
  * @author Martial
  *
- * This class represents ... TODO
+ * This class represents the TestCase for the ProjectDirectorService class.  
  *
  */
 public class ProjectDirectorServiceTest extends TestCase {

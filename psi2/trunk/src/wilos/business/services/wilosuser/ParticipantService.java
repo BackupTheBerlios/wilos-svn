@@ -30,12 +30,13 @@ public class ParticipantService {
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
 	/**
-	 * Return participant roles
+	 * Return all the roles
 	 * 
 	 * @return the roles
 	 */
 	@Transactional(readOnly = true)
 	public Set<RoleDescriptor> getRolesList() {
+		//TODO: A deplacer dans le RoleService
 		return this.participantDao.getAllRoles();
 	}
 	
@@ -70,8 +71,8 @@ public class ParticipantService {
 	}
 
 	/**
-	 * TODO
-	 * @return
+	 * Getter of ParticipantDao.
+	 * @return the ParticipantDao
 	 */
 	public ParticipantDao getParticipantDao() {
 		return this.participantDao;

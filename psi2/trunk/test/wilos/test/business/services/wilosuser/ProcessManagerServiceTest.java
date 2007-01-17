@@ -9,7 +9,7 @@ import wilos.model.misc.wilosuser.ProcessManager;
 /**
  * @author Martial
  *
- * This class represents ... TODO
+ * This class represents the TestCase for the ProcessManagerService class.  
  *
  */
 public class ProcessManagerServiceTest extends TestCase {

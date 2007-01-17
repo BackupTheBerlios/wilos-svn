@@ -41,7 +41,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * TODO
+ * TODO Method description
  */
 public class PageContentBean extends IceUserObject {
 

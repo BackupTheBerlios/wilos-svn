@@ -11,8 +11,7 @@ import wilos.model.misc.wilosuser.Administrator;
  * AdministratorDao manage requests from the system to store Administrator into
  * the database.
  * 
- * @author Yoann
- * @author Lopes
+ * @author Yoann Lopes
  * @author Martial Lapeyre
  */
 public class AdministratorDao extends HibernateDaoSupport {

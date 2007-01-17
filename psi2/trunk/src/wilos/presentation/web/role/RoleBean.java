@@ -161,7 +161,7 @@ public class RoleBean {
 	}
 	
 	/**
-	 * TODO
+	 * TODO Method description
 	 * @param newRole
 	 */
 	public void addRoleChangeListener(ValueChangeEvent newRole)

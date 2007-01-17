@@ -8,10 +8,9 @@ import wilos.model.misc.wilosuser.Participant;
 import junit.framework.TestCase;
 
 /**
+ * This class represents the TestCase for the ParticipantDao class.
+ * 
  * @author Michaël
- *
- * This class represents ... TODO
- *
  */
 public class ParticipantDaoTest extends TestCase {
 
@@ -35,7 +34,7 @@ public class ParticipantDaoTest extends TestCase {
 	 */
 	protected void tearDown() throws Exception {
 		super.tearDown() ;
-//		 Delete the tmp participant from the database.
+		//Delete the tmp participant from the database.
 		try{
 			this.participantDao.deleteParticipant(this.participant) ;
 		}
@@ -48,7 +47,7 @@ public class ParticipantDaoTest extends TestCase {
 	 * Test method for {@link woops2.hibernate.wilosuser.ParticipantDao#saveOrUpdateParticipant(woops2.model.wilosuser.Participant)}.
 	 */
 	public void testSaveOrUpdateParticipant() {
-//		Save the activity with the method to test.
+		// Save the activity with the method to test.
 		this.participantDao.saveOrUpdateParticipant(this.participant) ;
 		
 		// Check the saving.
@@ -63,7 +62,7 @@ public class ParticipantDaoTest extends TestCase {
 	 * Test method for {@link woops2.hibernate.wilosuser.ParticipantDao#getAllRoles()}.
 	 */
 	public void testGetAllRoles() {
-		// TODO ...
+		// TODO : tester cette methode quand elle sera placée dans la bonne classe
 		assertTrue(true);
 	}
 

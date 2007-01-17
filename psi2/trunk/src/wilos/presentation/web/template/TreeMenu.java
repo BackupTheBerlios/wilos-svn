@@ -7,7 +7,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 /**
- * TODO
+ * TODO Method description
  * <p>The TreeNavigation class is the backing bean for the showcase navigation
  * tree on the left hand side of the application. Each node in the tree is made
  * up of a PageContent which is responsible for the navigation action when a

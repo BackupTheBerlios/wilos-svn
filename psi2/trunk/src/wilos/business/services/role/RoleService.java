@@ -151,10 +151,10 @@ public class RoleService {
 	
 	
 	/**
-	 * TODO Method description
+	 * Method to get the RoleDescriptor that match with the RoleName provided
 	 *
 	 * @param roleName
-	 * @return
+	 * @return The RoleDescriptor
 	 */
 	public RoleDescriptor getRoleDescriptorByName(String roleName){
 		for(Iterator roleIter = this.getRolesDescriptor().iterator(); roleIter.hasNext();){

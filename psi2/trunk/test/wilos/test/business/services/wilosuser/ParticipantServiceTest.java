@@ -20,6 +20,15 @@ public class ParticipantServiceTest extends TestCase {
 	private ParticipantService ps;
 	private RoleService rs;
 	private Participant p ;
+	
+	private final static String LOGIN = "john";
+	private final static String NAME = "georges";
+	private final static String PASS = "pass";
+	private final static String ROLE1 = "Testeur";
+	private final static String ROLE2 = "Developpeur";
+	private final static Boolean VROLE1 = true;
+	private final static Boolean VROLE2 = true;
+	
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#setUp()
 	 */
@@ -28,9 +37,9 @@ public class ParticipantServiceTest extends TestCase {
 		this.ps = (ParticipantService) TestConfiguration.getInstance().getApplicationContext().getBean("ParticipantService") ;
 		this.rs = (RoleService) TestConfiguration.getInstance().getApplicationContext().getBean("RoleService") ;
 		p=new Participant();
-		p.setLogin("john");
-		p.setName("georges");
-		p.setPassword("pass") ;
+		p.setLogin(LOGIN);
+		p.setName(NAME);
+		p.setPassword(PASS) ;
 	}
 
 	/* (non-Javadoc)
@@ -47,11 +56,13 @@ public class ParticipantServiceTest extends TestCase {
 	 * Test method for {@link woops2.business.wilosuser.ParticipantService#getRolesList()}.
 	 */
 	public void testGetRolesList() {
-	//	TODO...	
+		//TODO: finir ce test quand la fonction sera placée dans la bonne classe 
 		HashMap<String, Boolean> roles = new HashMap<String, Boolean>();
-		roles.put("Tester", true);
-		roles.put("Developpeur", false);
-		rs.saveParticipantRoles(roles,"mika");
+		roles.put(ROLE1, VROLE1);
+		roles.put(ROLE2, VROLE2);
+		rs.saveParticipantRoles(roles,LOGIN);
+		
+		
 		assertTrue(true);
 	}
 
@@ -59,12 +70,12 @@ public class ParticipantServiceTest extends TestCase {
 	 * Test method for {@link woops2.business.wilosuser.ParticipantService#saveParticipant(woops2.model.wilosuser.Participant)}.
 	 */
 	public void testSaveParticipant() {
-		
 		this.ps.saveParticipant(this.p);
-		Participant ParticipantTmp = (Participant) this.ps.getParticipantDao().getParticipant("john");
+		Participant ParticipantTmp = (Participant) this.ps.getParticipantDao().getParticipant(LOGIN);
+		
 		assertNotNull(ParticipantTmp);
-		assertEquals(ParticipantTmp.getName(), "georges") ;
-		assertEquals(ParticipantTmp.getLogin(), "john") ;
-		assertEquals(ParticipantTmp.getPassword(), Security.encode("pass")) ;
+		assertEquals(ParticipantTmp.getName(), LOGIN) ;
+		assertEquals(ParticipantTmp.getLogin(), NAME) ;
+		assertEquals(ParticipantTmp.getPassword(), Security.encode(PASS)) ;
 	}
 }
