@@ -47,9 +47,9 @@ public class Project implements Cloneable {
 	 * @param _process
 	 *            the process to be linked to
 	 */
-	public void addToProcess(wilos.model.spem2.process.Process _process) {
+	public void addProcess(wilos.model.spem2.process.Process _process) {
 		this.process = _process ;
-		// _process.getProjects().add(this);
+		_process.getProjects().add(this);
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class Project implements Cloneable {
 	 */
 	public void removeFromProcess(wilos.model.spem2.process.Process _process) {
 		this.process = null ;
-		// _process.getProjects().remove(this);
+		_process.getProjects().remove(this);
 	}
 
 	/**

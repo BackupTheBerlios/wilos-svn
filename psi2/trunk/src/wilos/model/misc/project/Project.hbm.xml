@@ -14,9 +14,7 @@
 		
 		<set name="process" table="execute" lazy="true">
 			<key column="name"></key>
-			<many-to-many class="wilos.model.spem2.process.Process"
-				column="process_id">
-			</many-to-many>
+			<one-to-many class="wilos.model.spem2.process.Process" />
 		</set>
 		
 		<set name="participants" table="affectedto" lazy="true">
