@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 public class AllTests {
 
 	public static Test suite () {
-		TestSuite suite = new TestSuite("Test for wilos.test.model.role") ;
+		TestSuite suite = new TestSuite("Test for wilos.test.model.spem2.role") ;
 		//$JUnit-BEGIN$
 		suite.addTestSuite(RoleDefinitionTest.class) ;
 		suite.addTestSuite(RoleDescriptorTest.class) ;

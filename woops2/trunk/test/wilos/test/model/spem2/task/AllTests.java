@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 public class AllTests {
 
 	public static Test suite() {
-		TestSuite suite = new TestSuite("Test for wilos.test.model.task");
+		TestSuite suite = new TestSuite("Test for wilos.test.model.spem2.task");
 		// $JUnit-BEGIN$
 		suite.addTestSuite(StepTest.class);
 		suite.addTestSuite(TaskDescriptorTest.class);
