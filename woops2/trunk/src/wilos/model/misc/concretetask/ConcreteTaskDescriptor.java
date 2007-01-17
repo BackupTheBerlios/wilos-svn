@@ -44,6 +44,14 @@ public class ConcreteTaskDescriptor {
 		this.taskDescriptor = null ;
 	}
 	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 	public State getState() {
 		return state;
 	}
@@ -122,13 +130,5 @@ public class ConcreteTaskDescriptor {
 
 	public void setRemainingTime(float remainingTime) {
 		this.remainingTime = remainingTime;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 }
