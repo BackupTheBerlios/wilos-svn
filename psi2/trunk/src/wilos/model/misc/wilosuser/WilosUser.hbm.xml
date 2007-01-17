@@ -7,8 +7,12 @@
 
 	<class name="wilos.model.misc.wilosuser.WilosUser" table="wilosuser"
 		lazy="false">
-
-		<id name="login" type="string" column="login"></id>
+		<id name="wilosuser_id" type="string"
+                        column="wilosuser_id">
+                        <!--identifiant auto-incrementÃ© -->
+                        <generator class="uuid" />
+                </id>
+		<property name="login" type="string" column="login"/>
 
 		<property name="name" type="java.lang.String" column="name"
 			length="256" />

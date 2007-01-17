@@ -19,7 +19,7 @@
 		<set name="affectedProjectList" table="affectedto" lazy="true">
 			<key column="participant_id"></key>
 			<many-to-many class="wilos.model.misc.project.Project"
-				column="name">
+				column="project_id">
 			</many-to-many>
 		</set>
 	</joined-subclass>

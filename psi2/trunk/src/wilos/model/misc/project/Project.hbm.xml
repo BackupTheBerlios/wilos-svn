@@ -6,7 +6,12 @@
 <hibernate-mapping>
 
 	<class name="wilos.model.misc.project.Project" table="project" lazy="false">
-		<id name="name" type="string" column="name"></id>
+		<id name="project_id" type="string"
+                        column="project_id">
+                        <!--identifiant auto-incrementÃ© -->
+                        <generator class="uuid" />
+                </id>
+		<property name="name" type="string" column="name"/>
 		<property name="description" type="java.lang.String" column="description"
 			length="1024" />
 		<property name="creationDate" type="java.util.Date" column="creationDate"/>
@@ -18,7 +23,7 @@
 		</set>
 		
 		<set name="participants" table="affectedto" lazy="true">
-			<key column="name"></key>
+			<key column="project_id"></key>
 			<many-to-many class="wilos.model.misc.wilosuser.Participant"
 				column="participant_id">
 			</many-to-many>

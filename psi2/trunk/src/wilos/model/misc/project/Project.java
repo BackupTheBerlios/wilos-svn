@@ -9,7 +9,7 @@ import org.apache.commons.lang.builder.EqualsBuilder ;
 import org.apache.commons.lang.builder.HashCodeBuilder ;
 
 import wilos.model.misc.wilosuser.Participant;
-import wilos.model.spem2.role.RoleDescriptor;
+
 
 /**
  * This class represents a project.
@@ -18,6 +18,8 @@ import wilos.model.spem2.role.RoleDescriptor;
  */
 public class Project implements Cloneable {
 
+	private String project_id ;
+	
 	private String name ;
 
 	private String description ;
@@ -242,4 +244,13 @@ public class Project implements Cloneable {
 			this.removeFromParticipant(participant) ;
 		}
 	}
+
+	public String getProject_id() {
+		return project_id;
+	}
+
+	public void setProject_id(String project_id) {
+		this.project_id = project_id;
+	}
+
 }

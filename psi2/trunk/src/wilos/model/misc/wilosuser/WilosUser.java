@@ -11,6 +11,8 @@ import org.apache.commons.lang.builder.HashCodeBuilder ;
  */
 public abstract class WilosUser implements Cloneable {
 
+	private String wilosuser_id ;
+	
 	private String name ;
 
 	private String firstname ;
@@ -178,6 +180,14 @@ public abstract class WilosUser implements Cloneable {
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode() ;
+	}
+
+	public String getWilosuser_id() {
+		return wilosuser_id;
+	}
+
+	public void setWilosuser_id(String wilosuser_id) {
+		this.wilosuser_id = wilosuser_id;
 	}
 
 }
