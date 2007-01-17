@@ -10,12 +10,9 @@
 		<f:selectItems value="#{TreeBean.projects}" />
 	</ice:selectOneMenu> <ice:commandButton type="submit" value="Change Project"
 		actionListener="#{TreeBean.changeTreeActionListener}" /> <br />
-	<br />
-	<ice:outputText value="ID Selected : #{TreeBean.selectedId}" /> <br />
-	<br />
 
-	<!-- The process tree with its taskDescriptors --> <ice:tree id="tree"
-		value="#{TreeBean.model}" var="item" hideRootNode="false"
+	<!-- The process tree with its taskDescriptors --> 
+	<ice:tree id="tree" value="#{TreeBean.model}" var="item" hideRootNode="false"
 		hideNavigation="false" imageDir="./xmlhttp/css/xp/css-images/">
 		<ice:treeNode>
 			<f:facet name="icon">

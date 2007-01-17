@@ -11,7 +11,11 @@
 				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2"
 					border="0">
 					<ice:outputText value="Task ID : " />
-					<ice:inputText value="#{TaskViewerBean.taskDescriptor.id}" />
+					<ice:inputText value="#{TaskViewerBean.taskDescriptor.id}" size="32"/>
+					<ice:outputText value="Name : " />
+					<ice:inputText value="#{TaskViewerBean.taskDescriptor.name}" size="32"/>
+					<ice:outputText value="Description : " />
+					<ice:outputTextarea value="#{TaskViewerBean.taskDescriptor.description}" rows="3"/>
 				</ice:panelGrid>
 			</ice:panelTab>
 		</ice:panelTabSet>

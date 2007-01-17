@@ -33,8 +33,6 @@ public class TreeBean {
 
 	String processId = "" ;
 	
-	String selectedId = "";
-	
 	// tree default model, used as a value for the tree component
 	private DefaultTreeModel model = null ;
 
@@ -83,7 +81,6 @@ public class TreeBean {
 		FacesContext context = FacesContext.getCurrentInstance(); 
 		Map map = context.getExternalContext().getRequestParameterMap();
 		String basicNodeId = (String) map.get("basicNode_id");
-		this.selectedId = basicNodeId;
 		logger.debug("### TreeBean ### selectNodeActionListener - basicNodeId ="+basicNodeId);
 		// envoi vers taskviewverBean
 		TaskViewerBean tv = (TaskViewerBean) context.getApplication()
@@ -130,13 +127,5 @@ public class TreeBean {
 	 */
 	public void setProcessService(ProcessService _processService) {
 		this.processService = _processService ;
-	}
-
-	public String getSelectedId() {
-		return selectedId;
-	}
-
-	public void setSelectedId(String selectedId) {
-		this.selectedId = selectedId;
 	}
 }
