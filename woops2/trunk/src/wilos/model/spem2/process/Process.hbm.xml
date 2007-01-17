@@ -11,9 +11,11 @@
 		table="process" lazy="true">
 		<key column="process_id"></key>
 		
-		<many-to-one name="projects" class="wilos.model.misc.project.Project"
-			column="name" lazy="false">
-		</many-to-one>
+
+		<set name="projects" lazy="true">
+			<key column="process_id" />
+			<one-to-many class="wilos.model.misc.project.Project" ></one-to-many>
+		</set>
 		
 	</joined-subclass>
 	
