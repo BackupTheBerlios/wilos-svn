@@ -34,12 +34,19 @@ public class ConnectViewBean {
      * @param connected
      * @return
      */
-    public String connected(boolean connected){
+    public String connected(boolean _connected, String _applicationRole){
     	ConnectContentBean connectContent = new ConnectContentBean();
-    	if(connected)
+    	if(_connected)
+    	{
+    		
     		connectContent.setTemplateName("connected");
+    		connectContent.setTemplateNameActions(_applicationRole);
+    	}
     	else
+    	{
     		connectContent.setTemplateName("not_connected");
+    		connectContent.setTemplateNameActions("none");
+    	}
     	connectContent.setNavigationSelection(this);
     	this.selectedPanel = connectContent;
     	return "";

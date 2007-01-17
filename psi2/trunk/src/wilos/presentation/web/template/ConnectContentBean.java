@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 public class ConnectContentBean extends IceUserObject {
 
     private String templateName = "";
+    private String templateNameActions = "";
 
     // True indicates that there is content associated with link and as a
     // result templateName and contentPanelName can be used
@@ -123,4 +124,22 @@ public class ConnectContentBean extends IceUserObject {
             setExpanded(!isExpanded());
         }
     }
+
+	/**
+	 * Getter of templateNameActions.
+	 *
+	 * @return the templateNameActions.
+	 */
+	public String getTemplateNameActions() {
+		return this.templateNameActions ;
+	}
+
+	/**
+	 * Setter of templateNameActions.
+	 *
+	 * @param _templateNameActions The templateNameActions to set.
+	 */
+	public void setTemplateNameActions(String _templateNameActions) {
+		this.templateNameActions = _templateNameActions ;
+	}
 }

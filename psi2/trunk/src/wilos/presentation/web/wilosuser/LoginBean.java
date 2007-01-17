@@ -91,6 +91,7 @@ public class LoginBean {
 	 */
 	public String authentificationAction() {
 		String url = "" ;
+		String applicationRole = "";
 		WilosUser user = this.loginService.getAuthentifiedUser(this.login, Security.encode(this.password)) ;
 		if(user != null){
 			HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
@@ -100,22 +101,26 @@ public class LoginBean {
 			if(user instanceof Participant){
 				sess.setAttribute("role", "participant") ;
 				url = "welcome" ;
+				applicationRole = "participant_role";
 			}
 			else if(user instanceof ProcessManager){
 				sess.setAttribute("role", "processManager") ;
 				url = "welcomeProcessManager" ;
+				applicationRole = "processManager_role";
 			}
 			else if(user instanceof ProjectDirector){
 				sess.setAttribute("role", "projectDirector") ;
 				url = "welcomeProjectDirector" ;
+				applicationRole = "projectDirector_role";
 			}
 			else if(user instanceof Administrator){
 				sess.setAttribute("role", "admin") ;
 				url = "admin_main" ;
+				applicationRole = "admin_role";
 			}
 			/* Test de la navigation */
 			changeContentPage(url) ;
-			changeConnectView(true) ;
+			changeConnectView(true,applicationRole) ;
 		}
 		else{
 			FacesMessage message = new FacesMessage() ;
@@ -136,13 +141,13 @@ public class LoginBean {
 	 *
 	 * @param b
 	 */
-	public void changeConnectView(boolean b) {
+	public void changeConnectView(boolean _b, String _applicationRole) {
 		FacesContext facesContext = FacesContext.getCurrentInstance() ;
 		Object connectObject = facesContext.getApplication().createValueBinding("#{connect}").getValue(facesContext) ;
 		if(connectObject != null && connectObject instanceof ConnectViewBean){
 
-			ConnectViewBean connectBean = (ConnectViewBean) connectObject ;
-			connectBean.connected(b) ;
+			ConnectViewBean connectBean = (ConnectViewBean) connectObject;
+			connectBean.connected(_b,_applicationRole);
 		}
 	}
 
@@ -170,7 +175,7 @@ public class LoginBean {
 		// String url = "connect" ;
 		String url = "wilos" ;
 		changeContentPage(url) ;
-		changeConnectView(false) ;
+		changeConnectView(false,"none") ;
 		/*
 		 * HttpServletRequest req =
 		 * (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
