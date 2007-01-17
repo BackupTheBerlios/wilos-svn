@@ -10,6 +10,12 @@
 		extends="wilos.model.spem2.activity.Activity"
 		table="process" lazy="true">
 		<key column="process_id"></key>
+		
+		<many-to-one name="projects" class="wilos.model.misc.project.Project"
+			column="name" lazy="false">
+		</many-to-one>
+		
 	</joined-subclass>
+	
 	
 </hibernate-mapping>
