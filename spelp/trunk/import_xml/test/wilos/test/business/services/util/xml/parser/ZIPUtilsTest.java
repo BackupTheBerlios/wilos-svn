@@ -24,13 +24,13 @@ public class ZIPUtilsTest extends TestCase
 	}
 	
 	public void testGetXMLFile () {
-//		ZIPUtils monZip = new ZIPUtils(pathEmpty);
-//		assertTrue("TEST getXML FICHIER VIDE",monZip.getXMLFile() == null);
-//		
-//		ZIPUtils monZip2 = new ZIPUtils(pathMonTest);
-//		File file = monZip2.getXMLFile() ;
-//		assertTrue("TEST getXML FICHIER VIDE",file.getName().equals("monTest.xml"));
+		ZIPUtils monZip = new ZIPUtils(pathEmpty);
+		assertNull("TEST getXML FICHIER VIDE",monZip.getXMLFile());
 		
+		ZIPUtils monZip2 = new ZIPUtils(pathMonTest);
+		File file = monZip2.getXMLFile() ;
+		assertNotNull("TEST getXML FICHIER VIDE",file);
+		System.out.println(file.getName());
 		
 	}
 	
