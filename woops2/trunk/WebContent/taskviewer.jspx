@@ -1,0 +1,19 @@
+
+<ice:form>
+	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1"
+		border="0" bgcolor="#BEB4CC">
+		<ice:panelTabSet bgcolor="#BEB4CC">
+			<br />
+			<ice:outputText value="Page for viewing task ..." />
+			<br />
+			<ice:panelTab label="View Task">
+				<br />
+				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2"
+					border="0">
+					<ice:outputText value="Task ID : " />
+					<ice:inputText value="#{TaskViewerBean.taskDescriptor.id}" />
+				</ice:panelGrid>
+			</ice:panelTab>
+		</ice:panelTabSet>
+	</ice:panelGrid>
+</ice:form>
