@@ -1,15 +1,15 @@
 
 package wilos.presentation.web.icefaces.tree ;
 
-import wilos.model.spem2.task.TaskDescriptor;
+import javax.swing.tree.DefaultMutableTreeNode;
 
-import com.icesoft.faces.component.tree.IceUserObject;
+import wilos.model.spem2.task.TaskDescriptor;
 
 /**
  * @author deder
  * 
  */
-public class TaskDescriptorNode extends BasicNode {
+public class TaskDescriptorNode extends DefaultMutableTreeNode {
 
 	private static final long serialVersionUID = 7035675523830655414L ;
 	
@@ -20,7 +20,6 @@ public class TaskDescriptorNode extends BasicNode {
 	 */
 	public TaskDescriptorNode(TaskDescriptor _taskDescriptor) {
 		super() ;
-		super.setBasicNodeId(_taskDescriptor.getId());
 		WilosObjectNode iceUserObject = new WilosObjectNode(this) ;
 		this.setUserObject(iceUserObject) ;
 
