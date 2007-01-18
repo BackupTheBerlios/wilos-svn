@@ -33,6 +33,8 @@ public class TreeBean {
 
 	String processId = "" ;
 	
+	public Boolean affectedTaskFilter = false;
+	
 	// tree default model, used as a value for the tree component
 	private DefaultTreeModel model = null ;
 
@@ -53,6 +55,9 @@ public class TreeBean {
 	 */
 	
 	private void buildModel(){
+		// construire les cas avec la selection des filtres
+		// créer la méthode getConcreteTaskDescriptorByProcess
+		// créer les méthodes getAffectedConcreteTaskDescriptors
 		if(this.processId != null && !this.processId.equals("") ){
 			Process process = this.processService.getProcessWithOnlyTaskDescriptors(this.processId) ;
 			ProcessNode processNode = new ProcessNode(process);
@@ -127,5 +132,13 @@ public class TreeBean {
 	 */
 	public void setProcessService(ProcessService _processService) {
 		this.processService = _processService ;
+	}
+
+	public Boolean getAffectedTaskFilter() {
+		return affectedTaskFilter;
+	}
+
+	public void setAffectedTaskFilter(Boolean _affectedTaskFilter) {
+		this.affectedTaskFilter = _affectedTaskFilter;
 	}
 }
