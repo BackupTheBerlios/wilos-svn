@@ -12,64 +12,71 @@ import wilos.test.TestConfiguration;
  *
  */
 public class ProcessServiceTest extends TestCase {
-	
-	private ProcessService processService ;
 
-	private Process process ;
+	private ProcessService processService;
 
-	/* (non-Javadoc)
+	private Process process;
+
+	public ProcessServiceTest() {
+		// Get the ActivityDao Singleton for managing Activity data
+		this.processService = (ProcessService) TestConfiguration.getInstance()
+				.getApplicationContext().getBean("ProcessService");
+
+		// Create empty Activity
+		this.process = new Process();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see junit.framework.TestCase#setUp()
 	 */
 	protected void setUp() throws Exception {
-		super.setUp() ;
-		
-		//Get the ActivityDao Singleton for managing Activity data
-		this.processService = (ProcessService) TestConfiguration.getInstance().getApplicationContext().getBean("ProcessService") ;
-
-		// Create empty Activity
-		this.process = new Process() ;
+		super.setUp();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see junit.framework.TestCase#tearDown()
 	 */
 	protected void tearDown() throws Exception {
-		super.tearDown() ;
-		
-//		 Delete the tmp activity from the database.
-		this.processService.getProcessDao().deleteProcess(this.process) ;
+		super.tearDown();
+
+		// Delete the tmp activity from the database.
+		this.processService.getProcessDao().deleteProcess(this.process);
 	}
 
-	/* (non-Javadoc)
-	 * Test method for {@link woops2.business.process.ProcessService#getProcessesList()}.
+	/*
+	 * (non-Javadoc) Test method for
+	 * {@link woops2.business.process.ProcessService#getProcessesList()}.
 	 */
 	public final void testGetProcessesList() {
-		//Rk: the setUp method is called here.
+		// Rk: the setUp method is called here.
 
 		// Save the activity.
-		this.processService.saveProcess(this.process) ;
+		this.processService.saveProcess(this.process);
 
-		// Look if this activity is also into the database and look if the size of the set is >= 1.
-		List<Process> processes = this.processService.getProcessesList() ;
-		assertNotNull(processes) ;
-		assertTrue(processes.size() >= 1) ;
+		// Look if this activity is also into the database and look if the size
+		// of the set is >= 1.
+		List<Process> processes = this.processService.getProcessesList();
+		assertNotNull(processes);
+		assertTrue(processes.size() >= 1);
 
 		// Rk: the tearDown method is called here.
 	}
 
-	/* (non-Javadoc)
-	 * Test method for {@link woops2.business.process.ProcessService#saveActivity(woops2.model.process.Process)}.
+	/*
+	 * (non-Javadoc) Test method for
+	 * {@link woops2.business.process.ProcessService#saveActivity(woops2.model.process.Process)}.
 	 */
 	public final void testSaveProcess() {
-		//Rk: the setUp method is called here.
+		// Rk: the setUp method is called here.
 
 		// Save the activity.
-		this.processService.saveProcess(this.process) ;
+		this.processService.saveProcess(this.process);
 
-		// Look if this activity is also into the database and look if the size of the set is >= 1.
-		List<Process> processes = this.processService.getProcessesList() ;
-		assertNotNull(processes) ;
-		assertTrue(processes.size() >= 1) ;
+		//TODO !!!
 
 		// Rk: the tearDown method is called here.
 	}
