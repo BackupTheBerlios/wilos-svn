@@ -21,12 +21,12 @@
 			column="process_id" lazy="false">
 		</many-to-one>
 		
-		<set name="participants" table="affectedto" lazy="true">
+		<!--  <set name="participants" table="affectedto" lazy="true">
 			<key column="project_id"></key>
 			<many-to-many class="wilos.model.misc.wilosuser.Participant"
 				column="participant_id">
 			</many-to-many>
-		</set>
+		</set>-->
 	</class>
 
 </hibernate-mapping>

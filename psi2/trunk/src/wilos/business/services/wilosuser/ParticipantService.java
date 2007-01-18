@@ -2,6 +2,9 @@ package wilos.business.services.wilosuser;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
@@ -96,9 +99,12 @@ public class ParticipantService {
 		Participant chargedParticipant = new Participant();
 		
 		//chargement du participant et des projets
-		String id = participant.getWilosuser_id();
-		chargedParticipant = this.participantDao.getParticipant(id);
+		String login = participant.getLogin();
+		this.logger.debug("### LOGIN WILOS :"+login+" ###");
+		chargedParticipant = this.participantDao.getParticipant(login);
+		this.logger.debug("### PARTICIPANT :"+chargedParticipant.getName()+" ###");
 		allProjectList = (HashSet<Project>)this.projectDao.getAllProject();
+		this.logger.debug("### NOM DU PROJET COURANT :"+allProjectList.size()+" ###");
 		
 		for(Project p : allProjectList){
 			if (chargedParticipant.getAffectedProjectList().contains(p))
@@ -111,6 +117,26 @@ public class ParticipantService {
 			}
 		}
 		return affectedProjectList;
+	}
+	
+	@Transactional(readOnly = false)
+	public void saveProjectsForAParticipant(Participant participant, Map<String,Boolean> affectedProjects)
+	{
+		Participant currentParticipant = this.getParticipantDao().getParticipant(participant.getLogin());
+		Project currentProject;
+		
+		for(Iterator iter = affectedProjects.keySet().iterator(); iter.hasNext();){
+			String project_id = (String) iter.next() ;
+			currentProject = this.projectDao.getProject(project_id);
+			if((Boolean)affectedProjects.get(project_id))				
+				currentParticipant.addToProject(currentProject);
+			else
+				currentParticipant.removeFromProject(currentProject);		
+		}
+		this.logger.debug("### currentParticipant "+ currentParticipant.getAffectedProjectList().size() +" ###");
+		
+		this.participantDao.saveOrUpdateParticipant(currentParticipant);
+		
 	}
 
 	/**

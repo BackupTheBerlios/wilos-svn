@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import wilos.business.services.project.ProjectService;
 import wilos.business.services.wilosuser.LoginService;
 import wilos.business.services.wilosuser.ParticipantService;
 import wilos.model.spem2.role.RoleDescriptor;
@@ -40,6 +43,8 @@ public class ParticipantBean {
 	private List<RoleDescriptor> rolesList;
 
 	private ParticipantService participantService;
+	
+	private ProjectService projectService;
 
 	private LoginService loginService;
 
@@ -49,7 +54,7 @@ public class ParticipantBean {
 	
 	private List<Participant> participantsList;
 	
-	private List affectedProjectsList;
+	private List<HashMap<String,String>> affectedProjectsList;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -341,38 +346,78 @@ public class ParticipantBean {
 		this.participantsList = _participantsList ;
 	}
 
-	public List<HashMap> getAffectedProjectsList() {
+	public List<HashMap<String,String>> getAffectedProjectsList() {
 		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
 		HttpSession sess = req.getSession() ;
 		Participant user = (Participant) sess.getAttribute("wilosUser") ;
 		
 		if (user instanceof Participant)
 		{
-			this.affectedProjectsList = new ArrayList();
+			this.affectedProjectsList = new ArrayList<HashMap<String,String>>();
 			HashMap<Project, Boolean> plist = new HashMap<Project, Boolean>();
+			this.logger.debug("### FIN INIT RACE ###");
 			plist = (HashMap<Project, Boolean>)this.participantService.getProjectsForAParticipant(user);
+			this.logger.debug("### TAILLE RACE :"+plist.size()+" ###");
 			Project currentProject = new Project();
 			
 			for (Iterator iter = plist.keySet().iterator(); iter.hasNext();) {
-
-				HashMap ligne = new HashMap<String,String>();
-				/*currentProject = (Project)iter.next();
 				
-				this.logger.debug("### NOM DU PROJET COURANT :"+currentProject.getName()+" ###");
+				HashMap<String,String> ligne = new HashMap<String,String>();
+				
+				currentProject = (Project)iter.next();
+				this.logger.debug("### DATA :"+currentProject.getName()+" ###");
+				
+				ligne.put("project_id", currentProject.getProject_id());
+				ligne.put("affected", plist.get(currentProject).toString());
 				ligne.put("name", currentProject.getName());
-				ligne.put("creationDate", currentProject.getCreationDate());
-				ligne.put("launchingDate", currentProject.getLaunchingDate());
-				ligne.put("description", currentProject.getDescription());*/
+				ligne.put("creationDate", currentProject.getCreationDate().toString());
+				ligne.put("launchingDate", currentProject.getLaunchingDate().toString());
+				ligne.put("description", currentProject.getDescription());
 		
 				this.affectedProjectsList.add(ligne);
+				this.logger.debug("### TAILLE RACE :"+ligne.get("name")+" ###");
 			}
-		}
+		}		
 		return affectedProjectsList;
 	}
 
-	public void setAffectedProjectsList(List<HashMap> affectedProjectsList) {
+	public String test(){
+		this.getAffectedProjectsList();
+		return "";
+	}
+	public void setAffectedProjectsList(List<HashMap<String,String>> affectedProjectsList) {
 		this.affectedProjectsList = affectedProjectsList;
 	}
+	
+	public void saveProjectsAffectation()
+	{
+		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
+		HttpSession sess = req.getSession() ;
+		Participant user = (Participant) sess.getAttribute("wilosUser") ;
+		Map<String,Boolean> affectedProjects = new HashMap<String, Boolean>();
+		for (HashMap ligne : this.affectedProjectsList) {
+			Boolean testAffectation = (Boolean)ligne.get("affected");
+			String project_id = (String)ligne.get("project_id");
+			affectedProjects.put(project_id,testAffectation);
+		}
+		this.participantService.saveProjectsForAParticipant(user, affectedProjects);
+	}
 
+	/**
+	 * Getter of projectService.
+	 *
+	 * @return the projectService.
+	 */
+	public ProjectService getProjectService() {
+		return this.projectService ;
+	}
 
+	/**
+	 * Setter of projectService.
+	 *
+	 * @param _projectService The projectService to set.
+	 */
+	public void setProjectService(ProjectService _projectService) {
+		this.projectService = _projectService ;
+	}
 }

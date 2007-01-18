@@ -131,6 +131,18 @@ public class ProjectService {
 		return projectList;
 	}
 	
+	/**
+	 * 
+	 * TODO Method description
+	 *
+	 * @param _id
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Project getProject(String _id)
+	{
+		return this.projectDao.getProject(_id);
+	}
 	
 	/**
 	 * Getter of participantDao.

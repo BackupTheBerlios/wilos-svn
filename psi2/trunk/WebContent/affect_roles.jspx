@@ -28,14 +28,14 @@
 
 			<ice:panelTab id="panelTab_participant_project" label="#{msgs['component.tableparticipantproject.title']}" imageDir="images">
 				<ice:panelGroup id="projectPanelGroup" styleClass="contentIncludePanelGroup">
-					<ice:dataTable value="#{ParticipantBean.affectedProjectList}" border="1" var="project1">
+					<ice:dataTable value="#{ParticipantBean.affectedProjectsList}" border="1" var="project1">
 						<ice:column>
 							<f:facet name="header">         			
 						    	<ice:outputText value="Affecté"/>
 							</f:facet>
-							<ice:selectBooleanCheckbox partialSubmit="false" />
+							<ice:selectBooleanCheckbox partialSubmit="false" value="#{project1.affected}" />
 						</ice:column>
-						<ice:column>
+						  <ice:column>
 							<f:facet name="header">
 						    	<ice:outputText value="#{msgs['component.tableparticipantproject.column1']}"/>
 						    </f:facet>
@@ -60,7 +60,7 @@
 						    <ice:outputText value="#{project1.description}"/>
 						</ice:column>
 					</ice:dataTable>
-					
+					<ice:commandButton value="Valider" action="#{ParticipantBean.saveProjectsAffectation}"/>
 				</ice:panelGroup>
 			</ice:panelTab>
 	
