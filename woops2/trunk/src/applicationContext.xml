@@ -282,6 +282,9 @@
 		<property name="stepDao" ref="StepDao" />
 	</bean>
 	
-	
+	<bean id="ConcreteTaskDescriptorService"
+		class="wilos.business.services.concretetask.ConcreteTaskDescriptorService">
+		<property name="concreteTaskDescriptorDao" ref="ConcreteTaskDescriptorDao" />
+	</bean>
 	
 </beans>
