@@ -610,7 +610,8 @@ public class XMLParser {
 					
 					if (tmpBde != null) {					
 						if (tmpBde instanceof Activity) {
-							((Activity) returnedBde).addActivity((Activity) tmpBde);
+							//((Activity) returnedBde).addActivity((Activity) tmpBde);
+							((Activity) returnedBde).addBreakdownElement((Activity) tmpBde);
 						}
 						else {
 							((Activity) returnedBde).addBreakdownElement(tmpBde);
