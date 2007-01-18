@@ -1,7 +1,18 @@
 <ice:form xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ice="http://www.icesoft.com/icefaces/component"
-	id="navigationMenuForm">
+	id="navigationMenuForm"><br/>
+	
+	<!-- Check box - Concrete task filter -->
+    <ice:outputText styleClass="propertyLabel"
+                    value="affected tasks"/>
+    <ice:selectBooleanCheckbox value="#{TreeBean.affectedTaskFilter}"
+                               partialSubmit="true"/> <br/>
+
+	<ice:outputText value="label"
+                    styleClass="valueHeader"/>
+    <ice:outputText value="#{TreeBean.affectedTaskFilter}"
+                    styleClass="valueText"/><br/>
 
 	<div class="navTree"><ice:messages style="color:red;"
 		showDetail="true" /> <!-- The projects combobox --> <ice:outputText
