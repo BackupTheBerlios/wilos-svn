@@ -1,12 +1,12 @@
 <ice:form id="roles_form">
 	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
 		<ice:panelTabSet id="panelTabSet_participant" styleClass="componentPanelTabSetLayout">
-			<ice:panelTab id="panelTab_participant_roles" label="Affectation d'un Role" imageDir="images">
+			<ice:panelTab id="panelTab_participant_roles" label="#{msgs['component.tableparticipantrole.title']}" imageDir="images">
 				<ice:panelGroup id="rolesPanelGroup" styleClass="contentIncludePanelGroup">
 					<ice:dataTable value="#{RoleBean.project}" border="1" var="project">
 						<ice:column>
 							<f:facet name="header">
-						    	<ice:outputText value="Project"/>
+						    	<ice:outputText value="#{msgs['component.tableparticipantrole.column1']}"/>
 						    </f:facet>
 						</ice:column>
 						<ice:columns value="#{RoleBean.keysRolesParticipant}" var="roleD">
@@ -27,30 +27,30 @@
 			</ice:panelTab>
 			
 			
-			<ice:panelTab id="panelTab_participant_project" label="Affectation à un Projet" imageDir="images">
+			<ice:panelTab id="panelTab_participant_project" label="#{msgs['component.tableparticipantproject.title']}" imageDir="images">
 				<ice:panelGroup id="projectPanelGroup" styleClass="contentIncludePanelGroup">
 					<ice:dataTable value="#{ProjectBean.projectList}" border="1" var="project1">
 						<ice:column>
 							<f:facet name="header">
-						    	<ice:outputText value="Nom"/>
+						    	<ice:outputText value="#{msgs['component.tableparticipantproject.column1']}"/>
 						    </f:facet>
 						    <ice:outputText value="#{project1.name}"/>
 						</ice:column>
 						<ice:column>
 							<f:facet name="header">
-						    	<ice:outputText value="Date de creation"/>
+						    	<ice:outputText value="#{msgs['component.tableparticipantproject.column2']}"/>
 						    </f:facet>
 						    <ice:outputText value="#{project1.creationDate}"/>
 						</ice:column>
 						<ice:column>
 							<f:facet name="header">
-						    	<ice:outputText value="Date de lancement"/>
+						    	<ice:outputText value="#{msgs['component.tableparticipantproject.column3']}"/>
 						    </f:facet>
 						    <ice:outputText value="#{project1.launchingDate}"/>
 						</ice:column>
 						<ice:column>
 							<f:facet name="header">
-						    	<ice:outputText value="Description"/>
+						    	<ice:outputText value="#{msgs['component.tableparticipantproject.column4']}"/>
 						    </f:facet>
 						    <ice:outputText value="#{project1.description}"/>
 						</ice:column>

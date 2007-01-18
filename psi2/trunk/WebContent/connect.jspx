@@ -22,14 +22,14 @@
 			<f:subview id="not_connected_view">
 				<ice:form id="connect_form">
 					<ice:panelGrid columns="2">			
-						<ice:outputLabel value="Pseudo" style="iceInputtext"/>
+						<ice:outputLabel value="#{msgs['component.authentificationfield.login']}" style="iceInputtext"/>
 						<ice:inputText size="15" immediate="true" value="#{LoginBean.login}" />
-						<ice:outputText value="Mot de passe"/>
+						<ice:outputText value="#{msgs['component.authentificationfield.password']}"/>
 						<ice:inputSecret size="15" value="#{LoginBean.password}"/>
 					</ice:panelGrid>
 					<ice:panelGrid columns="2">
-						<ice:commandButton type="submit" value="Connexion" action="#{LoginBean.authentificationAction}"/>
-						<ice:commandLink immediate="true" type="submit" value="S'inscrire" action="#{menu.subscribe}"/>
+						<ice:commandButton type="submit" value="#{msgs['component.authentificationfield.connexion']}" action="#{LoginBean.authentificationAction}"/>
+						<ice:commandLink immediate="true" type="submit" value="#{msgs['component.authentificationfield.inscription']}" action="#{menu.subscribe}"/>
 					</ice:panelGrid>	
 				</ice:form>
 			</f:subview>
@@ -38,11 +38,11 @@
 			<f:subview id="connected_view">
 				<ice:form id="connected_form">
 					<ice:panelGrid columns="2">			
-						<ice:outputLabel value="Bienvenue"/>
+						<ice:outputLabel value="#{msgs['component.constant.welcome']}"/>
 						<ice:outputLabel value="#{LoginBean.login}"/>
 					</ice:panelGrid>
 					<ice:panelGrid columns="1">
-						<ice:commandLink immediate="true" type="submit" value="Se deconnecter" action="#{LoginBean.logoutAction}"/>
+						<ice:commandLink immediate="true" type="submit" value="#{msgs['component.constant.disconnect']}" action="#{LoginBean.logoutAction}"/>
 					</ice:panelGrid>	
 				</ice:form>
 			</f:subview>
