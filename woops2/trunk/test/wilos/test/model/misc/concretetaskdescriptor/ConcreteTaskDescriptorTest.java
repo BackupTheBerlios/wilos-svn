@@ -1,24 +1,23 @@
 package wilos.test.model.misc.concretetaskdescriptor;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import junit.framework.TestCase;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
+import wilos.utils.Constantes;
 import wilos.utils.Constantes.State;
 
 public class ConcreteTaskDescriptorTest extends TestCase {
 
 	private ConcreteTaskDescriptor concreteTaskDescriptor ;
 	
-	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
-	Date date = null;
+	Date date;
 	
 	public ConcreteTaskDescriptorTest(){
 		try {
-			date = sdf.parse("18-01-2007 10:00");
+			date = Constantes.DATE_FORMAT.parse("18-01-2007 10:00");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
