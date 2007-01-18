@@ -25,6 +25,7 @@ public class XMLUtils {
 		document = _file ;
 	}
 	
+	
 	/**
 	 * Evalute : this methods evaluate an xpath expression
 	 * @param document
@@ -51,9 +52,15 @@ public class XMLUtils {
 	
 	public static Object evaluate(String expression, QName retour){
 		Object resultat = null;
+		InputSource source = null;
 		try{
 			//creation de la source
-			InputSource source = new InputSource(new FileInputStream(document));
+			if (true) {
+				source = new InputSource(new FileInputStream(document));
+			}
+			else {
+				source = new InputSource(new ZIPUtils(document).getXMLStream());
+			}
 			
 			//creation du XPath 
 			XPathFactory fabrique = XPathFactory.newInstance();
