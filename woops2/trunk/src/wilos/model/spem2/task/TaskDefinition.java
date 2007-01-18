@@ -1,5 +1,4 @@
-
-package wilos.model.spem2.task ;
+package wilos.model.spem2.task;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,14 +9,17 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import wilos.model.spem2.element.Element;
+import wilos.model.spem2.guide.Guideline;
 
 /**
  * 
- * This class represents a task is a content element that describes work being performed by Roles.
- * It defines one default performing RoleDefinition as well as many additional performers.
+ * This class represents a task is a content element that describes work being
+ * performed by Roles. It defines one default performing RoleDefinition as well
+ * as many additional performers.
  * 
  * @author Sebastien BALARD
  * @author eperico
+ * @author Soosuske
  * 
  */
 public class TaskDefinition extends Element implements Cloneable {
@@ -25,20 +27,24 @@ public class TaskDefinition extends Element implements Cloneable {
 	/**
 	 * Collection of Step
 	 */
-	private SortedSet<Step> steps ;
+	private SortedSet<Step> steps;
 
 	/**
 	 * Collection of TaskDescriptor
 	 */
-	private Set<TaskDescriptor> taskDescriptors ;
+	private Set<TaskDescriptor> taskDescriptors;
+
+	// The Project of Process
+	private Set<Guideline> guidelines;
 
 	/**
 	 * Default constructor
 	 */
 	public TaskDefinition() {
-		super() ;
-		this.steps = new TreeSet<Step>() ;
-		this.taskDescriptors = new HashSet<TaskDescriptor>() ;
+		super();
+		this.steps = new TreeSet<Step>();
+		this.taskDescriptors = new HashSet<TaskDescriptor>();
+		this.guidelines = new HashSet<Guideline>();
 	}
 
 	/*
@@ -47,14 +53,16 @@ public class TaskDefinition extends Element implements Cloneable {
 	 * @see woops2.model.element.Element#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
-		if(obj instanceof TaskDefinition == false){
-			return false ;
+		if (obj instanceof TaskDefinition == false) {
+			return false;
 		}
-		if(this == obj){
-			return true ;
+		if (this == obj) {
+			return true;
 		}
-		TaskDefinition task = (TaskDefinition) obj ;
-		return new EqualsBuilder().appendSuper(super.equals(task)).append(this.steps, task.steps).append(this.taskDescriptors, task.taskDescriptors).isEquals() ;
+		TaskDefinition task = (TaskDefinition) obj;
+		return new EqualsBuilder().appendSuper(super.equals(task)).append(
+				this.steps, task.steps).append(this.taskDescriptors,
+				task.taskDescriptors).isEquals();
 	}
 
 	/*
@@ -63,7 +71,8 @@ public class TaskDefinition extends Element implements Cloneable {
 	 * @see woops2.model.element.Element#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode() ;
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
+				.toHashCode();
 	}
 
 	/*
@@ -71,20 +80,20 @@ public class TaskDefinition extends Element implements Cloneable {
 	 * 
 	 * @see java.lang.Object#clone()
 	 */
-	@ Override
+	@Override
 	public TaskDefinition clone() throws CloneNotSupportedException {
-		TaskDefinition taskDefinition = new TaskDefinition() ;
-		taskDefinition.copy(this) ;
-		return taskDefinition ;
+		TaskDefinition taskDefinition = new TaskDefinition();
+		taskDefinition.copy(this);
+		return taskDefinition;
 	}
 
 	/**
 	 * Copy the _taskDefinition into this.
 	 */
 	protected void copy(final TaskDefinition _taskDefinition) {
-		super.copy(_taskDefinition) ;
-		this.setSteps(_taskDefinition.getSteps()) ;
-		this.setTaskDescriptors(_taskDefinition.getTaskDescriptors()) ;
+		super.copy(_taskDefinition);
+		this.setSteps(_taskDefinition.getSteps());
+		this.setTaskDescriptors(_taskDefinition.getTaskDescriptors());
 	}
 
 	/**
@@ -93,8 +102,8 @@ public class TaskDefinition extends Element implements Cloneable {
 	 * @param _step
 	 */
 	public void addStep(Step _step) {
-		this.steps.add(_step) ;
-		_step.setTaskDefinition(this) ;
+		this.steps.add(_step);
+		_step.setTaskDefinition(this);
 	}
 
 	/**
@@ -103,8 +112,8 @@ public class TaskDefinition extends Element implements Cloneable {
 	 * @param _steps
 	 */
 	public void addAllSteps(SortedSet<Step> _steps) {
-		for(Step s : _steps){
-			s.addTaskDefinition(this) ;
+		for (Step s : _steps) {
+			s.addTaskDefinition(this);
 		}
 	}
 
@@ -114,18 +123,19 @@ public class TaskDefinition extends Element implements Cloneable {
 	 * @param _taskDescriptor
 	 */
 	public void addTaskDescriptor(TaskDescriptor _taskDescriptor) {
-		this.taskDescriptors.add(_taskDescriptor) ;
-		_taskDescriptor.setTaskDefinition(this) ;
+		this.taskDescriptors.add(_taskDescriptor);
+		_taskDescriptor.setTaskDefinition(this);
 	}
 
 	/**
-	 * Add a taskDesciptor collection to the taskDesciptor collection of a TaskDefinition
+	 * Add a taskDesciptor collection to the taskDesciptor collection of a
+	 * TaskDefinition
 	 * 
 	 * @param _taskDesciptor
 	 */
 	public void addAllTaskDesciptors(Set<TaskDescriptor> _taskDesciptor) {
-		for(TaskDescriptor td : _taskDesciptor){
-			td.addTaskDefinition(this) ;
+		for (TaskDescriptor td : _taskDesciptor) {
+			td.addTaskDefinition(this);
 		}
 	}
 
@@ -135,18 +145,18 @@ public class TaskDefinition extends Element implements Cloneable {
 	 * @param _step
 	 */
 	public void removeStep(Step _step) {
-		_step.setTaskDefinition(null) ;
-		this.steps.remove(_step) ;
+		_step.setTaskDefinition(null);
+		this.steps.remove(_step);
 	}
 
 	/**
 	 * Remove all steps from a TaskDefinition
 	 */
 	public void removeAllSteps() {
-		for(Step tmp : this.steps){
-			tmp.setTaskDefinition(null) ;
+		for (Step tmp : this.steps) {
+			tmp.setTaskDefinition(null);
 		}
-		this.steps.clear() ;
+		this.steps.clear();
 	}
 
 	/**
@@ -155,18 +165,18 @@ public class TaskDefinition extends Element implements Cloneable {
 	 * @param _taskDescriptor
 	 */
 	public void removeTaskDescriptor(TaskDescriptor _taskDescriptor) {
-		_taskDescriptor.setTaskDefinition(null) ;
-		this.taskDescriptors.remove(_taskDescriptor) ;
+		_taskDescriptor.setTaskDefinition(null);
+		this.taskDescriptors.remove(_taskDescriptor);
 	}
 
 	/**
 	 * Remove all taskDescriptors to its TaskDefinition
 	 */
 	public void removeAllTaskDescriptors() {
-		for(TaskDescriptor tmp : this.taskDescriptors){
-			tmp.setTaskDefinition(null) ;
+		for (TaskDescriptor tmp : this.taskDescriptors) {
+			tmp.setTaskDefinition(null);
 		}
-		this.taskDescriptors.clear() ;
+		this.taskDescriptors.clear();
 	}
 
 	/**
@@ -175,7 +185,7 @@ public class TaskDefinition extends Element implements Cloneable {
 	 * @return the steps.
 	 */
 	public SortedSet<Step> getSteps() {
-		return this.steps ;
+		return this.steps;
 	}
 
 	/**
@@ -184,9 +194,9 @@ public class TaskDefinition extends Element implements Cloneable {
 	 * @param _steps
 	 *            The steps to set.
 	 */
-	@ SuppressWarnings ("unused")
+	@SuppressWarnings("unused")
 	private void setSteps(SortedSet<Step> _steps) {
-		this.steps = _steps ;
+		this.steps = _steps;
 	}
 
 	/**
@@ -195,7 +205,7 @@ public class TaskDefinition extends Element implements Cloneable {
 	 * @return the taskDescriptors.
 	 */
 	public Set<TaskDescriptor> getTaskDescriptors() {
-		return this.taskDescriptors ;
+		return this.taskDescriptors;
 	}
 
 	/**
@@ -204,8 +214,55 @@ public class TaskDefinition extends Element implements Cloneable {
 	 * @param _taskDescriptors
 	 *            The taskDescriptors to set.
 	 */
-	@ SuppressWarnings ("unused")
+	@SuppressWarnings("unused")
 	private void setTaskDescriptors(Set<TaskDescriptor> _taskDescriptors) {
-		this.taskDescriptors = _taskDescriptors ;
+		this.taskDescriptors = _taskDescriptors;
 	}
+
+	/**
+	 * connection to guideline
+	 */
+	/**
+	 * remove a guideline
+	 * 
+	 * @param _guideline
+	 */
+	public void removeGuideline(Guideline _guideline) {
+		// _guideline.setTaskDefinition(null);
+		this.guidelines.remove(_guideline);
+	}
+
+	/**
+	 * add a guideline
+	 * 
+	 * @param _guideline
+	 */
+	public void addGuideline(Guideline _guideline) {
+		this.guidelines.add(_guideline);
+		// _guideline.setTaskDefinition(this);
+	}
+
+	/**
+	 * remove all Guideline
+	 * 
+	 */
+	public void removeAllGuidelines() {
+		for (Guideline guideline : this.guidelines) {
+			// guideline.setTaskDefinition(null);
+		}
+		this.guidelines.clear();
+	}
+
+	/**
+	 * Add a RoleDescriptor collection to the RoleDescriptor collection of an
+	 * RoleDefinition
+	 * 
+	 * @param _role
+	 */
+	public void addAllGuidelines(Set<Guideline> _guideline) {
+		for (Guideline _guid1 : _guideline) {
+			// _guid1.addTaskDefinition(this);
+		}
+	}
+
 }
