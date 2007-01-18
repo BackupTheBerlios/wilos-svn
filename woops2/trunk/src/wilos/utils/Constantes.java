@@ -1,19 +1,17 @@
 package wilos.utils;
 
 public class Constantes {
-	
-	public static String CREATED = "Created";
-	public static String READY = "Ready";
-	public static String STARTED = "Started";
-	public static String SUSPENDED = "Suspended";
-	public static String FINISHED = "Finished";
-	
-	public static enum State{
-		CREATED,
-		READY,
-		STARTED,
-		SUSPENDED,
-		FINISHED
-	};
 
+	public static class State {
+
+		public static final String CREATED = "Created";
+
+		public static final String READY = "Ready";
+
+		public static final String STARTED = "Started";
+
+		public static final String SUSPENDED = "Suspended";
+
+		public static final String FINISHED = "Finished";
+	}
 }

@@ -9,9 +9,11 @@ public class ConcreteTaskDescriptor {
 	
 	private String id;
 	
+	private String projectId;
+	
 	private String concreteName;
 	
-	private State state;
+	private String state;
 	
 	private TaskDescriptor taskDescriptor;
 	
@@ -52,11 +54,11 @@ public class ConcreteTaskDescriptor {
 		this.id = id;
 	}
 	
-	public State getState() {
+	public String getState() {
 		return state;
 	}
 
-	public void setState(State state) {
+	public void setState(String state) {
 		this.state = state;
 	}
 	
@@ -130,5 +132,13 @@ public class ConcreteTaskDescriptor {
 
 	public void setRemainingTime(float remainingTime) {
 		this.remainingTime = remainingTime;
+	}
+
+	public String getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
 	}
 }

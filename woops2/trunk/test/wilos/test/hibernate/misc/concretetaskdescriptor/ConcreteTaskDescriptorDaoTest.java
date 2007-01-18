@@ -1,12 +1,12 @@
 package wilos.test.hibernate.misc.concretetaskdescriptor;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import junit.framework.TestCase;
 import wilos.hibernate.misc.concretetask.ConcreteTaskDescriptorDao;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
-import wilos.model.spem2.task.TaskDescriptor;
 import wilos.test.TestConfiguration;
 import wilos.utils.Constantes.State;
 
@@ -26,18 +26,27 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 	/**
 	 * attributes from Element
 	 */
-	public static final String ID = "thisId" ;
-	
 	public static final String CONCRETENAME = "concreteName";
 	
-	//public static final State STATE = State.CREATED;
+	public static final String STATE = State.CREATED;
 	
 	public static final float PLANNEDTIME = 15.5f;
 	
 	public static final float REMAININGTIME = 14.8f;
 	
 	public static final float ACCOMPLISHEDTIME = 4.7f;
+	
+	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+	Date date = null;
 
+	public ConcreteTaskDescriptorDaoTest(){
+		try {
+			date = sdf.parse("18-01-2007 10:00");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -47,14 +56,16 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp() ;
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
-		Date date = sdf.parse("18-01-2007 10:00");
-
+		
+		
 		// Get the TaskDescriptorDao Singleton for managing TaskDescriptor data
 		this.concreteTaskDescriptorDao = (ConcreteTaskDescriptorDao) TestConfiguration.getInstance().getApplicationContext().getBean("ConcreteTaskDescriptorDao") ;
 
 		// Create empty TaskDescriptor
 		this.concreteTaskDescriptor = new ConcreteTaskDescriptor() ;
+		this.concreteTaskDescriptor.setPlannedFinishingDate(date);
+		this.concreteTaskDescriptor.setState(STATE);
+		this.concreteTaskDescriptor.setAccomplishedTime(PLANNEDTIME);
 	}
 
 	/*
@@ -77,8 +88,11 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 
 		// Check the saving.
 		String id = concreteTaskDescriptor.getId() ;
-		TaskDescriptor taskDescriptorTmp = (TaskDescriptor) this.concreteTaskDescriptorDao.getHibernateTemplate().load(TaskDescriptor.class, id) ;
-		assertNotNull(taskDescriptorTmp) ;
+		ConcreteTaskDescriptor concreteTaskDescriptorTmp = (ConcreteTaskDescriptor) this.concreteTaskDescriptorDao.getHibernateTemplate().load(ConcreteTaskDescriptor.class, id) ;
+		assertNotNull(concreteTaskDescriptorTmp) ;
+		assertNotNull(concreteTaskDescriptorTmp.getState()) ;
+		//assertEquals(concreteTaskDescriptorTmp.getState(), STATE);
+		//assertEquals(concreteTaskDescriptorTmp.getPlannedFinishingDate(), this.date);
 
 		// Rk: the tearDown method is called here.
 	}
