@@ -1,10 +1,12 @@
 package wilos.hibernate.misc.wilosuser;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import wilos.model.misc.wilosuser.ProcessManager;
 import wilos.model.misc.wilosuser.ProjectDirector;
 
 /**
@@ -32,8 +34,7 @@ public class ProjectDirectorDao extends HibernateDaoSupport {
 	 */
 	public Set<ProjectDirector> getAllProjectDirectors() {
 		Set<ProjectDirector> loadAll = new HashSet<ProjectDirector>();
-		loadAll.addAll(this.getHibernateTemplate().loadAll(
-				ProjectDirector.class));
+		loadAll.addAll(this.getHibernateTemplate().loadAll(ProjectDirector.class));
 		return loadAll;
 	}
 
@@ -43,9 +44,13 @@ public class ProjectDirectorDao extends HibernateDaoSupport {
 	 * @param _id
 	 * @return
 	 */
-	public ProjectDirector getProjectDirector(String _id) {
-		return (ProjectDirector) this.getHibernateTemplate().get(
-				ProjectDirector.class, _id);
+	public ProjectDirector getProjectDirector(String _login) {
+		ArrayList projectDirectors = (ArrayList)this.getHibernateTemplate().find("from ProjectDirector pd where pd.login=?",_login);
+		if(projectDirectors.size()>0){
+			return (ProjectDirector)projectDirectors.get(0);
+		}else{
+			return null;
+		}
 	}
 
 	/**

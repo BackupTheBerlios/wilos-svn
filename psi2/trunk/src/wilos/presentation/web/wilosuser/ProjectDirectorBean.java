@@ -111,6 +111,7 @@ public class ProjectDirectorBean {
 			}
 			facesContext.addMessage(null, message);
 		}	
+		this.projectDirector = new ProjectDirector();
 		
 		return url;
 	}

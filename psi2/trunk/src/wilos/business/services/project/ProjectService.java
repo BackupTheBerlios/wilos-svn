@@ -1,15 +1,8 @@
 package wilos.business.services.project;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
-
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -20,8 +13,6 @@ import wilos.hibernate.misc.project.ProjectDao;
 import wilos.hibernate.misc.wilosuser.ParticipantDao;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
-import wilos.model.misc.wilosuser.WilosUser;
-import wilos.model.spem2.role.RoleDescriptor;
 
 /**
  * The services associated to the Project
@@ -91,9 +82,9 @@ public class ProjectService {
 	}
 	
 	/**
-	 * TODO Method description
+	 * This method returns all the projects.
 	 *
-	 * @return
+	 * @return A set of Project
 	 */
 	@Transactional(readOnly = true)
 	public Set<Project> getAllProjects()
@@ -109,8 +100,7 @@ public class ProjectService {
 	 * @return
 	 */
 	@Transactional(readOnly = true)
-	public Set<Project> getAllProjectsWithNoProcess()
-	{
+	public Set<Project> getAllProjectsWithNoProcess(){
 		HashSet<Project> projectList = new HashSet<Project>();
 		HashSet<Project> tmpList = new HashSet<Project>();
 		tmpList = (HashSet)this.projectDao.getAllProject();
@@ -119,18 +109,16 @@ public class ProjectService {
 			if(project.getProcess() == null)
 				projectList.add(project);
 		}
-		
 		return projectList;
 	}
 
 	/**
-	 * TODO Method description
+	 * Returns the projects that aren't associated to a process.
 	 *
-	 * @return
+	 * @return A set of Project
 	 */
 	@Transactional(readOnly = true)
-	public Set<Project> getAllProjectsWithProcess()
-	{
+	public Set<Project> getAllProjectsWithProcess(){
 		HashSet<Project> projectList = new HashSet<Project>();
 		HashSet<Project> tmpList = new HashSet<Project>();
 		tmpList = (HashSet)this.projectDao.getAllProject();

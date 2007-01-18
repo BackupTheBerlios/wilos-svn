@@ -1,5 +1,6 @@
 package wilos.hibernate.misc.wilosuser;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +16,10 @@ import wilos.model.spem2.role.RoleDescriptor;
  * @author BlackMilk
  * @author Mikamikaze
  * @author Sakamakak
+ */
+/**
+ * @author mikamikaze
+ *
  */
 public class ParticipantDao extends HibernateDaoSupport {
 
@@ -49,16 +54,20 @@ public class ParticipantDao extends HibernateDaoSupport {
 		return loadAll;
 	}
 
+	
 	/**
-	 * Return the element which have the id _id.
-	 * 
-	 * @param _id
+	 * TODO
+	 * @param _login
 	 * @return
 	 */
-	public Participant getParticipant(String _id) {
-		return (Participant) this.getHibernateTemplate().get(Participant.class, _id);
+	public Participant getParticipant(String _login){
+		ArrayList participants = (ArrayList)this.getHibernateTemplate().find("from Participant p where p.login=?",_login);
+		if(participants.size()>0){
+			return (Participant)participants.get(0);
+		}else{
+			return null;
+		}
 	}
-
 	/**
 	 * Delete the element.
 	 * 

@@ -61,6 +61,7 @@ public class AdministratorDaoTest extends TestCase {
 	public void testGetAdministrator() {
 		this.ad.saveOrUpdateAdministrator(this.a) ;
 		Administrator admTmp = this.ad.getAdministrator("testAdmin") ;
+		assertNotNull(admTmp) ;
 		assertEquals(admTmp.getLogin(), "testAdmin") ;
 		assertEquals(admTmp.getPassword(), "pass") ;
 	}

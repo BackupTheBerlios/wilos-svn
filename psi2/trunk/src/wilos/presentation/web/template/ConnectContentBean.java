@@ -7,8 +7,10 @@ import javax.faces.event.ActionEvent;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+
 /**
- * TODO Method description
+ * This bean is used to manage the display zone for the connection area.
+ * @author sadasblackmilk
  */
 public class ConnectContentBean extends IceUserObject {
 
@@ -70,7 +72,7 @@ public class ConnectContentBean extends IceUserObject {
     }
 
     /**
-     * TODO Method description.
+     * Getter for TemplateName
      *
      * @return panel stack template name.
      */

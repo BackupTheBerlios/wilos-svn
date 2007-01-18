@@ -59,7 +59,8 @@ public class WilosUserDaoTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link wilos.hibernate.misc.wilosuser.WilosUserDao#getAllWilosUsers()}.
+	 * Test method for 
+	 * {@link wilos.hibernate.misc.wilosuser.WilosUserDao#getAllWilosUsers()}.
 	 */
 	public void testGetAllWilosUsers() {
 		this.wud.saveOrUpdateWilosUser(this.wu) ;

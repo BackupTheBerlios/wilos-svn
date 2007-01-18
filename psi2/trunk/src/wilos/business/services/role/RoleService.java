@@ -5,10 +5,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import wilos.hibernate.misc.wilosuser.ParticipantDao;
 import wilos.hibernate.spem2.role.RoleDescriptorDao;
 import wilos.model.misc.wilosuser.Participant;
-import wilos.model.misc.wilosuser.WilosUser;
 import wilos.model.spem2.role.RoleDescriptor;
 
 /**
@@ -68,13 +63,12 @@ public class RoleService {
 	
 	
 	/**
-	 * TODO Method description
+	 * Getting the roles list of the participant witch login is provided.   
 	 *
-	 * @return
+	 * @return An list with each roleDescriptor and if the participant is owning this role
 	 */
 	@Transactional(readOnly = true)
-	public HashMap<RoleDescriptor,Boolean> getRolesForAParticipant(String _user_login)
-	{
+	public HashMap<RoleDescriptor,Boolean> getRolesForAParticipant(String _user_login){
 		RoleDescriptor globalRoleTemp;
 		Boolean test;
 		HashMap<RoleDescriptor,Boolean> participantRoles = new HashMap<RoleDescriptor,Boolean>();

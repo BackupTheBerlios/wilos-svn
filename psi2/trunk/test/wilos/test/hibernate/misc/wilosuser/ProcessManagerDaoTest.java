@@ -75,6 +75,7 @@ public class ProcessManagerDaoTest extends TestCase {
 	public void testGetProcessManager() {
 		this.pmd.saveOrUpdateProcessManager(this.pm) ;
 		ProcessManager pmTmp = this.pmd.getProcessManager("testPM") ;
+		assertNotNull(pmTmp) ;
 		assertEquals(pmTmp.getLogin(), "testPM") ;
 		assertEquals(pmTmp.getName(), "Lopes") ;
 	}

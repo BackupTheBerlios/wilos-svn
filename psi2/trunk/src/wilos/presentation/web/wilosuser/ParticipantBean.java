@@ -139,6 +139,8 @@ public class ParticipantBean {
 				changeContentPage(url);
 			}
 		}
+		this.participant = new Participant();
+		
 		return "";
 	}
 

@@ -1,11 +1,13 @@
 package wilos.hibernate.misc.wilosuser;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import wilos.model.misc.wilosuser.Administrator;
+import wilos.model.misc.wilosuser.Participant;
 
 /**
  * AdministratorDao manage requests from the system to store Administrator into
@@ -33,8 +35,7 @@ public class AdministratorDao extends HibernateDaoSupport {
 	public Set<Administrator> getAllAdministrators() {
 		Set<Administrator> loadAll = new HashSet<Administrator>();
 		loadAll
-				.addAll(this.getHibernateTemplate()
-						.loadAll(Administrator.class));
+				.addAll(this.getHibernateTemplate().loadAll(Administrator.class));
 		return loadAll;
 	}
 
@@ -44,9 +45,13 @@ public class AdministratorDao extends HibernateDaoSupport {
 	 * @param _id
 	 * @return
 	 */
-	public Administrator getAdministrator(String _id) {
-		return (Administrator) this.getHibernateTemplate().get(
-				Administrator.class, _id);
+	public Administrator getAdministrator(String _login) {
+		ArrayList administrators = (ArrayList)this.getHibernateTemplate().find("from Administrator a where a.login=?",_login);
+		if(administrators.size()>0){
+			return (Administrator)administrators.get(0);
+		}else{
+			return null;
+		}
 	}
 
 	/**

@@ -1,10 +1,12 @@
 package wilos.hibernate.misc.wilosuser;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import wilos.model.misc.wilosuser.ProjectDirector;
 import wilos.model.misc.wilosuser.WilosUser;
 
 /**
@@ -42,9 +44,13 @@ public class WilosUserDao extends HibernateDaoSupport {
 	 * @param _id
 	 * @return
 	 */
-	public WilosUser getWilosUser(String _id) {
-		return (WilosUser) this.getHibernateTemplate()
-				.get(WilosUser.class, _id);
+	public WilosUser getWilosUser(String _login) {
+		ArrayList wilosUsers = (ArrayList)this.getHibernateTemplate().find("from WilosUser wu where wu.login=?",_login);
+		if(wilosUsers.size()>0){
+			return (WilosUser)wilosUsers.get(0);
+		}else{
+			return null;
+		}
 	}
 
 	/**

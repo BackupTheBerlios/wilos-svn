@@ -145,7 +145,6 @@ public class LoginBean {
 		FacesContext facesContext = FacesContext.getCurrentInstance() ;
 		Object connectObject = facesContext.getApplication().createValueBinding("#{connect}").getValue(facesContext) ;
 		if(connectObject != null && connectObject instanceof ConnectViewBean){
-
 			ConnectViewBean connectBean = (ConnectViewBean) connectObject;
 			connectBean.connected(_b,_applicationRole);
 		}

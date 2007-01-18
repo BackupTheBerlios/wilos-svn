@@ -1,10 +1,12 @@
 package wilos.hibernate.misc.wilosuser;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.ProcessManager;
 
 /**
@@ -32,20 +34,24 @@ public class ProcessManagerDao extends HibernateDaoSupport {
 	 */
 	public Set<ProcessManager> getAllProcessManagers() {
 		Set<ProcessManager> loadAll = new HashSet<ProcessManager>();
-		loadAll.addAll(this.getHibernateTemplate()
-				.loadAll(ProcessManager.class));
+		loadAll.addAll(this.getHibernateTemplate().loadAll(ProcessManager.class));
 		return loadAll;
 	}
 
+	
 	/**
 	 * Return the processmanager which have the id _id.
-	 * 
-	 * @param _id
+	 * TODO !!! FINIR LE HSQL ET APPELLER LES BONNES METHODES DANS LES TESTS !!!!  
+	 * @param _login
 	 * @return
 	 */
-	public ProcessManager getProcessManager(String _id) {
-		return (ProcessManager) this.getHibernateTemplate().get(
-				ProcessManager.class, _id);
+	public ProcessManager getProcessManager(String _login){
+		ArrayList processManagers = (ArrayList)this.getHibernateTemplate().find("from ProcessManager pm where pm.login=?",_login);
+		if(processManagers.size()>0){
+			return (ProcessManager)processManagers.get(0);
+		}else{
+			return null;
+		}
 	}
 
 	/**

@@ -111,7 +111,7 @@ public class ProcessManagerBean {
 			}
 			facesContext.addMessage(null, message) ;
 		}
-		
+		this.processManager = new ProcessManager() ;
 		
 		return url ;
 	}

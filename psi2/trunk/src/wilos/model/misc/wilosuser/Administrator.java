@@ -5,8 +5,7 @@ import org.apache.commons.lang.builder.EqualsBuilder ;
 import org.apache.commons.lang.builder.HashCodeBuilder ;
 
 /**
- * This class represents the administrator of Wilos.
- * 
+ * This class represents the administrator of Wilos. It hasn't been tested because it was too light. 
  * @author Yoann Lopes
  * @author MiKaMiKaZe
  */

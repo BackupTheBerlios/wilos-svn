@@ -17,7 +17,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.role.RoleService;
-import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
 import wilos.model.spem2.role.RoleDescriptor;
 
@@ -162,11 +161,10 @@ public class RoleBean {
 	}
 	
 	/**
-	 * TODO Method description
+	 * Listener on the check action in the role checkboxes.
 	 * @param newRole
 	 */
-	public void addRoleChangeListener(ValueChangeEvent newRole)
-	{
+	public void addRoleChangeListener(ValueChangeEvent newRole){
 		String roleName = (String)FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("roleD");
 		this.rolesParticipant.put(roleName,(Boolean)newRole.getNewValue());
 	}
