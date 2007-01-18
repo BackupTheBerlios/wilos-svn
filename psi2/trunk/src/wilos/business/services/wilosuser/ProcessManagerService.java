@@ -1,5 +1,7 @@
 package wilos.business.services.wilosuser;
 
+import java.util.Set;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
@@ -7,7 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import wilos.business.util.Security;
 import wilos.hibernate.misc.wilosuser.ProcessManagerDao;
+import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.ProcessManager;
+import wilos.model.spem2.role.RoleDescriptor;
 
 /**
  * The services associated to the ProcessManager
@@ -18,6 +22,8 @@ import wilos.model.misc.wilosuser.ProcessManager;
 public class ProcessManagerService {
 
 	private ProcessManagerDao processManagerDao;
+	
+	
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -50,5 +56,14 @@ public class ProcessManagerService {
 	public ProcessManagerDao getProcessManagerDao() {
 		return this.processManagerDao;
 	}
-
+	
+	/**
+	 * Return Process Mannager list
+	 * 
+	 * @return the list of Process Managers
+	 */
+	@Transactional(readOnly = true)
+	public Set<ProcessManager> getProcessManagers() {
+		return this.processManagerDao.getAllProcessManagers();
+	}
 }

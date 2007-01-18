@@ -1,6 +1,9 @@
 
 package wilos.presentation.web.wilosuser ;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.faces.application.FacesMessage ;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext ;
@@ -11,6 +14,7 @@ import org.apache.commons.logging.LogFactory ;
 
 import wilos.business.services.wilosuser.LoginService ;
 import wilos.business.services.wilosuser.ProcessManagerService ;
+import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.ProcessManager ;
 
 /**
@@ -26,6 +30,9 @@ public class ProcessManagerBean {
 	private LoginService loginService ;
 
 	private String passwordConfirmation ;
+	
+	private List<ProcessManager> processManagerList;
+	
 
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
@@ -210,5 +217,25 @@ public class ProcessManagerBean {
 	public void setLoginService(LoginService _loginService) {
 		this.loginService = _loginService ;
 	}
+	
+	
+	/**
+	 * Getter of ProcessManagerList.
+	 *
+	 * @return the ProcessManagerList.
+	 */
+	public List<ProcessManager> getProcessManagerList() {
+		this.processManagerList = new ArrayList<ProcessManager>();
+		processManagerList.addAll(this.processManagerService.getProcessManagers());
+		return this.processManagerList ;
+	}
 
+	/**
+	 * Setter of ProcessManagerList.
+	 *
+	 * @param _ProcessManagerList The ProcessManagerList to set.
+	 */
+	public void setProcessManagerList(List<ProcessManager> _processManagerList) {
+		this.processManagerList = _processManagerList ;
+	}
 }

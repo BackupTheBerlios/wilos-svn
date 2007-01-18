@@ -1,5 +1,8 @@
 package wilos.presentation.web.wilosuser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -8,8 +11,10 @@ import javax.faces.validator.ValidatorException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import wilos.business.services.project.ProjectService;
 import wilos.business.services.wilosuser.LoginService;
 import wilos.business.services.wilosuser.ProjectDirectorService;
+import wilos.model.misc.wilosuser.ProcessManager;
 import wilos.model.misc.wilosuser.ProjectDirector;
 
 /**
@@ -27,7 +32,10 @@ public class ProjectDirectorBean {
 
 	private String passwordConfirmation;
 
+	private List<ProjectDirector> projectDirectorList;
+	
 	protected final Log logger = LogFactory.getLog(this.getClass());
+	
 
 	/**
 	 * Constructor.
@@ -207,4 +215,26 @@ public class ProjectDirectorBean {
 	public void setLoginService(LoginService _loginService) {
 		this.loginService = _loginService;
 	}
+	
+	/**
+	 * Getter of ProjectDirectorList.
+	 *
+	 * @return the ProjectDirectorList.
+	 */
+	public List<ProjectDirector> getProjectDirectorList() {
+		this.projectDirectorList = new ArrayList<ProjectDirector>();
+		projectDirectorList.addAll(this.projectDirectorService.getProjectDirectors());
+		return this.projectDirectorList ;
+	}
+
+	/**
+	 * Setter of ProcessManagerList.
+	 *
+	 * @param _ProcessManagerList The ProcessManagerList to set.
+	 */
+	public void setProjectDirectorList(List<ProjectDirector> _projectDirectorList) {
+		this.projectDirectorList = _projectDirectorList ;
+	}	
+	
+	
 }
