@@ -153,13 +153,7 @@ public class ProjectBean {
 	 */
 	public List<Project> getProjectList() {
 		this.projectList = new ArrayList<Project>();
-		projectList.addAll(this.projectService.getAllProjects());
-		
-		for(Project project : projectList)
-		{
-			this.logger.debug("### Projet : "+project.getName()+"###");
-		}
-		
+		projectList.addAll(this.projectService.getAllProjects());		
 		return this.projectList ;
 	}
 

@@ -1,5 +1,7 @@
 package wilos.business.services.wilosuser;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
@@ -86,9 +88,29 @@ public class ParticipantService {
 	 * 				the participant which the affected to project are returned
 	 * @return list of project where the participant is affected to
 	 */
-	public Set<Project> getProjects(Participant participant)
+	@Transactional(readOnly = true)
+	public HashMap<Project,Boolean> getProjectsForAParticipant(Participant participant)
 	{
-		return participant.getAffectedProjectList();
+		HashMap<Project,Boolean> affectedProjectList = new HashMap<Project,Boolean>();
+		HashSet<Project> allProjectList = new HashSet<Project>();
+		Participant chargedParticipant = new Participant();
+		
+		//chargement du participant et des projets
+		String id = participant.getWilosuser_id();
+		chargedParticipant = this.participantDao.getParticipant(id);
+		allProjectList = (HashSet<Project>)this.projectDao.getAllProject();
+		
+		for(Project p : allProjectList){
+			if (chargedParticipant.getAffectedProjectList().contains(p))
+			{
+				affectedProjectList.put(p, true);
+			}
+			else
+			{
+				affectedProjectList.put(p, false);
+			}
+		}
+		return affectedProjectList;
 	}
 
 	/**

@@ -193,6 +193,7 @@
 	<bean id="ParticipantService"
 		class="wilos.business.services.wilosuser.ParticipantService">
 		<property name="participantDao" ref="ParticipantDao" />
+		<property name="projectDao" ref="ProjectDao" />
 	</bean>
 	
 	<bean id="ProcessManagerService"
@@ -213,6 +214,7 @@
 	<bean id="ProjectService"
 		class="wilos.business.services.project.ProjectService">
 		<property name="projectDao" ref="ProjectDao" />
+		<property name="participantDao" ref="ParticipantDao" />
 	</bean>
 	
 	<bean id="RoleService"

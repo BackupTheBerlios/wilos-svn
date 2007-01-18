@@ -99,7 +99,7 @@ public class ProjectService {
 	public Set<Project> getAllProjects()
 	{
 		HashSet<Project> projectList = new HashSet<Project>();
-		projectList = (HashSet)this.projectDao.getAllProject();
+		projectList = (HashSet<Project>)this.projectDao.getAllProject();
 		return projectList;
 	}
 	
@@ -169,6 +169,7 @@ public class ProjectService {
 	 * @param project
 	 * @return the list of participants affected to the project parameter
 	 */
+	@Transactional(readOnly = true)
 	public Set<Participant> getParticipants(Project project)
 	{
 		return project.getParticipants();

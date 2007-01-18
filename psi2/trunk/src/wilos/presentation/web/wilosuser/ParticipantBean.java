@@ -1,6 +1,9 @@
 package wilos.presentation.web.wilosuser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -11,6 +14,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.validator.ValidatorException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,7 +23,9 @@ import org.apache.commons.logging.LogFactory;
 import wilos.business.services.wilosuser.LoginService;
 import wilos.business.services.wilosuser.ParticipantService;
 import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
+import wilos.model.misc.wilosuser.WilosUser;
 import wilos.presentation.web.template.MenuBean;
 
 /**
@@ -41,6 +48,8 @@ public class ParticipantBean {
 	private String passwordConfirmation;
 	
 	private List<Participant> participantsList;
+	
+	private List affectedProjectsList;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -51,6 +60,7 @@ public class ParticipantBean {
 	public ParticipantBean() {
 		this.logger.debug("--- ParticipantBean --- == creating ..." + this);
 		this.participant = new Participant();
+		this.affectedProjectsList = new ArrayList();
 	}
 
 	/**
@@ -207,7 +217,7 @@ public class ParticipantBean {
 	{
 		String passConfirm = (String) _value;
 
-		//TODO : recuperer le nom de laure champs de password via une f:param
+		//TODO : recuperer le nom de l autre champs de password via une f:param
 		/*ExternalContext ec = (ExternalContext)_context.getExternalContext();
 		HashMap hm = new HashMap(ec.getRequestParameterMap());
 		String passName = (String)hm.get("forPassword");
@@ -328,5 +338,39 @@ public class ParticipantBean {
 	public void setParticipantsList(List<Participant> _participantsList) {
 		this.participantsList = _participantsList ;
 	}
+
+	public List<HashMap> getAffectedProjectsList() {
+		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
+		HttpSession sess = req.getSession() ;
+		Participant user = (Participant) sess.getAttribute("wilosUser") ;
+		
+		if (user instanceof Participant)
+		{
+			this.affectedProjectsList = new ArrayList();
+			HashMap<Project, Boolean> plist = new HashMap<Project, Boolean>();
+			plist = (HashMap<Project, Boolean>)this.participantService.getProjectsForAParticipant(user);
+			Project currentProject = new Project();
+			
+			for (Iterator iter = plist.keySet().iterator(); iter.hasNext();) {
+
+				HashMap ligne = new HashMap<String,String>();
+				/*currentProject = (Project)iter.next();
+				
+				this.logger.debug("### NOM DU PROJET COURANT :"+currentProject.getName()+" ###");
+				ligne.put("name", currentProject.getName());
+				ligne.put("creationDate", currentProject.getCreationDate());
+				ligne.put("launchingDate", currentProject.getLaunchingDate());
+				ligne.put("description", currentProject.getDescription());*/
+		
+				this.affectedProjectsList.add(ligne);
+			}
+		}
+		return affectedProjectsList;
+	}
+
+	public void setAffectedProjectsList(List<HashMap> affectedProjectsList) {
+		this.affectedProjectsList = affectedProjectsList;
+	}
+
 
 }

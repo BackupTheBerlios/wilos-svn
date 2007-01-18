@@ -157,6 +157,7 @@ public class RoleBean {
 		HttpSession sess = req.getSession() ;
 		WilosUser user = (WilosUser) sess.getAttribute("wilosUser") ;
 		String user_login = user.getLogin();
+		//TODO ROLES : ATTENTION ENREGISTRER L ID AU LIEU DU LOGIN !!! 
 		this.roleService.saveParticipantRoles(this.getRolesParticipant(),user_login);
 	}
 	

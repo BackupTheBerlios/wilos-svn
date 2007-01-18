@@ -23,6 +23,5 @@
 			</many-to-many>
 		</set>
 	</joined-subclass>
-	
 </hibernate-mapping>
 

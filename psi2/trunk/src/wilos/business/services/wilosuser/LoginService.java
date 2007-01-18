@@ -21,7 +21,7 @@ import wilos.model.misc.wilosuser.WilosUser ;
 public class LoginService {
 
 	private WilosUserDao wilosUserDao ;
-
+	
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
 	/**
