@@ -24,22 +24,21 @@
         <f:facet name="north">
             <ice:panelGroup>  
 					<img src="images/logo_wilos.png"/>						
+            
+            <div id="roles_actions">
+            	<jsp:directive.include file="roles_actions.jspx" />
+            </div>
             </ice:panelGroup>
-            
-            
         </f:facet>
 
         <f:facet name="west">
             <ice:panelGroup>
             <div id="connection">
-					<jsp:directive.include file="connect.jspx"/>
+				<jsp:directive.include file="connect.jspx"/>
 			</div>
-            	<div id="menu">
-                	<jsp:directive.include file="navigation.jspx" />
-                </div>
-                <div id="roles_actions">
-                	<jsp:directive.include file="roles_actions.jspx" />
-                </div>
+            <div id="menu">
+            	<jsp:directive.include file="navigation.jspx" />
+            </div>
             </ice:panelGroup>
         </f:facet>
 

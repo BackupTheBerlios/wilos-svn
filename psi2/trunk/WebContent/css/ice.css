@@ -15,9 +15,13 @@
 }
 
 #roles_actions {
-	width:190px;
-	border-top:2px solid #FFFFFF;
-	border-right:2px solid #FFFFFF;
+	position:absolute;
+	top:10%;
+	left:210px;
+	height:60px;
+	width:60%;
+	overflow:hidden;
+	line-height:25px;
 }
 
 #menu { 
