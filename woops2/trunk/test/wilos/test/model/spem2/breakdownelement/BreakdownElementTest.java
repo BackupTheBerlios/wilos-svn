@@ -114,12 +114,12 @@ public class BreakdownElementTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link wilos.model.spem2.breakdownelement.BreakdownElement#addActivity(wilos.model.spem2.activity.Activity)}.
+	 * {@link wilos.model.spem2.breakdownelement.BreakdownElement#addSuperActivity(wilos.model.spem2.activity.Activity)}.
 	 */
 	public void testAddToActivity() {
 		// Rk: the setUp method is called here.
 
-		assertTrue("Empty (begin)", this.breakdownElement.getActivities().isEmpty()) ;
+		assertTrue("Empty (begin)", this.breakdownElement.getSuperActivities().isEmpty()) ;
 
 		Activity activity1 = new Activity() ;
 		activity1.setGuid("idEPF") ;
@@ -132,8 +132,8 @@ public class BreakdownElementTest extends TestCase {
 		activity1.setIsEvenDriven(true) ;
 		activity1.setIsOngoing(false) ;
 		activity1.setIsRepeatable(true) ;
-		this.breakdownElement.addActivity(activity1) ;
-		assertTrue("acts.size == 1", this.breakdownElement.getActivities().size() == 1) ;
+		this.breakdownElement.addSuperActivity(activity1) ;
+		assertTrue("acts.size == 1", this.breakdownElement.getSuperActivities().size() == 1) ;
 		assertTrue("bdes.size1 == 1", activity1.getBreakDownElements().size() == 1) ;
 
 		Activity activity2 = new Activity() ;
@@ -147,8 +147,8 @@ public class BreakdownElementTest extends TestCase {
 		activity2.setIsEvenDriven(true) ;
 		activity2.setIsOngoing(false) ;
 		activity2.setIsRepeatable(true) ;
-		this.breakdownElement.addActivity(activity2) ;
-		assertTrue("acts.size ==  2", this.breakdownElement.getActivities().size() == 2) ;
+		this.breakdownElement.addSuperActivity(activity2) ;
+		assertTrue("acts.size ==  2", this.breakdownElement.getSuperActivities().size() == 2) ;
 		assertTrue("bdes.size2 ==  1", activity2.getBreakDownElements().size() == 1) ;
 
 		// Rk: the tearDown method is called here.
@@ -189,9 +189,9 @@ public class BreakdownElementTest extends TestCase {
 		activities.add(activity1) ;
 		activities.add(activity2) ;
 
-		this.breakdownElement.addAllActivities(activities) ;
+		this.breakdownElement.addAllSuperActivities(activities) ;
 
-		assertTrue("acts.size ==  2", this.breakdownElement.getActivities().size() == 2) ;
+		assertTrue("acts.size ==  2", this.breakdownElement.getSuperActivities().size() == 2) ;
 		assertTrue("bdes1.size == 1", activity1.getBreakDownElements().size() == 1) ;
 		assertTrue("bdes2.size == 1", activity2.getBreakDownElements().size() == 1) ;
 
@@ -200,7 +200,7 @@ public class BreakdownElementTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link wilos.model.spem2.breakdownelement.BreakdownElement#removeActivity(wilos.model.spem2.activity.Activity)}.
+	 * {@link wilos.model.spem2.breakdownelement.BreakdownElement#removeSuperActivity(wilos.model.spem2.activity.Activity)}.
 	 */
 	public void testRemoveFromActivity() {
 		// Rk: the setUp method is called here.
@@ -216,10 +216,10 @@ public class BreakdownElementTest extends TestCase {
 		activity.setIsEvenDriven(true) ;
 		activity.setIsOngoing(false) ;
 		activity.setIsRepeatable(true) ;
-		this.breakdownElement.addActivity(activity) ;
-		this.breakdownElement.removeActivity(activity) ;
+		this.breakdownElement.addSuperActivity(activity) ;
+		this.breakdownElement.removeSuperActivity(activity) ;
 
-		assertTrue(this.breakdownElement.getActivities().isEmpty()) ;
+		assertTrue(this.breakdownElement.getSuperActivities().isEmpty()) ;
 		assertTrue(activity.getBreakDownElements().isEmpty()) ;
 
 		// Rk: the tearDown method is called here.
@@ -260,10 +260,10 @@ public class BreakdownElementTest extends TestCase {
 		set.add(activity) ;
 		set.add(activity2) ;
 
-		this.breakdownElement.addAllActivities(set) ;
-		this.breakdownElement.removeAllActivities() ;
+		this.breakdownElement.addAllSuperActivities(set) ;
+		this.breakdownElement.removeAllSuperActivities() ;
 
-		assertTrue(this.breakdownElement.getActivities().isEmpty()) ;
+		assertTrue(this.breakdownElement.getSuperActivities().isEmpty()) ;
 		assertTrue(activity.getBreakDownElements().isEmpty()) ;
 		assertTrue(activity2.getBreakDownElements().isEmpty()) ;
 

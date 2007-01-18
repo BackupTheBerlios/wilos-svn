@@ -196,7 +196,7 @@ public class ProcessService {
 
 		for(RoleDescriptor rd : roleDescriptorList){
 			rd.getAdditionalTasks().clear() ;
-			rd.getActivities().clear() ;
+			rd.getSuperActivities().clear() ;
 			// rd.getParticipants().clear();
 			rd.getPrimaryTasks().clear() ;
 			rd.setRoleDefinition(null) ;
@@ -208,7 +208,7 @@ public class ProcessService {
 		}
 		for(TaskDescriptor td : taskDescriptorList){
 			td.getAdditionalRoles().clear() ;
-			td.getActivities().clear() ;
+			td.getSuperActivities().clear() ;
 			td.setMainRole(null) ;
 			td.setTaskDefinition(null) ;
 			this.taskDescriptorDao.saveOrUpdateTaskDescriptor(td) ;
@@ -392,7 +392,7 @@ public class ProcessService {
 
 		for(RoleDescriptor rd : roleDescriptorList){
 			rd.getAdditionalTasks().clear() ;
-			rd.getActivities().clear() ;
+			rd.getSuperActivities().clear() ;
 			// rd.getParticipants().clear();
 			rd.getPrimaryTasks().clear() ;
 			rd.setRoleDefinition(null) ;
@@ -404,7 +404,7 @@ public class ProcessService {
 		}
 		for(TaskDescriptor td : taskDescriptorList){
 			td.getAdditionalRoles().clear() ;
-			td.getActivities().clear() ;
+			td.getSuperActivities().clear() ;
 			td.setMainRole(null) ;
 			td.setTaskDefinition(null) ;
 			this.taskDescriptorDao.saveOrUpdateTaskDescriptor(td) ;

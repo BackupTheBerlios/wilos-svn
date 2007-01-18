@@ -133,9 +133,9 @@ public class ActivityTest extends TestCase {
 		this.activity.addBreakdownElement(breakdownElement) ;
 
 		assertFalse(this.activity.getBreakDownElements().isEmpty()) ;
-		assertFalse(breakdownElement.getActivities().isEmpty()) ;
+		assertFalse(breakdownElement.getSuperActivities().isEmpty()) ;
 		assertTrue(this.activity.getBreakDownElements().size() == 1) ;
-		assertTrue(breakdownElement.getActivities().size() == 1) ;
+		assertTrue(breakdownElement.getSuperActivities().size() == 1) ;
 	}
 
 	/**
@@ -170,10 +170,10 @@ public class ActivityTest extends TestCase {
 
 		assertFalse("bdes vides", this.activity.getBreakDownElements().isEmpty()) ;
 		assertTrue("bdes = 2", this.activity.getBreakDownElements().size() == 2) ;
-		assertFalse("brk acts vide", breakdownElement.getActivities().isEmpty()) ;
-		assertTrue("brk acts = 1", breakdownElement.getActivities().size() == 1) ;
-		assertFalse("tmp acts vide", tmp.getActivities().isEmpty()) ;
-		assertTrue("tmp acts = 1", tmp.getActivities().size() == 1) ;
+		assertFalse("brk acts vide", breakdownElement.getSuperActivities().isEmpty()) ;
+		assertTrue("brk acts = 1", breakdownElement.getSuperActivities().size() == 1) ;
+		assertFalse("tmp acts vide", tmp.getSuperActivities().isEmpty()) ;
+		assertTrue("tmp acts = 1", tmp.getSuperActivities().size() == 1) ;
 	}
 
 	/**
@@ -194,7 +194,7 @@ public class ActivityTest extends TestCase {
 		this.activity.removeBreakdownElement(breakdownElement) ;
 
 		assertTrue(this.activity.getBreakDownElements().isEmpty()) ;
-		assertTrue(breakdownElement.getActivities().isEmpty()) ;
+		assertTrue(breakdownElement.getSuperActivities().isEmpty()) ;
 	}
 
 	/**
@@ -230,7 +230,7 @@ public class ActivityTest extends TestCase {
 		this.activity.removeAllBreakdownElements() ;
 
 		assertTrue("bdes", this.activity.getBreakDownElements().isEmpty()) ;
-		assertTrue("bde.acts", breakdownElement.getActivities().isEmpty()) ;
-		assertTrue("tmp.acts", tmp.getActivities().isEmpty()) ;
+		assertTrue("bde.acts", breakdownElement.getSuperActivities().isEmpty()) ;
+		assertTrue("tmp.acts", tmp.getSuperActivities().isEmpty()) ;
 	}
 }

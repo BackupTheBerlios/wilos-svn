@@ -30,7 +30,7 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	private Boolean isOptional ;
 
-	private Set<Activity> activities ;
+	private Set<Activity> superActivities ;
 
 	/**
 	 * Constructor.
@@ -43,7 +43,7 @@ public class BreakdownElement extends Element implements Cloneable {
 		this.isOptional = false ;
 		this.isPlanned = true ;
 		this.hasMultipleOccurrences = false ;
-		this.activities = new HashSet<Activity>() ;
+		this.superActivities = new HashSet<Activity>() ;
 	}
 
 	/*
@@ -71,7 +71,7 @@ public class BreakdownElement extends Element implements Cloneable {
 		this.hasMultipleOccurrences = _breakdownElement.hasMultipleOccurrences ;
 		this.isPlanned = _breakdownElement.isPlanned ;
 		this.isOptional = _breakdownElement.isOptional ;
-		this.setActivities(_breakdownElement.getActivities()) ;
+		this.setSuperActivities(_breakdownElement.getSuperActivities()) ;
 	}
 
 	/*
@@ -89,7 +89,7 @@ public class BreakdownElement extends Element implements Cloneable {
 		BreakdownElement breakdownElement = (BreakdownElement) obj ;
 		return new EqualsBuilder().appendSuper(super.equals(breakdownElement)).append(this.presentationName, breakdownElement.presentationName).append(this.prefix, breakdownElement.prefix).append(this.isPlanned,
 				breakdownElement.isPlanned).append(this.hasMultipleOccurrences, breakdownElement.hasMultipleOccurrences).append(this.isOptional,
-				breakdownElement.isOptional).append(this.activities, breakdownElement.activities).isEquals() ;
+				breakdownElement.isOptional).append(this.superActivities, breakdownElement.superActivities).isEquals() ;
 	}
 
 	/*
@@ -105,22 +105,22 @@ public class BreakdownElement extends Element implements Cloneable {
 	/**
 	 * Add an Activity to the activities collection of a BreakdownElement.
 	 * 
-	 * @param _activity
+	 * @param _superActivity
 	 *            The activity to add
 	 */
-	public void addActivity(Activity _activity) {
-		this.getActivities().add(_activity) ;
-		_activity.getBreakDownElements().add(this) ;
+	public void addSuperActivity(Activity _superActivity) {
+		this.getSuperActivities().add(_superActivity) ;
+		_superActivity.getBreakDownElements().add(this) ;
 	}
 
 	/**
 	 * Add an activity collection to the activity collection of a breakdownelement.
 	 * 
-	 * @param _activities
+	 * @param _superActivities
 	 *            The set of Activity to add.
 	 */
-	public void addAllActivities(Set<Activity> _activities) {
-		for(Activity activity : _activities){
+	public void addAllSuperActivities(Set<Activity> _superActivities) {
+		for(Activity activity : _superActivities){
 			activity.addBreakdownElement(this) ;
 		}
 	}
@@ -128,22 +128,22 @@ public class BreakdownElement extends Element implements Cloneable {
 	/**
 	 * Remove from a breakdownelement one of these activities.
 	 * 
-	 * @param _activity
+	 * @param _superActivity
 	 *            The Activity to remove.
 	 */
-	public void removeActivity(Activity _activity) {
-		_activity.getBreakDownElements().remove(this) ;
-		this.getActivities().remove(_activity) ;
+	public void removeSuperActivity(Activity _superActivity) {
+		_superActivity.getBreakDownElements().remove(this) ;
+		this.getSuperActivities().remove(_superActivity) ;
 	}
 
 	/**
 	 * Remove from a breakdownelement all its activities.
 	 * 
 	 */
-	public void removeAllActivities() {
-		for(Activity activity : this.getActivities())
+	public void removeAllSuperActivities() {
+		for(Activity activity : this.getSuperActivities())
 			activity.getBreakDownElements().remove(this) ;
-		this.getActivities().clear() ;
+		this.getSuperActivities().clear() ;
 	}
 
 	/**
@@ -243,8 +243,8 @@ public class BreakdownElement extends Element implements Cloneable {
 	 * 
 	 * @return the activities.
 	 */
-	public Set<Activity> getActivities() {
-		return this.activities ;
+	public Set<Activity> getSuperActivities() {
+		return this.superActivities ;
 	}
 
 	/**
@@ -254,7 +254,7 @@ public class BreakdownElement extends Element implements Cloneable {
 	 *            The activities to set.
 	 */
 	@ SuppressWarnings ("unused")
-	private void setActivities(Set<Activity> _activities) {
-		this.activities = _activities ;
+	private void setSuperActivities(Set<Activity> _superActivities) {
+		this.superActivities = _superActivities ;
 	}
 }

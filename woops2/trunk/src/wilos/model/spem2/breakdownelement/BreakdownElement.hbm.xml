@@ -27,10 +27,10 @@
 			column="isOptional" length="1" />
 
 		<!-- Associations -->
-		<set name="activities" table="nesting" lazy="true">
+		<set name="superActivities" table="nesting" lazy="true">
 			<key column="breakdownelement_id"></key>
 			<many-to-many class="wilos.model.spem2.activity.Activity"
-				column="activity_id">
+				column="superactivity_id">
 			</many-to-many>
 		</set> 
 		

@@ -37,7 +37,7 @@ public class BreakdownElementService {
 
 		for(BreakdownElement bde : tempList){
 			flag = false ;
-			for(Activity a : bde.getActivities()){
+			for(Activity a : bde.getSuperActivities()){
 				if(a.getId().equals(_id)){
 					flag = true ;
 					break ;

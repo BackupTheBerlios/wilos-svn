@@ -37,7 +37,7 @@ public class TaskDescriptorService {
 		
 		for (TaskDescriptor rd : tempList) {
 			flag = false;
-			for (Activity a : rd.getActivities()) {
+			for (Activity a : rd.getSuperActivities()) {
 				if (a.getId().equals(_id)) {
 					flag = true;
 					break;
