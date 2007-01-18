@@ -13,17 +13,17 @@ import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.utils.ExceptionManager;
 
 /**
- * TaskDescriptorDao manage requests from the system to store TaskDescriptor to the database
+ * ConcreteTaskDescriptorDao manage requests from the system to store ConcreteTaskDescriptorDao to the database
  * 
- * @author eperico
+ * @author mat,seb
  * 
  */
 public class ConcreteTaskDescriptorDao extends HibernateDaoSupport {
 
 	/**
-	 * Save or update a TaskDescriptor
+	 * Save or update a ConcreteTaskDescriptorDao
 	 * 
-	 * @param _taskdescriptor
+	 * @param _concreteTaskdescriptor
 	 */
 	public void saveOrUpdateConcreteTaskDescriptor(ConcreteTaskDescriptor _concreteTaskdescriptor) {
 		try{
@@ -38,9 +38,9 @@ public class ConcreteTaskDescriptorDao extends HibernateDaoSupport {
 	}
 
 	/**
-	 * Return a set of TaskDescriptor
+	 * Return a set of ConcreteTaskDescriptor
 	 * 
-	 * @return set <TaskDescriptor>
+	 * @return set <ConcreteTaskDescriptor>
 	 */
 	@ SuppressWarnings ("unchecked")
 	public List<ConcreteTaskDescriptor> getAllConcreteTaskDescriptors() {
@@ -55,19 +55,19 @@ public class ConcreteTaskDescriptorDao extends HibernateDaoSupport {
 	}
 
 	/**
-	 * Return the TaskDescriptor which have the id _id
+	 * Return the ConcreteTaskDescriptor which have the id _id
 	 * 
 	 * @param _id
-	 * @return TaskDescriptor
+	 * @return ConcreteTaskDescriptor
 	 */
 	public ConcreteTaskDescriptor getConcreteTaskDescriptor(String _id) {
 		return (ConcreteTaskDescriptor) this.getHibernateTemplate().get(ConcreteTaskDescriptor.class, _id) ;
 	}
 
 	/**
-	 * Delete the TaskDescriptor
+	 * Delete the ConcreteTaskDescriptor
 	 * 
-	 * @param _taskdescriptor
+	 * @param _concreteTaskdescriptor
 	 */
 	public void deleteConcreteTaskDescriptor(ConcreteTaskDescriptor _concreteTaskdescriptor) {
 		try{
