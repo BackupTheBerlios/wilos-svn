@@ -57,7 +57,7 @@ public class ZIPUtils
 			// searching a xml file
 			while(e.hasMoreElements() && !trouve) {
 				entry = (ZipEntry) e.nextElement();
-				trouve = entry.getName().substring(entry.getName().lastIndexOf(".")+1).equals("xml");
+				trouve = isExtension(entry.getName(), "xml");
 			}
 			// if the file is founded
 			if (trouve){
@@ -70,6 +70,10 @@ public class ZIPUtils
 			}
 		}
 		return str ;
+	}
+	
+	public static boolean isExtension(String filePath, String extension){
+		return filePath.substring(filePath.lastIndexOf(".")+1).equals(extension);
 	}
 	
 	// exctraction du fichier xml et retour de son emplacement
@@ -87,7 +91,7 @@ public class ZIPUtils
 				// searching a xml file
 				while(e.hasMoreElements() && !trouve) {
 					entry = (ZipEntry) e.nextElement();
-					trouve = entry.getName().substring(entry.getName().lastIndexOf(".")+1).equals("xml");
+					trouve = isExtension(entry.getName(), "xml");
 				}
 				// if the file is founded
 				if (trouve){

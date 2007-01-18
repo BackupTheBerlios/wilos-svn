@@ -55,21 +55,22 @@ public class XMLUtils {
 		InputSource source = null;
 		try{
 			//creation de la source
-			if (true) {
+			if (ZIPUtils.isExtension(document.getName(), "xml")) {
 				source = new InputSource(new FileInputStream(document));
 			}
-			else {
+			else if (ZIPUtils.isExtension(document.getName(), "zip")) {
 				source = new InputSource(new ZIPUtils(document).getXMLStream());
 			}
-			
-			//creation du XPath 
-			XPathFactory fabrique = XPathFactory.newInstance();
-			XPath xpath = fabrique.newXPath();
-			
-			//evaluation de l'expression XPath
-			XPathExpression exp = xpath.compile(expression);
-			resultat = exp.evaluate(source,retour);
-			
+			if (source != null) {
+				
+				//creation du XPath 
+				XPathFactory fabrique = XPathFactory.newInstance();
+				XPath xpath = fabrique.newXPath();
+				
+				//evaluation de l'expression XPath
+				XPathExpression exp = xpath.compile(expression);
+				resultat = exp.evaluate(source,retour);
+			}
 		}catch(XPathExpressionException xpee){
 			xpee.printStackTrace();
 		}catch(IOException  ioe){
