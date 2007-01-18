@@ -17,6 +17,7 @@ public class AllTests {
 		suite.addTest(wilos.test.business.services.process.AllTests.suite()) ;
 		suite.addTest(wilos.test.business.services.role.AllTests.suite()) ;
 		suite.addTest(wilos.test.business.services.task.AllTests.suite()) ;
+		suite.addTest(wilos.test.business.services.concretetask.AllTests.suite()) ;
 		// $JUnit-END$
 		return suite ;
 	}
