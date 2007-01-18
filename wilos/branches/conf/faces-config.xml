@@ -9,7 +9,7 @@
 
 	<application>
 		<locale-config>
-			<default-locale>en_US</default-locale>
+			<default-locale>fr</default-locale>
 		</locale-config>
 	</application>
 
@@ -43,6 +43,10 @@
 		<managed-property>
 			<property-name>participantService</property-name>
 			<value>#{ParticipantService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
 		</managed-property>
 		<managed-property>
 			<property-name>loginService</property-name>
@@ -97,7 +101,7 @@
 	<managed-bean>
 		<managed-bean-name>RoleBean</managed-bean-name>
 		<managed-bean-class>wilos.presentation.web.role.RoleBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>roleService</property-name>
 			<value>#{RoleService}</value>
@@ -124,48 +128,7 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	
-	
-	<!-- Managed Bean for dynamic style examples -->
-	<managed-bean>
-		<managed-bean-name>styleBean</managed-bean-name>
-		<managed-bean-class>wilos.presentation.web.util.StyleBean</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
-
-	<managed-bean>
-		<description>
-			Backing bean that controls which content will be displayed
-			and the MenuGroupBeans that make up the left navigation of
-			the application
-		</description>
-		<managed-bean-name>navigation</managed-bean-name>
-		<managed-bean-class>
-			wilos.presentation.web.util.NavigationBean
-		</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
-
-	<managed-bean>
-		<managed-bean-name>treeNavigation</managed-bean-name>
-		<managed-bean-class>
-			wilos.presentation.web.util.TreeNavigation
-		</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
-
-
-
-	<!-- OutputProgress Render Manager-->
-	<managed-bean>
-		<managed-bean-name>renderManager</managed-bean-name>
-		<managed-bean-class>
-			com.icesoft.faces.async.render.RenderManager
-		</managed-bean-class>
-		<managed-bean-scope>application</managed-bean-scope>
-	</managed-bean>
-	
-	
-	<!-- Woops2 Beans -->
+	<!-- Woops2 -->
 	<managed-bean>
 		<managed-bean-name>ActivityBean</managed-bean-name>
 		<managed-bean-class>
@@ -235,8 +198,6 @@
 		</managed-property>
 	</managed-bean>
 	
-	
-	
 	<validator>
 		<validator-id>emailValidator</validator-id>
 		<validator-class>
@@ -259,9 +220,10 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
+
+
 	<navigation-rule>
-		<description>Custom Page for PSI2</description>
+		<description>Custom Pgae for Wilos</description>
 
 		<navigation-case>
 			<from-outcome>connect</from-outcome>
@@ -284,6 +246,16 @@
     		<redirect />
   		</navigation-case>
   		<navigation-case>
+    		<from-outcome>welcomeProjectDirector</from-outcome>
+    		<to-view-id>/welcomeProjectDirector.iface</to-view-id>
+    		<redirect />
+  		</navigation-case>
+  		<navigation-case>
+    		<from-outcome>welcomeProcessManager</from-outcome>
+    		<to-view-id>/welcomeProcessManager.iface</to-view-id>
+    		<redirect />
+  		</navigation-case>
+  		<navigation-case>
     		<from-outcome>processManager_create</from-outcome>
     		<to-view-id>/processManager_create.iface</to-view-id>
     		<redirect />
@@ -299,9 +271,20 @@
     		<redirect />
   		</navigation-case>
   		<navigation-case>
+    		<from-outcome>process_create</from-outcome>
+    		<to-view-id>/process_create.iface</to-view-id>
+    		<redirect />
+  		</navigation-case>
+  		<navigation-case>
     		<from-outcome>affect_roles</from-outcome>
     		<to-view-id>/affect_roles.iface</to-view-id>
     		<redirect />
   		</navigation-case>
+  		<navigation-case>
+    		<from-outcome>createProject</from-outcome>
+    		<to-view-id>/project_create.iface</to-view-id>
+    		<redirect />
+  		</navigation-case>
 	</navigation-rule>
+
 </faces-config>

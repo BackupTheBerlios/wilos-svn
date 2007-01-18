@@ -36,14 +36,13 @@
 
 		<property name="mappingResources">
 			<list>
-			<!-- PSI2 -->
 			<value>wilos/model/misc/wilosuser/Participant.hbm.xml</value>
 			<value>wilos/model/misc/wilosuser/WilosUser.hbm.xml</value>
 			<value>wilos/model/misc/wilosuser/Administrator.hbm.xml</value>
 			<value>wilos/model/misc/wilosuser/ProcessManager.hbm.xml</value>
 			<value>wilos/model/misc/wilosuser/ProjectDirector.hbm.xml</value>
 			<value>wilos/model/misc/project/Project.hbm.xml</value>
-			<!-- WOOPS2 -->
+			
 			<value>wilos/model/spem2/element/Element.hbm.xml</value>
 			<value>wilos/model/spem2/breakdownelement/BreakdownElement.hbm.xml</value>
 			<value>wilos/model/spem2/workbreakdownelement/WorkBreakdownElement.hbm.xml</value>
@@ -54,7 +53,6 @@
 			<value>wilos/model/spem2/task/Step.hbm.xml</value>
 			<value>wilos/model/spem2/role/RoleDescriptor.hbm.xml</value>
 			<value>wilos/model/spem2/role/RoleDefinition.hbm.xml</value>
-				
 			</list>
 		</property>
 
@@ -109,7 +107,7 @@
 	<!-- ========================= Start of BEAN DEFINITIONS ========================= -->
 
 	<!-- ========================= DAO Layer ========================= -->
-	<!-- PSI2 -->
+	
 	<bean id="ParticipantDao"
 		class="wilos.hibernate.misc.wilosuser.ParticipantDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
@@ -141,55 +139,22 @@
 	</bean>
 	
 	<!-- WOOPS2 -->
-	<bean id="ProcessDao" class="wilos.hibernate.spem2.process.ProcessDao">
-		<property name="hibernateTemplate" ref="hibernateTemplate" />
-	</bean>
-	
-	
-	<bean id="IterationDao" class="wilos.hibernate.spem2.iteration.IterationDao">
-		<property name="hibernateTemplate" ref="hibernateTemplate" />
-	</bean>
-	
-	<bean id="PhaseDao" class="wilos.hibernate.spem2.phase.PhaseDao">
-		<property name="hibernateTemplate" ref="hibernateTemplate" />
-	</bean>
-	
-	<bean id="ActivityDao"
-	      class="wilos.hibernate.spem2.activity.ActivityDao">
+	<bean id="RoleDescriptorDao"
+		class="wilos.hibernate.spem2.role.RoleDescriptorDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 	
 	<bean id="ElementDao" class="wilos.hibernate.spem2.element.ElementDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
-	
+
 	<bean id="BreakdownElementDao"
-	      class="wilos.hibernate.spem2.breakdownelement.BreakdownElementDao">
-		<property name="hibernateTemplate" ref="hibernateTemplate" />
-	</bean>
-	
-	<bean id="WorkBreakdownElementDao"
-	      class="wilos.hibernate.spem2.workbreakdownelement.WorkBreakdownElementDao">
-		<property name="hibernateTemplate" ref="hibernateTemplate" />
-	</bean>
-	
-	<bean id="TaskDefinitionDao"
-	      class="wilos.hibernate.spem2.task.TaskDefinitionDao">
-		<property name="hibernateTemplate" ref="hibernateTemplate" />
-	</bean>
-	
-	<bean id="TaskDescriptorDao"
-	      class="wilos.hibernate.spem2.task.TaskDescriptorDao">
+		class="wilos.hibernate.spem2.breakdownelement.BreakdownElementDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 	
 	<bean id="RoleDefinitionDao"
-	      class="wilos.hibernate.spem2.role.RoleDefinitionDao">
-		<property name="hibernateTemplate" ref="hibernateTemplate" />
-	</bean>
-	
-	<bean id="RoleDescriptorDao"
-	      class="wilos.hibernate.spem2.role.RoleDescriptorDao">
+		class="wilos.hibernate.spem2.role.RoleDefinitionDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 	
@@ -197,11 +162,38 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 	
+	<bean id="WorkBreakdownElementDao"
+		class="wilos.hibernate.spem2.workbreakdownelement.WorkBreakdownElementDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="TaskDefinitionDao"
+		class="wilos.hibernate.spem2.task.TaskDefinitionDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="TaskDescriptorDao"
+		class="wilos.hibernate.spem2.task.TaskDescriptorDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	
+	<bean id="ProcessDao" class="wilos.hibernate.spem2.process.ProcessDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="ActivityDao"
+		class="wilos.hibernate.spem2.activity.ActivityDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	
+	
+	
 	<!-- ========================= Business Layer ========================= -->
-	<!-- PSI2 -->
+
 	<bean id="ParticipantService"
 		class="wilos.business.services.wilosuser.ParticipantService">
 		<property name="participantDao" ref="ParticipantDao" />
+		<property name="projectDao" ref="ProjectDao" />
 	</bean>
 	
 	<bean id="ProcessManagerService"
@@ -222,6 +214,7 @@
 	<bean id="ProjectService"
 		class="wilos.business.services.project.ProjectService">
 		<property name="projectDao" ref="ProjectDao" />
+		<property name="participantDao" ref="ParticipantDao" />
 	</bean>
 	
 	<bean id="RoleService"
@@ -230,10 +223,8 @@
 		<property name="participantDao" ref="ParticipantDao" />
 	</bean>
 	
-	<!-- WOOOPS2 -->
-	
 	<bean id="ProcessService"
-	      class="wilos.business.services.process.ProcessService">
+		class="wilos.business.services.process.ProcessService">
 		<property name="processDao" ref="ProcessDao" />
 		<property name="activityDao" ref="ActivityDao" />
 		<property name="breakdownElementDao" ref="BreakdownElementDao" />
@@ -244,28 +235,12 @@
 		<property name="taskDefinitionDao" ref="TaskDefinitionDao" />
 		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
 		<property name="workBreakdownElementDao"
-			  ref="WorkBreakdownElementDao" />
+			ref="WorkBreakdownElementDao" />
 	</bean>
-	
+
 	<bean id="ActivityService"
-	      class="wilos.business.services.activity.ActivityService">
+		class="wilos.business.services.activity.ActivityService">
 		<property name="activityDao" ref="ActivityDao" />
-	</bean>
-	
-	<bean id="RoleDescriptorService"
-	      class="wilos.business.services.role.RoleDescriptorService">
-		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
-		<property name="roleDefinitionDao" ref="RoleDefinitionDao" />
-	</bean>
-	
-	<bean id="TaskDescriptorService"
-	      class="wilos.business.services.task.TaskDescriptorService">
-		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
-	</bean>
-	
-	<bean id="StepService"
-	      class="wilos.business.services.task.StepService">
-		<property name="stepDao" ref="StepDao" />
 	</bean>
 
 </beans>
