@@ -112,7 +112,7 @@ public class Process extends Activity implements Cloneable {
 	 */
 	public void removeAllProjects() {
 		for (Project project : this.projects) {
-			project.removeFromProcess(this);
+			project.setProcess(null);
 		}
 		this.projects.clear();
 	}

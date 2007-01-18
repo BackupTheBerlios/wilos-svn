@@ -131,7 +131,7 @@ public class ProcessTest extends TestCase {
 
 	}
 
-	/*public void testRemoveAllProject() {
+	public void testRemoveAllProject() {
 		Project proj = new Project();
 		proj.setName(NAME);
 		proj.setDescription(DESCRIPTION);
@@ -153,7 +153,7 @@ public class ProcessTest extends TestCase {
 		assertNull(proj.getProcess());
 		assertNull(tmp.getProcess());
 		assertTrue(this.process.getProjects().isEmpty());
-	}*/
+	}
 
 	
 	public void testAddToAllProjects() {
