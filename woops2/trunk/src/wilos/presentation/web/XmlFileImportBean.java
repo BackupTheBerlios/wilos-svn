@@ -7,6 +7,7 @@ import java.util.EventObject;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.model.SelectItem;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,6 +33,13 @@ public class XmlFileImportBean {
 	private TreeBean treeBean;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
+	
+	private String choosenExtensionFile;
+		
+	private SelectItem[] fileExtensions = new SelectItem[]{
+        new SelectItem("xml"),
+        new SelectItem("zip"),
+	};
 
 	public XmlFileImportBean() {
 		state = PersistentFacesState.getInstance();
@@ -167,5 +175,17 @@ public class XmlFileImportBean {
 
 	public void setTreeBean(TreeBean treeBean) {
 		this.treeBean = treeBean;
+	}
+
+	public SelectItem[] getFileExtensions() {
+		return fileExtensions;
+	}
+
+	public String getChoosenExtensionFile() {
+		return choosenExtensionFile;
+	}
+
+	public void setChoosenExtensionFile(String _choosenExtensionFile) {
+		this.choosenExtensionFile = _choosenExtensionFile;
 	}
 }
