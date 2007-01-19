@@ -2,8 +2,13 @@
 package wilos.test.business.services.project ;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
+import junit.framework.TestCase ;
+import wilos.business.services.project.ProjectService ;
+import wilos.model.misc.project.Project ;
+import wilos.test.configuration.TestConfiguration ;
 import junit.framework.TestCase;
 import wilos.business.services.project.ProjectService;
 import wilos.model.misc.project.Project;
@@ -21,6 +26,7 @@ public class ProjectServiceTest extends TestCase {
 	private ProjectService ps ;
 
 	private Project p ;
+
 	private Project p2 ;
 	private Participant parti ;
 
@@ -35,7 +41,12 @@ public class ProjectServiceTest extends TestCase {
 		p = new Project() ;
 		p.setName("Wilos") ;
 		p.setDescription("projet de test") ;
-		p.setIsFinished(true);
+		p.setIsFinished(true) ;
+
+		p2 = new Project() ;
+		p2.setName("Wilos2") ;
+		p2.setDescription("projet de test2") ;
+		p2.setIsFinished(false) ;
 	}
 
 	/*
@@ -47,6 +58,7 @@ public class ProjectServiceTest extends TestCase {
 		super.tearDown() ;
 		// Delete the tmp Project from the database.
 		this.ps.getProjectDao().deleteProject(this.p) ;
+		this.ps.getProjectDao().deleteProject(this.p2) ;
 	}
 
 	/**
@@ -56,11 +68,11 @@ public class ProjectServiceTest extends TestCase {
 	 */
 	public void testSaveProject() {
 		this.ps.saveProject(this.p) ;
-		Project ProjectTmp = (Project) this.ps.getProjectDao().getProject("Wilos") ;
+		Project ProjectTmp = (Project) this.ps.getProjectDao().getProject(this.p.getProject_id()) ;
 		assertNotNull(ProjectTmp) ;
 		assertEquals(ProjectTmp.getName(), "Wilos") ;
 		assertEquals(ProjectTmp.getDescription(), "projet de test") ;
-		//assertEquals(ProjectTmp.getIsFinished(), true) ;
+		// assertEquals(ProjectTmp.getIsFinished(), true) ;
 	}
 
 	/**
@@ -77,21 +89,19 @@ public class ProjectServiceTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link woops2.business.services.project.ProjectService#getUnfinishedProjects()}.
+	 * Test method for
+	 * {@link woops2.business.services.project.ProjectService#getUnfinishedProjects()}.
 	 * 
 	 */
-	public void testGetUnfinishedProjects(){
-		p2 = new Project() ;
-		p2.setName("Wilos2") ;
-		p2.setDescription("projet de test2") ;
-		p2.setIsFinished(false);
-		
+	public void testGetUnfinishedProjects() {
+		this.ps.saveProject(this.p) ;
 		this.ps.saveProject(this.p2) ;
+
+		Set<Project> unfProjects = this.ps.getUnfinishedProjects() ;
 		
-		Set<Project> projects = this.ps.getUnfinishedProjects();
-		for(Project p:projects){
-			
-		
+		for(Iterator iter = unfProjects.iterator(); iter.hasNext();){
+			Project project = (Project) iter.next() ;
+			assertFalse(project.getIsFinished());
 		}
 		
 	}

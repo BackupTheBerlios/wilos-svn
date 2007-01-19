@@ -5,11 +5,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import java.util.ArrayList ;
-import java.util.HashMap ;
-import java.util.Iterator ;
-import java.util.Map ;
-
 import java.util.List ;
 import java.util.regex.Matcher ;
 import java.util.regex.Pattern ;
@@ -31,14 +26,6 @@ import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.presentation.web.template.MenuBean;
-
-import wilos.business.services.project.ProjectService ;
-import wilos.business.services.wilosuser.LoginService ;
-import wilos.business.services.wilosuser.ParticipantService ;
-import wilos.model.spem2.role.RoleDescriptor ;
-import wilos.model.misc.project.Project ;
-import wilos.model.misc.wilosuser.Participant ;
-import wilos.presentation.web.template.MenuBean ;
 
 /**
  * Managed-Bean link to participantSubscribe.jspx

@@ -53,11 +53,8 @@ public class ProjectDao extends HibernateDaoSupport {
 		try {
 			this.getHibernateTemplate().delete(_project);
 		} catch (Exception sose) {
-			// Catch normally errors when we delete an unexisting project into
-			// the db.
-			logger
-					.error("#### ERROR #### --- ProjectDao => deleteProject : trying to delete unexisting object \n"
-							+ sose);
+			// Catch normally errors when we delete an unexisting project into the db.
+			logger.error("#### ERROR #### --- ProjectDao => deleteProject : trying to delete unexisting object \n" + sose);
 		}
 	}
 }

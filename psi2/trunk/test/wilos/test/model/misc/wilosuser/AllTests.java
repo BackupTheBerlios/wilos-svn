@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
 public class AllTests {
 
 	public static Test suite() {
-		TestSuite suite = new TestSuite("Test for model") ;
+		TestSuite suite = new TestSuite("Test for model.misc.wilosuser") ;
 		//$JUnit-BEGIN$
 		suite.addTestSuite(ParticipantTest.class) ;
 		//$JUnit-END$
