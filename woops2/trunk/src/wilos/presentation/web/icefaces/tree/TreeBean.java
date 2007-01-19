@@ -56,8 +56,8 @@ public class TreeBean {
 	
 	private void buildModel(){
 		// construire les cas avec la selection des filtres
-		// créer la méthode getConcreteTaskDescriptorByProcess
-		// créer les méthodes getAffectedConcreteTaskDescriptors
+		// creer la methode getConcreteTaskDescriptorByProcess
+		// creer les methodes getAffectedConcreteTaskDescriptorsByProcess
 		if(this.processId != null && !this.processId.equals("") ){
 			Process process = this.processService.getProcessWithOnlyTaskDescriptors(this.processId) ;
 			ProcessNode processNode = new ProcessNode(process);

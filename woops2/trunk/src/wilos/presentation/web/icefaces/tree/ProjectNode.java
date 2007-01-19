@@ -25,14 +25,17 @@ public class ProjectNode extends DefaultMutableTreeNode {
 		iceUserObject.setLeaf(false);
 		iceUserObject.setBranchContractedIcon("images/tree/icon_process.gif");
 		iceUserObject.setBranchExpandedIcon("images/tree/icon_process.gif");
-		//TODO iceUserObject.setObjectId(this.project.getId());
+		iceUserObject.setObjectId(this.project.getProject_id());
 		for (BreakdownElement breakdownElement : this.project.getProcess()
 				.getBreakDownElements()) {
 			if (breakdownElement instanceof TaskDescriptor) {
 				TaskDescriptor taskDescriptor = (TaskDescriptor) breakdownElement;
-				for(ConcreteTaskDescriptor concreteTaskDescriptor : taskDescriptor.getConcreteTaskDescriptors())
-					//TODO if(concreteTaskDescriptor.getProjectId().equals(this.project.getId()))
-					this.add(new ConcreteTaskDescriptorNode(concreteTaskDescriptor));
+				for (ConcreteTaskDescriptor concreteTaskDescriptor : taskDescriptor
+						.getConcreteTaskDescriptors())
+					if (concreteTaskDescriptor.getProjectId().equals(
+							this.project.getProject_id()))
+						this.add(new ConcreteTaskDescriptorNode(
+								concreteTaskDescriptor));
 			}
 		}
 	}
