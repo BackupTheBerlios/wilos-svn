@@ -270,10 +270,22 @@
 									<ice:panelGroup styleClass="formBorderHighlight"
 										style="text-align:left">
 										<br />
-
-										<br />
+								
+										<ice:outputText styleClass="propertyLabel"
+						                                value="File extension: "/>
+						                
+						                <ice:panelGroup styleClass="selectionRadioGroup">
+						                    <ice:selectOneRadio value="#{XmlFileImportBean.choosenExtensionFile}"
+						                                        partialSubmit="true">
+						                        <f:selectItems value="#{XmlFileImportBean.fileExtensions}"/>
+						                    </ice:selectOneRadio>
+						                </ice:panelGroup>
+						                
+						                <ice:outputText value="selection: #{XmlFileImportBean.choosenExtensionFile}"/>	
+										
 										<ice:outputText value="Add your file :" />
 										<br />
+										
 										<ice:inputFile style="border:none; width:400px; height:70px;"
 											progressListener="#{XmlFileImportBean.progress}"
 											actionListener="#{XmlFileImportBean.action}" 
