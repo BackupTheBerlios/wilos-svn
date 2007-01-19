@@ -76,7 +76,6 @@ public class ParticipantDaoTest extends TestCase {
 		Set<Participant> participantsTmp = this.participantDao.getAllParticipants() ;
 		assertNotNull(participantsTmp) ;
 		assertTrue(participantsTmp.size() >= 1);
-		
 	}
 
 	/**
