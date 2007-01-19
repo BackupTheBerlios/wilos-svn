@@ -1,5 +1,15 @@
 <ice:form id="admin_actions_form">
-	<ice:panelGrid columns="1">			
+	<ice:panelGrid columns="10">			
+		<ice:commandLink immediate="true" type="submit" value="admin" action=""/>
+		<ice:commandLink immediate="true" type="submit" value="admin" action=""/>
+		<ice:commandLink immediate="true" type="submit" value="admin" action=""/>
+		<ice:commandLink immediate="true" type="submit" value="admin" action=""/>
+		<ice:commandLink immediate="true" type="submit" value="admin" action=""/>
+		<ice:commandLink immediate="true" type="submit" value="admin" action=""/>
+		<ice:commandLink immediate="true" type="submit" value="admin" action=""/>
+		<ice:commandLink immediate="true" type="submit" value="admin" action=""/>
+		<ice:commandLink immediate="true" type="submit" value="admin" action=""/>
+		<ice:commandLink immediate="true" type="submit" value="admin" action=""/>
 		<ice:commandLink immediate="true" type="submit" value="admin" action=""/>
 	</ice:panelGrid>		
 </ice:form>

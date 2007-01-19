@@ -34,20 +34,11 @@ public class Project implements Cloneable {
 	
 	private Participant projectManager;
 	
-	public Participant getProjectManager() {
-		return projectManager;
-	}
-
-	public void setProjectManager(Participant projectManager) {
-		this.projectManager = projectManager;
-	}
-	
 	public Project() {
 		this.creationDate = new Date() ;
 		this.launchingDate = new Date() ;
 		this.participants = new HashSet<Participant>() ;
 		this.isFinished = false ;
-		this.projectManager = new Participant();
 	}
 
 	/**
@@ -214,6 +205,14 @@ public class Project implements Cloneable {
 	 */
 	public void setParticipants(Set<Participant> _participants) {
 		this.participants = _participants ;
+	}
+
+	public Participant getProjectManager() {
+		return projectManager;
+	}
+
+	public void setProjectManager(Participant projectManager) {
+		this.projectManager = projectManager;
 	}
 
 	/**
