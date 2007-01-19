@@ -51,8 +51,6 @@ public class XMLParser {
 	private static final String xpath_phase = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Phase']";
 	private static final String xpath_activity = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Activity']";
 	
-	
-	
 	// Sections
 	private static final String task = "Task";
 	private static final String role = "Role";

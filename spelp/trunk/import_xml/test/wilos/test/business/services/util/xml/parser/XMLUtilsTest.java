@@ -13,6 +13,7 @@ import junit.framework.TestCase;
 import org.w3c.dom.NodeList;
 
 import wilos.business.services.util.xml.parser.XMLUtils;
+import wilos.model.spem2.process.Process;
 
 public class XMLUtilsTest extends TestCase{
 	public static String path = "ressources" + File.separator + "scrum.xml";
@@ -29,5 +30,4 @@ public class XMLUtilsTest extends TestCase{
 		NodeList n = (NodeList)XMLUtils.evaluate(expression, XPathConstants.NODESET);
 		assertTrue(n.getLength() != 0);
 	}
-
 }

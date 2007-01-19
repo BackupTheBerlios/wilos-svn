@@ -5,7 +5,6 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.Vector;
 
 import junit.framework.TestCase;
 import wilos.business.services.util.xml.parser.XMLParser;
@@ -14,10 +13,7 @@ import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.process.Process;
-import wilos.model.spem2.role.RoleDefinition;
 import wilos.model.spem2.role.RoleDescriptor;
-import wilos.model.spem2.task.Step;
-import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
 
 public class XMLParserTest extends TestCase {

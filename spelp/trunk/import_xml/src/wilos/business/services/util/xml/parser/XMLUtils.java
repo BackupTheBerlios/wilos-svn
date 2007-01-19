@@ -12,11 +12,13 @@ import javax.xml.xpath.XPathFactory;
 
 import org.xml.sax.InputSource;
 
+import wilos.model.spem2.process.Process;
+
 public class XMLUtils {
 	
 	
 	private static File document ; 
-	
+		
 	public static File getDocument(){
 		return document ;
 	}
@@ -24,7 +26,6 @@ public class XMLUtils {
 	public static void setDocument (File _file){
 		document = _file ;
 	}
-	
 	
 	/**
 	 * Evalute : this methods evaluate an xpath expression
@@ -55,14 +56,13 @@ public class XMLUtils {
 		InputSource source = null;
 		try{
 			//creation de la source
-			if (ZIPUtils.isExtension(document.getName(), "xml")) {
+			if (isExtension(document.getName(), "xml")) {
 				source = new InputSource(new FileInputStream(document));
 			}
-			else if (ZIPUtils.isExtension(document.getName(), "zip")) {
+			else if (isExtension(document.getName(), "zip")) {
 				source = new InputSource(new ZIPUtils(document).getXMLStream());
 			}
 			if (source != null) {
-				
 				//creation du XPath 
 				XPathFactory fabrique = XPathFactory.newInstance();
 				XPath xpath = fabrique.newXPath();
@@ -77,5 +77,9 @@ public class XMLUtils {
 			ioe.printStackTrace();	
 		}
 		return resultat;
+	}
+	
+	public static boolean isExtension(String filePath, String extension){
+		return filePath.substring(filePath.lastIndexOf(".")+1).equals(extension);
 	}
 }
