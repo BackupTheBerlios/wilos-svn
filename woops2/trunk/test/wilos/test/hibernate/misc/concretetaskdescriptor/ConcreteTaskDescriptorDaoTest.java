@@ -1,16 +1,19 @@
 package wilos.test.hibernate.misc.concretetaskdescriptor;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import junit.framework.TestCase;
+
+import org.springframework.context.ApplicationContext;
+
 import wilos.hibernate.misc.concretetask.ConcreteTaskDescriptorDao;
 import wilos.hibernate.spem2.task.TaskDescriptorDao;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.test.TestConfiguration;
+import wilos.utils.Constantes;
 
 /**
  * 
@@ -65,12 +68,11 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 	
 	public static final float ACCOMPLISHEDTIME = 4.7f;
 	
-	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
 	Date date = null;
 
 	public ConcreteTaskDescriptorDaoTest(){
 		try {
-			date = sdf.parse("18-01-2007 10:00");
+			date = Constantes.DATE_FORMAT.parse("18/01/2007 10:00");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -138,7 +140,8 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 
 	public void testGetConcreteTaskDescriptor() {
 		
-		TaskDescriptorDao taskDescriptorDao = new TaskDescriptorDao() ;
+		ApplicationContext ctx  = TestConfiguration.getInstance().getApplicationContext() ;
+		TaskDescriptorDao taskDescriptorDao = (TaskDescriptorDao) ctx.getBean("TaskDescriptorDao");
 		
 		TaskDescriptor taskDescriptor = new TaskDescriptor() ;
 		// Rk: the setUp method is called here.
@@ -170,7 +173,9 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 		// Test the method getTaskDescriptor with an existing taskDescriptor.
 		ConcreteTaskDescriptor concreteTaskDescriptorTmp = this.concreteTaskDescriptorDao.getConcreteTaskDescriptor(id) ;
 		assertNotNull(concreteTaskDescriptorTmp) ;
-		//assertEquals("ConcreteName", concreteTaskDescriptorTmp.getConcreteName(), CONCRETENAME) ;
+		assertEquals("ConcreteName", concreteTaskDescriptorTmp.getConcreteName(), CONCRETENAME) ;
+		assertEquals("PlannedTime", concreteTaskDescriptorTmp.getPlannedTime(), PLANNEDTIME) ;
+		assertEquals("TaskDescriptor", concreteTaskDescriptorTmp.getTaskDescriptor().getId(), id_taskDescriptor) ;
 		
 		// Test the method getTaskDescriptor with an unexisting taskDescriptor.
 		this.concreteTaskDescriptorDao.getHibernateTemplate().delete(concreteTaskDescriptor) ;
