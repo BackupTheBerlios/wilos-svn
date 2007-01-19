@@ -1,0 +1,28 @@
+<ice:panelStack id="panelStack_roles_actions"
+                        styleClass=""
+                        selectedPanel="#{connect.selectedPanel.templateNameActions}">
+	<ice:panelGroup id="none">
+		<f:subview id="no_actions">		
+		</f:subview>
+	</ice:panelGroup>
+	<ice:panelGroup id="participant_role">
+		<f:subview id="participant_actions">
+			<jsp:directive.include file="participant_actions.jspx"/>		
+		</f:subview>
+	</ice:panelGroup>
+	<ice:panelGroup id="admin_role">
+		<f:subview id="admin_actions">
+			<jsp:directive.include file="admin_actions.jspx"/>		
+		</f:subview>
+	</ice:panelGroup>
+	<ice:panelGroup id="processManager_role">
+		<f:subview id="processManager_actions">
+			<jsp:directive.include file="processManager_actions.jspx"/>		
+		</f:subview>
+	</ice:panelGroup>
+	<ice:panelGroup id="projectDirector_role">
+		<f:subview id="projectDirector_actions">
+			<jsp:directive.include file="projectDirector_actions.jspx"/>		
+		</f:subview>
+	</ice:panelGroup>
+</ice:panelStack>
