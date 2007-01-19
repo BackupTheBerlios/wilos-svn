@@ -136,7 +136,26 @@ public class ParticipantService {
 		this.logger.debug("### currentParticipant "+ currentParticipant.getAffectedProjectList().size() +" ###");
 		
 		this.participantDao.saveOrUpdateParticipant(currentParticipant);
+	
+	}
+	
+	public HashMap<Project, Boolean> getManagedProjectsForAParticipant(Participant participant)
+	{
+		HashMap<Project,Boolean> managedProjectList = new HashMap<Project,Boolean>();
+		/*HashSet<Project> allProjectList = new HashSet<Project>();
+		Participant chargedParticipant = new Participant();
 		
+		//chargement du participant
+		String login = participant.getLogin();
+		this.logger.debug("### LOGIN WILOS :"+login+" ###");
+		chargedParticipant = this.participantDao.getParticipant(login);
+		
+		//chargement des projets
+		this.logger.debug("### PARTICIPANT :"+chargedParticipant.getName()+" ###");
+		allProjectList = (HashSet<Project>)this.projectDao.getAllProject();
+		this.logger.debug("### NOM DU PROJET COURANT :"+allProjectList.size()+" ###");*/
+		
+		return managedProjectList;
 	}
 
 	/**

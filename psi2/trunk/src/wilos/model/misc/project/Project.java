@@ -31,11 +31,22 @@ public class Project implements Cloneable {
 	private wilos.model.spem2.process.Process process ;
 	
 	private Set<Participant> participants;
+	
+	private Participant projectManager;
+
+	public Participant getProjectManager() {
+		return projectManager;
+	}
+
+	public void setProjectManager(Participant projectManager) {
+		this.projectManager = projectManager;
+	}
 
 	public Project() {
 		this.creationDate = new Date() ;
 		this.launchingDate = new Date() ;
 		this.participants = new HashSet<Participant>() ;
+		this.projectManager = new Participant();
 	}
 
 	/**

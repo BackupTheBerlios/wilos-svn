@@ -21,6 +21,10 @@
 			column="process_id" lazy="false">
 		</many-to-one>
 		
+		<many-to-one name="projectManager" class="wilos.model.misc.wilosuser.Participant"
+			column="participant_id" lazy="false">
+		</many-to-one>
+		
 		<!--  <set name="participants" table="affectedto" lazy="true">
 			<key column="project_id"></key>
 			<many-to-many class="wilos.model.misc.wilosuser.Participant"

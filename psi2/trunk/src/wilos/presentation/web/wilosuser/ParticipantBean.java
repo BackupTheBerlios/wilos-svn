@@ -55,6 +55,8 @@ public class ParticipantBean {
 	private List<Participant> participantsList;
 	
 	private List<HashMap<String,String>> affectedProjectsList;
+	
+	private List<HashMap<String,String>> managedProjectsList;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -66,6 +68,7 @@ public class ParticipantBean {
 		this.logger.debug("--- ParticipantBean --- == creating ..." + this);
 		this.participant = new Participant();
 		this.affectedProjectsList = new ArrayList();
+		this.managedProjectsList = new ArrayList();
 	}
 
 	/**
@@ -419,5 +422,44 @@ public class ParticipantBean {
 	 */
 	public void setProjectService(ProjectService _projectService) {
 		this.projectService = _projectService ;
+	}
+
+	public List<HashMap<String, String>> getManagedProjectsList() {
+		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
+		HttpSession sess = req.getSession() ;
+		Participant user = (Participant) sess.getAttribute("wilosUser") ;
+		
+		if (user instanceof Participant)
+		{
+			this.managedProjectsList = new ArrayList<HashMap<String,String>>();
+			/*HashMap<Project, Boolean> managedProjectList = new HashMap<Project, Boolean>();
+			this.logger.debug("### FIN INIT RACE ###");
+			managedProjectList = (HashMap<Project, Boolean>)this.participantService.getProjectsForAParticipant(user);
+			this.logger.debug("### TAILLE RACE :"+plist.size()+" ###");
+			Project currentProject = new Project();
+			
+			for (Iterator iter = plist.keySet().iterator(); iter.hasNext();) {
+				
+				HashMap<String,String> ligne = new HashMap<String,String>();
+				
+				currentProject = (Project)iter.next();
+				this.logger.debug("### DATA :"+currentProject.getName()+" ###");
+				
+				ligne.put("project_id", currentProject.getProject_id());
+				ligne.put("affected", plist.get(currentProject).toString());
+				ligne.put("name", currentProject.getName());
+				ligne.put("creationDate", currentProject.getCreationDate().toString());
+				ligne.put("launchingDate", currentProject.getLaunchingDate().toString());
+				ligne.put("description", currentProject.getDescription());
+		
+				this.affectedProjectsList.add(ligne);
+				this.logger.debug("### TAILLE RACE :"+ligne.get("name")+" ###");*/
+		}
+		return this.managedProjectsList;
+	}
+
+	public void setManagedProjectsList(
+			List<HashMap<String, String>> managedProjectsList) {
+		this.managedProjectsList = managedProjectsList;
 	}
 }
