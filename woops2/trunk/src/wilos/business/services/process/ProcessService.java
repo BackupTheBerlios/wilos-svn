@@ -130,6 +130,27 @@ public class ProcessService {
 			if(breakdownElement instanceof Activity){
 				Activity mon = (Activity) breakdownElement;
 				List<BreakdownElement> bdes1 = new ArrayList<BreakdownElement>() ;
+				if(breakdownElement instanceof Phase){
+					phaseList.add((Phase)breakdownElement);
+					try{
+						phaseListTmp.add(((Phase)breakdownElement).clone()) ;
+					}
+					catch(CloneNotSupportedException e){
+						e.printStackTrace() ;
+					}
+				}
+				else
+				{
+					if(breakdownElement instanceof Iteration){
+						iterationList.add((Iteration)breakdownElement);
+						try{
+							iterationListTmp.add(((Iteration)breakdownElement).clone()) ;
+						}
+						catch(CloneNotSupportedException e){
+							e.printStackTrace() ;
+						}
+					}
+				}
 				bdes1.addAll(mon.getBreakDownElements());
 				this.miseAJListe(bdes1);
 			}
@@ -218,16 +239,17 @@ public class ProcessService {
 		_process.getBreakDownElements().clear() ;
 		this.processDao.saveOrUpdateProcess(_process) ;
 		id_process = _process.getId() ;
-		for(Phase ph : phaseList)
+		/*for(Phase ph : phaseList)
 		{
 			ph.getSuperActivities().clear();
+			
 			
 		}
 		for(Iteration it : iterationList)
 		{
 			it.getSuperActivities().clear();
 			
-		}
+		}*/
 		for(RoleDescriptor rd : roleDescriptorList){
 			rd.getAdditionalTasks().clear() ;
 			rd.getSuperActivities().clear() ;
@@ -305,28 +327,30 @@ public class ProcessService {
 			// roleDescriptorList.get(i).addAllAdditionalTasks(roleDescriptorListTmp.get(i).getAdditionalTasks());
 			// roleDescriptorList.get(i).addAllActivities(roleDescriptorListTmp.get(i).getActivities());
 		}
-
+		
 		for(RoleDescriptor rd : roleDescriptorList){
 			this.roleDescriptorDao.saveOrUpdateRoleDescriptor(rd) ;
 		}
-		/*for(int i = 0; i < phaseListTmp.size(); i++ ){
-			phaseList.get(i).addAllSuperActivities(phaseListTmp.get(i).getSuperActivities()) ;
-			phaseList.get(i).addAllBreakdownElements(phaseListTmp.get(i).getBreakDownElements()) ;
-		}
-		for(Phase ph : phaseList)
-		{
-			this.phaseDao.saveOrUpdatePhase(ph) ;
-		}
+//		for(Phase ph : phaseList)
+//		{
+//			this.phaseDao.saveOrUpdatePhase(ph) ;
+//		}
+//		for(int i = 0; i < phaseListTmp.size(); i++ ){
+//			phaseList.get(i).addAllSuperActivities(phaseListTmp.get(i).getSuperActivities()) ;
+//			phaseList.get(i).addAllBreakdownElements(phaseListTmp.get(i).getBreakDownElements()) ;
+//		}
+//		
+//		for(Iteration it : iterationList)
+//		{
+//			this.iterationDao.saveOrUpdateIteration(it) ;
+//		}
+//		
+//		for(int i = 0; i < iterationListTmp.size(); i++ ){
+//			iterationList.get(i).addAllSuperActivities(iterationListTmp.get(i).getSuperActivities()) ;
+//			iterationList.get(i).addAllBreakdownElements(iterationListTmp.get(i).getBreakDownElements()) ;
+//		}
 		
-		for(int i = 0; i < iterationListTmp.size(); i++ ){
-			iterationList.get(i).addAllSuperActivities(iterationListTmp.get(i).getSuperActivities()) ;
-			iterationList.get(i).addAllBreakdownElements(iterationListTmp.get(i).getBreakDownElements()) ;
-		}
-		for(Iteration it : iterationList)
-		{
-			this.iterationDao.saveOrUpdateIteration(it) ;
-		}
-		*/
+		
 		_process.addAllBreakdownElements(processTmp.getBreakDownElements()) ;
 		this.processDao.saveOrUpdateProcess(_process) ;
 
@@ -342,6 +366,27 @@ public class ProcessService {
 			if(breakdownElement instanceof Activity){
 				Activity mon = (Activity) breakdownElement;
 				List<BreakdownElement> bdes1 = new ArrayList<BreakdownElement>() ;
+				if(breakdownElement instanceof Phase){
+					phaseList.add((Phase)breakdownElement);
+					try{
+						phaseListTmp.add(((Phase)breakdownElement).clone()) ;
+					}
+					catch(CloneNotSupportedException e){
+						e.printStackTrace() ;
+					}
+				}
+				else
+				{
+					if(breakdownElement instanceof Iteration){
+						iterationList.add((Iteration)breakdownElement);
+						try{
+							iterationListTmp.add(((Iteration)breakdownElement).clone()) ;
+						}
+						catch(CloneNotSupportedException e){
+							e.printStackTrace() ;
+						}
+					}
+				}
 				bdes1.addAll(mon.getBreakDownElements());
 				this.miseAJListe(bdes1);
 			}
