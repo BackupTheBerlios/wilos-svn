@@ -7,6 +7,10 @@ public class WorkOrder {
 	
 	private String linkType;
 	
+	private WorkBreakdownElement predecessor;
+	
+	private WorkBreakdownElement successor;
+	
 	public WorkOrder(){
 		//None.
 	}
@@ -25,6 +29,22 @@ public class WorkOrder {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public WorkBreakdownElement getPredecessor() {
+		return predecessor;
+	}
+
+	public void setPredecessor(WorkBreakdownElement predecessors) {
+		this.predecessor = predecessors;
+	}
+
+	public WorkBreakdownElement getSuccessor() {
+		return successor;
+	}
+
+	public void setSuccessor(WorkBreakdownElement successors) {
+		this.successor = successors;
 	}
 
 }
