@@ -180,8 +180,7 @@ public class ProjectService {
 	 * @return the list of participants affected to the project parameter
 	 */
 	@Transactional(readOnly = true)
-	public Set<Participant> getParticipants(Project project)
-	{
+	public Set<Participant> getParticipants(Project project){
 		return project.getParticipants();
 	}
 	

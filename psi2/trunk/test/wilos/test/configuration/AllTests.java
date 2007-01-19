@@ -22,6 +22,14 @@ public class AllTests {
 		//begin of the hibernate classes tests
 		suite.addTest(wilos.test.hibernate.misc.wilosuser.AllTests.suite()) ;
 		//end of the hibernate classes tests
+		
+		//begin of the hibernate classes tests
+		suite.addTest(wilos.test.business.util.AllTests.suite()) ;
+		//end of the hibernate classes tests
+		
+//		begin of the hibernate classes tests
+		suite.addTest(wilos.test.business.services.project.AllTests.suite()) ;
+		//end of the hibernate classes tests
 
 		// $JUnit-END$
 		return suite ;

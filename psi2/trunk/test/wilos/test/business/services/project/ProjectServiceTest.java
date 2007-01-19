@@ -1,11 +1,13 @@
 
 package wilos.test.business.services.project ;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import junit.framework.TestCase;
 import wilos.business.services.project.ProjectService;
 import wilos.model.misc.project.Project;
+import wilos.model.misc.wilosuser.Participant;
 import wilos.test.configuration.TestConfiguration;
 
 /**
@@ -20,6 +22,7 @@ public class ProjectServiceTest extends TestCase {
 
 	private Project p ;
 	private Project p2 ;
+	private Participant parti ;
 
 	/*
 	 * (non-Javadoc)
@@ -91,5 +94,19 @@ public class ProjectServiceTest extends TestCase {
 		
 		}
 		
+	}
+	
+	/**
+	 * Test method for addParticipant
+	 * 
+	 */
+	public void testAddParticipant() {
+		parti = new Participant() ;		
+		Set<Participant> participants = new HashSet<Participant>() ;
+		
+		assertFalse(participants.contains(parti)) ;		
+		this.ps.addParticipant(parti, p) ;
+		participants = this.p.getParticipants() ;
+		assertTrue(participants.contains(parti)) ;		
 	}
 }
