@@ -91,7 +91,8 @@ public class StepPanel extends JPanel implements TreeSelectionListener {
         	selectedElement = ((StepInfo)nodeInfo).getStep() ;
         	StepInfo tmpStep = (StepInfo) nodeInfo;
      //       mainFrame.moveHTML();	// TODO JF : verifier
-            HTMLViewer.getInstance(null).setMessage(tmpStep.getStep().getDescription());
+            //HTMLViewer.getInstance(null).setMessage(tmpStep.getStep().getDescription());
+        	HTMLViewer.getInstance(null).setBreakDownElement(tmpStep.getStep());
             
         }
 	}

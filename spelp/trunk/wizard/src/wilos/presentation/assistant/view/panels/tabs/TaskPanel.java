@@ -122,13 +122,15 @@ public class TaskPanel extends JPanel implements TreeSelectionListener {
         	selectedElement = ((TaskDefinitionInfo)nodeInfo).getTaskDefinition() ;
         	TaskDefinitionInfo tmpTaskDefinition = (TaskDefinitionInfo) nodeInfo;
             mainFrame.moveHTML();
-            HTMLViewer.getInstance(null).setMessage(tmpTaskDefinition.getTaskDefinition().getDescription());
+            //HTMLViewer.getInstance(null).setMessage(tmpTaskDefinition.getTaskDefinition().getDescription());
+            HTMLViewer.getInstance(null).setBreakDownElement(tmpTaskDefinition.getTaskDefinition());
             
         } else if (nodeInfo instanceof RoleDescriptorInfo){
         	selectedElement = null ;
         	RoleDescriptorInfo tmpRoleDescriptor = (RoleDescriptorInfo) nodeInfo;
         	mainFrame.moveHTML();
-        	HTMLViewer.getInstance(null).setMessage(tmpRoleDescriptor.getRoleDescriptor().getDescription());
+        	//HTMLViewer.getInstance(null).setMessage(tmpRoleDescriptor.getRoleDescriptor().getDescription());
+        	HTMLViewer.getInstance(null).setBreakDownElement(tmpRoleDescriptor.getRoleDescriptor());
         	
         }
 	}
