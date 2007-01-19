@@ -9,14 +9,14 @@
 		extends="wilos.model.misc.wilosuser.WilosUser" table="participant">
 		<key column="participant_id"></key>
 
-		<set name="rolesListForAProject" table="play" lazy="true">
+		<set name="rolesListForAProject" table="play" lazy="false">
 			<key column="participant_id"></key>
 			<many-to-many class="wilos.model.spem2.role.RoleDescriptor"
 				column="roledescriptor_id">
 			</many-to-many>
 		</set>
 		
-		<set name="affectedProjectList" table="affectedto" lazy="true">
+		<set name="affectedProjectList" table="affectedto" lazy="false">
 			<key column="participant_id"></key>
 			<many-to-many class="wilos.model.misc.project.Project"
 				column="project_id">

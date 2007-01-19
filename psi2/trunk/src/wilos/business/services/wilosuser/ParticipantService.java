@@ -138,23 +138,35 @@ public class ParticipantService {
 	
 	}
 	
-	public HashMap<Project, Boolean> getManagedProjectsForAParticipant(Participant participant)
-	{
-		HashMap<Project,Boolean> managedProjectList = new HashMap<Project,Boolean>();
-		/*HashSet<Project> allProjectList = new HashSet<Project>();
-		Participant chargedParticipant = new Participant();
-		
-		//chargement du participant
-		String login = participant.getLogin();
-		this.logger.debug("### LOGIN WILOS :"+login+" ###");
-		chargedParticipant = this.participantDao.getParticipant(login);
-		
-		//chargement des projets
-		this.logger.debug("### PARTICIPANT :"+chargedParticipant.getName()+" ###");
-		allProjectList = (HashSet<Project>)this.projectDao.getAllProject();
-		this.logger.debug("### NOM DU PROJET COURANT :"+allProjectList.size()+" ###");*/
-		
-		return managedProjectList;
+	public HashMap<Project, Participant> getManageableProjectsForAParticipant(Participant participant) {
+		HashMap<Project, Boolean> affectedProjectList = new HashMap<Project, Boolean>() ;
+		HashMap<Project, Participant> manageableProjectList = new HashMap<Project, Participant>() ;
+		Participant chargedParticipant = new Participant() ;
+
+		// chargement du participant
+		String login = participant.getLogin() ;
+		chargedParticipant = this.participantDao.getParticipant(login) ;
+
+		// chargement des projets
+		affectedProjectList = this.getProjectsForAParticipant(participant) ;
+
+		Project currentProject ;
+		// for every project 
+		for(Iterator iter = affectedProjectList.keySet().iterator(); iter.hasNext();){
+			currentProject = (Project) iter.next() ;
+			//if the project is affected to the participant
+			if(affectedProjectList.get(currentProject).booleanValue() == true){
+				// if there is no projectManager -> the project is manageable
+				if(currentProject.getProjectManager() == null){
+					manageableProjectList.put(currentProject, null) ;
+				}
+				// if there is a projectManager -> the project is not manageable
+				else{
+					manageableProjectList.put(currentProject, currentProject.getProjectManager()) ;
+				}
+			}
+		}
+		return manageableProjectList ;
 	}
 
 	/**
