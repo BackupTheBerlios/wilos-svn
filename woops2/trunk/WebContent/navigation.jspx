@@ -5,7 +5,7 @@
 	
 	<!-- Check box - Concrete task filter -->
     <ice:outputText styleClass="propertyLabel"
-                    value="affected tasks"/>
+                    value="#{msgs['navigation.title']}" />
     <ice:selectBooleanCheckbox value="#{TreeBean.affectedTaskFilter}"
                                partialSubmit="true"/> <br/>
 
@@ -14,12 +14,15 @@
     <ice:outputText value="#{TreeBean.affectedTaskFilter}"
                     styleClass="valueText"/><br/>
 
-	<div class="navTree"><ice:messages style="color:red;"
-		showDetail="true" /> <!-- The projects combobox --> <ice:outputText
-		value="Project : " /> <ice:selectOneMenu
-		value="#{TreeBean.processId}">
+	<div class="navTree">
+		<ice:messages style="color:red;"
+				showDetail="true" /> <!-- The projects combobox --> 
+		<ice:outputText
+				value="#{msgs['navigation.title2']}" /> 
+		<ice:selectOneMenu
+				value="#{TreeBean.processId}">
 		<f:selectItems value="#{TreeBean.projects}" />
-	</ice:selectOneMenu> <ice:commandButton type="submit" value="Change Project"
+	</ice:selectOneMenu> <ice:commandButton type="submit" value="#{msgs['navigation.button']}"
 		actionListener="#{TreeBean.changeTreeActionListener}" /> <br />
 
 	<!-- The process tree with its taskDescriptors --> 

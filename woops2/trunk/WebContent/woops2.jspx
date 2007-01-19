@@ -19,7 +19,7 @@
 				</ice:panelGrid>
 
 				<!-- Demo Title -->
-				<h2><ice:outputText value="Wilos / Woops2 - Feat. Ajax" /></h2>
+				<h2><ice:outputText value="#{msgs['page.title']}" /></h2>
 
 				<ice:form>
 					<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1"
@@ -27,11 +27,11 @@
 
 						<ice:panelTabSet bgcolor="#BEB4CC">
 
-							<ice:panelTab label="Processes" bgcolor="#BEB4CC">
+							<ice:panelTab label="#{msgs['component.tableactivity.paneltab']}" bgcolor="#BEB4CC">
 								<br />
 								<br />
 						 
-								<ice:outputText value="Process Table :" />
+								<ice:outputText value="#{msgs['component.tableactivity.title']}" />
 								
 								<table cellpadding="0" cellspacing="0">
 	                    		<tr>
@@ -85,11 +85,11 @@
 								<br />
 							</ice:panelTab>
 							
-							<ice:panelTab label="RoleDescriptor">
+							<ice:panelTab label="#{msgs['component.tableroledescriptor.paneltab']}">
 								<br />
 								<br />
 						 
-								<ice:outputText value="RoleDescriptor Table :" />
+								<ice:outputText value="#{msgs['component.tableroledescriptor.title']}" />
 								
 								<table cellpadding="0" cellspacing="0">
 	                    		<tr>
@@ -120,7 +120,7 @@
 										<ice:column>
 											<f:facet name="header">
 			                                        <ice:outputText
-			                                                value="#{msgs['component.tableroledescriptor.column3']}"/>
+			                                                value="#{msgs['component.tableroledescriptor.column3']}" />
 			                                </f:facet>
 											<ice:outputText value="#{roledescriptor.description}" />
 										</ice:column>
@@ -128,7 +128,7 @@
 										<ice:column>
 											<f:facet name="header">
 			                                        <ice:outputText
-			                                                value="RDefId"/>
+			                                                value="#{msgs['component.tableroledescriptor.column4']}" />
 			                                </f:facet>
 											<ice:outputText value="#{roledescriptor.roleDefinition.id}" />
 										</ice:column>
@@ -141,11 +141,11 @@
 								<br />
 							</ice:panelTab>
 							
-							<ice:panelTab label="TaskDescriptor">
+							<ice:panelTab label="#{msgs['component.tabletaskdescriptor.paneltab']}">
 								<br />
 								<br />
 						 
-								<ice:outputText value="TaskDescriptor Table :" />
+								<ice:outputText value="#{msgs['component.tabletaskdescriptor.title']}" />
 								
 								<table cellpadding="0" cellspacing="0">
 	                    		<tr>
@@ -200,7 +200,7 @@
 								<br />
 							</ice:panelTab>
 							
-							<ice:panelTab label="Step">
+							<ice:panelTab label="#{msgs['component.tablestep.paneltab']}">
 								<br />
 								<br />
 						 
@@ -248,17 +248,17 @@
 								<br />
 							</ice:panelTab>
 							
-							<ice:panelTab label="Create Activity">
+							<ice:panelTab label="#{msgs['component.createactivity.paneltab']}"/>
 								<br />
-								<ice:outputText value="Valeur prefix : " />
+								<ice:outputText value="#{msgs['component.createactivity.title']}" />
 								<ice:inputText value="#{ActivityBean.activity.prefix}" />
 								<br />
 								<br />
-								<ice:outputText value="isPlanned : " />
+								<ice:outputText value="#{msgs['component.createactivity.checkbox1']}" />
 								<ice:selectBooleanCheckbox
 									value="#{ActivityBean.activity.isPlanned}" />
 								<br />
-								<ice:outputText value="isOptional : " />
+								<ice:outputText value="#{msgs['component.createactivity.checkbox2']}" />
 								<ice:selectBooleanCheckbox
 									value="#{ActivityBean.activity.isOptional}" />
 								<br />
@@ -266,13 +266,13 @@
 								<ice:outputText value="Status : #{ActivityBean.viewerMessage}" />
 								<br />
 								<br />
-								<ice:commandButton value="Create Activity"
+								<ice:commandButton value="#{msgs['component.createactivity.button1']}"
 									actionListener="#{ActivityBean.saveActivityActionListener}" />
-								<ice:commandButton value="New/Reset Activity"
+								<ice:commandButton value="#{msgs['component.createactivity.button2']}"
 									actionListener="#{ActivityBean.resetActivityActionListener}" />
 							</ice:panelTab>
 
-							<ice:panelTab label="Import Process File">
+							<ice:panelTab label="#{msgs['component.importprocessfile.paneltab']}">
 
 								<ice:panelGrid styleClass="componentLayoutRootTable" columns="1">
 									<ice:panelGroup styleClass="formBorderHighlight"
@@ -280,7 +280,7 @@
 										<br />
 
 										<br />
-										<ice:outputText value="Add your file :" />
+										<ice:outputText value="#{msgs['component.importprocessfile.title']}" />
 										<br />
 										<ice:inputFile style="border:none; width:400px; height:70px;"
 											progressListener="#{XmlFileImportBean.progress}"
