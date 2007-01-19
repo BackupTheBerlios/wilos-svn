@@ -6,16 +6,16 @@
 <hibernate-mapping>
 
 	<class name="wilos.model.misc.project.Project" table="project" lazy="false">
-		<id name="project_id" type="string"
-                        column="project_id">
-                        <!--identifiant auto-incrementÃ© -->
-                        <generator class="uuid" />
-                </id>
+		<id name="project_id" type="string" column="project_id">
+			<!--identifiant auto-incremente -->
+			<generator class="uuid" />
+		</id>
 		<property name="name" type="string" column="name"/>
 		<property name="description" type="java.lang.String" column="description"
 			length="1024" />
 		<property name="creationDate" type="java.util.Date" column="creationDate"/>
 		<property name="launchingDate" type="java.util.Date" column="launchingDate"/>
+		<property name="isFinished" type="java.lang.Boolean" column="isFinished"/>
 		
 		<many-to-one name="process" class="wilos.model.spem2.process.Process"
 			column="process_id" lazy="false">

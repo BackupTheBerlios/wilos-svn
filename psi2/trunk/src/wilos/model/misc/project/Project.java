@@ -1,15 +1,13 @@
-
 package wilos.model.misc.project ;
 
 import java.util.Date ;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashSet ;
+import java.util.Set ;
 
 import org.apache.commons.lang.builder.EqualsBuilder ;
 import org.apache.commons.lang.builder.HashCodeBuilder ;
 
-import wilos.model.misc.wilosuser.Participant;
-
+import wilos.model.misc.wilosuser.Participant ;
 
 /**
  * This class represents a project.
@@ -19,7 +17,7 @@ import wilos.model.misc.wilosuser.Participant;
 public class Project implements Cloneable {
 
 	private String project_id ;
-	
+
 	private String name ;
 
 	private String description ;
@@ -28,12 +26,14 @@ public class Project implements Cloneable {
 
 	private Date launchingDate ;
 
+	private Boolean isFinished ;
+
 	private wilos.model.spem2.process.Process process ;
-	
-	private Set<Participant> participants;
+
+	private Set<Participant> participants ;
 	
 	private Participant projectManager;
-
+	
 	public Participant getProjectManager() {
 		return projectManager;
 	}
@@ -41,11 +41,12 @@ public class Project implements Cloneable {
 	public void setProjectManager(Participant projectManager) {
 		this.projectManager = projectManager;
 	}
-
+	
 	public Project() {
 		this.creationDate = new Date() ;
 		this.launchingDate = new Date() ;
 		this.participants = new HashSet<Participant>() ;
+		this.isFinished = false ;
 		this.projectManager = new Participant();
 	}
 
@@ -62,7 +63,7 @@ public class Project implements Cloneable {
 	 */
 	public void addProcess(wilos.model.spem2.process.Process _process) {
 		this.process = _process ;
-		_process.getProjects().add(this);
+		_process.getProjects().add(this) ;
 	}
 
 	/**
@@ -71,7 +72,7 @@ public class Project implements Cloneable {
 	 */
 	public void removeFromProcess(wilos.model.spem2.process.Process _process) {
 		this.process = null ;
-		_process.getProjects().remove(this);
+		_process.getProjects().remove(this) ;
 	}
 
 	/**
@@ -179,7 +180,7 @@ public class Project implements Cloneable {
 
 	/**
 	 * Getter of process.
-	 *
+	 * 
 	 * @return the process.
 	 */
 	public wilos.model.spem2.process.Process getProcess() {
@@ -188,8 +189,9 @@ public class Project implements Cloneable {
 
 	/**
 	 * Setter of process.
-	 *
-	 * @param _process The process to set.
+	 * 
+	 * @param _process
+	 *            The process to set.
 	 */
 	public void setProcess(wilos.model.spem2.process.Process _process) {
 		this.process = _process ;
@@ -197,7 +199,7 @@ public class Project implements Cloneable {
 
 	/**
 	 * Getter of participants.
-	 *
+	 * 
 	 * @return the participants.
 	 */
 	public Set<Participant> getParticipants() {
@@ -206,8 +208,9 @@ public class Project implements Cloneable {
 
 	/**
 	 * Setter of participants.
-	 *
-	 * @param _participants The participants to set.
+	 * 
+	 * @param _participants
+	 *            The participants to set.
 	 */
 	public void setParticipants(Set<Participant> _participants) {
 		this.participants = _participants ;
@@ -217,7 +220,7 @@ public class Project implements Cloneable {
 	 * add participant to this project
 	 * 
 	 * @param participant
-	 * 				the participant to add
+	 *            the participant to add
 	 */
 	public void addToParticipant(Participant participant) {
 		this.participants.add(participant) ;
@@ -228,7 +231,7 @@ public class Project implements Cloneable {
 	 * remove a project from a participant
 	 * 
 	 * @param participant
-	 * 			the participant to remove from
+	 *            the participant to remove from
 	 */
 	public void removeFromParticipant(Participant participant) {
 		this.participants.remove(participant) ;
@@ -248,7 +251,7 @@ public class Project implements Cloneable {
 
 	/**
 	 * remove all the participants from the list
-	 *
+	 * 
 	 */
 	public void removeFromAllParticipant() {
 		for(Participant participant : this.participants){
@@ -257,10 +260,30 @@ public class Project implements Cloneable {
 	}
 
 	public String getProject_id() {
-		return project_id;
+		return project_id ;
 	}
 
 	public void setProject_id(String project_id) {
-		this.project_id = project_id;
+		this.project_id = project_id ;
 	}
+
+	/**
+	 * Getter of isFinished.
+	 * 
+	 * @return the isFinished.
+	 */
+	public Boolean getIsFinished() {
+		return this.isFinished ;
+	}
+
+	/**
+	 * Setter of isFinished.
+	 * 
+	 * @param _isFinished
+	 *            The isFinished to set.
+	 */
+	public void setIsFinished(Boolean _isFinished) {
+		this.isFinished = _isFinished ;
+	}
+
 }

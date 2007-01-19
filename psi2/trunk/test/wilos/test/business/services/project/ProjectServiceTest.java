@@ -1,10 +1,12 @@
 
 package wilos.test.business.services.project ;
 
-import junit.framework.TestCase ;
-import wilos.business.services.project.ProjectService ;
-import wilos.model.misc.project.Project ;
-import wilos.test.configuration.TestConfiguration ;
+import java.util.Set;
+
+import junit.framework.TestCase;
+import wilos.business.services.project.ProjectService;
+import wilos.model.misc.project.Project;
+import wilos.test.configuration.TestConfiguration;
 
 /**
  * This class represents the class test of the ProjectService class.
@@ -17,6 +19,7 @@ public class ProjectServiceTest extends TestCase {
 	private ProjectService ps ;
 
 	private Project p ;
+	private Project p2 ;
 
 	/*
 	 * (non-Javadoc)
@@ -29,6 +32,7 @@ public class ProjectServiceTest extends TestCase {
 		p = new Project() ;
 		p.setName("Wilos") ;
 		p.setDescription("projet de test") ;
+		p.setIsFinished(true);
 	}
 
 	/*
@@ -53,6 +57,7 @@ public class ProjectServiceTest extends TestCase {
 		assertNotNull(ProjectTmp) ;
 		assertEquals(ProjectTmp.getName(), "Wilos") ;
 		assertEquals(ProjectTmp.getDescription(), "projet de test") ;
+		//assertEquals(ProjectTmp.getIsFinished(), true) ;
 	}
 
 	/**
@@ -68,4 +73,23 @@ public class ProjectServiceTest extends TestCase {
 		assertFalse(this.ps.projectExist("poulou")) ;
 	}
 
+	/**
+	 * Test method for {@link woops2.business.services.project.ProjectService#getUnfinishedProjects()}.
+	 * 
+	 */
+	public void testGetUnfinishedProjects(){
+		p2 = new Project() ;
+		p2.setName("Wilos2") ;
+		p2.setDescription("projet de test2") ;
+		p2.setIsFinished(false);
+		
+		this.ps.saveProject(this.p2) ;
+		
+		Set<Project> projects = this.ps.getUnfinishedProjects();
+		for(Project p:projects){
+			
+		
+		}
+		
+	}
 }

@@ -63,6 +63,16 @@ public class ProjectService {
 	}
 
 	/**
+	 * This method returns the list of the projects that aren't yet finished 
+	 *
+	 * @return a set of Projects
+	 */
+	public Set<Project> getUnfinishedProjects(){
+		
+		return new HashSet<Project>();
+	}
+
+	/**
 	 * Getter of projectDao.
 	 * 
 	 * @return the projectDao.
@@ -184,8 +194,9 @@ public class ProjectService {
 	 * @param project
 	 * 				the project where the participant will be affected to
 	 */
-	public void addParticipant(Participant participant, Project project)
-	{
+	public void addParticipant(Participant participant, Project project){
 		project.addToParticipant(participant);
 	}
+	
+	
 }
