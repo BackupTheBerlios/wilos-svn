@@ -55,7 +55,9 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 				super.equals(workBreakdownElement)).append(this.isEvenDriven,
 				workBreakdownElement.isEvenDriven).append(this.isOngoing,
 				workBreakdownElement.isOngoing).append(this.isRepeatable,
-				workBreakdownElement.isRepeatable).isEquals();
+				workBreakdownElement.isRepeatable).append(this.successors,
+				workBreakdownElement.successors).append(this.predecessors,
+				workBreakdownElement.predecessors).isEquals();
 	}
 
 	/*
@@ -89,6 +91,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 		this.setIsEvenDriven(_workBreakdownElement.getIsEvenDriven());
 		this.setIsOngoing(_workBreakdownElement.getIsOngoing());
 		this.setIsRepeatable(_workBreakdownElement.getIsRepeatable());
+		//todo
 	}
 
 	/**
@@ -99,7 +102,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	 */
 	public void addSuccessor(WorkBreakdownElement _workBreakdownElement) {
 		this.successors.add(_workBreakdownElement);
-		_workBreakdownElement.addPredecessor(_workBreakdownElement);
+		_workBreakdownElement.addPredecessor(this);
 	}
 
 	/**
@@ -109,7 +112,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	 *            The successor to remove.
 	 */
 	public void removeSuccessor(WorkBreakdownElement _workBreakdownElement) {
-		_workBreakdownElement.removePredecessor(_workBreakdownElement);
+		_workBreakdownElement.removePredecessor(this);
 		this.successors.remove(_workBreakdownElement);
 	}
 
@@ -144,6 +147,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	 */
 	public void addPredecessor(WorkBreakdownElement _workBreakdownElement) {
 		this.predecessors.add(_workBreakdownElement);
+		_workBreakdownElement.addSuccessor(this);
 	}
 
 	/**
@@ -153,6 +157,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	 *            The predecessor to remove.
 	 */
 	public void removePredecessor(WorkBreakdownElement _workBreakdownElement) {
+		_workBreakdownElement.removeSuccessor(this);
 		this.predecessors.remove(_workBreakdownElement);
 	}
 

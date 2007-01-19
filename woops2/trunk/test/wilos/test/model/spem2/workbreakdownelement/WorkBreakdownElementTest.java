@@ -11,13 +11,7 @@ public class WorkBreakdownElementTest extends TestCase {
 
 	private WorkBreakdownElement workBreakdownElement;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp();
+	public WorkBreakdownElementTest(){
 		this.workBreakdownElement = new WorkBreakdownElement() ;
 		this.workBreakdownElement.setGuid("idEPF") ;
 		this.workBreakdownElement.setName("name1") ;
@@ -29,6 +23,15 @@ public class WorkBreakdownElementTest extends TestCase {
 		this.workBreakdownElement.setIsOngoing(true);
 		this.workBreakdownElement.setIsPlanned(true);
 		this.workBreakdownElement.setIsRepeatable(true);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see junit.framework.TestCase#setUp()
+	 */
+	protected void setUp() throws Exception {
+		super.setUp();
 	}
 
 	/*
@@ -58,18 +61,6 @@ public class WorkBreakdownElementTest extends TestCase {
 	public final void testHashCode() {
 		// Rk: the setUp method is called here.
 
-		workBreakdownElement = new WorkBreakdownElement() ;
-		workBreakdownElement.setGuid("idEPF") ;
-		workBreakdownElement.setName("name1") ;
-		workBreakdownElement.setDescription("description1") ;
-		workBreakdownElement.setPrefix("prefix1") ;
-		workBreakdownElement.setIsOptional(true) ;
-		workBreakdownElement.setIsPlanned(false) ;
-		workBreakdownElement.setHasMultipleOccurrences(false) ;
-		workBreakdownElement.setIsOngoing(true);
-		workBreakdownElement.setIsPlanned(true);
-		workBreakdownElement.setIsRepeatable(true);
-		
 		assertNotNull(this.workBreakdownElement.hashCode());
 		assertNotNull(workBreakdownElement.hashCode());
 		assertEquals(this.workBreakdownElement.hashCode(),workBreakdownElement.hashCode());
@@ -111,6 +102,30 @@ public class WorkBreakdownElementTest extends TestCase {
 		bdeTmp2.setIsRepeatable(true);
 		assertFalse("Not equals", this.workBreakdownElement.equals(bdeTmp2));
 
+		// Rk: the tearDown method is called here.
+	}
+	
+	public final void testAddSuccessor() {
+		// Rk: the setUp method is called here.
+
+		WorkBreakdownElement tmp = new WorkBreakdownElement();
+		this.workBreakdownElement.addSuccessor(tmp);
+		
+		assertTrue(this.workBreakdownElement.getSuccessors().contains(tmp));
+		assertTrue(tmp.getPredecessors().contains(this.workBreakdownElement));
+		
+		// Rk: the tearDown method is called here.
+	}
+	
+	public final void testAddPredecessor() {
+		// Rk: the setUp method is called here.
+
+		WorkBreakdownElement tmp = new WorkBreakdownElement();
+		this.workBreakdownElement.addPredecessor(tmp);
+		
+		assertTrue(this.workBreakdownElement.getPredecessors().contains(tmp));
+		assertTrue(tmp.getSuccessors().contains(this.workBreakdownElement));
+		
 		// Rk: the tearDown method is called here.
 	}
 

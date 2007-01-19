@@ -54,7 +54,7 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 				.getConcreteTaskDescriptorsForProject(PROJECT_ID);
 		assertNotNull(list);
 		assertEquals(list.size(), 1);
-		//FIXME assertEquals(list.get(0), this.concreteTaskDescriptor);
+		assertTrue(list.contains(this.concreteTaskDescriptor));
 
 		// Rk: the tearDown method is called here.
 	}
