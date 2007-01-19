@@ -37,12 +37,4 @@ public class RoleDescriptorServiceTest extends TestCase {
 	public void testGetRoleDefinitionFromRoleDescriptor() {
 		fail("Not yet implemented") ;
 	}
-
-	/**
-	 * Test method for
-	 * {@link wilos.business.services.role.RoleDescriptorService#getRoleDescriptorDao()}.
-	 */
-	public void testGetRoleDescriptorDao() {
-		fail("Not yet implemented") ;
-	}
 }
