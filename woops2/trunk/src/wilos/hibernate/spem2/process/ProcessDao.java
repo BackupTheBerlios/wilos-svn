@@ -1,15 +1,15 @@
 
 package wilos.hibernate.spem2.process ;
 
-import java.util.ArrayList ;
-import java.util.List ;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.hibernate.exception.ConstraintViolationException ;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException ;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import wilos.model.spem2.process.Process ;
+import wilos.model.spem2.process.Process;
 import wilos.utils.ExceptionManager;
 
 /**
@@ -63,6 +63,21 @@ public class ProcessDao extends HibernateDaoSupport {
 	 */
 	public Process getProcess(String _id) {
 		return (Process) this.getHibernateTemplate().get(Process.class, _id) ;
+	}
+	
+	/**
+	 * Return a process  with the given guid If there are many process with
+	 * the same guid, it returns the first
+	 * 
+	 * @param _process
+	 * @return
+	 */
+	public Process getProcessFromGuid(String _guid) {
+		List processes = this.getHibernateTemplate().find("from Process p where p.guid=?", _guid) ;
+		if(processes.size() > 0)
+			return (Process) processes.get(0) ;
+		else
+			return null ;
 	}
 
 	/**
