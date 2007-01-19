@@ -1,1 +1,1 @@
-<jsp:directive.include file="processManager_create.jspx"/>
+<jsp:directive.include file="./pages/admin/processManager_create.jspx"/>

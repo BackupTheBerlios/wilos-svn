@@ -1,1 +1,1 @@
-<jsp:directive.include file="affect_roles.jspx"/>
+<jsp:directive.include file="./pages/participant/affect_roles.jspx"/>

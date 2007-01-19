@@ -26,7 +26,7 @@
 					<img src="images/logo_wilos.png"/>						
             
             <div id="roles_actions">
-            	<jsp:directive.include file="roles_actions.jspx" />
+            	<jsp:directive.include file="./pages/template/roles_actions.jspx" />
             </div>
             </ice:panelGroup>
         </f:facet>
@@ -34,10 +34,10 @@
         <f:facet name="west">
             <ice:panelGroup>
             <div id="connection">
-				<jsp:directive.include file="connect.jspx"/>
+				<jsp:directive.include file="./pages/template/connect.jspx"/>
 			</div>
             <div id="menu">
-            	<jsp:directive.include file="navigation.jspx" />
+            	<jsp:directive.include file="./pages/template/navigation.jspx" />
             </div>
             </ice:panelGroup>
         </f:facet>
@@ -57,50 +57,44 @@
 
 					<ice:panelGroup id="wilos" styleClass="contentIncludePanelGroup" >
                         <f:subview id="wilos_view">
-                            <jsp:directive.include file="wilos.jspx" />
-                        </f:subview>
-                    </ice:panelGroup>
-                    
-                    <ice:panelGroup id="test" styleClass="contentIncludePanelGroup" >
-                        <f:subview id="test_view">
-                            <jsp:directive.include file="test.jspx" />
+                            <jsp:directive.include file="./pages/common/wilos.jspx" />
                         </f:subview>
                     </ice:panelGroup>
                     
                     <ice:panelGroup id="welcome" styleClass="contentIncludePanelGroup" >
                         <f:subview id="welcome_view">
-                            <jsp:directive.include file="welcome.jspx" />
+                            <jsp:directive.include file="./pages/participant/welcome.jspx" />
                         </f:subview>
                     </ice:panelGroup>
 
                     <ice:panelGroup id="subscribe" styleClass="contentIncludePanelGroup" >
                         <f:subview id="subscribe_view">
-                            <jsp:directive.include file="participantSubscribe.jspx" />
+                            <jsp:directive.include file="./pages/common/participantSubscribe.jspx" />
                         </f:subview>
                     </ice:panelGroup>
                     
                     <ice:panelGroup id="admin_main" styleClass="contentIncludePanelGroup" >
                         <f:subview id="admin_view">
-                            <jsp:directive.include file="admin_main.jspx" />
+                            <jsp:directive.include file="./pages/admin/admin_main.jspx" />
                         </f:subview>
                     </ice:panelGroup>
                     
                     <ice:panelGroup id="welcomeProjectDirector" styleClass="contentIncludePanelGroup" >
                         <f:subview id="projectDirector_view">
-                            <jsp:directive.include file="welcomeProjectDirector.jspx" />
+                            <jsp:directive.include file="./pages/projectDirector/welcomeProjectDirector.jspx" />
                         </f:subview>
                     </ice:panelGroup>
                     
                     <ice:panelGroup id="welcomeProcessManager" styleClass="contentIncludePanelGroup" >
                         <f:subview id="processManager_view">
-                            <jsp:directive.include file="welcomeProcessManager.jspx" />
+                            <jsp:directive.include file="./pages/processManager/welcomeProcessManager.jspx" />
                         </f:subview>
                     </ice:panelGroup>
                     
                     <ice:panelGroup id="taskviewer"
 						styleClass="contentIncludePanelGroup">
 						<f:subview id="taskviewer_view">
-							<jsp:directive.include file="taskviewer.jspx" />
+							<jsp:directive.include file="./pages/common/taskviewer.jspx" />
 						</f:subview>
 					</ice:panelGroup>
 					
