@@ -20,7 +20,7 @@
 			column="isEvenDriven" length="1" />
 
 		<set name="predecessors" table="workorder" lazy="true">
-			<key column="workbreakdownelement_id1" />
+			<key column="workbreakdownelement_id1"></key>
 			<composite-element
 				class="wilos.model.spem2.workbreakdownelement.WorkOrder">
 				<property name="linkType" type="java.lang.String"
@@ -31,7 +31,7 @@
 		</set>
 
 		<set name="successors" table="workorder" lazy="true">
-			<key column="workbreakdownelement_id2" />
+			<key column="workbreakdownelement_id2"></key>
 			<composite-element
 				class="wilos.model.spem2.workbreakdownelement.WorkOrder">
 				<property name="linkType" type="java.lang.String"

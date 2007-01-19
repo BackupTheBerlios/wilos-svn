@@ -46,7 +46,6 @@
 			<value>wilos/model/spem2/element/Element.hbm.xml</value>
 			<value>wilos/model/spem2/breakdownelement/BreakdownElement.hbm.xml</value>
 			<value>wilos/model/spem2/workbreakdownelement/WorkBreakdownElement.hbm.xml</value>
-			<!--  <value>wilos/model/spem2/workbreakdownelement/WorkOrder.hbm.xml</value>-->
 			<value>wilos/model/spem2/process/Process.hbm.xml</value>
 			<value>wilos/model/spem2/iteration/Iteration.hbm.xml</value>
 			<value>wilos/model/spem2/phase/Phase.hbm.xml</value>
