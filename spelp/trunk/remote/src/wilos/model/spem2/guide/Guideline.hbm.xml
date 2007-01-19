@@ -12,12 +12,9 @@
 		<key column="guideline_id"></key>
 
 		<!-- Associations -->
-		<!--<set name="taskDefinitions" table="nesting" lazy="true">
-			<key column="guideline_id"></key>
-			<many-to-many class="wilos.model.spem2.task.TaskDefinition"
-				column="taskdefinition_id">
-			</many-to-many>
-		</set> -->
+		<many-to-one name="taskdefinition" class="TaskDefinition"
+			column="taskdefinition_id" lazy="false">
+		</many-to-one>
 		
 	</joined-subclass>
 </hibernate-mapping>
