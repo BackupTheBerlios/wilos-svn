@@ -19,29 +19,27 @@
 		<property name="isEvenDriven" type="java.lang.Boolean"
 			column="isEvenDriven" length="1" />
 
-		<list name="predecessors" table="workorder" lazy="true">
+		<set name="predecessors" table="workorder" lazy="true">
 			<key column="workbreakdownelement_id1" />
-			<index column="workorder_id" />
 			<composite-element
 				class="wilos.model.spem2.workbreakdownelement.WorkOrder">
 				<property name="linkType" type="java.lang.String"
 					column="linktype" />
 				<many-to-one name="successor"
-					column="workbreakdownelement_id" />
+					column="workbreakdownelement_id2" />
 			</composite-element>
-		</list>
+		</set>
 
-		<list name="successors" table="workorder" lazy="true">
+		<set name="successors" table="workorder" lazy="true">
 			<key column="workbreakdownelement_id2" />
-			<index column="workorder_id" />
 			<composite-element
 				class="wilos.model.spem2.workbreakdownelement.WorkOrder">
 				<property name="linkType" type="java.lang.String"
 					column="linktype" />
 				<many-to-one name="predecessor"
-					column="workbreakdownelement_id" />
+					column="workbreakdownelement_id1" />
 			</composite-element>
-		</list>
+		</set>
 
 	</joined-subclass>
 </hibernate-mapping>
