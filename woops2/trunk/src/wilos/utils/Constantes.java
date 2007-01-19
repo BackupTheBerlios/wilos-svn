@@ -20,4 +20,15 @@ public class Constantes {
 
 		public static final String FINISHED = "Finished";
 	}
+	
+	public static class WorkOrderType {
+
+		public static final String START_TO_START = "start-to-start";
+
+		public static final String START_TO_FINISH = "start-to-finish";
+
+		public static final String FINISH_TO_START = "finish-to-start";
+
+		public static final String FINISH_TO_FINISH  = "finish-to-finish";
+	}
 }
