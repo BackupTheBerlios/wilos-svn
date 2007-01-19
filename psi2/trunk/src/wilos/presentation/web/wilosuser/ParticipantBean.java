@@ -2,10 +2,8 @@ package wilos.presentation.web.wilosuser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -28,7 +26,6 @@ import wilos.business.services.wilosuser.ParticipantService;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
-import wilos.model.misc.wilosuser.WilosUser;
 import wilos.presentation.web.template.MenuBean;
 
 /**

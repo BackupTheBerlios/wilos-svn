@@ -7,7 +7,6 @@ import java.util.Set;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import wilos.model.misc.wilosuser.Administrator;
-import wilos.model.misc.wilosuser.Participant;
 
 /**
  * AdministratorDao manage requests from the system to store Administrator into

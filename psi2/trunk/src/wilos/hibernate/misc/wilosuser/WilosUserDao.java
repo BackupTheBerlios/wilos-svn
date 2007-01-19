@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import wilos.model.misc.wilosuser.ProjectDirector;
 import wilos.model.misc.wilosuser.WilosUser;
 
 /**

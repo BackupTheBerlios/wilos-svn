@@ -14,7 +14,6 @@ import org.apache.commons.logging.LogFactory ;
 
 import wilos.business.services.wilosuser.LoginService ;
 import wilos.business.services.wilosuser.ProcessManagerService ;
-import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.ProcessManager ;
 
 /**

@@ -9,9 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import wilos.business.util.Security;
 import wilos.hibernate.misc.wilosuser.ProcessManagerDao;
-import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.ProcessManager;
-import wilos.model.spem2.role.RoleDescriptor;
 
 /**
  * The services associated to the ProcessManager
