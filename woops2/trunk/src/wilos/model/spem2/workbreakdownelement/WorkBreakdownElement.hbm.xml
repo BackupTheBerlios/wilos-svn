@@ -23,7 +23,7 @@
             <key column="workbrealdownelement_id"/>
             <index column="linknumber"/>
             <composite-element class="WorkOrder">
-                <property name="linktype"/>
+                <property name="linkType" type="java.lang.String" column="linktype"/>
                 <many-to-one name="workbreakdownelement" column="workbreakdownelement_id"/>
             </composite-element>
         </list>
@@ -32,7 +32,7 @@
             <key column="workbrealdownelement_id"/>
             <index column="linknumber"/>
             <composite-element class="WorkOrder">
-                <property name="linktype"/>
+                <property name="linkType" type="java.lang.String" column="linktype"/>
                 <many-to-one name="workbreakdownelement" column="workbreakdownelement_id"/>
             </composite-element>
         </list>
