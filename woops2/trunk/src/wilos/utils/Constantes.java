@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 
 public class Constantes {
 
-	public static final String DATE_PATTERN = "dd'/'MM'/'yyyy" ;
+	public static final String DATE_PATTERN = "dd/MM/yyyy hh:mm" ;
 	
 	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(DATE_PATTERN) ;
 	
