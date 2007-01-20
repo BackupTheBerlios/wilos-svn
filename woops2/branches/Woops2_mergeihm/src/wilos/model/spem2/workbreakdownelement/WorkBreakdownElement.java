@@ -25,17 +25,12 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 
 	private Boolean isEvenDriven;
 
-	private Set<WorkBreakdownElement> predecessors;
-
-	private Set<WorkBreakdownElement> successors;
 
 	public WorkBreakdownElement() {
 		super();
 		this.isEvenDriven = false;
 		this.isOngoing = false;
 		this.isRepeatable = false;
-		this.predecessors = new HashSet<WorkBreakdownElement>();
-		this.successors = new HashSet<WorkBreakdownElement>();
 	}
 
 	/*
@@ -91,93 +86,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 		this.setIsRepeatable(_workBreakdownElement.getIsRepeatable());
 	}
 
-	/**
-	 * Add a successor to the successors collection of a wbde.
-	 * 
-	 * @param _workBreakdownElements
-	 *            The successor to add.
-	 */
-	public void addSuccessor(WorkBreakdownElement _workBreakdownElement) {
-		this.successors.add(_workBreakdownElement);
-		_workBreakdownElement.addPredecessor(_workBreakdownElement);
-	}
 
-	/**
-	 * Remove from a wbde one of these successor.
-	 * 
-	 * @param _workBreakdownElements
-	 *            The successor to remove.
-	 */
-	public void removeSuccessor(WorkBreakdownElement _workBreakdownElement) {
-		_workBreakdownElement.removePredecessor(_workBreakdownElement);
-		this.successors.remove(_workBreakdownElement);
-	}
-
-	/**
-	 * Add a successor collection to the successors collection of a wbde.
-	 * 
-	 * @param _workBreakdownElements
-	 *            The set of successors to add.
-	 */
-	public void addAllSuccessors(
-			Set<WorkBreakdownElement> _workBreakdownElements) {
-		for (WorkBreakdownElement wbde : _workBreakdownElements) {
-			wbde.addPredecessor(this);
-		}
-	}
-
-	/**
-	 * Remove from an wbde all its successors.
-	 * 
-	 */
-	public void removeAllSuccessors() {
-		for (WorkBreakdownElement wbde : this.getSuccessors())
-			wbde.getPredecessors().remove(this);
-		this.getSuccessors().clear();
-	}
-
-	/**
-	 * Add a predecessor to the predecessors collection of a wbde.
-	 * 
-	 * @param _workBreakdownElements
-	 *            The predecessor to add.
-	 */
-	public void addPredecessor(WorkBreakdownElement _workBreakdownElement) {
-		this.predecessors.add(_workBreakdownElement);
-	}
-
-	/**
-	 * Remove from a wbde one of these predecessor
-	 * 
-	 * @param _workBreakdownElements
-	 *            The predecessor to remove.
-	 */
-	public void removePredecessor(WorkBreakdownElement _workBreakdownElement) {
-		this.predecessors.remove(_workBreakdownElement);
-	}
-
-	/**
-	 * Add a predecessor collection to the predecessors collection of a wbde.
-	 * 
-	 * @param _workBreakdownElements
-	 *            The set of predecessors to add.
-	 */
-	public void addAllPredecessors(
-			Set<WorkBreakdownElement> _workBreakdownElements) {
-		for (WorkBreakdownElement wbde : _workBreakdownElements) {
-			wbde.addSuccessor(this);
-		}
-	}
-
-	/**
-	 * Remove from an wbde all its predecessors.
-	 * 
-	 */
-	public void removeAllPredecessors() {
-		for (WorkBreakdownElement wbde : this.getPredecessors())
-			wbde.getSuccessors().remove(this);
-		this.getPredecessors().clear();
-	}
 
 	/**
 	 * Getter of isEvenDriven.
@@ -234,21 +143,5 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	 */
 	public void setIsRepeatable(Boolean _isRepeatable) {
 		this.isRepeatable = _isRepeatable;
-	}
-
-	public Set<WorkBreakdownElement> getPredecessors() {
-		return predecessors;
-	}
-
-	public void setPredecessors(Set<WorkBreakdownElement> predecessors) {
-		this.predecessors = predecessors;
-	}
-
-	public Set<WorkBreakdownElement> getSuccessors() {
-		return successors;
-	}
-
-	public void setSuccessors(Set<WorkBreakdownElement> successors) {
-		this.successors = successors;
 	}
 }
