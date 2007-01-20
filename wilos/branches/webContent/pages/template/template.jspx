@@ -94,7 +94,7 @@
                     <ice:panelGroup id="taskviewer"
 						styleClass="contentIncludePanelGroup">
 						<f:subview id="taskviewer_view">
-							<jsp:directive.include file="./pages/common/taskviewer.jspx" />
+							<jsp:directive.include file="./pages/common/taskViewer.jspx" />
 						</f:subview>
 					</ice:panelGroup>
 					
