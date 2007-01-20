@@ -26,8 +26,9 @@
 				</ice:panelGroup>
 			</ice:panelTab>
 
-			<ice:panelTab id="panelTab_participant_project" label="#{msgs['component.tableparticipantproject.title']}" imageDir="images">
+			<ice:panelTab id="panelTab_participant_project" label="#{msgs['component.tableparticipantproject.tabTitle']}" imageDir="images">
 				<ice:panelGroup id="projectPanelGroup" styleClass="contentIncludePanelGroup">
+					<h3><ice:outputText value="#{msgs['component.tableparticipantproject.title']}" /></h3>
 					<ice:dataTable value="#{ParticipantBean.affectedProjectsList}" border="1" var="project1">
 						<ice:column>
 							<f:facet name="header">         			
@@ -60,13 +61,14 @@
 						    <ice:outputText value="#{project1.description}"/>
 						</ice:column>
 					</ice:dataTable>
-					<ice:commandButton value="Valider" action="#{ParticipantBean.saveProjectsAffectation}"/>
+					<ice:commandButton value="#{msgs['component.tableparticipantproject.validationButton']}" action="#{ParticipantBean.saveProjectsAffectation}"/>
 				</ice:panelGroup>
 			</ice:panelTab>
 			
 			
-			<ice:panelTab id="panelTab_participant_projectManager" label="#{msgs['component.participantprojectManager.title']}" imageDir="images">
+			<ice:panelTab id="panelTab_participant_projectManager" label="#{msgs['component.participantprojectManager.tabTitle']}" imageDir="images">
 				<ice:panelGroup id="projectManagerPanelGroup" styleClass="contentIncludePanelGroup">
+					<h3><ice:outputText value="#{msgs['component.table1participantprojectManager.title']}" /></h3>
 					<ice:dataTable value="#{ParticipantBean.manageableProjectsList}" border="1" var="manageableProject">
 						<ice:column>
 							<f:facet name="header">         			
@@ -99,9 +101,10 @@
 						    <ice:outputText value="#{manageableProject.description}"/>
 						</ice:column>
 					</ice:dataTable>
-					<!-- <ice:commandButton value="Valider" action="#{ParticipantBean.saveProjectsAffectation}"/> -->
+					 <ice:commandButton value="#{msgs['component.table1participantprojectManager.validationButton']}" action="#{ParticipantBean.saveProjectManagerAffectation}"/>
 					<br/>
 					<br/>
+					<h3><ice:outputText value="#{msgs['component.table2participantprojectManager.title']}" /></h3>
 					<ice:dataTable value="#{ParticipantBean.notManageableProjectsList}" border="1" var="notManageableProject">
 						<ice:column>
 							<f:facet name="header">

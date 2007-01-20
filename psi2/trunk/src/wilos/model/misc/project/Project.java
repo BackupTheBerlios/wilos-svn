@@ -284,5 +284,27 @@ public class Project implements Cloneable {
 	public void setIsFinished(Boolean _isFinished) {
 		this.isFinished = _isFinished ;
 	}
+	
+	/**
+	 * 
+	 * TODO Method description
+	 *
+	 * @param projectManager
+	 */
+	public void addToProjectManager(Participant projectManager){
+		   this.projectManager = projectManager;
+		   projectManager.getManagedProjects().add(this);
+	}
+	
+	/**
+	 * 
+	 * TODO Method description
+	 *
+	 * @param projectManager
+	 */
+	public void removeFromProjectManager(Participant projectManager){
+		   this.projectManager = null;
+		   projectManager.getManagedProjects().remove(this);
+		}
 
 }

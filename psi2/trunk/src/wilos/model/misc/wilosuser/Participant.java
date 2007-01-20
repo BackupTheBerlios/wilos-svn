@@ -7,7 +7,7 @@ import java.util.Set ;
 import org.apache.commons.lang.builder.EqualsBuilder ;
 import org.apache.commons.lang.builder.HashCodeBuilder ;
 
-import wilos.model.misc.project.Project;
+import wilos.model.misc.project.Project ;
 import wilos.model.spem2.role.RoleDescriptor ;
 
 /**
@@ -21,13 +21,16 @@ import wilos.model.spem2.role.RoleDescriptor ;
 public class Participant extends WilosUser implements Cloneable {
 
 	private Set<RoleDescriptor> rolesListForAProject ;
-	
-	private Set<Project> affectedProjectList;
+
+	private Set<Project> affectedProjectList ;
+
+	private Set<Project> managedProjects ;
 
 	public Participant() {
 		super() ;
 		rolesListForAProject = new HashSet<RoleDescriptor>() ;
 		affectedProjectList = new HashSet<Project>() ;
+		managedProjects = new HashSet<Project>() ;
 	}
 
 	/**
@@ -75,7 +78,7 @@ public class Participant extends WilosUser implements Cloneable {
 	 */
 	public void removeAllRoleDescriptors() {
 		for(RoleDescriptor _roleD : this.rolesListForAProject){
-			_roleD.removeParticipant(this);
+			_roleD.removeParticipant(this) ;
 		}
 		this.rolesListForAProject.clear() ;
 	}
@@ -100,7 +103,7 @@ public class Participant extends WilosUser implements Cloneable {
 		this.affectedProjectList.add(project) ;
 		project.getParticipants().add(this) ;
 	}
-	
+
 	/**
 	 * remove a participant from a project 
 	 * 
@@ -122,7 +125,7 @@ public class Participant extends WilosUser implements Cloneable {
 		}
 		this.affectedProjectList.clear() ;
 	}
-	
+
 	/**
 	 * remove all the project from the list
 	 *
@@ -132,7 +135,7 @@ public class Participant extends WilosUser implements Cloneable {
 			this.removeFromProject(project) ;
 		}
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#clone()
 	 */
@@ -196,5 +199,57 @@ public class Participant extends WilosUser implements Cloneable {
 	public void setAffectedProjectList(Set<Project> _affectedProjectList) {
 		this.affectedProjectList = _affectedProjectList ;
 	}
-	
+
+	/**
+	 * 
+	 * TODO Method description
+	 *
+	 * @param project
+	 */
+	public void addManagedProject(Project project) {
+		this.managedProjects.add(project) ;
+		project.setProjectManager(this) ;
+	}
+
+	/**
+	 * 
+	 * TODO Method description
+	 *
+	 * @param project
+	 */
+	public void removeManagedProject(Project project) {
+		this.managedProjects.remove(project) ;
+		project.setProjectManager(null) ;
+	}
+
+	/**
+	 * 
+	 * TODO Method description
+	 *
+	 */
+	public void removeAllManagedProjects() {
+		for(Project project : this.managedProjects){
+			project.removeFromProjectManager(this) ;
+		}
+		this.managedProjects.clear() ;
+	}
+
+	/**
+	 * Getter of managedProjects.
+	 *
+	 * @return the managedProjects.
+	 */
+	public Set<Project> getManagedProjects() {
+		return this.managedProjects ;
+	}
+
+	/**
+	 * Setter of managedProjects.
+	 *
+	 * @param _managedProjects The managedProjects to set.
+	 */
+	public void setManagedProjects(Set<Project> _managedProjects) {
+		this.managedProjects = _managedProjects ;
+	}
+
 }

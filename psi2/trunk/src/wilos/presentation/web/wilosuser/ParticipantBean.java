@@ -13,7 +13,6 @@ import java.util.regex.Pattern ;
 import javax.faces.application.FacesMessage ;
 import javax.faces.component.UIComponent ;
 import javax.faces.context.FacesContext ;
-import javax.faces.event.ActionEvent ;
 import javax.faces.validator.ValidatorException ;
 import javax.servlet.http.HttpServletRequest ;
 import javax.servlet.http.HttpSession ;
@@ -69,6 +68,23 @@ public class ParticipantBean {
 		this.affectedProjectsList = new ArrayList() ;
 		this.manageableProjectsList = new ArrayList() ;
 		this.notManageableProjectsList = new ArrayList() ;
+	}
+
+	/**
+	 * Method designed to change main page content after participant subscription
+	 * 
+	 * @param url
+	 */
+	public void changeContentPage(String url) {
+		// TODO factoriser cette fonction pr eviter de l'avoir
+		// dans chaque Bean ;)
+		FacesContext facesContext = FacesContext.getCurrentInstance() ;
+		Object menuObject = facesContext.getApplication().createValueBinding("#{menu}").getValue(facesContext) ;
+		if(menuObject != null && menuObject instanceof MenuBean){
+
+			MenuBean menuBean = (MenuBean) menuObject ;
+			menuBean.changePage(url) ;
+		}
 	}
 
 	/**
@@ -147,39 +163,6 @@ public class ParticipantBean {
 	}
 
 	/**
-	 * Method designed to change main page content after participant subscription
-	 * 
-	 * @param url
-	 */
-	public void changeContentPage(String url) {
-		// TODO factoriser cette fonction pr eviter de l'avoir
-		// dans chaque Bean ;)
-		FacesContext facesContext = FacesContext.getCurrentInstance() ;
-		Object menuObject = facesContext.getApplication().createValueBinding("#{menu}").getValue(facesContext) ;
-		if(menuObject != null && menuObject instanceof MenuBean){
-
-			MenuBean menuBean = (MenuBean) menuObject ;
-			menuBean.changePage(url) ;
-		}
-	}
-
-	public void testTransactionActionListener(ActionEvent e) {
-		// this.participantManager.Test();
-	}
-
-	/**
-	 * Getter of rolesList.
-	 * 
-	 * @return the rolesList.
-	 */
-	public List<RoleDescriptor> getRolesList() {
-		this.rolesList = new ArrayList<RoleDescriptor>() ;
-		rolesList.addAll(this.participantService.getRolesList()) ;
-		this.logger.debug("roles list =" + this.rolesList) ;
-		return this.rolesList ;
-	}
-
-	/**
 	 * 
 	 * methode qui controle que les deux mots de passes sont identiques
 	 * 
@@ -202,6 +185,28 @@ public class ParticipantBean {
 			message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 			throw new ValidatorException(message) ;
 		}
+	}
+
+	/**
+	 * Getter of rolesList.
+	 * 
+	 * @return the rolesList.
+	 */
+	public List<RoleDescriptor> getRolesList() {
+		this.rolesList = new ArrayList<RoleDescriptor>() ;
+		rolesList.addAll(this.participantService.getRolesList()) ;
+		this.logger.debug("roles list =" + this.rolesList) ;
+		return this.rolesList ;
+	}
+
+	/**
+	 * Setter of rolesList.
+	 * 
+	 * @param _rolesList
+	 *            The rolesList to set.
+	 */
+	public void setRolesList(List<RoleDescriptor> _rolesList) {
+		this.rolesList = _rolesList ;
 	}
 
 	/**
@@ -264,6 +269,35 @@ public class ParticipantBean {
 	}
 
 	/**
+	 * Setter of participantService.
+	 * 
+	 * @param _participantService
+	 *            The participantService to set.
+	 */
+	public void setParticipantService(ParticipantService _participantService) {
+		this.participantService = _participantService ;
+	}
+
+	/**
+	 * Getter of projectService.
+	 * 
+	 * @return the projectService.
+	 */
+	public ProjectService getProjectService() {
+		return this.projectService ;
+	}
+
+	/**
+	 * Setter of projectService.
+	 * 
+	 * @param _projectService
+	 *            The projectService to set.
+	 */
+	public void setProjectService(ProjectService _projectService) {
+		this.projectService = _projectService ;
+	}
+
+	/**
 	 * Getter of loginService.
 	 * 
 	 * @return the loginService.
@@ -302,26 +336,6 @@ public class ParticipantBean {
 	}
 
 	/**
-	 * Setter of rolesList.
-	 * 
-	 * @param _rolesList
-	 *            The rolesList to set.
-	 */
-	public void setRolesList(List<RoleDescriptor> _rolesList) {
-		this.rolesList = _rolesList ;
-	}
-
-	/**
-	 * Setter of participantService.
-	 * 
-	 * @param _participantService
-	 *            The participantService to set.
-	 */
-	public void setParticipantService(ParticipantService _participantService) {
-		this.participantService = _participantService ;
-	}
-
-	/**
 	 * Getter of participantsList.
 	 * 
 	 * @return the participantsList.
@@ -343,9 +357,7 @@ public class ParticipantBean {
 	}
 
 	public List<HashMap<String, String>> getAffectedProjectsList() {
-		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
-		HttpSession sess = req.getSession() ;
-		Participant user = (Participant) sess.getAttribute("wilosUser") ;
+		Participant user = getParticipantFromSession() ;
 
 		if(user instanceof Participant){
 			this.affectedProjectsList = new ArrayList<HashMap<String, String>>() ;
@@ -372,49 +384,32 @@ public class ParticipantBean {
 		return affectedProjectsList ;
 	}
 
-	public String test() {
-		this.getAffectedProjectsList() ;
-		return "" ;
-	}
-
 	public void setAffectedProjectsList(List<HashMap<String, String>> affectedProjectsList) {
 		this.affectedProjectsList = affectedProjectsList ;
 	}
 
 	public void saveProjectsAffectation() {
-		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
-		HttpSession sess = req.getSession() ;
-		Participant user = (Participant) sess.getAttribute("wilosUser") ;
+		// getting the participant stored into the session
+		Participant user = getParticipantFromSession() ;
+
+		// creating a arraylist of hashmaps to represent the affected projects
 		Map<String, Boolean> affectedProjects = new HashMap<String, Boolean>() ;
+
+		// iterating onto the collection to create a collection of this form :
+		// project_id/Boolean representing the affectation (true for affectation, false for not
 		for(HashMap ligne : this.affectedProjectsList){
 			Boolean testAffectation = (Boolean) ligne.get("affected") ;
 			String project_id = (String) ligne.get("project_id") ;
 			affectedProjects.put(project_id, testAffectation) ;
 		}
+		// saving of the new project affectation
 		this.participantService.saveProjectsForAParticipant(user, affectedProjects) ;
+
+		// displaying a message to express the good validation
 		FacesMessage saveAffectationMessage = new FacesMessage() ;
 		saveAffectationMessage.setSummary("Votre affectation à ces projets à bien été enregistrée") ;
 		saveAffectationMessage.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 		FacesContext.getCurrentInstance().addMessage(null, saveAffectationMessage) ;
-	}
-
-	/**
-	 * Getter of projectService.
-	 * 
-	 * @return the projectService.
-	 */
-	public ProjectService getProjectService() {
-		return this.projectService ;
-	}
-
-	/**
-	 * Setter of projectService.
-	 * 
-	 * @param _projectService
-	 *            The projectService to set.
-	 */
-	public void setProjectService(ProjectService _projectService) {
-		this.projectService = _projectService ;
 	}
 
 	/**
@@ -425,9 +420,7 @@ public class ParticipantBean {
 	 * @return
 	 */
 	public List<HashMap<String, String>> getManageableProjectsList() {
-		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
-		HttpSession sess = req.getSession() ;
-		Participant user = (Participant) sess.getAttribute("wilosUser") ;
+		Participant user = getParticipantFromSession() ;
 
 		if(user instanceof Participant){
 
@@ -464,9 +457,7 @@ public class ParticipantBean {
 	 * @return the notManageableProjectsList.
 	 */
 	public List<HashMap<String, String>> getNotManageableProjectsList() {
-		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
-		HttpSession sess = req.getSession() ;
-		Participant user = (Participant) sess.getAttribute("wilosUser") ;
+		Participant user = getParticipantFromSession() ;
 
 		if(user instanceof Participant){
 
@@ -481,7 +472,7 @@ public class ParticipantBean {
 				if(notManageableProjects.get(currentProject) != null){
 					// projectManager Name construction
 					String projectManagerName = ((Participant) notManageableProjects.get(currentProject)).getName().concat(
-							" "+ ((Participant) notManageableProjects.get(currentProject)).getFirstname()) ;
+							" " + ((Participant) notManageableProjects.get(currentProject)).getFirstname()) ;
 
 					HashMap<String, String> ligne = new HashMap<String, String>() ;
 					ligne.put("project_id", currentProject.getProject_id()) ;
@@ -508,4 +499,38 @@ public class ParticipantBean {
 		this.notManageableProjectsList = _notManageableProjectsList ;
 	}
 
+	/**
+	 * 
+	 * TODO Method description
+	 *
+	 */
+	public void saveProjectManagerAffectation() {
+		
+		Participant user = getParticipantFromSession() ;
+		Map<String, Boolean> affectedManagedProjects = new HashMap<String, Boolean>() ;
+		for(HashMap ligne : this.manageableProjectsList){
+			Boolean testAffectation = (Boolean) ligne.get("affected") ;
+			String project_id = (String) ligne.get("project_id") ;
+			affectedManagedProjects.put(project_id, testAffectation) ;
+		}
+		this.participantService.saveManagedProjectsForAParticipant(user, affectedManagedProjects) ;
+		
+		FacesMessage saveAffectationMessage = new FacesMessage() ;
+		saveAffectationMessage.setSummary("Votre affectation en tant que chef de projet à ces projets à bien été enregistrée") ;
+		saveAffectationMessage.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+		FacesContext.getCurrentInstance().addMessage(null, saveAffectationMessage) ;
+	}
+
+	/**
+	 * method which permits the getting of the object Participant 
+	 * 	which is stored into the session
+	 *
+	 * @return the participant stored into the session 
+	 */
+	private Participant getParticipantFromSession() {
+		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
+		HttpSession sess = req.getSession() ;
+		Participant user = (Participant) sess.getAttribute("wilosUser") ;
+		return user ;
+	}
 }
