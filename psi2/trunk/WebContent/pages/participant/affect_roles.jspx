@@ -31,7 +31,7 @@
 					<ice:dataTable value="#{ParticipantBean.affectedProjectsList}" border="1" var="project1">
 						<ice:column>
 							<f:facet name="header">         			
-						    	<ice:outputText value="Affecté"/>
+						    	<ice:outputText value="#{msgs['component.tableparticipantproject.assignedto']}"/>
 							</f:facet>
 							<ice:selectBooleanCheckbox partialSubmit="false" value="#{project1.affected}" />
 						</ice:column>
@@ -65,36 +65,36 @@
 			</ice:panelTab>
 			
 			
-			<ice:panelTab id="panelTab_participant_projectManager" label="#{msgs['component.tableparticipantprojectManager.title']}" imageDir="images">
+			<ice:panelTab id="panelTab_participant_projectManager" label="#{msgs['component.participantprojectManager.title']}" imageDir="images">
 				<ice:panelGroup id="projectManagerPanelGroup" styleClass="contentIncludePanelGroup">
 					<ice:dataTable value="#{ParticipantBean.manageableProjectsList}" border="1" var="manageableProject">
 						<ice:column>
 							<f:facet name="header">         			
-						    	<ice:outputText value="Affecté"/>
+						    	<ice:outputText value="#{msgs['component.table1participantprojectManager.assignedto']}"/>
 							</f:facet>
 							<ice:selectBooleanCheckbox partialSubmit="false" value="#{manageableProject.affected}" />
 						</ice:column>
 						  <ice:column>
 							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.tableparticipantproject.column1']}"/>
+						    	<ice:outputText value="#{msgs['component.table1participantprojectManager.name']}"/>
 						    </f:facet>
 						    <ice:outputText value="#{manageableProject.name}"/>
 						</ice:column>
 						<ice:column>
 							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.tableparticipantproject.column2']}"/>
+						    	<ice:outputText value="#{msgs['component.table1participantprojectManager.creationDate']}"/>
 						    </f:facet>
 						    <ice:outputText value="#{manageableProject.creationDate}"/>
 						</ice:column>
 						<ice:column>
 							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.tableparticipantproject.column3']}"/>
+						    	<ice:outputText value="#{msgs['component.table1participantprojectManager.lauchingDate']}"/>
 						    </f:facet>
 						    <ice:outputText value="#{manageableProject.launchingDate}"/>
 						</ice:column>
 						<ice:column>
 							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.tableparticipantproject.column4']}"/>
+						    	<ice:outputText value="#{msgs['component.table1participantprojectManager.description']}"/>
 						    </f:facet>
 						    <ice:outputText value="#{manageableProject.description}"/>
 						</ice:column>
@@ -105,27 +105,33 @@
 					<ice:dataTable value="#{ParticipantBean.notManageableProjectsList}" border="1" var="notManageableProject">
 						<ice:column>
 							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.tableparticipantproject.column1']}"/>
+						    	<ice:outputText value="#{msgs['component.table2participantprojectManager.projectManagerName']}"/>
 						    </f:facet>
 						    <ice:outputText value="#{notManageableProject.projectManagerName}"/>
 						</ice:column>
 						  <ice:column>
 							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.tableparticipantproject.column1']}"/>
+						    	<ice:outputText value="#{msgs['component.table2participantprojectManager.name']}"/>
 						    </f:facet>
 						    <ice:outputText value="#{notManageableProject.name}"/>
 						</ice:column>
 						<ice:column>
 							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.tableparticipantproject.column2']}"/>
+						    	<ice:outputText value="#{msgs['component.table2participantprojectManager.creationDate']}"/>
 						    </f:facet>
-						    <ice:outputText value="#{projectManagerName.creationDate}"/>
+						    <ice:outputText value="#{notManageableProject.creationDate}"/>
 						</ice:column>
 						<ice:column>
 							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.tableparticipantproject.column3']}"/>
+						    	<ice:outputText value="#{msgs['component.table2participantprojectManager.lauchingDate']}"/>
 						    </f:facet>
-						    <ice:outputText value="#{projectManagerName.launchingDate}"/>
+						    <ice:outputText value="#{notManageableProject.launchingDate}"/>
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="#{msgs['component.table2participantprojectManager.description']}"/>
+						    </f:facet>
+						    <ice:outputText value="#{notManageableProject.description}"/>
 						</ice:column>
 					</ice:dataTable>
 					

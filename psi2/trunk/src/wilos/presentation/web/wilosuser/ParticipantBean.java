@@ -481,7 +481,7 @@ public class ParticipantBean {
 				if(notManageableProjects.get(currentProject) != null){
 					// projectManager Name construction
 					String projectManagerName = ((Participant) notManageableProjects.get(currentProject)).getName().concat(
-							((Participant) notManageableProjects.get(currentProject)).getFirstname()) ;
+							" "+ ((Participant) notManageableProjects.get(currentProject)).getFirstname()) ;
 
 					HashMap<String, String> ligne = new HashMap<String, String>() ;
 					ligne.put("project_id", currentProject.getProject_id()) ;
@@ -490,7 +490,7 @@ public class ParticipantBean {
 					ligne.put("name", currentProject.getName()) ;
 					ligne.put("creationDate", currentProject.getCreationDate().toString()) ;
 					ligne.put("launchingDate", currentProject.getLaunchingDate().toString()) ;
-					//ligne.put("description", currentProject.getDescription()) ;
+					ligne.put("description", currentProject.getDescription()) ;
 					this.notManageableProjectsList.add(ligne) ;
 				}
 			}

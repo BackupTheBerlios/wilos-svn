@@ -16,6 +16,7 @@ import wilos.hibernate.misc.wilosuser.ParticipantDao;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.role.RoleDescriptor;
+import wilos.business.services.project.ProjectService;
 import wilos.business.util.Security;
 
 /**
@@ -29,7 +30,7 @@ import wilos.business.util.Security;
 public class ParticipantService {
 
 	private ParticipantDao participantDao;
-	private ProjectDao projectDao;
+	private ProjectService projectService;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -102,7 +103,9 @@ public class ParticipantService {
 		this.logger.debug("### LOGIN WILOS :"+login+" ###");
 		chargedParticipant = this.participantDao.getParticipant(login);
 		this.logger.debug("### PARTICIPANT :"+chargedParticipant.getName()+" ###");
-		allProjectList = (HashSet<Project>)this.projectDao.getAllProject();
+		allProjectList = (HashSet<Project>)this.projectService.getUnfinishedProjects();
+		
+		
 		this.logger.debug("### NOM DU PROJET COURANT :"+allProjectList.size()+" ###");
 		
 		for(Project p : allProjectList){
@@ -126,7 +129,7 @@ public class ParticipantService {
 		
 		for(Iterator iter = affectedProjects.keySet().iterator(); iter.hasNext();){
 			String project_id = (String) iter.next() ;
-			currentProject = this.projectDao.getProject(project_id);
+			currentProject = this.projectService.getProject(project_id);
 			if((Boolean)affectedProjects.get(project_id))				
 				currentParticipant.addToProject(currentProject);
 			else
@@ -170,20 +173,20 @@ public class ParticipantService {
 	}
 
 	/**
-	 * Getter of projectDao.
+	 * Getter of projectService.
 	 *
-	 * @return the projectDao.
+	 * @return the projectService.
 	 */
-	public ProjectDao getProjectDao() {
-		return this.projectDao ;
+	public ProjectService getProjectService() {
+		return this.projectService ;
 	}
 
 	/**
-	 * Setter of projectDao.
+	 * Setter of projectService.
 	 *
-	 * @param _projectDao The projectDao to set.
+	 * @param _projectService The projectService to set.
 	 */
-	public void setProjectDao(ProjectDao _projectDao) {
-		this.projectDao = _projectDao ;
+	public void setProjectService(ProjectService _projectService) {
+		this.projectService = _projectService ;
 	}
 }
