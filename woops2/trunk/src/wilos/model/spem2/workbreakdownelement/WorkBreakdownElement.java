@@ -102,7 +102,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	 */
 	public void addSuccessor(WorkBreakdownElement _workBreakdownElement) {
 		this.successors.add(_workBreakdownElement);
-		_workBreakdownElement.addPredecessor(this);
+		_workBreakdownElement.predecessors.add(this);
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	 *            The successor to remove.
 	 */
 	public void removeSuccessor(WorkBreakdownElement _workBreakdownElement) {
-		_workBreakdownElement.removePredecessor(this);
+		_workBreakdownElement.predecessors.remove(this);
 		this.successors.remove(_workBreakdownElement);
 	}
 
@@ -147,7 +147,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	 */
 	public void addPredecessor(WorkBreakdownElement _workBreakdownElement) {
 		this.predecessors.add(_workBreakdownElement);
-		_workBreakdownElement.addSuccessor(this);
+		_workBreakdownElement.successors.add(this);
 	}
 
 	/**
@@ -157,7 +157,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	 *            The predecessor to remove.
 	 */
 	public void removePredecessor(WorkBreakdownElement _workBreakdownElement) {
-		_workBreakdownElement.removeSuccessor(this);
+		_workBreakdownElement.successors.remove(this);
 		this.predecessors.remove(_workBreakdownElement);
 	}
 
