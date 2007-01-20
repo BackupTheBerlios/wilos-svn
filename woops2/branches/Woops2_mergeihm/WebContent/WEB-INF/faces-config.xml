@@ -45,10 +45,6 @@
 			<value>#{ParticipantService}</value>
 		</managed-property>
 		<managed-property>
-			<property-name>projectService</property-name>
-			<value>#{ProjectService}</value>
-		</managed-property>
-		<managed-property>
 			<property-name>loginService</property-name>
 			<value>#{LoginService}</value>
 		</managed-property>
@@ -100,8 +96,10 @@
 
 	<managed-bean>
 		<managed-bean-name>RoleBean</managed-bean-name>
-		<managed-bean-class>wilos.presentation.web.role.RoleBean</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
+		<managed-bean-class>
+			wilos.presentation.web.role.RoleBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
 			<property-name>roleService</property-name>
 			<value>#{RoleService}</value>
