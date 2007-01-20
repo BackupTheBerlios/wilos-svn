@@ -212,6 +212,30 @@
 		</validator-class>
 	</validator>
 	
+	<managed-bean>
+		<managed-bean-name>TreeBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.icefaces.tree.TreeBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>processService</property-name>
+			<value>#{ProcessService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>TaskViewerBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.task.TaskViewerBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>taskDescriptorService</property-name>
+			<value>#{TaskDescriptorService}</value>
+		</managed-property>
+	</managed-bean>
+	
 	<navigation-rule>
 		<description>Theme Reload</description>
 		<navigation-case>

@@ -1,6 +1,0 @@
-<div class="wilos">
-   <h1><ice:outputText value="Page d'accueil de Wilos"/></h1>
-   <ice:form id="test">
-   <ice:commandLink id="test" value="test" action="#{menu.welcome}"/>
-   </ice:form>
-</div>

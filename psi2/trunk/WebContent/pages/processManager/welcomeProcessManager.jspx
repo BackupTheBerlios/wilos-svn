@@ -293,6 +293,23 @@
 								</ice:panelGrid>
 							</ice:panelTab>
 							
+							<ice:panelTab label="Affect a process to a project">
+
+								<ice:panelGrid styleClass="componentLayoutRootTable" columns="1">
+									<ice:panelGroup styleClass="formBorderHighlight"
+										style="text-align:left">
+										<ice:dataTable value="#{ProjectBean.projectsList}" border="1" var="project">
+											<ice:column>
+												<f:facet name="header">
+											    	<ice:outputText value="Name"/>
+											    </f:facet>
+											    <ice:outputText value="#{project.name}"/>
+											</ice:column>											
+										</ice:dataTable>
+									</ice:panelGroup>
+								</ice:panelGrid>
+							</ice:panelTab>
+							
 						</ice:panelTabSet>
 					</ice:panelGrid>
 				</ice:form>
