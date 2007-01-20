@@ -20,24 +20,24 @@
 			column="isEvenDriven" length="1" />
 
 		<set name="predecessors" table="workorder" lazy="true">
-			<key column="workbreakdownelement_id1"></key>
+			<key column="predecessor_id" />
 			<composite-element
 				class="wilos.model.spem2.workbreakdownelement.WorkOrder">
-				<property name="linkType" type="java.lang.String"
-					column="linktype" />
-				<many-to-one name="successor"
-					column="workbreakdownelement_id2" />
+				<many-to-one name="successor" class="wilos.model.spem2.workbreakdownelement.WorkBreakdownElement"
+					column="successor_id">
+				</many-to-one>
 			</composite-element>
 		</set>
 
 		<set name="successors" table="workorder" lazy="true">
-			<key column="workbreakdownelement_id2"></key>
+			<key column="successor_id" />
 			<composite-element
 				class="wilos.model.spem2.workbreakdownelement.WorkOrder">
 				<property name="linkType" type="java.lang.String"
 					column="linktype" />
-				<many-to-one name="predecessor"
-					column="workbreakdownelement_id1" />
+				<many-to-one name="predecessor" class="wilos.model.spem2.workbreakdownelement.WorkBreakdownElement"
+					column="predecessor_id">
+				</many-to-one>
 			</composite-element>
 		</set>
 
