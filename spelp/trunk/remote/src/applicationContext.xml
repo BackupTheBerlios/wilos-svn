@@ -49,6 +49,7 @@
 			<value>wilos/model/spem2/workbreakdownelement/WorkBreakdownElement.hbm.xml</value>
 			<value>wilos/model/spem2/process/Process.hbm.xml</value>
 			<value>wilos/model/spem2/activity/Activity.hbm.xml</value>
+			<value>wilos/model/misc/concretetask/ConcreteTaskDescriptor.hbm.xml</value>
 			<value>wilos/model/spem2/task/TaskDescriptor.hbm.xml</value>
 			<value>wilos/model/spem2/task/TaskDefinition.hbm.xml</value>
 			<value>wilos/model/spem2/task/Step.hbm.xml</value>

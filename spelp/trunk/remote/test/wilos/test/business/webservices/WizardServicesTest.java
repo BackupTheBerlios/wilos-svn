@@ -17,6 +17,7 @@ import wilos.business.services.wilosuser.ParticipantService;
 import wilos.business.util.Security;
 import wilos.business.webservices.WizardServices;
 import wilos.model.misc.wilosuser.Participant;
+import wilos.test.TestConfiguration;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -100,12 +101,10 @@ public class WizardServicesTest extends TestCase {
          System.out.println("testException");
          
          WizardServices instance = new WizardServices();
-    	 
-    	 ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");     
 
-         LoginService ls = (LoginService)ctx.getBean("LoginService");
+         LoginService ls = (LoginService) TestConfiguration.getInstance().getApplicationContext().getBean("LoginService");
 
-         ParticipantService ps = (ParticipantService)ctx.getBean("ParticipantService");
+         ParticipantService ps = (ParticipantService) TestConfiguration.getInstance().getApplicationContext().getBean("ParticipantService");
          
     	 Participant p = new Participant();
          p.setLogin("test");
@@ -115,8 +114,7 @@ public class WizardServicesTest extends TestCase {
          p.setFirstname("test");
          
          if (ls.getAuthentifiedUser(p.getLogin(), p.getPassword()) != null) 
-     		ps.getParticipantDao().deleteParticipant(p);
-         
+     		ps.getParticipantDao().deleteParticipant(p);         
          
          try {             
         	 instance.getParticipant(p.getLogin(), p.getPassword());            
@@ -131,13 +129,11 @@ public class WizardServicesTest extends TestCase {
         System.out.println("GetParticipant");
         System.out.println("testBD");
         
-        WizardServices instance = new WizardServices();
+        WizardServices instance = new WizardServices();     
         
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-        
-        LoginService ls = (LoginService)ctx.getBean("LoginService");
+        LoginService ls = (LoginService) TestConfiguration.getInstance().getApplicationContext().getBean("LoginService");
 
-        ParticipantService ps = (ParticipantService)ctx.getBean("ParticipantService");
+        ParticipantService ps = (ParticipantService) TestConfiguration.getInstance().getApplicationContext().getBean("ParticipantService");
         
 
         		

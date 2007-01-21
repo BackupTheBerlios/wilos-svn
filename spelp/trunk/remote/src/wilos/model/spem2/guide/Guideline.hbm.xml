@@ -12,7 +12,7 @@
 		<key column="guideline_id"></key>
 
 		<!-- Associations -->
-		<many-to-one name="taskdefinition" class="TaskDefinition"
+		<many-to-one name="taskdefinition" class="wilos.model.spem2.task.TaskDefinition"
 			column="taskdefinition_id" lazy="false">
 		</many-to-one>
 		
