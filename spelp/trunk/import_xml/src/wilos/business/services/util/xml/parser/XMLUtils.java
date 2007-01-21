@@ -80,6 +80,8 @@ public class XMLUtils {
 	}
 	
 	public static boolean isExtension(String filePath, String extension){
-		return filePath.substring(filePath.lastIndexOf(".")+1).equals(extension);
+		String s1 = new String(filePath).toLowerCase();
+		String s2 = new String(extension).toLowerCase();
+		return s1.substring(s1.lastIndexOf(".")+1).equals(s2);
 	}
 }

@@ -16,7 +16,7 @@ import wilos.business.services.util.xml.parser.XMLUtils;
 import wilos.model.spem2.process.Process;
 
 public class XMLUtilsTest extends TestCase{
-	public static String path = "ressources" + File.separator + "scrum.xml";
+	public static String path = "test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator +"scrum.xml";
 	public String expression = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:TaskDescriptor']";
 
 	public void testSetDocument() {
@@ -29,5 +29,18 @@ public class XMLUtilsTest extends TestCase{
 		XMLUtils.setDocument(new File(path));
 		NodeList n = (NodeList)XMLUtils.evaluate(expression, XPathConstants.NODESET);
 		assertTrue(n.getLength() != 0);
+	}
+	
+	public void testIsExtension(){
+		String chemin = "caca.zip";
+		String chemin2 = "caca.ZIP";
+		String chemin3 = "caca.ZiP";
+		assertTrue(XMLUtils.isExtension(chemin, "zip"));
+		assertTrue(XMLUtils.isExtension(chemin2, "zip"));
+		assertTrue(XMLUtils.isExtension(chemin3, "zip"));
+		assertTrue(XMLUtils.isExtension(chemin, "Zip"));
+		assertTrue(XMLUtils.isExtension(chemin2, "ZIP"));
+		assertTrue(XMLUtils.isExtension(chemin3, "zIP"));
+		
 	}
 }
