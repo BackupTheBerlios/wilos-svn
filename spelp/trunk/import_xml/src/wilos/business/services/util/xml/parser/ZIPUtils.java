@@ -19,6 +19,11 @@ public class ZIPUtils
 	private ZipFile zipfile ;
 	private File file ;
 	
+	/**
+	 * ZIPUtils : Object containing an archive
+	 * @param file the archive
+	 * @throws ZipException if the zip can't be read
+	 */
 	public ZIPUtils(File file) throws ZipException {
 			try {
 				zipfile = new ZipFile (file);
@@ -26,21 +31,30 @@ public class ZIPUtils
 			} catch (ZipException e) {
 				zipfile = null ;
 				if (!file.exists() || !e.getMessage().equals("error in opening zip file")){
-					// TODO Exception
+					// if the exception is not error in opening zip file we have to throw
+					// and if the file doesn' exist
 					throw e;
 				}
 				
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				// if there is an I/O Exception we transform this in ZIPException for the catcher
 				throw new ZipException(e.getMessage());
 			}
 			
 	}
 
+	/**
+	 * isEmpty check if the Zip contains files
+	 * @return true if the Zip is empty
+	 */
 	public boolean isEmpty() {
 		return (zipfile == null) ;
 	}
 	
+	/**
+	 * getXMLStream return the XML from the ZIP File as an inputStream
+	 * @return the stream
+	 */
 	public InputStream getXMLStream (){
 		InputStream str = null ;
 		ZipEntry entry = getXMLEntry() ;
@@ -55,6 +69,10 @@ public class ZIPUtils
 		return str ;
 	}
 	
+	/**
+	 * getXMLEntry return the entry corresponding at the ZIP file
+	 * @return e ZipEntry
+	 */
 	private ZipEntry getXMLEntry () {
 		ZipEntry entry = null ;
 		boolean trouve = false ;
@@ -70,7 +88,12 @@ public class ZIPUtils
 		return entry ;
 	}
 	
-	// exctraction du fichier xml et retour de son emplacement
+	
+	/**
+	 * getXMLFile return the XML from the ZIP File as an inputStream
+	 * => creates a temporary file
+	 * @return the file
+	 */
 	public File getXMLFile() {
 		File fileReturned = null ;
 		ZipEntry entry = getXMLEntry();
@@ -106,8 +129,9 @@ public class ZIPUtils
 	}
 
 	/**
-	 
-	 **/
+	 * extract takes the files in the zip and extract then in the path specified
+	 * @param path
+	 */
 	public void extract(String path) {
 		if (path.length() != 0 && path.charAt(path.length()-1) != File.separatorChar){
 			path += File.separatorChar ;
