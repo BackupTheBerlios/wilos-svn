@@ -15,6 +15,7 @@ import org.w3c.dom.NodeList;
 
 import wilos.business.services.util.xml.fillers.FillerActivity;
 import wilos.business.services.util.xml.fillers.FillerElement;
+import wilos.business.services.util.xml.fillers.FillerGuideline;
 import wilos.business.services.util.xml.fillers.FillerIteration;
 import wilos.business.services.util.xml.fillers.FillerPhase;
 import wilos.business.services.util.xml.fillers.FillerProcess;
@@ -25,6 +26,7 @@ import wilos.business.services.util.xml.fillers.FillerTask;
 import wilos.business.services.util.xml.fillers.FillerTaskDescriptor;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.guide.Guideline;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.process.Process;
@@ -50,6 +52,7 @@ public class XMLParser {
 	private static final String xpath_iteration = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Iteration']";
 	private static final String xpath_phase = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Phase']";
 	private static final String xpath_activity = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Activity']";
+	private static final String xpath_guideline = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Guideline']";
 	
 	// Sections
 	private static final String task = "Task";
@@ -59,6 +62,7 @@ public class XMLParser {
 	private static final String step = "Section";
 	private static final String presentation = "Presentation";
 	private static final String breakdownElement = "BreakdownElement";
+	private static final String guideline = "Guideline"; 
 	
 	// Types
 	private static final String process = "uma:DeliveryProcess";
@@ -77,6 +81,8 @@ public class XMLParser {
 	// Filled by fillTaskDefinitionsList and fillRoleDefinitionsList
 	protected static Vector<TaskDefinition> TaskDefinitionsList = new Vector<TaskDefinition> ();
 	protected static Vector<RoleDefinition> RoleDefinitionsList = new Vector<RoleDefinition>() ;
+	protected static Vector<Guideline> GuidesList = new Vector<Guideline>() ;
+	
 	
 	// this variables contain all the Elements that concern them
 	protected static Set<RoleDescriptor> allRoleDescriptors ;
@@ -84,6 +90,7 @@ public class XMLParser {
 	protected static Set<Phase> allPhases;
 	protected static Set<Iteration> allIterations;
 	protected static Set<Activity> allActivities;
+
 	
 	/**
 	 * initializes the Lists in memory
@@ -92,7 +99,9 @@ public class XMLParser {
 	private static void start() {
 		try {
 			RoleDefinitionsList = fillRoleDefinitionsList();
+			GuidesList = fillGuidesList();
 			TaskDefinitionsList = fillTaskDefinitionsList();
+
 			
 			allRoleDescriptors = getAllRoleDescriptors() ;
 			allTaskDescriptors = getAllTaskDescriptors(allRoleDescriptors);
@@ -104,6 +113,36 @@ public class XMLParser {
 		}
 	}
 	
+	/**
+	 * fillGuidesList
+	 * @return
+	 */
+	private static Vector<Guideline> fillGuidesList() {
+		Vector<Guideline> theGuidelineList; // the return of the function
+		
+		// initializes the List
+		theGuidelineList = new Vector<Guideline>();
+		theGuidelineList.clear();
+		
+		// gets all the nodes containing guideline
+		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_guideline,XPathConstants.NODESET);
+		if (nodeReturned.getLength() != 0) {
+			// For each node...
+			Node aNode;
+			for(int i=0;i<nodeReturned.getLength();i++){
+				aNode = nodeReturned.item(i);
+				
+				// Fills the RoleDefinition from the node
+				Guideline  aGuideline = new Guideline();
+				FillerGuideline aFiller = new FillerGuideline(aGuideline,aNode);	
+				aGuideline = (Guideline)aFiller.getFilledElement();
+				// add the guideline in the list
+				theGuidelineList.add(aGuideline);
+			}			
+		}
+		return theGuidelineList;
+	}
+
 	private static Set<Activity> getAllActivities() {
 		Set<Activity> activitiesList = new LinkedHashSet<Activity>();
 		
@@ -151,9 +190,11 @@ public class XMLParser {
 			
 			// Fills the TaskDefinition from the node
 			TaskDefinition aTaskDefinition = new TaskDefinition();
-			FillerTask aFiller = new FillerTask(aTaskDefinition,aNode);	
+			FillerTask aFiller = new FillerTask(aTaskDefinition, aNode);	
 			aTaskDefinition = (TaskDefinition)aFiller.getFilledElement();
-			setStepByTaskDefinition(aTaskDefinition, aNode);
+			setStepsByTaskDefinition(aTaskDefinition, aNode);
+			setGuideByTaskDefinition(aTaskDefinition, aNode);
+			
 			
 			theTaskDefinitionsList.add(aTaskDefinition);
 		}
@@ -304,7 +345,7 @@ public class XMLParser {
 			taskTobereturn = getTaskDefinitionByID(idTask);
 			// if the task doesn't exist
 			if (taskTobereturn != null){
-//				 set the task in the taskdescriptor
+				//set the task in the taskdescriptor
 				_t.addTaskDefinition(taskTobereturn);
 			}
 		}
@@ -330,7 +371,7 @@ public class XMLParser {
 	 * @param _n
 	 * @throws Exception
 	 */
-	private static void setStepByTaskDefinition(TaskDefinition _taskd,Node _n)  {
+	private static void setStepsByTaskDefinition(TaskDefinition _taskd,Node _n)  {
 		// getting the id of the role
 		NodeList listOfTdNodes = _n.getChildNodes() ;
 		boolean trouve = false ;
@@ -347,6 +388,36 @@ public class XMLParser {
 					}
 				}
 				trouve = true ;
+			}
+		}
+	}
+	
+	/**
+	 * setGuideByTaskDefinition
+	 * @param _taskDefinition
+	 * @param _node
+	 */
+	private static void setGuideByTaskDefinition(TaskDefinition _taskDefinition, Node _node) {
+		NodeList listOfTdNodes = _node.getChildNodes() ;
+		Guideline GuideTobereturn = null;
+		boolean trouve = false ;
+		String idGuide = "";
+		
+		// search the nodes of the guide
+		for (int i = 0 ; i < listOfTdNodes.getLength() && !trouve ; i ++){
+			if (listOfTdNodes.item(i).getNodeName().equals(guideline)){
+				trouve = true ;
+				// recuperation des differents id des guidelines
+				idGuide = listOfTdNodes.item(i).getTextContent();
+			}
+		}	
+		
+		if (trouve){
+			GuideTobereturn = getGuidelineById(idGuide);
+			// if the guideline doesn't exist
+			if (GuideTobereturn != null){
+				 //set the guideline in the taskDefinition
+				_taskDefinition.addGuideline(GuideTobereturn);
 			}
 		}
 	}
@@ -658,6 +729,7 @@ public class XMLParser {
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(activity)) {
 			returnedBde = getActivityById(allActivities, bdeId);
 		}
+		
 		return returnedBde;
 	}
 	
@@ -702,6 +774,22 @@ public class XMLParser {
 		}
 		return null ;
 	}
+	
+	
+	/**
+	 * getGuidelineById
+	 * @param bdeId
+	 * @return
+	 */
+	private static Guideline getGuidelineById(String bdeId) {
+		for (Iterator i = GuidesList.iterator() ; i.hasNext() ;){
+			Guideline tmp = (Guideline) i .next();
+			if (tmp.getGuid().equals(bdeId)){
+				return tmp;
+			}
+		}
+		return null ;
+	}
 
 	/**
 	 * getAllProcesses
@@ -733,5 +821,6 @@ public class XMLParser {
 		}
 		return processesReturned;
 	}
+	
 }
 
