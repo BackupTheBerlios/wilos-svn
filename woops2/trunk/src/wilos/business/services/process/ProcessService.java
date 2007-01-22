@@ -82,35 +82,6 @@ public class ProcessService {
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
-	// declaration of list
-	List<Step> stepList = new ArrayList<Step>();
-
-	List<Step> stepListTmp = new ArrayList<Step>();
-
-	List<TaskDefinition> taskDefinitionList = new ArrayList<TaskDefinition>();
-
-	List<TaskDefinition> taskDefinitionListTmp = new ArrayList<TaskDefinition>();
-
-	List<TaskDescriptor> taskDescriptorList = new ArrayList<TaskDescriptor>();
-
-	List<TaskDescriptor> taskDescriptorListTmp = new ArrayList<TaskDescriptor>();
-
-	List<RoleDefinition> roleDefinitionList = new ArrayList<RoleDefinition>();
-
-	List<RoleDefinition> roleDefinitionListTmp = new ArrayList<RoleDefinition>();
-
-	List<Phase> phaseList = new ArrayList<Phase>();
-
-	List<Phase> phaseListTmp = new ArrayList<Phase>();
-
-	List<Iteration> iterationList = new ArrayList<Iteration>();
-
-	List<Iteration> iterationListTmp = new ArrayList<Iteration>();
-
-	List<RoleDescriptor> roleDescriptorList = new ArrayList<RoleDescriptor>();
-
-	List<RoleDescriptor> roleDescriptorListTmp = new ArrayList<RoleDescriptor>();
-
 	public Process spelpParsingXML(File _file) {
 		Process spelpProcess = null;
 		try {
