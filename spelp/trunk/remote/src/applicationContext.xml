@@ -112,6 +112,14 @@
 	<!-- ========================= Start of BEAN DEFINITIONS ========================= -->
 
 	<!-- ========================= DAO Layer ========================= -->
+	<!-- SPELP -->
+	
+	<bean id="GuidelineDao"
+		class="wilos.hibernate.spem2.guide.GuidelineDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	
+	
 	<!-- PSI2 -->
 	<bean id="ParticipantDao"
 		class="wilos.hibernate.misc.wilosuser.ParticipantDao">
@@ -195,11 +203,19 @@
 	
 	<!-- ========================= Business Layer ========================= -->
 	
+	<!-- SPELP -->
 	<bean id="AssistantService"
 		class="wilos.business.services.assistant.AssistantService">
 		<property name="participantDao" ref="ParticipantDao" />
 	</bean>
-
+	
+	<bean id="GuidelineService"
+		class="wilos.business.services.guide.GuidelineService">
+		<property name="guidelineDao" ref="GuidelineDao" />
+	</bean>
+	
+	<!-- FIN SPELP -->
+	
 	<bean id="ParticipantService"
 		class="wilos.business.services.wilosuser.ParticipantService">
 		<property name="participantDao" ref="ParticipantDao" />
