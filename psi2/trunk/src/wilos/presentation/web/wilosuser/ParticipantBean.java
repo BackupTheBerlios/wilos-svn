@@ -194,7 +194,7 @@ public class ParticipantBean {
 	 */
 	public List<RoleDescriptor> getRolesList() {
 		this.rolesList = new ArrayList<RoleDescriptor>() ;
-		rolesList.addAll(this.participantService.getRolesList()) ;
+		rolesList.addAll(this.participantService.getRolesListForAParticipant(this.participant.getLogin())) ;
 		this.logger.debug("roles list =" + this.rolesList) ;
 		return this.rolesList ;
 	}

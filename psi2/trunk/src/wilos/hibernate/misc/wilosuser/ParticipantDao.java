@@ -2,6 +2,7 @@ package wilos.hibernate.misc.wilosuser;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -40,6 +41,28 @@ public class ParticipantDao extends HibernateDaoSupport {
 	public Set<RoleDescriptor> getAllRoles() {
 		Set<RoleDescriptor> loadAll = new HashSet<RoleDescriptor>();
 		loadAll.addAll(this.getHibernateTemplate().loadAll(RoleDescriptor.class));
+		return loadAll;
+	}
+	
+	/**
+	 * Return a list of elements.
+	 * 
+	 * @return
+	 */
+	public Set<RoleDescriptor> getAllRolesForAParticipant(String _login) {
+		Set<RoleDescriptor> loadAll = new HashSet<RoleDescriptor>();
+		Participant participant = this.getParticipant(_login);
+		List roles = this.getHibernateTemplate().find("from RoleDescriptor role join role.play p where p.id=?",participant.getWilosuser_id());
+		List<RoleDescriptor> rolesList = new ArrayList<RoleDescriptor>();
+        if (roles.get(0) instanceof List){
+                for (Object o : (ArrayList) roles.get(0)) {
+                        if (o instanceof RoleDescriptor) {
+                        	RoleDescriptor role = (RoleDescriptor) o;
+                                rolesList.add(role);
+                        }
+                }
+        }
+        loadAll.addAll(rolesList);
 		return loadAll;
 	}
 

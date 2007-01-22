@@ -79,9 +79,9 @@ public class ParticipantService {
 	 * @return the roles
 	 */
 	@ Transactional (readOnly = true)
-	public Set<RoleDescriptor> getRolesList() {
+	public Set<RoleDescriptor> getRolesListForAParticipant(String _login) {
 		// TODO: A deplacer dans le RoleService
-		return this.participantDao.getAllRoles() ;
+		return this.participantDao.getAllRolesForAParticipant(_login);
 	}
 
 	/**
