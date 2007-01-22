@@ -12,10 +12,10 @@ import wilos.model.spem2.task.TaskDefinition;
  * @author Nicolas CASTEL
  */
 public class Guideline extends Element {
-	private TaskDefinition taskDefinition;
+	private TaskDefinition taskdefinition;
 	
 	public Guideline() {
-		this.taskDefinition = new TaskDefinition();
+		this.taskdefinition = new TaskDefinition();
 	}
 	
 	/**
@@ -23,7 +23,7 @@ public class Guideline extends Element {
 	 *            the taskdefinition to be linked to
 	 */
 	public void addTaskDefinition(TaskDefinition _taskdefinition) {
-		this.taskDefinition = _taskdefinition ;
+		this.taskdefinition = _taskdefinition ;
 		/* TODO A modifier quand jar woops2 mis a jour */
 		/*_taskdefinition.getProjects().add(this);*/
 	}
@@ -33,17 +33,17 @@ public class Guideline extends Element {
 	 *            the process to be unlinked to
 	 */
 	public void removeFromTaskDefinition(TaskDefinition _taskdefinition) {
-		this.taskDefinition = null ;
+		this.taskdefinition = null ;
 		/* TODO A modifier quand jar woops2 mis a jour */
 		/*_taskdefinition.getProjects().remove(this);*/
 	}
 
-	public TaskDefinition getTaskDefinition() {
-		return taskDefinition;
+	public TaskDefinition getTaskdefinition() {
+		return taskdefinition;
 	}
 
-	public void setTaskDefinition(TaskDefinition _taskdefinition) {
-		this.taskDefinition = _taskdefinition;
+	public void setTaskdefinition(TaskDefinition _taskdefinition) {
+		this.taskdefinition = _taskdefinition;
 	}
 	
 	/*
@@ -66,7 +66,7 @@ public class Guideline extends Element {
 	 */
 	protected void copy(final Guideline _guideline) {
 		super.copy(_guideline) ;
-		this.setTaskDefinition(_guideline.getTaskDefinition()) ;
+		this.setTaskdefinition(_guideline.getTaskdefinition()) ;
 	}
 	
 	/*
@@ -83,7 +83,7 @@ public class Guideline extends Element {
 		}
 
 		Guideline guideline = (Guideline) obj ;
-		return new EqualsBuilder().appendSuper(super.equals(guideline)).append(this.taskDefinition, guideline.taskDefinition).isEquals() ;
+		return new EqualsBuilder().appendSuper(super.equals(guideline)).append(this.taskdefinition, guideline.taskdefinition).isEquals() ;
 	}
 
 	/*
@@ -92,6 +92,6 @@ public class Guideline extends Element {
 	 * @see woops2.model.breakdownelement.BreakdownElement#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.taskDefinition).toHashCode() ;
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.taskdefinition).toHashCode() ;
 	}
 }
