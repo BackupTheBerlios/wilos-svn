@@ -1,4 +1,4 @@
-package wilos.business.services.task;
+package wilos.business.services.spem2.task;
 
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

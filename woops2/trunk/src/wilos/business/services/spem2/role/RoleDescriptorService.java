@@ -1,4 +1,4 @@
-package wilos.business.services.role;
+package wilos.business.services.spem2.role;
 
 import java.util.ArrayList;
 import java.util.List;
