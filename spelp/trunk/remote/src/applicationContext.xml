@@ -36,20 +36,20 @@
 
 		<property name="mappingResources">
 			<list>
-			<!-- PSI2 -->
 			<value>wilos/model/misc/wilosuser/Participant.hbm.xml</value>
 			<value>wilos/model/misc/wilosuser/WilosUser.hbm.xml</value>
 			<value>wilos/model/misc/wilosuser/Administrator.hbm.xml</value>
 			<value>wilos/model/misc/wilosuser/ProcessManager.hbm.xml</value>
 			<value>wilos/model/misc/wilosuser/ProjectDirector.hbm.xml</value>
 			<value>wilos/model/misc/project/Project.hbm.xml</value>
-			<!-- WOOPS2 -->
+			<value>wilos/model/misc/concretetask/ConcreteTaskDescriptor.hbm.xml</value>
 			<value>wilos/model/spem2/element/Element.hbm.xml</value>
 			<value>wilos/model/spem2/breakdownelement/BreakdownElement.hbm.xml</value>
 			<value>wilos/model/spem2/workbreakdownelement/WorkBreakdownElement.hbm.xml</value>
 			<value>wilos/model/spem2/process/Process.hbm.xml</value>
+			<value>wilos/model/spem2/iteration/Iteration.hbm.xml</value>
+			<value>wilos/model/spem2/phase/Phase.hbm.xml</value>
 			<value>wilos/model/spem2/activity/Activity.hbm.xml</value>
-			<value>wilos/model/misc/concretetask/ConcreteTaskDescriptor.hbm.xml</value>
 			<value>wilos/model/spem2/task/TaskDescriptor.hbm.xml</value>
 			<value>wilos/model/spem2/task/TaskDefinition.hbm.xml</value>
 			<value>wilos/model/spem2/task/Step.hbm.xml</value>
