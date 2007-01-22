@@ -8,7 +8,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import wilos.hibernate.misc.concretetask.ConcreteTaskDescriptorDao;
 import wilos.hibernate.spem2.task.TaskDescriptorDao;
+import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.task.TaskDescriptor;
 
@@ -21,6 +23,8 @@ import wilos.model.spem2.task.TaskDescriptor;
 public class TaskDescriptorService {
 	
 	private TaskDescriptorDao taskDescriptorDao ;
+	
+	private ConcreteTaskDescriptorDao concreteTaskDescriptorDao ;
 	
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 	
@@ -50,6 +54,22 @@ public class TaskDescriptorService {
 		}
 		return returnedList;
 	}
+	
+	/**
+	 * TODO Method description
+	 *
+	 * @param _td
+	 */
+	public void taskDescriptorInstanciation (String _projectId, TaskDescriptor td) {
+		
+		ConcreteTaskDescriptor ctd = new ConcreteTaskDescriptor();
+		
+		ctd.setConcreteName(td.getName());
+		ctd.setProjectId(_projectId);
+		ctd.addTaskDescriptor(td);
+		
+		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(ctd);
+	}
 
 	/**
 	 * Getter of taskDescriptorDao.
@@ -67,5 +87,14 @@ public class TaskDescriptorService {
 	 */
 	public void setTaskDescriptorDao(TaskDescriptorDao _taskDescriptorDao) {
 		this.taskDescriptorDao = _taskDescriptorDao ;
+	}
+
+	public ConcreteTaskDescriptorDao getConcreteTaskDescriptorDao() {
+		return this.concreteTaskDescriptorDao;
+	}
+
+	public void setConcreteTaskDescriptorDao(
+			ConcreteTaskDescriptorDao _concreteTaskDescriptorDao) {
+		this.concreteTaskDescriptorDao = _concreteTaskDescriptorDao;
 	}
 }

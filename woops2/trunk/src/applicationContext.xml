@@ -282,6 +282,7 @@
 	<bean id="TaskDescriptorService"
 		class="wilos.business.services.spem2.task.TaskDescriptorService">
 		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
+		<property name="concreteTaskDescriptorDao" ref="ConcreteTaskDescriptorDao" />
 	</bean>
 	
 	<bean id="StepService"

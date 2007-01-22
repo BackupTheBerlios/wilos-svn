@@ -532,7 +532,7 @@ public class ProcessService {
 	 * @param id_process
 	 * @param id_project
 	 */
-	public void projectInstanciation(String _processId, String projectId) {
+	public void projectInstanciation(String _processId, String _projectId) {
 		
 		Process p = this.processDao.getProcess(_processId);
 		
@@ -568,7 +568,8 @@ public class ProcessService {
 		
 		for (BreakdownElement b : forSaving) {
 			if (b instanceof TaskDescriptor) {
-				
+				TaskDescriptor td = (TaskDescriptor) b;
+				this.taskDescriptorService.taskDescriptorInstanciation(_projectId, td);
 			}
 		}
 	}
