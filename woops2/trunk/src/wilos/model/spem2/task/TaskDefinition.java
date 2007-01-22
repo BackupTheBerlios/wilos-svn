@@ -261,8 +261,16 @@ public class TaskDefinition extends Element implements Cloneable {
 	 */
 	public void addAllGuidelines(Set<Guideline> _guideline) {
 		for (Guideline _guid1 : _guideline) {
-			// _guid1.addTaskDefinition(this);
+			 //_guid1.addTaskDefinition(this);
 		}
+	}
+
+	public Set<Guideline> getGuidelines() {
+		return guidelines;
+	}
+
+	public void setGuidelines(Set<Guideline> guidelines) {
+		this.guidelines = guidelines;
 	}
 
 }
