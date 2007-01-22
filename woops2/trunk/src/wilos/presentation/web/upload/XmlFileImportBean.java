@@ -31,10 +31,10 @@ public class XmlFileImportBean {
 	private ProcessService processService;
 
 	private TreeBean treeBean;
-
+	
 	protected final Log logger = LogFactory.getLog(this.getClass());
 	
-	private String choosenExtensionFile;
+	private String choosenExtension = "";
 		
 	private SelectItem[] fileExtensions = new SelectItem[]{
         new SelectItem("xml"),
@@ -172,11 +172,11 @@ public class XmlFileImportBean {
 		return fileExtensions;
 	}
 
-	public String getChoosenExtensionFile() {
-		return choosenExtensionFile;
+	public String getChoosenExtension() {
+		return choosenExtension;
 	}
 
-	public void setChoosenExtensionFile(String _choosenExtensionFile) {
-		this.choosenExtensionFile = _choosenExtensionFile;
+	public void setChoosenExtension(String _choosenExtension) {
+		this.choosenExtension = _choosenExtension;
 	}
 }
