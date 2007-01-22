@@ -2,6 +2,7 @@ package wilos.presentation.web.tree;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
@@ -25,16 +26,19 @@ public class PhaseNode extends DefaultMutableTreeNode {
 		iceUserObject.setLeaf(false);
 		iceUserObject.setBranchContractedIcon("images/tree/icon_phase.gif");
 		iceUserObject.setBranchExpandedIcon("images/tree/icon_phase.gif");
-		iceUserObject.setObjectId(_phase.getId());
+		iceUserObject.setObjectId(this.phase.getId());
 		for (BreakdownElement breakdownElement : this.phase
 				.getBreakDownElements()) {
 			if (breakdownElement instanceof Iteration) {
-				Iteration iteration = (Iteration) breakdownElement;
-				this.add(new IterationNode(iteration));
+				this.add(new IterationNode((Iteration) breakdownElement));
+			} 
+			else if (breakdownElement instanceof Activity) {
+				this.add(new ActivityNode((Activity) breakdownElement));
 			}
+			// TODO Change with ConcreteTaskDescriptorNode !!!
 			else if (breakdownElement instanceof TaskDescriptor) {
-				TaskDescriptor taskDescriptor = (TaskDescriptor) breakdownElement;
-				this.add(new TaskDescriptorNode(taskDescriptor));
+				this.add(new TaskDescriptorNode(
+						(TaskDescriptor) breakdownElement));
 			}
 		}
 	}

@@ -3,6 +3,8 @@ package wilos.presentation.web.tree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import wilos.model.spem2.activity.Activity;
+import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.task.TaskDescriptor;
 
 public class ActivityNode extends DefaultMutableTreeNode {
 
@@ -23,13 +25,14 @@ public class ActivityNode extends DefaultMutableTreeNode {
 		iceUserObject.setBranchContractedIcon("images/tree/icon_activity.gif");
 		iceUserObject.setBranchExpandedIcon("images/tree/icon_activity.gif");
 		iceUserObject.setObjectId(this.activity.getId());
-		/*for (BreakdownElement breakdownElement : this.phase
+		for (BreakdownElement breakdownElement : this.activity
 				.getBreakDownElements()) {
+			// TODO Change with ConcreteTaskDescriptorNode !!!
 			if (breakdownElement instanceof TaskDescriptor) {
-				TaskDescriptor taskDescriptor = (TaskDescriptor) breakdownElement;
-				this.add(new TaskDescriptorNode(taskDescriptor));
+				this.add(new TaskDescriptorNode(
+						(TaskDescriptor) breakdownElement));
 			}
-		}*/
+		}
 	}
 
 }

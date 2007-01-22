@@ -25,19 +25,17 @@ public class IterationNode extends DefaultMutableTreeNode {
 		iceUserObject.setLeaf(false);
 		iceUserObject.setBranchContractedIcon("images/tree/icon_iteration.gif");
 		iceUserObject.setBranchExpandedIcon("images/tree/icon_iteration.gif");
-		iceUserObject.setObjectId(_iteration.getId());
+		iceUserObject.setObjectId(this.iteration.getId());
 		for (BreakdownElement breakdownElement : this.iteration
 				.getBreakDownElements()) {
 			if (breakdownElement instanceof Activity) {
-				Activity activity = (Activity) breakdownElement;
-				this.add(new ActivityNode(activity));
+				this.add(new ActivityNode((Activity) breakdownElement));
 			}
+			// TODO Change with ConcreteTaskDescriptorNode !!!
 			else if (breakdownElement instanceof TaskDescriptor) {
-				TaskDescriptor taskDescriptor = (TaskDescriptor) breakdownElement;
-				this.add(new TaskDescriptorNode(taskDescriptor));
+				this.add(new TaskDescriptorNode((TaskDescriptor) breakdownElement));
 			}
 		}
 	}
 
 }
-

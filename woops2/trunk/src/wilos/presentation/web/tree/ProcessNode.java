@@ -3,10 +3,12 @@ package wilos.presentation.web.tree ;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.process.Process;
+import wilos.model.spem2.task.TaskDescriptor;
 
 /**
  * @author deder
@@ -30,7 +32,7 @@ public class ProcessNode extends DefaultMutableTreeNode {
 		iceUserObject.setLeaf(false) ;
 		iceUserObject.setBranchContractedIcon("images/tree/icon_process.gif") ;
 		iceUserObject.setBranchExpandedIcon("images/tree/icon_process.gif") ;
-		iceUserObject.setObjectId(_process.getId());
+		iceUserObject.setObjectId(this.process.getId());
 		for(BreakdownElement breakdownElement : this.process.getBreakDownElements()){
 			if(breakdownElement instanceof Phase){
 				this.add(new PhaseNode((Phase)breakdownElement)) ;
@@ -38,9 +40,13 @@ public class ProcessNode extends DefaultMutableTreeNode {
 			else if(breakdownElement instanceof Iteration){
 				this.add(new IterationNode((Iteration)breakdownElement)) ;
 			}
-			/*else if(breakdownElement instanceof Activity){
+			else if(breakdownElement instanceof Activity){
 				this.add(new ActivityNode((Activity)breakdownElement)) ;
-			}*/
+			}
+			//TODO Change with ConcreteTaskDescriptorNode !!!
+			else if(breakdownElement instanceof TaskDescriptor){
+				this.add(new TaskDescriptorNode((TaskDescriptor)breakdownElement)) ;
+			}
 		}
 	}
 }
