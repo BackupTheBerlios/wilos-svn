@@ -259,6 +259,7 @@
 		<property name="breakdownElementService" ref="BreakdownElementService" />
 		<property name="stepService" ref="StepService" />
 		<property name="phaseService" ref="PhaseService" />
+		<property name="iterationService" ref="IterationService" />
 	</bean>
 	
 	  <bean id="BreakdownElementService"
@@ -295,6 +296,8 @@
 	<bean id="PhaseService"
 		class="wilos.business.services.phase.PhaseService">
 		<property name="phaseDao" ref="PhaseDao" />
+		<property name="activityService" ref="ActivityService" />
+		<property name="taskDescriptorService" ref="TaskDescriptorService" />
 	</bean>
 	
 	<bean id="IterationService"
