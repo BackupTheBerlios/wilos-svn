@@ -257,9 +257,6 @@
 		<property name="workBreakdownElementDao"
 			ref="WorkBreakdownElementDao" />
 		<property name="breakdownElementService" ref="BreakdownElementService" />
-		<property name="stepService" ref="StepService" />
-		<property name="phaseService" ref="PhaseService" />
-		<property name="iterationService" ref="IterationService" />
 	</bean>
 	
 	  <bean id="BreakdownElementService"

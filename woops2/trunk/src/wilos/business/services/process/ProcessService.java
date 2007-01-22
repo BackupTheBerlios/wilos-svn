@@ -12,9 +12,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import wilos.business.services.breakdownelement.BreakdownElementService;
-import wilos.business.services.iteration.IterationService;
-import wilos.business.services.phase.PhaseService;
-import wilos.business.services.task.StepService;
 import wilos.business.services.util.xml.parser.XMLParser;
 import wilos.hibernate.spem2.activity.ActivityDao;
 import wilos.hibernate.spem2.breakdownelement.BreakdownElementDao;
@@ -46,19 +43,12 @@ import wilos.model.spem2.task.TaskDescriptor;
  * @author eperico
  * @author soosuske
  * @author Sebastien
+ * @author deder
  */
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class ProcessService {
-	
-	//ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 
 	private BreakdownElementService breakdownElementService;
-
-	private StepService stepService;
-	
-	private PhaseService phaseService;
-	
-	private IterationService iterationService;
 
 	private ActivityDao activityDao;
 
@@ -99,13 +89,13 @@ public class ProcessService {
 	/**
 	 * 
 	 * TODO Method description
-	 *
+	 * 
 	 * @param _process
 	 */
 	public void saveProcess(Process _process) {
-		
+
 		Process clone = null;
-		
+
 		// clone creation for the save of the dependencies
 		try {
 			clone = _process.clone();
@@ -113,11 +103,11 @@ public class ProcessService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		// elements of collection getting
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 		bdes.addAll(_process.getBreakDownElements());
-		
+
 		// in function of element type
 		for (BreakdownElement bde : bdes) {
 			if (bde instanceof Phase) {
@@ -143,18 +133,18 @@ public class ProcessService {
 				}
 			}
 		}
-		
+
 		// dependencies erasing
 		_process.getBreakDownElements().clear();
 		_process.getPredecessors().clear();
 		_process.getProjects().clear();
 		_process.getSuccessors().clear();
 		_process.getSuperActivities().clear();
-		
+
 		// save of the project
 		this.processDao.saveOrUpdateProcess(_process);
 		System.out.println("###Process sauve");
-		
+
 		// clone dependencies getting
 		_process.addAllBreakdownElements(clone.getBreakDownElements());
 		_process.addAllPredecessors(clone.getPredecessors());
@@ -165,33 +155,32 @@ public class ProcessService {
 		// update of the project
 		this.processDao.saveOrUpdateProcess(_process);
 	}
-	
+
 	/**
 	 * 
 	 * TODO Method description
-	 *
+	 * 
 	 * @param _ph
 	 */
 	private void parsePhase(Phase _ph) {
-		
+
 		Phase clone = null;
-		
+
 		try {
 			clone = _ph.clone();
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 		bdes.addAll(_ph.getBreakDownElements());
-		/*System.out.println("###"+bdes.size());
-		for (BreakdownElement bde : bdes) {
-			String s = bde.getClass().getName();
-			String sbis = s.substring(s.lastIndexOf('.')+1);
-			System.out.println("###"+sbis);
-		}*/
-		
+		/*
+		 * System.out.println("###"+bdes.size()); for (BreakdownElement bde :
+		 * bdes) { String s = bde.getClass().getName(); String sbis =
+		 * s.substring(s.lastIndexOf('.')+1); System.out.println("###"+sbis); }
+		 */
+
 		for (BreakdownElement bde : bdes) {
 			if (bde instanceof Iteration) {
 				Iteration it = (Iteration) bde;
@@ -211,50 +200,49 @@ public class ProcessService {
 				}
 			}
 		}
-		
+
 		// clean of dependancies of _ph
 		_ph.getBreakDownElements().clear();
 		_ph.getPredecessors().clear();
 		_ph.getSuccessors().clear();
 		_ph.getSuperActivities().clear();
-		
+
 		this.phaseDao.saveOrUpdatePhase(_ph);
 		System.out.println("###Phase sauve");
-		
+
 		_ph.addAllBreakdownElements(clone.getBreakDownElements());
 		_ph.addAllPredecessors(clone.getPredecessors());
 		_ph.addAllSuccessors(clone.getSuccessors());
 		_ph.addAllSuperActivities(clone.getSuperActivities());
-		
+
 		this.phaseDao.saveOrUpdatePhase(_ph);
 	}
-	
+
 	/**
 	 * 
 	 * TODO Method description
-	 *
+	 * 
 	 * @param _it
 	 */
 	private void parseIteration(Iteration _it) {
-		
+
 		Iteration clone = null;
-		
+
 		try {
 			clone = _it.clone();
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			
+
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 		bdes.addAll(_it.getBreakDownElements());
-			/*System.out.println("###"+bdes.size());
-			for (BreakdownElement bde : bdes) {
-				String s = bde.getClass().getName();
-				String sbis = s.substring(s.lastIndexOf('.')+1);
-				System.out.println("###"+sbis);
-			}*/
-			
+		/*
+		 * System.out.println("###"+bdes.size()); for (BreakdownElement bde :
+		 * bdes) { String s = bde.getClass().getName(); String sbis =
+		 * s.substring(s.lastIndexOf('.')+1); System.out.println("###"+sbis); }
+		 */
+
 		for (BreakdownElement bde : bdes) {
 			if (bde instanceof Activity) {
 				Activity act = (Activity) bde;
@@ -269,50 +257,50 @@ public class ProcessService {
 				}
 			}
 		}
-		
+
 		_it.getBreakDownElements().clear();
 		_it.getPredecessors().clear();
 		_it.getSuccessors().clear();
 		_it.getSuperActivities().clear();
-		
+
 		this.iterationDao.saveOrUpdateIteration(_it);
 		System.out.println("###Iteration sauve");
-		
+
 		_it.addAllBreakdownElements(clone.getBreakDownElements());
 		_it.addAllPredecessors(clone.getPredecessors());
 		_it.addAllSuccessors(clone.getSuccessors());
 		_it.addAllSuperActivities(clone.getSuperActivities());
-		
+
 		this.iterationDao.saveOrUpdateIteration(_it);
 	}
-	
+
 	/**
 	 * 
 	 * TODO Method description
-	 *
+	 * 
 	 * @param _act
 	 */
 	private void parseActivity(Activity _act) {
-		
+
 		Activity clone = null;
-		
+
 		try {
 			clone = _act.clone();
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 		bdes.addAll(_act.getBreakDownElements());
-		//System.out.println("###"+bdes.size());
-		
-		/*for (BreakdownElement bde : bdes) {
-			String s = bde.getClass().getName();
-			String sbis = s.substring(s.lastIndexOf('.')+1);
-			System.out.println("OOO"+sbis);
-		}*/
-		
+		// System.out.println("###"+bdes.size());
+
+		/*
+		 * for (BreakdownElement bde : bdes) { String s =
+		 * bde.getClass().getName(); String sbis =
+		 * s.substring(s.lastIndexOf('.')+1); System.out.println("OOO"+sbis); }
+		 */
+
 		for (BreakdownElement bde : bdes) {
 			if (bde instanceof Activity) {
 				Activity act = (Activity) bde;
@@ -327,115 +315,115 @@ public class ProcessService {
 				}
 			}
 		}
-		
+
 		_act.getBreakDownElements().clear();
 		_act.getPredecessors().clear();
 		_act.getSuccessors().clear();
 		_act.getSuperActivities().clear();
-		
+
 		this.activityDao.saveOrUpdateActivity(_act);
 		System.out.println("###Activity sauve");
-		
+
 		_act.addAllBreakdownElements(clone.getBreakDownElements());
 		_act.addAllPredecessors(clone.getPredecessors());
 		_act.addAllSuccessors(clone.getSuccessors());
 		_act.addAllSuperActivities(clone.getSuperActivities());
-		
+
 		this.activityDao.saveOrUpdateActivity(_act);
 	}
-	
+
 	/**
 	 * 
 	 * TODO Method description
-	 *
+	 * 
 	 * @param _rd
 	 */
 	private void parseRoleDescriptor(RoleDescriptor _rd) {
-		
+
 		RoleDescriptor clone = null;
-		
+
 		try {
 			clone = _rd.clone();
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		RoleDefinition rdef = _rd.getRoleDefinition();
 
 		if (rdef != null) {
-			//System.out.println("OOO"+rdef.getName());
+			// System.out.println("OOO"+rdef.getName());
 			this.parseRoleDefinition(rdef);
 		}
-		
+
 		_rd.getAdditionalTasks().clear();
 		_rd.getParticipants().clear();
 		_rd.getPrimaryTasks().clear();
 		_rd.getSuperActivities().clear();
 		_rd.setRoleDefinition(null);
-		
+
 		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(_rd);
 		System.out.println("###RoleDescriptor sauve");
-		
+
 		_rd.addAllAdditionalTasks(clone.getAdditionalTasks());
 		_rd.addAllParticipants(clone.getParticipants());
 		_rd.addAllPrimaryTasks(clone.getPrimaryTasks());
 		_rd.addAllSuperActivities(clone.getSuperActivities());
 		_rd.setRoleDefinition(clone.getRoleDefinition());
-		
+
 		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(_rd);
 	}
-	
+
 	/**
 	 * 
 	 * TODO Method description
-	 *
+	 * 
 	 * @param _rdef
 	 */
 	private void parseRoleDefinition(RoleDefinition _rdef) {
-		
+
 		RoleDefinition clone = null;
-		
+
 		try {
 			clone = _rdef.clone();
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		_rdef.getRoleDescriptors().clear();
-		
+
 		this.roleDefinitionDao.saveOrUpdateRoleDefinition(_rdef);
 		System.out.println("###RoleDefinition sauve");
-		
+
 		_rdef.addAllRoleDescriptors(clone.getRoleDescriptors());
-		
+
 		this.roleDefinitionDao.saveOrUpdateRoleDefinition(_rdef);
 	}
-	
+
 	/**
 	 * 
 	 * TODO Method description
-	 *
+	 * 
 	 * @param _td
 	 */
 	private void parseTaskDescriptor(TaskDescriptor _td) {
-		
+
 		TaskDescriptor clone = null;
-		
+
 		try {
 			clone = _td.clone();
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		TaskDefinition tdef = _td.getTaskDefinition();
-		
+
 		if (tdef != null) {
 			this.parseTaskDefinition(tdef);
 		}
-		
+
 		_td.getAdditionalRoles().clear();
 		_td.getConcreteTaskDescriptors().clear();
 		_td.getPredecessors().clear();
@@ -443,10 +431,10 @@ public class ProcessService {
 		_td.getSuperActivities().clear();
 		_td.setMainRole(null);
 		_td.setTaskDefinition(null);
-		
+
 		this.taskDescriptorDao.saveOrUpdateTaskDescriptor(_td);
 		System.out.println("###TaskDescriptor sauve");
-		
+
 		_td.addAllAdditionalRoles(clone.getAdditionalRoles());
 		_td.addAllConcreteTaskDescriptors(clone.getConcreteTaskDescriptors());
 		_td.addAllPredecessors(clone.getPredecessors());
@@ -454,57 +442,57 @@ public class ProcessService {
 		_td.addAllSuperActivities(clone.getSuperActivities());
 		_td.setMainRole(clone.getMainRole());
 		_td.setTaskDefinition(clone.getTaskDefinition());
-		
+
 		this.taskDescriptorDao.saveOrUpdateTaskDescriptor(_td);
 	}
-	
+
 	/**
 	 * 
 	 * TODO Method description
-	 *
+	 * 
 	 * @param _tdef
 	 */
 	private void parseTaskDefinition(TaskDefinition _tdef) {
-		
+
 		TaskDefinition clone = null;
-		
+
 		try {
 			clone = _tdef.clone();
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		List<Step> steps = new ArrayList<Step>();
 		// recuperation des breakdownelements du processus
 		steps.addAll(_tdef.getSteps());
-		//System.out.println("###"+steps.size());
+		// System.out.println("###"+steps.size());
 		for (Step step : steps) {
 			this.parseStep(step);
 		}
-		
+
 		_tdef.getSteps().clear();
 		_tdef.getTaskDescriptors().clear();
-		
+
 		this.taskDefinitionDao.saveOrUpdateTaskDefinition(_tdef);
 		System.out.println("###TaskDefinition sauve");
-		
+
 		_tdef.addAllSteps(clone.getSteps());
 		_tdef.addAllTaskDesciptors(clone.getTaskDescriptors());
-		
+
 		this.taskDefinitionDao.saveOrUpdateTaskDefinition(_tdef);
 	}
-	
+
 	/**
 	 * 
 	 * TODO Method description
-	 *
+	 * 
 	 * @param _step
 	 */
 	private void parseStep(Step _step) {
-		
+
 		Step clone = null;
-		
+
 		try {
 			clone = _step.clone();
 		} catch (CloneNotSupportedException e) {
@@ -514,12 +502,11 @@ public class ProcessService {
 		// System.out.println("$$$"+step.getName());
 		_step.setTaskDefinition(null);
 		this.stepDao.saveOrUpdateStep(_step);
-		
+
 		_step.setTaskDefinition(clone.getTaskDefinition());
 		this.stepDao.saveOrUpdateStep(_step);
 	}
 
-	
 	/**
 	 * Return processes list
 	 * 
@@ -570,30 +557,6 @@ public class ProcessService {
 				.getBreakdownElementsFromProcess(_processId));
 		process.addAllBreakdownElements(bdes);
 		
-		for (BreakdownElement bde : bdes) {
-			if (bde instanceof Phase) {
-				Phase ph = (Phase) bde;
-				ph.addAllBreakdownElements(this.phaseService.getBreakdownElementsFromPhase(ph.getId()));
-			} /*else {
-				if (bde instanceof Iteration) {
-					Iteration it = (Iteration) bde;
-					it.addAllBreakdownElements(this.iterationService.getBreakdownElementsFromIteration(it.getId()));
-				} else {
-					if (bde instanceof Activity) {
-						Activity act = (Activity) bde;
-						this.activityService.getEntirePhase(act);
-					} else {
-						if (bde instanceof RoleDescriptor) {
-							RoleDescriptor rd = (RoleDescriptor) bde;
-							this.roleDescriptorService.getEntirePhase(rd);
-						} else {
-							TaskDescriptor td = (TaskDescriptor) bde;
-							this.taskDescriptorService.getEntirePhase(td);
-						}
-					}
-				}
-			}*/
-		}
 		return process;
 	}
 
@@ -806,23 +769,6 @@ public class ProcessService {
 		this.breakdownElementService = _breakdownElementService;
 	}
 
-	/**
-	 * @return the stepService
-	 */
-	public StepService getStepService() {
-		return this.stepService;
-	}
-
-	/**
-	 * Setter of stepService.
-	 * 
-	 * @param _stepService
-	 *            The stepService to set.
-	 */
-	public void setStepService(StepService _stepService) {
-		this.stepService = _stepService;
-	}
-
 	public IterationDao getIterationDao() {
 		return iterationDao;
 	}
@@ -837,21 +783,5 @@ public class ProcessService {
 
 	public void setPhaseDao(PhaseDao phaseDao) {
 		this.phaseDao = phaseDao;
-	}
-
-	public PhaseService getPhaseService() {
-		return phaseService;
-	}
-
-	public void setPhaseService(PhaseService phaseService) {
-		this.phaseService = phaseService;
-	}
-
-	public IterationService getIterationService() {
-		return iterationService;
-	}
-
-	public void setIterationService(IterationService iterationService) {
-		this.iterationService = iterationService;
 	}
 }

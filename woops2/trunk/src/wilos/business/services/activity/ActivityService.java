@@ -1,15 +1,16 @@
 
 package wilos.business.services.activity ;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import wilos.hibernate.spem2.activity.ActivityDao;
 import wilos.model.spem2.activity.Activity;
+import wilos.model.spem2.breakdownelement.BreakdownElement;
 
 /**
  * ActivityManager is a transactional class, that manage operations about activity, requested by web pages (activity.jsp &
@@ -23,8 +24,6 @@ public class ActivityService {
 
 	private ActivityDao activityDao ;
 	
-	protected final Log logger = LogFactory.getLog(this.getClass()) ;
-	
 	/**
 	 * Return activities list
 	 * 
@@ -33,6 +32,12 @@ public class ActivityService {
 	@Transactional(readOnly = true)
 	public List<Activity> getActivitiesList() {
 		return this.activityDao.getAllActivities() ;
+	}
+	
+	public Set<BreakdownElement> getBreakdownElementsFromActivity(String _activityId) {
+		Set<BreakdownElement> bdes = new HashSet<BreakdownElement>();
+		bdes.addAll(this.activityDao.getBreakdownElementsFromActivity(_activityId));
+		return bdes;
 	}
 	
 	/**
