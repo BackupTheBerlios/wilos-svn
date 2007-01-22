@@ -606,7 +606,7 @@ public class XMLParser {
 		NodeList roleDescriptors = (NodeList)XMLUtils.evaluate(xpath_roleDescriptor,XPathConstants.NODESET);
 		
 		Node aNode;
-		for(int i=0;i<roleDescriptors.getLength();i++){
+		for(int i=0;i<roleDescriptors.getLength();i++) {
 			aNode = roleDescriptors.item(i);
 			RoleDescriptor aRoleDescriptor = new RoleDescriptor();
 			FillerRoleDescriptor aFiller = new FillerRoleDescriptor(aRoleDescriptor,aNode);	
