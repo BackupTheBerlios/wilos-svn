@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -14,6 +12,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import wilos.business.services.breakdownelement.BreakdownElementService;
+import wilos.business.services.iteration.IterationService;
+import wilos.business.services.phase.PhaseService;
 import wilos.business.services.task.StepService;
 import wilos.business.services.util.xml.parser.XMLParser;
 import wilos.hibernate.spem2.activity.ActivityDao;
@@ -55,6 +55,10 @@ public class ProcessService {
 	private BreakdownElementService breakdownElementService;
 
 	private StepService stepService;
+	
+	private PhaseService phaseService;
+	
+	private IterationService iterationService;
 
 	private ActivityDao activityDao;
 
@@ -565,34 +569,31 @@ public class ProcessService {
 		bdes.addAll(this.breakdownElementService
 				.getBreakdownElementsFromProcess(_processId));
 		process.addAllBreakdownElements(bdes);
+		
 		for (BreakdownElement bde : bdes) {
-			if (bde instanceof TaskDescriptor) {
-				TaskDescriptor tdor = (TaskDescriptor) bde;
-				SortedSet<Step> steps = new TreeSet<Step>();
-				if (tdor.getTaskDefinition() != null) {
-					steps.addAll(this.stepService.getStepsFromTask(tdor
-							.getTaskDefinition().getId()));
-					tdor.getTaskDefinition().addAllSteps(steps);
+			if (bde instanceof Phase) {
+				Phase ph = (Phase) bde;
+				ph.addAllBreakdownElements(this.phaseService.getBreakdownElementsFromPhase(ph.getId()));
+			} /*else {
+				if (bde instanceof Iteration) {
+					Iteration it = (Iteration) bde;
+					it.addAllBreakdownElements(this.iterationService.getBreakdownElementsFromIteration(it.getId()));
+				} else {
+					if (bde instanceof Activity) {
+						Activity act = (Activity) bde;
+						this.activityService.getEntirePhase(act);
+					} else {
+						if (bde instanceof RoleDescriptor) {
+							RoleDescriptor rd = (RoleDescriptor) bde;
+							this.roleDescriptorService.getEntirePhase(rd);
+						} else {
+							TaskDescriptor td = (TaskDescriptor) bde;
+							this.taskDescriptorService.getEntirePhase(td);
+						}
+					}
 				}
-			}
+			}*/
 		}
-		return process;
-	}
-
-	// TODO PROBLEME : fonction peut etre inutile ?!
-	@Transactional(readOnly = true)
-	public Process getProcessWithOnlyTaskDescriptors(String _processId) {
-		Process process = this.processDao.getProcess(_processId);
-		Set<BreakdownElement> bdes = new HashSet<BreakdownElement>();
-		bdes.addAll(this.breakdownElementService
-				.getBreakdownElementsFromProcess(_processId));
-		Set<BreakdownElement> taskDescriptors = new HashSet<BreakdownElement>();
-		for (BreakdownElement bde : bdes) {
-			if (bde instanceof TaskDescriptor) {
-				taskDescriptors.add(bde);
-			}
-		}
-		process.addAllBreakdownElements(taskDescriptors);
 		return process;
 	}
 
@@ -836,5 +837,21 @@ public class ProcessService {
 
 	public void setPhaseDao(PhaseDao phaseDao) {
 		this.phaseDao = phaseDao;
+	}
+
+	public PhaseService getPhaseService() {
+		return phaseService;
+	}
+
+	public void setPhaseService(PhaseService phaseService) {
+		this.phaseService = phaseService;
+	}
+
+	public IterationService getIterationService() {
+		return iterationService;
+	}
+
+	public void setIterationService(IterationService iterationService) {
+		this.iterationService = iterationService;
 	}
 }

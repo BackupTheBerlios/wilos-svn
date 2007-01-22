@@ -9,6 +9,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException ;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
 
+import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.phase.Phase ;
 import wilos.utils.ExceptionManager;
 
@@ -61,6 +62,12 @@ public class PhaseDao extends HibernateDaoSupport {
 	 */
 	public Phase getPhase(String _id) {
 		return (Phase) this.getHibernateTemplate().get(Phase.class, _id) ;
+	}
+	
+	@ SuppressWarnings ("unchecked")
+	public List<BreakdownElement> getBreakdownElementsFromPhase(String _phaseId) {
+		List<BreakdownElement> bdes = this.getHibernateTemplate().find("from BreakdownElement bde join bde.superActivities s where s.id=?", _phaseId) ;
+		return bdes;
 	}
 
 	/**

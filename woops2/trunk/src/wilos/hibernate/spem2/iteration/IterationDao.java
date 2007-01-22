@@ -1,15 +1,16 @@
 
 package wilos.hibernate.spem2.iteration ;
 
-import java.util.ArrayList ;
-import java.util.List ;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.hibernate.exception.ConstraintViolationException ;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException ;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import wilos.model.spem2.iteration.Iteration ;
+import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.iteration.Iteration;
 import wilos.utils.ExceptionManager;
 
 /**
@@ -52,7 +53,13 @@ public class IterationDao extends HibernateDaoSupport {
 		}
 		return loadAll ;
 	}
-
+	
+	@ SuppressWarnings ("unchecked")
+	public List<BreakdownElement> getBreakdownElementsFromIteration(String _iterationId) {
+		List<BreakdownElement> bdes = this.getHibernateTemplate().find("from BreakdownElement bde join bde.superActivities s where s.id=?", _iterationId) ;
+		return bdes;
+	}
+	
 	/**
 	 * Return the iteration which have the id _id
 	 * 

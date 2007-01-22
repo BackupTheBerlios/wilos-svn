@@ -258,6 +258,7 @@
 			ref="WorkBreakdownElementDao" />
 		<property name="breakdownElementService" ref="BreakdownElementService" />
 		<property name="stepService" ref="StepService" />
+		<property name="phaseService" ref="PhaseService" />
 	</bean>
 	
 	  <bean id="BreakdownElementService"
@@ -289,6 +290,16 @@
 	<bean id="ConcreteTaskDescriptorService"
 		class="wilos.business.services.concretetask.ConcreteTaskDescriptorService">
 		<property name="concreteTaskDescriptorDao" ref="ConcreteTaskDescriptorDao" />
+	</bean>
+	
+	<bean id="PhaseService"
+		class="wilos.business.services.phase.PhaseService">
+		<property name="phaseDao" ref="PhaseDao" />
+	</bean>
+	
+	<bean id="IterationService"
+		class="wilos.business.services.iteration.IterationService">
+		<property name="iterationDao" ref="IterationDao" />
 	</bean>
 	
 </beans>

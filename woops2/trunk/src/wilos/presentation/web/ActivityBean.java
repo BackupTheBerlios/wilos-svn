@@ -66,10 +66,6 @@ public class ActivityBean {
 		this.viewerMessage = "";
 	}
 	
-	public void testTransactionActionListener(ActionEvent e){
-		this.activityService.Test();
-	}
-	
 	public void chooseProcessActionListener(ActionEvent e){
 		FacesContext context = FacesContext.getCurrentInstance(); 
 		Map map = context.getExternalContext().getRequestParameterMap();

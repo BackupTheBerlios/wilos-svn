@@ -3,9 +3,11 @@ package wilos.presentation.web.icefaces.tree ;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.iteration.Iteration;
+import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.process.Process;
-import wilos.model.spem2.task.TaskDescriptor;
 
 /**
  * @author deder
@@ -31,9 +33,14 @@ public class ProcessNode extends DefaultMutableTreeNode {
 		iceUserObject.setBranchExpandedIcon("images/tree/icon_process.gif") ;
 		iceUserObject.setObjectId(_process.getId());
 		for(BreakdownElement breakdownElement : this.process.getBreakDownElements()){
-			if(breakdownElement instanceof TaskDescriptor){
-				TaskDescriptor taskDescriptor = (TaskDescriptor) breakdownElement ;
-				this.add(new TaskDescriptorNode(taskDescriptor)) ;
+			if(breakdownElement instanceof Phase){
+				this.add(new PhaseNode((Phase)breakdownElement)) ;
+			}
+			else if(breakdownElement instanceof Iteration){
+				this.add(new IterationNode((Iteration)breakdownElement)) ;
+			}
+			else if(breakdownElement instanceof Activity){
+				this.add(new ActivityNode((Activity)breakdownElement)) ;
 			}
 		}
 	}
