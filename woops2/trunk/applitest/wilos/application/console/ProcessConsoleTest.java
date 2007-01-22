@@ -5,7 +5,7 @@ import java.io.File;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import wilos.business.services.process.ProcessService;
+import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.spem2.process.Process;
 
 public class ProcessConsoleTest {

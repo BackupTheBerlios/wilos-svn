@@ -7,7 +7,7 @@ import java.util.List ;
 import org.apache.commons.logging.Log ;
 import org.apache.commons.logging.LogFactory ;
 
-import wilos.business.services.task.TaskDescriptorService ;
+import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.model.spem2.task.TaskDescriptor ;
 
 /**

@@ -1,6 +1,6 @@
 package wilos.presentation.web.task;
 
-import wilos.business.services.task.TaskDescriptorService;
+import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.model.spem2.task.TaskDescriptor;
 
 public class TaskViewerBean {

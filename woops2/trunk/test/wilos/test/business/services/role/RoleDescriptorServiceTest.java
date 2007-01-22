@@ -24,7 +24,7 @@ public class RoleDescriptorServiceTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link wilos.business.services.role.RoleDescriptorService#getRoleDescriptorsFromProcess(java.lang.String)}.
+	 * {@link wilos.business.services.spem2.role.RoleDescriptorService#getRoleDescriptorsFromProcess(java.lang.String)}.
 	 */
 	public void testGetRoleDescriptorsFromProcess() {
 		fail("Not yet implemented") ;
@@ -32,7 +32,7 @@ public class RoleDescriptorServiceTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link wilos.business.services.role.RoleDescriptorService#getRoleDefinitionFromRoleDescriptor(java.lang.String)}.
+	 * {@link wilos.business.services.spem2.role.RoleDescriptorService#getRoleDefinitionFromRoleDescriptor(java.lang.String)}.
 	 */
 	public void testGetRoleDefinitionFromRoleDescriptor() {
 		fail("Not yet implemented") ;

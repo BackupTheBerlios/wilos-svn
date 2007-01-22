@@ -14,7 +14,7 @@ import javax.swing.tree.DefaultTreeModel;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import wilos.business.services.process.ProcessService;
+import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.spem2.process.Process;
 import wilos.presentation.web.task.TaskViewerBean;
 import wilos.presentation.web.template.MenuBean;

@@ -12,7 +12,7 @@ import javax.faces.model.SelectItem;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import wilos.business.services.process.ProcessService;
+import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.spem2.process.Process;
 import wilos.presentation.web.tree.TreeBean;
 

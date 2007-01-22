@@ -2,7 +2,7 @@
 package wilos.test.business.services.task ;
 
 import junit.framework.TestCase ;
-import wilos.business.services.task.StepService ;
+import wilos.business.services.spem2.task.StepService;
 import wilos.hibernate.spem2.task.TaskDefinitionDao ;
 import wilos.model.spem2.task.Step ;
 import wilos.model.spem2.task.TaskDefinition ;
@@ -57,7 +57,7 @@ public class StepServiceTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link wilos.business.services.task.StepService#getStep(java.lang.String)}.
+	 * Test method for {@link wilos.business.services.spem2.task.StepService#getStep(java.lang.String)}.
 	 */
 	public void testGetStep() {
 		// Rk: the setUp method is called here.
@@ -72,7 +72,7 @@ public class StepServiceTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link wilos.business.services.task.StepService#getAllSteps()}.
+	 * Test method for {@link wilos.business.services.spem2.task.StepService#getAllSteps()}.
 	 */
 	public void testGetAllSteps() {
 		// fail("Not yet implemented") ;
@@ -80,7 +80,7 @@ public class StepServiceTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link wilos.business.services.task.StepService#saveStep(wilos.model.spem2.task.Step)}.
+	 * {@link wilos.business.services.spem2.task.StepService#saveStep(wilos.model.spem2.task.Step)}.
 	 */
 	public void testSaveStep() {
 		// Rk: the setUp method is called here.
@@ -97,7 +97,7 @@ public class StepServiceTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link wilos.business.services.task.StepService#deleteStep(wilos.model.spem2.task.Step)}.
+	 * {@link wilos.business.services.spem2.task.StepService#deleteStep(wilos.model.spem2.task.Step)}.
 	 */
 	public void testDeleteStep() {
 		// Rk: the setUp method is called here.
@@ -121,7 +121,7 @@ public class StepServiceTest extends TestCase {
 
 	/**
 	 * Test method for
-	 * {@link wilos.business.services.task.StepService#getStepsFromTask(java.lang.String)}.
+	 * {@link wilos.business.services.spem2.task.StepService#getStepsFromTask(java.lang.String)}.
 	 */
 	public void testGetStepsFromTask() {
 		// fail("Not yet implemented") ;

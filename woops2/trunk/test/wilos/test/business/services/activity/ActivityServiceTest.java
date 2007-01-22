@@ -3,7 +3,7 @@ package wilos.test.business.services.activity;
 import java.util.List;
 
 import junit.framework.TestCase;
-import wilos.business.services.activity.ActivityService;
+import wilos.business.services.spem2.activity.ActivityService;
 import wilos.model.spem2.activity.Activity;
 import wilos.test.TestConfiguration;
 

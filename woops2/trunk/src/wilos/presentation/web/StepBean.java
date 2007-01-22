@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import wilos.business.services.task.StepService;
+import wilos.business.services.spem2.task.StepService;
 import wilos.model.spem2.task.Step;
 
 /**

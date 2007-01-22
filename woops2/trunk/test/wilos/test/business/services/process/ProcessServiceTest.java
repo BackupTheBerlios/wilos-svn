@@ -3,7 +3,7 @@ package wilos.test.business.services.process;
 import java.util.List;
 
 import junit.framework.TestCase;
-import wilos.business.services.process.ProcessService;
+import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.spem2.process.Process;
 import wilos.test.TestConfiguration;
 

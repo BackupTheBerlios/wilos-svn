@@ -3,7 +3,7 @@ package wilos.test.business.services.concretetask;
 import java.util.List;
 
 import junit.framework.TestCase;
-import wilos.business.services.concretetask.ConcreteTaskDescriptorService;
+import wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.test.TestConfiguration;
 import wilos.utils.Constantes.State;
