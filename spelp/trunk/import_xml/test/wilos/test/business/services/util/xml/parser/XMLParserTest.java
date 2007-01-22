@@ -75,12 +75,33 @@ public class XMLParserTest extends TestCase {
 	public void testProcessFromScrumFileContainsPhases() {
 		HashSet<Process> processes;
 		Iterator<Process> it;
+		Process process;
+		HashSet<BreakdownElement> phases; 
+		Iterator<BreakdownElement> itBde;
+		int nbExpectedPhases = 2;
+		int nbExpectedIterations = 0;
 		
 		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathScrum);
 		it = processes.iterator();
 		assertTrue(it.hasNext());
 		while (it.hasNext()) {
-			assertTrue(it.next().getBreakDownElements().size() > 0);
+			process = it.next();
+			assertTrue(process.getBreakDownElements().size() > 0);
+			
+			phases = (HashSet<BreakdownElement>) process.getBreakDownElements();
+			int nbPhases = 0;
+			int nbIterations = 0;
+			itBde = phases.iterator();
+			while (itBde.hasNext()) {
+				if (itBde.next() instanceof Phase) {
+					nbPhases += 1;
+				}
+				else if (itBde.next() instanceof Iteration) {
+					nbPhases += 1;
+				}
+			}
+			assertTrue(nbPhases == nbExpectedPhases);
+			assertTrue(nbIterations == nbExpectedIterations);
 		}
 		
 	}
@@ -290,6 +311,7 @@ public class XMLParserTest extends TestCase {
 		HashSet<Process> processes;
 		Iterator<Process> itProc;
 		Iterator<BreakdownElement> itAct;
+		BreakdownElement bde;
 		
 		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathOPenUP);
 		itProc = processes.iterator();
@@ -300,19 +322,25 @@ public class XMLParserTest extends TestCase {
 			
 			// Activity 1
 			assertTrue(itAct.hasNext());
-			itAct.next();
+			bde = itAct.next();
+			assertTrue(bde instanceof Iteration);
 			
 //			 Activity 2
 			assertTrue(itAct.hasNext());
-			itAct.next();
+			bde = itAct.next();
+			assertTrue(bde instanceof Iteration);
 			
 //			 Activity 3
 			assertTrue(itAct.hasNext());
-			itAct.next();
+			bde = itAct.next();
+			assertTrue(bde instanceof Iteration);
 			
 //			 Activity 4
 			assertTrue(itAct.hasNext());
-			itAct.next();
+			bde = itAct.next();
+			assertTrue(bde instanceof Iteration);
+			
+			assertFalse(itAct.hasNext());
 		}
 		
 	}
@@ -334,7 +362,7 @@ public class XMLParserTest extends TestCase {
 			
 			// Activity 1
 			while (itTopLevelAct.hasNext()) {
-				topLevelActivity = (Activity) itTopLevelAct.next();				
+				topLevelActivity = (Activity) itTopLevelAct.next();
 				assertTrue(topLevelActivity.getBreakDownElements().size() >= nbMiniSndLevelActivities);
 				assertTrue(topLevelActivity.getBreakDownElements().size() <= nbMaxiSndLevelActivities);
 			}
