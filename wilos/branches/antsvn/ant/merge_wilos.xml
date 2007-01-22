@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<!-- 
+	ANT-SVN Merge Script for WILOS 
+	Arnaud.GIULIANI
+-->
+<project name="Wilos Merger" default="merge_all" basedir=".">
+
+	<property name="sources.psi2" value="../src_psi2" />
+	<property name="sources.woops2" value="../src_woops2" />
+	<property name="sources.spelp" value="../src_spelp" />
+	<property name="sources.wilos" value="../src_wilos" />
+	<property name="sources.branches" value="../src_branches" />
+	<property file="./depots.properties" />
+
+	<path id="project.classpath">
+		<fileset dir="lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<taskdef resource="svntask.properties" classpathref="project.classpath" />
+
+	<!-- All merge operation -->
+	<target name="merge_all" depends="merge_server,merge_web,merge_conf,merge_lib">
+	</target>
+
+
+	<!-- merge the server side -->
+	<target name="merge_server">
+		<mkdir dir="${sources.wilos}/src" />
+
+		<copy todir="${sources.wilos}/src">
+			<fileset dir="${sources.psi2}">
+				<include name="**/*.*" />
+			</fileset>
+			<fileset dir="${sources.woops2}">
+				<include name="**/*.*" />
+			</fileset>
+			<fileset dir="${sources.spelp}">
+				<include name="**/*.*" />
+			</fileset>
+			<fileset dir="${sources.spelp}">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- merge the web side -->
+	<target name="merge_web">
+		<mkdir dir="${sources.wilos}/WebContent" />
+		<copy todir="${sources.wilos}/WebContent">
+			<fileset dir="${sources.branches}/webContent">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- merge the configuration file -->
+	<target name="merge_conf">
+		<mkdir dir="${sources.wilos}/WebContent/WEB-INF" />
+		<copy todir="${sources.wilos}/WebContent/WEB-INF">
+			<fileset dir="${sources.branches}/conf">
+				<include name="web.xml" />
+				<include name="faces-config.xml" />
+				<include name="sun-jaxws.xml" />
+			</fileset>
+		</copy>
+		<copy todir="${sources.wilos}/src">
+			<fileset dir="${sources.branches}/conf">
+				<include name="applicationContext.xml" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- merge the configuration file -->
+	<target name="merge_lib">
+		<mkdir dir="${sources.wilos}/WebContent/WEB-INF/lib" />
+		<copy todir="${sources.wilos}/WebContent/WEB-INF/lib">
+			<fileset dir="${sources.branches}/lib_server">
+				<include name="**/*.jar" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- Wilos branches -->
+	<target name="update_branches">
+		<svn javahl="true">
+			<export srcurl="${depot.wilos_branches}" destPath="${sources.branches}" force="true" />
+		</svn>
+	</target>
+
+	<!-- Download needed sources -->
+	<target name="update_sources">
+		<svn javahl="true">
+			<export srcurl="${depot.psi2}/src" destPath="${sources.psi2}" force="true" />
+		</svn>
+		<svn javahl="true">
+			<export srcurl="${depot.woops2}/src" destPath="${sources.woops2}" force="true" />
+		</svn>
+		<!--
+		<svn javahl="true">
+			<export srcurl="${depot.spelp}" destPath="${sources.spelp}" />
+		</svn> -->
+		<svn javahl="true">
+			<export srcurl="${depot.spelp_import}" destPath="${sources.spelp}" force="true" />
+		</svn>
+		<svn javahl="true">
+			<export srcurl="${depot.spelp_remote}" destPath="${sources.spelp}" force="true" />
+		</svn>
+
+	</target>
+
+	<!-- Clean all the directories -->
+	<target name="make_dirs">
+		<mkdir dir="${sources.woops2}" />
+		<mkdir dir="${sources.psi2}" />
+		<mkdir dir="${sources.spelp}" />
+		<mkdir dir="${sources.wilos}" />
+		<mkdir dir="${sources.branches}" />
+	</target>
+
+	<target name="delete_dirs">
+		<delete dir="${sources.woops2}" />
+		<delete dir="${sources.psi2}" />
+		<delete dir="${sources.spelp}" />
+		<delete dir="${sources.wilos}" />
+		<delete dir="${sources.branches}" />
+	</target>
+
+	<target name="clean_dirs" depends="delete_dirs,make_dirs">
+	</target>
+
+</project>
