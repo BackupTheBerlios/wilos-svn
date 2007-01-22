@@ -34,6 +34,7 @@ public class GuidelineDaoTest extends TestCase {
 
 		// Create empty Activity.
 		this.guideline = new Guideline() ;
+		this.guideline.setTaskdefinition(null);
 	}
 
 	/*
