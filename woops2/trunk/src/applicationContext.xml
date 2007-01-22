@@ -210,7 +210,7 @@
 	<bean id="ParticipantService"
 		class="wilos.business.services.wilosuser.ParticipantService">
 		<property name="participantDao" ref="ParticipantDao" />
-		<property name="projectService" ref="ProjectService" />
+		<property name="projectDao" ref="ProjectDao" />
 	</bean>
 	
 	<bean id="ProcessManagerService"

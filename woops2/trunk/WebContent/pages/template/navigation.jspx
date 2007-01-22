@@ -19,21 +19,24 @@
 	<br />
 
 	<!-- ComboBox -->
-	<div class="navTree"><ice:messages style="color:red;"
-		showDetail="true" /> <!-- The projects combobox --> <ice:outputText
-		value="#{msgs['navigation.combobox.label']}" /> <ice:selectOneMenu
-		value="#{TreeBean.processId}">
+	<!-- The projects combobox -->
+	<ice:outputText value="#{msgs['navigation.combobox.label']}" />
+	<ice:selectOneMenu value="#{TreeBean.processId}">
 		<f:selectItems value="#{TreeBean.projects}" />
-	</ice:selectOneMenu> 
-	
-	<!-- Button --> 
+	</ice:selectOneMenu>
+
+	<!-- Button -->
 	<ice:commandButton type="submit"
 		value="#{msgs['navigation.button.label']}"
-		actionListener="#{TreeBean.changeTreeActionListener}" /> <br />
+		actionListener="#{TreeBean.changeTreeActionListener}" />
+	<br />
 
-	<!-- Tree - The process tree with its taskDescriptors --> <ice:tree
-		id="tree" value="#{TreeBean.model}" var="item" hideRootNode="false"
-		hideNavigation="false" imageDir="./xmlhttp/css/xp/css-images/">
+	<!-- ScrollBar -->
+	<div class="navTree"><ice:messages style="color:red;"
+		showDetail="true" /> <!-- Tree - The process tree with its taskDescriptors -->
+	<ice:tree id="tree" value="#{TreeBean.model}" var="item"
+		hideRootNode="false" hideNavigation="false"
+		imageDir="./xmlhttp/css/xp/css-images/">
 		<ice:treeNode>
 			<f:facet name="icon">
 				<ice:panelGroup style="display: inline">
