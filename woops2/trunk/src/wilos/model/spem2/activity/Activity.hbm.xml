@@ -12,7 +12,7 @@
 		<key column="activity_id"></key>
 		
 		<!-- Associations -->
-		<set name="breakDownElements" table="nesting" lazy="true">
+		<set name="breakDownElements" table="nesting" lazy="true" inverse="true">
 			<key column="superactivity_id"></key>
 			<many-to-many class="wilos.model.spem2.breakdownelement.BreakdownElement"
 				column="breakdownelement_id">

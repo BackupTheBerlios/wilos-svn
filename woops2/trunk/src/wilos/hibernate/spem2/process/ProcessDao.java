@@ -25,7 +25,7 @@ public class ProcessDao extends HibernateDaoSupport {
 	 * 
 	 * @param _process
 	 */
-	public void saveOrUpdateProcess(Process _process) {
+	public void saveOrUpdateProcess(Process _process) throws ConstraintViolationException, DataIntegrityViolationException {
 		try{
 			this.getHibernateTemplate().saveOrUpdate(_process) ;
 		}
