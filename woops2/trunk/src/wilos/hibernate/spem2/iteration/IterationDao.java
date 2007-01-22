@@ -1,5 +1,4 @@
-
-package wilos.hibernate.spem2.iteration ;
+package wilos.hibernate.spem2.iteration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,8 @@ import wilos.model.spem2.iteration.Iteration;
 import wilos.utils.ExceptionManager;
 
 /**
- * IterationDao manage requests from the system to store iterations to the database
+ * IterationDao manage requests from the system to store iterations to the
+ * database
  * 
  * @author soosuske
  */
@@ -25,14 +25,16 @@ public class IterationDao extends HibernateDaoSupport {
 	 * @param _iteration
 	 */
 	public void saveOrUpdateIteration(Iteration _iteration) {
-		try{
-			this.getHibernateTemplate().saveOrUpdate(_iteration) ;
-		}
-		catch(DataIntegrityViolationException _e){
-			ExceptionManager.getInstance().manageDataIntegrityViolationException(this.getClass().getName(), "saveOrUpdateIteration", _e);
-		}
-		catch(ConstraintViolationException _ex){
-			ExceptionManager.getInstance().manageConstraintViolationException(this.getClass().getName(), "saveOrUpdateIteration", _ex);
+		try {
+			this.getHibernateTemplate().saveOrUpdate(_iteration);
+		} catch (DataIntegrityViolationException _e) {
+			ExceptionManager.getInstance()
+					.manageDataIntegrityViolationException(
+							this.getClass().getName(), "saveOrUpdateIteration",
+							_e);
+		} catch (ConstraintViolationException _ex) {
+			ExceptionManager.getInstance().manageConstraintViolationException(
+					this.getClass().getName(), "saveOrUpdateIteration", _ex);
 		}
 	}
 
@@ -41,25 +43,41 @@ public class IterationDao extends HibernateDaoSupport {
 	 * 
 	 * @return
 	 */
-	@ SuppressWarnings ("unchecked")
+	@SuppressWarnings("unchecked")
 	public List<Iteration> getAllIterations() {
-		List<Iteration> loadAll = new ArrayList<Iteration>() ;
-		try{
-			loadAll.addAll(this.getHibernateTemplate().loadAll(Iteration.class)) ;
+		List<Iteration> loadAll = new ArrayList<Iteration>();
+		try {
+			loadAll
+					.addAll(this.getHibernateTemplate()
+							.loadAll(Iteration.class));
 
+		} catch (DataAccessException _e) {
+			ExceptionManager.getInstance().manageDataAccessException(
+					this.getClass().getName(), "getAllIterations", _e);
 		}
-		catch(DataAccessException _e){
-			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "getAllIterations", _e);
+		return loadAll;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<BreakdownElement> getBreakdownElementsFromIteration(
+			String _iterationId) {
+		List bdes = this
+				.getHibernateTemplate()
+				.find(
+						"from BreakdownElement bde join bde.superActivities s where s.id=?",
+						_iterationId);
+		List<BreakdownElement> listBdes = new ArrayList<BreakdownElement>();
+		if (bdes.get(0) instanceof List) {
+			for (Object o : (ArrayList) bdes.get(0)) {
+				if (o instanceof BreakdownElement) {
+					BreakdownElement bde = (BreakdownElement) o;
+					listBdes.add(bde);
+				}
+			}
 		}
-		return loadAll ;
+		return listBdes;
 	}
-	
-	@ SuppressWarnings ("unchecked")
-	public List<BreakdownElement> getBreakdownElementsFromIteration(String _iterationId) {
-		List<BreakdownElement> bdes = this.getHibernateTemplate().find("from BreakdownElement bde join bde.superActivities s where s.id=?", _iterationId) ;
-		return bdes;
-	}
-	
+
 	/**
 	 * Return the iteration which have the id _id
 	 * 
@@ -67,7 +85,8 @@ public class IterationDao extends HibernateDaoSupport {
 	 * @return
 	 */
 	public Iteration getIteration(String _id) {
-		return (Iteration) this.getHibernateTemplate().get(Iteration.class, _id) ;
+		return (Iteration) this.getHibernateTemplate()
+				.get(Iteration.class, _id);
 	}
 
 	/**
@@ -76,11 +95,11 @@ public class IterationDao extends HibernateDaoSupport {
 	 * @param _iteration
 	 */
 	public void deleteIteration(Iteration _iteration) {
-		try{
-			this.getHibernateTemplate().delete(_iteration) ;
-		}
-		catch(DataAccessException _e){
-			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "getIteration", _e);
+		try {
+			this.getHibernateTemplate().delete(_iteration);
+		} catch (DataAccessException _e) {
+			ExceptionManager.getInstance().manageDataAccessException(
+					this.getClass().getName(), "getIteration", _e);
 		}
 	}
 }
