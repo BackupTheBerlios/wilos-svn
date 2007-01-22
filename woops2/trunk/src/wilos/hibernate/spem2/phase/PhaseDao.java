@@ -1,16 +1,15 @@
+package wilos.hibernate.spem2.phase;
 
-package wilos.hibernate.spem2.phase ;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.ArrayList ;
-import java.util.List ;
-
-import org.hibernate.exception.ConstraintViolationException ;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException ;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import wilos.model.spem2.breakdownelement.BreakdownElement;
-import wilos.model.spem2.phase.Phase ;
+import wilos.model.spem2.phase.Phase;
 import wilos.utils.ExceptionManager;
 
 /**
@@ -25,14 +24,15 @@ public class PhaseDao extends HibernateDaoSupport {
 	 * @param _phase
 	 */
 	public void saveOrUpdatePhase(Phase _phase) {
-		try{
-			this.getHibernateTemplate().saveOrUpdate(_phase) ;
-		}
-		catch(DataIntegrityViolationException _e){
-			ExceptionManager.getInstance().manageDataIntegrityViolationException(this.getClass().getName(), "saveOrUpdatePhase", _e);
-		}
-		catch(ConstraintViolationException _ex){
-			ExceptionManager.getInstance().manageConstraintViolationException(this.getClass().getName(), "saveOrUpdatePhase", _ex);
+		try {
+			this.getHibernateTemplate().saveOrUpdate(_phase);
+		} catch (DataIntegrityViolationException _e) {
+			ExceptionManager.getInstance()
+					.manageDataIntegrityViolationException(
+							this.getClass().getName(), "saveOrUpdatePhase", _e);
+		} catch (ConstraintViolationException _ex) {
+			ExceptionManager.getInstance().manageConstraintViolationException(
+					this.getClass().getName(), "saveOrUpdatePhase", _ex);
 		}
 	}
 
@@ -41,17 +41,17 @@ public class PhaseDao extends HibernateDaoSupport {
 	 * 
 	 * @return
 	 */
-	@ SuppressWarnings ("unchecked")
+	@SuppressWarnings("unchecked")
 	public List<Phase> getAllPhases() {
-		List<Phase> loadAll = new ArrayList<Phase>() ;
-		try{
-			loadAll.addAll(this.getHibernateTemplate().loadAll(Phase.class)) ;
+		List<Phase> loadAll = new ArrayList<Phase>();
+		try {
+			loadAll.addAll(this.getHibernateTemplate().loadAll(Phase.class));
 
+		} catch (DataAccessException _e) {
+			ExceptionManager.getInstance().manageDataAccessException(
+					this.getClass().getName(), "getAllPhases", _e);
 		}
-		catch(DataAccessException _e){
-			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "getAllPhases", _e);
-		}
-		return loadAll ;
+		return loadAll;
 	}
 
 	/**
@@ -61,13 +61,26 @@ public class PhaseDao extends HibernateDaoSupport {
 	 * @return
 	 */
 	public Phase getPhase(String _id) {
-		return (Phase) this.getHibernateTemplate().get(Phase.class, _id) ;
+		return (Phase) this.getHibernateTemplate().get(Phase.class, _id);
 	}
-	
-	@ SuppressWarnings ("unchecked")
+
+	@SuppressWarnings("unchecked")
 	public List<BreakdownElement> getBreakdownElementsFromPhase(String _phaseId) {
-		List<BreakdownElement> bdes = this.getHibernateTemplate().find("from BreakdownElement bde join bde.superActivities s where s.id=?", _phaseId) ;
-		return bdes;
+		List bdes = this
+				.getHibernateTemplate()
+				.find(
+						"from BreakdownElement bde join bde.superActivities s where s.id=?",
+						_phaseId);
+		List<BreakdownElement> listBdes = new ArrayList<BreakdownElement>();
+		if (bdes.get(0) instanceof List){
+			for (Object o : (ArrayList) bdes.get(0)) {
+				if (o instanceof BreakdownElement) {
+					BreakdownElement bde = (BreakdownElement) o;
+					listBdes.add(bde);
+				}
+			}
+		}
+		return listBdes;
 	}
 
 	/**
@@ -76,11 +89,11 @@ public class PhaseDao extends HibernateDaoSupport {
 	 * @param _phase
 	 */
 	public void deletePhase(Phase _phase) {
-		try{
-			this.getHibernateTemplate().delete(_phase) ;
-		}
-		catch(DataAccessException _e){
-			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "deletePhase", _e);
+		try {
+			this.getHibernateTemplate().delete(_phase);
+		} catch (DataAccessException _e) {
+			ExceptionManager.getInstance().manageDataAccessException(
+					this.getClass().getName(), "deletePhase", _e);
 		}
 	}
 }
