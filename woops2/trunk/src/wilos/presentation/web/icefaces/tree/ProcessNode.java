@@ -3,7 +3,6 @@ package wilos.presentation.web.icefaces.tree ;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
@@ -39,9 +38,9 @@ public class ProcessNode extends DefaultMutableTreeNode {
 			else if(breakdownElement instanceof Iteration){
 				this.add(new IterationNode((Iteration)breakdownElement)) ;
 			}
-			else if(breakdownElement instanceof Activity){
+			/*else if(breakdownElement instanceof Activity){
 				this.add(new ActivityNode((Activity)breakdownElement)) ;
-			}
+			}*/
 		}
 	}
 }
