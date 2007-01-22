@@ -44,6 +44,7 @@
 		</javac>
 		<copy todir="${build.dir}/${project.name}/">
 			<fileset dir="${src.java.dir}">
+				<excludesfile name="${src.dir}/applicationContext.xml"/>
 				<include name="**/*.xml" />
 				<include name="**/*.tld" />
 				<include name="**/*.properties" />
