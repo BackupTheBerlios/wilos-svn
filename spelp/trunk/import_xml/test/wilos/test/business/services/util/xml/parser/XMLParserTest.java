@@ -10,10 +10,12 @@ import junit.framework.TestCase;
 import wilos.business.services.util.xml.parser.XMLParser;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.guide.Guideline;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.process.Process;
 import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
 
 public class XMLParserTest extends TestCase {
@@ -318,7 +320,7 @@ public class XMLParserTest extends TestCase {
 	public void testOpenUPTopLevelActivitiesContainActivities() {
 		HashSet<Process> processes;
 		Iterator<Process> itProc;
-		Iterator<Activity> itTopLevelAct;
+		Iterator<BreakdownElement> itTopLevelAct;
 		Activity topLevelActivity;
 		final int nbMiniSndLevelActivities = 4;
 		final int nbMaxiSndLevelActivities = 6;
@@ -328,13 +330,13 @@ public class XMLParserTest extends TestCase {
 		assertTrue(itProc.hasNext());
 		while (itProc.hasNext()) {
 			// Iterator on the set of the four Phases of OpenUP
-			itTopLevelAct = itProc.next().getActivities().iterator();
+			itTopLevelAct = itProc.next().getBreakDownElements().iterator();
 			
 			// Activity 1
 			while (itTopLevelAct.hasNext()) {
-				topLevelActivity = itTopLevelAct.next();				
-				assertTrue(topLevelActivity.getActivities().size() >= nbMiniSndLevelActivities);
-				assertTrue(topLevelActivity.getActivities().size() <= nbMaxiSndLevelActivities);
+				topLevelActivity = (Activity) itTopLevelAct.next();				
+				assertTrue(topLevelActivity.getBreakDownElements().size() >= nbMiniSndLevelActivities);
+				assertTrue(topLevelActivity.getBreakDownElements().size() <= nbMaxiSndLevelActivities);
 			}
 		}
 	}
@@ -447,6 +449,7 @@ public class XMLParserTest extends TestCase {
 						tmpBde = BdeIterator.next();
 						if (tmpBde instanceof TaskDescriptor) {
 							nbTaskDescriptors++;
+
 							tmpBde = (TaskDescriptor) tmpBde;
 							assertTrue(expectedResults.contains( tmpBde.getPresentationName() ) );
 						}
@@ -504,6 +507,77 @@ public class XMLParserTest extends TestCase {
 						if (tmpBde instanceof TaskDescriptor) {
 							nbTaskDescriptors++;
 							tmpBde = (TaskDescriptor) tmpBde;
+							assertTrue(expectedResults.contains( tmpBde.getPresentationName() ) );
+						}
+					}
+					assertTrue(nbTaskDescriptors == 3);
+				}
+			}
+			assertTrue(rentreDansManageRequirements);
+		}		
+	}
+	
+	public void testOpenUPContainsGuidances() {
+		Process theTestedProcess;
+		Iterator<BreakdownElement> itTopLevelAct;
+		Iterator<BreakdownElement> itSecondLevelAct;
+		Activity topLevelActivity,secondLevelActivity;
+		boolean rentreDansManageRequirements;
+		int nbTaskDescriptors;
+		Iterator<BreakdownElement> BdeIterator;
+		BreakdownElement tmpBde;
+		
+		Set<Guideline> listGuides = null;
+		
+		HashSet<String> expectedResults = new HashSet<String>();
+		expectedResults.add("Find and Outline Requirements");
+		expectedResults.add("Detail Requirements");
+		expectedResults.add("Create Test Cases");
+		
+		theTestedProcess = XMLParser.getProcess(pathOPenUP);
+		assertNotNull(theTestedProcess);
+		if (theTestedProcess != null) {
+			// Iterator on the set of the four Phases of OpenUP
+			itTopLevelAct = theTestedProcess.getBreakDownElements().iterator();
+			
+			topLevelActivity = null;
+			// We want the third Phase : Construction Iteration
+			while (itTopLevelAct.hasNext()) {
+				topLevelActivity = (Activity) itTopLevelAct.next();
+				if (topLevelActivity.getPresentationName().equals("Construction Iteration [1..n]")) {
+					break;
+				}
+			}
+			
+			itSecondLevelAct = topLevelActivity.getBreakDownElements().iterator();
+			
+			rentreDansManageRequirements = false;
+			while (itSecondLevelAct.hasNext()) {
+				secondLevelActivity = (Activity) itSecondLevelAct.next();
+				if (secondLevelActivity.getPresentationName().equals("Manage Requirements")) {
+					rentreDansManageRequirements = true;
+					BdeIterator = secondLevelActivity.getBreakDownElements().iterator();
+					nbTaskDescriptors = 0;
+					while (BdeIterator.hasNext()) {
+						tmpBde = BdeIterator.next();
+						if (tmpBde instanceof TaskDescriptor) {
+							nbTaskDescriptors++;
+							tmpBde = (TaskDescriptor) tmpBde;
+							//td = (TaskDescriptor) tmpBde;
+							assertNotNull(tmpBde);
+							
+							TaskDefinition g = ((TaskDescriptor)tmpBde).getTaskDefinition();
+							listGuides = g.getGuidelines();
+							if (!listGuides.isEmpty()) {
+								System.out.println(g.getName()+"    "+ listGuides.size());								
+								Iterator<Guideline> itGuide = listGuides.iterator();
+								while (itGuide.hasNext()) {
+									System.out.println("TD:"+tmpBde.getName());
+									System.out.println(itGuide.next().getName());
+								}								
+							}
+							
+							System.out.println(tmpBde.getName());
 							assertTrue(expectedResults.contains( tmpBde.getPresentationName() ) );
 						}
 					}
@@ -730,8 +804,6 @@ public class XMLParserTest extends TestCase {
 	}*/
 	
 	
-	public void testOpenUPContainsGuidances() {
-		
-	}
-	
+
 }
+
