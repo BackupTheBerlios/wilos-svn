@@ -239,7 +239,7 @@ public class TaskDefinition extends Element implements Cloneable {
 	 */
 	public void addGuideline(Guideline _guideline) {
 		this.guidelines.add(_guideline);
-		// _guideline.setTaskDefinition(this);
+		_guideline.setTaskdefinition(this);
 	}
 
 	/**
@@ -248,7 +248,7 @@ public class TaskDefinition extends Element implements Cloneable {
 	 */
 	public void removeAllGuidelines() {
 		for (Guideline guideline : this.guidelines) {
-			// guideline.setTaskDefinition(null);
+			guideline.setTaskdefinition(null);
 		}
 		this.guidelines.clear();
 	}
@@ -261,7 +261,7 @@ public class TaskDefinition extends Element implements Cloneable {
 	 */
 	public void addAllGuidelines(Set<Guideline> _guideline) {
 		for (Guideline _guid1 : _guideline) {
-			 //_guid1.addTaskDefinition(this);
+			 _guid1.addTaskDefinition(this);
 		}
 	}
 
