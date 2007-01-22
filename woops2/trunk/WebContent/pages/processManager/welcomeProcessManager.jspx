@@ -212,8 +212,8 @@
 							<ice:outputText value="Add your file :" />
 							<br />
 							<ice:inputFile style="border:none; width:400px; height:70px;"
-								progressListener="#{XmlFileImportBean.progress}"
-								actionListener="#{XmlFileImportBean.action}"
+								progressListener="#{XmlFileImportBean.progressListener}"
+								actionListener="#{XmlFileImportBean.uploadFileActionListener}"
 								uniqueFolder="false" file="#{XmlFileImportBean.file}"
 								immediate="true" />
 							<ice:outputProgress id="pro" value="#{XmlFileImportBean.percent}" />
