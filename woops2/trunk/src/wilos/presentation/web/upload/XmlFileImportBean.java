@@ -14,7 +14,7 @@ import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.process.ProcessService;
 import wilos.model.spem2.process.Process;
-import wilos.presentation.web.icefaces.tree.TreeBean;
+import wilos.presentation.web.tree.TreeBean;
 
 import com.icesoft.faces.component.inputfile.InputFile;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;

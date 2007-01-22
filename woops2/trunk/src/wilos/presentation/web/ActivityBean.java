@@ -13,7 +13,7 @@ import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.activity.ActivityService;
 import wilos.model.spem2.activity.Activity;
-import wilos.presentation.web.icefaces.tree.TreeBean;
+import wilos.presentation.web.tree.TreeBean;
 
 /**
  * Managed-Bean link to activity.jsp and activitform.jsp
