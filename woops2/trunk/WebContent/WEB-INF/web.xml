@@ -24,7 +24,7 @@
     
     <context-param>
         <param-name>com.icesoft.faces.uploadDirectory</param-name>
-        <param-value>/upload</param-value>
+        <param-value>\upload</param-value>
     </context-param>
     
     <!-- concurrent DOM views -->

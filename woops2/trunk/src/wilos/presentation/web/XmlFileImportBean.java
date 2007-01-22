@@ -61,7 +61,7 @@ public class XmlFileImportBean {
 		return file;
 	}
 
-	public void action(ActionEvent event) {
+	public void uploadFileActionListener(ActionEvent event) {
 		InputFile inputFile = (InputFile) event.getSource();
 		if (inputFile.getStatus() == InputFile.SAVED) {
 			fileName = inputFile.getFileInfo().getFileName();
@@ -83,7 +83,7 @@ public class XmlFileImportBean {
 		ExternalContext extCtx = FacesContext.getCurrentInstance()
 				.getExternalContext();
 		// File destFile = new File("/upload/"+file.getName());
-		logger.debug("### fichier = " + file.getPath() + " => "
+		logger.debug("### fichier uploade = " + file.getPath() + " => "
 				+ file.getName() + " ###");
 		try {
 			logger.debug("### getCanonicalPath = " + file.getCanonicalPath());
@@ -96,14 +96,7 @@ public class XmlFileImportBean {
 		logger.debug("### getRequestPathInfo = " + extCtx.getRequestPathInfo());
 		extCtx.getResourceAsStream("");
 
-		//String id = null;
-		/*
-		TreeViewBean treeBean = null;
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		treeBean = (TreeViewBean) facesContext.getApplication()
-				.getVariableResolver().resolveVariable(facesContext,
-						"TreeViewBean");
-		*/
+		
 		try {
 			Process p = processService.spelpParsingXML(file);
 			// save the process
@@ -113,11 +106,9 @@ public class XmlFileImportBean {
 		} catch (Exception e) {
 			logger.error("### XmlFileImportBean ### action -> " + e);
 		}
-
-		//treeBean.setProcessId(id);
 	}
 
-	public void progress(EventObject event) {
+	public void progressListener(EventObject event) {
 		InputFile file = (InputFile) event.getSource();
 		this.percent = file.getFileInfo().getPercent();
 		try {
