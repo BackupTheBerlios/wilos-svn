@@ -408,7 +408,7 @@ public class ParticipantBean {
 		// displaying a message to express the good validation
 		FacesMessage saveAffectationMessage = new FacesMessage() ;
 		saveAffectationMessage.setSummary("Votre affectation à ces projets à bien été enregistrée") ;
-		saveAffectationMessage.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+		saveAffectationMessage.setSeverity(FacesMessage.SEVERITY_INFO) ;
 		FacesContext.getCurrentInstance().addMessage(null, saveAffectationMessage) ;
 	}
 
@@ -420,28 +420,52 @@ public class ParticipantBean {
 	 * @return
 	 */
 	public List<HashMap<String, String>> getManageableProjectsList() {
+		
 		Participant user = getParticipantFromSession() ;
 
-		if(user instanceof Participant){
-
+		if(user instanceof Participant)
+		{
 			this.manageableProjectsList = new ArrayList<HashMap<String, String>>() ;
 			HashMap<Project, Participant> manageableProjects = (HashMap<Project, Participant>) this.participantService
 					.getManageableProjectsForAParticipant(user) ;
 
 			Project currentProject = new Project() ;
 			for(Iterator iter = manageableProjects.keySet().iterator(); iter.hasNext();){
+				
 				currentProject = (Project) iter.next() ;
-				this.logger.debug("### Projet : " + currentProject.getName() + "/ Affecte : " + manageableProjects.get(currentProject) + "###") ;
-				if(manageableProjects.get(currentProject) == null){
-					HashMap<String, String> ligne = new HashMap<String, String>() ;
-					ligne.put("project_id", currentProject.getProject_id()) ;
-					ligne.put("affected", "") ;
-					ligne.put("name", currentProject.getName()) ;
-					ligne.put("creationDate", currentProject.getCreationDate().toString()) ;
-					ligne.put("launchingDate", currentProject.getLaunchingDate().toString()) ;
-					ligne.put("description", currentProject.getDescription()) ;
+				Participant projectManager = manageableProjects.get(currentProject);
+
+				HashMap<String, String> ligne = new HashMap<String, String>() ;
+				
+				ligne.put("project_id", currentProject.getProject_id()) ;
+				ligne.put("name", currentProject.getName()) ;
+				ligne.put("creationDate", currentProject.getCreationDate().toString()) ;
+				ligne.put("launchingDate", currentProject.getLaunchingDate().toString()) ;
+				ligne.put("description", currentProject.getDescription()) ;
+				
+				if(projectManager == null){
+					
+					this.logger.debug("### Projet : " + currentProject.getName() + "/ Affecte : PERSONNE ###") ;
+					ligne.put("projectManagerName", "nobody") ;
+					ligne.put("projectManager_id", "") ;
+					ligne.put("affected", (new Boolean(false)).toString()) ;
 					this.manageableProjectsList.add(ligne) ;
 				}
+				else
+				{
+					this.logger.debug("### Projet : " + currentProject.getName() + "/ Affecte : " +projectManager.getLogin()+ "###") ;
+					String projectManagerName = projectManager.getName().concat(" " +projectManager.getFirstname()) ;
+					ligne.put("projectManager_id", projectManager.getWilosuser_id()) ;
+					ligne.put("projectManagerName", projectManagerName) ;
+					//the project is manageable by the current logged participant
+					if(projectManager.getLogin().equals(user.getLogin()))
+					{
+						this.logger.debug("### MANAGEABLE : "+user.getLogin()+" ###");
+						ligne.put("affected", (new Boolean(true)).toString()) ;
+						this.manageableProjectsList.add(ligne) ;
+					}
+				}
+				
 			}
 		}
 		return this.manageableProjectsList ;
@@ -468,21 +492,25 @@ public class ParticipantBean {
 			Project currentProject = new Project() ;
 			for(Iterator iter = notManageableProjects.keySet().iterator(); iter.hasNext();){
 				currentProject = (Project) iter.next() ;
+				Participant projectManager = notManageableProjects.get(currentProject);
+				
 				this.logger.debug("### Projet : " + currentProject.getName() + "/ Affecte : " + notManageableProjects.get(currentProject) + "###") ;
 				if(notManageableProjects.get(currentProject) != null){
-					// projectManager Name construction
-					String projectManagerName = ((Participant) notManageableProjects.get(currentProject)).getName().concat(
-							" " + ((Participant) notManageableProjects.get(currentProject)).getFirstname()) ;
-
-					HashMap<String, String> ligne = new HashMap<String, String>() ;
-					ligne.put("project_id", currentProject.getProject_id()) ;
-					ligne.put("projectManager_id", ((Participant) notManageableProjects.get(currentProject)).getWilosuser_id()) ;
-					ligne.put("projectManagerName", projectManagerName) ;
-					ligne.put("name", currentProject.getName()) ;
-					ligne.put("creationDate", currentProject.getCreationDate().toString()) ;
-					ligne.put("launchingDate", currentProject.getLaunchingDate().toString()) ;
-					ligne.put("description", currentProject.getDescription()) ;
-					this.notManageableProjectsList.add(ligne) ;
+					if(!projectManager.getLogin().equals(user.getLogin()))
+					{
+						// projectManager Name construction
+						String projectManagerName = projectManager.getName().concat(" " +projectManager.getFirstname()) ;
+	
+						HashMap<String, String> ligne = new HashMap<String, String>() ;
+						ligne.put("project_id", currentProject.getProject_id()) ;
+						ligne.put("projectManager_id", ((Participant) notManageableProjects.get(currentProject)).getWilosuser_id()) ;
+						ligne.put("projectManagerName", projectManagerName) ;
+						ligne.put("name", currentProject.getName()) ;
+						ligne.put("creationDate", currentProject.getCreationDate().toString()) ;
+						ligne.put("launchingDate", currentProject.getLaunchingDate().toString()) ;
+						ligne.put("description", currentProject.getDescription()) ;
+						this.notManageableProjectsList.add(ligne) ;
+					}
 				}
 			}
 		}
@@ -505,7 +533,7 @@ public class ParticipantBean {
 	 *
 	 */
 	public void saveProjectManagerAffectation() {
-		
+
 		Participant user = getParticipantFromSession() ;
 		Map<String, Boolean> affectedManagedProjects = new HashMap<String, Boolean>() ;
 		for(HashMap ligne : this.manageableProjectsList){
@@ -514,7 +542,7 @@ public class ParticipantBean {
 			affectedManagedProjects.put(project_id, testAffectation) ;
 		}
 		this.participantService.saveManagedProjectsForAParticipant(user, affectedManagedProjects) ;
-		
+
 		FacesMessage saveAffectationMessage = new FacesMessage() ;
 		saveAffectationMessage.setSummary("Votre affectation en tant que chef de projet à ces projets à bien été enregistrée") ;
 		saveAffectationMessage.setSeverity(FacesMessage.SEVERITY_ERROR) ;

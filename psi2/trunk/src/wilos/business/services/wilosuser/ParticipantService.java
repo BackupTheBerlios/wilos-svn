@@ -152,11 +152,25 @@ public class ParticipantService {
 
 		for(Iterator iter = affectedProjects.keySet().iterator(); iter.hasNext();){
 			String project_id = (String) iter.next() ;
+			
 			currentProject = this.projectService.getProject(project_id) ;
+			
 			if((Boolean) affectedProjects.get(project_id))
+			{
 				currentParticipant.addToProject(currentProject) ;
+			}
 			else
+			{
+				if (currentProject.getProjectManager() != null)
+				{
+					if (currentProject.getProjectManager().getLogin() == currentParticipant.getLogin())
+					{
+						currentProject.removeFromProjectManager(currentParticipant);
+						this.projectService.saveProject(currentProject);
+					}
+				}
 				currentParticipant.removeFromProject(currentProject) ;
+			}
 		}
 		this.logger.debug("### currentParticipant " + currentParticipant.getAffectedProjectList().size() + " ###") ;
 

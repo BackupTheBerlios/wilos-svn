@@ -168,6 +168,7 @@ public class ProjectBean {
 	}
 
 	public List<Project> getProjectListWithoutProcess() {
+		this.projectListWithoutProcess = new ArrayList<Project>();
 		this.projectListWithoutProcess.addAll(this.projectService.getAllProjectsWithNoProcess());
 		return projectListWithoutProcess;
 	}
@@ -177,6 +178,7 @@ public class ProjectBean {
 	}
 
 	public List<Project> getProjectListWithProcess() {
+		this.projectListWithProcess = new ArrayList<Project>();
 		this.projectListWithProcess.addAll(this.projectService.getAllProjectsWithProcess());
 		return projectListWithProcess;
 	}
