@@ -49,6 +49,9 @@ public class GuidelineServiceTest extends TestCase {
 		this.guideline.setGuid(guid);
 		this.guideline.setName(name);
 		this.guideline.setDescription(description);
+		this.guideline.setTaskdefinition(null);
+		
+		
 
 		
 		
