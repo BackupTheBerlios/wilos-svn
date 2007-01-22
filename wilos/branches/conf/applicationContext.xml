@@ -247,6 +247,8 @@
 		<property name="activityDao" ref="ActivityDao" />
 		<property name="breakdownElementDao" ref="BreakdownElementDao" />
 		<property name="elementDao" ref="ElementDao" />
+		<property name="phaseDao" ref="PhaseDao" />
+		<property name="iterationDao" ref="IterationDao" />
 		<property name="roleDefinitionDao" ref="RoleDefinitionDao" />
 		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
 		<property name="stepDao" ref="StepDao" />
