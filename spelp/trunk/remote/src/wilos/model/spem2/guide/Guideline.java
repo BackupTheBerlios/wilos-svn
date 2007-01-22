@@ -24,8 +24,7 @@ public class Guideline extends Element {
 	 */
 	public void addTaskDefinition(TaskDefinition _taskdefinition) {
 		this.taskdefinition = _taskdefinition ;
-		/* TODO A modifier quand jar woops2 mis a jour */
-		/*_taskdefinition.getProjects().add(this);*/
+		_taskdefinition.getGuidelines().add(this);
 	}
 
 	/**
@@ -34,8 +33,7 @@ public class Guideline extends Element {
 	 */
 	public void removeFromTaskDefinition(TaskDefinition _taskdefinition) {
 		this.taskdefinition = null ;
-		/* TODO A modifier quand jar woops2 mis a jour */
-		/*_taskdefinition.getProjects().remove(this);*/
+		_taskdefinition.getGuidelines().remove(this);
 	}
 
 	public TaskDefinition getTaskdefinition() {
