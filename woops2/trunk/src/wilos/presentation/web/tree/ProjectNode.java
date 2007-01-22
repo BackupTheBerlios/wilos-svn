@@ -23,7 +23,7 @@ public class ProjectNode extends DefaultMutableTreeNode {
 		this.setUserObject(iceUserObject);
 
 		iceUserObject.setExpanded(true);
-		iceUserObject.setText(this.project.getName());
+		iceUserObject.setText(this.project.getName() + " (" + this.project.getProcess().getName() + ")");
 		iceUserObject.setLeaf(false);
 		iceUserObject.setBranchContractedIcon("images/tree/icon_process.gif");
 		iceUserObject.setBranchExpandedIcon("images/tree/icon_process.gif");
