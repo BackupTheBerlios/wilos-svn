@@ -212,6 +212,26 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 		}
 		this.getAdditionalRoles().clear() ;
 	}
+	
+	/**
+	 * 
+	 * @param _ctd
+	 */
+	public void addAllConcreteTaskDescriptors(Set<ConcreteTaskDescriptor> _ctd) {
+		for(ConcreteTaskDescriptor tmp : _ctd){
+			tmp.addTaskDescriptor(this) ;
+		}
+	}
+	
+	/**
+	 * Remove from a roleDescriptor all its taskDescriptors
+	 */
+	public void removeConcreteTaskDescriptors() {
+		for(ConcreteTaskDescriptor tmp : this.getConcreteTaskDescriptors()){
+			tmp.setTaskDescriptor(null) ;
+		}
+		this.getConcreteTaskDescriptors().clear() ;
+	}
 
 	/**
 	 * Getter of taskDefinition.
