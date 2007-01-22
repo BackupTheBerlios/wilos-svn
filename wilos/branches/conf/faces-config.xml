@@ -133,6 +133,7 @@
 	</managed-bean>
 
 	<!-- Woops2 -->
+	<!--  
 	<managed-bean>
 		<managed-bean-name>ActivityBean</managed-bean-name>
 		<managed-bean-class>
@@ -176,12 +177,12 @@
 			<value>#{StepService}</value>
 		</managed-property>
 	</managed-bean>
-
+	-->
 
 	<managed-bean>
 		<managed-bean-name>XmlFileImportBean</managed-bean-name>
 		<managed-bean-class>
-			wilos.presentation.web.XmlFileImportBean
+			wilos.presentation.web.upload.XmlFileImportBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
