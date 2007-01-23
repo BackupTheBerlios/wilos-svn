@@ -15,18 +15,20 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import wilos.business.util.Security;
 
+import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ProfileReader;
 import wilos.presentation.assistant.view.dialogs.ErrorDialog;
 import wilos.presentation.assistant.view.main.MainFrame;
+import wilos.presentation.assistant.view.main.WizardMainFrame;
 import wilos.presentation.assistant.webservices.WizardServicesProxy;
 
 public class LoginPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
         
-        private static String path_file = "wilos/presentation/assistant/ressources/wizard_setting.ini";
+    private static String path_file = "wilos/presentation/assistant/ressources/wizard_setting.ini";
         
 	private JLabel introLabel = null;
 
@@ -48,11 +50,11 @@ public class LoginPanel extends JPanel {
 
 	private JTextField adressTextField = null;
         
-        private MainFrame mframe = null;
+    private MainFrame mframe = null;
         
-        private MainPanel mTaskPanel = null;
+    private MainPanel mTaskPanel = null;
         
-        private ImagePanel iconPanel = null;
+    private ImagePanel iconPanel = null;
 
 	/**
 	 * @param owner
@@ -74,7 +76,7 @@ public class LoginPanel extends JPanel {
                 this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		this.setLayout(new BorderLayout());
 		//this.add(introLabel, BorderLayout.NORTH);
-                this.add(getImagePanel(),BorderLayout.NORTH);
+        this.add(getImagePanel(),BorderLayout.NORTH);
 		this.add(getButtonsPanel(), BorderLayout.SOUTH);
 		this.add(getFieldsPanel(), BorderLayout.CENTER);
                  
@@ -168,19 +170,27 @@ public class LoginPanel extends JPanel {
                         connectionButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					String passcript =  Security.encode(new String(passwordPasswordField.getPassword()));
-                                        ArrayList<RoleDescriptor> rolesListe = WizardServicesProxy.getRolesByUser(loginTextField.getText(),passcript, adressTextField.getText());
+                                        //ArrayList<RoleDescriptor> rolesListe = WizardServicesProxy.getRolesByUser(loginTextField.getText(),passcript, adressTextField.getText());
+										Participant participant = WizardServicesProxy.getParticipant(loginTextField.getText(),passcript, adressTextField.getText());
                                         setVisible(false);                               
                                         
-                                        if (rolesListe.isEmpty())
+                                        if (participant == null)
                                         {
                                             setVisible(true);
                                             ErrorDialog Err = new ErrorDialog("L'utilisateur n'existe pas");
                                         }  
                                         else
                                         {
-                                        	mTaskPanel = new MainPanel(mframe,rolesListe);
-                                            mframe.setContentPane(mTaskPanel);
-                                            mTaskPanel.setVisible(true);                                         
+                                        	//mTaskPanel = new MainPanel(mframe,rolesListe);
+                                            //mframe.setContentPane(mTaskPanel);
+                                            //mTaskPanel.setVisible(true);
+                                        	
+                                        	WizardMainFrame wmf = new WizardMainFrame();
+                                        	wmf.setParticipant(participant);
+                                        	wmf.setVisible(true);
+                                        	
+                                        	mframe.setVisible(false);
+                                        	
                                         }
                                         
                                         

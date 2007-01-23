@@ -59,7 +59,7 @@ public class WizardServicesProxy {
                       XStream xstream = new XStream(); 
                       String result = port.getParticipant(login,password);
                       System.out.println(result);
-                    myParticipant = (Participant)xstream.fromXML(result);
+                    myParticipant = (Participant) xstream.fromXML(result);
             	}
             }
             catch (java.lang.Exception e) {
