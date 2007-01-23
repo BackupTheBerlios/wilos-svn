@@ -63,6 +63,8 @@ public class XMLParser {
 	private static final String presentation = "Presentation";
 	private static final String breakdownElement = "BreakdownElement";
 	private static final String guideline = "Guideline"; 
+	private static final String predecessor = "Predecessor"; 
+	
 	
 	// Types
 	private static final String process = "uma:DeliveryProcess";
@@ -104,15 +106,25 @@ public class XMLParser {
 
 			
 			allRoleDescriptors = getAllRoleDescriptors() ;
-			allTaskDescriptors = getAllTaskDescriptors(allRoleDescriptors);
+			allTaskDescriptors = getAllTaskDescriptors(allRoleDescriptors);			
+			setAllDependencyTD(allTaskDescriptors);
+			
 			allPhases = getAllPhases();
 			allIterations = getAllIterations();
+			
 			allActivities = getAllActivities();
+			setAllDependencyActivity(allActivities);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
+
+
+	
+
+
+
 	/**
 	 * fillGuidesList
 	 * @return
@@ -165,6 +177,60 @@ public class XMLParser {
 
 		return activitiesList;
 	}
+	
+	/**
+	 * setAllDependencyActivity
+	 * @param aSet
+	 */
+	private static void setAllDependencyActivity(Set<Activity> aSet) {
+		Set<Activity> activitiesList = new LinkedHashSet<Activity>();
+		
+		/* evaluate the XPAth request and return the nodeList*/
+		NodeList activities = (NodeList)XMLUtils.evaluate(xpath_activity,XPathConstants.NODESET);
+		
+
+		/* For each node */
+		Node aNode;
+		for(int i = 0 ; i < activities.getLength(); i++){
+			/* for each list element , get the list item */
+			aNode = activities.item(i);
+			Activity anActivity = new Activity();
+			/* Filler for the iteration and the item (node)*/
+			FillerActivity itFiller = new FillerActivity(anActivity, aNode);	
+			Activity returnedActivityFilled = (Activity) itFiller.getFilledElement();
+			
+			setDependencyByActivity(returnedActivityFilled, aNode);			
+		}
+		
+	}
+
+	private static void setDependencyByActivity(Activity _act, Node _node) {
+		// search the predecessor
+		Activity ActivityTobereturn = null;
+		// getting the id of the task
+		String idAct_pred = "" ;
+		NodeList listOfTdNodes = _node.getChildNodes() ;
+		
+		for (int i = 0 ; i < listOfTdNodes.getLength() ; i ++){
+			if (listOfTdNodes.item(i).getNodeName().equals(predecessor)){
+				idAct_pred = listOfTdNodes.item(i).getTextContent();
+			}
+			
+			// process if there is a task for this task desriptor			
+			ActivityTobereturn = getActivityById(allActivities, idAct_pred);
+			// if the task doesn't exist
+			if (ActivityTobereturn != null){
+				//set the task in the taskdescriptor
+				_act.addPredecessor(ActivityTobereturn);
+			}			
+		}
+	}
+
+
+
+
+
+
 
 	/**
 	 * fills the taskslist with task definition
@@ -324,7 +390,59 @@ public class XMLParser {
 	}
 	
 	/**
-	 * getTasksByTaskDescriptor
+	 * setDependencyByTaskDescriptor
+	 * @param _aSet 
+	 * @param taskDescriptorfilled
+	 * @param node
+	 */
+	private static void setDependencyByTaskDescriptor(TaskDescriptor _t, Node _node) {
+		// search the predecessor
+		TaskDescriptor taskTobereturn = null;
+		// getting the id of the task
+		String idTask_pred = "" ;
+		NodeList listOfTdNodes = _node.getChildNodes() ;
+		
+		for (int i = 0 ; i < listOfTdNodes.getLength() ; i ++){
+			if (listOfTdNodes.item(i).getNodeName().equals(predecessor)){				
+				idTask_pred = listOfTdNodes.item(i).getTextContent();
+			}
+			
+			// process if there is a task for this task desriptor			
+			taskTobereturn = getTaskDescriptorById(allTaskDescriptors, idTask_pred);
+			// if the task doesn't exist
+			if (taskTobereturn != null){
+				//set the task in the taskdescriptor
+				_t.addPredecessor(taskTobereturn);				
+			}
+			
+		}
+
+	}
+	
+	
+	private static void setAllDependencyTD(Set<TaskDescriptor> _allTaskD) {
+		// gets all the roles in the file
+		NodeList taskDescriptors = (NodeList)XMLUtils.evaluate(xpath_taskDescriptor,XPathConstants.NODESET);
+		
+		Node aNode;
+		for(int i=0;i<taskDescriptors.getLength();i++){
+			aNode = taskDescriptors.item(i);
+			TaskDescriptor aTaskDescriptor = new TaskDescriptor();
+			FillerTaskDescriptor aFiller = new FillerTaskDescriptor(aTaskDescriptor,aNode);	
+			TaskDescriptor taskDescriptorfilled = (TaskDescriptor)aFiller.getFilledElement();
+			
+			setDependencyByTaskDescriptor(taskDescriptorfilled, aNode);
+		}
+	}
+		
+		
+		
+
+
+
+
+	/**
+	 * setTaskByTaskDescriptor
 	 * @param t
 	 * @return a task 
 	 */
