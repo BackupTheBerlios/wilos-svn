@@ -31,7 +31,7 @@ import wilos.presentation.web.template.MenuBean;
 public class TreeBean {
 
 	private ProcessService processService;
-
+	
 	private Process process;
 
 	String processId = "";

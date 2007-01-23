@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.iteration.Iteration;
@@ -16,7 +17,8 @@ public class IterationNode extends DefaultMutableTreeNode {
 
 	private Iteration iteration;
 
-	public IterationNode(Iteration _iteration, Set<RoleDescriptor> _roleDescriptors) {
+	public IterationNode(Iteration _iteration,
+			Set<RoleDescriptor> _roleDescriptors) {
 		super();
 		this.iteration = _iteration;
 
@@ -35,11 +37,13 @@ public class IterationNode extends DefaultMutableTreeNode {
 		for (BreakdownElement breakdownElement : this.iteration
 				.getBreakDownElements()) {
 			if (breakdownElement instanceof Activity) {
-				this.add(new ActivityNode((Activity) breakdownElement, _roleDescriptors));
+				this.add(new ActivityNode((Activity) breakdownElement,
+						_roleDescriptors));
 			}
-			// TODO Change with ConcreteTaskDescriptorNode !!!
 			else if (breakdownElement instanceof TaskDescriptor) {
-				this.add(new TaskDescriptorNode((TaskDescriptor) breakdownElement, _roleDescriptors));
+				TaskDescriptor td = (TaskDescriptor) breakdownElement;
+				for (ConcreteTaskDescriptor ctd : td.getConcreteTaskDescriptors())
+					this.add(new ConcreteTaskDescriptorNode(ctd, _roleDescriptors));
 			}
 		}
 	}

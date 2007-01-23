@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
@@ -44,9 +45,10 @@ public class ProjectNode extends DefaultMutableTreeNode {
 			else if(breakdownElement instanceof Activity){
 				this.add(new ActivityNode((Activity)breakdownElement, _roleDescriptors)) ;
 			}
-			//TODO Change with ConcreteTaskDescriptorNode !!!
-			else if(breakdownElement instanceof TaskDescriptor){
-				this.add(new TaskDescriptorNode((TaskDescriptor)breakdownElement, _roleDescriptors)) ;
+			else if (breakdownElement instanceof TaskDescriptor) {
+				TaskDescriptor td = (TaskDescriptor) breakdownElement;
+				for (ConcreteTaskDescriptor ctd : td.getConcreteTaskDescriptors())
+					this.add(new ConcreteTaskDescriptorNode(ctd, _roleDescriptors));
 			}
 		}
 	}
