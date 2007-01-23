@@ -1,13 +1,16 @@
 package wilos.presentation.assistant.webservices;
 
 import java.net.URL;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.namespace.QName;
 
 import wilos.business.webservices.WizardServices;
 import wilos.business.webservices.WizardServicesService;
+import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.process.Process;
 import wilos.model.spem2.role.RoleDefinition;
@@ -15,6 +18,7 @@ import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
+import wilos.utils.Constantes;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -53,12 +57,6 @@ public class WizardServicesProxy {
                     WizardServices port = service.getWizardServicesPort();
                     //myWilosUser = port.getWilosUser(login,password);
                       XStream xstream = new XStream(); 
-                      xstream.alias("wilos.business.transfertobject.ParticipantTO",Participant.class);
-                      xstream.alias("wilos.business.transfertobject.RoleDescriptorTO",RoleDescriptor.class);
-                      xstream.alias("wilos.business.transfertobject.TaskDescriptorTO",TaskDescriptor.class);
-                      xstream.alias("wilos.business.transfertobject.TaskDefinitionTO",TaskDefinition.class);
-                      xstream.alias("wilos.business.transfertobject.StepTO",Step.class);
-                      xstream.alias("wilos.business.transfertobject.RoleDefinitionTO",RoleDefinition.class);
                       String result = port.getParticipant(login,password);
                       System.out.println(result);
                     myParticipant = (Participant)xstream.fromXML(result);
@@ -70,24 +68,6 @@ public class WizardServicesProxy {
             return myParticipant;
         }
         
-        private static List<Process> getAllProcess(String login, String password, String address) {
-             ArrayList<Process> pros = new  ArrayList<Process>();
-             try { 
-            	 WizardServicesService service = new WizardServicesService(new URL(address+ENDPOINT), new QName(URLWebService, nameWebService));  
-                // Call Web Service Operation
-            	 WizardServices port = service.getWizardServicesPort();
-                java.util.List<String> result = port.getAllProcess(login, password);
-                XStream xstream = new XStream();     
-                for (String strxml : result) {
-                    pros.add((Process)xstream.fromXML(strxml));
-                }
-
-            } catch (java.lang.Exception ex) {
-                ex.printStackTrace();
-            }
-             return pros;
-        }
-        
         private static Participant getParticipantExample () {
         	Participant p = new Participant();
             p.setName("testSansBD");
@@ -96,17 +76,28 @@ public class WizardServicesProxy {
             TaskDescriptor aTmpTask;
             Step aTmpStep;
             TaskDefinition aTmpTaskDef;
+            ConcreteTaskDescriptor aTmpConcrete;
 
             aTmpRole = new RoleDescriptor();
             aTmpTask = new TaskDescriptor();
             aTmpTaskDef = new TaskDefinition();
             aTmpStep = new Step();
+            aTmpConcrete = new ConcreteTaskDescriptor();
+            
+            
+            aTmpConcrete.setConcreteName("concr_coder le prog");
+            aTmpConcrete.setAccomplishedTime(42);
+            aTmpConcrete.setPlannedFinishingDate(new Date());
+            aTmpConcrete.setState(Constantes.State.READY);
+            aTmpConcrete.setPlannedStartingDate(new Date());
+            aTmpConcrete.setPlannedTime(24);
     			
             aTmpRole.setName("Developper");
             aTmpRole.setDescription("Un gars qui developpe");
 
             aTmpTask.setName("Coder le programme");
             aTmpTask.setDescription("Un grand moment de solitude");
+            aTmpTask.addConcreteTaskDescriptor(aTmpConcrete);
 
             aTmpTaskDef.setName("Coder le programme");
             aTmpTaskDef.setDescription("Un grand moment de solitude");
