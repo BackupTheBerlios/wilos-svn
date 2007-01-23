@@ -758,7 +758,6 @@ public class XMLParserTest extends TestCase {
 								while (itSuccessor.hasNext()) {
 									nbSuccessor++;
 									tmpWBde = itSuccessor.next();
-									System.out.println("NANAA");
 								}
 								assertTrue(nbSuccessor == 1);
 								assertTrue(tmpWBde.getPresentationName().equals("Design the Solution"));								
