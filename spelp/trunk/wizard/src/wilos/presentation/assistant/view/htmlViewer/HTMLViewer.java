@@ -15,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.element.Element;
 import wilos.presentation.assistant.ressources.Bundle;
 
@@ -27,8 +26,8 @@ public class HTMLViewer extends JFrame {
 	private JLabel myElementLabel ;
 	private JButton prevButton;
 	private JButton nextButton;
-	private Stack prevStack;
-	private Stack nextStack;
+	private Stack historyStack;
+	private int cursorStack=0;
 	
 	
 	private HTMLViewer(Point p) {
@@ -44,15 +43,20 @@ public class HTMLViewer extends JFrame {
 		this.myElementLabel = new JLabel() ;
 		northPanel.add(this.myElementLabel);
 		
+		this.historyStack = new Stack() ;
+		
 		this.prevButton = new JButton("<");
 		this.nextButton = new JButton(">");
 		this.prevButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				// traitement
+				setPrevElement();
 			}
 		});
-		this.prevButton.setEnabled(false);
-		this.nextButton.setEnabled(false);
+		this.nextButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				setNextElement();
+			}
+		});
 		northPanel.add(this.prevButton);
 		northPanel.add(this.nextButton);
 		
@@ -89,13 +93,8 @@ public class HTMLViewer extends JFrame {
 		
 		this.setVisible(true);
 	}
-
-	/**
-	 * Affiche les informations de l'element
-	 * 
-	 * @param BreakDownElement bde
-	 */
-	public void setBreakDownElement(Element bde) {
+	
+	private void displayBreakDownElement(Element bde) {
 		/* Affichage du nom */
 		this.myElementLabel.setText(bde.getName()) ;
 		
@@ -110,18 +109,44 @@ public class HTMLViewer extends JFrame {
 		
 		this.setVisible(true);
 		
-		/* Empilement du bde pour l'historique */
-		//this.prevStack.push(bde);
+		/* Activation/Desactivation des boutons d'historique */
+		if(this.cursorStack < 1)
+			this.prevButton.setEnabled(false);
+		else
+			this.prevButton.setEnabled(true);
+		
+		if(this.cursorStack < this.historyStack.size()-1)
+			this.nextButton.setEnabled(true);
+		else
+			this.nextButton.setEnabled(false);
+	}
+
+	/**
+	 * Affiche les informations de l'element
+	 * 
+	 * @param Element bde
+	 */
+	public void setBreakDownElement(Element bde) {
+		if(!this.historyStack.empty())
+			while(this.cursorStack != this.historyStack.size()-1)
+				this.historyStack.pop();
+		
+		this.historyStack.push(bde);
+		
+		if(this.historyStack.size() > 6)
+			this.historyStack.remove(0);
+		else
+			this.cursorStack = this.historyStack.size()-1;
+		
+		this.displayBreakDownElement(bde);
 	}
 	
 	public void setPrevElement() {
-		this.nextStack.push(this.prevStack.pop()) ;
-		this.setBreakDownElement((BreakdownElement)this.prevStack.peek()) ;
+		this.displayBreakDownElement((Element)this.historyStack.get(--this.cursorStack)) ;
 	}
 	
 	public void setNextElement() {
-		this.setBreakDownElement((BreakdownElement)this.nextStack.peek()) ;
-		this.prevStack.push(this.nextStack.pop()) ;
+		this.displayBreakDownElement((Element)this.historyStack.get(++this.cursorStack)) ;
 	}
 	
 	/**
