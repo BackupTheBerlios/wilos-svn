@@ -10,6 +10,11 @@
 package wilos.business.transfertobject;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.model.spem2.guide.Guideline;
 import wilos.model.spem2.task.TaskDescriptor;
 
 /**
@@ -33,6 +38,11 @@ public class TaskDescriptorTO extends TaskDescriptor implements Serializable{
         if(myTaskDescriptor.getTaskDefinition() != null) this.setTaskDefinition(new TaskDefinitionTO(myTaskDescriptor.getTaskDefinition()));
         if(this.getTaskDefinition() != null && this.getDescription().length()==0)  this.setDescription(this.getTaskDefinition().getDescription());
         
+        Set<ConcreteTaskDescriptor> concreteTaskDescriptors= new HashSet<ConcreteTaskDescriptor>();
+        for (ConcreteTaskDescriptor ct : myTaskDescriptor.getConcreteTaskDescriptors()) {
+        	concreteTaskDescriptors.add(new ConcreteTaskDescriptorTO(ct));
+        }
+        this.addAllConcreteTaskDescriptors(concreteTaskDescriptors);
     }
 
     
