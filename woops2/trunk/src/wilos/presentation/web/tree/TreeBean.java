@@ -19,11 +19,9 @@ import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.project.ProjectService;
 import wilos.model.misc.project.Project;
-import wilos.presentation.web.task.ActivityViewerBean;
+import wilos.model.misc.wilosuser.WilosUser;
 import wilos.presentation.web.task.ConcreteTaskViewerBean;
-import wilos.presentation.web.task.IterationViewerBean;
 import wilos.presentation.web.task.PhaseViewerBean;
-import wilos.presentation.web.task.ProjectViewerBean;
 import wilos.presentation.web.task.TaskViewerBean;
 import wilos.presentation.web.template.MenuBean;
 
