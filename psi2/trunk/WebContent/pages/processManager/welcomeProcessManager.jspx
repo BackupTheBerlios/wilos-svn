@@ -2,7 +2,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ice="http://www.icesoft.com/icefaces/component">
 
-<f:loadBundle basename="wilos.resources.messages" var="msgs" />
+	<f:loadBundle basename="wilos.resources.messages" var="msgs" />
 	<ice:outputDeclaration doctypeRoot="HTML"
 		doctypePublic="-//W3C//DTD HTML 4.01 Transitional//EN"
 		doctypeSystem="http://www.w3.org/TR/html4/loose.dtd" />
@@ -14,305 +14,60 @@
 	</head>
 	<body>
 	<ice:form>
-					<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1"
-						border="0">
+		<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1"
+			border="0">
 
-						<ice:panelTabSet>
+			<ice:panelTabSet>
 
-							<ice:panelTab label="Processes">
-								<br />
-								<br />
-						 
-								<ice:outputText value="Process Table :" />
-								
-								<table cellpadding="0" cellspacing="0">
-	                    		<tr>
-	                        		<td>
-	                        		<ice:dataTable var="activity"
-	                                           value="#{ActivityBean.activitiesList}"
-	                                           columnClasses="tableCol"
-	                                           scrollable="#{table.scrollable}"
-	                                           scrollHeight="#{table.scrollableHeight}"
-	                                           columnWidths="150px,150px,150px,150px">					
-										
-										<ice:column>
-											<f:facet name="header">
-			                                        <ice:outputText
-			                                                value="#{msgs['component.tableactivity.column1']}"/>
-			                                </f:facet>
-											<ice:commandLink value="#{activity.id}" actionListener="#{ActivityBean.chooseProcessActionListener}" >
-												<f:param  name="process_id" value="#{activity.id}"/>
-											</ice:commandLink>
-										</ice:column>
-																			
-										<ice:column>
-											<f:facet name="header">
-			                                        <ice:outputText  value="#{msgs['component.tableactivity.column2']}"/>
-			                                </f:facet>
-											<ice:outputText value="#{activity.prefix}" />
-										</ice:column>
-										
-										<ice:column>
-											<f:facet name="header">
-			                                        <ice:outputText value="#{msgs['component.tableactivity.column3']}"/>
-			                                </f:facet>
-										<ice:selectBooleanCheckbox value="#{activity.isPlanned}"
-											disabled="true" />
-										</ice:column>
-										
-										<ice:column>
-											<f:facet name="header">
-			                                        <ice:outputText value="#{msgs['component.tableactivity.column4']}"/>
-			                                </f:facet>
-										<ice:selectBooleanCheckbox value="#{activity.isOptional}"
-											disabled="true" />
-										</ice:column>
-										
-									</ice:dataTable>
-									</td>
-	                    		</tr>
-	                			</table>
-								
-								<br />
-								<br />
-							</ice:panelTab>
-							
-							<ice:panelTab label="RoleDescriptor">
-								<br />
-								<br />
-						 
-								<ice:outputText value="RoleDescriptor Table :" />
-								
-								<table cellpadding="0" cellspacing="0">
-	                    		<tr>
-	                        		<td>
-	                        		<ice:dataTable var="roledescriptor"
-	                                           value="#{RoleDescriptorBean.roleDescriptorList}"
-	                                           columnClasses="tableCol"
-	                                           scrollable="#{table.scrollable}"
-	                                           scrollHeight="#{table.scrollableHeight}"
-	                                           columnWidths="150px,150px,150px,150px">					
-										
-										<ice:column>
-											<f:facet name="header">
-			                                        <ice:outputText
-			                                                value="#{msgs['component.tableroledescriptor.column1']}"/>
-			                                </f:facet>
-											<ice:outputText value="#{roledescriptor.id}" />
-										</ice:column>
-																			
-										<ice:column>
-											<f:facet name="header">
-			                                        <ice:outputText
-			                                                value="#{msgs['component.tableroledescriptor.column2']}"/>
-			                                </f:facet>
-											<ice:outputText value="#{roledescriptor.name}" />
-										</ice:column>
-										
-										<ice:column>
-											<f:facet name="header">
-			                                        <ice:outputText
-			                                                value="#{msgs['component.tableroledescriptor.column3']}"/>
-			                                </f:facet>
-											<ice:outputText value="#{roledescriptor.description}" />
-										</ice:column>
-										
-										<ice:column>
-											<f:facet name="header">
-			                                        <ice:outputText
-			                                                value="RDefId"/>
-			                                </f:facet>
-											<ice:outputText value="#{roledescriptor.roleDefinition.id}" />
-										</ice:column>
-										
-									</ice:dataTable>
-									</td>
-	                    		</tr>
-	                			</table>
-	               				<br />
-								<br />
-							</ice:panelTab>
-							
-							<ice:panelTab label="TaskDescriptor">
-								<br />
-								<br />
-						 
-								<ice:outputText value="TaskDescriptor Table :" />
-								
-								<table cellpadding="0" cellspacing="0">
-	                    		<tr>
-	                        		<td>
-	                        		<ice:dataTable var="taskdescriptor"
-	                                           value="#{TaskDescriptorBean.taskDescriptorList}"
-	                                           columnClasses="tableCol"
-	                                           scrollable="#{table.scrollable}"
-	                                           scrollHeight="#{table.scrollableHeight}"
-	                                           columnWidths="150px,150px,150px,150px">					
-										
-										<ice:column>
-											<f:facet name="header">
-			                                        <ice:outputText
-			                                                value="#{msgs['component.tabletaskdescriptor.column1']}"/>
-			                                </f:facet>
-											<ice:outputText value="#{taskdescriptor.id}" />
-										</ice:column>
-																			
-										<ice:column>
-											<f:facet name="header">
-			                                        <ice:outputText
-			                                                value="#{msgs['component.tabletaskdescriptor.column2']}"/>
-			                                </f:facet>
-											<ice:outputText value="#{taskdescriptor.name}" />
-										</ice:column>
-										
-										<ice:column>
-											<f:facet name="header">
-			                                        <ice:outputText
-			                                                value="#{msgs['component.tabletaskdescriptor.column3']}"/>
-			                                </f:facet>
-											<ice:outputText value="#{taskdescriptor.description}" />
-										</ice:column>
-										
-										<ice:column>
-											<f:facet name="header">
-			                                        <ice:outputText
-			                                                value="#{msgs['component.tabletaskdescriptor.column4']}"/>
-			                                </f:facet>
-			                                <ice:commandLink value="#{taskdescriptor.taskDefinition.id}" actionListener="#{TaskDefinitionBean.chooseTaskDefinitionActionListener}" >
-												<f:param  name="taskdefinition_id" value="#{taskdescriptor.taskDefinition.id}"/>
-											</ice:commandLink>
-											<!-- <ice:outputText value="#{taskdescriptor.taskDefinition.id}" /> -->
-										</ice:column>
-										
-									</ice:dataTable>
-									</td>
-	                    		</tr>
-	                			</table>
-	               				<br />
-								<br />
-							</ice:panelTab>
-							
-							<ice:panelTab label="Step">
-								<br />
-								<br />
-						 
-								<ice:outputText value="Step Table :" />
-								
-								<table cellpadding="0" cellspacing="0">
-	                    		<tr>
-	                        		<td>
-	                        		<ice:dataTable var="step"
-	                                           value="#{StepBean.stepList}"
-	                                           columnClasses="tableCol"
-	                                           scrollable="#{table.scrollable}"
-	                                           scrollHeight="#{table.scrollableHeight}"
-	                                           columnWidths="150px,150px,150px,150px">					
-										
-										<ice:column>
-											<f:facet name="header">
-			                                        <ice:outputText
-			                                                value="#{msgs['component.tablestep.column1']}"/>
-			                                </f:facet>
-											<ice:outputText value="#{step.id}" />
-										</ice:column>
-																			
-										<ice:column>
-											<f:facet name="header">
-			                                        <ice:outputText
-			                                                value="#{msgs['component.tablestep.column2']}"/>
-			                                </f:facet>
-											<ice:outputText value="#{step.name}" />
-										</ice:column>
-										
-										<ice:column>
-											<f:facet name="header">
-			                                        <ice:outputText
-			                                                value="#{msgs['component.tablestep.column3']}"/>
-			                                </f:facet>
-											<ice:outputText value="#{step.description}" />
-										</ice:column>
-										
-									</ice:dataTable>
-									</td>
-	                    		</tr>
-	                			</table>
-	               				<br />
-								<br />
-							</ice:panelTab>
-							
-							<ice:panelTab label="Create Activity">
-								<br />
-								<ice:outputText value="Valeur prefix : " />
-								<ice:inputText value="#{ActivityBean.activity.prefix}" />
-								<br />
-								<br />
-								<ice:outputText value="isPlanned : " />
-								<ice:selectBooleanCheckbox
-									value="#{ActivityBean.activity.isPlanned}" />
-								<br />
-								<ice:outputText value="isOptional : " />
-								<ice:selectBooleanCheckbox
-									value="#{ActivityBean.activity.isOptional}" />
-								<br />
-								<br />
-								<ice:outputText value="Status : #{ActivityBean.viewerMessage}" />
-								<br />
-								<br />
-								<ice:commandButton value="Create Activity"
-									actionListener="#{ActivityBean.saveActivityActionListener}" />
-								<ice:commandButton value="New/Reset Activity"
-									actionListener="#{ActivityBean.resetActivityActionListener}" />
-							</ice:panelTab>
+				<ice:panelTab label="Import Process File">
 
-							<ice:panelTab label="Import Process File">
+					<ice:panelGrid styleClass="componentLayoutRootTable" columns="1">
+						<ice:panelGroup styleClass="formBorderHighlight"
+							style="text-align:left">
+							<br />
 
-								<ice:panelGrid styleClass="componentLayoutRootTable" columns="1">
-									<ice:panelGroup styleClass="formBorderHighlight"
-										style="text-align:left">
-										<br />
+							<br />
+							<ice:outputText value="Add your file :" />
+							<br />
+							<ice:inputFile style="border:none; width:400px; height:70px;"
+								progressListener="#{XmlFileImportBean.progressListener}"
+								actionListener="#{XmlFileImportBean.uploadFileActionListener}"
+								uniqueFolder="false" file="#{XmlFileImportBean.file}"
+								immediate="true" />
+							<ice:outputProgress id="pro" value="#{XmlFileImportBean.percent}" />
+							<ice:outputText value="File Name: #{XmlFileImportBean.fileName}" />
+							<br />
+							<ice:outputText
+								value="Content Type: #{XmlFileImportBean.contentType}" />
+							<ice:messages />
+						</ice:panelGroup>
 
-										<br />
-										<ice:outputText value="Add your file :" />
-										<br />
-										<ice:inputFile style="border:none; width:400px; height:70px;"
-											progressListener="#{XmlFileImportBean.progress}"
-											actionListener="#{XmlFileImportBean.action}" 
-											uniqueFolder="false" file="#{XmlFileImportBean.file}" immediate="true"/>
-										<ice:outputProgress id="pro"
-											value="#{XmlFileImportBean.percent}" />
-										<ice:outputText
-											value="File Name: #{XmlFileImportBean.fileName}" />
-										<br />
-										<ice:outputText
-											value="Content Type: #{XmlFileImportBean.contentType}" />
-										<ice:messages />
-									</ice:panelGroup>
+						<br />
 
-									<br />
-
-								</ice:panelGrid>
-							</ice:panelTab>
-							
-							<ice:panelTab label="Affect a process to a project">
-
-								<ice:panelGrid styleClass="componentLayoutRootTable" columns="1">
-									<ice:panelGroup styleClass="formBorderHighlight"
-										style="text-align:left">
-										<ice:dataTable value="#{ProjectBean.projectsList}" border="1" var="project">
-											<ice:column>
-												<f:facet name="header">
-											    	<ice:outputText value="Name"/>
-											    </f:facet>
-											    <ice:outputText value="#{project.name}"/>
-											</ice:column>											
-										</ice:dataTable>
-									</ice:panelGroup>
-								</ice:panelGrid>
-							</ice:panelTab>
-							
-						</ice:panelTabSet>
 					</ice:panelGrid>
-				</ice:form>
-</body>
-</html>
+				</ice:panelTab>
+
+				<ice:panelTab label="Affect a process to a project">
+
+					<ice:panelGrid styleClass="componentLayoutRootTable" columns="1">
+						<ice:panelGroup styleClass="formBorderHighlight"
+							style="text-align:left">
+							<ice:dataTable value="#{ProjectBean.projectsList}" border="1"
+								var="project">
+								<ice:column>
+									<f:facet name="header">
+										<ice:outputText value="Name" />
+									</f:facet>
+									<ice:outputText value="#{project.name}" />
+								</ice:column>
+							</ice:dataTable>
+						</ice:panelGroup>
+					</ice:panelGrid>
+				</ice:panelTab>
+
+			</ice:panelTabSet>
+		</ice:panelGrid>
+	</ice:form>
+	</body>
+	</html>
 </f:view>
