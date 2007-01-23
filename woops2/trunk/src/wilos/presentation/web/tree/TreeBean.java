@@ -14,8 +14,8 @@ import javax.swing.tree.DefaultTreeModel;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import wilos.business.services.spem2.process.ProcessService;
-import wilos.model.spem2.process.Process;
+import wilos.business.services.project.ProjectService;
+import wilos.model.misc.project.Project;
 import wilos.presentation.web.task.TaskViewerBean;
 import wilos.presentation.web.template.MenuBean;
 
@@ -30,11 +30,11 @@ import wilos.presentation.web.template.MenuBean;
  */
 public class TreeBean {
 
-	private ProcessService processService;
+	private ProjectService projectService;
 	
-	private Process process;
+	private Project project;
 
-	String processId = "";
+	private String projectId = "";
 
 	public Boolean affectedTaskFilter = false;
 
@@ -57,18 +57,17 @@ public class TreeBean {
 	 * @return tree model.
 	 */
 
-	private void buildModel(boolean _mustBuildProcess) {
-		if (this.processId != null && !this.processId.equals("")) {
-			if (_mustBuildProcess) {
-				this.process = this.processService
-						.getEntireProcess(this.processId);
+	private void buildModel(boolean _mustBuildProject) {
+		if (this.projectId != null && !this.projectId.equals("")) {
+			if (_mustBuildProject) {
+				this.project = this.projectService.getProject(this.projectId);
 			}
-			ProcessNode processNode;
+			ProjectNode projectNode;
 			if (this.affectedTaskFilter)
-				processNode = new ProcessNode(process, null);
+				projectNode = new ProjectNode(this.project, null);
 			else
-				processNode = new ProcessNode(process, null);
-			this.model = new DefaultTreeModel(processNode);
+				projectNode = new ProjectNode(this.project, null);
+			this.model = new DefaultTreeModel(projectNode);
 		}
 	}
 	
@@ -78,9 +77,10 @@ public class TreeBean {
 
 	public List<SelectItem> getProjects() {
 		List<SelectItem> projectsList = new ArrayList<SelectItem>();
-		for (Process process : this.processService.getProcessesList()) {
+		
+		for (Project project : this.projectService.getAllProjects()) {
 			projectsList
-					.add(new SelectItem(process.getId(), process.getName()));
+					.add(new SelectItem(project.getProject_id(), project.getName()));
 		}
 		projectsList.add(new SelectItem("", ""));
 		return projectsList;
@@ -144,8 +144,8 @@ public class TreeBean {
 	/**
 	 * @return the processId
 	 */
-	public String getProcessId() {
-		return this.processId ;
+	public String getProjectId() {
+		return this.projectId ;
 	}
 
 	/**
@@ -154,25 +154,8 @@ public class TreeBean {
 	 * @param _processId
 	 *            The processId to set.
 	 */
-	public void setProcessId(String _processId) {
-		this.processId = _processId ;
-	}
-
-	/**
-	 * @return the processService
-	 */
-	public ProcessService getProcessService() {
-		return this.processService ;
-	}
-
-	/**
-	 * Setter of processService.
-	 * 
-	 * @param _processService
-	 *            The processService to set.
-	 */
-	public void setProcessService(ProcessService _processService) {
-		this.processService = _processService ;
+	public void setProjectId(String _processId) {
+		this.projectId = _processId ;
 	}
 
 	public Boolean getAffectedTaskFilter() {
@@ -181,5 +164,13 @@ public class TreeBean {
 
 	public void setAffectedTaskFilter(Boolean _affectedTaskFilter) {
 		this.affectedTaskFilter = _affectedTaskFilter;
+	}
+
+	public ProjectService getProjectService() {
+		return projectService;
+	}
+
+	public void setProjectService(ProjectService projectService) {
+		this.projectService = projectService;
 	}
 }

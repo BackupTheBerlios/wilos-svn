@@ -167,8 +167,8 @@
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
-			<property-name>processService</property-name>
-			<value>#{ProcessService}</value>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
 		</managed-property>
 	</managed-bean>
 	

@@ -34,7 +34,6 @@ public class ActivityNode extends DefaultMutableTreeNode {
 		
 		for (BreakdownElement breakdownElement : this.activity
 				.getBreakDownElements()) {
-			// TODO Change with ConcreteTaskDescriptorNode !!!
 			if (breakdownElement instanceof Activity) {
 				this.add(new ActivityNode(
 						(Activity) breakdownElement, _roleDescriptors));

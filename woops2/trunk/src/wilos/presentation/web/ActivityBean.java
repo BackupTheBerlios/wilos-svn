@@ -75,7 +75,7 @@ public class ActivityBean {
 		TreeBean treeBean = (TreeBean) context.getApplication()
 		.getVariableResolver().resolveVariable(context,"TreeBean");
 		taskDescriptorBean.setProcessId(processId);
-		treeBean.setProcessId(processId);
+		treeBean.setProjectId(processId);
 	}
 	
 	/**
