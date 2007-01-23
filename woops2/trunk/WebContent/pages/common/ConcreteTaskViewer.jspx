@@ -6,9 +6,7 @@
 		border="0" bgcolor="#BEB4CC">
 		<ice:panelTabSet bgcolor="#BEB4CC">
 			<br />
-			<ice:outputText value="#{msgs['concretetaskviewer.pagetitle']}" />
-			<br />
-			<ice:panelTab label="#{msgs['concretetaskviewer.paneltabtitle']}">
+			<ice:panelTab label="ConcreteTask Display">
 				<br />
 				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2"
 					border="0">
@@ -27,6 +25,9 @@
 					<ice:outputText value="planned starting date " />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.plannedStartingDate}" />
+					<ice:outputText value="plannedFinishingDate " />
+					<ice:outputText
+						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.plannedFinishingDate}" />
 				</ice:panelGrid>
 			</ice:panelTab>
 		</ice:panelTabSet>

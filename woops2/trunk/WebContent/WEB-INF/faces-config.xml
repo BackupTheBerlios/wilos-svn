@@ -196,6 +196,18 @@
 		</managed-property>
 	</managed-bean>
 
+	<managed-bean>
+		<managed-bean-name>PhaseViewerBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.task.PhaseViewerBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>phaseService</property-name>
+			<value>#{PhaseService}</value>
+		</managed-property>
+	</managed-bean>
+
 	<navigation-rule>
 		<description>Theme Reload</description>
 		<navigation-case>
