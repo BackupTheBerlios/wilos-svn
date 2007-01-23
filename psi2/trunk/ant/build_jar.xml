@@ -47,6 +47,7 @@
 				<include name="**/*.xml" />
 				<include name="**/*.tld" />
 				<include name="**/*.properties" />
+				<excludesfile name="${src.dir}/applicationContext.xml" />
 			</fileset>
 		</copy>
 	</target>
