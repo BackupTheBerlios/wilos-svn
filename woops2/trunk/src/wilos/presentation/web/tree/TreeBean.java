@@ -21,6 +21,7 @@ import wilos.presentation.web.task.ActivityViewerBean;
 import wilos.presentation.web.task.ConcreteTaskViewerBean;
 import wilos.presentation.web.task.IterationViewerBean;
 import wilos.presentation.web.task.PhaseViewerBean;
+import wilos.presentation.web.task.ProjectViewerBean;
 import wilos.presentation.web.task.TaskViewerBean;
 import wilos.presentation.web.template.MenuBean;
 
@@ -151,7 +152,12 @@ public class TreeBean {
 			mb.changePage(_pageId);
 		}
 		else if (_pageId.equals(WilosObjectNode.PROJECTNODE)){
-			// TODO faire selectNodeToShow WilosObjectNode.PROJECTNODE
+			ProjectViewerBean p = (ProjectViewerBean) context.getApplication()
+			.getVariableResolver().resolveVariable(context,"ProjectViewerBean");
+			p.setProjectId(_objectId);
+			// model building
+			p.buildProjectModel();
+			mb.changePage(_pageId);
 		}
 		else if (_pageId.equals(WilosObjectNode.TASKNODE)){
 			TaskViewerBean tv = (TaskViewerBean) context.getApplication()
