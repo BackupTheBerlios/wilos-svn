@@ -400,26 +400,26 @@ public class XMLParser {
 	private static void setGuideByTaskDefinition(TaskDefinition _taskDefinition, Node _node) {
 		NodeList listOfTdNodes = _node.getChildNodes() ;
 		Guideline GuideTobereturn = null;
-		boolean trouve = false ;
+
 		String idGuide = "";
 		
 		// search the nodes of the guide
-		for (int i = 0 ; i < listOfTdNodes.getLength() && !trouve ; i ++){
-			if (listOfTdNodes.item(i).getNodeName().equals(guideline)){
-				trouve = true ;
+		for (int i = 0 ; i < listOfTdNodes.getLength() ; i ++){
+			if (listOfTdNodes.item(i).getNodeName().equals(guideline)){				
 				// recuperation des differents id des guidelines
-				idGuide = listOfTdNodes.item(i).getTextContent();
+				idGuide = listOfTdNodes.item(i).getTextContent();				
+				
+				GuideTobereturn = getGuidelineById(idGuide);
+				// if the guideline doesn't exist
+				if (GuideTobereturn != null){
+					 //set the guideline in the taskDefinition
+					_taskDefinition.addGuideline(GuideTobereturn);
+				}
+				
 			}
 		}	
 		
-		if (trouve){
-			GuideTobereturn = getGuidelineById(idGuide);
-			// if the guideline doesn't exist
-			if (GuideTobereturn != null){
-				 //set the guideline in the taskDefinition
-				_taskDefinition.addGuideline(GuideTobereturn);
-			}
-		}
+
 	}
 	
 	/**
