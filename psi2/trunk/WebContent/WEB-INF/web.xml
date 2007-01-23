@@ -24,7 +24,7 @@
     
     <context-param>
         <param-name>com.icesoft.faces.uploadDirectory</param-name>
-        <param-value>/upload</param-value>
+        <param-value>\upload</param-value>
     </context-param>
     
     <!-- concurrent DOM views -->
@@ -103,7 +103,7 @@
     <servlet-mapping>
         <servlet-name>Blocking Servlet</servlet-name>
         <url-pattern>/block/*</url-pattern>
-    </servlet-mapping>
+  </servlet-mapping>
   
     <session-config>
       <session-timeout>15</session-timeout>

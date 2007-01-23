@@ -20,7 +20,7 @@
 		</variable-resolver>
 		<locale-config />
 	</application>
-	
+
 	<!-- Beans -->
 	<managed-bean>
 		<managed-bean-name>LoginBean</managed-bean-name>
@@ -33,7 +33,7 @@
 			<value>#{LoginService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>ParticipantBean</managed-bean-name>
 		<managed-bean-class>
@@ -45,15 +45,11 @@
 			<value>#{ParticipantService}</value>
 		</managed-property>
 		<managed-property>
-			<property-name>projectService</property-name>
-			<value>#{ProjectService}</value>
-		</managed-property>
-		<managed-property>
 			<property-name>loginService</property-name>
 			<value>#{LoginService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>ProcessManagerBean</managed-bean-name>
 		<managed-bean-class>
@@ -69,7 +65,7 @@
 			<value>#{LoginService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>ProjectDirectorBean</managed-bean-name>
 		<managed-bean-class>
@@ -85,7 +81,7 @@
 			<value>#{LoginService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>ProjectBean</managed-bean-name>
 		<managed-bean-class>
@@ -97,38 +93,47 @@
 			<value>#{ProjectService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>RoleBean</managed-bean-name>
-		<managed-bean-class>wilos.presentation.web.role.RoleBean</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
+		<managed-bean-class>
+			wilos.presentation.web.role.RoleBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
 			<property-name>roleService</property-name>
 			<value>#{RoleService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<!-- Managed Bean for menu interaction -->
 	<managed-bean>
 		<managed-bean-name>menu</managed-bean-name>
-		<managed-bean-class>wilos.presentation.web.template.MenuBean</managed-bean-class>
+		<managed-bean-class>
+			wilos.presentation.web.template.MenuBean
+		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>treeMenu</managed-bean-name>
-		<managed-bean-class>wilos.presentation.web.template.TreeMenu</managed-bean-class>
+		<managed-bean-class>
+			wilos.presentation.web.template.TreeMenu
+		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
-	
+
 	<!-- Managed Bean for connection view management -->
 	<managed-bean>
 		<managed-bean-name>connect</managed-bean-name>
-		<managed-bean-class>wilos.presentation.web.template.ConnectViewBean</managed-bean-class>
+		<managed-bean-class>
+			wilos.presentation.web.template.ConnectViewBean
+		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
-	
+
 	<!-- Woops2 -->
+	<!--  
 	<managed-bean>
 		<managed-bean-name>ActivityBean</managed-bean-name>
 		<managed-bean-class>
@@ -140,19 +145,7 @@
 			<value>#{ActivityService}</value>
 		</managed-property>
 	</managed-bean>
-	
-	<managed-bean>
-		<managed-bean-name>RoleDescriptorBean</managed-bean-name>
-		<managed-bean-class>
-			wilos.presentation.web.RoleDescriptorBean
-		</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-		<managed-property>
-			<property-name>roleDescriptorService</property-name>
-			<value>#{RoleDescriptorService}</value>
-		</managed-property>
-	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>TaskDescriptorBean</managed-bean-name>
 		<managed-bean-class>
@@ -164,7 +157,7 @@
 			<value>#{TaskDescriptorService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>TaskDefinitionBean</managed-bean-name>
 		<managed-bean-class>
@@ -172,7 +165,7 @@
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>StepBean</managed-bean-name>
 		<managed-bean-class>
@@ -184,12 +177,12 @@
 			<value>#{StepService}</value>
 		</managed-property>
 	</managed-bean>
-	
-	
+	-->
+
 	<managed-bean>
 		<managed-bean-name>XmlFileImportBean</managed-bean-name>
 		<managed-bean-class>
-			wilos.presentation.web.XmlFileImportBean
+			wilos.presentation.web.upload.XmlFileImportBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
@@ -197,21 +190,22 @@
 			<value>#{ProcessService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<validator>
 		<validator-id>emailValidator</validator-id>
 		<validator-class>
 			wilos.presentation.web.validators.EmailValidator
 		</validator-class>
 	</validator>
-	
+
 	<validator>
 		<validator-id>equalValidator</validator-id>
 		<validator-class>
 			wilos.presentation.web.validators.EqualValidator
 		</validator-class>
 	</validator>
-	
+
+
 	<managed-bean>
 		<managed-bean-name>TreeBean</managed-bean-name>
 		<managed-bean-class>
@@ -235,7 +229,7 @@
 			<value>#{TaskDescriptorService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<navigation-rule>
 		<description>Theme Reload</description>
 		<navigation-case>
@@ -260,55 +254,55 @@
 			<redirect />
 		</navigation-case>
 		<navigation-case>
-    		<from-outcome>admin_main</from-outcome>
-    		<to-view-id>/admin_main.iface</to-view-id>
-    		<redirect />
-  		</navigation-case>
-  		<navigation-case>
-    		<from-outcome>welcome</from-outcome>
-    		<to-view-id>/welcome.iface</to-view-id>
-    		<redirect />
-  		</navigation-case>
-  		<navigation-case>
-    		<from-outcome>welcomeProjectDirector</from-outcome>
-    		<to-view-id>/welcomeProjectDirector.iface</to-view-id>
-    		<redirect />
-  		</navigation-case>
-  		<navigation-case>
-    		<from-outcome>welcomeProcessManager</from-outcome>
-    		<to-view-id>/welcomeProcessManager.iface</to-view-id>
-    		<redirect />
-  		</navigation-case>
-  		<navigation-case>
-    		<from-outcome>processManager_create</from-outcome>
-    		<to-view-id>/processManager_create.iface</to-view-id>
-    		<redirect />
-  		</navigation-case>
-  		<navigation-case>
-    		<from-outcome>projectDirector_create</from-outcome>
-    		<to-view-id>/projectDirector_create.iface</to-view-id>
-    		<redirect />
-  		</navigation-case>
-  		<navigation-case>
-    		<from-outcome>project_create</from-outcome>
-    		<to-view-id>/project_create.iface</to-view-id>
-    		<redirect />
-  		</navigation-case>
-  		<navigation-case>
-    		<from-outcome>process_create</from-outcome>
-    		<to-view-id>/process_create.iface</to-view-id>
-    		<redirect />
-  		</navigation-case>
-  		<navigation-case>
-    		<from-outcome>affect_roles</from-outcome>
-    		<to-view-id>/affect_roles.iface</to-view-id>
-    		<redirect />
-  		</navigation-case>
-  		<navigation-case>
-    		<from-outcome>createProject</from-outcome>
-    		<to-view-id>/project_create.iface</to-view-id>
-    		<redirect />
-  		</navigation-case>
+			<from-outcome>admin_main</from-outcome>
+			<to-view-id>/admin_main.iface</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/welcome.iface</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>welcomeProjectDirector</from-outcome>
+			<to-view-id>/welcomeProjectDirector.iface</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>welcomeProcessManager</from-outcome>
+			<to-view-id>/welcomeProcessManager.iface</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>processManager_create</from-outcome>
+			<to-view-id>/processManager_create.iface</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>projectDirector_create</from-outcome>
+			<to-view-id>/projectDirector_create.iface</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>project_create</from-outcome>
+			<to-view-id>/project_create.iface</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>process_create</from-outcome>
+			<to-view-id>/process_create.iface</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>affect_roles</from-outcome>
+			<to-view-id>/affect_roles.iface</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>createProject</from-outcome>
+			<to-view-id>/project_create.iface</to-view-id>
+			<redirect />
+		</navigation-case>
 	</navigation-rule>
 
 </faces-config>
