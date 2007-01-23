@@ -10,7 +10,7 @@
 	<ice:outputText styleClass="propertyLabel"
 		value="#{msgs['navigation.checkbox.label']}" />
 	<ice:selectBooleanCheckbox value="#{TreeBean.affectedTaskFilter}"
-		partialSubmit="true" />
+		partialSubmit="true" valueChangeListener="#{TreeBean.filterTreeActionListener}"/>
 	<br />
 
 	<ice:outputText value="label" styleClass="valueHeader" />
