@@ -1,9 +1,12 @@
 package wilos.presentation.web.tree;
 
+import java.util.Set;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
 
 public class ActivityNode extends DefaultMutableTreeNode {
@@ -12,7 +15,7 @@ public class ActivityNode extends DefaultMutableTreeNode {
 
 	private Activity activity;
 
-	public ActivityNode(Activity _activity) {
+	public ActivityNode(Activity _activity, Set<RoleDescriptor> _roleDescriptors) {
 		super();
 		this.activity = _activity;
 
@@ -33,7 +36,7 @@ public class ActivityNode extends DefaultMutableTreeNode {
 			// TODO Change with ConcreteTaskDescriptorNode !!!
 			if (breakdownElement instanceof TaskDescriptor) {
 				this.add(new TaskDescriptorNode(
-						(TaskDescriptor) breakdownElement));
+						(TaskDescriptor) breakdownElement, _roleDescriptors));
 			}
 		}
 	}
