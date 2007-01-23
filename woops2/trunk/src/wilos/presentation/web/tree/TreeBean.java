@@ -9,6 +9,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -17,12 +19,12 @@ import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.project.ProjectService;
 import wilos.model.misc.project.Project;
+import wilos.model.misc.wilosuser.WilosUser;
 import wilos.presentation.web.task.ActivityViewerBean;
 import wilos.presentation.web.task.ConcreteTaskViewerBean;
 import wilos.presentation.web.task.IterationViewerBean;
 import wilos.presentation.web.task.PhaseViewerBean;
 import wilos.presentation.web.task.ProjectViewerBean;
-import wilos.presentation.web.task.TaskViewerBean;
 import wilos.presentation.web.template.MenuBean;
 
 /**
@@ -84,8 +86,13 @@ public class TreeBean {
 	public List<SelectItem> getProjects() {
 		List<SelectItem> projectsList = new ArrayList<SelectItem>();
 		
+		HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
+		HttpSession httpSession = httpServletRequest.getSession() ;
+		WilosUser wilosUser = (WilosUser) httpSession.getAttribute("wilosUser") ; 
+		
 		for (Project project : this.projectService.getAllProjects()) {
-			//Add the project if the wilosUser is in this project.
+			//if(loginService.isParticipant(wilosUser))
+			//if(project.getParticipants().contains((Participant)wilosUser))
 			projectsList.add(new SelectItem(project.getProject_id(), project.getName()));
 		}
 		projectsList.add(new SelectItem("", "Choose a project ..."));
@@ -113,12 +120,6 @@ public class TreeBean {
 		this.selectNodeToShow(nodeId,pageId);
 	}
 
-	/**
-	 * 
-	 * @param _objectId
-	 * @param _pageId
-	 * node selection function
-	 */
 	private void selectNodeToShow(String _objectId, String _pageId) {
 		logger.debug("### TreeBean ### selectNodeToShow id="+_objectId+" page="+_pageId);
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -163,14 +164,6 @@ public class TreeBean {
 			p.setProjectId(_objectId);
 			// model building
 			p.buildProjectModel();
-			mb.changePage(_pageId);
-		}
-		else if (_pageId.equals(WilosObjectNode.TASKNODE)){
-			TaskViewerBean tv = (TaskViewerBean) context.getApplication()
-			.getVariableResolver().resolveVariable(context,"TaskViewerBean");
-			tv.setTaskId(_objectId);
-			// model building
-			tv.buildTaskDescriptor();
 			mb.changePage(_pageId);
 		}
 		else {
