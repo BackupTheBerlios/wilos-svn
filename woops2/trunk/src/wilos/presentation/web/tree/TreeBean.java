@@ -1,5 +1,4 @@
-
-package wilos.presentation.web.tree ;
+package wilos.presentation.web.tree;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,32 +19,35 @@ import wilos.presentation.web.task.TaskViewerBean;
 import wilos.presentation.web.template.MenuBean;
 
 /**
- * <p/> A basic backing bean for a ice:tree component. The only instance variable needed is a
- * DefaultTreeModel Object which is bound to the icefaces tree component in the jspx code.
+ * <p/> A basic backing bean for a ice:tree component. The only instance
+ * variable needed is a DefaultTreeModel Object which is bound to the icefaces
+ * tree component in the jspx code.
  * </p>
- * <p/> The tree created by this backing bean is used to control the selected panel in a
- * ice:panelStack.
+ * <p/> The tree created by this backing bean is used to control the selected
+ * panel in a ice:panelStack.
  * </p>
  */
 public class TreeBean {
 
-	private ProcessService processService ;
+	private ProcessService processService;
 
-	String processId = "" ;
-	
+	private Process process;
+
+	String processId = "";
+
 	public Boolean affectedTaskFilter = false;
-	
-	// tree default model, used as a value for the tree component
-	private DefaultTreeModel model = null ;
 
-	protected final Log logger = LogFactory.getLog(this.getClass()) ;
+	// tree default model, used as a value for the tree component
+	private DefaultTreeModel model = null;
+
+	protected final Log logger = LogFactory.getLog(this.getClass());
 
 	public TreeBean() {
 		DefaultMutableTreeNode defaultTree = new DefaultMutableTreeNode();
-		WilosObjectNode iceUserObject = new WilosObjectNode(defaultTree) ;
-		iceUserObject.setText("Choose a project ...") ;
-		defaultTree.setUserObject(iceUserObject) ;
-		this.model = new DefaultTreeModel(defaultTree) ;
+		WilosObjectNode iceUserObject = new WilosObjectNode(defaultTree);
+		iceUserObject.setText("Choose a project ...");
+		defaultTree.setUserObject(iceUserObject);
+		this.model = new DefaultTreeModel(defaultTree);
 	}
 
 	/**
@@ -53,74 +55,86 @@ public class TreeBean {
 	 * 
 	 * @return tree model.
 	 */
-	
-	private void buildModel(){
-		// construire les cas avec la selection des filtres
-		// creer la methode getConcreteTaskDescriptorByProcess
-		// creer les methodes getAffectedConcreteTaskDescriptorsByProcess
-		if(this.processId != null && !this.processId.equals("") ){
-			Process process = this.processService.getEntireProcess(this.processId) ;
-			ProcessNode processNode = new ProcessNode(process);
-			this.model = new DefaultTreeModel(processNode) ;
+
+	private void buildModel(boolean _mustBuildProcess) {
+		if (this.processId != null && !this.processId.equals("")) {
+			if (_mustBuildProcess) {
+				this.process = this.processService
+						.getEntireProcess(this.processId);
+			}
+			ProcessNode processNode;
+			if (this.affectedTaskFilter)
+				processNode = new ProcessNode(process, null);
+			else
+				processNode = new ProcessNode(process, null);
+			this.model = new DefaultTreeModel(processNode);
 		}
 	}
-	
+
 	public DefaultTreeModel getModel() {
-		return this.model ;
+		return this.model;
 	}
-	
-	public List<SelectItem> getProjects(){
+
+	public List<SelectItem> getProjects() {
 		List<SelectItem> projectsList = new ArrayList<SelectItem>();
 		for (Process process : this.processService.getProcessesList()) {
-			projectsList.add(new SelectItem(process.getId(), process.getName()));
+			projectsList
+					.add(new SelectItem(process.getId(), process.getName()));
 		}
 		projectsList.add(new SelectItem("", ""));
 		return projectsList;
 	}
-	
+
 	public void changeTreeActionListener(ActionEvent evt) {
-		this.buildModel();
+		this.buildModel(true);
 	}
-	
+
+	public void filterTreeActionListener(ActionEvent evt) {
+		this.buildModel(false);
+	}
+
 	public void selectNodeActionListener(ActionEvent evt) {
 		logger.debug("### TreeBean ### selectNodeActionListener");
-		FacesContext context = FacesContext.getCurrentInstance(); 
+		FacesContext context = FacesContext.getCurrentInstance();
 		Map map = context.getExternalContext().getRequestParameterMap();
-		
+
 		String nodeId = (String) map.get("nodeId");
-		logger.debug("### TreeBean ### selectNodeActionListener - nodeId ="+nodeId);
+		logger.debug("### TreeBean ### selectNodeActionListener - nodeId ="
+				+ nodeId);
 		String pageId = (String) map.get("pageId");
-		logger.debug("### TreeBean ### selectNodeActionListener - pageId ="+pageId);
+		logger.debug("### TreeBean ### selectNodeActionListener - pageId ="
+				+ pageId);
 		// 
-		this.selectNodeToShow(nodeId,pageId);
+		this.selectNodeToShow(nodeId, pageId);
 
 		/*
-		TaskViewerBean tv = (TaskViewerBean) context.getApplication()
-		.getVariableResolver().resolveVariable(context,"TaskViewerBean");
-		tv.setTaskId(basicNodeId);
-		tv.buildTaskDescriptor();
-
-		MenuBean mb = (MenuBean) context.getApplication()
-		.getVariableResolver().resolveVariable(context,"menu");
-		mb.changePage("taskviewer");
-		*/
+		 * TaskViewerBean tv = (TaskViewerBean) context.getApplication()
+		 * .getVariableResolver().resolveVariable(context,"TaskViewerBean");
+		 * tv.setTaskId(basicNodeId); tv.buildTaskDescriptor();
+		 * 
+		 * MenuBean mb = (MenuBean) context.getApplication()
+		 * .getVariableResolver().resolveVariable(context,"menu");
+		 * mb.changePage("taskviewer");
+		 */
 	}
 
 	private void selectNodeToShow(String _objectId, String _pageId) {
-		logger.debug("### TreeBean ### selectNodeToShow id="+_objectId+" page="+_pageId);
+		logger.debug("### TreeBean ### selectNodeToShow id=" + _objectId
+				+ " page=" + _pageId);
 		FacesContext context = FacesContext.getCurrentInstance();
-		MenuBean mb = (MenuBean) context.getApplication()
-		.getVariableResolver().resolveVariable(context,"menu");
-		
-		if (_pageId.equals(WilosObjectNode.ACTIVITYNODE)){
+		MenuBean mb = (MenuBean) context.getApplication().getVariableResolver()
+				.resolveVariable(context, "menu");
+
+		if (_pageId.equals(WilosObjectNode.ACTIVITYNODE)) {
 			TaskViewerBean tv = (TaskViewerBean) context.getApplication()
-			.getVariableResolver().resolveVariable(context,"TaskViewerBean");
+					.getVariableResolver().resolveVariable(context,
+							"TaskViewerBean");
 			tv.setTaskId(_objectId);
 			mb.changePage(_pageId);
-		}
-		else if (_pageId.equals(WilosObjectNode.CONCRETETASKNODE)){
+		} else if (_pageId.equals(WilosObjectNode.CONCRETETASKNODE)) {
 			TaskViewerBean tv = (TaskViewerBean) context.getApplication()
-			.getVariableResolver().resolveVariable(context,"ConcreteTaskViewerBean");
+					.getVariableResolver().resolveVariable(context,
+							"ConcreteTaskViewerBean");
 			tv.setTaskId(_objectId);
 			mb.changePage(_pageId);
 		}
@@ -130,7 +144,7 @@ public class TreeBean {
 	 * @return the processId
 	 */
 	public String getProcessId() {
-		return this.processId ;
+		return this.processId;
 	}
 
 	/**
@@ -140,14 +154,14 @@ public class TreeBean {
 	 *            The processId to set.
 	 */
 	public void setProcessId(String _processId) {
-		this.processId = _processId ;
+		this.processId = _processId;
 	}
 
 	/**
 	 * @return the processService
 	 */
 	public ProcessService getProcessService() {
-		return this.processService ;
+		return this.processService;
 	}
 
 	/**
@@ -157,7 +171,7 @@ public class TreeBean {
 	 *            The processService to set.
 	 */
 	public void setProcessService(ProcessService _processService) {
-		this.processService = _processService ;
+		this.processService = _processService;
 	}
 
 	public Boolean getAffectedTaskFilter() {
