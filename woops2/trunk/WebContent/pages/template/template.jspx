@@ -105,6 +105,13 @@
 						</f:subview>
 					</ice:panelGroup>
 					
+					 <ice:panelGroup id="PhaseViewer"
+						styleClass="contentIncludePanelGroup">
+						<f:subview id="PhaseViewer_view">
+							<jsp:directive.include file="./pages/common/PhaseViewer.jspx" />
+						</f:subview>
+					</ice:panelGroup>
+					
                 </ice:panelStack>
                 <br />
             </ice:panelGroup>
