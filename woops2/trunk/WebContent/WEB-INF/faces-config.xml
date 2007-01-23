@@ -171,7 +171,7 @@
 			<value>#{ProjectService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>TaskViewerBean</managed-bean-name>
 		<managed-bean-class>
@@ -181,6 +181,18 @@
 		<managed-property>
 			<property-name>taskDescriptorService</property-name>
 			<value>#{TaskDescriptorService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>ConcreteTaskViewerBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.task.ConcreteTaskViewerBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>concreteTaskDescriptorService</property-name>
+			<value>#{ConcreteTaskDescriptorService}</value>
 		</managed-property>
 	</managed-bean>
 

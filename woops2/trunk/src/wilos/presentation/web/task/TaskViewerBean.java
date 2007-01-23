@@ -14,16 +14,6 @@ public class TaskViewerBean {
 		
 	}
 	
-	/*
-	public Boolean getTaskClicked() {
-		return taskClicked;
-	}
-
-	public void setTaskClicked(Boolean _taskClicked) {
-		this.taskClicked = _taskClicked;
-	}
-	*/
-	
 	public void buildTaskDescriptor(){
 		taskDescriptor = new TaskDescriptor();
 		if (!(this.taskId.equals("")) && this.taskId != null){
