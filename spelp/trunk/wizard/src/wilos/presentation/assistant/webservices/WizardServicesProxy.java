@@ -46,7 +46,7 @@ public class WizardServicesProxy {
             return myRoleListe;
 	}
         
-        private static Participant getParticipant(String login, String password, String address)
+        public static Participant getParticipant(String login, String password, String address)
         {
             Participant myParticipant = null;
             try { 
@@ -66,6 +66,19 @@ public class WizardServicesProxy {
                 e.printStackTrace();
             }
             return myParticipant;
+        }
+        
+        public static  void startConcreteTaskDescriptor (String login, String password, String address, String ConcreteTaskId) {
+            try { 
+            	if (!login.equalsIgnoreCase("testIHM")) {
+            		WizardServicesService service = new WizardServicesService(new URL(address+ENDPOINT), new QName(URLWebService, nameWebService));            	
+                    WizardServices port = service.getWizardServicesPort();
+                    port.startConcreteTaskDescriptor(login, password, ConcreteTaskId);
+            	}
+            }
+            catch (java.lang.Exception e) {
+                e.printStackTrace();
+            }
         }
         
         private static Participant getParticipantExample () {
