@@ -18,6 +18,7 @@ import org.apache.commons.logging.LogFactory;
 import wilos.business.services.project.ProjectService;
 import wilos.model.misc.project.Project;
 import wilos.presentation.web.task.ConcreteTaskViewerBean;
+import wilos.presentation.web.task.PhaseViewerBean;
 import wilos.presentation.web.task.TaskViewerBean;
 import wilos.presentation.web.template.MenuBean;
 
@@ -130,7 +131,12 @@ public class TreeBean {
 			// TODO faire selectNodeToShow WilosObjectNode.ITERATIONNODE
 		}
 		else if (_pageId.equals(WilosObjectNode.PHASENODE)){
-			// TODO faire selectNodeToShow WilosObjectNode.PHASENODE
+			PhaseViewerBean pb = (PhaseViewerBean) context.getApplication()
+			.getVariableResolver().resolveVariable(context,"PhaseViewerBean");
+			pb.setPhaseId(_objectId);
+			// model building
+			pb.buildPhaseModel();
+			mb.changePage(_pageId);
 		}
 		else if (_pageId.equals(WilosObjectNode.PROJECTNODE)){
 			// TODO faire selectNodeToShow WilosObjectNode.PROJECTNODE
