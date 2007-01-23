@@ -4,8 +4,6 @@ package wilos.business.services.spem2.breakdownelement ;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,9 +18,8 @@ import wilos.model.spem2.breakdownelement.BreakdownElement;
  */
 @ Transactional (readOnly = false, propagation = Propagation.REQUIRED)
 public class BreakdownElementService {
+	
 	private BreakdownElementDao breakdownElementDao ;
-
-	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
 	/**
 	 * Return activities list

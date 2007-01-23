@@ -11,10 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import wilos.business.services.spem2.activity.ActivityService;
 import wilos.business.services.spem2.breakdownelement.BreakdownElementService;
-import wilos.business.services.spem2.iteration.IterationService;
-import wilos.business.services.spem2.phase.PhaseService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.business.services.util.xml.parser.XMLParser;
 import wilos.hibernate.spem2.activity.ActivityDao;
@@ -53,12 +50,6 @@ import wilos.model.spem2.task.TaskDescriptor;
 public class ProcessService {
 
 	private BreakdownElementService breakdownElementService;
-	
-	private PhaseService phaseService;
-	
-	private IterationService iterationService;
-	
-	private ActivityService activityService;
 	
 	private TaskDescriptorService taskDescriptorService;
 
@@ -547,15 +538,15 @@ public class ProcessService {
 		for (BreakdownElement bde : bdes) {
 			if (bde instanceof Phase) {
 				Phase ph = (Phase) bde;
-				forSaving.addAll(this.phaseService.getBreakdownElementsFromPhase(ph.getId()));
+				//forSaving.addAll(this.phaseService.getBreakdownElementsFromPhase(ph.getId()));
 			} else {
 				if (bde instanceof Iteration) {
 					Iteration it = (Iteration) bde;
-					forSaving.addAll(this.iterationService.getBreakdownElementsFromIteration(it.getId()));
+					//forSaving.addAll(this.iterationService.getBreakdownElementsFromIteration(it.getId()));
 				} else {
 					if (bde instanceof Activity) {
 						Activity act = (Activity) bde;
-						forSaving.addAll(this.activityService.getBreakdownElementsFromActivity(act.getId()));
+						//forSaving.addAll(this.activityService.getBreakdownElementsFromActivity(act.getId()));
 					} else {
 						if (bde instanceof TaskDescriptor) {
 							TaskDescriptor td = (TaskDescriptor) bde;
@@ -829,30 +820,6 @@ public class ProcessService {
 
 	public void setBreakdownElementService(BreakdownElementService _breakdownElementService) {
 		this.breakdownElementService = _breakdownElementService;
-	}
-
-	public PhaseService getPhaseService() {
-		return this.phaseService;
-	}
-
-	public void setPhaseService(PhaseService _phaseService) {
-		this.phaseService = _phaseService;
-	}
-
-	public ActivityService getActivityService() {
-		return this.activityService;
-	}
-
-	public void setActivityService(ActivityService _activityService) {
-		this.activityService = _activityService;
-	}
-
-	public IterationService getIterationService() {
-		return this.iterationService;
-	}
-
-	public void setIterationService(IterationService _iterationService) {
-		this.iterationService = _iterationService;
 	}
 
 	public TaskDescriptorService getTaskDescriptorService() {
