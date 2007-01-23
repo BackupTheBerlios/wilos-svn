@@ -11,7 +11,10 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import wilos.business.services.spem2.activity.ActivityService;
 import wilos.business.services.spem2.breakdownelement.BreakdownElementService;
+import wilos.business.services.spem2.iteration.IterationService;
+import wilos.business.services.spem2.phase.PhaseService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.business.services.util.xml.parser.XMLParser;
 import wilos.hibernate.spem2.activity.ActivityDao;
@@ -50,6 +53,12 @@ import wilos.model.spem2.task.TaskDescriptor;
 public class ProcessService {
 
 	private BreakdownElementService breakdownElementService;
+	
+	private PhaseService phaseService;
+	
+	private IterationService iterationService;
+	
+	private ActivityService activityService;
 	
 	private TaskDescriptorService taskDescriptorService;
 
@@ -527,88 +536,45 @@ public class ProcessService {
 		
 		Process p = this.processDao.getProcess(_processId);
 		
-		// elements of collection getting
-		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
-		bdes.addAll(p.getBreakDownElements());
+		List<TaskDescriptor> forSaving = this.getTaskDescriptors(p);
+				
+		for (TaskDescriptor td : forSaving) {
+			this.taskDescriptorService.taskDescriptorInstanciation(_projectId, td);
+		}
+	}
+	
+	private List<TaskDescriptor> getTaskDescriptors(Activity _act) {
 		
-		List<BreakdownElement> forSaving = new ArrayList<BreakdownElement>();
-		forSaving.addAll(p.getBreakDownElements());
+		// elements of collection getting
+		Set<BreakdownElement> bdes = _act.getBreakDownElements();
+		
+		List<TaskDescriptor> tds = new ArrayList<TaskDescriptor>();
 		
 		// in function of element type
 		for (BreakdownElement bde : bdes) {
 			if (bde instanceof Phase) {
 				Phase ph = (Phase) bde;
-				//forSaving.addAll(this.phaseService.getBreakdownElementsFromPhase(ph.getId()));
+				tds.addAll(this.getTaskDescriptors(ph));
 			} else {
 				if (bde instanceof Iteration) {
 					Iteration it = (Iteration) bde;
-					//forSaving.addAll(this.iterationService.getBreakdownElementsFromIteration(it.getId()));
+					tds.addAll(this.getTaskDescriptors(it));
 				} else {
 					if (bde instanceof Activity) {
 						Activity act = (Activity) bde;
-						//forSaving.addAll(this.activityService.getBreakdownElementsFromActivity(act.getId()));
+						tds.addAll(this.getTaskDescriptors(act));
 					} else {
 						if (bde instanceof TaskDescriptor) {
 							TaskDescriptor td = (TaskDescriptor) bde;
-							forSaving.add(td);
+							tds.add(td);
 						}
 					}
 				}
 			}
 		}
-		
-		for (BreakdownElement b : forSaving) {
-			if (b instanceof TaskDescriptor) {
-				TaskDescriptor td = (TaskDescriptor) b;
-				this.taskDescriptorService.taskDescriptorInstanciation(_projectId, td);
-			}
-		}
+		return tds;
 	}
 	
-	
-	/**
-	 * 
-	 * TODO Method description
-	 *
-	 * @param _processId
-	 * @return
-	 */
-	public Process getConcreteTaskDescriptorByProcess(String _processId) {
-		/*
-		 * TODO Process process = this.processDao.getProcess(_processId) ; Set<BreakdownElement>
-		 * bdes = new HashSet<BreakdownElement>() ;
-		 * bdes.addAll(this.breakdownElementService.getBreakdownElementsFromProcess(_processId)) ;
-		 * Set<BreakdownElement> taskDescriptors = new HashSet<BreakdownElement>() ;
-		 * for(BreakdownElement bde : bdes){ if(bde instanceof TaskDescriptor){
-		 * taskDescriptors.add(bde); } }
-		 * process.addAllBreakdownElements(taskDescriptors) ; return process ;
-		 */
-		return null;
-	}
-
-	/**
-	 * 
-	 * TODO Method description
-	 *
-	 * @param _processId
-	 * @param _roleId
-	 * @return
-	 */
-	@Transactional(readOnly = true)
-	public Process getAffectedConcreteTaskDescriptorsByProcess(
-			String _processId, String _roleId) {
-		/*
-		 * TODO Process process = this.processDao.getProcess(_processId) ; Set<BreakdownElement>
-		 * bdes = new HashSet<BreakdownElement>() ;
-		 * bdes.addAll(this.breakdownElementService.getBreakdownElementsFromProcess(_processId)) ;
-		 * Set<BreakdownElement> taskDescriptors = new HashSet<BreakdownElement>() ;
-		 * for(BreakdownElement bde : bdes){ if(bde instanceof TaskDescriptor){
-		 * taskDescriptors.add(bde); } }
-		 * process.addAllBreakdownElements(taskDescriptors) ; return process ;
-		 */
-		return null;
-	}
-
 	/**
 	 * @param _processId
 	 * @return
@@ -820,6 +786,30 @@ public class ProcessService {
 
 	public void setBreakdownElementService(BreakdownElementService _breakdownElementService) {
 		this.breakdownElementService = _breakdownElementService;
+	}
+
+	public PhaseService getPhaseService() {
+		return this.phaseService;
+	}
+
+	public void setPhaseService(PhaseService _phaseService) {
+		this.phaseService = _phaseService;
+	}
+
+	public ActivityService getActivityService() {
+		return this.activityService;
+	}
+
+	public void setActivityService(ActivityService _activityService) {
+		this.activityService = _activityService;
+	}
+
+	public IterationService getIterationService() {
+		return this.iterationService;
+	}
+
+	public void setIterationService(IterationService _iterationService) {
+		this.iterationService = _iterationService;
 	}
 
 	public TaskDescriptorService getTaskDescriptorService() {
