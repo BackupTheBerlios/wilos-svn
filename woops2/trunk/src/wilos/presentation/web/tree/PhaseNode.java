@@ -31,6 +31,7 @@ public class PhaseNode extends DefaultMutableTreeNode {
 		iceUserObject.setBranchExpandedIcon("images/tree/icon_phase.gif");
 		// node informations
 		iceUserObject.setId(this.phase.getId());
+		iceUserObject.setPageId(WilosObjectNode.PHASENODE);
 		
 		for (BreakdownElement breakdownElement : this.phase
 				.getBreakDownElements()) {
