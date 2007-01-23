@@ -17,6 +17,7 @@ import org.apache.commons.logging.LogFactory;
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.spem2.process.Process;
 import wilos.presentation.web.task.TaskViewerBean;
+import wilos.presentation.web.template.MenuBean;
 
 /**
  * <p/> A basic backing bean for a ice:tree component. The only instance variable needed is a
@@ -108,10 +109,20 @@ public class TreeBean {
 	private void selectNodeToShow(String _objectId, String _pageId) {
 		logger.debug("### TreeBean ### selectNodeToShow id="+_objectId+" page="+_pageId);
 		FacesContext context = FacesContext.getCurrentInstance();
+		MenuBean mb = (MenuBean) context.getApplication()
+		.getVariableResolver().resolveVariable(context,"menu");
+		
 		if (_pageId.equals(WilosObjectNode.ACTIVITYNODE)){
 			TaskViewerBean tv = (TaskViewerBean) context.getApplication()
 			.getVariableResolver().resolveVariable(context,"TaskViewerBean");
 			tv.setTaskId(_objectId);
+			mb.changePage(_pageId);
+		}
+		else if (_pageId.equals(WilosObjectNode.CONCRETETASKNODE)){
+			TaskViewerBean tv = (TaskViewerBean) context.getApplication()
+			.getVariableResolver().resolveVariable(context,"ConcreteTaskViewerBean");
+			tv.setTaskId(_objectId);
+			mb.changePage(_pageId);
 		}
 	}
 

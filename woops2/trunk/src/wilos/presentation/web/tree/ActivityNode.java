@@ -24,7 +24,10 @@ public class ActivityNode extends DefaultMutableTreeNode {
 		iceUserObject.setLeaf(false);
 		iceUserObject.setBranchContractedIcon("images/tree/icon_activity.gif");
 		iceUserObject.setBranchExpandedIcon("images/tree/icon_activity.gif");
+		// node information
 		iceUserObject.setId(this.activity.getId());
+		iceUserObject.setPageId(WilosObjectNode.ACTIVITYNODE);
+		
 		for (BreakdownElement breakdownElement : this.activity
 				.getBreakDownElements()) {
 			// TODO Change with ConcreteTaskDescriptorNode !!!
