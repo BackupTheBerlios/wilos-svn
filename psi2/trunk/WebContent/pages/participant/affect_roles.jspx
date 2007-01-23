@@ -147,6 +147,24 @@
 					
 				</ice:panelGroup>
 			</ice:panelTab> 
+			
+			<!-- Affectation d'un projet à un processus -->
+			
+			<ice:panelTab id="panelTab_affect_project_process" label="TabRadio" imageDir="images">
+				<ice:panelGroup id="projectProcessPanelGroup" styleClass="contentIncludePanelGroup">
+			
+					<ice:outputText styleClass="propertyLabel" value="Liste des process: "/><br />
+					<ice:panelSeries value="#{ProjectBean.processNamesList}" var="curentProcess"/>
+					<!--	<ice:selectOneRadio value="#{ProjectBean.selectedProcessName}">
+							<f:selectItem itemValue="#{curentProcess.value}" itemLabel="#{curentProcess.label}"/>
+						</ice:selectOneRadio>-->
+					</ice:panelSeries>
+					
+					<ice:commandButton value="Affecter" action="#{ProjectBean.saveProjectProcessAffectation}"/>
+			
+				</ice:panelGroup>
+			</ice:panelTab>
+
 		</ice:panelTabSet>
 	</ice:panelGrid>
 </ice:form>

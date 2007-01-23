@@ -232,6 +232,7 @@
 		class="wilos.business.services.project.ProjectService">
 		<property name="projectDao" ref="ProjectDao" />
 		<property name="participantDao" ref="ParticipantDao" />
+		<property name="processService" ref="ProcessService" />
 	</bean>
 	
 	<bean id="RoleService"

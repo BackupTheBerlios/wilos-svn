@@ -10,7 +10,7 @@ import org.apache.commons.logging.LogFactory ;
 import org.springframework.transaction.annotation.Propagation ;
 import org.springframework.transaction.annotation.Transactional ;
 
-import wilos.business.services.process.ProcessService;
+import wilos.business.services.spem2.process.ProcessService;
 import wilos.hibernate.misc.project.ProjectDao ;
 import wilos.hibernate.misc.wilosuser.ParticipantDao ;
 import wilos.model.misc.project.Project ;

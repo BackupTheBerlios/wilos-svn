@@ -2,18 +2,19 @@
 package wilos.presentation.web.project ;
 
 import java.util.ArrayList;
-
 import java.util.List;
 import java.util.Set;
 
-import javax.faces.application.FacesMessage ;
-import javax.faces.context.FacesContext ;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 
-import org.apache.commons.logging.Log ;
-import org.apache.commons.logging.LogFactory ;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
-import wilos.business.services.project.ProjectService ;
-import wilos.model.misc.project.Project ;
+import wilos.business.services.spem2.process.ProcessService;
+import wilos.business.services.project.ProjectService;
+import wilos.model.misc.project.Project;
 
 
 /**
@@ -25,7 +26,13 @@ public class ProjectBean {
 
 	private ProjectService projectService ;
 
+	private ProcessService processService ;
+	
 	private Project project ;
+	
+	private String selectedProcessGuid ;
+	
+	private ArrayList<SelectItem> processNamesList ;
 	
 	private List<Project> projectList ;
 	
@@ -42,7 +49,7 @@ public class ProjectBean {
 	public ProjectBean() {
 		this.logger.debug("--- Project --- == creating ..." + this) ;
 		this.project = new Project() ;
-		
+		this.selectedProcessGuid="";
 		/*
 		 * this.projectList = (HashSet<Project>)this.projectService.getAllProjects(); for(Project
 		 * projectTmp : this.projectList){ this.logger.debug("### Project"+projectTmp.getName()+"
@@ -98,6 +105,21 @@ public class ProjectBean {
 		return url ;
 	}
 
+	
+	/**
+	 * Method for saving project/process association from radio buttons
+	 *
+	 * @return nothing
+	 */
+	public String saveProjectProcessAffectation(){
+		Project projTmp = projectService.getProject("2c90a1b2104ad70601104ad906f90001");
+		this.logger.debug("Project: "+projTmp) ;
+		wilos.model.spem2.process.Process procTmp = processService.getProcessDao().getProcessFromGuid(selectedProcessGuid);
+		this.logger.debug("Process selectionne: "+procTmp) ;
+		projectService.saveProcessProjectAffectation(procTmp, projTmp);
+		return "";
+	}	
+		
 	/**
 	 * Getter of project.
 	 * 
@@ -185,6 +207,72 @@ public class ProjectBean {
 
 	public void setProjectListWithProcess(List<Project> projectListWithProcess) {
 		this.projectListWithProcess = projectListWithProcess;
+	}
+
+	/**
+	 * Getter of processNamesList.
+	 *
+	 * @return the processNamesList.
+	 */
+	public ArrayList<SelectItem> getProcessNamesList() {
+		ArrayList<SelectItem> tmpListNames = new ArrayList<SelectItem>();
+		ArrayList<wilos.model.spem2.process.Process> tmpListProcess= (ArrayList<wilos.model.spem2.process.Process>) this.processService.getProcessesList();
+		
+		for(int i = 0; i < tmpListProcess.size(); i++ ){
+			tmpListNames.add(new SelectItem(tmpListProcess.get(i).getGuid(),tmpListProcess.get(i).getName()));
+			this.logger.debug("NEW PROCESS DETECTED !!!!!") ;
+		}
+		this.logger.debug("tmpListNames:"+tmpListNames) ;
+		processNamesList = tmpListNames;
+		this.logger.debug("processNamesList:"+processNamesList) ;
+
+		return this.processNamesList ;
+	}
+
+	/**
+	 * Setter of processNamesList.
+	 *
+	 * @param _processNamesList The processNamesList to set.
+	 */
+	public void setProcessNamesList(ArrayList<SelectItem> _processNamesList) {
+		this.processNamesList = _processNamesList ;
+	}
+	
+	/**
+	 * Getter of processService.
+	 *
+	 * @return the processService.
+	 */
+	public ProcessService getProcessService() {
+		return this.processService ;
+	}
+
+	/**
+	 * Setter of processService.
+	 *
+	 * @param _processService The processService to set.
+	 */
+	public void setProcessService(ProcessService _processService) {
+		this.processService = _processService ;
+	}
+
+	/**
+	 * Getter of selectedProcessGuid.
+	 *
+	 * @return the selectedProcessGuid.
+	 */
+	public String getSelectedProcessGuid() {
+		return this.selectedProcessGuid ;
+	}
+
+	/**
+	 * Setter of selectedProcessGuid.
+	 *
+	 * @param _selectedProcessGuid The selectedProcessGuid to set.
+	 */
+	public void setSelectedProcessGuid(String _selectedProcessGuid) {
+		this.logger.debug("Process selectionne "+this.selectedProcessGuid) ;
+		this.selectedProcessGuid = _selectedProcessGuid ;
 	}
 
 }
