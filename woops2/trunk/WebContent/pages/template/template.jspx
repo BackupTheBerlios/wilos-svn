@@ -126,6 +126,13 @@
 						</f:subview>
 					</ice:panelGroup>
 					
+					<ice:panelGroup id="ProjectViewer"
+						styleClass="contentIncludePanelGroup">
+						<f:subview id="ProjectViewer_view">
+							<jsp:directive.include file="./pages/common/ProjectViewer.jspx" />
+						</f:subview>
+					</ice:panelGroup>
+					
                 </ice:panelStack>
                 <br />
             </ice:panelGroup>

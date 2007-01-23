@@ -231,6 +231,18 @@
 			<value>#{IterationService}</value>
 		</managed-property>
 	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>ProjectViewerBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.task.ProjectViewerBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+	</managed-bean>
 
 	<navigation-rule>
 		<description>Theme Reload</description>
