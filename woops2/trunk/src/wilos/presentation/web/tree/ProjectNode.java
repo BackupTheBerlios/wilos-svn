@@ -30,7 +30,10 @@ public class ProjectNode extends DefaultMutableTreeNode {
 		iceUserObject.setLeaf(false);
 		iceUserObject.setBranchContractedIcon("images/tree/icon_process.gif");
 		iceUserObject.setBranchExpandedIcon("images/tree/icon_process.gif");
+		//node information
 		iceUserObject.setId(this.project.getProject_id());
+		iceUserObject.setPageId(WilosObjectNode.PROJECTNODE);
+		
 		for(BreakdownElement breakdownElement : this.project.getProcess().getBreakDownElements()){
 			if(breakdownElement instanceof Phase){
 				this.add(new PhaseNode((Phase)breakdownElement, _roleDescriptors)) ;
