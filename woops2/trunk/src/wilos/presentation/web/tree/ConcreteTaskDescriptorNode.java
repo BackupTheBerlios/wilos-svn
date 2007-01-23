@@ -30,11 +30,6 @@ public class ConcreteTaskDescriptorNode extends DefaultMutableTreeNode {
 		// node information
 		iceUserObject.setId(_concreteTaskDescriptor.getId());
 		iceUserObject.setPageId(WilosObjectNode.CONCRETETASKNODE);
-		
-		/*TaskDefinition taskDefinition = _taskDescriptor.getTaskDefinition() ;
-		if(taskDefinition != null){
-			this.add(new TaskDefinitionNode(taskDefinition)) ;
-		}*/
 	}
 
 }

@@ -40,8 +40,11 @@ public class ActivityNode extends DefaultMutableTreeNode {
 			}
 			else if (breakdownElement instanceof TaskDescriptor) {
 				TaskDescriptor td = (TaskDescriptor) breakdownElement;
-				for (ConcreteTaskDescriptor ctd : td.getConcreteTaskDescriptors())
-					this.add(new ConcreteTaskDescriptorNode(ctd, _roleDescriptors));
+				if ((_roleDescriptors == null)||(_roleDescriptors.contains(td.getMainRole())))
+					for (ConcreteTaskDescriptor ctd : td
+							.getConcreteTaskDescriptors())
+						this.add(new ConcreteTaskDescriptorNode(ctd,
+								_roleDescriptors));
 			}
 		}
 	}

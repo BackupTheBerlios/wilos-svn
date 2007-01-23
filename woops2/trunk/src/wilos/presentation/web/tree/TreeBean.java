@@ -25,7 +25,6 @@ import wilos.presentation.web.task.ConcreteTaskViewerBean;
 import wilos.presentation.web.task.IterationViewerBean;
 import wilos.presentation.web.task.PhaseViewerBean;
 import wilos.presentation.web.task.ProjectViewerBean;
-import wilos.presentation.web.task.TaskViewerBean;
 import wilos.presentation.web.template.MenuBean;
 
 /**
@@ -65,15 +64,16 @@ public class TreeBean {
 	 * 
 	 * @return tree model.
 	 */
-
 	private void buildModel(boolean _mustBuildProject) {
 		if (this.projectId != null && !this.projectId.equals("")) {
 			if (_mustBuildProject) {
 				this.project = this.projectService.getProject(this.projectId);
 			}
 			ProjectNode projectNode;
-			if (this.affectedTaskFilter)
+			if (this.affectedTaskFilter){
+				//recup des rd du login courant.
 				projectNode = new ProjectNode(this.project, null);
+			}
 			else
 				projectNode = new ProjectNode(this.project, null);
 			this.model = new DefaultTreeModel(projectNode);
@@ -171,14 +171,6 @@ public class TreeBean {
 			p.setProjectId(_objectId);
 			// model building
 			p.buildProjectModel();
-			mb.changePage(_pageId);
-		}
-		else if (_pageId.equals(WilosObjectNode.TASKNODE)){
-			TaskViewerBean tv = (TaskViewerBean) context.getApplication()
-			.getVariableResolver().resolveVariable(context,"TaskViewerBean");
-			tv.setTaskId(_objectId);
-			// model building
-			tv.buildTaskDescriptor();
 			mb.changePage(_pageId);
 		}
 		else {

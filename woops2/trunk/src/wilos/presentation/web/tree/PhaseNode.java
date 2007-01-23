@@ -41,11 +41,14 @@ public class PhaseNode extends DefaultMutableTreeNode {
 			} 
 			else if (breakdownElement instanceof Activity) {
 				this.add(new ActivityNode((Activity) breakdownElement, _roleDescriptors));
-			}
+			} 
 			else if (breakdownElement instanceof TaskDescriptor) {
 				TaskDescriptor td = (TaskDescriptor) breakdownElement;
-				for (ConcreteTaskDescriptor ctd : td.getConcreteTaskDescriptors())
-					this.add(new ConcreteTaskDescriptorNode(ctd, _roleDescriptors));
+				if ((_roleDescriptors == null)||(_roleDescriptors.contains(td.getMainRole())))
+					for (ConcreteTaskDescriptor ctd : td
+							.getConcreteTaskDescriptors())
+						this.add(new ConcreteTaskDescriptorNode(ctd,
+								_roleDescriptors));
 			}
 		}
 	}
