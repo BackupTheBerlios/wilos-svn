@@ -79,7 +79,7 @@ public class ParticipantDao extends HibernateDaoSupport {
 
 	
 	/**
-	 * TODO
+	 * return a participant by giving his login
 	 * @param _login
 	 * @return
 	 */

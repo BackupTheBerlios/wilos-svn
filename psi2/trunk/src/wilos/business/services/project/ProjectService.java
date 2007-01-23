@@ -22,7 +22,7 @@ import wilos.model.misc.wilosuser.Participant ;
  * @author martial
  */
 
-@ Transactional (readOnly = false, propagation = Propagation.REQUIRED)
+@Transactional (readOnly = false, propagation = Propagation.REQUIRED)
 public class ProjectService {
 
 	private ProjectDao projectDao ;
@@ -107,7 +107,7 @@ public class ProjectService {
 	 * 
 	 * @return A set of Project
 	 */
-	@ Transactional (readOnly = true)
+	@Transactional (readOnly = true)
 	public Set<Project> getAllProjects() {
 		HashSet<Project> projectList = new HashSet<Project>() ;
 		projectList = (HashSet<Project>) this.projectDao.getAllProject() ;
@@ -119,7 +119,7 @@ public class ProjectService {
 	 * 
 	 * @return
 	 */
-	@ Transactional (readOnly = true)
+	@Transactional (readOnly = true)
 	public Set<Project> getAllProjectsWithNoProcess() {
 		HashSet<Project> projectList = new HashSet<Project>() ;
 		HashSet<Project> tmpList = new HashSet<Project>() ;
@@ -137,7 +137,7 @@ public class ProjectService {
 	 * 
 	 * @return A set of Project
 	 */
-	@ Transactional (readOnly = true)
+	@Transactional (readOnly = true)
 	public Set<Project> getAllProjectsWithProcess() {
 		HashSet<Project> projectList = new HashSet<Project>() ;
 		HashSet<Project> tmpList = new HashSet<Project>() ;
@@ -158,7 +158,7 @@ public class ProjectService {
 	 * @param _id
 	 * @return
 	 */
-	@ Transactional (readOnly = true)
+	@Transactional (readOnly = true)
 	public Project getProject(String _id) {
 		return this.projectDao.getProject(_id) ;
 	}
@@ -209,7 +209,7 @@ public class ProjectService {
 	 * @param project
 	 * @return the list of participants affected to the project parameter
 	 */
-	@ Transactional (readOnly = true)
+	@Transactional (readOnly = true)
 	public Set<Participant> getParticipants(Project project) {
 		return project.getParticipants() ;
 	}

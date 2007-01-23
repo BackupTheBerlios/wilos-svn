@@ -126,7 +126,7 @@ public class ProjectDirectorBean {
 	{
 		String passConfirm = (String) _value;
 
-		//TODO : recuperer le nom de laure champs de password via une f:param
+		//TODO : recuperer le nom de l autre champs de password via une f:param
 		/*ExternalContext ec = (ExternalContext)_context.getExternalContext();
 		HashMap hm = new HashMap(ec.getRequestParameterMap());
 		String passName = (String)hm.get("forPassword");

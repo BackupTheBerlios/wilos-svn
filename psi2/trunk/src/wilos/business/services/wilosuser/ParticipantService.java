@@ -112,7 +112,7 @@ public class ParticipantService {
 	 *            the participant which the affected to project are returned
 	 * @return list of project where the participant is affected to
 	 */
-	@ Transactional (readOnly = true)
+	@Transactional (readOnly = true)
 	public HashMap<Project, Boolean> getProjectsForAParticipant(Participant participant) {
 		HashMap<Project, Boolean> affectedProjectList = new HashMap<Project, Boolean>() ;
 		HashSet<Project> allProjectList = new HashSet<Project>() ;
@@ -183,7 +183,8 @@ public class ParticipantService {
 	 * TODO Method description
 	 * 
 	 * @param participant
-	 * @return
+	 * @return HashMap with couples of this form : 
+	 * 				(Project,ProjectManager) or (Project,null)
 	 */
 	public HashMap<Project, Participant> getManageableProjectsForAParticipant(Participant participant) {
 		HashMap<Project, Boolean> affectedProjectList = new HashMap<Project, Boolean>() ;
@@ -216,7 +217,7 @@ public class ParticipantService {
 	 * TODO Method description
 	 * 
 	 * @param participant
-	 * @param managedProjects
+	 * @param managedProjects : Map of couples of this form :(project_id, Boolean)
 	 */
 	@Transactional(readOnly = false)
 	public void saveManagedProjectsForAParticipant(Participant participant, Map<String,Boolean> managedProjects)

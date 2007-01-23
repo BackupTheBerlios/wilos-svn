@@ -98,22 +98,23 @@ public class LoginBean {
 			HttpSession sess = req.getSession() ;
 			sess.setAttribute("wilosUser", user) ;
 
-			if(user instanceof Participant){
+			//if(user instanceof Participant){
+			if(this.loginService.isParticipant(user)){
 				sess.setAttribute("role", "participant") ;
 				url = "welcome" ;
 				applicationRole = "participant_role";
 			}
-			else if(user instanceof ProcessManager){
+			else if(this.loginService.isProcessManager(user)){
 				sess.setAttribute("role", "processManager") ;
 				url = "welcomeProcessManager" ;
 				applicationRole = "processManager_role";
 			}
-			else if(user instanceof ProjectDirector){
+			else if(this.loginService.isProjectDirector(user)){
 				sess.setAttribute("role", "projectDirector") ;
 				url = "welcomeProjectDirector" ;
 				applicationRole = "projectDirector_role";
 			}
-			else if(user instanceof Administrator){
+			else if(this.loginService.isAdministrator(user)){
 				sess.setAttribute("role", "admin") ;
 				url = "admin_main" ;
 				applicationRole = "admin_role";
