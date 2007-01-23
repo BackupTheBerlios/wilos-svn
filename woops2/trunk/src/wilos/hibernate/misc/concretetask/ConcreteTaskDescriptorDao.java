@@ -1,5 +1,4 @@
-
-package wilos.hibernate.misc.concretetask ;
+package wilos.hibernate.misc.concretetask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,8 @@ import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.utils.ExceptionManager;
 
 /**
- * ConcreteTaskDescriptorDao manage requests from the system to store ConcreteTaskDescriptorDao to the database
+ * ConcreteTaskDescriptorDao manage requests from the system to store
+ * ConcreteTaskDescriptorDao to the database
  * 
  * @author mat,seb
  * 
@@ -25,15 +25,19 @@ public class ConcreteTaskDescriptorDao extends HibernateDaoSupport {
 	 * 
 	 * @param _concreteTaskdescriptor
 	 */
-	public void saveOrUpdateConcreteTaskDescriptor(ConcreteTaskDescriptor _concreteTaskdescriptor) {
-		try{
-			this.getHibernateTemplate().saveOrUpdate(_concreteTaskdescriptor) ;
-		}
-		catch(DataIntegrityViolationException _e){
-			ExceptionManager.getInstance().manageDataIntegrityViolationException(this.getClass().getName(), "saveOrUpdateConcreteTaskDescriptor", _e);
-		}
-		catch(ConstraintViolationException _ex){
-			ExceptionManager.getInstance().manageConstraintViolationException(this.getClass().getName(), "saveOrUpdateConcreteTaskDescriptor", _ex);
+	public void saveOrUpdateConcreteTaskDescriptor(
+			ConcreteTaskDescriptor _concreteTaskdescriptor) {
+		try {
+			this.getHibernateTemplate().saveOrUpdate(_concreteTaskdescriptor);
+		} catch (DataIntegrityViolationException _e) {
+			ExceptionManager.getInstance()
+					.manageDataIntegrityViolationException(
+							this.getClass().getName(),
+							"saveOrUpdateConcreteTaskDescriptor", _e);
+		} catch (ConstraintViolationException _ex) {
+			ExceptionManager.getInstance().manageConstraintViolationException(
+					this.getClass().getName(),
+					"saveOrUpdateConcreteTaskDescriptor", _ex);
 		}
 	}
 
@@ -42,16 +46,18 @@ public class ConcreteTaskDescriptorDao extends HibernateDaoSupport {
 	 * 
 	 * @return set <ConcreteTaskDescriptor>
 	 */
-	@ SuppressWarnings ("unchecked")
+	@SuppressWarnings("unchecked")
 	public List<ConcreteTaskDescriptor> getAllConcreteTaskDescriptors() {
-		List<ConcreteTaskDescriptor> loadAll = new ArrayList<ConcreteTaskDescriptor>() ;
-		try{
-			loadAll.addAll(this.getHibernateTemplate().loadAll(ConcreteTaskDescriptor.class)) ;
+		List<ConcreteTaskDescriptor> loadAll = new ArrayList<ConcreteTaskDescriptor>();
+		try {
+			loadAll.addAll(this.getHibernateTemplate().loadAll(
+					ConcreteTaskDescriptor.class));
+		} catch (DataAccessException _e) {
+			ExceptionManager.getInstance().manageDataAccessException(
+					this.getClass().getName(), "getAllConcreteTaskDescriptors",
+					_e);
 		}
-		catch(DataAccessException _e){
-			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "getAllConcreteTaskDescriptors", _e);
-		}
-		return loadAll ;
+		return loadAll;
 	}
 
 	/**
@@ -61,7 +67,8 @@ public class ConcreteTaskDescriptorDao extends HibernateDaoSupport {
 	 * @return ConcreteTaskDescriptor
 	 */
 	public ConcreteTaskDescriptor getConcreteTaskDescriptor(String _id) {
-		return (ConcreteTaskDescriptor) this.getHibernateTemplate().get(ConcreteTaskDescriptor.class, _id) ;
+		return (ConcreteTaskDescriptor) this.getHibernateTemplate().get(
+				ConcreteTaskDescriptor.class, _id);
 	}
 
 	/**
@@ -69,12 +76,25 @@ public class ConcreteTaskDescriptorDao extends HibernateDaoSupport {
 	 * 
 	 * @param _concreteTaskdescriptor
 	 */
-	public void deleteConcreteTaskDescriptor(ConcreteTaskDescriptor _concreteTaskdescriptor) {
-		try{
-			this.getHibernateTemplate().delete(_concreteTaskdescriptor) ;
+	public void deleteConcreteTaskDescriptor(
+			ConcreteTaskDescriptor _concreteTaskdescriptor) {
+		try {
+			this.getHibernateTemplate().delete(_concreteTaskdescriptor);
+		} catch (DataAccessException _e) {
+			ExceptionManager.getInstance().manageDataAccessException(
+					this.getClass().getName(), "deleteConcreteTaskDescriptor",
+					_e);
 		}
-		catch(DataAccessException _e){
-			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "deleteConcreteTaskDescriptor", _e);
-		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<ConcreteTaskDescriptor> getConcreteTaskDescriptorFromProject(
+			String _projectId) {
+		List ctds = this
+				.getHibernateTemplate()
+				.find(
+						"from ConcreteTaskDescriptor ctd where ctd.projectid=?",
+						_projectId);
+		return ctds;
 	}
 }

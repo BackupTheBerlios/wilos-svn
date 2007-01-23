@@ -254,6 +254,7 @@
 		<property name="stepDao" ref="StepDao" />
 		<property name="taskDefinitionDao" ref="TaskDefinitionDao" />
 		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
+		<property name="projectDao" ref="ProjectDao" />
 		<property name="workBreakdownElementDao"
 			ref="WorkBreakdownElementDao" />
 		<property name="breakdownElementService" ref="BreakdownElementService" />

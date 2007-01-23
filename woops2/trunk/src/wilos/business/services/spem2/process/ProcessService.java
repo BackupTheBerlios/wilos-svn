@@ -17,6 +17,7 @@ import wilos.business.services.spem2.iteration.IterationService;
 import wilos.business.services.spem2.phase.PhaseService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.business.services.util.xml.parser.XMLParser;
+import wilos.hibernate.misc.project.ProjectDao;
 import wilos.hibernate.spem2.activity.ActivityDao;
 import wilos.hibernate.spem2.breakdownelement.BreakdownElementDao;
 import wilos.hibernate.spem2.element.ElementDao;
@@ -85,6 +86,8 @@ public class ProcessService {
 	private TaskDescriptorDao taskDescriptorDao;
 
 	private WorkBreakdownElementDao workBreakdownElementDao;
+	
+	private ProjectDao projectDao;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -588,7 +591,7 @@ public class ProcessService {
 		
 		return process;
 	}
-
+	
 	/**
 	 * Getter of processDao.
 	 * 
@@ -835,5 +838,13 @@ public class ProcessService {
 
 	public void setPhaseDao(PhaseDao phaseDao) {
 		this.phaseDao = phaseDao;
+	}
+
+	public ProjectDao getProjectDao() {
+		return projectDao;
+	}
+
+	public void setProjectDao(ProjectDao projectDao) {
+		this.projectDao = projectDao;
 	}
 }
