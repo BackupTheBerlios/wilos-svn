@@ -25,19 +25,8 @@
 						<ice:panelGroup styleClass="formBorderHighlight"
 							style="text-align:left">
 							<br />
-
-							<br />
-							<ice:outputText value="Choose a file extension :" />
 							
-							<!-- Radio buttons - file extension -->
-			                <ice:panelGroup styleClass="selectionRadioGroup">
-			                    <ice:selectOneRadio value="#{XmlFileImportBean.choosenExtension}"
-			                                        partialSubmit="true">
-			                        <f:selectItems value="#{XmlFileImportBean.fileExtensions}"/>
-			                    </ice:selectOneRadio>
-			                </ice:panelGroup><br />
-							
-							<ice:outputText value="Add your file :" />
+							<ice:outputText value="Select a ZIP or XML file:" />
 							<br />
 							<ice:inputFile style="border:none; width:400px; height:70px;"
 								progressListener="#{XmlFileImportBean.progressListener}"
@@ -47,8 +36,9 @@
 							<ice:outputProgress id="pro" value="#{XmlFileImportBean.percent}" />
 							<ice:outputText value="File Name: #{XmlFileImportBean.fileName}" />
 							<br />
-							<ice:outputText
-								value="Content Type: #{XmlFileImportBean.contentType}" />
+							<ice:outputText value="Content Type: #{XmlFileImportBean.contentType}" />
+							<br />
+							<ice:outputText value="Upload status: #{XmlFileImportBean.uploadStatus}" />
 							<ice:messages />
 						</ice:panelGroup>
 

@@ -34,12 +34,19 @@ public class XmlFileImportBean {
 	
 	protected final Log logger = LogFactory.getLog(this.getClass());
 	
-	private String choosenExtension = "";
-		
-	private SelectItem[] fileExtensions = new SelectItem[]{
-        new SelectItem("xml"),
-        new SelectItem("zip"),
-	};
+	private String fileName = "";
+
+	private String contentType = "";
+	
+	private String uploadStatus = "" ;
+
+	public String getUploadStatus() {
+		return uploadStatus;
+	}
+
+	public void setUploadStatus(String _uploadStatus) {
+		this.uploadStatus = _uploadStatus;
+	}
 
 	public XmlFileImportBean() {
 		state = PersistentFacesState.getInstance();
@@ -64,11 +71,26 @@ public class XmlFileImportBean {
 	public void uploadFileActionListener(ActionEvent event) {
 		InputFile inputFile = (InputFile) event.getSource();
 		if (inputFile.getStatus() == InputFile.SAVED) {
-			fileName = inputFile.getFileInfo().getFileName();
+			fileName = inputFile.getFileInfo().getFileName();	
 			contentType = inputFile.getFileInfo().getContentType();
 			setFile(inputFile.getFile());
 		}
-
+		
+		if (! contentType.equalsIgnoreCase("application/zip")) {
+			if (! contentType.equalsIgnoreCase("text/xml")) {
+				uploadStatus = "File type error! Expecting XML or ZIP, please select another file." ;
+				file.delete() ;
+				logger.debug("### XmlFileImportBean ### File type error (got '"+contentType+"') - Deleting file");
+				return ;
+			}
+			else {
+				uploadStatus = "XML file successfully uploaded to server!" ;
+			}	
+		}
+		else {
+			uploadStatus = "ZIP file successfully uploaded to server!" ;
+		}
+		
 		if (inputFile.getStatus() == InputFile.INVALID) {
 			inputFile.getFileInfo().getException().printStackTrace();
 		}
@@ -100,7 +122,7 @@ public class XmlFileImportBean {
 		try {
 			Process p = processService.spelpParsingXML(file);
 			// save the process
-			logger.debug("###XmlFileImportBean ### action -> id=" + p.getId());
+			logger.debug("### XmlFileImportBean ### action -> id=" + p.getId());
 			/* id = */
 			this.processService.saveProcess(p);
 		} catch (Exception e) {
@@ -122,10 +144,6 @@ public class XmlFileImportBean {
 			System.out.println(ee.getMessage());
 		}
 	}
-
-	private String fileName = "";
-
-	private String contentType = "";
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
@@ -166,17 +184,5 @@ public class XmlFileImportBean {
 
 	public void setTreeBean(TreeBean treeBean) {
 		this.treeBean = treeBean;
-	}
-
-	public SelectItem[] getFileExtensions() {
-		return fileExtensions;
-	}
-
-	public String getChoosenExtension() {
-		return choosenExtension;
-	}
-
-	public void setChoosenExtension(String _choosenExtension) {
-		this.choosenExtension = _choosenExtension;
 	}
 }
