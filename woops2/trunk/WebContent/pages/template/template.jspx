@@ -112,6 +112,20 @@
 						</f:subview>
 					</ice:panelGroup>
 					
+					 <ice:panelGroup id="ActivityViewer"
+						styleClass="contentIncludePanelGroup">
+						<f:subview id="ActivityViewer_view">
+							<jsp:directive.include file="./pages/common/ActivityViewer.jspx" />
+						</f:subview>
+					</ice:panelGroup>
+					
+					<ice:panelGroup id="IterationViewer"
+						styleClass="contentIncludePanelGroup">
+						<f:subview id="IterationViewer_view">
+							<jsp:directive.include file="./pages/common/IterationViewer.jspx" />
+						</f:subview>
+					</ice:panelGroup>
+					
                 </ice:panelStack>
                 <br />
             </ice:panelGroup>
