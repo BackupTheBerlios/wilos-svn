@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory ;
 import org.springframework.transaction.annotation.Propagation ;
 import org.springframework.transaction.annotation.Transactional ;
 
+import wilos.business.services.process.ProcessService;
 import wilos.hibernate.misc.project.ProjectDao ;
 import wilos.hibernate.misc.wilosuser.ParticipantDao ;
 import wilos.model.misc.project.Project ;
@@ -27,6 +28,8 @@ public class ProjectService {
 	private ProjectDao projectDao ;
 
 	private ParticipantDao participantDao ;
+	
+	private ProcessService processService ;
 
 	public final Log logger = LogFactory.getLog(this.getClass()) ;
 
@@ -168,6 +171,26 @@ public class ProjectService {
 	public ParticipantDao getParticipantDao() {
 		return this.participantDao ;
 	}
+	
+	/**
+	 * 
+	 * TODO Method description
+	 *
+	 * @return
+	 */
+	public ProcessService getProcessService() {
+		return this.processService ;
+	}
+
+	/**
+	 * 
+	 * TODO Method description
+	 *
+	 * @param _processService
+	 */
+	public void setProcessService(ProcessService _processService) {
+		this.processService = _processService ;
+	}
 
 	/**
 	 * Setter of participantDao.
@@ -203,5 +226,25 @@ public class ProjectService {
 	public void addParticipant(Participant participant, Project project) {
 		project.addToParticipant(participant) ;
 	}
+	
+
+	/**
+	 * 
+	 * Affects a process to a project
+	 * 
+	 * @param process
+	 *            the process to affect
+	 * @param project
+	 *            the project to affect
+	 */
+	public void saveProcessProjectAffectation(wilos.model.spem2.process.Process _process, Project _project) {
+
+		Project loadedProject = this.getProject(_project.getProject_id()) ;
+		wilos.model.spem2.process.Process loadedProcess = this.processService.getProcessDao().getProcessFromGuid(_process.getGuid()) ;
+
+		loadedProject.addProcess(loadedProcess) ;
+		this.projectDao.saveOrUpdateProject(loadedProject) ;
+	}
+
 
 }
