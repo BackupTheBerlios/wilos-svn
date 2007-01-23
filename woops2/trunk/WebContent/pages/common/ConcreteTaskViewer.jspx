@@ -1,0 +1,25 @@
+
+<f:loadBundle basename="wilos.resources.messages" var="msgs" />
+
+<ice:form>
+	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1"
+		border="0" bgcolor="#BEB4CC">
+		<ice:panelTabSet bgcolor="#BEB4CC">
+			<br />
+			<ice:outputText value="#{msgs['concretetaskviewer.pagetitle']}" />
+			<br />
+			<ice:panelTab label="#{msgs['concretetaskviewer.paneltabtitle']}">
+				<br />
+				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2"
+					border="0">
+					<ice:outputText value="#{msgs['concretetaskviewer.taskid']}" />
+					<ice:inputText value="#{ConcreteTaskViewerBean.taskDescriptor.id}" size="32"/>
+					<ice:outputText value="#{msgs['concretetaskviewer.taskname']}" />
+					<ice:inputText value="#{ConcreteTaskViewerBean.taskDescriptor.name}" size="32"/>
+					<ice:outputText value="#{msgs['concretetaskviewer.taskdescription']}" />
+					<ice:outputTextarea value="#{ConcreteTaskViewerBean.taskDescriptor.description}" rows="3"/>
+				</ice:panelGrid>
+			</ice:panelTab>
+		</ice:panelTabSet>
+	</ice:panelGrid>
+</ice:form>
