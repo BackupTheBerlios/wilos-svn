@@ -17,6 +17,8 @@ import wilos.model.spem2.process.Process;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
+import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
+import wilos.model.spem2.workbreakdownelement.WorkOrder;
 
 public class XMLParserTest extends TestCase {
 	public static File pathScrum = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "scrum.xml"); 
@@ -695,6 +697,134 @@ public class XMLParserTest extends TestCase {
 			assertTrue(rentreDansManageRequirements);
 		}		
 	}
+	
+	
+	public void testOpenUPTaskDescriptorContainsDependency() {
+		Process theTestedProcess = null;
+		Iterator<BreakdownElement> itTopLevelAct,itSecondLevelAct,BdeIterator;
+		Activity topLevelActivity,secondLevelActivity;
+		boolean rentreDansDevelopSolution = false;
+		int nbTaskDescriptors = 0;
+		int nbSuccessor = 0;
+		BreakdownElement tmpBde = null;
+		
+		WorkBreakdownElement tmpWBde = null;
+		Set<WorkBreakdownElement> listSuccessor = null;
+		Set<WorkBreakdownElement> listPredecessor = null;
+		
+		Iterator<WorkBreakdownElement> itSuccessor;
+		
+		theTestedProcess = XMLParser.getProcess(pathOPenUP);
+		
+		assertNotNull(theTestedProcess);
+		if (theTestedProcess != null) {
+			// Iterator on the set of the four Phases of OpenUP
+			itTopLevelAct = theTestedProcess.getBreakDownElements().iterator();
+			
+			topLevelActivity = null;
+			// We want the third Phase : Construction Iteration
+			while (itTopLevelAct.hasNext()) {
+				topLevelActivity = (Activity) itTopLevelAct.next();
+				if (topLevelActivity.getPresentationName().equals("Construction Iteration [1..n]")) {
+					break;
+				}
+			}
+			
+			itSecondLevelAct = topLevelActivity.getBreakDownElements().iterator();
+			
+			rentreDansDevelopSolution = false;
+			while (itSecondLevelAct.hasNext()) {
+				secondLevelActivity = (Activity) itSecondLevelAct.next();
+				if (secondLevelActivity.getPresentationName().equals("Develop Solution (for requirement) (within context)")) {
+					rentreDansDevelopSolution = true;
+					BdeIterator = secondLevelActivity.getBreakDownElements().iterator();
+					nbTaskDescriptors = 0;
+					while (BdeIterator.hasNext()) {
+						tmpBde = BdeIterator.next();					
+					
+						if (tmpBde instanceof TaskDescriptor) {
+							nbTaskDescriptors++;
+							tmpBde = (TaskDescriptor) tmpBde;
+							assertNotNull(tmpBde);
+							
+							// recherche de la taskDescriptor "Refine the architecture"
+							// qui est la predecesseur de la Task Descriptor "Design the solution"
+							if (tmpBde.getPresentationName().equals("Refine the Architecture")) {
+								// on est dans la taskDescriptor qui est le predecesseur d'un autre tache
+								// on va verifie que le succeseur de cette TD est
+								// la taskDescriptor Design the solution
+								listSuccessor = ((WorkBreakdownElement)tmpBde).getSuccessors();
+								itSuccessor = listSuccessor.iterator();
+								while (itSuccessor.hasNext()) {
+									nbSuccessor++;
+									tmpWBde = itSuccessor.next();
+									System.out.println("NANAA");
+								}
+								assertTrue(nbSuccessor == 1);
+								assertTrue(tmpWBde.getPresentationName().equals("Design the Solution"));								
+								assertTrue(((WorkBreakdownElement)tmpWBde).getPredecessors().iterator().next().getPresentationName().equals("Refine the Architecture"));
+							}
+														
+						}
+					}					
+				}		
+			}
+			assertTrue(nbTaskDescriptors == 5);
+		}
+	}
+	
+	public void testOpenUPActivityContainsDependency() {
+		Process theTestedProcess = null;
+		Iterator<BreakdownElement> itTopLevelAct,itSecondLevelAct;
+		Activity topLevelActivity,secondLevelActivity;
+		boolean rentreDansInitiateProject = false;
+		int nbSuccessor = 0;
+
+		
+		WorkBreakdownElement tmpWBde = null;
+		Set<WorkBreakdownElement> listSuccessor = null;
+		
+		Iterator<WorkBreakdownElement> itSuccessor;
+		
+		theTestedProcess = XMLParser.getProcess(pathOPenUP);
+		
+		assertNotNull(theTestedProcess);
+		if (theTestedProcess != null) {
+			// Iterator on the set of the four Phases of OpenUP
+			itTopLevelAct = theTestedProcess.getBreakDownElements().iterator();
+			
+			topLevelActivity = null;
+			// We want the third Phase : Construction Iteration
+			while (itTopLevelAct.hasNext()) {
+				topLevelActivity = (Activity) itTopLevelAct.next();
+				if (topLevelActivity.getPresentationName().equals("Inception Iteration [1..n]")) {
+					break;
+				}
+			}			
+			
+			itSecondLevelAct = topLevelActivity.getBreakDownElements().iterator();			
+			rentreDansInitiateProject = false;
+			while (itSecondLevelAct.hasNext()) {
+				secondLevelActivity = (Activity) itSecondLevelAct.next();
+				if (secondLevelActivity.getPresentationName().equals("Initiate Project")) {
+					rentreDansInitiateProject = true;
+					
+					listSuccessor = ((WorkBreakdownElement)secondLevelActivity).getSuccessors();
+					itSuccessor = listSuccessor.iterator();
+					while (itSuccessor.hasNext()) {
+						nbSuccessor++;
+						tmpWBde = itSuccessor.next();	
+						System.out.println(tmpWBde.getPresentationName());						
+					}
+					assertTrue(nbSuccessor == 2);
+					assertTrue(tmpWBde.getPredecessors().iterator().next().getPresentationName().equals("Initiate Project"));
+				}				
+			}
+		}
+	}
+	
+	
+	
 	
 	/*
 	public void testGetProcess(){
