@@ -1,4 +1,5 @@
-package wilos.presentation.web.tree;
+
+package wilos.presentation.web.tree ;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +71,7 @@ public class TreeBean {
 			this.model = new DefaultTreeModel(processNode);
 		}
 	}
-
+	
 	public DefaultTreeModel getModel() {
 		return this.model;
 	}
@@ -84,59 +85,59 @@ public class TreeBean {
 		projectsList.add(new SelectItem("", ""));
 		return projectsList;
 	}
-
+	
 	public void changeTreeActionListener(ActionEvent evt) {
-		this.buildModel(true);
+		this.buildModel();
 	}
-
-	public void filterTreeActionListener(ActionEvent evt) {
-		this.buildModel(false);
-	}
-
+	
 	public void selectNodeActionListener(ActionEvent evt) {
 		logger.debug("### TreeBean ### selectNodeActionListener");
-		FacesContext context = FacesContext.getCurrentInstance();
+		FacesContext context = FacesContext.getCurrentInstance(); 
 		Map map = context.getExternalContext().getRequestParameterMap();
-
+		
 		String nodeId = (String) map.get("nodeId");
-		logger.debug("### TreeBean ### selectNodeActionListener - nodeId ="
-				+ nodeId);
+		logger.debug("### TreeBean ### selectNodeActionListener - nodeId ="+nodeId);
 		String pageId = (String) map.get("pageId");
-		logger.debug("### TreeBean ### selectNodeActionListener - pageId ="
-				+ pageId);
+		logger.debug("### TreeBean ### selectNodeActionListener - pageId ="+pageId);
 		// 
-		this.selectNodeToShow(nodeId, pageId);
-
-		/*
-		 * TaskViewerBean tv = (TaskViewerBean) context.getApplication()
-		 * .getVariableResolver().resolveVariable(context,"TaskViewerBean");
-		 * tv.setTaskId(basicNodeId); tv.buildTaskDescriptor();
-		 * 
-		 * MenuBean mb = (MenuBean) context.getApplication()
-		 * .getVariableResolver().resolveVariable(context,"menu");
-		 * mb.changePage("taskviewer");
-		 */
+		this.selectNodeToShow(nodeId,pageId);
 	}
 
 	private void selectNodeToShow(String _objectId, String _pageId) {
-		logger.debug("### TreeBean ### selectNodeToShow id=" + _objectId
-				+ " page=" + _pageId);
+		logger.debug("### TreeBean ### selectNodeToShow id="+_objectId+" page="+_pageId);
 		FacesContext context = FacesContext.getCurrentInstance();
-		MenuBean mb = (MenuBean) context.getApplication().getVariableResolver()
-				.resolveVariable(context, "menu");
-
-		if (_pageId.equals(WilosObjectNode.ACTIVITYNODE)) {
+		MenuBean mb = (MenuBean) context.getApplication()
+		.getVariableResolver().resolveVariable(context,"menu");
+		
+		if (_pageId.equals(WilosObjectNode.ACTIVITYNODE)){
+			// TODO faire selectNodeToShow WilosObjectNode.ACTIVITYNODE
+		}
+		else if (_pageId.equals(WilosObjectNode.CONCRETETASKNODE)){
+			// TODO faire selectNodeToShow WilosObjectNode.CONCRETETASKNODE
+		}
+		else if (_pageId.equals(WilosObjectNode.ITERATIONNODE)){
+			// TODO faire selectNodeToShow WilosObjectNode.ITERATIONNODE
+		}
+		else if (_pageId.equals(WilosObjectNode.PHASENODE)){
+			// TODO faire selectNodeToShow WilosObjectNode.PHASENODE
+		}
+		else if (_pageId.equals(WilosObjectNode.PROCESSNODE)){
+			// TODO faire selectNodeToShow WilosObjectNode.PROCESSNODE
+		}
+		else if (_pageId.equals(WilosObjectNode.PROJECTNODE)){
+			// TODO faire selectNodeToShow WilosObjectNode.PROJECTNODE
+		}
+		else if (_pageId.equals(WilosObjectNode.TASKNODE)){
 			TaskViewerBean tv = (TaskViewerBean) context.getApplication()
-					.getVariableResolver().resolveVariable(context,
-							"TaskViewerBean");
+			.getVariableResolver().resolveVariable(context,"TaskViewerBean");
 			tv.setTaskId(_objectId);
+			// model building
+			tv.buildTaskDescriptor();
 			mb.changePage(_pageId);
-		} else if (_pageId.equals(WilosObjectNode.CONCRETETASKNODE)) {
-			TaskViewerBean tv = (TaskViewerBean) context.getApplication()
-					.getVariableResolver().resolveVariable(context,
-							"ConcreteTaskViewerBean");
-			tv.setTaskId(_objectId);
-			mb.changePage(_pageId);
+		}
+		else {
+			// didnt found the node's class
+			new ClassNotFoundException("coulnd't found the node class");
 		}
 	}
 
@@ -144,7 +145,7 @@ public class TreeBean {
 	 * @return the processId
 	 */
 	public String getProcessId() {
-		return this.processId;
+		return this.processId ;
 	}
 
 	/**
@@ -154,14 +155,14 @@ public class TreeBean {
 	 *            The processId to set.
 	 */
 	public void setProcessId(String _processId) {
-		this.processId = _processId;
+		this.processId = _processId ;
 	}
 
 	/**
 	 * @return the processService
 	 */
 	public ProcessService getProcessService() {
-		return this.processService;
+		return this.processService ;
 	}
 
 	/**
@@ -171,7 +172,7 @@ public class TreeBean {
 	 *            The processService to set.
 	 */
 	public void setProcessService(ProcessService _processService) {
-		this.processService = _processService;
+		this.processService = _processService ;
 	}
 
 	public Boolean getAffectedTaskFilter() {
