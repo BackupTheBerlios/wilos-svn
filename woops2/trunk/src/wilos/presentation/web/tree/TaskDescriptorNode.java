@@ -32,8 +32,10 @@ public class TaskDescriptorNode extends DefaultMutableTreeNode {
 		//iceUserObject.setBranchContractedIcon("images/icon_taskdescriptor.gif") ;
 		//iceUserObject.setBranchExpandedIcon("images/icon_taskdescriptor.gif") ;
 		iceUserObject.setLeafIcon("images/tree/icon_taskdescriptor.gif") ;
+		// information node
 		iceUserObject.setId(_taskDescriptor.getId());
 		iceUserObject.setPageId(WilosObjectNode.TASKNODE);
+		
 		/*TaskDefinition taskDefinition = _taskDescriptor.getTaskDefinition() ;
 		if(taskDefinition != null){
 			this.add(new TaskDefinitionNode(taskDefinition)) ;
