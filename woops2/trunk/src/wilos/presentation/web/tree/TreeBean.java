@@ -121,9 +121,6 @@ public class TreeBean {
 		else if (_pageId.equals(WilosObjectNode.PHASENODE)){
 			// TODO faire selectNodeToShow WilosObjectNode.PHASENODE
 		}
-		else if (_pageId.equals(WilosObjectNode.PROCESSNODE)){
-			// TODO faire selectNodeToShow WilosObjectNode.PROCESSNODE
-		}
 		else if (_pageId.equals(WilosObjectNode.PROJECTNODE)){
 			// TODO faire selectNodeToShow WilosObjectNode.PROJECTNODE
 		}

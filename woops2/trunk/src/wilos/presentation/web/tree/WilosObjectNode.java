@@ -17,8 +17,6 @@ public class WilosObjectNode extends IceUserObject {
 	public final static String TASKNODE = "TaskViewer";
 	// Project Node
 	public final static String PROJECTNODE = "ProjectViewer";
-	// Project Node
-	public final static String PROCESSNODE = "ProcessViewer";
 	// Phase Node
 	public final static String PHASENODE = "PhaseViewer";
 	// Iteration Node
@@ -26,7 +24,7 @@ public class WilosObjectNode extends IceUserObject {
 	// ConcreteTask Node
 	public final static String CONCRETETASKNODE = "ConcreteTaskViewer";
 	// ConcreteTask Node
-	public final static String ACTIVITYNODE = "ConcreteTaskViewer";
+	public final static String ACTIVITYNODE = "ActivityViewer";
 	
 	// properties
 	private String id = "";
