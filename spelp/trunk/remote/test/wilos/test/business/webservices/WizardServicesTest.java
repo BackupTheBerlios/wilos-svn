@@ -26,53 +26,22 @@ import com.thoughtworks.xstream.XStream;
  * @author toine
  */
 public class WizardServicesTest extends TestCase {
+	LoginService ls;
+	ParticipantService ps;
+	WizardServices instance;
     
     public WizardServicesTest(String testName) {
         super(testName);
     }
 
     protected void setUp() throws Exception {
+    	 ls = (LoginService) TestConfiguration.getInstance().getApplicationContext().getBean("LoginService");
+    	 ps = (ParticipantService) TestConfiguration.getInstance().getApplicationContext().getBean("ParticipantService");
+    	 instance = new WizardServices();     
     }
 
     protected void tearDown() throws Exception {
     }
-   
-    /**
-     * Test of getAllProcess method, of class wilos.spelp.webservices.WizardServices.
-     */
-    /*public void testGetAllProcess() {
-        System.out.println("getAllProcess");
-        System.out.println("testBD");
-        WizardServices instance = new WizardServices();
-        
-        Process proc = new Process();
-        
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-        org.springframework.orm.hibernate3.HibernateTemplate hibTempl = (org.springframework.orm.hibernate3.HibernateTemplate) ctx.getBean("hibernateTemplate");
-
-        ProcessService p = (ProcessService)ctx.getBean("ProcessService");
-        
-        p.saveProcess(proc);
-        
-        String login = "testBD";
-        String pass = "testBD";
-        
-        List<String> result = instance.getAllProcess(login,pass);
-        
-        assertNotNull(result);
-        assertTrue(result.size()>=1);
-
-        p.getProcessDao().deleteProcess(proc);
-        
-        login = "testSansBD";
-        pass = "testSansBD";
-        
-        result = instance.getAllProcess(login,pass);
-        
-        assertNotNull(result);
-        assertTrue(result.size()>=1);
-        
-    }*/
     
      public void testGetParticipantSansBD() {
         System.out.println("GetParticipant");
@@ -100,12 +69,6 @@ public class WizardServicesTest extends TestCase {
          System.out.println("GetParticipant");
          System.out.println("testException");
          
-         WizardServices instance = new WizardServices();
-
-         LoginService ls = (LoginService) TestConfiguration.getInstance().getApplicationContext().getBean("LoginService");
-
-         ParticipantService ps = (ParticipantService) TestConfiguration.getInstance().getApplicationContext().getBean("ParticipantService");
-         
     	 Participant p = new Participant();
          p.setLogin("test");
          p.setPassword(Security.encode("testtest"));
@@ -128,15 +91,7 @@ public class WizardServicesTest extends TestCase {
      public void testGetParticipant() {
         System.out.println("GetParticipant");
         System.out.println("testBD");
-        
-        WizardServices instance = new WizardServices();     
-        
-        LoginService ls = (LoginService) TestConfiguration.getInstance().getApplicationContext().getBean("LoginService");
-
-        ParticipantService ps = (ParticipantService) TestConfiguration.getInstance().getApplicationContext().getBean("ParticipantService");
-        
-
-        		
+	
         Participant p = new Participant();
         p.setLogin("test");
         p.setPassword(Security.encode("testtest"));

@@ -22,17 +22,17 @@ public class GuidelineServiceTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp() ;
 
-		// Get the ActivityService Singleton for managing Activity data
+		// Get the GuidelineService Singleton for managing Guideline data
 		this.guidelineService = (GuidelineService) TestConfiguration.getInstance().getApplicationContext().getBean("GuidelineService") ;
 
-		// Create empty Activity
+		// Create empty Guideline
 		this.guideline = new Guideline() ;
 	}
 
 	protected void tearDown() throws Exception {
 		super.tearDown();
 
-		// Delete the tmp activity from the database.
+		// Delete the tmp guideline from the database.
 		this.guidelineService.getGuidelineDao().deleteGuideline(this.guideline) ;
 	}
 
@@ -58,7 +58,7 @@ public class GuidelineServiceTest extends TestCase {
 		this.guidelineService.saveGuideline(this.guideline) ;
 		String id = this.guideline.getId() ;
 
-		// Look if this activity is also into the database.
+		// Look if this guideline is also into the database.
 		Guideline guidelineTmp = (Guideline) this.guidelineService.getGuidelineDao().getGuideline(id) ;
 		assertNotNull(guidelineTmp) ;
 		assertEquals(guidelineTmp.getGuid(), guid) ;
