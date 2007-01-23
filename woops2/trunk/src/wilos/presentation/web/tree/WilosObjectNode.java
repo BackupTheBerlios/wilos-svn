@@ -13,8 +13,6 @@ import com.icesoft.faces.component.tree.IceUserObject;
 public class WilosObjectNode extends IceUserObject {
 	
 	// static fields
-	// Tasks node
-	public final static String TASKNODE = "TaskViewer";
 	// Project Node
 	public final static String PROJECTNODE = "ProjectViewer";
 	// Phase Node
