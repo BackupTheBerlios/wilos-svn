@@ -6,29 +6,27 @@
 
 	<f:loadBundle basename="wilos.resources.messages" var="msgs" />
 
-	<!-- Check box - Concrete task filter -->
-	<ice:outputText styleClass="propertyLabel"
-		value="#{msgs['navigation.checkbox.label']}" />
-	<ice:selectBooleanCheckbox value="#{TreeBean.affectedTaskFilter}"
-		partialSubmit="true" valueChangeListener="#{TreeBean.filterTreeActionListener}"/>
-	<br />
-
-	<ice:outputText value="label" styleClass="valueHeader" />
-	<ice:outputText value="#{TreeBean.affectedTaskFilter}"
-		styleClass="valueText" />
-	<br />
-
 	<!-- ComboBox -->
 	<!-- The projects combobox -->
 	<ice:outputText value="#{msgs['navigation.combobox.label']}" />
 	<ice:selectOneMenu value="#{TreeBean.projectId}">
 		<f:selectItems value="#{TreeBean.projects}" />
 	</ice:selectOneMenu>
+	<br />
+	<br />
 
 	<!-- Button -->
 	<ice:commandButton type="submit"
 		value="#{msgs['navigation.button.label']}"
 		actionListener="#{TreeBean.changeTreeActionListener}" />
+	<br />
+	<br />
+	
+	<!-- Check box - Concrete task filter -->
+	<ice:outputText styleClass="propertyLabel"
+		value="#{msgs['navigation.checkbox.label']}" />
+	<ice:selectBooleanCheckbox value="#{TreeBean.affectedTaskFilter}"
+		partialSubmit="true" valueChangeListener="#{TreeBean.filterTreeActionListener}"/>
 	<br />
 
 	<!-- ScrollBar -->

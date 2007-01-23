@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -79,15 +80,19 @@ public class TreeBean {
 		List<SelectItem> projectsList = new ArrayList<SelectItem>();
 		
 		for (Project project : this.projectService.getAllProjects()) {
-			projectsList
-					.add(new SelectItem(project.getProject_id(), project.getName()));
+			//Add the project if the wilosUser is in this project.
+			projectsList.add(new SelectItem(project.getProject_id(), project.getName()));
 		}
-		projectsList.add(new SelectItem("", ""));
+		projectsList.add(new SelectItem("", "Choose a project ..."));
 		return projectsList;
 	}
 	
 	public void changeTreeActionListener(ActionEvent evt) {
 		this.buildModel(true);
+	}
+	
+	public void filterTreeActionListener(ValueChangeEvent evt) {
+		this.buildModel(false);
 	}
 	
 	public void selectNodeActionListener(ActionEvent evt) {
