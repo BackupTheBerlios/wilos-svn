@@ -17,7 +17,9 @@ import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.project.ProjectService;
 import wilos.model.misc.project.Project;
+import wilos.presentation.web.task.ActivityViewerBean;
 import wilos.presentation.web.task.ConcreteTaskViewerBean;
+import wilos.presentation.web.task.IterationViewerBean;
 import wilos.presentation.web.task.PhaseViewerBean;
 import wilos.presentation.web.task.TaskViewerBean;
 import wilos.presentation.web.template.MenuBean;
@@ -117,7 +119,12 @@ public class TreeBean {
 		.getVariableResolver().resolveVariable(context,"menu");
 		
 		if (_pageId.equals(WilosObjectNode.ACTIVITYNODE)){
-			// TODO faire selectNodeToShow WilosObjectNode.ACTIVITYNODE
+			ActivityViewerBean av = (ActivityViewerBean) context.getApplication()
+			.getVariableResolver().resolveVariable(context,"ActivityViewerBean");
+			av.setActivityId(_objectId);
+			// model building
+			av.buildActivity();
+			mb.changePage(_pageId);
 		}
 		else if (_pageId.equals(WilosObjectNode.CONCRETETASKNODE)){
 			ConcreteTaskViewerBean ctv = (ConcreteTaskViewerBean) context.getApplication()
@@ -128,7 +135,12 @@ public class TreeBean {
 			mb.changePage(_pageId);
 		}
 		else if (_pageId.equals(WilosObjectNode.ITERATIONNODE)){
-			// TODO faire selectNodeToShow WilosObjectNode.ITERATIONNODE
+			IterationViewerBean iv = (IterationViewerBean) context.getApplication()
+			.getVariableResolver().resolveVariable(context,"IterationViewerBean");
+			iv.setIterationId(_objectId);
+			// model building
+			iv.buildIteration();
+			mb.changePage(_pageId);
 		}
 		else if (_pageId.equals(WilosObjectNode.PHASENODE)){
 			PhaseViewerBean pb = (PhaseViewerBean) context.getApplication()
