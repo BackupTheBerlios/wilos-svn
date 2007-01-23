@@ -1,11 +1,14 @@
 package wilos.presentation.web.tree;
 
+import java.util.Set;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
+import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
 
 public class PhaseNode extends DefaultMutableTreeNode {
@@ -14,7 +17,7 @@ public class PhaseNode extends DefaultMutableTreeNode {
 
 	private Phase phase;
 
-	public PhaseNode(Phase _phase) {
+	public PhaseNode(Phase _phase, Set<RoleDescriptor> _roleDescriptors) {
 		super();
 		this.phase = _phase;
 
@@ -32,15 +35,15 @@ public class PhaseNode extends DefaultMutableTreeNode {
 		for (BreakdownElement breakdownElement : this.phase
 				.getBreakDownElements()) {
 			if (breakdownElement instanceof Iteration) {
-				this.add(new IterationNode((Iteration) breakdownElement));
+				this.add(new IterationNode((Iteration) breakdownElement, _roleDescriptors));
 			} 
 			else if (breakdownElement instanceof Activity) {
-				this.add(new ActivityNode((Activity) breakdownElement));
+				this.add(new ActivityNode((Activity) breakdownElement, _roleDescriptors));
 			}
 			// TODO Change with ConcreteTaskDescriptorNode !!!
 			else if (breakdownElement instanceof TaskDescriptor) {
 				this.add(new TaskDescriptorNode(
-						(TaskDescriptor) breakdownElement));
+						(TaskDescriptor) breakdownElement, _roleDescriptors));
 			}
 		}
 	}
