@@ -17,7 +17,6 @@ import org.apache.commons.logging.LogFactory;
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.spem2.process.Process;
 import wilos.presentation.web.task.TaskViewerBean;
-import wilos.presentation.web.template.MenuBean;
 
 /**
  * <p/> A basic backing bean for a ice:tree component. The only instance variable needed is a
@@ -83,21 +82,37 @@ public class TreeBean {
 	}
 	
 	public void selectNodeActionListener(ActionEvent evt) {
+		logger.debug("### TreeBean ### selectNodeActionListener");
 		FacesContext context = FacesContext.getCurrentInstance(); 
 		Map map = context.getExternalContext().getRequestParameterMap();
-		String basicNodeId = (String) map.get("basicNode_id");
-		logger.debug("### TreeBean ### selectNodeActionListener - basicNodeId ="+basicNodeId);
-		// envoi vers taskviewverBean
+		
+		String nodeId = (String) map.get("nodeId");
+		logger.debug("### TreeBean ### selectNodeActionListener - nodeId ="+nodeId);
+		String pageId = (String) map.get("pageId");
+		logger.debug("### TreeBean ### selectNodeActionListener - pageId ="+pageId);
+		// 
+		this.selectNodeToShow(nodeId,pageId);
+
+		/*
 		TaskViewerBean tv = (TaskViewerBean) context.getApplication()
 		.getVariableResolver().resolveVariable(context,"TaskViewerBean");
 		tv.setTaskId(basicNodeId);
 		tv.buildTaskDescriptor();
-		//tv.setTaskClicked(true);
-		// change the new web page
+
 		MenuBean mb = (MenuBean) context.getApplication()
 		.getVariableResolver().resolveVariable(context,"menu");
 		mb.changePage("taskviewer");
-		
+		*/
+	}
+
+	private void selectNodeToShow(String _objectId, String _pageId) {
+		logger.debug("### TreeBean ### selectNodeToShow id="+_objectId+" page="+_pageId);
+		FacesContext context = FacesContext.getCurrentInstance();
+		if (_pageId.equals(WilosObjectNode.ACTIVITYNODE)){
+			TaskViewerBean tv = (TaskViewerBean) context.getApplication()
+			.getVariableResolver().resolveVariable(context,"TaskViewerBean");
+			tv.setTaskId(_objectId);
+		}
 	}
 
 	/**

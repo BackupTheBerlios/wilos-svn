@@ -27,7 +27,7 @@ public class ProjectNode extends DefaultMutableTreeNode {
 		iceUserObject.setLeaf(false);
 		iceUserObject.setBranchContractedIcon("images/tree/icon_process.gif");
 		iceUserObject.setBranchExpandedIcon("images/tree/icon_process.gif");
-		iceUserObject.setObjectId(this.project.getProject_id());
+		iceUserObject.setId(this.project.getProject_id());
 		for(BreakdownElement breakdownElement : this.project.getProcess().getBreakDownElements()){
 			if(breakdownElement instanceof Phase){
 				this.add(new PhaseNode((Phase)breakdownElement)) ;

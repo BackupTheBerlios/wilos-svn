@@ -24,7 +24,7 @@ public class ActivityNode extends DefaultMutableTreeNode {
 		iceUserObject.setLeaf(false);
 		iceUserObject.setBranchContractedIcon("images/tree/icon_activity.gif");
 		iceUserObject.setBranchExpandedIcon("images/tree/icon_activity.gif");
-		iceUserObject.setObjectId(this.activity.getId());
+		iceUserObject.setId(this.activity.getId());
 		for (BreakdownElement breakdownElement : this.activity
 				.getBreakDownElements()) {
 			// TODO Change with ConcreteTaskDescriptorNode !!!

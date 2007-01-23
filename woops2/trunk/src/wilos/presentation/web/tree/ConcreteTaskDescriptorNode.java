@@ -23,7 +23,7 @@ public class ConcreteTaskDescriptorNode extends DefaultMutableTreeNode {
 		//iceUserObject.setBranchContractedIcon("images/icon_taskdescriptor.gif") ;
 		//iceUserObject.setBranchExpandedIcon("images/icon_taskdescriptor.gif") ;
 		iceUserObject.setLeafIcon("images/tree/icon_taskdescriptor.gif") ;
-		iceUserObject.setObjectId(_concreteTaskDescriptor.getId());
+		iceUserObject.setId(_concreteTaskDescriptor.getId());
 		/*TaskDefinition taskDefinition = _taskDescriptor.getTaskDefinition() ;
 		if(taskDefinition != null){
 			this.add(new TaskDefinitionNode(taskDefinition)) ;

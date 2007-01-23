@@ -26,7 +26,9 @@ public class PhaseNode extends DefaultMutableTreeNode {
 		iceUserObject.setLeaf(false);
 		iceUserObject.setBranchContractedIcon("images/tree/icon_phase.gif");
 		iceUserObject.setBranchExpandedIcon("images/tree/icon_phase.gif");
-		iceUserObject.setObjectId(this.phase.getId());
+		// node informations
+		iceUserObject.setId(this.phase.getId());
+		
 		for (BreakdownElement breakdownElement : this.phase
 				.getBreakDownElements()) {
 			if (breakdownElement instanceof Iteration) {

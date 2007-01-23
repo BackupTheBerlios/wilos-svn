@@ -32,7 +32,7 @@ public class ProcessNode extends DefaultMutableTreeNode {
 		iceUserObject.setLeaf(false) ;
 		iceUserObject.setBranchContractedIcon("images/tree/icon_process.gif") ;
 		iceUserObject.setBranchExpandedIcon("images/tree/icon_process.gif") ;
-		iceUserObject.setObjectId(this.process.getId());
+		iceUserObject.setId(this.process.getId());
 		for(BreakdownElement breakdownElement : this.process.getBreakDownElements()){
 			if(breakdownElement instanceof Phase){
 				this.add(new PhaseNode((Phase)breakdownElement)) ;

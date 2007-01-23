@@ -47,7 +47,8 @@
 				<ice:panelGroup style="display: inline">
 					<ice:commandLink value="#{item.userObject.text}"
 						actionListener="#{TreeBean.selectNodeActionListener}">
-						<f:param name="basicNode_id" value="#{item.userObject.objectId}" />
+						<f:param name="nodeId" value="#{item.userObject.id}" />
+						<f:param name="pageId" value="#{item.userObject.pageId}" />
 					</ice:commandLink>
 				</ice:panelGroup>
 			</f:facet>

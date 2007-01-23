@@ -91,10 +91,10 @@
                         </f:subview>
                     </ice:panelGroup>
                     
-                    <ice:panelGroup id="taskviewer"
+                    <ice:panelGroup id="TaskViewer"
 						styleClass="contentIncludePanelGroup">
-						<f:subview id="taskviewer_view">
-							<jsp:directive.include file="./pages/common/taskViewer.jspx" />
+						<f:subview id="TaskViewer_view">
+							<jsp:directive.include file="./pages/common/TaskViewer.jspx" />
 						</f:subview>
 					</ice:panelGroup>
 					
