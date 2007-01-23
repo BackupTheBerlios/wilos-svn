@@ -35,7 +35,9 @@ public class ProcessNode extends DefaultMutableTreeNode {
 		iceUserObject.setLeaf(false) ;
 		iceUserObject.setBranchContractedIcon("images/tree/icon_process.gif") ;
 		iceUserObject.setBranchExpandedIcon("images/tree/icon_process.gif") ;
+		// information node
 		iceUserObject.setId(this.process.getId());
+		iceUserObject.setPageId(WilosObjectNode.PROCESSNODE);
 		
 		for(BreakdownElement breakdownElement : this.process.getBreakDownElements()){
 			if(breakdownElement instanceof Phase){
