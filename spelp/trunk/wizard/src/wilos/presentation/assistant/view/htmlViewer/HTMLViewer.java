@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -21,14 +22,18 @@ import wilos.presentation.assistant.ressources.Bundle;
 public class HTMLViewer extends JFrame {
 	private static HTMLViewer instance = null;
 	private String HTMLCode; // Le code HTML affiché
+	
 	private JScrollPane myScrollPane;
 	private JEditorPane myEditorPane;
+	
 	private JLabel myElementLabel ;
+	
 	private JButton prevButton;
 	private JButton nextButton;
 	private Stack historyStack;
 	private int cursorStack=0;
 	
+	private JList guidesList ;
 	
 	private HTMLViewer(Point p) {
 		super(Bundle.getText("htmlViewer.title"));
@@ -73,6 +78,11 @@ public class HTMLViewer extends JFrame {
 		southPanel.setLayout(new GridLayout());
 		southPanel.add(new JLabel(Bundle.getText("htmlViewer.guidelines")));
 		
+		this.guidesList = new JList();
+		this.guidesList.setVisibleRowCount(2);
+		southPanel.add(new JScrollPane(this.guidesList));
+		
+		
 		this.getContentPane().add(northPanel, BorderLayout.NORTH);
 		this.getContentPane().add(this.myScrollPane, BorderLayout.CENTER);
 		this.getContentPane().add(southPanel, BorderLayout.SOUTH);
@@ -106,6 +116,7 @@ public class HTMLViewer extends JFrame {
 		
 		if(description.length() != 0)
 			this.myEditorPane.setCaretPosition(1); // revient au debut du texte
+		
 		
 		this.setVisible(true);
 		
