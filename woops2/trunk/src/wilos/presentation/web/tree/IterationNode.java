@@ -28,7 +28,10 @@ public class IterationNode extends DefaultMutableTreeNode {
 		iceUserObject.setLeaf(false);
 		iceUserObject.setBranchContractedIcon("images/tree/icon_iteration.gif");
 		iceUserObject.setBranchExpandedIcon("images/tree/icon_iteration.gif");
+		// node information
 		iceUserObject.setId(this.iteration.getId());
+		iceUserObject.setPageId(WilosObjectNode.ITERATIONNODE);
+		
 		for (BreakdownElement breakdownElement : this.iteration
 				.getBreakDownElements()) {
 			if (breakdownElement instanceof Activity) {
