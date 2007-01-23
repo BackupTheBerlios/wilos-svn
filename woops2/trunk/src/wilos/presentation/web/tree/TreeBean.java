@@ -87,7 +87,7 @@ public class TreeBean {
 	}
 	
 	public void changeTreeActionListener(ActionEvent evt) {
-		this.buildModel();
+		this.buildModel(true);
 	}
 	
 	public void selectNodeActionListener(ActionEvent evt) {
