@@ -155,7 +155,7 @@ public class XMLParser {
 		for(int i = 0 ; i < activities.getLength(); i++){
 			/* for each list element , get the list item */
 			aNode = activities.item(i);
-			Activity anActivity = new Iteration();
+			Activity anActivity = new Activity();
 			/* Filler for the iteration and the item (node)*/
 			FillerActivity itFiller = new FillerActivity(anActivity, aNode);	
 			Activity returnedActivityFilled = (Activity) itFiller.getFilledElement();
