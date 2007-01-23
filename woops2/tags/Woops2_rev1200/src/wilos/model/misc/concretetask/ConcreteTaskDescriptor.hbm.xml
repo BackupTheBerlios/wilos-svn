@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping>
+	<class name="wilos.model.misc.concretetask.ConcreteTaskDescriptor"
+		table="concretetaskdescriptor" lazy="true">
+
+		<id name="id" type="string"
+			column="concretetaskdescriptor_id">
+			<!--identifiant auto-incrementé -->
+			<generator class="uuid" />
+		</id>
+
+		<property name="projectId" type="java.lang.String"
+			column="projectid" length="256" />
+
+		<property name="concreteName" type="java.lang.String"
+			column="concretename" length="256" />
+
+		<property name="state" type="java.lang.String" column="state"
+			length="256" />
+
+		<many-to-one name="taskDescriptor"
+			class="wilos.model.spem2.task.TaskDescriptor"
+			column="taskdescriptor_id">
+		</many-to-one>
+
+		<property name="plannedStartingDate" type="java.util.Date"
+			column="plannedstartingdate" length="256" />
+
+		<property name="plannedFinishingDate" type="java.util.Date"
+			column="plannedfinishingdate" length="256" />
+
+		<property name="realStartingDate" type="java.util.Date"
+			column="realstartingdate" length="256" />
+
+		<property name="realFinishingDate" type="java.util.Date"
+			column="realfinishingdate" length="256" />
+
+		<property name="plannedTime" type="float" column="plannedtime" />
+
+		<property name="remainingTime" type="float"
+			column="remainingtime" />
+
+		<property name="accomplishedTime" type="float"
+			column="accomplishedtime" />
+
+
+	</class>
+</hibernate-mapping>
