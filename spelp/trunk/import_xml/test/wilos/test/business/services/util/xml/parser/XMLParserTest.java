@@ -629,7 +629,7 @@ public class XMLParserTest extends TestCase {
 		Iterator<BreakdownElement> itSecondLevelAct;
 		Activity topLevelActivity,secondLevelActivity;
 		boolean rentreDansManageRequirements;
-		int nbTaskDescriptors;
+		int nbTaskDescriptors, nbGuidelines = 0;
 		Iterator<BreakdownElement> BdeIterator;
 		BreakdownElement tmpBde;
 		
@@ -675,15 +675,17 @@ public class XMLParserTest extends TestCase {
 							TaskDefinition g = ((TaskDescriptor)tmpBde).getTaskDefinition();
 							listGuides = g.getGuidelines();
 							if (!listGuides.isEmpty()) {
-								System.out.println(g.getName()+"    "+ listGuides.size());								
-								Iterator<Guideline> itGuide = listGuides.iterator();
-								while (itGuide.hasNext()) {
-									System.out.println("TD:"+tmpBde.getName());
-									System.out.println(itGuide.next().getName());
-								}								
+								if (tmpBde.getName().equals("detail_requirements")) {
+									Iterator<Guideline> itGuide = listGuides.iterator();
+																		
+									while (itGuide.hasNext()) {										
+										nbGuidelines++;
+										itGuide.next();
+									}
+									assertTrue(nbGuidelines == 5);
+								}
 							}
 							
-							System.out.println(tmpBde.getName());
 							assertTrue(expectedResults.contains( tmpBde.getPresentationName() ) );
 						}
 					}
