@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import wilos.hibernate.spem2.activity.ActivityDao;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.task.TaskDescriptor;
 
 /**
  * ActivityManager is a transactional class, that manage operations about activity, requested by web pages (activity.jsp &
@@ -37,7 +38,22 @@ public class ActivityService {
 	public Set<BreakdownElement> getBreakdownElementsFromActivity(String _activityId) {
 		Set<BreakdownElement> bdes = new HashSet<BreakdownElement>();
 		bdes.addAll(this.activityDao.getBreakdownElementsFromActivity(_activityId));
-		return bdes;
+				
+		Set<BreakdownElement> allBdes = new HashSet<BreakdownElement>();
+		allBdes.addAll(this.activityDao.getBreakdownElementsFromActivity(_activityId));
+		
+		for (BreakdownElement bde : bdes) {
+			if (bde instanceof Activity) {
+				Activity act = (Activity) bde;
+				allBdes.addAll(this.getBreakdownElementsFromActivity(act.getId()));
+			} else {
+				if (bde instanceof TaskDescriptor) {
+					TaskDescriptor td = (TaskDescriptor) bde;
+					allBdes.add(td);
+				}
+			}
+		}
+		return allBdes;
 	}
 	
 	/**

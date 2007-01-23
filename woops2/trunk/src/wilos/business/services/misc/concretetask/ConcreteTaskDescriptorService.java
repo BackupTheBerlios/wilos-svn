@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import wilos.hibernate.misc.concretetask.ConcreteTaskDescriptorDao;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.model.spem2.process.Process;
 import wilos.utils.Constantes;
 import wilos.utils.Constantes.State;
 
@@ -104,6 +105,49 @@ public class ConcreteTaskDescriptorService {
 
 		// save changings.
 		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(_concreteTaskDescriptor);
+	}
+	
+	/**
+	 * 
+	 * TODO Method description
+	 *
+	 * @param _processId
+	 * @return
+	 */
+	public Process getConcreteTaskDescriptorByProcess(String _processId) {
+		/*
+		 * TODO Process process = this.processDao.getProcess(_processId) ; Set<BreakdownElement>
+		 * bdes = new HashSet<BreakdownElement>() ;
+		 * bdes.addAll(this.breakdownElementService.getBreakdownElementsFromProcess(_processId)) ;
+		 * Set<BreakdownElement> taskDescriptors = new HashSet<BreakdownElement>() ;
+		 * for(BreakdownElement bde : bdes){ if(bde instanceof TaskDescriptor){
+		 * taskDescriptors.add(bde); } }
+		 * process.addAllBreakdownElements(taskDescriptors) ; return process ;
+		 */
+		return null;
+	}
+
+	/**
+	 * 
+	 * TODO Method description
+	 *
+	 * @param _processId
+	 * @param _roleId
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public Process getAffectedConcreteTaskDescriptorsByProcess(
+			String _processId, String _roleId) {
+		/*
+		 * TODO Process process = this.processDao.getProcess(_processId) ; Set<BreakdownElement>
+		 * bdes = new HashSet<BreakdownElement>() ;
+		 * bdes.addAll(this.breakdownElementService.getBreakdownElementsFromProcess(_processId)) ;
+		 * Set<BreakdownElement> taskDescriptors = new HashSet<BreakdownElement>() ;
+		 * for(BreakdownElement bde : bdes){ if(bde instanceof TaskDescriptor){
+		 * taskDescriptors.add(bde); } }
+		 * process.addAllBreakdownElements(taskDescriptors) ; return process ;
+		 */
+		return null;
 	}
 
 	/**

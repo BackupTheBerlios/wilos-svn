@@ -17,13 +17,13 @@
 			<value>org.gjt.mm.mysql.Driver</value>
 		</property>
 		<property name="url">
-			<value>jdbc:mysql://127.0.0.1/wilos</value>
+			<value>jdbc:mysql://127.0.0.1/m1isb10</value>
 		</property>
 		<property name="username">
-			<value>root</value>
+			<value>m1isb10</value>
 		</property>
 		<property name="password">
-			<value></value>
+			<value>enisym</value>
 		</property>
 	</bean>
 
@@ -300,6 +300,7 @@
 	<bean id="IterationService"
 		class="wilos.business.services.spem2.iteration.IterationService">
 		<property name="iterationDao" ref="IterationDao" />
+		<property name="activityService" ref="ActivityService" />
 	</bean>
 	
 </beans>

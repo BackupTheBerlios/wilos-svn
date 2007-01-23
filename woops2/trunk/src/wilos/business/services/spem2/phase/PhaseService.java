@@ -10,8 +10,11 @@ import wilos.business.services.spem2.activity.ActivityService;
 import wilos.business.services.spem2.iteration.IterationService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.hibernate.spem2.phase.PhaseDao;
+import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.iteration.Iteration;
+import wilos.model.spem2.phase.Phase;
+import wilos.model.spem2.task.TaskDescriptor;
 
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class PhaseService {
@@ -24,28 +27,31 @@ public class PhaseService {
 	
 	private TaskDescriptorService taskDescriptorService;
 
-	public Set<BreakdownElement> getBreakdownElementsFromPhase(String _phaseId) {
+	public Set<BreakdownElement> getBreakdownElementsFromPhase(Phase _ph) {
 		Set<BreakdownElement> bdes = new HashSet<BreakdownElement>();
-		bdes.addAll(this.phaseDao.getBreakdownElementsFromPhase(_phaseId));
+		bdes.addAll(_ph.getBreakDownElements());
+		
+		Set<BreakdownElement> allBdes = new HashSet<BreakdownElement>();
+		allBdes.addAll(_ph.getBreakDownElements());
 		
 		for (BreakdownElement bde : bdes) {
 			if (bde instanceof Iteration) {
 				Iteration it = (Iteration) bde;
-				it.addAllBreakdownElements(this.iterationService.getBreakdownElementsFromIteration(it.getId()));
-			} /*else {
+				allBdes.addAll(this.iterationService.getBreakdownElementsFromIteration(it.getId()));
+			} else {
 				if (bde instanceof Activity) {
 					Activity act = (Activity) bde;
-					this.activityService.getEntirePhase(act);
+					allBdes.addAll(this.activityService.getBreakdownElementsFromActivity(act.getId()));
 				} else {
 					if (bde instanceof TaskDescriptor) {
 						TaskDescriptor td = (TaskDescriptor) bde;
-						this.taskDescriptorService.getEntirePhase(td);
+						allBdes.add(td);
 					}
 				}
-			}*/
+			}
 		}
 		
-		return bdes;
+		return allBdes;
 	}
 	
 	public PhaseDao getPhaseDao() {
