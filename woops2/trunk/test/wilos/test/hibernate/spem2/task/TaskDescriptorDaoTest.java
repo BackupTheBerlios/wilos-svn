@@ -1,12 +1,14 @@
 
 package wilos.test.hibernate.spem2.task ;
 
-import java.util.List ;
+import java.util.List;
 
-import junit.framework.TestCase ;
-import wilos.hibernate.spem2.task.TaskDescriptorDao ;
-import wilos.model.spem2.task.TaskDescriptor ;
-import wilos.test.TestConfiguration ;
+import junit.framework.TestCase;
+import wilos.hibernate.misc.concretetask.ConcreteTaskDescriptorDao;
+import wilos.hibernate.spem2.task.TaskDescriptorDao;
+import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.model.spem2.task.TaskDescriptor;
+import wilos.test.TestConfiguration;
 
 /**
  * Unit test for TaskDescriptorDao
@@ -17,6 +19,8 @@ import wilos.test.TestConfiguration ;
 public class TaskDescriptorDaoTest extends TestCase {
 
 	private TaskDescriptorDao taskDescriptorDao = null ;
+	
+	private ConcreteTaskDescriptorDao concreteTaskDescriptorDao = null;
 
 	private TaskDescriptor taskDescriptor = null ;
 
@@ -60,6 +64,8 @@ public class TaskDescriptorDaoTest extends TestCase {
 
 		// Get the TaskDescriptorDao Singleton for managing TaskDescriptor data
 		this.taskDescriptorDao = (TaskDescriptorDao) TestConfiguration.getInstance().getApplicationContext().getBean("TaskDescriptorDao") ;
+		
+		this.concreteTaskDescriptorDao = (ConcreteTaskDescriptorDao) TestConfiguration.getInstance().getApplicationContext().getBean("ConcreteTaskDescriptorDao") ;
 
 		// Create empty TaskDescriptor
 		this.taskDescriptor = new TaskDescriptor() ;
@@ -140,6 +146,13 @@ public class TaskDescriptorDaoTest extends TestCase {
 		this.taskDescriptor.setIsRepeatable(IS_REPEATABLE) ;
 		this.taskDescriptor.setIsOngoing(IS_ON_GOING) ;
 		this.taskDescriptor.setIsEvenDriven(IS_EVEN_DRIVEN) ;
+		
+		ConcreteTaskDescriptor concreteTaskDescriptor = new ConcreteTaskDescriptor() ;
+		concreteTaskDescriptor.setConcreteName("pouet_pouet");
+		
+		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(concreteTaskDescriptor);
+		
+		this.taskDescriptor.addConcreteTaskDescriptor(concreteTaskDescriptor);
 
 		// Save the taskDescriptor into the database.
 		this.taskDescriptorDao.getHibernateTemplate().saveOrUpdate(this.taskDescriptor) ;
@@ -148,6 +161,7 @@ public class TaskDescriptorDaoTest extends TestCase {
 		// Test the method getTaskDescriptor with an existing taskDescriptor.
 		TaskDescriptor taskDescriptorTmp = this.taskDescriptorDao.getTaskDescriptor(id) ;
 		assertNotNull(taskDescriptorTmp) ;
+		assertTrue("ctds.size()", taskDescriptorTmp.getConcreteTaskDescriptors().size() == 1);
 		assertEquals("Name", taskDescriptorTmp.getName(), NAME) ;
 		assertEquals("Description", taskDescriptorTmp.getDescription(), DESCRIPTION) ;
 		assertEquals("Prefix", taskDescriptorTmp.getPrefix(), PREFIX) ;
