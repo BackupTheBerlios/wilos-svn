@@ -12,12 +12,21 @@
 				<br />
 				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2"
 					border="0">
-					<ice:outputText value="#{msgs['concretetaskviewer.taskid']}" />
-					<ice:inputText value="#{ConcreteTaskViewerBean.taskDescriptor.id}" size="32"/>
-					<ice:outputText value="#{msgs['concretetaskviewer.taskname']}" />
-					<ice:inputText value="#{ConcreteTaskViewerBean.taskDescriptor.name}" size="32"/>
-					<ice:outputText value="#{msgs['concretetaskviewer.taskdescription']}" />
-					<ice:outputTextarea value="#{ConcreteTaskViewerBean.taskDescriptor.description}" rows="3"/>
+					<ice:outputText value="id " />
+					<ice:outputText
+						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.id}" />
+					<ice:outputText value="projectid " />
+					<ice:outputText
+						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.projectId}" />
+					<ice:outputText value="state " />
+					<ice:outputText
+						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.state}" />
+					<ice:outputText value="concreteName " />
+					<ice:outputText
+						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.concreteName}" />
+					<ice:outputText value="planned starting date " />
+					<ice:outputText
+						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.plannedStartingDate}" />
 				</ice:panelGrid>
 			</ice:panelTab>
 		</ice:panelTabSet>

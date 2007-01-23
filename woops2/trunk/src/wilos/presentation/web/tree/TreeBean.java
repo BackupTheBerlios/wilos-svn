@@ -17,6 +17,7 @@ import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.project.ProjectService;
 import wilos.model.misc.project.Project;
+import wilos.presentation.web.task.ConcreteTaskViewerBean;
 import wilos.presentation.web.task.TaskViewerBean;
 import wilos.presentation.web.template.MenuBean;
 
@@ -118,7 +119,12 @@ public class TreeBean {
 			// TODO faire selectNodeToShow WilosObjectNode.ACTIVITYNODE
 		}
 		else if (_pageId.equals(WilosObjectNode.CONCRETETASKNODE)){
-			// TODO faire selectNodeToShow WilosObjectNode.CONCRETETASKNODE
+			ConcreteTaskViewerBean ctv = (ConcreteTaskViewerBean) context.getApplication()
+			.getVariableResolver().resolveVariable(context,"ConcreteTaskViewerBean");
+			ctv.setConcreteTaskDescriptorId(_objectId);
+			// model building
+			ctv.buildConcreteTaskDescriptor();
+			mb.changePage(_pageId);
 		}
 		else if (_pageId.equals(WilosObjectNode.ITERATIONNODE)){
 			// TODO faire selectNodeToShow WilosObjectNode.ITERATIONNODE

@@ -98,6 +98,13 @@
 						</f:subview>
 					</ice:panelGroup>
 					
+					 <ice:panelGroup id="ConcreteTaskViewer"
+						styleClass="contentIncludePanelGroup">
+						<f:subview id="ConcreteTaskViewer_view">
+							<jsp:directive.include file="./pages/common/ConcreteTaskViewer.jspx" />
+						</f:subview>
+					</ice:panelGroup>
+					
                 </ice:panelStack>
                 <br />
             </ice:panelGroup>
