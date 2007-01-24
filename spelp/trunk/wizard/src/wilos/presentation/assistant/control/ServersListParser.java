@@ -16,6 +16,7 @@ public class ServersListParser {
 	
 	private File XML_File = new File("wilos/presentation/assistant/ressources/servers.xml");
 	private List<WizardServer> serversList = null;
+	private static final String xpath_server ="//Server";
 	
 	public List<WizardServer> getServersList() {
 		
@@ -23,13 +24,14 @@ public class ServersListParser {
 			if (XML_File.exists() && XML_File.length() > 2) {
 				serversList = new ArrayList<WizardServer>();
 				
-				NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_contact, XPathConstants.NODESET);
+				NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_server, XPathConstants.NODESET);
 				
 				if (nodeReturned != null) {
 					Node aNode;
+					/*
 					String name = "";
 					String number = "";
-					int id = 0;
+					int id = 0;*/
 					for(int i = 0; i < nodeReturned.getLength(); i++) {
 						aNode = nodeReturned.item(i);
 						
@@ -37,26 +39,22 @@ public class ServersListParser {
 						for (int j = 0 ; j < attributesNode.getLength() ; j++) {
 							//System.out.println(attributesNode.item(j).getName);
 							if (attributesNode.item(j).getNodeName().equals("Name")) {
-								name = attributesNode.item(j).getTextContent();
+								al = attributesNode.item(j).getTextContent();
 							}
-							if (attributesNode.item(j).getNodeName().equals("Number")) {
-								number = attributesNode.item(j).getTextContent();
-							}
-							if (attributesNode.item(j).getNodeName().equals("Id")) {
-								Integer tmpId = new Integer(attributesNode.item(j).getTextContent());
-								id = tmpId.intValue();
+							if (attributesNode.item(j).getNodeName().equals("Address")) {
+								add = attributesNode.item(j).getTextContent();
 							}
 						}
 						
-						Contact contact = new Contact(name, number, id);
-						
-						allContacts.add(contact);			
+						WizardServer ws = new WizardServer (al, add);
+												
+						serversList.add(ws);		
 					}	
 				}
 			}
-			else allContacts = new ArrayList<Contact>();
+			else serversList = new ArrayList<WizardServer>();
 		}
-		return allContacts;
+		return serversList;
 	}
 	
 	public void saveServersList(List<WizardServer> wsl) {
