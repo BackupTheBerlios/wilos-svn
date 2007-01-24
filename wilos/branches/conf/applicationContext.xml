@@ -331,6 +331,9 @@
 	<bean id="ConcreteTaskDescriptorService"
 		class="wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService">
 		<property name="concreteTaskDescriptorDao" ref="ConcreteTaskDescriptorDao" />
+		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
+		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
+		
 	</bean>
 	
 	<bean id="PhaseService"

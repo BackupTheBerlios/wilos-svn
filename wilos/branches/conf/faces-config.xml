@@ -137,7 +137,6 @@
 	</managed-bean>
 
 	<!-- Woops2 -->
-
 	<managed-bean>
 		<managed-bean-name>XmlFileImportBean</managed-bean-name>
 		<managed-bean-class>
@@ -174,6 +173,14 @@
 		<managed-property>
 			<property-name>projectService</property-name>
 			<value>#{ProjectService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>loginService</property-name>
+			<value>#{LoginService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>roleService</property-name>
+			<value>#{RoleService}</value>
 		</managed-property>
 	</managed-bean>
 	
