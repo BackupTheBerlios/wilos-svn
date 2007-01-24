@@ -55,6 +55,7 @@
 			<value>wilos/model/spem2/task/Step.hbm.xml</value>
 			<value>wilos/model/spem2/role/RoleDescriptor.hbm.xml</value>
 			<value>wilos/model/spem2/role/RoleDefinition.hbm.xml</value>
+			<value>wilos/model/spem2/guide/Guideline.hbm.xml</value>
 			</list>
 		</property>
 
@@ -109,6 +110,11 @@
 	<!-- ========================= Start of BEAN DEFINITIONS ========================= -->
 
 	<!-- ========================= DAO Layer ========================= -->
+	
+	<bean id="GuidelineDao"
+		class="wilos.hibernate.spem2.guide.GuidelineDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
 	
 	<bean id="ParticipantDao"
 		class="wilos.hibernate.misc.wilosuser.ParticipantDao">
@@ -206,6 +212,11 @@
 		class="wilos.business.services.assistant.AssistantService">
 		<property name="participantDao" ref="ParticipantDao" />
 	</bean> -->
+	
+	<bean id="GuidelineService"
+		class="wilos.business.services.guide.GuidelineService">
+		<property name="guidelineDao" ref="GuidelineDao" />
+	</bean>
 
 	<bean id="ParticipantService"
 		class="wilos.business.services.wilosuser.ParticipantService">
