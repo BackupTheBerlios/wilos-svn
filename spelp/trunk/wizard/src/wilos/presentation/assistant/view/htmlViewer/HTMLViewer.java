@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.element.Element;
+import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.ressources.Bundle;
 
 public class HTMLViewer extends JFrame {
@@ -83,7 +84,6 @@ public class HTMLViewer extends JFrame {
 		this.guidesList.setVisibleRowCount(2);
 		southPanel.add(new JScrollPane(this.guidesList));
 		
-		
 		this.getContentPane().add(northPanel, BorderLayout.NORTH);
 		this.getContentPane().add(this.myScrollPane, BorderLayout.CENTER);
 		this.getContentPane().add(southPanel, BorderLayout.SOUTH);
@@ -105,19 +105,18 @@ public class HTMLViewer extends JFrame {
 		this.setVisible(true);
 	}
 	
-	private void displayBreakDownElement(Element bde) {
+	private void displayTaskDescriptor(TaskDescriptor td) {
 		/* Affichage du nom */
-		this.myElementLabel.setText(bde.getName()) ;
+		this.myElementLabel.setText(td.getName()) ;
 		
 		/* Affichage de la description (ancienne methode setMessage) */
-		String description = bde.getDescription();
+		String description = td.getDescription();
 		this.HTMLCode = description;
 		
 		this.myEditorPane.setText(this.HTMLCode);
 		
 		if(description.length() != 0)
 			this.myEditorPane.setCaretPosition(1); // revient au debut du texte
-		
 		
 		this.setVisible(true);
 		
@@ -136,29 +135,31 @@ public class HTMLViewer extends JFrame {
 	/**
 	 * Affiche les informations de l'element
 	 * 
-	 * @param Element bde
+	 * @param ConcreteTaskDescriptor ctd
 	 */
-	public void setBreakDownElement(ConcreteTaskDescriptor bde) {
+	public void setConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
+		TaskDescriptor td = ctd.getTaskDescriptor();
+		
 		if(!this.historyStack.empty())
 			while(this.cursorStack != this.historyStack.size()-1)
 				this.historyStack.pop();
 		
-		this.historyStack.push(bde);
+		this.historyStack.push(td);
 		
 		if(this.historyStack.size() > 6)
 			this.historyStack.remove(0);
 		else
 			this.cursorStack = this.historyStack.size()-1;
 		
-		//this.displayBreakDownElement(bde);
+		this.displayTaskDescriptor(td);
 	}
 	
 	private void setPrevElement() {
-		this.displayBreakDownElement((Element)this.historyStack.get(--this.cursorStack)) ;
+		this.displayTaskDescriptor((TaskDescriptor)this.historyStack.get(--this.cursorStack)) ;
 	}
 	
 	private void setNextElement() {
-		this.displayBreakDownElement((Element)this.historyStack.get(++this.cursorStack)) ;
+		this.displayTaskDescriptor((TaskDescriptor)this.historyStack.get(++this.cursorStack)) ;
 	}
 	
 	/**
