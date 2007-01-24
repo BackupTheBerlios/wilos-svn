@@ -1,10 +1,10 @@
 package wilos.presentation.assistant.webservices;
 
 import java.net.URL;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.xml.namespace.QName;
 
@@ -12,8 +12,7 @@ import wilos.business.webservices.WizardServices;
 import wilos.business.webservices.WizardServicesService;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.wilosuser.Participant;
-import wilos.model.spem2.process.Process;
-import wilos.model.spem2.role.RoleDefinition;
+import wilos.model.spem2.guide.Guideline;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;
@@ -173,6 +172,23 @@ public class WizardServicesProxy {
             aTmpConcrete.setPlannedStartingDate(new Date());
             aTmpConcrete.setPlannedTime(24);
             aTmpConcrete.setId("test_id");
+            
+            Guideline g1 = new Guideline();
+            g1.setName("guide 1");
+            g1.setDescription("description du guide 1");
+            
+            Guideline g2 = new Guideline();
+            g2.setName("guide 2");
+            g2.setDescription("description du guide 2");
+            
+            Guideline g3 = new Guideline();
+            g3.setName("guide 3");
+            g3.setDescription("description du guide 3");
+            
+            Set<Guideline> sgl = new HashSet<Guideline>();
+            sgl.add(g1);
+            sgl.add(g2);
+            sgl.add(g3);
     			
             aTmpTask.setName("Aimer son programme");
             aTmpTask.setDescription("Un grand moment d'amour");
@@ -180,6 +196,7 @@ public class WizardServicesProxy {
             aTmpTaskDef = new TaskDefinition();
             aTmpTaskDef.setName("Aimer son programme");
             aTmpTaskDef.setDescription("Un grand moment d'amour");
+            aTmpTaskDef.setGuidelines(sgl);
             
             aTmpStep = new Step();
             aTmpStep.setName("Debugger son programme");

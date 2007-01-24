@@ -186,7 +186,9 @@ public class HTMLViewer extends JFrame {
 					displayElement((Element)value);
 			}
 		});
+		guidesList.setVisible(true);
 		this.guidesScrollPane.add(guidesList);
+		this.guidesScrollPane.setVisible(true);
 	}
 	
 	private class GuidesRenderer extends DefaultListCellRenderer {
