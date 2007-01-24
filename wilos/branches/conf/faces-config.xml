@@ -133,52 +133,6 @@
 	</managed-bean>
 
 	<!-- Woops2 -->
-	<!--  
-	<managed-bean>
-		<managed-bean-name>ActivityBean</managed-bean-name>
-		<managed-bean-class>
-			wilos.presentation.web.ActivityBean
-		</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-		<managed-property>
-			<property-name>activityService</property-name>
-			<value>#{ActivityService}</value>
-		</managed-property>
-	</managed-bean>
-
-	<managed-bean>
-		<managed-bean-name>TaskDescriptorBean</managed-bean-name>
-		<managed-bean-class>
-			wilos.presentation.web.TaskDescriptorBean
-		</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-		<managed-property>
-			<property-name>taskDescriptorService</property-name>
-			<value>#{TaskDescriptorService}</value>
-		</managed-property>
-	</managed-bean>
-
-	<managed-bean>
-		<managed-bean-name>TaskDefinitionBean</managed-bean-name>
-		<managed-bean-class>
-			wilos.presentation.web.TaskDefinitionBean
-		</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
-
-	<managed-bean>
-		<managed-bean-name>StepBean</managed-bean-name>
-		<managed-bean-class>
-			wilos.presentation.web.StepBean
-		</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-		<managed-property>
-			<property-name>stepService</property-name>
-			<value>#{StepService}</value>
-		</managed-property>
-	</managed-bean>
-	-->
-
 	<managed-bean>
 		<managed-bean-name>XmlFileImportBean</managed-bean-name>
 		<managed-bean-class>
@@ -209,24 +163,72 @@
 	<managed-bean>
 		<managed-bean-name>TreeBean</managed-bean-name>
 		<managed-bean-class>
-			wilos.presentation.web.icefaces.tree.TreeBean
+			wilos.presentation.web.tree.TreeBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
-			<property-name>processService</property-name>
-			<value>#{ProcessService}</value>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>ConcreteTaskViewerBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.viewer.ConcreteTaskViewerBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>concreteTaskDescriptorService</property-name>
+			<value>#{ConcreteTaskDescriptorService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>PhaseViewerBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.viewer.PhaseViewerBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>phaseService</property-name>
+			<value>#{PhaseService}</value>
 		</managed-property>
 	</managed-bean>
 	
 	<managed-bean>
-		<managed-bean-name>TaskViewerBean</managed-bean-name>
+		<managed-bean-name>ActivityViewerBean</managed-bean-name>
 		<managed-bean-class>
-			wilos.presentation.web.task.TaskViewerBean
+			wilos.presentation.web.viewer.ActivityViewerBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
-			<property-name>taskDescriptorService</property-name>
-			<value>#{TaskDescriptorService}</value>
+			<property-name>activityService</property-name>
+			<value>#{ActivityService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>IterationViewerBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.viewer.IterationViewerBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>iterationService</property-name>
+			<value>#{IterationService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>ProjectViewerBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.viewer.ProjectViewerBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
 		</managed-property>
 	</managed-bean>
 
