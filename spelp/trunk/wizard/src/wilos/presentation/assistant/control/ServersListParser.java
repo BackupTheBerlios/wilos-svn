@@ -1,16 +1,62 @@
 package wilos.presentation.assistant.control;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.xpath.XPathConstants;
+
+import org.w3c.dom.NodeList;
 
 import wilos.presentation.assistant.model.WizardServer;
 
+import com.sun.corba.se.impl.orbutil.graph.Node;
+
 public class ServersListParser {
 	
-	private String XMLfile = "wilos/presentation/assistant/ressources/servers.xml";
+	private File XML_File = new File("wilos/presentation/assistant/ressources/servers.xml");
+	private List<WizardServer> serversList = null;
 	
 	public List<WizardServer> getServersList() {
 		
-		return null;
+		if (serversList == null) {
+			if (XML_File.exists() && XML_File.length() > 2) {
+				serversList = new ArrayList<WizardServer>();
+				
+				NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_contact, XPathConstants.NODESET);
+				
+				if (nodeReturned != null) {
+					Node aNode;
+					String name = "";
+					String number = "";
+					int id = 0;
+					for(int i = 0; i < nodeReturned.getLength(); i++) {
+						aNode = nodeReturned.item(i);
+						
+						NodeList attributesNode = aNode.getChildNodes();
+						for (int j = 0 ; j < attributesNode.getLength() ; j++) {
+							//System.out.println(attributesNode.item(j).getName);
+							if (attributesNode.item(j).getNodeName().equals("Name")) {
+								name = attributesNode.item(j).getTextContent();
+							}
+							if (attributesNode.item(j).getNodeName().equals("Number")) {
+								number = attributesNode.item(j).getTextContent();
+							}
+							if (attributesNode.item(j).getNodeName().equals("Id")) {
+								Integer tmpId = new Integer(attributesNode.item(j).getTextContent());
+								id = tmpId.intValue();
+							}
+						}
+						
+						Contact contact = new Contact(name, number, id);
+						
+						allContacts.add(contact);			
+					}	
+				}
+			}
+			else allContacts = new ArrayList<Contact>();
+		}
+		return allContacts;
 	}
 	
 	public void saveServersList(List<WizardServer> wsl) {
@@ -20,17 +66,6 @@ public class ServersListParser {
 
 
 /**
-
-
-
-
-
-
-
-
-
-
-
 package model;
 
 import java.io.File;
@@ -256,18 +291,4 @@ public class Contact {
 		return contact;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 */
