@@ -90,11 +90,39 @@
                             <jsp:directive.include file="./pages/processManager/welcomeProcessManager.jspx" />
                         </f:subview>
                     </ice:panelGroup>
-                    
-                    <ice:panelGroup id="taskviewer"
+					
+					 <ice:panelGroup id="ConcreteTaskViewer"
 						styleClass="contentIncludePanelGroup">
-						<f:subview id="taskviewer_view">
-							<jsp:directive.include file="./pages/common/taskViewer.jspx" />
+						<f:subview id="ConcreteTaskViewer_view">
+							<jsp:directive.include file="./pages/common/ConcreteTaskViewer.jspx" />
+						</f:subview>
+					</ice:panelGroup>
+					
+					 <ice:panelGroup id="PhaseViewer"
+						styleClass="contentIncludePanelGroup">
+						<f:subview id="PhaseViewer_view">
+							<jsp:directive.include file="./pages/common/PhaseViewer.jspx" />
+						</f:subview>
+					</ice:panelGroup>
+					
+					 <ice:panelGroup id="ActivityViewer"
+						styleClass="contentIncludePanelGroup">
+						<f:subview id="ActivityViewer_view">
+							<jsp:directive.include file="./pages/common/ActivityViewer.jspx" />
+						</f:subview>
+					</ice:panelGroup>
+					
+					<ice:panelGroup id="IterationViewer"
+						styleClass="contentIncludePanelGroup">
+						<f:subview id="IterationViewer_view">
+							<jsp:directive.include file="./pages/common/IterationViewer.jspx" />
+						</f:subview>
+					</ice:panelGroup>
+					
+					<ice:panelGroup id="ProjectViewer"
+						styleClass="contentIncludePanelGroup">
+						<f:subview id="ProjectViewer_view">
+							<jsp:directive.include file="./pages/common/ProjectViewer.jspx" />
 						</f:subview>
 					</ice:panelGroup>
 					

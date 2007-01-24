@@ -1,61 +1,8 @@
 <ice:form id="roles_form">
 	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
 		<ice:panelTabSet id="panelTabSet_adminAdd" styleClass="componentPanelTabSetLayout">
-			<ice:panelTab id="panelTab_participant_list" label="#{msgs['component.participantlist.title']}" imageDir="images">
-				<ice:panelGroup id="participantPanelGroup" styleClass="contentIncludePanelGroup">
-					<ice:dataTable value="#{ParticipantBean.participantsList}" columnWidths="100px,100px,100px,100px" border="1" var="participant">
-						<ice:column>
-							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.participantlist.column1']}"/>
-						    </f:facet>
-						    <ice:outputText value="#{participant.login}"/>
-						</ice:column>
-						<ice:column>
-							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.participantlist.column2']}"/>
-						    </f:facet>
-						    <ice:outputText value="#{participant.name}"/>
-						</ice:column>
-						<ice:column>
-							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.participantlist.column3']}"/>
-						    </f:facet>
-						    <ice:outputText value="#{participant.firstname}"/>
-						</ice:column>
-						<ice:column>
-							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.participantlist.column4']}"/>
-						    </f:facet>
-						    <ice:outputText value="#{participant.emailAddress}"/>
-						</ice:column>
-					</ice:dataTable>
-				</ice:panelGroup>
-			</ice:panelTab>	
-			<ice:panelTab id="panelTab_process_managers_list" label="#{msgs['component.processManagerList.title']}" imageDir="images">
-				<ice:panelGroup id="processManagerPanelGroup" styleClass="contentIncludePanelGroup">
-					<ice:dataTable value="#{ProcessManagerBean.processManagerList}" columnWidths="100px,100px,100px" border="1" var="processManager">
-						<ice:column>
-							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.processManagerList.login']}"/>
-						    </f:facet>
-						    <ice:outputText value="#{processManager.login}"/>
-						</ice:column>
-						<ice:column>
-							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.processManagerList.lastname']}"/>
-						    </f:facet>
-						    <ice:outputText value="#{processManager.name}"/>
-						</ice:column>
-						<ice:column>
-							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.processManagerList.firstname']}"/>
-						    </f:facet>
-						    <ice:outputText value="#{processManager.firstname}"/>
-						</ice:column>
-					</ice:dataTable>
-				</ice:panelGroup>
-			</ice:panelTab>	
-			<ice:panelTab id="panelTab_processManager" label="#{msgs['component.processmanagercreate.tabtitle']}" imageDir="images">
+			<ice:panelTab id="panelTab_processManager" label="Process Manager" imageDir="images">
+
 				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
 					<ice:panelGroup id="processManagerCreateGroup" styleClass="contentIncludePanelGroup">
 						<h2><ice:outputText value="#{msgs['component.processmanagercreate.title']}" /></h2>
@@ -82,37 +29,16 @@
 								<f:validator validatorId="equalValidator"/>-->
 							</ice:inputSecret>
 						</ice:panelGrid>
+				
 						<ice:panelGrid columns="2">
 							<ice:commandButton value="#{msgs['component.processmanagercreate.register']}" action="#{ProcessManagerBean.saveProcessManagerAction}"/>
 						</ice:panelGrid>	
+				
 					</ice:panelGroup>
 				</ice:panelGrid>
 			</ice:panelTab>
-			<ice:panelTab id="panelTab_project_directors_list" label="#{msgs['component.projectDirectorList.title']}" imageDir="images">
-				<ice:panelGroup id="projectDirectorsPanelGroup" styleClass="contentIncludePanelGroup">
-					<ice:dataTable value="#{ProjectDirectorBean.projectDirectorList}" columnWidths="100px,100px,100px" border="1" var="projectDirector">
-						<ice:column>
-							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.projectDirectorList.login']}"/>
-						    </f:facet>
-						    <ice:outputText value="#{projectDirector.login}"/>
-						</ice:column>
-						<ice:column>
-							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.projectDirectorList.lastname']}"/>
-						    </f:facet>
-						    <ice:outputText value="#{projectDirector.name}"/>
-						</ice:column>
-						<ice:column>
-							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.projectDirectorList.firstname']}"/>
-						    </f:facet>
-						    <ice:outputText value="#{projectDirector.firstname}"/>
-						</ice:column>
-					</ice:dataTable>
-				</ice:panelGroup>
-			</ice:panelTab>	
-			<ice:panelTab id="panelTab_projectDirector" label="#{msgs['component.projectdirectorcreate.tabtitle']}" imageDir="images">
+			
+			<ice:panelTab id="panelTab_projectDirector" label="Project Director" imageDir="images">
 				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
 						<ice:panelGroup id="projectDirectorCreateGroup" styleClass="contentIncludePanelGroup">
 							<h2><ice:outputText value="#{msgs['component.projectdirectorcreate.title']}"/></h2>
@@ -143,9 +69,90 @@
 								<ice:panelGrid columns="2">
 									<ice:commandButton value="#{msgs['component.projectdirectorcreate.register']}" action="#{ProjectDirectorBean.saveProjectDirectorAction}"/>
 								</ice:panelGrid>
+				
 						</ice:panelGroup>
 				</ice:panelGrid>
 			</ice:panelTab>		
+			<ice:panelTab id="panelTab_participant_list" label="#{msgs['component.participantlist.title']}" imageDir="images">
+				<ice:panelGroup id="participantPanelGroup" styleClass="contentIncludePanelGroup">
+					<ice:dataTable value="#{ParticipantBean.participantsList}" border="1" var="participant">
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="#{msgs['component.participantlist.column1']}"/>
+						    </f:facet>
+						    <ice:outputText value="#{participant.login}"/>
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="#{msgs['component.participantlist.column2']}"/>
+						    </f:facet>
+						    <ice:outputText value="#{participant.name}"/>
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="#{msgs['component.participantlist.column3']}"/>
+						    </f:facet>
+						    <ice:outputText value="#{participant.firstname}"/>
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="#{msgs['component.participantlist.column4']}"/>
+						    </f:facet>
+						    <ice:outputText value="#{participant.emailAddress}"/>
+						</ice:column>
+					</ice:dataTable>
+				</ice:panelGroup>
+			</ice:panelTab>	
+			
+			<ice:panelTab id="panelTab_process_managers_list" label="Liste des process managers" imageDir="images">
+				<ice:panelGroup id="processManagerPanelGroup" styleClass="contentIncludePanelGroup">
+					<ice:dataTable value="#{ProcessManagerBean.processManagerList}" border="1" var="processManager">
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="Login"/>
+						    </f:facet>
+						    <ice:outputText value="#{processManager.login}"/>
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="Nom"/>
+						    </f:facet>
+						    <ice:outputText value="#{processManager.name}"/>
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="Prenom"/>
+						    </f:facet>
+						    <ice:outputText value="#{processManager.firstname}"/>
+						</ice:column>
+					</ice:dataTable>
+				</ice:panelGroup>
+			</ice:panelTab>	
+			
+			<ice:panelTab id="panelTab_project_directors_list" label="Liste des project directors" imageDir="images">
+				<ice:panelGroup id="projectDirectorsPanelGroup" styleClass="contentIncludePanelGroup">
+					<ice:dataTable value="#{ProjectDirectorBean.projectDirectorList}" border="1" var="projectDirector">
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="Login"/>
+						    </f:facet>
+						    <ice:outputText value="#{projectDirector.login}"/>
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="Nom"/>
+						    </f:facet>
+						    <ice:outputText value="#{projectDirector.name}"/>
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="Prenom"/>
+						    </f:facet>
+						    <ice:outputText value="#{projectDirector.firstname}"/>
+						</ice:column>
+					</ice:dataTable>
+				</ice:panelGroup>
+			</ice:panelTab>	
 		</ice:panelTabSet>
 	</ice:panelGrid>
 </ice:form>
