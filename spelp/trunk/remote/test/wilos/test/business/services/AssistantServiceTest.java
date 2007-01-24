@@ -2,7 +2,8 @@ package wilos.test.business.services;
 
 import junit.framework.TestCase;
 import wilos.business.services.assistant.AssistantService;
-import wilos.business.services.concretetask.ConcreteTaskDescriptorService;
+
+import wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService;
 import wilos.business.services.wilosuser.LoginService;
 import wilos.business.services.wilosuser.ParticipantService;
 import wilos.business.util.Security;

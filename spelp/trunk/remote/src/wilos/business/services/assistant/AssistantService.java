@@ -8,7 +8,7 @@ import javax.jws.WebParam;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import wilos.business.services.concretetask.ConcreteTaskDescriptorService;
+import wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService;
 import wilos.business.transfertobject.ParticipantTO;
 import wilos.hibernate.misc.wilosuser.ParticipantDao;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;

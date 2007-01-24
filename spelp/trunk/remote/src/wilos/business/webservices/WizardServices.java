@@ -20,8 +20,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import wilos.business.services.assistant.AssistantService;
-import wilos.business.services.concretetask.ConcreteTaskDescriptorService;
-import wilos.business.services.process.ProcessService;
 import wilos.business.services.role.RoleService;
 import wilos.business.services.wilosuser.LoginService;
 import wilos.business.services.wilosuser.ParticipantService;
