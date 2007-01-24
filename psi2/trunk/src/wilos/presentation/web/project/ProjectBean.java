@@ -8,12 +8,14 @@ import java.util.Set;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import wilos.business.services.spem2.process.ProcessService;
 import wilos.business.services.project.ProjectService;
+import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.process.Process;
 
@@ -114,11 +116,21 @@ public class ProjectBean {
 	 */
 	public String saveProjectProcessAffectation(){
 		//TODO: A tester.
-		Project projTmp = projectService.getProject("2c90a1b2104ad70601104ad906f90001");
-		this.logger.debug("Project: "+projTmp) ;
-		wilos.model.spem2.process.Process procTmp = processService.getProcessDao().getProcessFromGuid(selectedProcessGuid);
-		this.logger.debug("Process selectionne: "+procTmp) ;
-		projectService.saveProcessProjectAffectation(procTmp, projTmp);
+		//TODO: recup le projet de la cession
+		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
+		HttpSession sess = req.getSession() ;
+		String tmpProjId = (String)sess.getAttribute("projectId");
+		if(tmpProjId!=null){		
+			Project projTmp = projectService.getProject(tmpProjId);
+			this.logger.debug("Project a affecter au process: "+projTmp) ;
+			if(projTmp!=null){
+				Process procTmp = processService.getProcessDao().getProcessFromGuid(selectedProcessGuid);
+				this.logger.debug("Process a appliquer au projet: "+procTmp) ;
+				if(procTmp!=null){
+					projectService.saveProcessProjectAffectation(procTmp, projTmp);
+				}
+			}
+		}
 		return "";
 	}	
 		
@@ -264,12 +276,22 @@ public class ProjectBean {
 	 * @return the selectedProcessGuid.
 	 */
 	public String getSelectedProcessGuid() {
+		//TODO: A tester
+		//Getting the current projet id from cession
+		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
+		HttpSession sess = req.getSession() ;
+		String tmpProjId = (String)sess.getAttribute("projectId");
 		this.logger.debug("Process selectionne avt get: "+this.selectedProcessGuid) ;
-		Project projTmp = projectService.getProject("2c90a1b2104ad70601104ad906f90001") ;
-		this.logger.debug("Project: "+projTmp) ;
-		Process procTmp = projTmp.getProcess();
-		if(procTmp!=null){
-			this.selectedProcessGuid = projTmp.getProcess().getGuid();
+		this.logger.debug("Projet selectionne: "+tmpProjId) ;
+		if(tmpProjId!=null){
+			Project projTmp = projectService.getProject(tmpProjId) ;
+			this.logger.debug("Project recupere de la cession: "+projTmp) ;
+			if(projTmp!=null){
+				Process procTmp = projTmp.getProcess();
+				if(procTmp!=null){
+					this.selectedProcessGuid = projTmp.getProcess().getGuid();
+				}
+			}
 		}
 		this.logger.debug("Process selectionne apres get: "+this.selectedProcessGuid) ;
 		return this.selectedProcessGuid ;
