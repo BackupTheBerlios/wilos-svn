@@ -1,9 +1,5 @@
 package wilos.presentation.assistant.view.panels;
 
-import java.awt.Color;
-import java.util.Iterator;
-import java.util.Set;
-
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
@@ -11,11 +7,13 @@ import wilos.presentation.assistant.view.main.ActionBar;
 import wilos.utils.Constantes;
 
 public class WizardStateMachine {
-	private static final int STATE_PARTICIPANT = 1;
-	private static final int STATE_NOTHING = 0;
-	private static final int STATE_TASK_STARTED = 2;
-	private static final int STATE_TASK_READY = 3;
-	private static final int STATE_TASK_CREATED = 4;
+	private final int STATE_NOTHING = 0;
+	private final int STATE_PARTICIPANT = 1;
+	private final int STATE_TASK_STARTED = 2;
+	private final int STATE_TASK_READY = 3;
+	private final int STATE_TASK_CREATED = 4;
+	private final int STATE_TASK_SUSPENDED = 5;
+	private final int STATE_TASK_FINISHED = 6;
 	private int currentState;
 	
 	private static WizardStateMachine wsm = null;
@@ -54,27 +52,35 @@ public class WizardStateMachine {
 	 */
 	
 	public void setFocusedObject(Object object) {
-		if (object.getClass().getSimpleName().equals("Participant")) {
-			updateState(this.STATE_PARTICIPANT);
-		}
-		if (object instanceof TaskDescriptor) {
-			Set<ConcreteTaskDescriptor> ctds = ((TaskDescriptor) object).getConcreteTaskDescriptors();
-			Iterator<ConcreteTaskDescriptor> it = ctds.iterator();
-			
-			if (it.hasNext()) {
-				System.out.println("ohe !!!");
-				ConcreteTaskDescriptor ctd = it.next();
-				if (ctd.getState() == Constantes.State.STARTED) {
-					updateState(this.STATE_TASK_STARTED);
-				}
-				else if (ctd.getState() == Constantes.State.READY) {
-					updateState(this.STATE_TASK_READY);
-				}
-				else if (ctd.getState() == Constantes.State.CREATED) {
-					updateState(this.STATE_TASK_CREATED);
-				}
+//		if (object.getClass().getSimpleName().equals("Participant")) {
+//			System.out.println("pouet");
+//			updateState(this.STATE_PARTICIPANT);
+//		}
+		if (object instanceof ConcreteTaskDescriptor) {
+			ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) object;
+			if (ctd.getState() == Constantes.State.STARTED) {
+				updateState(this.STATE_TASK_STARTED);
 			}
-			HTMLViewer.getInstance(null).setBreakDownElement((TaskDescriptor) object);
+			else if (ctd.getState() == Constantes.State.READY) {
+				updateState(this.STATE_TASK_READY);
+			}
+			else if (ctd.getState() == Constantes.State.CREATED) {
+				updateState(this.STATE_TASK_CREATED);
+			}
+			else if (ctd.getState() == Constantes.State.SUSPENDED) {
+				updateState(this.STATE_TASK_SUSPENDED);
+			}
+			else if (ctd.getState() == Constantes.State.FINISHED) {
+				updateState(this.STATE_TASK_FINISHED);
+			}
+			else {
+				updateState(this.STATE_NOTHING);
+			}
+
+			HTMLViewer.getInstance(null).setBreakDownElement(ctd.getTaskDescriptor());
+		}
+		else {
+			updateState(this.STATE_NOTHING);
 		}
 	}
 
@@ -93,7 +99,16 @@ public class WizardStateMachine {
 		case STATE_TASK_READY :	
 			actionToolBar.setButtons(actionToolBar.ENABLED, actionToolBar.DISABLED, actionToolBar.DISABLED);
 			break;
-		}
+		case STATE_TASK_STARTED :	
+			actionToolBar.setButtons(actionToolBar.DISABLED, actionToolBar.ENABLED, actionToolBar.ENABLED);
+			break;
+		case STATE_TASK_SUSPENDED :	
+			actionToolBar.setButtons(actionToolBar.ENABLED, actionToolBar.DISABLED, actionToolBar.DISABLED);
+			break;
+		case STATE_TASK_FINISHED :	
+			actionToolBar.setButtons(actionToolBar.DISABLED, actionToolBar.DISABLED, actionToolBar.DISABLED);
+			break;
+	}
 		
 	}
 }

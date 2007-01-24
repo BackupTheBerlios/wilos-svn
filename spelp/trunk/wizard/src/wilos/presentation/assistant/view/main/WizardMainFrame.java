@@ -80,6 +80,7 @@ public class WizardMainFrame extends JFrame {
 		this.setContentPane(getMainPanel());
 		this.setTitle("JFrame");
 		WizardStateMachine.getInstance().initUIElements(actionToolBar);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	private JPanel getMainPanel(){

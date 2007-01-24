@@ -50,19 +50,23 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 	}
 	
 	private class WizardMutableTreeNode extends DefaultMutableTreeNode {
-		Element element;
-
-		public WizardMutableTreeNode(Element element) {
+		
+		public WizardMutableTreeNode(Object element) {
 			super();
-			this.element = element;
+			this.userObject = element;
 		}
 
-		public Element getElement() {
-			return element;
+		public Object getUserObject() {
+			return userObject;
 		}
 		
 		public String toString() {
-			return element.getName();
+			if (userObject instanceof Element)
+				return ((Element) userObject).getName();
+			else if (userObject instanceof ConcreteTaskDescriptor) 
+				return ((ConcreteTaskDescriptor) userObject).getConcreteName();
+			else
+				return "";
 		}
 	}
 	
@@ -78,21 +82,22 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 		
 		private void initTree() {
 			TreePanel.this.tree.removeAll();
-			//DefaultMutableTreeNode rooti = new DefaultMutableTreeNode("pipi");
-			//this.setRoot(rooti);
+
 			this.root = new DefaultMutableTreeNode(participant.getName());
-			//((DefaultMutableTreeNode) this.root).add(new DefaultMutableTreeNode("zorz"));
-			//root.add(new DefaultMutableTreeNode("caca"));
-			//this.setRoot(root);
+
 			Set<RoleDescriptor> roles = participant.getRolesListForAProject();
 			
 			for (RoleDescriptor rd : roles) {
 				WizardMutableTreeNode rdWmt = new WizardMutableTreeNode(rd);
 				((DefaultMutableTreeNode) this.root).add(rdWmt);
 				
-				for(TaskDescriptor act : rd.getPrimaryTasks()) {
-					WizardMutableTreeNode actWmt = new WizardMutableTreeNode(act);
-					rdWmt.add(actWmt);
+				for(TaskDescriptor td : rd.getPrimaryTasks()) {
+					
+					for (ConcreteTaskDescriptor ctd : td.getConcreteTaskDescriptors()) {
+						WizardMutableTreeNode ctdWmt = new WizardMutableTreeNode(ctd);
+						rdWmt.add(ctdWmt);
+					}
+					
 				}
 				//((DefaultMutableTreeNode) this.root).add(new DefaultMutableTreeNode(rd.getName()));
 			}
@@ -160,25 +165,29 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 				this.setIcon(ImagesService.getImageIcon("images.iconParticipant"));
 			}
 			else {
-				Element element = ((WizardMutableTreeNode) value).getElement();
-				if (element instanceof RoleDescriptor) {
+				Object object = ((WizardMutableTreeNode) value).getUserObject();
+				if (object instanceof RoleDescriptor) {
 					this.setIcon(ImagesService.getImageIcon("images.iconRole"));
 				}
-				if (element instanceof TaskDescriptor) {
+				if (object instanceof ConcreteTaskDescriptor) {
 					this.setIcon(ImagesService.getImageIcon("images.iconTaskDescriptor"));
-					Set<ConcreteTaskDescriptor> ctds = ((TaskDescriptor) element).getConcreteTaskDescriptors();
-					Iterator<ConcreteTaskDescriptor> it = ctds.iterator();
-					
-					if (it.hasNext()) {
-						ConcreteTaskDescriptor ctd = it.next();
-						if (ctd.getState() == Constantes.State.STARTED) {
-							this.setForeground(Color.green);
-						}
-						else if (ctd.getState() == Constantes.State.READY) {
-							this.setForeground(Color.yellow);
-						}
+
+					ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) object;
+					if (ctd.getState() == Constantes.State.STARTED) {
+						this.setForeground(Color.green);
 					}
-					
+					else if (ctd.getState() == Constantes.State.READY) {
+						this.setForeground(Color.yellow);
+					}
+					else if (ctd.getState() == Constantes.State.SUSPENDED) {
+						this.setForeground(Color.pink);
+					}
+					else if (ctd.getState() == Constantes.State.FINISHED) {
+						this.setForeground(Color.cyan);
+					}
+					else if (ctd.getState() == Constantes.State.CREATED) {
+						this.setForeground(Color.black);
+					}					
 				}
 //				if (selected) {
 //					HTMLViewer.getInstance(p)
@@ -199,9 +208,18 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 	}
 
 	public void valueChanged(TreeSelectionEvent e) {
-		if (tree.getLastSelectedPathComponent() instanceof WizardMutableTreeNode) {
-			Element element = ((WizardMutableTreeNode) tree.getLastSelectedPathComponent()).getElement();
-			WizardStateMachine.getInstance().setFocusedObject(element);
-		}		
+//		if (tree.getLastSelectedPathComponent() instanceof WizardMutableTreeNode) {
+//			Element element = ((WizardMutableTreeNode) tree.getLastSelectedPathComponent()).getUserObject();
+//			WizardStateMachine.getInstance().setFocusedObject(element);
+//		}
+//		else {
+		if (tree.getLastSelectedPathComponent() != null) {
+			Object objet = ((DefaultMutableTreeNode) tree.getLastSelectedPathComponent()).getUserObject();
+			WizardStateMachine.getInstance().setFocusedObject(objet);
+		}
+		else {
+			System.out.println("ERREUR : TreePanel.ValueChanged (enlever ce message quand pb resolu)");
+		}
+//		}
 	}
 }

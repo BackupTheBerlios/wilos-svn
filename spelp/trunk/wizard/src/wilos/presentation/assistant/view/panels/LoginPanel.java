@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -167,33 +169,9 @@ public class LoginPanel extends JPanel {
 		if (connectionButton == null) {
 			connectionButton = new JButton();
 			connectionButton.setText(Bundle.getText("loginPanel.connection"));
-                        connectionButton.addActionListener(new java.awt.event.ActionListener() {
+            connectionButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					String passcript =  Security.encode(new String(passwordPasswordField.getPassword()));
-                                        //ArrayList<RoleDescriptor> rolesListe = WizardServicesProxy.getRolesByUser(loginTextField.getText(),passcript, adressTextField.getText());
-										Participant participant = WizardServicesProxy.getParticipant(loginTextField.getText(),passcript, adressTextField.getText());
-                                        setVisible(false);                               
-                                        
-                                        if (participant == null)
-                                        {
-                                            setVisible(true);
-                                            ErrorDialog Err = new ErrorDialog("L'utilisateur n'existe pas");
-                                        }  
-                                        else
-                                        {
-                                        	//mTaskPanel = new MainPanel(mframe,rolesListe);
-                                            //mframe.setContentPane(mTaskPanel);
-                                            //mTaskPanel.setVisible(true);
-                                        	
-                                        	WizardMainFrame wmf = new WizardMainFrame();
-                                        	wmf.setParticipant(participant);
-                                        	wmf.setVisible(true);
-                                        	
-                                        	mframe.setVisible(false);
-                                        	
-                                        }
-                                        
-                                        
+					startConnection();
 				}
 			});
 		}
@@ -209,9 +187,34 @@ public class LoginPanel extends JPanel {
 	private JTextField getLoginTextField() {
 		if (loginTextField == null) {
 			loginTextField = new JTextField();
+			loginTextField.addKeyListener(new myKeyListener());
 		}
 		return loginTextField;
 	}
+	
+	/**
+	 * This methods makes the connexion, gets the Participant and calls WizardMainFrame
+	 *
+	 */
+	private void startConnection() {
+		String passcript =  Security.encode(new String(passwordPasswordField.getPassword()));
+		Participant participant = WizardServicesProxy.getParticipant(loginTextField.getText(),passcript, adressTextField.getText());                          
+        
+        if (participant == null)
+        {
+            setVisible(true);
+            new ErrorDialog("L'utilisateur n'existe pas");
+        }  
+        else
+        {
+        	WizardMainFrame wmf = new WizardMainFrame();
+        	wmf.setParticipant(participant);
+        	wmf.setVisible(true);
+        	
+        	mframe.setVisible(false);
+        }
+	}
+	
 
 	/**
 	 * This method initializes passwordPasswordField	
@@ -221,6 +224,7 @@ public class LoginPanel extends JPanel {
 	private JPasswordField getPasswordPasswordField() {
 		if (passwordPasswordField == null) {
 			passwordPasswordField = new JPasswordField();
+			passwordPasswordField.addKeyListener(new myKeyListener());
 		}
 		return passwordPasswordField;
 	}
@@ -235,6 +239,23 @@ public class LoginPanel extends JPanel {
 			adressTextField = new JTextField();			
 		}
 		return adressTextField;
+	}
+	
+	private class myKeyListener implements KeyListener{
+		public void keyPressed(KeyEvent e) {
+			// Nothing to do here
+		}
+
+		public void keyReleased(KeyEvent e) {
+			if (KeyEvent.VK_ENTER == e.getKeyCode()) {
+				startConnection();
+			}			
+		}
+
+		public void keyTyped(KeyEvent e) {
+			// Nothing to do here			
+		}
+		
 	}
 
 }

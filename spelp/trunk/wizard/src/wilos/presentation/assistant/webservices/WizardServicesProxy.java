@@ -26,6 +26,7 @@ public class WizardServicesProxy {
         public static String ENDPOINT = "/WizardServices?wsdl";
         public static String URLWebService = "http://webservices.business.wilos/";
         public static String nameWebService = "WizardServicesService";
+        private static String testIHMLoginString = "";
     
 	public static ArrayList<RoleDescriptor> getRolesByUser(String login, String password, String address) {	
             ArrayList<RoleDescriptor> myRoleListe = new  ArrayList<RoleDescriptor>();
@@ -50,7 +51,7 @@ public class WizardServicesProxy {
         {
             Participant myParticipant = null;
             try { 
-            	if (login.equalsIgnoreCase("testIHM")) {
+            	if (login.equalsIgnoreCase(testIHMLoginString)) {
             		myParticipant = getParticipantExample();
             	} else {
                 	WizardServicesService service = new WizardServicesService(new URL(address+ENDPOINT), new QName(URLWebService, nameWebService));            	
@@ -70,7 +71,7 @@ public class WizardServicesProxy {
         
         public static  void startConcreteTaskDescriptor (String login, String password, String address, String ConcreteTaskId) {
             try { 
-            	if (!login.equalsIgnoreCase("testIHM")) {
+            	if (!login.equalsIgnoreCase(testIHMLoginString)) {
             		WizardServicesService service = new WizardServicesService(new URL(address+ENDPOINT), new QName(URLWebService, nameWebService));            	
                     WizardServices port = service.getWizardServicesPort();
                     port.startConcreteTaskDescriptor(login, password, ConcreteTaskId);
@@ -98,10 +99,15 @@ public class WizardServicesProxy {
             aTmpConcrete = new ConcreteTaskDescriptor();
             
             
-            aTmpConcrete.setConcreteName("concr_coder le prog");
+            
+            
+            
+            
+            
+            aTmpConcrete.setConcreteName("Coder le programme Partie I");
             aTmpConcrete.setAccomplishedTime(42);
             aTmpConcrete.setPlannedFinishingDate(new Date());
-            aTmpConcrete.setState(Constantes.State.READY);
+            aTmpConcrete.setState(Constantes.State.CREATED);
             aTmpConcrete.setPlannedStartingDate(new Date());
             aTmpConcrete.setPlannedTime(24);
     			
@@ -112,6 +118,7 @@ public class WizardServicesProxy {
             aTmpTask.setDescription("Un grand moment de solitude");
             aTmpTask.addConcreteTaskDescriptor(aTmpConcrete);
 
+          
             aTmpTaskDef.setName("Coder le programme");
             aTmpTaskDef.setDescription("Un grand moment de solitude");
             
@@ -127,8 +134,23 @@ public class WizardServicesProxy {
             aTmpTask.addTaskDefinition(aTmpTaskDef);
             
             aTmpRole.addPrimaryTask(aTmpTask);
+        
+            
+            
+            
+            
+            
             
             aTmpTask = new TaskDescriptor();
+            
+            aTmpConcrete = new ConcreteTaskDescriptor();
+            aTmpConcrete.setConcreteName("Aimer le programme avec envie");
+            aTmpConcrete.setAccomplishedTime(42);
+            aTmpConcrete.setPlannedFinishingDate(new Date());
+            aTmpConcrete.setState(Constantes.State.READY);
+            aTmpConcrete.setPlannedStartingDate(new Date());
+            aTmpConcrete.setPlannedTime(24);
+    			
             aTmpTask.setName("Aimer son programme");
             aTmpTask.setDescription("Un grand moment d'amour");
             
@@ -147,22 +169,58 @@ public class WizardServicesProxy {
             aTmpTaskDef.addStep(aTmpStep);
             
             aTmpTask.addTaskDefinition(aTmpTaskDef);
+            aTmpTask.addConcreteTaskDescriptor(aTmpConcrete);
             
             aTmpRole.addPrimaryTask(aTmpTask);
+        
+            
+            
+            
+            
+            
+            
             
             aTmpTask = new TaskDescriptor();
+
+            aTmpConcrete = new ConcreteTaskDescriptor();
+            aTmpConcrete.setConcreteName("Trouver le balai");
+            aTmpConcrete.setAccomplishedTime(42);
+            aTmpConcrete.setPlannedFinishingDate(new Date());
+            aTmpConcrete.setState(Constantes.State.STARTED);
+            aTmpConcrete.setPlannedStartingDate(new Date());
+            aTmpConcrete.setPlannedTime(24);
+    			
             aTmpTask.setName("Passer le balai");
             aTmpTask.setDescription("Et c'est plus propre");        
             aTmpRole.addPrimaryTask(aTmpTask);
 
             p.addToRoleDescriptor(aTmpRole);
+            aTmpTask.addConcreteTaskDescriptor(aTmpConcrete);
 
+            
+            
+            
+            
+            
+            
+            
+            
             aTmpRole = new RoleDescriptor();
             aTmpTask = new TaskDescriptor();
+
+            aTmpConcrete = new ConcreteTaskDescriptor();
+            aTmpConcrete.setConcreteName("concr_faire_essais");
+            aTmpConcrete.setAccomplishedTime(42);
+            aTmpConcrete.setPlannedFinishingDate(new Date());
+            aTmpConcrete.setState(Constantes.State.SUSPENDED);
+            aTmpConcrete.setPlannedStartingDate(new Date());
+            aTmpConcrete.setPlannedTime(24);
+    			
             aTmpRole.setName("Tester");
             aTmpRole.setDescription("Faire des essais, en gros");
             aTmpTask.setName("Tester le programme");
-            
+            aTmpTask.addConcreteTaskDescriptor(aTmpConcrete);
+
             aTmpTaskDef = new TaskDefinition();
             aTmpTaskDef.setName("Ecrire le test");
             aTmpTaskDef.setDescription("Je devais faire quoi?");
@@ -181,10 +239,30 @@ public class WizardServicesProxy {
             
             aTmpTask.setDescription("Un grand moment de solitude");
             aTmpRole.addPrimaryTask(aTmpTask);
+
+            
+            
+            
+            
             aTmpTask = new TaskDescriptor();
+
+            aTmpConcrete = new ConcreteTaskDescriptor();
+            aTmpConcrete.setConcreteName("concr_detester le prog");
+            aTmpConcrete.setAccomplishedTime(42);
+            aTmpConcrete.setPlannedFinishingDate(new Date());
+            aTmpConcrete.setState(Constantes.State.FINISHED);
+            aTmpConcrete.setPlannedStartingDate(new Date());
+            aTmpConcrete.setPlannedTime(24);
+    			
             aTmpTask.setName("Detester le programme");
             aTmpTask.setDescription("Un grand moment de haine");
             aTmpRole.addPrimaryTask(aTmpTask);
+            aTmpTask.addConcreteTaskDescriptor(aTmpConcrete);
+
+            
+            
+            
+            
             aTmpTask = new TaskDescriptor();
             aTmpTask.setName("Passer la serpilliere");
             aTmpTask.setDescription("Un grand moment de solitude");
@@ -192,6 +270,13 @@ public class WizardServicesProxy {
 
             p.addToRoleDescriptor(aTmpRole);
 
+            
+            
+            
+            
+            
+            
+            
             aTmpRole = new RoleDescriptor();
             aTmpTask = new TaskDescriptor();
             aTmpRole.setName("Conceptualisateur");

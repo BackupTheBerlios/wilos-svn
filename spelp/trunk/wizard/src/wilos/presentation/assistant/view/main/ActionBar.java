@@ -16,9 +16,9 @@ import wilos.presentation.assistant.view.panels.tabs.StepPanel;
 import wilos.presentation.assistant.view.panels.tabs.TaskPanel;
 
 public class ActionBar extends JToolBar {
-	public static final int INVISIBLE = 1;
-	public static final int ENABLED = 2;
-	public static final int DISABLED = 3;
+	public final int INVISIBLE = 1;
+	public final int ENABLED = 2;
+	public final int DISABLED = 3;
 	
 	private JButton runButton ;
 	
