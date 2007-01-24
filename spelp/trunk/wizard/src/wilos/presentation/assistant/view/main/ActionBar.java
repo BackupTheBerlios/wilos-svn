@@ -7,10 +7,14 @@ import java.awt.event.ActionListener;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
+import javax.swing.tree.DefaultMutableTreeNode;
 
+import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.task.TaskDefinition;
+import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
+import wilos.presentation.assistant.view.panels.WizardStateMachine;
 import wilos.presentation.assistant.view.panels.WorkTabbedPane;
 import wilos.presentation.assistant.view.panels.tabs.StepPanel;
 import wilos.presentation.assistant.view.panels.tabs.TaskPanel;
@@ -38,6 +42,22 @@ public class ActionBar extends JToolBar {
 		this.add(getJButtonPlayTask());
 		this.add(getJButtonPauseTask());
 		this.add(getJButtonFinished());
+		this.jButtonPlayTask.addActionListener(
+			new ActionListener() {
+
+				public void actionPerformed(ActionEvent e) {
+					DefaultMutableTreeNode dmt =  (DefaultMutableTreeNode)WizardStateMachine.getInstance().getTreePanel().getTree().getLastSelectedPathComponent();
+					
+					if(dmt != null) {
+						ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
+						if(selectedTask.getId() != null) {
+							WizardControler.getInstance().startConcreteTaskDescriptor(selectedTask);
+						}
+					}
+					
+				}
+		});
+		
 		/*runButton.addActionListener(
 				new ActionListener(){
 					public void actionPerformed(ActionEvent e) {

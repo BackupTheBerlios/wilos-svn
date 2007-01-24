@@ -172,6 +172,7 @@ public class WizardServicesProxy {
             aTmpConcrete.setState(Constantes.State.READY);
             aTmpConcrete.setPlannedStartingDate(new Date());
             aTmpConcrete.setPlannedTime(24);
+            aTmpConcrete.setId("test_id");
     			
             aTmpTask.setName("Aimer son programme");
             aTmpTask.setDescription("Un grand moment d'amour");

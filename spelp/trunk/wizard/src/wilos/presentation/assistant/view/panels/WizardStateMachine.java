@@ -19,13 +19,19 @@ public class WizardStateMachine {
 	private static WizardStateMachine wsm = null;
 	
 	private ActionBar actionToolBar;
+	private TreePanel treePanel;
 	
 	private WizardStateMachine() {
 		
 	}
 	
-	public void initUIElements(ActionBar theActionToolBar) {
+	public TreePanel getTreePanel() {
+		return treePanel;
+	}
+
+	public void initUIElements(ActionBar theActionToolBar,TreePanel theTreePanel) {
 		actionToolBar = theActionToolBar;
+		treePanel = theTreePanel;
 		updateState(STATE_NOTHING);
 		
 	}

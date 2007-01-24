@@ -5,13 +5,13 @@ import wilos.presentation.assistant.webservices.WizardServicesProxy;
 import wilos.utils.Constantes;
 
 public class WizardControler {
-	private WizardControler wc = null;
+	private static WizardControler wc = null;
 	
 	private WizardControler() {
 		
 	}
 	
-	public WizardControler getInstance() {
+	public static WizardControler getInstance() {
 		if (wc == null) {
 			wc = new WizardControler();
 		}
@@ -21,6 +21,7 @@ public class WizardControler {
 	public void startConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
 		if (ctd.getState() == Constantes.State.READY) {
 			WizardServicesProxy wsp = new WizardServicesProxy();
+			wsp.startConcreteTaskDescriptor(ctd.getId());
 		}
 	}
 }
