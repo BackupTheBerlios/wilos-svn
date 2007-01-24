@@ -55,9 +55,7 @@
 			<value>wilos/model/spem2/task/Step.hbm.xml</value>
 			<value>wilos/model/spem2/role/RoleDescriptor.hbm.xml</value>
 			<value>wilos/model/spem2/role/RoleDefinition.hbm.xml</value>
-			<!-- SPELP -->
 			<value>wilos/model/spem2/guide/Guideline.hbm.xml</value>
-				
 			</list>
 		</property>
 
@@ -66,7 +64,8 @@
 				<prop key="hibernate.dialect">
 					org.hibernate.dialect.MySQLDialect
 				</prop>
-				<prop key="hibernate.show_sql">true</prop>
+				<!-- Mise a false pour eviter les affichages des requetes SQL -->
+				<prop key="hibernate.show_sql">false</prop>
 				<prop key="hibernate.cglib.use_reflection_optimizer">
 					true
 				</prop>
@@ -112,15 +111,19 @@
 	<!-- ========================= Start of BEAN DEFINITIONS ========================= -->
 
 	<!-- ========================= DAO Layer ========================= -->
-	<!-- SPELP -->
-	
+		
+	<!-- =============================================================== -->
+	<!-- ========================= SPELP DAO =========================== -->
+	<!-- =============================================================== -->	
 	<bean id="GuidelineDao"
 		class="wilos.hibernate.spem2.guide.GuidelineDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 	
 	
-	<!-- PSI2 -->
+	<!-- =============================================================== -->
+	<!-- ========================= PSI2 DAO ============================ -->
+	<!-- =============================================================== -->	
 	<bean id="ParticipantDao"
 		class="wilos.hibernate.misc.wilosuser.ParticipantDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
@@ -151,12 +154,28 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 	
-	<!-- WOOPS2 -->
-	<bean id="RoleDescriptorDao"
-		class="wilos.hibernate.spem2.role.RoleDescriptorDao">
+	
+	<!-- =============================================================== -->
+	<!-- ========================= WOOPS2 DAO ========================== -->
+	<!-- =============================================================== -->	
+	<bean id="ProcessDao" class="wilos.hibernate.spem2.process.ProcessDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 	
+	
+	<bean id="IterationDao" class="wilos.hibernate.spem2.iteration.IterationDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	
+	<bean id="PhaseDao" class="wilos.hibernate.spem2.phase.PhaseDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="ActivityDao"
+		class="wilos.hibernate.spem2.activity.ActivityDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
 	<bean id="ElementDao" class="wilos.hibernate.spem2.element.ElementDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
@@ -165,16 +184,7 @@
 		class="wilos.hibernate.spem2.breakdownelement.BreakdownElementDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
-	
-	<bean id="RoleDefinitionDao"
-		class="wilos.hibernate.spem2.role.RoleDefinitionDao">
-		<property name="hibernateTemplate" ref="hibernateTemplate" />
-	</bean>
-	
-	<bean id="StepDao" class="wilos.hibernate.spem2.task.StepDao">
-		<property name="hibernateTemplate" ref="hibernateTemplate" />
-	</bean>
-	
+
 	<bean id="WorkBreakdownElementDao"
 		class="wilos.hibernate.spem2.workbreakdownelement.WorkBreakdownElementDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
@@ -189,21 +199,18 @@
 		class="wilos.hibernate.spem2.task.TaskDescriptorDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
-	
-	<bean id="ProcessDao" class="wilos.hibernate.spem2.process.ProcessDao">
+
+	<bean id="RoleDefinitionDao"
+		class="wilos.hibernate.spem2.role.RoleDefinitionDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 
-	<bean id="ActivityDao"
-		class="wilos.hibernate.spem2.activity.ActivityDao">
+	<bean id="RoleDescriptorDao"
+		class="wilos.hibernate.spem2.role.RoleDescriptorDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
-	
-	<bean id="IterationDao" class="wilos.hibernate.spem2.iteration.IterationDao">
-		<property name="hibernateTemplate" ref="hibernateTemplate" />
-	</bean>
-	
-	<bean id="PhaseDao" class="wilos.hibernate.spem2.phase.PhaseDao">
+
+	<bean id="StepDao" class="wilos.hibernate.spem2.task.StepDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 	
@@ -212,12 +219,35 @@
 	</bean>
 	
 	<!-- ========================= Business Layer ========================= -->
+	<!-- Spelp 
+	<bean id="AssistantService"
+		class="wilos.business.services.assistant.AssistantService">
+		<property name="participantDao" ref="ParticipantDao" />
+	</bean> -->
 	
+	<!-- =============================================================== -->
+	<!-- ======================= SPELP Service ========================= -->
+	<!-- =============================================================== -->	
+	<bean id="AssistantService"
+		class="wilos.business.services.assistant.AssistantService">
+		<property name="participantDao" ref="ParticipantDao" />
+		<property name="concreteTaskDescriptorService" ref="ConcreteTaskDescriptorService" />
+	</bean>
+	
+	
+	<bean id="GuidelineService"
+		class="wilos.business.services.guide.GuidelineService">
+		<property name="guidelineDao" ref="GuidelineDao" />
+	</bean>
 
 	
+	<!-- =============================================================== -->
+	<!-- ======================= PSI2 Service ========================= -->
+	<!-- =============================================================== -->
 	<bean id="ParticipantService"
 		class="wilos.business.services.wilosuser.ParticipantService">
 		<property name="participantDao" ref="ParticipantDao" />
+		<property name="projectService" ref="ProjectService" />
 	</bean>
 	
 	<bean id="ProcessManagerService"
@@ -238,6 +268,8 @@
 	<bean id="ProjectService"
 		class="wilos.business.services.project.ProjectService">
 		<property name="projectDao" ref="ProjectDao" />
+		<property name="participantDao" ref="ParticipantDao" />
+		<property name="processService" ref="ProcessService" />
 	</bean>
 	
 	<bean id="RoleService"
@@ -246,8 +278,12 @@
 		<property name="participantDao" ref="ParticipantDao" />
 	</bean>
 	
+	
+	<!-- =============================================================== -->
+	<!-- ====================== WOOPS2 Service ========================= -->
+	<!-- =============================================================== -->
 	<bean id="ProcessService"
-		class="wilos.business.services.process.ProcessService">
+		class="wilos.business.services.spem2.process.ProcessService">
 		<property name="processDao" ref="ProcessDao" />
 		<property name="activityDao" ref="ActivityDao" />
 		<property name="breakdownElementDao" ref="BreakdownElementDao" />
@@ -259,61 +295,54 @@
 		<property name="stepDao" ref="StepDao" />
 		<property name="taskDefinitionDao" ref="TaskDefinitionDao" />
 		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
+		<property name="projectDao" ref="ProjectDao" />
 		<property name="workBreakdownElementDao"
 			ref="WorkBreakdownElementDao" />
 		<property name="breakdownElementService" ref="BreakdownElementService" />
+		<property name="taskDescriptorService" ref="TaskDescriptorService" />
 	</bean>
 	
 	  <bean id="BreakdownElementService"
-                class="wilos.business.services.breakdownelement.BreakdownElementService">
+                class="wilos.business.services.spem2.breakdownelement.BreakdownElementService">
                 <property name="breakdownElementDao" ref="BreakdownElementDao" />
         </bean>
 
 	<bean id="ActivityService"
-		class="wilos.business.services.activity.ActivityService">
+		class="wilos.business.services.spem2.activity.ActivityService">
 		<property name="activityDao" ref="ActivityDao" />
 	</bean>
 	
 	<bean id="RoleDescriptorService"
-		class="wilos.business.services.role.RoleDescriptorService">
+		class="wilos.business.services.spem2.role.RoleDescriptorService">
 		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
 		<property name="roleDefinitionDao" ref="RoleDefinitionDao" />
 	</bean>
 	
 	<bean id="TaskDescriptorService"
-		class="wilos.business.services.task.TaskDescriptorService">
+		class="wilos.business.services.spem2.task.TaskDescriptorService">
 		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
+		<property name="concreteTaskDescriptorDao" ref="ConcreteTaskDescriptorDao" />
 	</bean>
 	
 	<bean id="StepService"
-		class="wilos.business.services.task.StepService">
+		class="wilos.business.services.spem2.task.StepService">
 		<property name="stepDao" ref="StepDao" />
 	</bean>
 	
 	<bean id="ConcreteTaskDescriptorService"
-		class="wilos.business.services.concretetask.ConcreteTaskDescriptorService">
+		class="wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService">
 		<property name="concreteTaskDescriptorDao" ref="ConcreteTaskDescriptorDao" />
 	</bean>
 	
-
+	<bean id="PhaseService"
+		class="wilos.business.services.spem2.phase.PhaseService">
+		<property name="phaseDao" ref="PhaseDao" />
+	</bean>
 	
 	<bean id="IterationService"
-		class="wilos.business.services.iteration.IterationService">
+		class="wilos.business.services.spem2.iteration.IterationService">
 		<property name="iterationDao" ref="IterationDao" />
+		<property name="activityService" ref="ActivityService" />
 	</bean>
 	
-		<!-- SPELP -->
-	<bean id="AssistantService"
-		class="wilos.business.services.assistant.AssistantService">
-		<property name="participantDao" ref="ParticipantDao" />
-		<property name="concreteTaskDescriptorService" ref="ConcreteTaskDescriptorService" />
-	</bean>
-	
-	<bean id="GuidelineService"
-		class="wilos.business.services.guide.GuidelineService">
-		<property name="guidelineDao" ref="GuidelineDao" />
-	</bean>
-	
-	<!-- FIN SPELP -->
-
 </beans>
