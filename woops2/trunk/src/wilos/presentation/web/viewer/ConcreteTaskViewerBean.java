@@ -13,7 +13,6 @@ public class ConcreteTaskViewerBean {
 
 	private String concreteTaskDescriptorId = "";
 	
-	/*attribut for the button*/
 	private boolean visibleAffected;
 	
 	private boolean visibleStart;
@@ -26,6 +25,18 @@ public class ConcreteTaskViewerBean {
 					.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(
 							this.concreteTaskDescriptorId);
 		}
+	}
+	
+	/**
+	 * soosuske
+	 * methodes for the buton affected
+	 */
+	public void affectedActionListener(ActionEvent event) {
+		this.concreteTaskDescriptorService.affectedConcreteTaskDescriptor(this.concreteTaskDescriptor);
+	}
+
+	public boolean isVisibleAffected() {
+		return this.concreteTaskDescriptor.getState().equals("Ready");
 	}
 
 	public ConcreteTaskDescriptor getConcreteTaskDescriptor() {
@@ -54,24 +65,6 @@ public class ConcreteTaskViewerBean {
 		this.concreteTaskDescriptorId = concreteTaskDescriptorId;
 	}
 	
-	/**
-	 * soosuske
-	 * methodes for the buton affected
-	 */
-	public void affectedActionListener(ActionEvent event) {
-		this.concreteTaskDescriptorService.affectedConcreteTaskDescriptor(this.concreteTaskDescriptor);
-	}
-
-	public boolean isVisibleAffected() {
-		if(this.concreteTaskDescriptor.getState().equals("Ready"))
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-	}
 
 	public void setVisibleAffected(boolean visibleAffected) {
 		this.visibleAffected = visibleAffected;
@@ -86,14 +79,7 @@ public class ConcreteTaskViewerBean {
 	}
 	
 	public boolean isVisibleStart() {
-		if(this.concreteTaskDescriptor.getState().equals("Ready"))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return this.concreteTaskDescriptor.getState().equals("Ready");
 	}
 
 	public void setVisibleStart(boolean visibleStart) {
