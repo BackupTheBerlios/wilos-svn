@@ -23,17 +23,18 @@
 	<br />
 	
 	<!-- Check box - Concrete task filter -->
-	<ice:outputText styleClass="propertyLabel"
+	<ice:outputText visible="#{TreeBean.loadCheckBox}" styleClass="propertyLabel"
 		value="#{msgs['navigation.checkbox.label']}" />
-	<ice:selectBooleanCheckbox value="#{TreeBean.affectedTaskFilter}"
-		partialSubmit="true" valueChangeListener="#{TreeBean.filterTreeActionListener}"/>
+	<ice:selectBooleanCheckbox visible="#{TreeBean.loadCheckBox}" value="#{TreeBean.affectedTaskFilter}"
+		 valueChangeListener="#{TreeBean.filterTreeActionListener}"/>
+	<br />
 	<br />
 
 	<!-- ScrollBar -->
 	<div class="navTree">
 	<!-- Tree - The process tree with its taskDescriptors -->
 	<ice:tree id="tree" value="#{TreeBean.model}" var="item"
-		hideRootNode="false" hideNavigation="false"
+		hideRootNode="#{TreeBean.loadTree}" hideNavigation="false"
 		imageDir="./xmlhttp/css/xp/css-images/">
 		<ice:treeNode>
 			<f:facet name="icon">

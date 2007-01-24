@@ -54,6 +54,10 @@ public class TreeBean {
 
 	private Boolean affectedTaskFilter = false;
 	
+	private Boolean loadTree = true;
+	
+	private Boolean loadCheckBox = false;
+	
 	private RoleService roleService;
 
 	// tree default model, used as a value for the tree component
@@ -119,6 +123,8 @@ public class TreeBean {
 	}
 	
 	public void changeTreeActionListener(ActionEvent evt) {
+		this.loadCheckBox = true;
+		this.loadTree = false;
 		this.buildModel(true);
 	}
 	
@@ -229,5 +235,21 @@ public class TreeBean {
 
 	public void setProjectService(ProjectService projectService) {
 		this.projectService = projectService;
+	}
+
+	public Boolean getLoadTree() {
+		return loadTree;
+	}
+
+	public void setLoadTree(Boolean loadTree) {
+		this.loadTree = loadTree;
+	}
+
+	public Boolean getLoadCheckBox() {
+		return loadCheckBox;
+	}
+
+	public void setLoadCheckBox(Boolean loadCheckBox) {
+		this.loadCheckBox = loadCheckBox;
 	}
 }
