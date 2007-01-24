@@ -291,4 +291,23 @@ public class Contact {
 		return contact;
 	}
 }
+
+//////////////////////////////////////////
+<?xml version="1.0" encoding="UTF-8"?>
+<Data lastModification=""> 
+	<Contact>
+		<Name>Mon Premier Contact</Name>
+		<Number>0123456789</Number>
+		<Id>1</Id>
+	</Contact>
+	<Contact>
+		<Name>Mon Second Contact</Name>
+		<Number>9876543210</Number>
+		<Id>2</Id>
+	</Contact>
+</Data>
+///////////////////////////////////////////
+
+
+
 */
