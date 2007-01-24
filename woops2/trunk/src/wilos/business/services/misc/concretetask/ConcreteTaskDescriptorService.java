@@ -58,7 +58,7 @@ public class ConcreteTaskDescriptorService {
 		// update changings.
 		_concreteTaskDescriptor.setState(State.STARTED);
 		try {
-			_concreteTaskDescriptor.setRealFinishingDate(Constantes.DATE_FORMAT
+			_concreteTaskDescriptor.setRealStartingDate(Constantes.DATE_FORMAT
 					.parse(Calendar.getInstance().getTime().toString()));
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -68,6 +68,20 @@ public class ConcreteTaskDescriptorService {
 		// save changings.
 		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(_concreteTaskDescriptor);
 	}
+	
+	/**
+	 * When the user click on the button affected. The state of the ConcreteTask change
+	 * @param _concreteTaskDescriptor
+	 */
+	public void affectedConcreteTaskDescriptor(
+			ConcreteTaskDescriptor _concreteTaskDescriptor) {
+		// update changings.
+		_concreteTaskDescriptor.setState(State.READY);
+
+		// save changings.
+		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(_concreteTaskDescriptor);
+	}
+	
 
 	/**
 	 * Suspend the ConcreteTaskDescriptor and save into the data base changings

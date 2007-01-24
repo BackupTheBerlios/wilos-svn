@@ -28,6 +28,18 @@
 					<ice:outputText value="plannedFinishingDate " />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.plannedFinishingDate}" />
+					<table>
+					<tr>
+					<td>
+					<ice:commandButton value="affecter" 
+					actionListener="#{ConcreteTaskViewerBean.affectedActionListener}"
+					visible="#{ConcreteTaskViewerBean.visibleAffected}"/>
+					<ice:commandButton value="start" 
+					actionListener="#{ConcreteTaskViewerBean.startActionListener}"
+					visible="#{ConcreteTaskViewerBean.visibleStart}"/>
+					</td>
+					</tr>
+					</table>
 				</ice:panelGrid>
 			</ice:panelTab>
 		</ice:panelTabSet>
