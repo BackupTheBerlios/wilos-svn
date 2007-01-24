@@ -19,6 +19,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.project.ProjectService;
+import wilos.business.services.role.RoleService;
 import wilos.business.services.wilosuser.LoginService;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
@@ -47,6 +48,8 @@ public class TreeBean {
 	private ProjectService projectService;
 
 	private LoginService loginService;
+	
+	private RoleService roleService;
 
 	private Project project;
 
@@ -87,22 +90,25 @@ public class TreeBean {
 				//Retrieve the entire project.
 				this.project = this.projectService.getProject(this.projectId);
 			}
-			ProjectNode projectNode;
-			if (this.affectedTaskFilter) {
+			ProjectNode projectNode = null;
+			logger.debug("### TreeBean ### affectedFilter: " + this.affectedTaskFilter);
+			
+			if (this.affectedTaskFilter){
 				// participant en session
-				HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext
-						.getCurrentInstance().getExternalContext().getRequest();
-				HttpSession httpSession = httpServletRequest.getSession();
-				Participant participant = (Participant) httpSession
-						.getAttribute("wilosUser");
-
-				// TODO roleDescriptors associes au participant - attente du jar
-				// de PSI
-				Set<RoleDescriptor> roleDescriptorsList = new HashSet<RoleDescriptor>();
-				// roleDescriptorsList.addAll(this.roleService.getRolesForAParticipant(participant.getLogin()));
-				projectNode = new ProjectNode(this.project, roleDescriptorsList);
-			} else {
-				projectNode = new ProjectNode(this.project, null);
+				HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
+				HttpSession httpSession = httpServletRequest.getSession() ;
+				Participant participant = (Participant) httpSession.getAttribute("wilosUser");
+								
+				if (participant != null) {
+					Set<RoleDescriptor> roleDescriptorsList = new HashSet<RoleDescriptor>();
+					roleDescriptorsList.addAll(this.roleService.getAffectedRolesForAParticipant(participant.getLogin()));
+					logger.debug("### TreeBean ### roleDescriptorsList => " + roleDescriptorsList);
+					logger.debug("### TreeBean ### roleDescriptorsList.size => " + roleDescriptorsList.size());
+					projectNode = new ProjectNode(this.project, roleDescriptorsList);
+				}				
+			}
+			else {
+				projectNode = new ProjectNode(this.project, null); 
 			}
 			this.model = new DefaultTreeModel(projectNode);
 		}
