@@ -137,6 +137,7 @@
 	</managed-bean>
 
 	<!-- Woops2 -->
+
 	<managed-bean>
 		<managed-bean-name>XmlFileImportBean</managed-bean-name>
 		<managed-bean-class>
@@ -175,7 +176,7 @@
 			<value>#{ProjectService}</value>
 		</managed-property>
 	</managed-bean>
-
+	
 	<managed-bean>
 		<managed-bean-name>ConcreteTaskViewerBean</managed-bean-name>
 		<managed-bean-class>
