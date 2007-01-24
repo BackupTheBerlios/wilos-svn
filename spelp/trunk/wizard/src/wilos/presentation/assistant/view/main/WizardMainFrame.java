@@ -15,6 +15,9 @@ import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JTree;
 
 import org.jdesktop.swingx.JXTree;
@@ -235,6 +238,11 @@ public class WizardMainFrame extends JFrame {
 		if (jMenuItemServers == null) {
 			jMenuItemServers = new JMenuItem();
 			jMenuItemServers.setText("Serveurs");
+			jMenuItemServers.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					ServersFrame sf = new ServersFrame();
+				}
+			});
 		}
 		return jMenuItemServers;
 	}
