@@ -30,8 +30,8 @@
 	<br />
 
 	<!-- ScrollBar -->
-	<div class="navTree"><ice:messages style="color:red;"
-		showDetail="true" /> <!-- Tree - The process tree with its taskDescriptors -->
+	<div class="navTree">
+	<!-- Tree - The process tree with its taskDescriptors -->
 	<ice:tree id="tree" value="#{TreeBean.model}" var="item"
 		hideRootNode="false" hideNavigation="false"
 		imageDir="./xmlhttp/css/xp/css-images/">
