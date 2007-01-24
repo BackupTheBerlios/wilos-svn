@@ -30,5 +30,17 @@ public class ConcreteTaskDescriptorsInstanciationTest {
 		String id = project.getProject_id();
 		
 		am.projectInstanciation(s, id);
-	}
+		
+		String s2 = am.getProcessDao().getProcessFromGuid("_0uyGoMlgEdmt3adZL5Dmdw").getId();
+		Process openup = p.getProcess(s2);	
+		
+		Project project2 = new Project();
+		project2.setName("IceOpenUP");
+		project2.setProcess(openup);
+		pm.saveOrUpdateProject(project2);
+		
+		String id2 = project2.getProject_id();
+		
+		am.projectInstanciation(s2, id2);
+		}
 }

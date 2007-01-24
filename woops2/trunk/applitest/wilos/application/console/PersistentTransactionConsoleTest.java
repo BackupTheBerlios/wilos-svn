@@ -14,7 +14,10 @@ public class PersistentTransactionConsoleTest {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 		
 		ProcessService am = (ProcessService) ctx.getBean("ProcessService");
-		Process p = am.spelpParsingXML(new File("applitest/wilos/application/console/scrum.xml"));
-		am.saveProcess(p);
-	}
+		Process scrum = am.spelpParsingXML(new File("applitest/wilos/application/console/scrum.xml"));
+		am.saveProcess(scrum);
+		
+		Process openup = am.spelpParsingXML(new File("applitest/wilos/application/console/openUP.xml"));
+		am.saveProcess(openup);
+		}
 }

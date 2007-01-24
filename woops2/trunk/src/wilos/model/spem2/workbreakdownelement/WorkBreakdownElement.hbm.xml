@@ -29,7 +29,7 @@
 			</composite-element>
 		</set>
 
-		<set name="successors" table="workorder" lazy="true">
+		<set name="successors" table="workorder" lazy="true" inverse="true">
 			<key column="successor_id" />
 			<composite-element
 				class="wilos.model.spem2.workbreakdownelement.WorkOrder">
