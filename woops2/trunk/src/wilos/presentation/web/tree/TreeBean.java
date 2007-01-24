@@ -50,7 +50,7 @@ public class TreeBean {
 
 	private Project project;
 
-	private String projectId = "";
+	private String projectId = "default";
 
 	private Boolean affectedTaskFilter = false;
 
@@ -126,11 +126,12 @@ public class TreeBean {
 					projectsList.add(new SelectItem(project.getProject_id(),
 							project.getName()));
 		}
-		projectsList.add(new SelectItem("", "Choose a project ..."));
+		projectsList.add(new SelectItem("default", "Choose a project ..."));
 		return projectsList;
 	}
 
-	public void changeTreeActionListener(ActionEvent evt) {
+	public void changeTreeActionListener(ValueChangeEvent evt) {
+		this.projectId = (String) evt.getNewValue();
 		this.loadCheckBox = true;
 		this.loadTree = false;
 		this.buildModel(true);
