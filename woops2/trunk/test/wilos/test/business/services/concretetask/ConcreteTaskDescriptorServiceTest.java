@@ -5,6 +5,7 @@ import java.util.List;
 import junit.framework.TestCase;
 import wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.model.spem2.task.TaskDescriptor;
 import wilos.test.TestConfiguration;
 import wilos.utils.Constantes.State;
 
@@ -13,6 +14,12 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 	ConcreteTaskDescriptorService concreteTaskDescriptorService;
 
 	ConcreteTaskDescriptor concreteTaskDescriptor;
+	
+	TaskDescriptor taskDescriptor;
+	
+	public static final String NAME = "name" ;
+
+	public static final String DESCRIPTION = "description" ;
 
 	final String PROJECT_ID = "projectId";
 
@@ -112,5 +119,27 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 
 		// Rk: the tearDown method is called here.
 	}
+	
+	public void testDep(){
+		TaskDescriptor taskDescriptor = new TaskDescriptor() ;
+		taskDescriptor.setDescription(DESCRIPTION) ;
+		taskDescriptor.setName(NAME) ;
+		
+		ConcreteTaskDescriptor concreteTaskDescriptor = new ConcreteTaskDescriptor();
+		concreteTaskDescriptor.setTaskDescriptor(taskDescriptor);
+		
+		this.concreteTaskDescriptorService
+		.getConcreteTaskDescriptorDao()
+		.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
+		
+		String id = this.concreteTaskDescriptor.getId();
+		
+		ConcreteTaskDescriptor ct = this.concreteTaskDescriptorService.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(id);
+		
+		assertTrue(ct.getTaskDescriptor() != null);
+		
+	}
+	
+	
 
 }

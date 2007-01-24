@@ -1,9 +1,13 @@
 package wilos.presentation.web.viewer;
 
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.model.misc.wilosuser.Participant;
 
 public class ConcreteTaskViewerBean {
 
@@ -32,11 +36,15 @@ public class ConcreteTaskViewerBean {
 	 * methodes for the buton affected
 	 */
 	public void affectedActionListener(ActionEvent event) {
-		this.concreteTaskDescriptorService.affectedConcreteTaskDescriptor(this.concreteTaskDescriptor);
+		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
+		HttpSession sess = req.getSession() ;
+		Participant user = (Participant) sess.getAttribute("wilosUser") ; 
+		
+		this.concreteTaskDescriptorService.affectedConcreteTaskDescriptor(this.concreteTaskDescriptor, user);
 	}
 
 	public boolean isVisibleAffected() {
-		return this.concreteTaskDescriptor.getState().equals("Ready");
+		return this.concreteTaskDescriptor.getState().equals("Created");
 	}
 
 	public ConcreteTaskDescriptor getConcreteTaskDescriptor() {

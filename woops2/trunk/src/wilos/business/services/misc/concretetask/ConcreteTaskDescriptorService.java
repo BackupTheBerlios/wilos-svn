@@ -11,7 +11,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import wilos.hibernate.misc.concretetask.ConcreteTaskDescriptorDao;
+import wilos.hibernate.misc.wilosuser.ParticipantDao;
+import wilos.hibernate.spem2.role.RoleDescriptorDao;
+import wilos.hibernate.spem2.task.TaskDescriptorDao;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.model.misc.wilosuser.Participant;
+import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.task.TaskDescriptor;
 import wilos.utils.Constantes;
 import wilos.utils.Constantes.State;
 
@@ -24,6 +30,10 @@ import wilos.utils.Constantes.State;
 public class ConcreteTaskDescriptorService {
 
 	private ConcreteTaskDescriptorDao concreteTaskDescriptorDao;
+	
+	private RoleDescriptorDao roleDescriptorDao;
+	
+	private TaskDescriptorDao TaskDescriptorDao;
 
 	/**
 	 * Return concreteTaskDescriptor for a project list
@@ -56,7 +66,8 @@ public class ConcreteTaskDescriptorService {
 	public void startConcreteTaskDescriptor(
 			ConcreteTaskDescriptor _concreteTaskDescriptor) {
 		// update changings.
-		_concreteTaskDescriptor.setState(State.STARTED);
+		
+		_concreteTaskDescriptor.setState(State.READY);
 		try {
 			_concreteTaskDescriptor.setRealStartingDate(Constantes.DATE_FORMAT
 					.parse(Calendar.getInstance().getTime().toString()));
@@ -73,13 +84,16 @@ public class ConcreteTaskDescriptorService {
 	 * When the user click on the button affected. The state of the ConcreteTask change
 	 * @param _concreteTaskDescriptor
 	 */
-	public void affectedConcreteTaskDescriptor(
-			ConcreteTaskDescriptor _concreteTaskDescriptor) {
-		// update changings.
-		_concreteTaskDescriptor.setState(State.READY);
 
+	public void affectedConcreteTaskDescriptor(
+			ConcreteTaskDescriptor _concreteTaskDescriptor, Participant _user) {
+		
+		
+		/*RoleDescriptor role = _concreteTaskDescriptor.getTaskDescriptor().getMainRole();
+		role.addParticipant(_user);
+		*/
 		// save changings.
-		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(_concreteTaskDescriptor);
+		//this.roleDescriptorDao.saveOrUpdateRoleDescriptor(role);*/
 	}
 	
 
@@ -153,5 +167,22 @@ public class ConcreteTaskDescriptorService {
 	public void setConcreteTaskDescriptorDao(
 			ConcreteTaskDescriptorDao _concreteTaskDescriptorDao) {
 		this.concreteTaskDescriptorDao = _concreteTaskDescriptorDao;
+	}
+
+
+	public RoleDescriptorDao getRoleDescriptorDao() {
+		return roleDescriptorDao;
+	}
+
+	public void setRoleDescriptorDao(RoleDescriptorDao roleDescriptorDao) {
+		this.roleDescriptorDao = roleDescriptorDao;
+	}
+
+	public TaskDescriptorDao getTaskDescriptorDao() {
+		return TaskDescriptorDao;
+	}
+
+	public void setTaskDescriptorDao(TaskDescriptorDao taskDescriptorDao) {
+		TaskDescriptorDao = taskDescriptorDao;
 	}
 }
