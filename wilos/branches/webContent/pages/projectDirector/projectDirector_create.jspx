@@ -1,0 +1,33 @@
+<ice:form id="projectDirector_form">
+	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
+			<ice:panelGroup id="projectDirectorCreateGroup" styleClass="contentIncludePanelGroup">
+
+				<ice:panelGrid columns="2">
+					<ice:outputText value="Nom" />
+					<ice:inputText id="nompd" value="#{ProjectDirectorBean.projectDirector.name}" required="true"/>
+							
+					<ice:outputText value="Prénom"/>
+					<ice:inputText id="prenompd" value="#{ProjectDirectorBean.projectDirector.firstname}" required="true"/>
+		
+					<ice:outputText value="Pseudo"/>
+					<ice:inputText id="loginpd" value="#{ProjectDirectorBean.projectDirector.login}" required="true"/>
+					
+					<ice:outputText value="Mot de passe"/>
+					<ice:inputSecret id="equal1" value="#{ProjectDirectorBean.projectDirector.password}" required="true">
+						<f:validateLength minimum="6" />
+					</ice:inputSecret>
+					
+					<ice:outputText value="Confirmer le mot de passe"/>
+					<ice:inputSecret id="equal2" value="#{ProjectDirectorBean.passwordConfirmation}">
+						<f:validateLength minimum="6" />
+						<f:validator validatorId="equalValidator"/>
+					</ice:inputSecret>
+					
+				</ice:panelGrid>
+				<ice:panelGrid columns="2">
+					<ice:commandButton value="S'enregistrer" action="#{ProjectDirectorBean.saveProjectDirectorAction}"/>
+					<ice:commandButton value="Retour" immediate="true" action="admin_main"/>
+				</ice:panelGrid>
+		</ice:panelGroup>
+	</ice:panelGrid>
+</ice:form>
