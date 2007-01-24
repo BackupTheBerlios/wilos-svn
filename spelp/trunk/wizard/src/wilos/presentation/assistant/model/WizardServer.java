@@ -3,11 +3,21 @@ package wilos.presentation.assistant.model;
 public class WizardServer {
 	private String alias;
 	private String address;
+	private int id;
 	
-	public WizardServer(String alias, String address) {
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public WizardServer(String alias, String address, int id) {
 		super();
 		this.alias = alias;
 		this.address = address;
+		this.id = id;
 	}
 	
 	public String getAddress() {
