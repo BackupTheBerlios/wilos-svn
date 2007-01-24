@@ -55,11 +55,11 @@ public class TreeBean {
 
 	private String projectId = "default";
 
-	private Boolean affectedTaskFilter = false;
+	private boolean affectedTaskFilter = false;
 
-	private Boolean loadTree = true;
+	private boolean loadTree = true;
 
-	private Boolean loadCheckBox = false;
+	private boolean loadCheckBox = false;
 
 	// tree default model, used as a value for the tree component
 	private DefaultTreeModel model = null;
@@ -94,7 +94,7 @@ public class TreeBean {
 			logger.debug("### TreeBean ### affectedFilter: " + this.affectedTaskFilter);
 			
 			if (this.affectedTaskFilter){
-				// participant en session
+				// participant into session
 				HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
 				HttpSession httpSession = httpServletRequest.getSession() ;
 				Participant participant = (Participant) httpSession.getAttribute("wilosUser");
