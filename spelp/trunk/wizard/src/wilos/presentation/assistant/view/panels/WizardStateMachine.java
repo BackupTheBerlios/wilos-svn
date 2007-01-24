@@ -77,7 +77,7 @@ public class WizardStateMachine {
 				updateState(this.STATE_NOTHING);
 			}
 
-			HTMLViewer.getInstance(null).setBreakDownElement(ctd.getTaskDescriptor());
+			HTMLViewer.getInstance(null).setBreakDownElement(ctd);
 		}
 		else {
 			updateState(this.STATE_NOTHING);

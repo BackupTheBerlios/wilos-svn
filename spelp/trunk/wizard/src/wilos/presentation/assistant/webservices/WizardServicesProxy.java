@@ -23,10 +23,32 @@ import wilos.utils.Constantes;
 import com.thoughtworks.xstream.XStream;
 
 public class WizardServicesProxy {
-        public static String ENDPOINT = "/WizardServices?wsdl";
-        public static String URLWebService = "http://webservices.business.wilos/";
-        public static String nameWebService = "WizardServicesService";
-        private static String testIHMLoginString = "";
+   	public static String ENDPOINT = "/WizardServices?wsdl";
+    public static String URLWebService = "http://webservices.business.wilos/";
+    public static String nameWebService = "WizardServicesService";
+    private static String testIHMLoginString = "";
+        
+    private static String login = "";
+    private static String password = "";
+    private static String address = "";
+    
+    public static String getAddress() {
+		return address;
+	}
+
+	public static String getLogin() {
+		return login;
+	}
+
+	public static String getPassword() {
+		return password;
+	}
+
+	public static void setIdentificationParamaters(String aLogin, String aPassword, String anAddress) {
+    	WizardServicesProxy.login = aLogin;
+    	WizardServicesProxy.password = aPassword;
+    	WizardServicesProxy.address = anAddress;
+    }
     
 	public static ArrayList<RoleDescriptor> getRolesByUser(String login, String password, String address) {	
             ArrayList<RoleDescriptor> myRoleListe = new  ArrayList<RoleDescriptor>();
@@ -38,7 +60,7 @@ public class WizardServicesProxy {
                     }
                 }
             }*/
-            Participant myParticipant = getParticipant(login,password,address);
+            Participant myParticipant = getParticipant();
             if (myParticipant!= null) {
                 for (RoleDescriptor rd : myParticipant.getRolesListForAProject()) {
                     myRoleListe.add(rd);
@@ -47,7 +69,7 @@ public class WizardServicesProxy {
             return myRoleListe;
 	}
         
-        public static Participant getParticipant(String login, String password, String address)
+        public static Participant getParticipant()
         {
             Participant myParticipant = null;
             try { 
@@ -69,12 +91,12 @@ public class WizardServicesProxy {
             return myParticipant;
         }
         
-        public static  void startConcreteTaskDescriptor (String login, String password, String address, String ConcreteTaskId) {
+        public static  void startConcreteTaskDescriptor (String theConcreteTaskId) {
             try { 
             	if (!login.equalsIgnoreCase(testIHMLoginString)) {
             		WizardServicesService service = new WizardServicesService(new URL(address+ENDPOINT), new QName(URLWebService, nameWebService));            	
                     WizardServices port = service.getWizardServicesPort();
-                    port.startConcreteTaskDescriptor(login, password, ConcreteTaskId);
+                    port.startConcreteTaskDescriptor(login, password, theConcreteTaskId);
             	}
             }
             catch (java.lang.Exception e) {

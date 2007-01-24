@@ -16,6 +16,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.element.Element;
 import wilos.presentation.assistant.ressources.Bundle;
 
@@ -137,7 +138,7 @@ public class HTMLViewer extends JFrame {
 	 * 
 	 * @param Element bde
 	 */
-	public void setBreakDownElement(Element bde) {
+	public void setBreakDownElement(ConcreteTaskDescriptor bde) {
 		if(!this.historyStack.empty())
 			while(this.cursorStack != this.historyStack.size()-1)
 				this.historyStack.pop();
@@ -149,14 +150,14 @@ public class HTMLViewer extends JFrame {
 		else
 			this.cursorStack = this.historyStack.size()-1;
 		
-		this.displayBreakDownElement(bde);
+		//this.displayBreakDownElement(bde);
 	}
 	
-	public void setPrevElement() {
+	private void setPrevElement() {
 		this.displayBreakDownElement((Element)this.historyStack.get(--this.cursorStack)) ;
 	}
 	
-	public void setNextElement() {
+	private void setNextElement() {
 		this.displayBreakDownElement((Element)this.historyStack.get(++this.cursorStack)) ;
 	}
 	

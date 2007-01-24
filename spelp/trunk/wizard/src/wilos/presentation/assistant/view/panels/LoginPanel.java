@@ -198,7 +198,8 @@ public class LoginPanel extends JPanel {
 	 */
 	private void startConnection() {
 		String passcript =  Security.encode(new String(passwordPasswordField.getPassword()));
-		Participant participant = WizardServicesProxy.getParticipant(loginTextField.getText(),passcript, adressTextField.getText());                          
+		WizardServicesProxy.setIdentificationParamaters(loginTextField.getText(),passcript, adressTextField.getText());
+		Participant participant = WizardServicesProxy.getParticipant();                          
         
         if (participant == null)
         {
