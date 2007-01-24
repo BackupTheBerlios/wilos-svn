@@ -50,6 +50,7 @@ public class ProjectBean {
 		this.logger.debug("--- Project --- == creating ..." + this) ;
 		this.project = new Project() ;
 		this.selectedProcessGuid="";
+		this.processNamesList = new ArrayList<SelectItem>();
 		/*
 		 * this.projectList = (HashSet<Project>)this.projectService.getAllProjects(); for(Project
 		 * projectTmp : this.projectList){ this.logger.debug("### Project"+projectTmp.getName()+"
@@ -112,6 +113,7 @@ public class ProjectBean {
 	 * @return nothing
 	 */
 	public String saveProjectProcessAffectation(){
+		//TODO: A tester.
 		Project projTmp = projectService.getProject("2c90a1b2104ad70601104ad906f90001");
 		this.logger.debug("Project: "+projTmp) ;
 		wilos.model.spem2.process.Process procTmp = processService.getProcessDao().getProcessFromGuid(selectedProcessGuid);
@@ -262,6 +264,7 @@ public class ProjectBean {
 	 * @return the selectedProcessGuid.
 	 */
 	public String getSelectedProcessGuid() {
+		this.logger.debug("Process selectionne "+this.selectedProcessGuid) ;
 		return this.selectedProcessGuid ;
 	}
 
