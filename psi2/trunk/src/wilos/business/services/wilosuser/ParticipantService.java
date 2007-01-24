@@ -26,7 +26,7 @@ import wilos.business.util.Security ;
  * @author Mikamikaze
  * @author Sakamakak
  */
-@ Transactional (readOnly = false, propagation = Propagation.REQUIRED)
+@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class ParticipantService {
 
 	private ParticipantDao participantDao ;
@@ -78,9 +78,9 @@ public class ParticipantService {
 	 * 
 	 * @return the roles
 	 */
-	@ Transactional (readOnly = true)
+	@Transactional(readOnly = true)
 	public Set<RoleDescriptor> getRolesListForAParticipant(String _login) {
-		// TODO: A deplacer dans le RoleService
+		// TODO: getRolesListForAParticipant à deplacer dans le RoleService
 		return this.participantDao.getAllRolesForAParticipant(_login);
 	}
 
@@ -89,7 +89,7 @@ public class ParticipantService {
 	 * 
 	 * @return the list of participants
 	 */
-	@ Transactional (readOnly = true)
+	@Transactional(readOnly = true)
 	public Set<Participant> getParticipants() {
 		return this.participantDao.getAllParticipants() ;
 	}
@@ -145,7 +145,7 @@ public class ParticipantService {
 	 * @param participant
 	 * @param affectedProjects
 	 */
-	@ Transactional (readOnly = false)
+	@Transactional(readOnly = false)
 	public void saveProjectsForAParticipant(Participant participant, Map<String, Boolean> affectedProjects) {
 		Participant currentParticipant = this.getParticipantDao().getParticipant(participant.getLogin()) ;
 		Project currentProject ;

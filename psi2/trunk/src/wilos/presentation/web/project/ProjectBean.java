@@ -15,7 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.business.services.project.ProjectService;
 import wilos.model.misc.project.Project;
-
+import wilos.model.spem2.process.Process;
 
 /**
  * Managed-Bean link to project_create.jspx
@@ -68,7 +68,7 @@ public class ProjectBean {
 		boolean error=false;
 		FacesMessage message = new FacesMessage();
 		FacesContext facesContext = FacesContext.getCurrentInstance() ;
-	// test if the fields are correctly completed
+		// test if the fields are correctly completed
 		if (this.project.getName().trim().length()==0)
 		{
 			FacesMessage errName = new FacesMessage() ;
@@ -264,7 +264,14 @@ public class ProjectBean {
 	 * @return the selectedProcessGuid.
 	 */
 	public String getSelectedProcessGuid() {
-		this.logger.debug("Process selectionne "+this.selectedProcessGuid) ;
+		this.logger.debug("Process selectionne avt get: "+this.selectedProcessGuid) ;
+		Project projTmp = projectService.getProject("2c90a1b2104ad70601104ad906f90001") ;
+		this.logger.debug("Project: "+projTmp) ;
+		Process procTmp = projTmp.getProcess();
+		if(procTmp!=null){
+			this.selectedProcessGuid = projTmp.getProcess().getGuid();
+		}
+		this.logger.debug("Process selectionne apres get: "+this.selectedProcessGuid) ;
 		return this.selectedProcessGuid ;
 	}
 

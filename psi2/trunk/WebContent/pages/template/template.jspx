@@ -61,11 +61,11 @@
                         </f:subview>
                     </ice:panelGroup>
                     
-                    <!--<ice:panelGroup id="welcome" styleClass="contentIncludePanelGroup" >
+                    <ice:panelGroup id="welcome" styleClass="contentIncludePanelGroup" >
                         <f:subview id="welcome_view">
                             <jsp:directive.include file="./pages/participant/welcome.jspx" />
                         </f:subview>
-                    </ice:panelGroup>-->
+                    </ice:panelGroup>
 
                     <ice:panelGroup id="subscribe" styleClass="contentIncludePanelGroup" >
                         <f:subview id="subscribe_view">

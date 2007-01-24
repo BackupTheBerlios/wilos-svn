@@ -22,8 +22,7 @@ import wilos.model.spem2.process.Process;
  * 
  * @author martial
  */
-
-@Transactional (readOnly = false, propagation = Propagation.REQUIRED)
+@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class ProjectService {
 
 	private ProjectDao projectDao ;
@@ -108,7 +107,7 @@ public class ProjectService {
 	 * 
 	 * @return A set of Project
 	 */
-	@Transactional (readOnly = true)
+	@Transactional(readOnly = true)
 	public Set<Project> getAllProjects() {
 		HashSet<Project> projectList = new HashSet<Project>() ;
 		projectList = (HashSet<Project>) this.projectDao.getAllProject() ;
@@ -120,7 +119,7 @@ public class ProjectService {
 	 * 
 	 * @return
 	 */
-	@Transactional (readOnly = true)
+	@Transactional(readOnly = true)
 	public Set<Project> getAllProjectsWithNoProcess() {
 		HashSet<Project> projectList = new HashSet<Project>() ;
 		HashSet<Project> tmpList = new HashSet<Project>() ;
@@ -138,7 +137,7 @@ public class ProjectService {
 	 * 
 	 * @return A set of Project
 	 */
-	@Transactional (readOnly = true)
+	@Transactional(readOnly = true)
 	public Set<Project> getAllProjectsWithProcess() {
 		HashSet<Project> projectList = new HashSet<Project>() ;
 		HashSet<Project> tmpList = new HashSet<Project>() ;
@@ -148,7 +147,6 @@ public class ProjectService {
 			if(project.getProcess() != null)
 				projectList.add(project) ;
 		}
-
 		return projectList ;
 	}
 
@@ -159,7 +157,7 @@ public class ProjectService {
 	 * @param _id
 	 * @return
 	 */
-	@Transactional (readOnly = true)
+	@Transactional(readOnly = true)
 	public Project getProject(String _id) {
 		return this.projectDao.getProject(_id) ;
 	}
@@ -210,7 +208,7 @@ public class ProjectService {
 	 * @param project
 	 * @return the list of participants affected to the project parameter
 	 */
-	@Transactional (readOnly = true)
+	@Transactional(readOnly = true)
 	public Set<Participant> getParticipants(Project project) {
 		return project.getParticipants() ;
 	}
@@ -239,7 +237,7 @@ public class ProjectService {
 	 *            the project to affect
 	 */
 	public void saveProcessProjectAffectation(wilos.model.spem2.process.Process _process, Project _project) {
-
+		//TODO: A tester
 		Project loadedProject = this.getProject(_project.getProject_id()) ;
 		Process loadedProcess = this.processService.getProcessDao().getProcessFromGuid(_process.getGuid()) ;
 		loadedProject.addProcess(loadedProcess) ;
