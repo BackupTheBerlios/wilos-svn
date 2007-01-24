@@ -17,6 +17,10 @@
 	<property name="dist.dir" value="${basedir}/dist" />
 	<property file="${ant.dir}/tomcat.properties" />
 
+	<!-- Taches webservices -->
+	<taskdef name="apt" classname="com.sun.tools.ws.ant.Apt">
+		   <classpath refid="classpath" />  
+	</taskdef>
 	<!-- Libraries Import -->
 	<path id="classpath">
 		<fileset dir="${lib.dir}">
@@ -65,6 +69,25 @@
 				<include name="**/*.*" />
 			</fileset>
 		</copy>
+		
+		<!-- Generation des webservices -->
+		<mkdir dir="${ant.dir}/tmp" />
+		
+		<apt
+		   debug="${debug}"
+		   verbose="${verbose}"
+		   destdir="${build.dir}/${project.name}/WEB-INF/classes"
+		   sourcedestdir="${ant.dir}/tmp"
+		   sourcepath="${src.java.dir}">
+		   <classpath refid="classpath" /> 
+		   <option key="r" value="${build.dir}/${project.name}/WEB-INF/"/>
+		   <source dir="${src.java.dir}">		  
+		      <include name="**/webservices/*.java"/>
+		   </source>			
+		</apt>
+		
+		<delete dir="${ant.dir}/tmp" />	
+		<!-- Fin Generation des webservices -->
 
 		<!-- java sources -->
 		<javac srcdir="${src.java.dir}" destdir="${build.dir}/${project.name}/WEB-INF/classes" source="1.5">
