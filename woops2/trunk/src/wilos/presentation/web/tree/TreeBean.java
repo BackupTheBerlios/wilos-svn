@@ -278,4 +278,12 @@ public class TreeBean {
 	public void setLoginService(LoginService loginService) {
 		this.loginService = loginService;
 	}
+
+	public RoleService getRoleService() {
+		return roleService;
+	}
+
+	public void setRoleService(RoleService _roleService) {
+		this.roleService = _roleService;
+	}
 }
