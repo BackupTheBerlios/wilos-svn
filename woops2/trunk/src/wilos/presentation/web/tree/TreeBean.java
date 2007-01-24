@@ -2,8 +2,10 @@
 package wilos.presentation.web.tree ;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -18,8 +20,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.project.ProjectService;
+import wilos.business.services.role.RoleService;
 import wilos.model.misc.project.Project;
+import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
+import wilos.model.spem2.role.RoleDescriptor;
 import wilos.presentation.web.template.MenuBean;
 import wilos.presentation.web.viewer.ActivityViewerBean;
 import wilos.presentation.web.viewer.ConcreteTaskViewerBean;
@@ -28,6 +33,9 @@ import wilos.presentation.web.viewer.PhaseViewerBean;
 import wilos.presentation.web.viewer.ProjectViewerBean;
 
 /**
+ * @author deder
+ * @author eperico
+ * @author garwind
  * <p/> A basic backing bean for a ice:tree component. The only instance
  * variable needed is a DefaultTreeModel Object which is bound to the icefaces
  * tree component in the jspx code.
@@ -44,7 +52,9 @@ public class TreeBean {
 
 	private String projectId = "";
 
-	public Boolean affectedTaskFilter = false;
+	private Boolean affectedTaskFilter = false;
+	
+	private RoleService roleService;
 
 	// tree default model, used as a value for the tree component
 	private DefaultTreeModel model = null;
@@ -71,11 +81,19 @@ public class TreeBean {
 			}
 			ProjectNode projectNode;
 			if (this.affectedTaskFilter){
-				//recup des rd du login courant.
-				projectNode = new ProjectNode(this.project, null);
+				// participant en session
+				HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
+				HttpSession httpSession = httpServletRequest.getSession() ;
+				Participant participant = (Participant) httpSession.getAttribute("wilosUser");
+				
+				// TODO roleDescriptors associés au participant - attente du jar de PSI
+				Set<RoleDescriptor> roleDescriptorsList = new HashSet<RoleDescriptor>();
+				//roleDescriptorsList.addAll(this.roleService.getRolesForAParticipant(participant.getLogin()));
+				projectNode = new ProjectNode(this.project, roleDescriptorsList);
 			}
-			else
-				projectNode = new ProjectNode(this.project, null);
+			else {
+				projectNode = new ProjectNode(this.project, null); 
+			}
 			this.model = new DefaultTreeModel(projectNode);
 		}
 	}
