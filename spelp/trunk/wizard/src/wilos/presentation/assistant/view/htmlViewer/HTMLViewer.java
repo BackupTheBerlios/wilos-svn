@@ -1,13 +1,18 @@
 package wilos.presentation.assistant.view.htmlViewer;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Stack;
+import java.util.Vector;
 
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
@@ -15,9 +20,12 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.element.Element;
+import wilos.model.spem2.guide.Guideline;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.ressources.Bundle;
 
@@ -32,10 +40,11 @@ public class HTMLViewer extends JFrame {
 	
 	private JButton prevButton;
 	private JButton nextButton;
-	private Stack historyStack;
+	private Stack<Element> historyStack;
 	private int cursorStack=0;
 	
-	private JList guidesList ;
+	private JPanel southPanel;
+	private JScrollPane guidesScrollPane;
 	
 	private HTMLViewer(Point p) {
 		super(Bundle.getText("htmlViewer.title"));
@@ -50,7 +59,7 @@ public class HTMLViewer extends JFrame {
 		this.myElementLabel = new JLabel() ;
 		northPanel.add(this.myElementLabel);
 		
-		this.historyStack = new Stack() ;
+		this.historyStack = new Stack<Element>() ;
 		
 		this.prevButton = new JButton("<");
 		this.nextButton = new JButton(">");
@@ -76,17 +85,16 @@ public class HTMLViewer extends JFrame {
 		
 		this.myScrollPane = new JScrollPane(this.myEditorPane);
 		
-		JPanel southPanel = new JPanel() ;
-		southPanel.setLayout(new GridLayout());
-		southPanel.add(new JLabel(Bundle.getText("htmlViewer.guidelines")));
+		this.southPanel = new JPanel() ;
+		this.southPanel.setLayout(new GridLayout());
+		this.southPanel.add(new JLabel(Bundle.getText("htmlViewer.guidelines")));
 		
-		this.guidesList = new JList();
-		this.guidesList.setVisibleRowCount(2);
-		southPanel.add(new JScrollPane(this.guidesList));
+		this.guidesScrollPane = new JScrollPane();
+		this.southPanel.add(this.guidesScrollPane);
 		
 		this.getContentPane().add(northPanel, BorderLayout.NORTH);
 		this.getContentPane().add(this.myScrollPane, BorderLayout.CENTER);
-		this.getContentPane().add(southPanel, BorderLayout.SOUTH);
+		this.getContentPane().add(this.southPanel, BorderLayout.SOUTH);
 	}
 	
 	/**
@@ -105,18 +113,23 @@ public class HTMLViewer extends JFrame {
 		this.setVisible(true);
 	}
 	
-	private void displayTaskDescriptor(TaskDescriptor td) {
+	private void displayElement(Element e) {
 		/* Affichage du nom */
-		this.myElementLabel.setText(td.getName()) ;
+		this.myElementLabel.setText(e.getName()) ;
 		
 		/* Affichage de la description (ancienne methode setMessage) */
-		String description = td.getDescription();
+		String description = e.getDescription();
 		this.HTMLCode = description;
 		
 		this.myEditorPane.setText(this.HTMLCode);
 		
 		if(description.length() != 0)
 			this.myEditorPane.setCaretPosition(1); // revient au debut du texte
+		
+		if(e instanceof Guideline)
+			this.southPanel.setVisible(false);
+		else
+			this.southPanel.setVisible(true);
 		
 		this.setVisible(true);
 		
@@ -151,15 +164,43 @@ public class HTMLViewer extends JFrame {
 		else
 			this.cursorStack = this.historyStack.size()-1;
 		
-		this.displayTaskDescriptor(td);
+		this.displayElement(td);
+		
+		/* Affichage des guides */
+		Set<Guideline> guides = new HashSet<Guideline>(); 
+		if (td.getTaskDefinition() != null) {
+			guides = td.getTaskDefinition().getGuidelines();
+		}
+		
+		Vector<Guideline> vectGuides = new Vector<Guideline>();
+		vectGuides.addAll(guides);
+		
+		JList guidesList = new JList(vectGuides);
+		guidesList.setVisibleRowCount(2);
+		guidesList.setCellRenderer(new GuidesRenderer());
+		guidesList.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				JList list = (JList)e.getSource();
+				Object value = list.getSelectedValue();
+				if(value != null)
+					displayElement((Element)value);
+			}
+		});
+		this.guidesScrollPane.add(guidesList);
+	}
+	
+	private class GuidesRenderer extends DefaultListCellRenderer {
+		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+			return super.getListCellRendererComponent(list, ((Element)value).getName(), index, isSelected, cellHasFocus);
+		}
 	}
 	
 	private void setPrevElement() {
-		this.displayTaskDescriptor((TaskDescriptor)this.historyStack.get(--this.cursorStack)) ;
+		this.displayElement(this.historyStack.get(--this.cursorStack)) ;
 	}
 	
 	private void setNextElement() {
-		this.displayTaskDescriptor((TaskDescriptor)this.historyStack.get(++this.cursorStack)) ;
+		this.displayElement(this.historyStack.get(++this.cursorStack)) ;
 	}
 	
 	/**
