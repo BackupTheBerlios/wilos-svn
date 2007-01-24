@@ -1,20 +1,21 @@
 
 package wilos.business.services.project ;
 
-import java.util.HashSet ;
-import java.util.Iterator ;
-import java.util.Set ;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
-import org.apache.commons.logging.Log ;
-import org.apache.commons.logging.LogFactory ;
-import org.springframework.transaction.annotation.Propagation ;
-import org.springframework.transaction.annotation.Transactional ;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import wilos.business.services.spem2.process.ProcessService;
-import wilos.hibernate.misc.project.ProjectDao ;
-import wilos.hibernate.misc.wilosuser.ParticipantDao ;
-import wilos.model.misc.project.Project ;
-import wilos.model.misc.wilosuser.Participant ;
+import wilos.hibernate.misc.project.ProjectDao;
+import wilos.hibernate.misc.wilosuser.ParticipantDao;
+import wilos.model.misc.project.Project;
+import wilos.model.misc.wilosuser.Participant;
+import wilos.model.spem2.process.Process;
 
 /**
  * The services associated to the Project
@@ -240,10 +241,10 @@ public class ProjectService {
 	public void saveProcessProjectAffectation(wilos.model.spem2.process.Process _process, Project _project) {
 
 		Project loadedProject = this.getProject(_project.getProject_id()) ;
-		wilos.model.spem2.process.Process loadedProcess = this.processService.getProcessDao().getProcessFromGuid(_process.getGuid()) ;
-
+		Process loadedProcess = this.processService.getProcessDao().getProcessFromGuid(_process.getGuid()) ;
 		loadedProject.addProcess(loadedProcess) ;
 		this.projectDao.saveOrUpdateProject(loadedProject) ;
+		this.processService.projectInstanciation(loadedProject);
 	}
 
 

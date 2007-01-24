@@ -2,8 +2,10 @@ package wilos.business.services.role;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -90,6 +92,18 @@ public class RoleService {
 			}
 		}
 		return participantRoles;
+	}
+	
+	public Set<RoleDescriptor> getAffectedRolesForAParticipant(String _login){
+		Set<RoleDescriptor> rolesSetForAParticipant = new HashSet<RoleDescriptor>();
+		HashMap<RoleDescriptor, Boolean> rolesForAParticipant = this.getRolesForAParticipant(_login);
+		for(Iterator iter = rolesForAParticipant.keySet().iterator(); iter.hasNext();){
+			RoleDescriptor currentRole = (RoleDescriptor) iter.next() ;
+			if(((Boolean)rolesForAParticipant.get(currentRole)).booleanValue()){
+				rolesSetForAParticipant.add(currentRole);
+			}
+		}
+		return rolesSetForAParticipant;
 	}
 
 	/**
