@@ -27,9 +27,7 @@ public class ConcreteTaskDescriptorsInstanciationTest {
 		project.setProcess(scrum);
 		pm.saveOrUpdateProject(project);
 		
-		String id = project.getProject_id();
-		
-		am.projectInstanciation(s, id);
+		am.projectInstanciation(project);
 		
 		String s2 = am.getProcessDao().getProcessFromGuid("_0uyGoMlgEdmt3adZL5Dmdw").getId();
 		Process openup = p.getProcess(s2);	
@@ -39,8 +37,6 @@ public class ConcreteTaskDescriptorsInstanciationTest {
 		project2.setProcess(openup);
 		pm.saveOrUpdateProject(project2);
 		
-		String id2 = project2.getProject_id();
-		
-		am.projectInstanciation(s2, id2);
+		am.projectInstanciation(project2);
 		}
 }

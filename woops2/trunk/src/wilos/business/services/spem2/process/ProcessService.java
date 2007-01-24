@@ -30,6 +30,7 @@ import wilos.hibernate.spem2.task.StepDao;
 import wilos.hibernate.spem2.task.TaskDefinitionDao;
 import wilos.hibernate.spem2.task.TaskDescriptorDao;
 import wilos.hibernate.spem2.workbreakdownelement.WorkBreakdownElementDao;
+import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.iteration.Iteration;
@@ -535,17 +536,22 @@ public class ProcessService {
 	 * @param id_process
 	 * @param id_project
 	 */
-	public void projectInstanciation(String _processId, String _projectId) {
+	public void projectInstanciation(Project _project) {
 		
-		Process p = this.processDao.getProcess(_processId);
+		Process p = this.processDao.getProcess(_project.getProcess().getId());
 		
 		List<TaskDescriptor> forSaving = this.getTaskDescriptors(p);
 				
 		for (TaskDescriptor td : forSaving) {
-			this.taskDescriptorService.taskDescriptorInstanciation(_projectId, td);
+			this.taskDescriptorService.taskDescriptorInstanciation(_project.getProject_id(), td);
 		}
 	}
 	
+	/**
+	 * 
+	 * @param _act
+	 * @return
+	 */
 	private List<TaskDescriptor> getTaskDescriptors(Activity _act) {
 		
 		// elements of collection getting
