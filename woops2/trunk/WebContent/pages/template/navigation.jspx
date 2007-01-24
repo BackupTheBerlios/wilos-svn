@@ -8,7 +8,6 @@
 
 	<!-- ComboBox -->
 	<!-- The projects combobox -->
-	<ice:outputText value="#{msgs['navigation.combobox.label']}" />
 	<ice:selectOneMenu value="#{TreeBean.projectId}">
 		<f:selectItems value="#{TreeBean.projects}" />
 	</ice:selectOneMenu>
