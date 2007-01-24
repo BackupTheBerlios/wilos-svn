@@ -20,7 +20,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.project.ProjectService;
-import wilos.business.services.role.RoleService;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
@@ -58,8 +57,6 @@ public class TreeBean {
 	
 	private Boolean loadCheckBox = false;
 	
-	private RoleService roleService;
-
 	// tree default model, used as a value for the tree component
 	private DefaultTreeModel model = null;
 
