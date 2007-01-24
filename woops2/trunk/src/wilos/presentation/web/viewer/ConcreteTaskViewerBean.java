@@ -1,4 +1,4 @@
-package wilos.presentation.web.task;
+package wilos.presentation.web.viewer;
 
 import javax.faces.event.ActionEvent;
 

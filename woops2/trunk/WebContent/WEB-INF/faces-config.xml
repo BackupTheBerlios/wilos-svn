@@ -173,21 +173,9 @@
 	</managed-bean>
 
 	<managed-bean>
-		<managed-bean-name>TaskViewerBean</managed-bean-name>
-		<managed-bean-class>
-			wilos.presentation.web.task.TaskViewerBean
-		</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-		<managed-property>
-			<property-name>taskDescriptorService</property-name>
-			<value>#{TaskDescriptorService}</value>
-		</managed-property>
-	</managed-bean>
-
-	<managed-bean>
 		<managed-bean-name>ConcreteTaskViewerBean</managed-bean-name>
 		<managed-bean-class>
-			wilos.presentation.web.task.ConcreteTaskViewerBean
+			wilos.presentation.web.viewer.ConcreteTaskViewerBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
@@ -199,7 +187,7 @@
 	<managed-bean>
 		<managed-bean-name>PhaseViewerBean</managed-bean-name>
 		<managed-bean-class>
-			wilos.presentation.web.task.PhaseViewerBean
+			wilos.presentation.web.viewer.PhaseViewerBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
@@ -211,7 +199,7 @@
 	<managed-bean>
 		<managed-bean-name>ActivityViewerBean</managed-bean-name>
 		<managed-bean-class>
-			wilos.presentation.web.task.ActivityViewerBean
+			wilos.presentation.web.viewer.ActivityViewerBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
@@ -223,7 +211,7 @@
 	<managed-bean>
 		<managed-bean-name>IterationViewerBean</managed-bean-name>
 		<managed-bean-class>
-			wilos.presentation.web.task.IterationViewerBean
+			wilos.presentation.web.viewer.IterationViewerBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
@@ -235,7 +223,7 @@
 	<managed-bean>
 		<managed-bean-name>ProjectViewerBean</managed-bean-name>
 		<managed-bean-class>
-			wilos.presentation.web.task.ProjectViewerBean
+			wilos.presentation.web.viewer.ProjectViewerBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>

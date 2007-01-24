@@ -1,4 +1,4 @@
-package wilos.presentation.web.task;
+package wilos.presentation.web.viewer;
 
 import wilos.business.services.project.ProjectService;
 import wilos.model.misc.project.Project;

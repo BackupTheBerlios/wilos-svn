@@ -1,4 +1,4 @@
-package wilos.presentation.web.task;
+package wilos.presentation.web.viewer;
 
 import wilos.business.services.spem2.iteration.IterationService;
 import wilos.model.spem2.iteration.Iteration;

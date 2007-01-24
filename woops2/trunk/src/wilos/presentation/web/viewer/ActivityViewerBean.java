@@ -1,4 +1,4 @@
-package wilos.presentation.web.task;
+package wilos.presentation.web.viewer;
 
 import wilos.business.services.spem2.activity.ActivityService;
 import wilos.model.spem2.activity.Activity;

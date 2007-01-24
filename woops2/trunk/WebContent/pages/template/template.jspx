@@ -90,13 +90,6 @@
                             <jsp:directive.include file="./pages/processManager/welcomeProcessManager.jspx" />
                         </f:subview>
                     </ice:panelGroup>
-                    
-                    <ice:panelGroup id="TaskViewer"
-						styleClass="contentIncludePanelGroup">
-						<f:subview id="TaskViewer_view">
-							<jsp:directive.include file="./pages/common/TaskViewer.jspx" />
-						</f:subview>
-					</ice:panelGroup>
 					
 					 <ice:panelGroup id="ConcreteTaskViewer"
 						styleClass="contentIncludePanelGroup">

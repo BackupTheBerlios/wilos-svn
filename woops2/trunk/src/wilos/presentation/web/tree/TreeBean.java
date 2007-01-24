@@ -20,12 +20,12 @@ import org.apache.commons.logging.LogFactory;
 import wilos.business.services.project.ProjectService;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.WilosUser;
-import wilos.presentation.web.task.ActivityViewerBean;
-import wilos.presentation.web.task.ConcreteTaskViewerBean;
-import wilos.presentation.web.task.IterationViewerBean;
-import wilos.presentation.web.task.PhaseViewerBean;
-import wilos.presentation.web.task.ProjectViewerBean;
 import wilos.presentation.web.template.MenuBean;
+import wilos.presentation.web.viewer.ActivityViewerBean;
+import wilos.presentation.web.viewer.ConcreteTaskViewerBean;
+import wilos.presentation.web.viewer.IterationViewerBean;
+import wilos.presentation.web.viewer.PhaseViewerBean;
+import wilos.presentation.web.viewer.ProjectViewerBean;
 
 /**
  * <p/> A basic backing bean for a ice:tree component. The only instance
@@ -132,7 +132,7 @@ public class TreeBean {
 		FacesContext context = FacesContext.getCurrentInstance();
 		MenuBean mb = (MenuBean) context.getApplication()
 		.getVariableResolver().resolveVariable(context,"menu");
-		
+		if (_objectId != null && _pageId != null){
 		if (_pageId.equals(WilosObjectNode.ACTIVITYNODE)){
 			ActivityViewerBean av = (ActivityViewerBean) context.getApplication()
 			.getVariableResolver().resolveVariable(context,"ActivityViewerBean");
@@ -176,6 +176,7 @@ public class TreeBean {
 		else {
 			// didnt found the node's class
 			new ClassNotFoundException("coulnd't found the node class");
+		}
 		}
 	}
 
