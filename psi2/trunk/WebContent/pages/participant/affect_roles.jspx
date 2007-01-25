@@ -152,13 +152,13 @@
 			</ice:panelTab> 
 			
 			<!-- Affectation d'un projet à un processus -->
-			<ice:panelTab id="panelTab_affect_project_process" label="TabRadio" imageDir="images">
+			<ice:panelTab id="panelTab_affect_project_process" label="#{msgs['component.tableparticipantProcessProject.tabTitle']}" imageDir="images">
 				<ice:panelGroup id="projectProcessPanelGroup" styleClass="contentIncludePanelGroup">
-					<ice:outputText styleClass="propertyLabel" value="Liste des process: "/><br />
+					<ice:outputText styleClass="propertyLabel" value="#{msgs['component.tableparticipantProcessProject.processList']}"/>
 					<ice:selectOneRadio value="#{ProjectBean.selectedProcessGuid}">
 						<f:selectItems value="#{ProjectBean.processNamesList}"/><br />
 					</ice:selectOneRadio>
-					<ice:commandButton value="Affecter" action="#{ProjectBean.saveProjectProcessAffectation}"/>
+					<ice:commandButton value="#{msgs['component.tableparticipantProcessProject.affectButton']}" action="#{ProjectBean.saveProjectProcessAffectation}"/>
 				</ice:panelGroup>
 			</ice:panelTab>
 
