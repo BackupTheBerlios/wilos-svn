@@ -209,7 +209,7 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 				if (object instanceof RoleDescriptor) {
 					this.setIcon(ImagesService.getImageIcon("images.iconRole"));
 				}
-				if (object instanceof ConcreteTaskDescriptor) {
+				else if (object instanceof ConcreteTaskDescriptor) {
 					this.setIcon(ImagesService.getImageIcon("images.iconTaskDescriptor"));
 
 					ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) object;
@@ -228,6 +228,9 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 					else if (ctd.getState() == Constantes.State.CREATED) {
 						this.setForeground(Color.black);
 					}					
+				}
+				else if (object instanceof Step) {
+					this.setIcon(ImagesService.getImageIcon("images.iconStep"));
 				}
 			}
 			

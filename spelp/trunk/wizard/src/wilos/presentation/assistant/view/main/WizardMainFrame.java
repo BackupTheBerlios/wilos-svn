@@ -61,7 +61,7 @@ public class WizardMainFrame extends JFrame {
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(420, 395);
+		this.setSize(420, 500);
 		this.setJMenuBar(getJJMenuBar());
 		//this.setContentPane(getJContentPane());
 		this.setContentPane(getMainPanel());
