@@ -1,9 +1,11 @@
 package wilos.presentation.assistant.view.htmlViewer;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -13,6 +15,7 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
@@ -22,6 +25,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -50,6 +54,10 @@ public class HTMLViewer extends JFrame {
 	private JPanel southPanel;
 	private JScrollPane guidesScrollPane;
 	
+	private Border getCommonBorder(String msg) {
+		return (BorderFactory.createTitledBorder(msg));
+	}
+	
 	private HTMLViewer(Point p) {
 		super(Bundle.getText("htmlViewer.title"));
 		this.setLayout(new BorderLayout());
@@ -59,7 +67,8 @@ public class HTMLViewer extends JFrame {
 		
 		JPanel northPanel = new JPanel() ;
 		northPanel.setLayout(new GridLayout(1,4,5,5));
-		northPanel.add(new JLabel(Bundle.getText("htmlViewer.element")));
+		//northPanel.add(new JLabel(Bundle.getText("htmlViewer.element")));
+		northPanel.setBorder(getCommonBorder(Bundle.getText("htmlViewer.element")));
 		this.myElementLabel = new JLabel() ;
 		northPanel.add(this.myElementLabel);
 		
@@ -88,12 +97,13 @@ public class HTMLViewer extends JFrame {
 		this.myEditorPane.setFocusable(false);
 		
 		this.myScrollPane = new JScrollPane(this.myEditorPane);
+		this.myScrollPane.setBorder(getCommonBorder("Description :"));
 		
 		this.southPanel = new JPanel() ;
 		this.southPanel.setLayout(new GridLayout());
 		this.southPanel.setVisible(true);
-		this.southPanel.add(new JLabel(Bundle.getText("htmlViewer.guidelines")));
-		
+		//this.southPanel.add(new JLabel(Bundle.getText("htmlViewer.guidelines")));
+		this.southPanel.setBorder(getCommonBorder(Bundle.getText("htmlViewer.guidelines")));
 		
 		guidesList = new JList();
 		guidesList.setVisible(false);
