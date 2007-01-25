@@ -334,6 +334,7 @@
 		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
 		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
 		<property name="taskDescriptorService" ref="TaskDescriptorService" />
+		<property name="roleDescriptorService" ref="RoleDescriptorService" />
 		
 	</bean>
 	
