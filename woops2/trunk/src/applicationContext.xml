@@ -233,7 +233,7 @@
 		<property name="participantDao" ref="ParticipantDao" />
 		<property name="concreteTaskDescriptorService" ref="ConcreteTaskDescriptorService" />
 	</bean>
-		
+	
 	<bean id="GuidelineService"
 		class="wilos.business.services.guide.GuidelineService">
 		<property name="guidelineDao" ref="GuidelineDao" />
