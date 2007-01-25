@@ -333,6 +333,8 @@
 		<property name="concreteTaskDescriptorDao" ref="ConcreteTaskDescriptorDao" />
 		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
 		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
+		<property name="taskDescriptorService" ref="TaskDescriptorService" />
+		
 	</bean>
 	
 	<bean id="PhaseService"
