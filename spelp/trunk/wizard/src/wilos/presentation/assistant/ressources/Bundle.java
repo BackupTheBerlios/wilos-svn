@@ -1,5 +1,6 @@
 package wilos.presentation.assistant.ressources;
 
+import java.io.File;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -7,7 +8,7 @@ import java.util.ResourceBundle;
 
 public class Bundle {
 
-	static private final String BASENAME = "wilos/presentation/assistant/ressources/label";
+	static private final String BASENAME = "wilos" + File.separatorChar  + "presentation" + File.separatorChar + "assistant" + File.separatorChar + "ressources" + File.separatorChar + "label";
 	static private ResourceBundle bundle = ResourceBundle.getBundle(Bundle.BASENAME, Locale.getDefault());
 	
 	
