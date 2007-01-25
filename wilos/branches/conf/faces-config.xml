@@ -21,7 +21,10 @@
 		<locale-config />
 	</application>
 
-	<!-- Beans -->
+
+	<!-- =============================================================== -->
+	<!-- ========================= PSI2 Beans ========================== -->
+	<!-- =============================================================== -->
 	<managed-bean>
 		<managed-bean-name>LoginBean</managed-bean-name>
 		<managed-bean-class>
@@ -110,7 +113,9 @@
 		</managed-property>
 	</managed-bean>
 
-	<!-- Managed Bean for menu interaction -->
+	<!-- =============================================================== -->
+	<!-- ========================= PSI2 Bean =========================== -->
+	<!-- ======================== Navigation =========================== -->
 	<managed-bean>
 		<managed-bean-name>menu</managed-bean-name>
 		<managed-bean-class>
@@ -127,7 +132,9 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
-	<!-- Managed Bean for connection view management -->
+	<!-- =============================================================== -->
+	<!-- ========================= PSI2 Bean =========================== -->
+	<!-- ======================== Connection =========================== -->
 	<managed-bean>
 		<managed-bean-name>connect</managed-bean-name>
 		<managed-bean-class>
@@ -136,7 +143,10 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
-	<!-- Woops2 -->
+	
+	<!-- =============================================================== -->
+	<!-- ======================== WOOPS2 Beans ========================= -->
+	<!-- =============================================================== -->
 	<managed-bean>
 		<managed-bean-name>XmlFileImportBean</managed-bean-name>
 		<managed-bean-class>
@@ -244,6 +254,10 @@
 		</managed-property>
 	</managed-bean>
 
+
+	<!-- =============================================================== -->
+	<!-- =========================== Reload ============================ -->
+	<!-- =============================================================== -->
 	<navigation-rule>
 		<description>Theme Reload</description>
 		<navigation-case>
@@ -253,7 +267,9 @@
 		</navigation-case>
 	</navigation-rule>
 
-
+	<!-- =============================================================== -->
+	<!-- ====================== Navigation Rules ======================= -->
+	<!-- =============================================================== -->
 	<navigation-rule>
 		<description>Custom Pgae for Wilos</description>
 
