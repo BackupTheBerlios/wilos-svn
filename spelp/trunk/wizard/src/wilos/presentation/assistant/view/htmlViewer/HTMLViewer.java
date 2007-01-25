@@ -2,6 +2,7 @@ package wilos.presentation.assistant.view.htmlViewer;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -31,7 +32,9 @@ import wilos.presentation.assistant.ressources.Bundle;
 
 public class HTMLViewer extends JFrame {
 	private static HTMLViewer instance = null;
-	private String HTMLCode; // Le code HTML affiché
+	private String HTMLCode; // Le code HTML affich
+	
+	private JList guidesList = null  ;
 	
 	private JScrollPane myScrollPane;
 	private JEditorPane myEditorPane;
@@ -91,6 +94,14 @@ public class HTMLViewer extends JFrame {
 		
 		this.guidesScrollPane = new JScrollPane();
 		this.southPanel.add(this.guidesScrollPane);
+		this.guidesScrollPane.setVisible(true);
+		this.guidesScrollPane.setViewportView(guidesList);
+		guidesList = new JList();
+		guidesList.setVisible(false);
+		guidesList.setAutoscrolls(true);
+		guidesList.setPreferredSize(new Dimension(100,25));
+		
+		//this.southPanel.add(guidesList);
 		
 		this.getContentPane().add(northPanel, BorderLayout.NORTH);
 		this.getContentPane().add(this.myScrollPane, BorderLayout.CENTER);
@@ -98,7 +109,7 @@ public class HTMLViewer extends JFrame {
 	}
 	
 	/**
-	 * Modifie le texte affiché par le HTMLViewer
+	 * Modifie le texte affich par le HTMLViewer
 	 * @deprecated
 	 * @param message
 	 */
@@ -126,10 +137,10 @@ public class HTMLViewer extends JFrame {
 		if(description.length() != 0)
 			this.myEditorPane.setCaretPosition(1); // revient au debut du texte
 		
-		if(e instanceof Guideline)
-			this.southPanel.setVisible(false);
-		else
-			this.southPanel.setVisible(true);
+//		if(e instanceof Guideline)
+//			this.southPanel.setVisible(false);
+//		else
+//			this.southPanel.setVisible(true);
 		
 		this.setVisible(true);
 		
@@ -175,7 +186,7 @@ public class HTMLViewer extends JFrame {
 		Vector<Guideline> vectGuides = new Vector<Guideline>();
 		vectGuides.addAll(guides);
 		
-		JList guidesList = new JList(vectGuides);
+		guidesList.setListData(vectGuides);
 		guidesList.setVisibleRowCount(2);
 		guidesList.setCellRenderer(new GuidesRenderer());
 		guidesList.addListSelectionListener(new ListSelectionListener() {
@@ -187,8 +198,8 @@ public class HTMLViewer extends JFrame {
 			}
 		});
 		guidesList.setVisible(true);
-		this.guidesScrollPane.add(guidesList);
-		this.guidesScrollPane.setVisible(true);
+		//this.guidesScrollPane.add(guidesList);
+		//this.guidesScrollPane.setVisible(true);
 	}
 	
 	private class GuidesRenderer extends DefaultListCellRenderer {
