@@ -116,10 +116,10 @@ public class ProjectBean {
 	 */
 	public String saveProjectProcessAffectation(){
 		//TODO: A tester.
-		//TODO: recup le projet de la cession
 		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
 		HttpSession sess = req.getSession() ;
 		String tmpProjId = (String)sess.getAttribute("projectId");
+		//tmpProjId = "2c90a1b2104ad70601104ad906f90001";//debug
 		if(tmpProjId!=null){		
 			Project projTmp = projectService.getProject(tmpProjId);
 			this.logger.debug("Project a affecter au process: "+projTmp) ;
@@ -282,7 +282,8 @@ public class ProjectBean {
 		HttpSession sess = req.getSession() ;
 		String tmpProjId = (String)sess.getAttribute("projectId");
 		this.logger.debug("Process selectionne avt get: "+this.selectedProcessGuid) ;
-		this.logger.debug("Projet selectionne: "+tmpProjId) ;
+		this.logger.debug("Id du Projet selectionne: "+tmpProjId) ;
+		//tmpProjId = "2c90a1b2104ad70601104ad906f90001";//debug
 		if(tmpProjId!=null){
 			Project projTmp = projectService.getProject(tmpProjId) ;
 			this.logger.debug("Project recupere de la cession: "+projTmp) ;
