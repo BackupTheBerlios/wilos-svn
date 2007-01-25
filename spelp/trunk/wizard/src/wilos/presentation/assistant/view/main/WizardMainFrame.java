@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import java.awt.Dimension;
+
+import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
 import javax.swing.JButton;
 import javax.swing.JMenuBar;
@@ -90,7 +92,8 @@ public class WizardMainFrame extends JFrame {
 		//this.setContentPane(getJContentPane());
 		this.setContentPane(getMainPanel());
 		this.setTitle(Bundle.getText("mainFrame.title"));
-		WizardStateMachine.getInstance().initUIElements(actionToolBar,jTree);
+		ContextualMenu menu = new ContextualMenu();
+		WizardStateMachine.getInstance().initUIElements(actionToolBar,jTree,menu);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.addComponentListener(new ComponentListener(){
 	   		public void componentHidden(ComponentEvent e) {

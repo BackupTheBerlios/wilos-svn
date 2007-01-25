@@ -2,17 +2,25 @@ package wilos.presentation.assistant.view.panels;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.util.Iterator;
+import java.awt.Event;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Set;
 
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.KeyStroke;
+import javax.swing.LookAndFeel;
 import javax.swing.ScrollPaneLayout;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 
 import org.jdesktop.swingx.JXTree;
 
@@ -23,7 +31,6 @@ import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.ressources.ImagesService;
-import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 import wilos.utils.Constantes;
 
 public class TreePanel extends JScrollPane implements TreeSelectionListener {
@@ -42,7 +49,44 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 		t.setCellRenderer(new WizardTreeRenderer());
 		this.setViewportView(t);
 		tree.addTreeSelectionListener(this); 
-		
+		tree.addMouseListener(new MouseListener(){
+
+			public void mouseClicked(MouseEvent arg0) {
+				
+				
+			}
+
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			public void mouseReleased(MouseEvent arg0) {
+//				if (arg0.getButton() == MouseEvent.BUTTON3){
+//					TreePath path = TreePanel.this.tree.getPathForLocation(arg0.getX(), arg0.getY()); 
+//					if (path != null) { 
+//							if (path.getLastPathComponent() == TreePanel.this.tree.getLastSelectedPathComponent()){
+//								System.out.println(path.getLastPathComponent());
+//								//WizardStateMachine.getInstance().setFocusedObject(path.getLastPathComponent());
+//								WizardStateMachine.getInstance().getMenuContextuel().show(arg0.getComponent(),arg0.getX(),arg0.getY());
+//							}
+//					}
+//					
+//				}
+				
+			}
+			
+		});
 		//DefaultTreeCellRenderer df;
 		//df.getTreeCellRendererComponent(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
 	}
