@@ -61,7 +61,7 @@ public class ServersListParser {
 							}*/
 						}
 						
-						WizardServer ws = new WizardServer (al, add);
+						WizardServer ws = new WizardServer (al, add,id);
 												
 						serversList.add(ws);		
 					}	
