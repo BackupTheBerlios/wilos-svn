@@ -1,0 +1,5 @@
+<ice:form id="participant_actions_form">
+	<ice:panelGrid columns="1">			
+		<ice:commandLink immediate="true" type="submit" value="participant" action=""/>
+	</ice:panelGrid>		
+</ice:form>
