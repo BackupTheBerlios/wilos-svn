@@ -17,7 +17,10 @@ public class WizardStateMachine {
 	private final int STATE_TASK_CREATED = 4;
 	private final int STATE_TASK_SUSPENDED = 5;
 	private final int STATE_TASK_FINISHED = 6;
+	
 	private int currentState;
+	private boolean showInfo;
+	private ConcreteTaskDescriptor lastCtd;
 	
 	private static WizardStateMachine wsm = null;
 	
@@ -37,12 +40,12 @@ public class WizardStateMachine {
 		return treePanel;
 	}
 
-	public void initUIElements(ActionBar theActionToolBar,TreePanel theTreePanel,ContextualMenu menu) {
+	public void initUIElements(ActionBar theActionToolBar,TreePanel theTreePanel, ContextualMenu menu) {
 		actionToolBar = theActionToolBar;
 		treePanel = theTreePanel;
 		menuContextuel = menu ;
 		updateState(STATE_NOTHING);
-		
+		showInfo = true;
 	}
 	
 	public static WizardStateMachine getInstance() {
@@ -92,7 +95,9 @@ public class WizardStateMachine {
 				updateState(this.STATE_NOTHING);
 			}
 
-			if (actionToolBar.getJCheckBoxShowViewer().isSelected()){
+			lastCtd = ctd;
+			
+			if (showInfo){
 				HTMLViewer.getInstance(null).setConcreteTaskDescriptor(ctd);
 			}
 			
@@ -135,5 +140,16 @@ public class WizardStateMachine {
 			break;
 		}
 		
+	}
+	
+	public void changeHTMLViewerBehavior(boolean newBehavior) {
+		showInfo = newBehavior;
+		if (showInfo){
+			HTMLViewer.getInstance(null).setConcreteTaskDescriptor(lastCtd);
+		}
+		else {
+			HTMLViewer.getInstance(null).setVisible(false);
+		}
+		actionToolBar.setJCheckBoxShowViewerEnabled(newBehavior);
 	}
 }

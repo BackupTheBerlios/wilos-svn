@@ -93,7 +93,7 @@ public class MainFrame extends JFrame{
 	}
 	
 	public MainFrame () {
-		super(Bundle.getText("mainFrame.title"));
+		super(Bundle.getText("mainFrame.connectionTitle"));
 		this.setLayout(new BorderLayout());
 		this.setSize(Toolkit.getDefaultToolkit().getScreenSize().width/4, Toolkit.getDefaultToolkit().getScreenSize().height/3);
 		this.setLocation(0,0);

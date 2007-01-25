@@ -32,6 +32,7 @@ public class ActionBar extends JToolBar {
 	private JButton jButtonPauseTask = null;
 	private JButton jButtonFinished = null;
 	private JButton jButtonPlayTask = null;
+	private JButton jButtonRefresh = null;
 	private JCheckBox jCheckBoxShowViewer;
 	
 	
@@ -39,7 +40,6 @@ public class ActionBar extends JToolBar {
 	public ActionBar(){
 		super ();
 		this.setLayout(new FlowLayout());
-		//this.setLayout(new GridBagLayout());
 		runButton = createButton(null,
 				Bundle.getText("ActionBar.tooltip.run"), 
 				ImagesService.getImageIcon("images.run"));
@@ -47,6 +47,10 @@ public class ActionBar extends JToolBar {
 		this.add(getJButtonPlayTask());
 		this.add(getJButtonPauseTask());
 		this.add(getJButtonFinished());
+		this.addSeparator();
+		this.addSeparator();
+		this.add(getJButtonRefresh());
+		this.addSeparator();
 		this.addSeparator();
 		this.add(getJCheckBoxShowViewer());
 		this.setFloatable(false);
@@ -60,6 +64,7 @@ public class ActionBar extends JToolBar {
 					if(dmt != null) {
 						ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
 						if(selectedTask.getId() != null) {
+							WizardStateMachine.getInstance().changeHTMLViewerBehavior(true);
 							WizardControler.getInstance().startConcreteTaskDescriptor(selectedTask);
 						}
 					}
@@ -103,10 +108,15 @@ public class ActionBar extends JToolBar {
 	
 	public JCheckBox getJCheckBoxShowViewer() {
 		if (jCheckBoxShowViewer == null) {
-			jCheckBoxShowViewer = new JCheckBox("Afficher Informations");
+			jCheckBoxShowViewer = new JCheckBox("Informations");
 			jCheckBoxShowViewer.setSize(100, 100);
 			jCheckBoxShowViewer.setSelected(true);
-			//jCheckBoxShowViewer.setIcon(ImagesService.getImageIcon("images.iconPlay"));
+			jCheckBoxShowViewer.addActionListener(new ActionListener() {
+
+				public void actionPerformed(ActionEvent e) {
+					WizardStateMachine.getInstance().changeHTMLViewerBehavior(jCheckBoxShowViewer.isSelected());
+				}
+		});
 		}
 		return jCheckBoxShowViewer;
 	}
@@ -122,6 +132,14 @@ public class ActionBar extends JToolBar {
 			jButtonPauseTask.setIcon(ImagesService.getImageIcon("images.iconPause"));
 		}
 		return jButtonPauseTask;
+	}
+	
+	private JButton getJButtonRefresh() {
+		if (jButtonRefresh == null) {
+			jButtonRefresh = new JButton();
+			jButtonRefresh.setIcon(ImagesService.getImageIcon("images.iconRefresh"));
+		}
+		return jButtonRefresh;
 	}
 
 	/**
@@ -178,4 +196,7 @@ public class ActionBar extends JToolBar {
 		}
 	}
 
+	public void setJCheckBoxShowViewerEnabled(boolean value) {
+		jCheckBoxShowViewer.setSelected(value);
+	}
 }

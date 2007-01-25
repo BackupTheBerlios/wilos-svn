@@ -200,19 +200,7 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 		public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected,
 				boolean expanded, boolean leaf, int row, boolean hasFocus) {
 			super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
-			//System.out.println(value.getClass().getSimpleName());
-			//System.out.println((DefaultMutableTreeNode) value.);
-			//System.out.println(selected);
-//			DefaultMutableTreeNode tn = (DefaultMutableTreeNode) value;
-//			JLabel label = new JLabel(tn.toString());
-//			if (value.toString().startsWith("b")){
-//				this.setForeground(Color.yellow);
-//			}
-//			if (value.toString().startsWith("v")){
-//				this.setIcon(ImagesService.getImageIcon("images.iconPlay"));
-//			}
-//			return label;
-
+			
 			if (value.getClass().getSimpleName().equals("DefaultMutableTreeNode")) {
 				this.setIcon(ImagesService.getImageIcon("images.iconParticipant"));
 			}
@@ -241,17 +229,10 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 						this.setForeground(Color.black);
 					}					
 				}
-//				if (selected) {
-//					HTMLViewer.getInstance(p)
-//				}
 			}
 			
 			return this;
 		}
-		/*
-		public Color getTextNonSelectionColor() {
-			return Color.yellow;
-		}*/
 	}
 
 	public void setParticipant(Participant participant) {
@@ -260,18 +241,9 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 	}
 
 	public void valueChanged(TreeSelectionEvent e) {
-//		if (tree.getLastSelectedPathComponent() instanceof WizardMutableTreeNode) {
-//			Element element = ((WizardMutableTreeNode) tree.getLastSelectedPathComponent()).getUserObject();
-//			WizardStateMachine.getInstance().setFocusedObject(element);
-//		}
-//		else {
 		if (tree.getLastSelectedPathComponent() != null) {
 			Object objet = ((DefaultMutableTreeNode) tree.getLastSelectedPathComponent()).getUserObject();
 			WizardStateMachine.getInstance().setFocusedObject(objet);
 		}
-		else {
-			System.out.println("ERREUR : TreePanel.ValueChanged (enlever ce message quand pb resolu)");
-		}
-//		}
 	}
 }
