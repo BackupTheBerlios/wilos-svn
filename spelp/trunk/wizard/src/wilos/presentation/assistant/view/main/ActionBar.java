@@ -101,10 +101,11 @@ public class ActionBar extends JToolBar {
 		return jButtonPlayTask;
 	}
 	
-	private JCheckBox getJCheckBoxShowViewer() {
+	public JCheckBox getJCheckBoxShowViewer() {
 		if (jCheckBoxShowViewer == null) {
 			jCheckBoxShowViewer = new JCheckBox("Afficher Informations");
 			jCheckBoxShowViewer.setSize(100, 100);
+			jCheckBoxShowViewer.setSelected(true);
 			//jCheckBoxShowViewer.setIcon(ImagesService.getImageIcon("images.iconPlay"));
 		}
 		return jCheckBoxShowViewer;

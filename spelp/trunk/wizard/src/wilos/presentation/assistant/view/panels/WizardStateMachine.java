@@ -83,7 +83,10 @@ public class WizardStateMachine {
 				updateState(this.STATE_NOTHING);
 			}
 
-			HTMLViewer.getInstance(null).setConcreteTaskDescriptor(ctd);
+			if (actionToolBar.getJCheckBoxShowViewer().isSelected()){
+				HTMLViewer.getInstance(null).setConcreteTaskDescriptor(ctd);
+			}
+			
 		}
 		else {
 			updateState(this.STATE_NOTHING);
