@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -92,15 +93,15 @@ public class HTMLViewer extends JFrame {
 		this.southPanel.setLayout(new GridLayout());
 		this.southPanel.add(new JLabel(Bundle.getText("htmlViewer.guidelines")));
 		
-		this.guidesScrollPane = new JScrollPane();
-		this.southPanel.add(this.guidesScrollPane);
-		this.guidesScrollPane.setVisible(true);
-		this.guidesScrollPane.setViewportView(guidesList);
+		
 		guidesList = new JList();
 		guidesList.setVisible(false);
-		guidesList.setAutoscrolls(true);
-		guidesList.setPreferredSize(new Dimension(100,25));
-		
+		//guidesList.setAutoscrolls(true);
+		guidesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		//guidesList.setPreferredSize(new Dimension(25,25));
+		this.guidesScrollPane = new JScrollPane(guidesList);
+		this.southPanel.add(this.guidesScrollPane);
+		this.guidesScrollPane.setVisible(true);
 		//this.southPanel.add(guidesList);
 		
 		this.getContentPane().add(northPanel, BorderLayout.NORTH);
@@ -198,8 +199,6 @@ public class HTMLViewer extends JFrame {
 			}
 		});
 		guidesList.setVisible(true);
-		//this.guidesScrollPane.add(guidesList);
-		//this.guidesScrollPane.setVisible(true);
 	}
 	
 	private class GuidesRenderer extends DefaultListCellRenderer {

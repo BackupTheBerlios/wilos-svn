@@ -15,21 +15,28 @@ import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 import javax.swing.JTree;
 
 import org.jdesktop.swingx.JXTree;
 
 import wilos.model.misc.wilosuser.Participant;
+import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
+import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 import wilos.presentation.assistant.view.panels.InfoPanel;
 import wilos.presentation.assistant.view.panels.TreePanel;
 import wilos.presentation.assistant.view.panels.WizardStateMachine;
 
 public class WizardMainFrame extends JFrame {
 
+	
+	
 	private static final long serialVersionUID = 1L;
 
 	private JPanel jContentPane = null;
@@ -82,9 +89,33 @@ public class WizardMainFrame extends JFrame {
 		this.setJMenuBar(getJJMenuBar());
 		//this.setContentPane(getJContentPane());
 		this.setContentPane(getMainPanel());
-		this.setTitle("JFrame");
+		this.setTitle(Bundle.getText("mainFrame.title"));
 		WizardStateMachine.getInstance().initUIElements(actionToolBar,jTree);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.addComponentListener(new ComponentListener(){
+	   		public void componentHidden(ComponentEvent e) {
+			// TODO Auto-generated method stub	
+			}
+			public void componentMoved(ComponentEvent e) {
+				moveHTML();
+			}
+			public void componentResized(ComponentEvent e) {
+				moveHTML() ;		
+			}
+			public void componentShown(ComponentEvent e) {
+				// TODO Auto-generated method stub	
+			}
+		 });
+	}
+	
+	
+	public Point getHTMLLocation(){
+		return new Point(this.getLocation().x+this.getWidth(),this.getLocation().y);
+	}
+	
+	public void moveHTML(){
+		Point p = getHTMLLocation();
+		HTMLViewer.getInstance(p);
 	}
 	
 	private JPanel getMainPanel(){
@@ -197,7 +228,12 @@ public class WizardMainFrame extends JFrame {
 	private JMenuItem getJMenuItemQuit() {
 		if (jMenuItemQuit == null) {
 			jMenuItemQuit = new JMenuItem();
-			jMenuItemQuit.setText("Quitter");
+			jMenuItemQuit.setText(Bundle.getText("mainFrame.exit"));
+			jMenuItemQuit.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent arg0) {
+					System.exit(0);
+				}
+			});
 		}
 		return jMenuItemQuit;
 	}
