@@ -7,7 +7,7 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 
 public class ImagesService {
-	private final static String path = "wilos" + File.separatorChar + "presentation" + File.separatorChar + "assistant" + File.separatorChar + "ressources" + File.separatorChar + "images"  + File.separatorChar  ;
+	private final static String path = "wilos/presentation/assistant/ressources/images/"  ;
 	
 	public static ImageIcon getImageIcon (String key){
 		ImageIcon img ; 
