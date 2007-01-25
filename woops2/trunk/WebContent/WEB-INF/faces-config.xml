@@ -92,6 +92,10 @@
 			<property-name>projectService</property-name>
 			<value>#{ProjectService}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>processService</property-name>
+			<value>#{ProcessService}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -179,7 +183,7 @@
 			<value>#{RoleService}</value>
 		</managed-property>
 	</managed-bean>
-
+	
 	<managed-bean>
 		<managed-bean-name>ConcreteTaskViewerBean</managed-bean-name>
 		<managed-bean-class>
