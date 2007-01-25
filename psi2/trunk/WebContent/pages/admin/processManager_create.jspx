@@ -75,7 +75,7 @@
 			</ice:panelTab>		
 			<ice:panelTab id="panelTab_participant_list" label="#{msgs['component.participantlist.title']}" imageDir="images">
 				<ice:panelGroup id="participantPanelGroup" styleClass="contentIncludePanelGroup">
-					<ice:dataTable value="#{ParticipantBean.participantsList}" border="1" var="participant">
+					<ice:dataTable value="#{ParticipantBean.participantsList}" columnWidths="100px,100px,100px,100px" border="1" var="participant">
 						<ice:column>
 							<f:facet name="header">
 						    	<ice:outputText value="#{msgs['component.participantlist.column1']}"/>
@@ -106,7 +106,7 @@
 			
 			<ice:panelTab id="panelTab_process_managers_list" label="Liste des process managers" imageDir="images">
 				<ice:panelGroup id="processManagerPanelGroup" styleClass="contentIncludePanelGroup">
-					<ice:dataTable value="#{ProcessManagerBean.processManagerList}" border="1" var="processManager">
+					<ice:dataTable value="#{ProcessManagerBean.processManagerList}" columnWidths="100px,100px,100px" border="1" var="processManager">
 						<ice:column>
 							<f:facet name="header">
 						    	<ice:outputText value="Login"/>
@@ -131,7 +131,7 @@
 			
 			<ice:panelTab id="panelTab_project_directors_list" label="Liste des project directors" imageDir="images">
 				<ice:panelGroup id="projectDirectorsPanelGroup" styleClass="contentIncludePanelGroup">
-					<ice:dataTable value="#{ProjectDirectorBean.projectDirectorList}" border="1" var="projectDirector">
+					<ice:dataTable value="#{ProjectDirectorBean.projectDirectorList}" columnWidths="100px,100px,100px" border="1" var="projectDirector">
 						<ice:column>
 							<f:facet name="header">
 						    	<ice:outputText value="Login"/>
