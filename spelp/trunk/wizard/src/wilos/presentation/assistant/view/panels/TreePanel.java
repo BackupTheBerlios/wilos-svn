@@ -20,6 +20,7 @@ import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.element.Element;
 import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.ressources.ImagesService;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
@@ -96,8 +97,14 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 					for (ConcreteTaskDescriptor ctd : td.getConcreteTaskDescriptors()) {
 						WizardMutableTreeNode ctdWmt = new WizardMutableTreeNode(ctd);
 						rdWmt.add(ctdWmt);
+						
+						if (td.getTaskDefinition() != null) {
+							for (Step s : td.getTaskDefinition().getSteps()) {
+								WizardMutableTreeNode sWmt = new WizardMutableTreeNode(s);
+								ctdWmt.add(sWmt);
+							}
+						}
 					}
-					
 				}
 				//((DefaultMutableTreeNode) this.root).add(new DefaultMutableTreeNode(rd.getName()));
 			}

@@ -1,11 +1,14 @@
 package wilos.presentation.assistant.view.main;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JToolBar;
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -29,12 +32,14 @@ public class ActionBar extends JToolBar {
 	private JButton jButtonPauseTask = null;
 	private JButton jButtonFinished = null;
 	private JButton jButtonPlayTask = null;
+	private JCheckBox jCheckBoxShowViewer;
 	
 	
 	
 	public ActionBar(){
 		super ();
 		this.setLayout(new FlowLayout());
+		//this.setLayout(new GridBagLayout());
 		runButton = createButton(null,
 				Bundle.getText("ActionBar.tooltip.run"), 
 				ImagesService.getImageIcon("images.run"));
@@ -42,6 +47,10 @@ public class ActionBar extends JToolBar {
 		this.add(getJButtonPlayTask());
 		this.add(getJButtonPauseTask());
 		this.add(getJButtonFinished());
+		this.addSeparator();
+		this.add(getJCheckBoxShowViewer());
+		this.setFloatable(false);
+		//this.setBounds(0, 0, 150, 300);
 		this.jButtonPlayTask.addActionListener(
 			new ActionListener() {
 
@@ -90,6 +99,15 @@ public class ActionBar extends JToolBar {
 			jButtonPlayTask.setIcon(ImagesService.getImageIcon("images.iconPlay"));
 		}
 		return jButtonPlayTask;
+	}
+	
+	private JCheckBox getJCheckBoxShowViewer() {
+		if (jCheckBoxShowViewer == null) {
+			jCheckBoxShowViewer = new JCheckBox("Afficher Informations");
+			jCheckBoxShowViewer.setSize(100, 100);
+			//jCheckBoxShowViewer.setIcon(ImagesService.getImageIcon("images.iconPlay"));
+		}
+		return jCheckBoxShowViewer;
 	}
 	
 	/**

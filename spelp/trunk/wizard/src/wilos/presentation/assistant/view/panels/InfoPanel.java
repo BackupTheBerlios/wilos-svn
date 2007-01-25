@@ -33,6 +33,7 @@ public class InfoPanel extends JXPanel {
 			tasks.setExpanded(false);
 			editor = new JLabel(Bundle.getText("infoPanel.no_informations"));
 			tasks.add(editor);
+			//tasks.add(new JLabel("essai2"));
 			
 		}
 		return tasks ;

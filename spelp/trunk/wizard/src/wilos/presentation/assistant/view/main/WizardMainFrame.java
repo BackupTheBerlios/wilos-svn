@@ -24,6 +24,7 @@ import org.jdesktop.swingx.JXTree;
 
 import wilos.model.misc.wilosuser.Participant;
 import wilos.presentation.assistant.ressources.ImagesService;
+import wilos.presentation.assistant.view.panels.InfoPanel;
 import wilos.presentation.assistant.view.panels.TreePanel;
 import wilos.presentation.assistant.view.panels.WizardStateMachine;
 
@@ -89,7 +90,7 @@ public class WizardMainFrame extends JFrame {
 	private JPanel getMainPanel(){
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
-		panel.add(getJToolBar(),BorderLayout.WEST);
+		panel.add(getJToolBar(),BorderLayout.NORTH);
 		//panel.add(getJContentPane(),BorderLayout.CENTER);
 		panel.add(getJPanel(),BorderLayout.CENTER);
 		return panel ;
@@ -307,21 +308,51 @@ public class WizardMainFrame extends JFrame {
 	 */
 	private JPanel getJPanel() {
 		if (jPanel == null) {
-			GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
-			gridBagConstraints1.gridx = 0;
-			gridBagConstraints1.gridy = 1;
-			GridBagConstraints gridBagConstraints = new GridBagConstraints();
-			gridBagConstraints.fill = GridBagConstraints.BOTH;
-			gridBagConstraints.gridy = 0;
-			gridBagConstraints.weightx = 1.0;
-			gridBagConstraints.weighty = 1.0;
-			gridBagConstraints.anchor = GridBagConstraints.EAST;
-			gridBagConstraints.gridwidth = 1;
-			gridBagConstraints.gridx = 0;
+//			GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
+//			gridBagConstraints1.gridx = 0;
+//			gridBagConstraints1.gridy = 1;
+//			GridBagConstraints gridBagConstraints = new GridBagConstraints();
+//			gridBagConstraints.fill = GridBagConstraints.BOTH;
+//			gridBagConstraints.gridy = 0;
+//			gridBagConstraints.weightx = 1.0;
+//			gridBagConstraints.weighty = 1.0;
+//			gridBagConstraints.anchor = GridBagConstraints.EAST;
+//			gridBagConstraints.gridwidth = 1;
+//			gridBagConstraints.gridx = 0;
+//			jPanel = new JPanel();
+//			jPanel.setLayout(new GridBagLayout());
+			
+			
+//			jPanel.add(getJTree(), gridBagConstraints);
+//			jPanel.add(getJButton(), gridBagConstraints1);
+			
+			
+			
+			
 			jPanel = new JPanel();
-			jPanel.setLayout(new GridBagLayout());
-			jPanel.add(getJTree(), gridBagConstraints);
-			jPanel.add(getJButton(), gridBagConstraints1);
+			
+			
+			jPanel.setLayout(new BorderLayout());
+//			jPanel.setLayout(new GridBagLayout());
+//			GridBagConstraints c = new GridBagConstraints();
+//			c.gridx = 0;
+//			c.gridy = 0;
+//			c.ipady = 100;
+//			c.weighty = 1.0; 
+//			c.weightx = 1.0; 
+//			
+//			jPanel.add(getJTree(), c);
+//			
+//			c.gridx = 0;
+//			c.gridy = 0;
+//			c.ipady = 0;
+//			jPanel.add(new InfoPanel(), c);
+			
+			jPanel.add(getJTree(), BorderLayout.NORTH);
+//			jPanel.add(getJButton(), BorderLayout.SOUTH);
+//			jPanel.add(getJButton(), BorderLayout.NORTH);
+			jPanel.add(new InfoPanel(), BorderLayout.SOUTH);
+			
 		}
 		return jPanel;
 	}
