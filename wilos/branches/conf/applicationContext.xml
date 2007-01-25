@@ -233,7 +233,7 @@
 		<property name="participantDao" ref="ParticipantDao" />
 		<property name="concreteTaskDescriptorService" ref="ConcreteTaskDescriptorService" />
 	</bean>
-		
+	
 	<bean id="GuidelineService"
 		class="wilos.business.services.guide.GuidelineService">
 		<property name="guidelineDao" ref="GuidelineDao" />
@@ -333,7 +333,6 @@
 		<property name="concreteTaskDescriptorDao" ref="ConcreteTaskDescriptorDao" />
 		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
 		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
-		
 	</bean>
 	
 	<bean id="PhaseService"
