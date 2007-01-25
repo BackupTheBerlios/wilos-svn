@@ -7,6 +7,7 @@ import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 import wilos.presentation.assistant.view.main.ActionBar;
 import wilos.presentation.assistant.view.main.ContextualMenu;
+import wilos.presentation.assistant.webservices.WizardServicesProxy;
 import wilos.utils.Constantes;
 
 public class WizardStateMachine {
@@ -151,5 +152,9 @@ public class WizardStateMachine {
 			HTMLViewer.getInstance(null).setVisible(false);
 		}
 		actionToolBar.setJCheckBoxShowViewerEnabled(newBehavior);
+	}
+
+	public void refreshParticipant() {
+		treePanel.setParticipant(WizardServicesProxy.getParticipant());		
 	}
 }

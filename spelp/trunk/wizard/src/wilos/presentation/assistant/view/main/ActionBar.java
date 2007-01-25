@@ -66,6 +66,7 @@ public class ActionBar extends JToolBar {
 						if(selectedTask.getId() != null) {
 							WizardStateMachine.getInstance().changeHTMLViewerBehavior(true);
 							WizardControler.getInstance().startConcreteTaskDescriptor(selectedTask);
+							WizardStateMachine.getInstance().refreshParticipant();
 						}
 					}
 					
@@ -138,6 +139,11 @@ public class ActionBar extends JToolBar {
 		if (jButtonRefresh == null) {
 			jButtonRefresh = new JButton();
 			jButtonRefresh.setIcon(ImagesService.getImageIcon("images.iconRefresh"));
+			jButtonRefresh.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					WizardStateMachine.getInstance().refreshParticipant();
+				}
+			});
 		}
 		return jButtonRefresh;
 	}
