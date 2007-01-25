@@ -34,6 +34,7 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 		super();
 		this.setLayout(new ScrollPaneLayout());
 		this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		this.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	}
 	
 	public void putTree (JXTree t){

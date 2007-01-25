@@ -384,7 +384,7 @@ public class WizardMainFrame extends JFrame {
 //			c.ipady = 0;
 //			jPanel.add(new InfoPanel(), c);
 			
-			jPanel.add(getJTree(), BorderLayout.NORTH);
+			jPanel.add(getJTree(), BorderLayout.CENTER);
 //			jPanel.add(getJButton(), BorderLayout.SOUTH);
 //			jPanel.add(getJButton(), BorderLayout.NORTH);
 			jPanel.add(new InfoPanel(), BorderLayout.SOUTH);

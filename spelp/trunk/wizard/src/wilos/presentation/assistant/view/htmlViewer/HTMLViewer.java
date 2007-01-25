@@ -91,6 +91,7 @@ public class HTMLViewer extends JFrame {
 		
 		this.southPanel = new JPanel() ;
 		this.southPanel.setLayout(new GridLayout());
+		this.southPanel.setVisible(true);
 		this.southPanel.add(new JLabel(Bundle.getText("htmlViewer.guidelines")));
 		
 		
@@ -126,6 +127,8 @@ public class HTMLViewer extends JFrame {
 	}
 	
 	private void displayElement(Element e) {
+		guidesList.setVisible(false);
+		
 		/* Affichage du nom */
 		this.myElementLabel.setText(e.getName()) ;
 		
@@ -198,7 +201,10 @@ public class HTMLViewer extends JFrame {
 					displayElement((Element)value);
 			}
 		});
-		guidesList.setVisible(true);
+		if (guides.size() != 0){
+			guidesList.setVisible(true);
+		}
+		
 	}
 	
 	private class GuidesRenderer extends DefaultListCellRenderer {
