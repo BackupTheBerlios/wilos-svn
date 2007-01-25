@@ -37,7 +37,7 @@
 				<jsp:directive.include file="./pages/template/connect.jspx"/>
 			</div>
             <div id="menu">
-            	<jsp:directive.include file="./pages/template/navigation.jspx" />
+            	<jsp:directive.include file="./pages/template/Menu.jspx" />
             </div>
             </ice:panelGroup>
         </f:facet>
