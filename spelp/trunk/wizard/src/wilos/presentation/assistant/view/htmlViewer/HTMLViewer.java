@@ -127,7 +127,7 @@ public class HTMLViewer extends JFrame {
 	}
 	
 	private void displayElement(Element e) {
-		guidesList.setVisible(false);
+		guidesList.setVisible(e instanceof Guideline);
 		
 		/* Affichage du nom */
 		this.myElementLabel.setText(e.getName()) ;
