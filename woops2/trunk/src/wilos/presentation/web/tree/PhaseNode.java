@@ -44,7 +44,7 @@ public class PhaseNode extends DefaultMutableTreeNode {
 			} 
 			else if (breakdownElement instanceof TaskDescriptor) {
 				TaskDescriptor td = (TaskDescriptor) breakdownElement;
-				if ((_roleDescriptors == null)||(_roleDescriptors.contains(td.getMainRole())))
+				if ((_roleDescriptors == null)||(_roleDescriptors.size() == 0)||(_roleDescriptors.contains(td.getMainRole())))
 					for (ConcreteTaskDescriptor ctd : td
 							.getConcreteTaskDescriptors())
 						this.add(new ConcreteTaskDescriptorNode(ctd,

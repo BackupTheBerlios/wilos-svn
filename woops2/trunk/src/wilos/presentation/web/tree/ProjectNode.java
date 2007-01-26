@@ -41,8 +41,7 @@ public class ProjectNode extends DefaultMutableTreeNode {
 					+ this.project.getProcess().getName() + ")");
 			
 			//Nested nodes.
-			for (BreakdownElement breakdownElement : this.project.getProcess()
-					.getBreakDownElements()) {
+			for (BreakdownElement breakdownElement : this.project.getProcess().getBreakDownElements()) {
 				if (breakdownElement instanceof Phase) {
 					this.add(new PhaseNode((Phase) breakdownElement,
 							_roleDescriptors));
@@ -54,7 +53,7 @@ public class ProjectNode extends DefaultMutableTreeNode {
 							_roleDescriptors));
 				} else if (breakdownElement instanceof TaskDescriptor) {
 					TaskDescriptor td = (TaskDescriptor) breakdownElement;
-					if ((_roleDescriptors == null)
+					if ((_roleDescriptors == null) || (_roleDescriptors.size() == 0)
 							|| (_roleDescriptors.contains(td.getMainRole())))
 						for (ConcreteTaskDescriptor ctd : td
 								.getConcreteTaskDescriptors())

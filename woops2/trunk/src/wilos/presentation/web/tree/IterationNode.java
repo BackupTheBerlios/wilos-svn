@@ -36,13 +36,14 @@ public class IterationNode extends DefaultMutableTreeNode {
 		
 		for (BreakdownElement breakdownElement : this.iteration
 				.getBreakDownElements()) {
+			//FIXME LazyExceptrion
 			if (breakdownElement instanceof Activity) {
 				this.add(new ActivityNode((Activity) breakdownElement,
 						_roleDescriptors));
 			}
 			else if (breakdownElement instanceof TaskDescriptor) {
 				TaskDescriptor td = (TaskDescriptor) breakdownElement;
-				if ((_roleDescriptors == null)||(_roleDescriptors.contains(td.getMainRole())))
+				if ((_roleDescriptors == null)||(_roleDescriptors.size() == 0)||(_roleDescriptors.contains(td.getMainRole())))
 					for (ConcreteTaskDescriptor ctd : td
 							.getConcreteTaskDescriptors())
 						this.add(new ConcreteTaskDescriptorNode(ctd,
