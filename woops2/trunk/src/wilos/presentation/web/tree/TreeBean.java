@@ -1,6 +1,7 @@
 package wilos.presentation.web.tree;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.apache.commons.logging.LogFactory;
 import wilos.business.services.project.ProjectService;
 import wilos.business.services.role.RoleService;
 import wilos.business.services.wilosuser.LoginService;
+import wilos.business.services.wilosuser.ParticipantService;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
@@ -50,6 +52,8 @@ public class TreeBean {
 	private LoginService loginService;
 	
 	private RoleService roleService;
+	
+	private ParticipantService participantService;
 
 	private Project project;
 
@@ -127,13 +131,16 @@ public class TreeBean {
 		HttpSession httpSession = httpServletRequest.getSession();
 		WilosUser wilosUser = (WilosUser) httpSession.getAttribute("wilosUser");
 
-		for (Project project : this.projectService.getAllProjects()) {
-			//if (this.loginService.isParticipant(wilosUser))
-				//if (this.projectService.getParticipants(project).contains(
-						//(Participant) wilosUser))
-					projectsList.add(new SelectItem(project.getProject_id(),
-							project.getName()));
+		if (this.loginService.isParticipant(wilosUser)) {
+			HashMap<Project, Boolean> projects = this.participantService
+					.getProjectsForAParticipant((Participant) wilosUser);
+			for(Project project : projects.keySet()){
+				if(projects.get(project)){
+					projectsList.add(new SelectItem(project.getProject_id(), project.getName()));
+				}
+			}
 		}
+		
 		projectsList.add(new SelectItem("default", "Choose a project ..."));
 		return projectsList;
 	}
@@ -290,5 +297,13 @@ public class TreeBean {
 
 	public void setRoleService(RoleService _roleService) {
 		this.roleService = _roleService;
+	}
+
+	public ParticipantService getParticipantService() {
+		return participantService;
+	}
+
+	public void setParticipantService(ParticipantService participantService) {
+		this.participantService = participantService;
 	}
 }
