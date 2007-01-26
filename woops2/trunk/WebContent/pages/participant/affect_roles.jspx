@@ -73,6 +73,12 @@
 							</f:facet>
 							<ice:selectBooleanCheckbox partialSubmit="false" value="#{manageableProject.affected}" />
 						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="#{msgs['component.tableparticipantproject.column1']}"/>
+						    </f:facet>
+						    <ice:outputText value="#{manageableProject.projectManagerName}"/>
+						</ice:column>
 						  <ice:column>
 							<f:facet name="header">
 						    	<ice:outputText value="#{msgs['component.tableparticipantproject.column1']}"/>
