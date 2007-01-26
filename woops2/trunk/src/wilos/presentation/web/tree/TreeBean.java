@@ -71,11 +71,15 @@ public class TreeBean {
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
 	public TreeBean() {
+		this.model = new DefaultTreeModel(this.getDefaultTree());
+	}
+	
+	public DefaultMutableTreeNode getDefaultTree(){
 		DefaultMutableTreeNode defaultTree = new DefaultMutableTreeNode();
 		WilosObjectNode iceUserObject = new WilosObjectNode(defaultTree);
 		iceUserObject.setText("Choose a project ...");
 		defaultTree.setUserObject(iceUserObject);
-		this.model = new DefaultTreeModel(defaultTree);
+		return defaultTree;
 	}
 
 	/**
@@ -84,7 +88,7 @@ public class TreeBean {
 	 * @return tree model.
 	 */
 	private void buildModel(boolean _mustBuildProject) {
-		if (this.projectId != null && !this.projectId.equals("")) {
+		if (this.projectId != null && !this.projectId.equals("default")) {
 			if (_mustBuildProject) {
 				// Put into the session the current project used.
 				HttpServletRequest req = (HttpServletRequest) FacesContext
@@ -96,9 +100,7 @@ public class TreeBean {
 				this.project = this.projectService.getProject(this.projectId);
 			}
 			ProjectNode projectNode = null;
-			logger.debug("### TreeBean ### affectedFilter: "
-					+ this.affectedTaskFilter);
-
+			
 			if (this.affectedTaskFilter) {
 				// participant into session
 				HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext
@@ -112,11 +114,6 @@ public class TreeBean {
 					roleDescriptorsList.addAll(this.roleService
 							.getAffectedRolesForAParticipant(participant
 									.getLogin()));
-					logger.debug("### TreeBean ### roleDescriptorsList => "
-							+ roleDescriptorsList);
-					logger
-							.debug("### TreeBean ### roleDescriptorsList.size => "
-									+ roleDescriptorsList.size());
 					projectNode = new ProjectNode(this.project,
 							roleDescriptorsList);
 				}
@@ -124,6 +121,13 @@ public class TreeBean {
 				projectNode = new ProjectNode(this.project, null);
 			}
 			this.model = new DefaultTreeModel(projectNode);
+		}
+		else{
+			//Build the default tree.
+			this.model = new DefaultTreeModel(this.getDefaultTree());
+			
+			//hide tree.
+			this.loadTree = true;
 		}
 	}
 
