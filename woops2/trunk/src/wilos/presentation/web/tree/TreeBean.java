@@ -1,6 +1,7 @@
 package wilos.presentation.web.tree;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.apache.commons.logging.LogFactory;
 import wilos.business.services.project.ProjectService;
 import wilos.business.services.role.RoleService;
 import wilos.business.services.wilosuser.LoginService;
+import wilos.business.services.wilosuser.ParticipantService;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
@@ -48,8 +50,10 @@ public class TreeBean {
 	private ProjectService projectService;
 
 	private LoginService loginService;
-	
+
 	private RoleService roleService;
+
+	private ParticipantService participantService;
 
 	private Project project;
 
@@ -82,33 +86,42 @@ public class TreeBean {
 	private void buildModel(boolean _mustBuildProject) {
 		if (this.projectId != null && !this.projectId.equals("")) {
 			if (_mustBuildProject) {
-				//Put into the session the current project used.
-				HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
-				HttpSession sess = req.getSession() ;
-				sess.setAttribute("projectId", this.projectId) ;
-				
-				//Retrieve the entire project.
+				// Put into the session the current project used.
+				HttpServletRequest req = (HttpServletRequest) FacesContext
+						.getCurrentInstance().getExternalContext().getRequest();
+				HttpSession sess = req.getSession();
+				sess.setAttribute("projectId", this.projectId);
+
+				// Retrieve the entire project.
 				this.project = this.projectService.getProject(this.projectId);
 			}
 			ProjectNode projectNode = null;
-			logger.debug("### TreeBean ### affectedFilter: " + this.affectedTaskFilter);
-			
-			if (this.affectedTaskFilter){
+			logger.debug("### TreeBean ### affectedFilter: "
+					+ this.affectedTaskFilter);
+
+			if (this.affectedTaskFilter) {
 				// participant into session
-				HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
-				HttpSession httpSession = httpServletRequest.getSession() ;
-				Participant participant = (Participant) httpSession.getAttribute("wilosUser");
-								
+				HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext
+						.getCurrentInstance().getExternalContext().getRequest();
+				HttpSession httpSession = httpServletRequest.getSession();
+				Participant participant = (Participant) httpSession
+						.getAttribute("wilosUser");
+
 				if (participant != null) {
 					Set<RoleDescriptor> roleDescriptorsList = new HashSet<RoleDescriptor>();
-					roleDescriptorsList.addAll(this.roleService.getAffectedRolesForAParticipant(participant.getLogin()));
-					logger.debug("### TreeBean ### roleDescriptorsList => " + roleDescriptorsList);
-					logger.debug("### TreeBean ### roleDescriptorsList.size => " + roleDescriptorsList.size());
-					projectNode = new ProjectNode(this.project, roleDescriptorsList);
-				}				
-			}
-			else {
-				projectNode = new ProjectNode(this.project, null); 
+					roleDescriptorsList.addAll(this.roleService
+							.getAffectedRolesForAParticipant(participant
+									.getLogin()));
+					logger.debug("### TreeBean ### roleDescriptorsList => "
+							+ roleDescriptorsList);
+					logger
+							.debug("### TreeBean ### roleDescriptorsList.size => "
+									+ roleDescriptorsList.size());
+					projectNode = new ProjectNode(this.project,
+							roleDescriptorsList);
+				}
+			} else {
+				projectNode = new ProjectNode(this.project, null);
 			}
 			this.model = new DefaultTreeModel(projectNode);
 		}
@@ -125,13 +138,16 @@ public class TreeBean {
 		HttpSession httpSession = httpServletRequest.getSession();
 		WilosUser wilosUser = (WilosUser) httpSession.getAttribute("wilosUser");
 
-		for (Project project : this.projectService.getAllProjects()) {
-			//if (this.loginService.isParticipant(wilosUser))
-				//if (this.projectService.getParticipants(project).contains(
-						//(Participant) wilosUser))
-					projectsList.add(new SelectItem(project.getProject_id(),
-							project.getName()));
+		if (this.loginService.isParticipant(wilosUser)) {
+			HashMap<Project, Boolean> projects = this.participantService
+					.getProjectsForAParticipant((Participant) wilosUser);
+			for(Project project : projects.keySet()){
+				if(projects.get(project)){
+					projectsList.add(new SelectItem(project.getProject_id(), project.getName()));
+				}
+			}
 		}
+
 		projectsList.add(new SelectItem("default", "Choose a project ..."));
 		return projectsList;
 	}
@@ -285,5 +301,13 @@ public class TreeBean {
 
 	public void setRoleService(RoleService _roleService) {
 		this.roleService = _roleService;
+	}
+
+	public ParticipantService getParticipantService() {
+		return participantService;
+	}
+
+	public void setParticipantService(ParticipantService participantService) {
+		this.participantService = participantService;
 	}
 }
