@@ -50,16 +50,16 @@ public class TreeBean {
 	private ProjectService projectService;
 
 	private LoginService loginService;
-	
+
 	private RoleService roleService;
-	
+
 	private ParticipantService participantService;
 
 	private Project project;
 
 	private String projectId = "default";
 
-	private boolean affectedTaskFilter; // = false;
+	private boolean affectedTaskFilter = false;
 
 	private boolean loadTree = true;
 
@@ -84,37 +84,44 @@ public class TreeBean {
 	 * @return tree model.
 	 */
 	private void buildModel(boolean _mustBuildProject) {
-		logger.debug("### TreeBean ### buildModel ==> " + _mustBuildProject);
 		if (this.projectId != null && !this.projectId.equals("")) {
 			if (_mustBuildProject) {
-				//Put into the session the current project used.
-				HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
-				HttpSession sess = req.getSession() ;
-				sess.setAttribute("projectId", this.projectId) ;
-				
-				//Retrieve the entire project.
+				// Put into the session the current project used.
+				HttpServletRequest req = (HttpServletRequest) FacesContext
+						.getCurrentInstance().getExternalContext().getRequest();
+				HttpSession sess = req.getSession();
+				sess.setAttribute("projectId", this.projectId);
+
+				// Retrieve the entire project.
 				this.project = this.projectService.getProject(this.projectId);
 			}
 			ProjectNode projectNode = null;
-			
-			logger.debug("### TreeBean ### buildModel affectedFilter: " + this.affectedTaskFilter);
-			if (this.affectedTaskFilter){
+			logger.debug("### TreeBean ### affectedFilter: "
+					+ this.affectedTaskFilter);
+
+			if (this.affectedTaskFilter) {
 				// participant into session
-				HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
-				HttpSession httpSession = httpServletRequest.getSession() ;
-				Participant participant = (Participant) httpSession.getAttribute("wilosUser");
-								
+				HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext
+						.getCurrentInstance().getExternalContext().getRequest();
+				HttpSession httpSession = httpServletRequest.getSession();
+				Participant participant = (Participant) httpSession
+						.getAttribute("wilosUser");
+
 				if (participant != null) {
 					Set<RoleDescriptor> roleDescriptorsList = new HashSet<RoleDescriptor>();
-					roleDescriptorsList.addAll(this.roleService.getAffectedRolesForAParticipant(participant.getLogin()));
-					logger.debug("### TreeBean ### roleDescriptorsList => " + roleDescriptorsList);
-					logger.debug("### TreeBean ### roleDescriptorsList.size => " + roleDescriptorsList.size());
-					//FIXME LazyException
-					projectNode = new ProjectNode(this.project, roleDescriptorsList);
-				}				
-			}
-			else {
-				projectNode = new ProjectNode(this.project, new HashSet<RoleDescriptor>()); 
+					roleDescriptorsList.addAll(this.roleService
+							.getAffectedRolesForAParticipant(participant
+									.getLogin()));
+					logger.debug("### TreeBean ### roleDescriptorsList => "
+							+ roleDescriptorsList);
+					logger
+							.debug("### TreeBean ### roleDescriptorsList.size => "
+									+ roleDescriptorsList.size());
+					projectNode = new ProjectNode(this.project,
+							roleDescriptorsList);
+				}
+			} else {
+				projectNode = new ProjectNode(this.project, null);
 			}
 			this.model = new DefaultTreeModel(projectNode);
 		}
@@ -140,7 +147,7 @@ public class TreeBean {
 				}
 			}
 		}
-		
+
 		projectsList.add(new SelectItem("default", "Choose a project ..."));
 		return projectsList;
 	}
@@ -249,13 +256,10 @@ public class TreeBean {
 	}
 
 	public Boolean getAffectedTaskFilter() {
-		logger.debug("### TreeBean ### getAffectedTaskFilter "+this.affectedTaskFilter);
 		return affectedTaskFilter;
 	}
 
 	public void setAffectedTaskFilter(Boolean _affectedTaskFilter) {
-		logger.debug("### TreeBean ### setAffectedTaskFilter b=" + _affectedTaskFilter);
-		this.buildModel(this.affectedTaskFilter);
 		this.affectedTaskFilter = _affectedTaskFilter;
 	}
 
