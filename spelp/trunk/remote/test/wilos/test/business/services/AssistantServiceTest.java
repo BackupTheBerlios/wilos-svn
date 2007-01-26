@@ -59,15 +59,18 @@ public class AssistantServiceTest extends TestCase {
 	}
 
 	public void testStartConcreteTaskDescriptor() {
-		ConcreteTaskDescriptor ct = new ConcreteTaskDescriptor();
+		/*ConcreteTaskDescriptor ct = new ConcreteTaskDescriptor();
 		ct.setConcreteName("ConcreteTest");
 		ct.setState(Constantes.State.READY);
 		ct.setTaskDescriptor(null);
 		ct.setProjectId("projectId");
-		cts.getConcreteTaskDescriptorDao().saveOrUpdateConcreteTaskDescriptor(ct);
-		ct = cts.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(ct.getConcreteName());
+		cts.getConcreteTaskDescriptorDao().saveOrUpdateConcreteTaskDescriptor(ct);*/
+		ConcreteTaskDescriptor ct = cts.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor("2c90a3b0105ace6d01105ace983f0004");
 		
-		assistantService.startConcreteTaskDescriptor(ct.getConcreteName());
+		assistantService.startConcreteTaskDescriptor("2c90a3b0105ace6d01105ace983f0004");
+		ct = cts.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor("2c90a3b0105ace6d01105ace983f0004");
+		System.out.println(ct.getState());
 		assertTrue(ct.getState()==Constantes.State.STARTED);
+		
 	}
 }
