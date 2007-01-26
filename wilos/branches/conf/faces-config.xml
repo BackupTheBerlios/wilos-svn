@@ -192,6 +192,10 @@
 			<property-name>roleService</property-name>
 			<value>#{RoleService}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>participantService</property-name>
+			<value>#{ParticipantService}</value>
+		</managed-property>
 	</managed-bean>
 	
 	<managed-bean>
