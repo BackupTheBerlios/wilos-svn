@@ -46,7 +46,11 @@
 
 		<property name="accomplishedTime" type="float"
 			column="accomplishedtime" />
-
+		
+		<many-to-one name="concreteRoleDescriptor"
+			class="wilos.model.spem2.concreterole.concreteRoleDescriptor"
+			column="concreteroledescriptor_id">
+		</many-to-one>
 
 	</class>
 </hibernate-mapping>
