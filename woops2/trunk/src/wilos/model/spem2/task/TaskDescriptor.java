@@ -12,16 +12,16 @@ import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 
 /**
- * 
+ *
  * A Task Descriptor is a Descriptor and Work Breakdown Element that represents a proxy for a Task
  * in the context of one specific Activity. Every breakdown structure can define different
  * relationships of Task Descriptors to Work Product Descriptors and Role Descriptors. Therefore one
  * Task can be represented by many Task Descriptors each within the context of an Activity with its
  * own set of relationships.
- * 
+ *
  * @author Sebastien BALARD
  * @author eperico
- * 
+ *
  */
 public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 
@@ -39,7 +39,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 	 * The main role of the taskDefinition
 	 */
 	private RoleDescriptor mainRole ;
-	
+
 	/**
 	 * The corresponding concrete task descriptors.
 	 */
@@ -56,7 +56,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#clone()
 	 */
 	@ Override
@@ -79,7 +79,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see woops2.model.workbreakdownelement.WorkBreakdownElement#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
@@ -96,18 +96,18 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see woops2.model.workbreakdownelement.WorkBreakdownElement#hashCode()
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.taskDefinition).append(this.mainRole).toHashCode() ;
 	}
-	
+
 	/*
 	 * relation between TaskDescriptor and ConcreteTaskDescriptor.
-	 * 
+	 *
 	 */
-	
+
 	/**
 	 * @param _roleDescriptor
 	 */
@@ -119,19 +119,19 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 	/**
 	 * @param _roleDescriptor
 	 */
-	public void removeAdditionalRole(ConcreteTaskDescriptor _concreteTaskDescriptor) {
+	public void removeConcreteTaskDescriptor(ConcreteTaskDescriptor _concreteTaskDescriptor) {
 		_concreteTaskDescriptor.removeTaskDescriptor(this) ;
 		this.concreteTaskDescriptors.remove(_concreteTaskDescriptor) ;
 	}
 
 	/*
 	 * relation between TaskDescriptor and TaskDefinition
-	 * 
+	 *
 	 */
 
 	/**
 	 * Attach a taskDescriptor to a taskDefinition
-	 * 
+	 *
 	 * @param _taskDefinition
 	 */
 	public void addTaskDefinition(TaskDefinition _taskDefinition) {
@@ -141,7 +141,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 
 	/**
 	 * Detach a taskDescriptor to its taskDefinition
-	 * 
+	 *
 	 * @param _taskDefinition
 	 */
 	public void removeTaskDefinition(TaskDefinition _taskDefinition) {
@@ -155,7 +155,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 
 	/**
 	 * Attach a taskDescriptor to a roleDescriptor
-	 * 
+	 *
 	 * @param _roleDescriptor
 	 */
 	public void addMainRole(RoleDescriptor _roleDescriptor) {
@@ -165,7 +165,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 
 	/**
 	 * Detach a taskDescriptor to its roleDescriptor
-	 * 
+	 *
 	 * @param _roleDescriptor
 	 */
 	public void removeMainRole(RoleDescriptor _roleDescriptor) {
@@ -194,7 +194,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param _role
 	 */
 	public void addAllAdditionalRoles(Set<RoleDescriptor> _role) {
@@ -212,9 +212,9 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 		}
 		this.getAdditionalRoles().clear() ;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param _ctd
 	 */
 	public void addAllConcreteTaskDescriptors(Set<ConcreteTaskDescriptor> _ctd) {
@@ -222,7 +222,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 			tmp.addTaskDescriptor(this) ;
 		}
 	}
-	
+
 	/**
 	 * Remove from a roleDescriptor all its taskDescriptors
 	 */
@@ -235,7 +235,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 
 	/**
 	 * Getter of taskDefinition.
-	 * 
+	 *
 	 * @return the taskDefinition.
 	 */
 	public TaskDefinition getTaskDefinition() {
@@ -244,7 +244,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 
 	/**
 	 * Setter of taskDefinition.
-	 * 
+	 *
 	 * @param _taskDefinition
 	 *            The taskDefinition to set.
 	 */
@@ -254,7 +254,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 
 	/**
 	 * Getter of additionalRoles.
-	 * 
+	 *
 	 * @return the additionalRoles.
 	 */
 	public Set<RoleDescriptor> getAdditionalRoles() {
@@ -263,7 +263,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 
 	/**
 	 * Setter of additionalRoles.
-	 * 
+	 *
 	 * @param _additionalRoles
 	 *            The additionalRoles to set.
 	 */
@@ -274,7 +274,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 
 	/**
 	 * Getter of mainRole.
-	 * 
+	 *
 	 * @return the mainRole.
 	 */
 	public RoleDescriptor getMainRole() {
@@ -283,7 +283,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 
 	/**
 	 * Setter of mainRole.
-	 * 
+	 *
 	 * @param _mainRole
 	 *            The mainRole to set.
 	 */
