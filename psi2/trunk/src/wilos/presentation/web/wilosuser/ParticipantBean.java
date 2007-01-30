@@ -1,6 +1,7 @@
 
 package wilos.presentation.web.wilosuser ;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList ;
 import java.util.HashMap ;
 import java.util.Iterator ;
@@ -55,7 +56,13 @@ public class ParticipantBean {
 	private List<HashMap<String, String>> manageableProjectsList ;
 
 	private List<HashMap<String, String>> notManageableProjectsList ;
-
+	
+	private String selectManageableProjectView ;
+	
+	private String selectNotManageableProjectView;
+	
+	private SimpleDateFormat formatter ; 
+	
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
 	/**
@@ -63,11 +70,13 @@ public class ParticipantBean {
 	 * 
 	 */
 	public ParticipantBean() {
-		this.logger.debug("--- ParticipantBean --- == creating ..." + this) ;
 		this.participant = new Participant() ;
 		this.affectedProjectsList = new ArrayList() ;
 		this.manageableProjectsList = new ArrayList() ;
 		this.notManageableProjectsList = new ArrayList() ;
+		this.selectManageableProjectView = new String();
+		this.selectNotManageableProjectView = new String();
+		this.formatter = new SimpleDateFormat("dd/MM/yyyy");
 	}
 
 	/**
@@ -368,14 +377,14 @@ public class ParticipantBean {
 			for(Iterator iter = plist.keySet().iterator(); iter.hasNext();){
 
 				HashMap<String, String> ligne = new HashMap<String, String>() ;
-
+				
 				currentProject = (Project) iter.next() ;
 
 				ligne.put("project_id", currentProject.getProject_id()) ;
 				ligne.put("affected", plist.get(currentProject).toString()) ;
 				ligne.put("name", currentProject.getName()) ;
-				ligne.put("creationDate", currentProject.getCreationDate().toString()) ;
-				ligne.put("launchingDate", currentProject.getLaunchingDate().toString()) ;
+				ligne.put("creationDate", formatter.format(currentProject.getCreationDate())) ;
+				ligne.put("launchingDate", formatter.format(currentProject.getLaunchingDate())) ;
 				ligne.put("description", currentProject.getDescription()) ;
 
 				this.affectedProjectsList.add(ligne) ;
@@ -428,45 +437,45 @@ public class ParticipantBean {
 			this.manageableProjectsList = new ArrayList<HashMap<String, String>>() ;
 			HashMap<Project, Participant> manageableProjects = (HashMap<Project, Participant>) this.participantService
 					.getManageableProjectsForAParticipant(user) ;
-
-			Project currentProject = new Project() ;
-			for(Iterator iter = manageableProjects.keySet().iterator(); iter.hasNext();){
 				
-				currentProject = (Project) iter.next() ;
-				Participant projectManager = manageableProjects.get(currentProject);
-
-				HashMap<String, String> ligne = new HashMap<String, String>() ;
-				
-				ligne.put("project_id", currentProject.getProject_id()) ;
-				ligne.put("name", currentProject.getName()) ;
-				ligne.put("creationDate", currentProject.getCreationDate().toString()) ;
-				ligne.put("launchingDate", currentProject.getLaunchingDate().toString()) ;
-				ligne.put("description", currentProject.getDescription()) ;
-				
-				if(projectManager == null){
+				Project currentProject = new Project() ;
+				for(Iterator iter = manageableProjects.keySet().iterator(); iter.hasNext();){
 					
-					this.logger.debug("### Projet : " + currentProject.getName() + "/ Affecte : PERSONNE ###") ;
-					ligne.put("projectManagerName", "nobody") ;
-					ligne.put("projectManager_id", "") ;
-					ligne.put("affected", (new Boolean(false)).toString()) ;
-					this.manageableProjectsList.add(ligne) ;
-				}
-				else
-				{
-					this.logger.debug("### Projet : " + currentProject.getName() + "/ Affecte : " +projectManager.getLogin()+ "###") ;
-					String projectManagerName = projectManager.getName().concat(" " +projectManager.getFirstname()) ;
-					ligne.put("projectManager_id", projectManager.getWilosuser_id()) ;
-					ligne.put("projectManagerName", projectManagerName) ;
-					//the project is manageable by the current logged participant
-					if(projectManager.getLogin().equals(user.getLogin()))
-					{
-						this.logger.debug("### MANAGEABLE : "+user.getLogin()+" ###");
-						ligne.put("affected", (new Boolean(true)).toString()) ;
+					currentProject = (Project) iter.next() ;
+					Participant projectManager = manageableProjects.get(currentProject);
+	
+					HashMap<String, String> ligne = new HashMap<String, String>() ;
+					
+					ligne.put("project_id", currentProject.getProject_id()) ;
+					ligne.put("name", currentProject.getName()) ;
+					ligne.put("creationDate", formatter.format(currentProject.getCreationDate())) ;
+					ligne.put("launchingDate", formatter.format(currentProject.getLaunchingDate())) ;
+					ligne.put("description", currentProject.getDescription()) ;
+					
+					if(projectManager == null){
+						
+						this.logger.debug("### Projet : " + currentProject.getName() + "/ Affecte : PERSONNE ###") ;
+						ligne.put("projectManagerName", "nobody") ;
+						ligne.put("projectManager_id", "") ;
+						ligne.put("affected", (new Boolean(false)).toString()) ;
 						this.manageableProjectsList.add(ligne) ;
 					}
+					else
+					{
+						this.logger.debug("### Projet : " + currentProject.getName() + "/ Affecte : " +projectManager.getLogin()+ "###") ;
+						String projectManagerName = projectManager.getName().concat(" " +projectManager.getFirstname()) ;
+						ligne.put("projectManager_id", projectManager.getWilosuser_id()) ;
+						ligne.put("projectManagerName", projectManagerName) ;
+						//the project is manageable by the current logged participant
+						if(projectManager.getLogin().equals(user.getLogin()))
+						{
+							this.logger.debug("### MANAGEABLE : "+user.getLogin()+" ###");
+							ligne.put("affected", (new Boolean(true)).toString()) ;
+							this.manageableProjectsList.add(ligne) ;
+						}
+					}
+					
 				}
-				
-			}
 		}
 		return this.manageableProjectsList ;
 	}
@@ -506,8 +515,8 @@ public class ParticipantBean {
 						ligne.put("projectManager_id", ((Participant) notManageableProjects.get(currentProject)).getWilosuser_id()) ;
 						ligne.put("projectManagerName", projectManagerName) ;
 						ligne.put("name", currentProject.getName()) ;
-						ligne.put("creationDate", currentProject.getCreationDate().toString()) ;
-						ligne.put("launchingDate", currentProject.getLaunchingDate().toString()) ;
+						ligne.put("creationDate", formatter.format(currentProject.getCreationDate())) ;
+						ligne.put("launchingDate", formatter.format(currentProject.getLaunchingDate())) ;
 						ligne.put("description", currentProject.getDescription()) ;
 						this.notManageableProjectsList.add(ligne) ;
 					}
@@ -560,5 +569,46 @@ public class ParticipantBean {
 		HttpSession sess = req.getSession() ;
 		Participant user = (Participant) sess.getAttribute("wilosUser") ;
 		return user ;
+	}
+
+	public String getSelectManageableProjectView() {
+		if (this.manageableProjectsList.size()==0 )
+		{
+			this.selectManageableProjectView  = "manageable_no_records_view";
+		}
+		else
+		{
+			this.selectManageableProjectView ="manageable_records_view";
+		}
+		return selectManageableProjectView;
+	}
+
+	public void setSelectManageableProjectView(String selectManageableProjectView) {
+		this.selectManageableProjectView = selectManageableProjectView;
+	}
+
+	public SimpleDateFormat getFormatter() {
+		return formatter;
+	}
+
+	public void setFormatter(SimpleDateFormat formatter) {
+		this.formatter = formatter;
+	}
+
+	public String getSelectNotManageableProjectView() {
+		if (this.notManageableProjectsList.size()==0 )
+		{
+			this.selectNotManageableProjectView  = "notmanageable_no_records_view";
+		}
+		else
+		{
+			this.selectNotManageableProjectView ="notmanageable_records_view";
+		}
+		return selectNotManageableProjectView;
+	}
+
+	public void setSelectNotManageableProjectView(
+			String selectNotManageableProjectView) {
+		this.selectNotManageableProjectView = selectNotManageableProjectView;
 	}
 }

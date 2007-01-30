@@ -1,6 +1,7 @@
 
 package wilos.presentation.web.project ;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -44,6 +45,8 @@ public class ProjectBean {
 	
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
+	private SimpleDateFormat formatter;
+
 	/**
 	 * Constructor.
 	 * 
@@ -53,6 +56,7 @@ public class ProjectBean {
 		this.project = new Project() ;
 		this.selectedProcessGuid="";
 		this.processNamesList = new ArrayList<SelectItem>();
+		this.formatter = new SimpleDateFormat("dd/MM/yyyy");
 		/*
 		 * this.projectList = (HashSet<Project>)this.projectService.getAllProjects(); for(Project
 		 * projectTmp : this.projectList){ this.logger.debug("### Project"+projectTmp.getName()+"
@@ -189,7 +193,7 @@ public class ProjectBean {
 	 */
 	public List<Project> getProjectList() {
 		this.projectList = new ArrayList<Project>();
-		projectList.addAll(this.projectService.getAllProjects());		
+		projectList.addAll(this.projectService.getAllProjects());
 		return this.projectList ;
 	}
 
