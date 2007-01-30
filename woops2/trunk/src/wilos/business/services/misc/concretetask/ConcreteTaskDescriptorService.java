@@ -23,9 +23,9 @@ import wilos.utils.Constantes;
 import wilos.utils.Constantes.State;
 
 /**
- * 
+ *
  * @author deder
- * 
+ *
  */
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class ConcreteTaskDescriptorService {
@@ -42,7 +42,7 @@ public class ConcreteTaskDescriptorService {
 
 	/**
 	 * Return concreteTaskDescriptor for a project list
-	 * 
+	 *
 	 * @return
 	 */
 	@Transactional(readOnly = true)
@@ -64,7 +64,7 @@ public class ConcreteTaskDescriptorService {
 	/**
 	 * Start the ConcreteTaskDescriptor and save into the data base changings
 	 * (i.e. State, realStartingDate).
-	 * 
+	 *
 	 * @param _concreteTaskDescriptor
 	 *            The ConcreteTaskDescriptor to start.
 	 */
@@ -88,26 +88,26 @@ public class ConcreteTaskDescriptorService {
 
 	/**
 	 * When the user click on the button affected.
-	 * 
+	 *
 	 * @param _concreteTaskDescriptor
 	 */
 
 	public void affectedConcreteTaskDescriptor(
 			ConcreteTaskDescriptor _concreteTaskDescriptor, Participant _user) {
 
-		TaskDescriptor td = _concreteTaskDescriptor.getTaskDescriptor();
+		/*FIXME TaskDescriptor td = _concreteTaskDescriptor.getTaskDescriptor();
 		TaskDescriptor tmp = this.taskDescriptorService.getTaskDescriptorDao()
 				.getTaskDescriptor(td.getId());
 		RoleDescriptor roleDescriptor = tmp.getMainRole();
 		roleDescriptor.addParticipant(_user);
 		// save changings.
-		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(roleDescriptor);
+		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(roleDescriptor);*/
 	}
 
 	/**
 	 * Suspend the ConcreteTaskDescriptor and save into the data base changings
 	 * (i.e. State).
-	 * 
+	 *
 	 * @param _concreteTaskDescriptor
 	 *            The ConcreteTaskDescriptor to start.
 	 */
@@ -124,7 +124,7 @@ public class ConcreteTaskDescriptorService {
 	/**
 	 * Finish the ConcreteTaskDescriptor and save into the data base changings
 	 * (i.e. State, realFinishingDate).
-	 * 
+	 *
 	 * @param _concreteTaskDescriptor
 	 *            The ConcreteTaskDescriptor to start.
 	 */
@@ -146,9 +146,9 @@ public class ConcreteTaskDescriptorService {
 	}
 
 	/**
-	 * 
+	 *
 	 * TODO Method description
-	 * 
+	 *
 	 * @param _processId
 	 * @return
 	 */
@@ -165,55 +165,55 @@ public class ConcreteTaskDescriptorService {
 	 */
 	public boolean affectedVisible(
 			ConcreteTaskDescriptor _concreteTaskDescriptor, Participant _user) {
-		
+
 		boolean visi = true;
-		
-		TaskDescriptor td = _concreteTaskDescriptor.getTaskDescriptor();
+
+		/*FIXME TaskDescriptor td = _concreteTaskDescriptor.getTaskDescriptor();
 		TaskDescriptor tmp = this.taskDescriptorService.getTaskDescriptorDao().getTaskDescriptor(td.getId());
 		RoleDescriptor roleDescriptor = tmp.getMainRole();
 		RoleDescriptor tmpRd = this.roleDescriptorService.getRoleDescriptorDao().getRoleDescriptor(roleDescriptor.getId());
 		Set<Participant> part = tmpRd.getParticipants();
-		
+
 			for (Participant parti : part) {
 				if(parti.getWilosuser_id().equals(_user.getWilosuser_id()))
 				{
 					visi= false;
 				}
-			}
+			}*/
 
 		return visi;
-	
+
 	}
-	
+
 	/**
 	 * Visible ob affected buton
 	 */
 	public boolean startVisible(
 			ConcreteTaskDescriptor _concreteTaskDescriptor, Participant _user) {
-		
+
 		boolean visi = true;
-		
-		TaskDescriptor td = _concreteTaskDescriptor.getTaskDescriptor();
+
+		/*FIXME TaskDescriptor td = _concreteTaskDescriptor.getTaskDescriptor();
 		TaskDescriptor tmp = this.taskDescriptorService.getTaskDescriptorDao().getTaskDescriptor(td.getId());
 		RoleDescriptor roleDescriptor = tmp.getMainRole();
 		RoleDescriptor tmpRd = this.roleDescriptorService.getRoleDescriptorDao().getRoleDescriptor(roleDescriptor.getId());
 		Set<Participant> part = tmpRd.getParticipants();
 		if(!_concreteTaskDescriptor.getState().equals("Started"))
-		{	
+		{
 			for (Participant parti : part) {
 				if(parti.getWilosuser_id().equals(_user.getWilosuser_id()))
 				{
 					visi= false;
 				}
 			}
-		}
+		}*/
 		return visi;
-	
+
 	}
 
 	/**
 	 * Getter of taskDescriptorDao.
-	 * 
+	 *
 	 * @return the taskDescriptorDao.
 	 */
 	public ConcreteTaskDescriptorDao getConcreteTaskDescriptorDao() {
@@ -222,7 +222,7 @@ public class ConcreteTaskDescriptorService {
 
 	/**
 	 * Setter of taskDescriptorDao.
-	 * 
+	 *
 	 * @param _taskDescriptorDao
 	 *            The taskDescriptorDao to set.
 	 */

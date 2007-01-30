@@ -45,7 +45,7 @@ import wilos.model.spem2.task.TaskDescriptor;
 /**
  * ProcessService is a transactional class, that manage operations about
  * process, requested by web pages (?)
- * 
+ *
  * @author eperico
  * @author soosuske
  * @author Sebastien
@@ -55,13 +55,13 @@ import wilos.model.spem2.task.TaskDescriptor;
 public class ProcessService {
 
 	private BreakdownElementService breakdownElementService;
-	
+
 	private PhaseService phaseService;
-	
+
 	private IterationService iterationService;
-	
+
 	private ActivityService activityService;
-	
+
 	private TaskDescriptorService taskDescriptorService;
 
 	private ActivityDao activityDao;
@@ -87,7 +87,7 @@ public class ProcessService {
 	private TaskDescriptorDao taskDescriptorDao;
 
 	private WorkBreakdownElementDao workBreakdownElementDao;
-	
+
 	private ProjectDao projectDao;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
@@ -103,9 +103,9 @@ public class ProcessService {
 	}
 
 	/**
-	 * 
+	 *
 	 * TODO Method description
-	 * 
+	 *
 	 * @param _process
 	 */
 	public void saveProcess(Process _process) {
@@ -173,9 +173,9 @@ public class ProcessService {
 	}
 
 	/**
-	 * 
+	 *
 	 * TODO Method description
-	 * 
+	 *
 	 * @param _ph
 	 */
 	private void parsePhase(Phase _ph) {
@@ -230,9 +230,9 @@ public class ProcessService {
 	}
 
 	/**
-	 * 
+	 *
 	 * TODO Method description
-	 * 
+	 *
 	 * @param _it
 	 */
 	private void parseIteration(Iteration _it) {
@@ -286,9 +286,9 @@ public class ProcessService {
 	}
 
 	/**
-	 * 
+	 *
 	 * TODO Method description
-	 * 
+	 *
 	 * @param _act
 	 */
 	private void parseActivity(Activity _act) {
@@ -344,9 +344,9 @@ public class ProcessService {
 	}
 
 	/**
-	 * 
+	 *
 	 * TODO Method description
-	 * 
+	 *
 	 * @param _rd
 	 */
 	private void parseRoleDescriptor(RoleDescriptor _rd) {
@@ -368,7 +368,7 @@ public class ProcessService {
 		}
 
 		_rd.getAdditionalTasks().clear();
-		_rd.getParticipants().clear();
+		//FIXME _rd.getParticipants().clear();
 		_rd.getPrimaryTasks().clear();
 		_rd.getSuperActivities().clear();
 		_rd.setRoleDefinition(null);
@@ -377,7 +377,7 @@ public class ProcessService {
 		System.out.println("###RoleDescriptor sauve");
 
 		_rd.addAllAdditionalTasks(clone.getAdditionalTasks());
-		_rd.addAllParticipants(clone.getParticipants());
+		//FIXME _rd.addAllParticipants(clone.getParticipants());
 		_rd.addAllPrimaryTasks(clone.getPrimaryTasks());
 		_rd.addAllSuperActivities(clone.getSuperActivities());
 		_rd.setRoleDefinition(clone.getRoleDefinition());
@@ -386,9 +386,9 @@ public class ProcessService {
 	}
 
 	/**
-	 * 
+	 *
 	 * TODO Method description
-	 * 
+	 *
 	 * @param _rdef
 	 */
 	private void parseRoleDefinition(RoleDefinition _rdef) {
@@ -413,9 +413,9 @@ public class ProcessService {
 	}
 
 	/**
-	 * 
+	 *
 	 * TODO Method description
-	 * 
+	 *
 	 * @param _td
 	 */
 	private void parseTaskDescriptor(TaskDescriptor _td) {
@@ -458,9 +458,9 @@ public class ProcessService {
 	}
 
 	/**
-	 * 
+	 *
 	 * TODO Method description
-	 * 
+	 *
 	 * @param _tdef
 	 */
 	private void parseTaskDefinition(TaskDefinition _tdef) {
@@ -495,9 +495,9 @@ public class ProcessService {
 	}
 
 	/**
-	 * 
+	 *
 	 * TODO Method description
-	 * 
+	 *
 	 * @param _step
 	 */
 	private void parseStep(Step _step) {
@@ -520,7 +520,7 @@ public class ProcessService {
 
 	/**
 	 * Return processes list
-	 * 
+	 *
 	 * @return
 	 */
 	@Transactional(readOnly = true)
@@ -529,7 +529,7 @@ public class ProcessService {
 	}
 
 	/**
-	 * 
+	 *
 	 * Create and associate COncreteTaskDescriptors from TaskDescriptors of the process whose id is id_process
 	 * to the project whose id is id_project
 	 *
@@ -537,28 +537,28 @@ public class ProcessService {
 	 * @param id_project
 	 */
 	public void projectInstanciation(Project _project) {
-		
+
 		Process p = this.processDao.getProcess(_project.getProcess().getId());
-		
+
 		List<TaskDescriptor> forSaving = this.getTaskDescriptors(p);
-				
+
 		for (TaskDescriptor td : forSaving) {
 			this.taskDescriptorService.taskDescriptorInstanciation(_project.getProject_id(), td);
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param _act
 	 * @return
 	 */
 	private List<TaskDescriptor> getTaskDescriptors(Activity _act) {
-		
+
 		// elements of collection getting
 		Set<BreakdownElement> bdes = _act.getBreakDownElements();
-		
+
 		List<TaskDescriptor> tds = new ArrayList<TaskDescriptor>();
-		
+
 		// in function of element type
 		for (BreakdownElement bde : bdes) {
 			if (bde instanceof Phase) {
@@ -583,7 +583,7 @@ public class ProcessService {
 		}
 		return tds;
 	}
-	
+
 	/**
 	 * @param _processId
 	 * @return
@@ -594,13 +594,13 @@ public class ProcessService {
 		Set<BreakdownElement> bdes = new HashSet<BreakdownElement>();
 		bdes.addAll(this.breakdownElementService.getBreakdownElementsFromProcess(_processId));
 		process.addAllBreakdownElements(bdes);
-		
+
 		return process;
 	}
-	
+
 	/**
 	 * Getter of processDao.
-	 * 
+	 *
 	 * @return the processDao.
 	 */
 	public ProcessDao getProcessDao() {
@@ -609,7 +609,7 @@ public class ProcessService {
 
 	/**
 	 * Setter of processDao.
-	 * 
+	 *
 	 * @param _processDao
 	 *            The processDao to set.
 	 */
@@ -619,7 +619,7 @@ public class ProcessService {
 
 	/**
 	 * Getter of activityDao.
-	 * 
+	 *
 	 * @return the activityDao.
 	 */
 	public ActivityDao getActivityDao() {
@@ -628,7 +628,7 @@ public class ProcessService {
 
 	/**
 	 * Setter of activityDao.
-	 * 
+	 *
 	 * @param activityDao
 	 *            The activityDao to set.
 	 */
@@ -638,7 +638,7 @@ public class ProcessService {
 
 	/**
 	 * Getter of breakdownElementDao.
-	 * 
+	 *
 	 * @return the breakdownElementDao.
 	 */
 	public BreakdownElementDao getBreakdownElementDao() {
@@ -647,7 +647,7 @@ public class ProcessService {
 
 	/**
 	 * Setter of breakdownElementDao.
-	 * 
+	 *
 	 * @param breakdownElementDao
 	 *            The breakdownElementDao to set.
 	 */
@@ -657,7 +657,7 @@ public class ProcessService {
 
 	/**
 	 * Getter of elementDao.
-	 * 
+	 *
 	 * @return the elementDao.
 	 */
 	public ElementDao getElementDao() {
@@ -666,7 +666,7 @@ public class ProcessService {
 
 	/**
 	 * Setter of elementDao.
-	 * 
+	 *
 	 * @param elementDao
 	 *            The elementDao to set.
 	 */
@@ -676,7 +676,7 @@ public class ProcessService {
 
 	/**
 	 * Getter of roleDefinitionDao.
-	 * 
+	 *
 	 * @return the roleDefinitionDao.
 	 */
 	public RoleDefinitionDao getRoleDefinitionDao() {
@@ -685,7 +685,7 @@ public class ProcessService {
 
 	/**
 	 * Setter of roleDefinitionDao.
-	 * 
+	 *
 	 * @param roleDefinitionDao
 	 *            The roleDefinitionDao to set.
 	 */
@@ -695,7 +695,7 @@ public class ProcessService {
 
 	/**
 	 * Getter of roleDescriptorDao.
-	 * 
+	 *
 	 * @return the roleDescriptorDao.
 	 */
 	public RoleDescriptorDao getRoleDescriptorDao() {
@@ -704,7 +704,7 @@ public class ProcessService {
 
 	/**
 	 * Setter of roleDescriptorDao.
-	 * 
+	 *
 	 * @param roleDescriptorDao
 	 *            The roleDescriptorDao to set.
 	 */
@@ -714,7 +714,7 @@ public class ProcessService {
 
 	/**
 	 * Getter of stepDao.
-	 * 
+	 *
 	 * @return the stepDao.
 	 */
 	public StepDao getStepDao() {
@@ -723,7 +723,7 @@ public class ProcessService {
 
 	/**
 	 * Setter of stepDao.
-	 * 
+	 *
 	 * @param stepDao
 	 *            The stepDao to set.
 	 */
@@ -733,7 +733,7 @@ public class ProcessService {
 
 	/**
 	 * Getter of taskDefinitionDao.
-	 * 
+	 *
 	 * @return the taskDefinitionDao.
 	 */
 	public TaskDefinitionDao getTaskDefinitionDao() {
@@ -742,7 +742,7 @@ public class ProcessService {
 
 	/**
 	 * Setter of taskDefinitionDao.
-	 * 
+	 *
 	 * @param taskDefinitionDao
 	 *            The taskDefinitionDao to set.
 	 */
@@ -752,7 +752,7 @@ public class ProcessService {
 
 	/**
 	 * Getter of taskDescriptorDao.
-	 * 
+	 *
 	 * @return the taskDescriptorDao.
 	 */
 	public TaskDescriptorDao getTaskDescriptorDao() {
@@ -761,7 +761,7 @@ public class ProcessService {
 
 	/**
 	 * Setter of taskDescriptorDao.
-	 * 
+	 *
 	 * @param taskDescriptorDao
 	 *            The taskDescriptorDao to set.
 	 */
@@ -771,7 +771,7 @@ public class ProcessService {
 
 	/**
 	 * Getter of workBreakdownElementDao.
-	 * 
+	 *
 	 * @return the workBreakdownElementDao.
 	 */
 	public WorkBreakdownElementDao getWorkBreakdownElementDao() {
@@ -780,7 +780,7 @@ public class ProcessService {
 
 	/**
 	 * Setter of workBreakdownElementDao.
-	 * 
+	 *
 	 * @param workBreakdownElementDao
 	 *            The workBreakdownElementDao to set.
 	 */

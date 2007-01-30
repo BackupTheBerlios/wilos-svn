@@ -8,7 +8,6 @@ import junit.framework.TestCase;
 import wilos.model.spem2.role.RoleDefinition;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
-import wilos.model.misc.wilosuser.Participant;
 
 public class RoleDescriptorTest extends TestCase {
 
@@ -28,7 +27,7 @@ public class RoleDescriptorTest extends TestCase {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see junit.framework.TestCase#setUp()
 	 */
 	protected void setUp() throws Exception {
@@ -44,7 +43,7 @@ public class RoleDescriptorTest extends TestCase {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see junit.framework.TestCase#tearDown()
 	 */
 	protected void tearDown() throws Exception {
@@ -102,7 +101,7 @@ public class RoleDescriptorTest extends TestCase {
 
 	/**
 	 * Test method for {@link wilos.model.role.RoleDescriptor#AddRoleDefinition()}.
-	 * 
+	 *
 	 */
 	public void testAddRoleDefinition() {
 		RoleDefinition role = new RoleDefinition() ;
@@ -117,7 +116,7 @@ public class RoleDescriptorTest extends TestCase {
 
 	/**
 	 * Test method for {@link wilos.model.role.RoleDescriptor#RemoveRoleDefinition()}.
-	 * 
+	 *
 	 */
 	public void testRemoveRoleDefinition() {
 		RoleDefinition role = new RoleDefinition() ;
@@ -138,7 +137,7 @@ public class RoleDescriptorTest extends TestCase {
 
 	/**
 	 * Test method for {@link wilos.model.role.RoleDescriptor#addPrimaryTask()}.
-	 * 
+	 *
 	 */
 	public void testAddPrimaryTask() {
 		TaskDescriptor task = new TaskDescriptor() ;
@@ -153,7 +152,7 @@ public class RoleDescriptorTest extends TestCase {
 
 	/**
 	 * Test method for {@link wilos.model.role.RoleDescriptor#RemovePrimaryTask()}.
-	 * 
+	 *
 	 */
 	public void testRemovePrimaryTask() {
 		TaskDescriptor task = new TaskDescriptor() ;
@@ -171,7 +170,7 @@ public class RoleDescriptorTest extends TestCase {
 
 	/**
 	 * Test method for {@link wilos.model.role.RoleDescriptor#RemoveAllPrimaryTasks()}.
-	 * 
+	 *
 	 */
 	public void testRemoveAllPrimaryTasks() {
 		TaskDescriptor task = new TaskDescriptor() ;
@@ -181,7 +180,7 @@ public class RoleDescriptorTest extends TestCase {
 		TaskDescriptor tmp = new TaskDescriptor() ;
 		tmp.setName("nom") ;
 		tmp.setDescription(DESCRIPTION) ;
-		
+
 		Set<TaskDescriptor> set = new HashSet<TaskDescriptor>() ;
 		set.add(task) ;
 		set.add(tmp) ;
@@ -199,7 +198,7 @@ public class RoleDescriptorTest extends TestCase {
 
 	/**
 	 * Test method for {@link wilos.model.role.RoleDescriptor#AddAllPrimaryTasks()}.
-	 * 
+	 *
 	 */
 	public void testAddAllPrimaryTasks() {
 		TaskDescriptor task = new TaskDescriptor() ;
@@ -222,7 +221,7 @@ public class RoleDescriptorTest extends TestCase {
 
 	/**
 	 * Test method for {@link wilos.model.role.RoleDescriptor#addAdditionalTask()}.
-	 * 
+	 *
 	 */
 	public void testAddAdditionnalTask() {
 		TaskDescriptor task = new TaskDescriptor() ;
@@ -239,7 +238,7 @@ public class RoleDescriptorTest extends TestCase {
 
 	/**
 	 * Test method for {@link wilos.model.role.RoleDescriptor#removeAdditionalTask()}.
-	 * 
+	 *
 	 */
 	public void testRemoveAdditionalTask() {
 		TaskDescriptor task = new TaskDescriptor() ;
@@ -249,7 +248,7 @@ public class RoleDescriptorTest extends TestCase {
 		this.roleDescriptor.addAdditionalTask(task) ;
 		assertFalse(this.roleDescriptor.getAdditionalTasks().isEmpty()) ;
 		assertFalse(task.getAdditionalRoles().isEmpty());
-		
+
 		this.roleDescriptor.removeAdditionalTask(task) ;
 		assertTrue(this.roleDescriptor.getAdditionalTasks().isEmpty()) ;
 		assertTrue(task.getAdditionalRoles().isEmpty());
@@ -257,7 +256,7 @@ public class RoleDescriptorTest extends TestCase {
 
 	/**
 	 * Test method for {@link wilos.model.role.RoleDescriptor#RemoveAllAdditionalTasks()}.
-	 * 
+	 *
 	 */
 	public void testRemoveAllAdditionalTasks() {
 
@@ -277,89 +276,10 @@ public class RoleDescriptorTest extends TestCase {
 		assertTrue(this.roleDescriptor.getAdditionalTasks().size() == 2) ;
 		assertTrue(task.getAdditionalRoles().size() == 1);
 		assertTrue(tmp.getAdditionalRoles().size() == 1);
-		
+
 		this.roleDescriptor.removeAllAdditionalTasks() ;
 		assertTrue(this.roleDescriptor.getAdditionalTasks().isEmpty()) ;
 		assertTrue(task.getAdditionalRoles().isEmpty());
 		assertTrue(tmp.getAdditionalRoles().isEmpty());
-	}
-	
-	/**
-	 * Test method for {@link wilos.model.role.RoleDescriptor#addParticipant()}.
-	 * 
-	 */
-	public void testAddParticipant() {
-		Participant participant = new Participant() ;
-		
-		this.roleDescriptor.addParticipant(participant) ;
-
-		assertFalse(this.roleDescriptor.getParticipants().isEmpty()) ;
-		//TODO assertFalse(participant.getRolesListForAProject().isEmpty()) ;
-		assertTrue(this.roleDescriptor.getParticipants().size() == 1) ;
-		//TODO assertTrue(participant.getRolesListForAProject().size() == 1) ;
-	}
-	
-	/**
-	 * Test method for {@link wilos.model.role.RoleDescriptor#AddAllParticipants()}.
-	 * 
-	 */
-	public void testAddAllParticipants() {
-		Participant task = new Participant() ;
-		task.setName(NAME) ;
-		
-		Participant tmp = new Participant() ;
-		
-		Set<Participant> set = new HashSet<Participant>() ;
-		set.add(task) ;
-		set.add(tmp) ;
-
-		this.roleDescriptor.addAllParticipants(set) ;
-
-		assertFalse(this.roleDescriptor.getParticipants().isEmpty()) ;
-		assertTrue(this.roleDescriptor.getParticipants().size() == 2) ;
-	}
-	
-	/**
-	 * Test method for {@link wilos.model.role.RoleDescriptor#removeParticipant()}.
-	 * 
-	 */
-	public void testRemoveParticipant() {
-		Participant task = new Participant() ;
-		task.setName(NAME) ;
-		
-		this.roleDescriptor.addParticipant(task) ;
-		assertFalse(this.roleDescriptor.getParticipants().isEmpty()) ;
-		//TODO assertFalse(task.getRolesListForAProject().isEmpty());
-		
-		this.roleDescriptor.removeParticipant(task) ;
-		assertTrue(this.roleDescriptor.getParticipants().isEmpty()) ;
-		//TODO assertTrue(task.getRolesListForAProject().isEmpty());
-	}
-	
-	/**
-	 * Test method for {@link wilos.model.role.RoleDescriptor#RemoveAllParticipants()}.
-	 * 
-	 */
-	public void testRemoveAllParticipants() {
-
-		Participant task = new Participant() ;
-		task.setName(NAME) ;
-		
-		Participant tmp = new Participant() ;
-		tmp.setName("autreNom") ;
-		
-		Set<Participant> set = new HashSet<Participant>() ;
-		set.add(task) ;
-		set.add(tmp) ;
-
-		this.roleDescriptor.addAllParticipants(set) ;
-		assertTrue(this.roleDescriptor.getParticipants().size() == 2) ;
-		//TODO assertTrue(task.getRolesListForAProject().size() == 1);
-		//TODO assertTrue(tmp.getRolesListForAProject().size() == 1);
-		
-		this.roleDescriptor.removeAllParticipants() ;
-		assertTrue(this.roleDescriptor.getParticipants().isEmpty()) ;
-		//TODO assertTrue(task.getRolesListForAProject().isEmpty());
-		//TODO assertTrue(tmp.getRolesListForAProject().isEmpty());
 	}
 }
