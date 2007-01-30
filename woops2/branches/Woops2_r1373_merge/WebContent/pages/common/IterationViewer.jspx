@@ -1,0 +1,29 @@
+
+<f:loadBundle basename="wilos.resources.messages" var="msgs" />
+
+<ice:form>
+	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1"
+		border="0" bgcolor="#BEB4CC">
+		<ice:panelTabSet bgcolor="#BEB4CC">
+			<br />
+			<ice:panelTab label="Iteration Display">
+				<br />
+				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2"
+					border="0">
+					<ice:outputText value="id " />
+					<ice:outputText
+						value="#{IterationViewerBean.iteration.id}" />
+					<ice:outputText value="presentationName " />
+					<ice:outputText
+						value="#{IterationViewerBean.iteration.presentationName}" />
+					<ice:outputText value="isPlanned " />
+					<ice:outputText
+						value="#{IterationViewerBean.iteration.isPlanned}" />
+					<ice:outputText value="description " />
+					<ice:outputText
+						value="#{IterationViewerBean.iteration.description}" />
+				</ice:panelGrid>
+			</ice:panelTab>
+		</ice:panelTabSet>
+	</ice:panelGrid>
+</ice:form>
