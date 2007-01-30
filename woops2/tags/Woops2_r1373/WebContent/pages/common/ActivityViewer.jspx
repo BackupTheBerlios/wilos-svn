@@ -1,0 +1,29 @@
+
+<f:loadBundle basename="wilos.resources.messages" var="msgs" />
+
+<ice:form>
+	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1"
+		border="0" bgcolor="#BEB4CC">
+		<ice:panelTabSet bgcolor="#BEB4CC">
+			<br />
+			<ice:panelTab label="Activity Display">
+				<br />
+				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2"
+					border="0">
+					<ice:outputText value="id " />
+					<ice:outputText
+						value="#{ActivityViewerBean.activity.id}" />
+					<ice:outputText value="presentationName " />
+					<ice:outputText
+						value="#{ActivityViewerBean.activity.presentationName}" />
+					<ice:outputText value="isPlanned " />
+					<ice:outputText
+						value="#{ActivityViewerBean.activity.isPlanned}" />
+					<ice:outputText value="description " />
+					<ice:outputText
+						value="#{ActivityViewerBean.activity.description}" />
+				</ice:panelGrid>
+			</ice:panelTab>
+		</ice:panelTabSet>
+	</ice:panelGrid>
+</ice:form>
