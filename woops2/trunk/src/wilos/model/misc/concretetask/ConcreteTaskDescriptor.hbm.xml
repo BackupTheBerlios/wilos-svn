@@ -48,7 +48,7 @@
 			column="accomplishedtime" />
 		
 		<many-to-one name="concreteRoleDescriptor"
-			class="wilos.model.spem2.concreterole.concreteRoleDescriptor"
+			class="wilos.model.misc.concreterole.concreteRoleDescriptor"
 			column="concreteroledescriptor_id">
 		</many-to-one>
 

@@ -1,1 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping>
+	<class name="wilos.model.misc.concreterole.ConcreteRoleDescriptor"
+		table="concreteroledescriptor" lazy="true">
+
+		<id name="id" type="string"
+			column="concreteroledescriptor_id">
+			<!--identifiant auto-incrementé -->
+			<generator class="uuid" />
+		</id>
+		
+		<set name="concreteTaskDescriptors" lazy="true">
+			<key column="concreteroledescriptor_id" />
+			<one-to-many class="wilos.model.misc.concretetask.ConcreteTaskDescriptor"></one-to-many>
+		</set>
+		
+		<many-to-one name="roleDescriptor"
+			class="wilos.model.spem2.role.RoleDescriptor"
+			column="roledescriptor_id">
+		</many-to-one>
+		
+		<!-- <many-to-one name="participant"
+			class="wilos.model.misc.wilosuser.Participant"
+			column="participant_id">
+		</many-to-one> -->
+
+	</class>
+</hibernate-mapping>

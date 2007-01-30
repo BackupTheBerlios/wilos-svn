@@ -24,6 +24,8 @@
 				column="taskdescriptor_id">
 			</many-to-many>
 		</set>
+		
+		<!-- A supprimer quand PSI2 sera a jour -->
 		<set name="participants" table="play" lazy="true" inverse="true">
 			<key column="roledescriptor_id"></key>
 			<many-to-many class="wilos.model.misc.wilosuser.Participant"
@@ -36,5 +38,10 @@
 			<one-to-many class="wilos.model.misc.concreterole.ConcreteRoleDescriptor"></one-to-many>
 		</set>
 
+		<set name="concreteRoleDescriptors" lazy="false">
+			<key column="roledescriptor_id" />
+			<one-to-many class="wilos.model.misc.concreterole.ConcreteRoleDescriptor"></one-to-many>
+		</set>
+		
 	</joined-subclass>
 </hibernate-mapping>
