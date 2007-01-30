@@ -17,5 +17,3 @@ INSERT INTO `participant` (`participant_id`) VALUES ('2c90a1b21031d7ef011031de53
 INSERT INTO `project` (`project_id`, `name`, `description`, `creationDate`, `launchingDate`, `isFinished`, `process_id`, `participant_id`) VALUES 
 ('2c90a1b2104ad70601104ad906f90001', 'Shmurf', 'shhhhmuuuuuurf', '2007-01-22 18:27:05', '2007-01-22 00:00:00', '\0', NULL, NULL),
 ('2c90a1b2104ad70601104ad9d72a0002', 'Poulouuuuu', 'pooooouuuuuuuuuulouuuuuuuuuuuuuuuuuu', '2007-01-22 18:27:21', '2008-01-22 00:00:00', '\0', NULL, NULL);
-
--- test de unlock
