@@ -47,52 +47,12 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 */
 	private Set<ConcreteRoleDescriptor> concreteRoleDescriptors;
 
-	/*
-	 * relation between RoleDescriptor and ConcreteRoleDescriptor.
-	 *
-	 */
-
-	/**
-	 * @param _roleDescriptor
-	 */
-	public void addConcreteRoleDescriptor(ConcreteRoleDescriptor _concreteRoleDescriptor) {
-		this.concreteRoleDescriptors.add(_concreteRoleDescriptor) ;
-		_concreteRoleDescriptor.addRoleDescriptor(this) ;
-	}
-
-	/**
-	 * @param _roleDescriptor
-	 */
-	public void removeConcreteRoleDescriptor(ConcreteRoleDescriptor _concreteRoleDescriptor) {
-		_concreteRoleDescriptor.removeRoleDescriptor(this) ;
-		this.concreteRoleDescriptors.remove(_concreteRoleDescriptor) ;
-	}
-
-	/**
-	 * Getter of participant.
-	 *
-	 * @return t he participants.
-	 */
-	public Set<Participant> getParticipants() {
-		return this.participants;
-	}
-
-	/**
-	 * Setter of participants.
-	 *
-	 * @param _participants
-	 *            The participants to set.
-	 */
-	@SuppressWarnings("unused")
-	private void setParticipants(Set<Participant> _participants) {
-		this.participants = _participants;
-	}
-
 	public RoleDescriptor() {
 		super();
 		this.primaryTasks = new HashSet<TaskDescriptor>();
 		this.additionalTasks = new HashSet<TaskDescriptor>();
 		this.participants = new HashSet<Participant>();
+		this.concreteRoleDescriptors = new HashSet<ConcreteRoleDescriptor>();
 	}
 
 	/*
@@ -152,6 +112,39 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 				.append(this.roleDefinition).append(this.additionalTasks)
 				.append(this.concreteRoleDescriptors).append(this.participants)
 				.append(this.primaryTasks).toHashCode();
+	}
+
+	/*
+	 * relation between RoleDescriptor and ConcreteRoleDescriptor.
+	 *
+	 */
+
+	/**
+	 * @param _roleDescriptor
+	 */
+	public void addConcreteRoleDescriptor(ConcreteRoleDescriptor _concreteRoleDescriptor) {
+		this.concreteRoleDescriptors.add(_concreteRoleDescriptor) ;
+		_concreteRoleDescriptor.addRoleDescriptor(this) ;
+	}
+
+	/**
+	 * @param _roleDescriptor
+	 */
+	public void removeConcreteRoleDescriptor(ConcreteRoleDescriptor _concreteRoleDescriptor) {
+		_concreteRoleDescriptor.removeRoleDescriptor(this) ;
+		this.concreteRoleDescriptors.remove(_concreteRoleDescriptor) ;
+	}
+
+	public void addAllConcreteRoleDescriptors(Set<ConcreteRoleDescriptor> _concreteRoleDescriptors) {
+		for (ConcreteRoleDescriptor crd : _concreteRoleDescriptors) {
+			crd.addRoleDescriptor(this);
+		}
+	}
+
+	public void removeAllConcreteRoleDescriptors() {
+		for (ConcreteRoleDescriptor crd : this.getConcreteRoleDescriptors())
+			crd.setRoleDescriptor(null);
+		this.getConcreteRoleDescriptors().clear();
 	}
 
 	/*
@@ -268,6 +261,10 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 		this.additionalTasks.clear();
 	}
 
+	/*
+	 * relation between RoleDescriptor and Participant.
+	 */
+
 	public void addParticipant(Participant _participant) {
 		this.participants.add(_participant);
 		_participant.getRolesListForAProject().add(this);
@@ -290,6 +287,10 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 		}
 		this.participants.clear();
 	}
+
+	/*
+	 * Getter and Setter.
+	 */
 
 	/**
 	 * Getter of roleDefinition.
@@ -358,6 +359,26 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	public void setConcreteRoleDescriptors(
 			Set<ConcreteRoleDescriptor> concreteRoleDescriptors) {
 		this.concreteRoleDescriptors = concreteRoleDescriptors;
+	}
+
+	/**
+	 * Getter of participant.
+	 *
+	 * @return t he participants.
+	 */
+	public Set<Participant> getParticipants() {
+		return this.participants;
+	}
+
+	/**
+	 * Setter of participants.
+	 *
+	 * @param _participants
+	 *            The participants to set.
+	 */
+	@SuppressWarnings("unused")
+	private void setParticipants(Set<Participant> _participants) {
+		this.participants = _participants;
 	}
 
 }
