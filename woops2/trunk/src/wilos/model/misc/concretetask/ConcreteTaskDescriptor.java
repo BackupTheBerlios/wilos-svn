@@ -5,6 +5,7 @@ import java.util.Date;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.utils.Constantes.State;
 
@@ -33,6 +34,8 @@ public class ConcreteTaskDescriptor {
 	private float remainingTime;
 
 	private float accomplishedTime;
+
+	private ConcreteRoleDescriptor concreteRoleDescriptor;
 
 	public ConcreteTaskDescriptor() {
 		super();
@@ -117,6 +120,28 @@ public class ConcreteTaskDescriptor {
 				.toHashCode();
 	}
 
+	/*
+	 * Relation between ConcreteRoleDescriptor and ConcreteTaskDescriptor.
+	 *
+	 */
+
+	public void addConcreteRoleDescriptor(
+			ConcreteRoleDescriptor _concreteRoleDescriptor) {
+		this.concreteRoleDescriptor = _concreteRoleDescriptor;
+		_concreteRoleDescriptor.getConcreteTaskDescriptors().add(this);
+	}
+
+	public void removeConcreteRoleDescriptor(
+			ConcreteRoleDescriptor _concreteRoleDescriptor) {
+		_concreteRoleDescriptor.getConcreteTaskDescriptors().remove(this);
+		this.concreteRoleDescriptor = null;
+	}
+
+	/*
+	 * Relation between TaskDescriptor and ConcreteTaskDescriptor.
+	 *
+	 */
+
 	public void addTaskDescriptor(TaskDescriptor _taskDescriptor) {
 		this.taskDescriptor = _taskDescriptor;
 		_taskDescriptor.getConcreteTaskDescriptors().add(this);
@@ -126,6 +151,11 @@ public class ConcreteTaskDescriptor {
 		_taskDescriptor.getConcreteTaskDescriptors().remove(this);
 		this.taskDescriptor = null;
 	}
+
+	/*
+	 * Getter and Setter.
+	 *
+	 */
 
 	public String getId() {
 		return id;
@@ -221,5 +251,14 @@ public class ConcreteTaskDescriptor {
 
 	public void setProjectId(String projectId) {
 		this.projectId = projectId;
+	}
+
+	public ConcreteRoleDescriptor getConcreteRoleDescriptor() {
+		return concreteRoleDescriptor;
+	}
+
+	public void setConcreteRoleDescriptor(
+			ConcreteRoleDescriptor concreteRoleDescriptor) {
+		this.concreteRoleDescriptor = concreteRoleDescriptor;
 	}
 }
