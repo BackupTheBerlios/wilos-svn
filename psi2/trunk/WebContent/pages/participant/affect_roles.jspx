@@ -1,8 +1,8 @@
 <ice:form id="roles_form">
 	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
 		<ice:panelTabSet id="panelTabSet_participant" styleClass="componentPanelTabSetLayout">
-			
-			
+
+
 			<ice:panelTab id="panelTab_participant_roles" label="#{msgs['component.tableparticipantrole.title']}" imageDir="images">
 				<ice:panelGroup id="rolesPanelGroup" styleClass="contentIncludePanelGroup">
 					<ice:dataTable value="#{RoleBean.project}" border="1" var="project">
@@ -22,13 +22,13 @@
 						        	<f:param name="columnId" value="#{roleD}"/>
 						    	</ice:selectBooleanCheckbox>
 						    </ice:panelGroup>
-						</ice:columns>						
+						</ice:columns>
 					</ice:dataTable>
 					<ice:commandButton value="saveRoles" action="#{RoleBean.saveParticipantRoles}"/>
 				</ice:panelGroup>
 			</ice:panelTab>
-			
-			
+
+
 			<ice:panelTab id="panelTab_participant_project" label="#{msgs['component.tableparticipantproject.tabTitle']}" imageDir="images">
 				<ice:panelGroup id="projectPanelGroup" styleClass="contentIncludePanelGroup">
 					<h3><ice:outputText value="#{msgs['component.tableparticipantproject.title']}" /></h3>
