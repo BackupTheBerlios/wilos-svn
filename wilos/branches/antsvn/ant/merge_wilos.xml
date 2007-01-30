@@ -58,6 +58,11 @@
 	<!-- merge the configuration file -->
 	<target name="merge_conf">
 		<mkdir dir="${sources.wilos}/WebContent/WEB-INF" />
+		<delete>
+			<fileset dir="${sources.wilos}/src">
+				<include name="applicationContext.xml" />
+			</fileset>
+		</delete>
 		<copy todir="${sources.wilos}/WebContent/WEB-INF">
 			<fileset dir="${sources.branches}/conf">
 				<include name="web.xml" />
@@ -65,14 +70,11 @@
 				<include name="sun-jaxws.xml" />
 			</fileset>
 		</copy>
-		<copy todir="${sources.wilos}/src">
-			<fileset dir="${sources.branches}/conf">
-				<include name="applicationContext.xml" />
-			</fileset>
-		</copy>
+		<copyfile dest="${sources.wilos}/src/applicationContext.xml" 
+			src="${sources.branches}/conf/applicationContext.xml"/>
 	</target>
 
-	<!-- merge the configuration file -->
+	<!-- merge librairies -->
 	<target name="merge_lib">
 		<mkdir dir="${sources.wilos}/WebContent/WEB-INF/lib" />
 		<copy todir="${sources.wilos}/WebContent/WEB-INF/lib">
