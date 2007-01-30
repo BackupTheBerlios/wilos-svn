@@ -15,9 +15,18 @@ public class ConcreteTaskDescriptorTest extends TestCase {
 	
 	Date date;
 	
+	public static final String CONCRETE_NAME = "Concrete name" ;
+	
+	public static final int ACCOMPLISHED_TIME = 15 ;
+	
+	public static final int PLANNED_TIME = 24 ;
+	
+	public static final String PLANNED_FINISHING_DATE_STRING = "18/01/2007 10:00" ;
+	
+	
 	public ConcreteTaskDescriptorTest(){
 		try {
-			date = Constantes.DATE_FORMAT.parse("18-01-2007 10:00");
+			date = Constantes.DATE_FORMAT.parse(PLANNED_FINISHING_DATE_STRING);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -31,9 +40,9 @@ public class ConcreteTaskDescriptorTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp() ;
 		this.concreteTaskDescriptor = new ConcreteTaskDescriptor() ;
-		this.concreteTaskDescriptor.setConcreteName("Concrete Name");
-		this.concreteTaskDescriptor.setAccomplishedTime(15);
-		this.concreteTaskDescriptor.setPlannedTime(24);
+		this.concreteTaskDescriptor.setConcreteName(CONCRETE_NAME);
+		this.concreteTaskDescriptor.setAccomplishedTime(ACCOMPLISHED_TIME);
+		this.concreteTaskDescriptor.setPlannedTime(PLANNED_TIME);
 		this.concreteTaskDescriptor.setPlannedFinishingDate(this.date);
 	}
 
@@ -46,6 +55,39 @@ public class ConcreteTaskDescriptorTest extends TestCase {
 		super.tearDown() ;
 	}
 	
+	/**
+	 * TODO
+	 * 
+	 */
+	public void testClone () {
+		try{
+			assertEquals(this.concreteTaskDescriptor, this.concreteTaskDescriptor.clone()) ;
+		}
+		catch(CloneNotSupportedException e){
+			fail("Error CloneNotSupportedException in the testClone method") ;
+		}
+	}
+	
+	/**
+	 * TODO
+	 * 
+	 */
+	public void testHashCode() {
+		ConcreteTaskDescriptor ctd = new ConcreteTaskDescriptor();
+		ctd.setConcreteName(CONCRETE_NAME);
+		ctd.setAccomplishedTime(ACCOMPLISHED_TIME);
+		ctd.setPlannedTime(PLANNED_TIME);
+		ctd.setPlannedFinishingDate(this.date);
+		
+		assertNotNull(this.concreteTaskDescriptor.hashCode());
+		assertNotNull(ctd.hashCode());
+		assertEquals(this.concreteTaskDescriptor.hashCode(),ctd.hashCode());
+	}
+	
+	/**
+	 * TODO
+	 * 
+	 */
 	public void testAddTaskDescriptor() {
 		TaskDescriptor taskDescriptor = new TaskDescriptor();
 		this.concreteTaskDescriptor.addTaskDescriptor(taskDescriptor);
@@ -58,6 +100,10 @@ public class ConcreteTaskDescriptorTest extends TestCase {
 		System.out.println(this.concreteTaskDescriptor.getPlannedFinishingDate());
 	}
 
+	/**
+	 * TODO
+	 * 
+	 */
 	public void testRemoveTaskDescriptor() {
 		TaskDescriptor taskDescriptor = new TaskDescriptor();
 		

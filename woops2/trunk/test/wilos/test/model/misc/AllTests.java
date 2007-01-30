@@ -14,6 +14,7 @@ public class AllTests {
 		TestSuite suite = new TestSuite("Test for wilos.test.model.misc") ;
 		// $JUnit-BEGIN$
 		suite.addTest(wilos.test.model.misc.concretetaskdescriptor.AllTests.suite()) ;
+		suite.addTest(wilos.test.model.misc.concreteroledescriptor.AllTests.suite()) ;
 		// $JUnit-END$
 		return suite ;
 	}
