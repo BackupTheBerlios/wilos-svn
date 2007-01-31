@@ -26,22 +26,22 @@ public class PhaseNode extends DefaultMutableTreeNode {
 		this.setUserObject(iceUserObject);
 
 		iceUserObject.setExpanded(true);
-		iceUserObject.setText(this.phase.getName());
+		iceUserObject.setText(this.phase.getPresentationName());
 		iceUserObject.setLeaf(false);
 		iceUserObject.setBranchContractedIcon("images/tree/icon_phase.gif");
 		iceUserObject.setBranchExpandedIcon("images/tree/icon_phase.gif");
 		// node informations
 		iceUserObject.setId(this.phase.getId());
 		iceUserObject.setPageId(WilosObjectNode.PHASENODE);
-		
+
 		for (BreakdownElement breakdownElement : this.phase
 				.getBreakDownElements()) {
 			if (breakdownElement instanceof Iteration) {
 				this.add(new IterationNode((Iteration) breakdownElement, _roleDescriptors));
-			} 
+			}
 			else if (breakdownElement instanceof Activity) {
 				this.add(new ActivityNode((Activity) breakdownElement, _roleDescriptors));
-			} 
+			}
 			else if (breakdownElement instanceof TaskDescriptor) {
 				TaskDescriptor td = (TaskDescriptor) breakdownElement;
 				if ((_roleDescriptors == null)||(_roleDescriptors.size() == 0)||(_roleDescriptors.contains(td.getMainRole())))
