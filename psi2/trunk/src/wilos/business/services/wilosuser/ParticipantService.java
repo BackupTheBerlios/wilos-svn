@@ -120,12 +120,8 @@ public class ParticipantService {
 
 		// chargement du participant et des projets
 		String login = participant.getLogin() ;
-		this.logger.debug("### LOGIN WILOS :" + login + " ###") ;
 		chargedParticipant = this.participantDao.getParticipant(login) ;
-		this.logger.debug("### PARTICIPANT :" + chargedParticipant.getName() + " ###") ;
 		allProjectList = (HashSet<Project>) this.projectService.getUnfinishedProjects() ;
-
-		this.logger.debug("### NOM DU PROJET COURANT :" + allProjectList.size() + " ###") ;
 
 		for(Project p : allProjectList){
 			if(chargedParticipant.getAffectedProjectList().contains(p)){
@@ -172,10 +168,7 @@ public class ParticipantService {
 				currentParticipant.removeFromProject(currentProject) ;
 			}
 		}
-		this.logger.debug("### currentParticipant " + currentParticipant.getAffectedProjectList().size() + " ###") ;
-
 		this.participantDao.saveOrUpdateParticipant(currentParticipant) ;
-
 	}
 
 	/**
@@ -239,8 +232,6 @@ public class ParticipantService {
 				currentParticipant.removeManagedProject(currentProject);
 			}
 		}
-		//this.logger.debug("### currentProjectManager "+ currentParticipant.getAffectedProjectList().size() +" ###");
 		this.participantDao.saveOrUpdateParticipant(currentParticipant);
-	
 	}
 }

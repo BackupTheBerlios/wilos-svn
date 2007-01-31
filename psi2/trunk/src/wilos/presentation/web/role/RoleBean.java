@@ -48,7 +48,6 @@ public class RoleBean {
 	 * 
 	 */
 	public RoleBean() {
-		this.logger.debug("--- RoleBean --- == creating ..." + this);
 		this.roleDescriptor = new RoleDescriptor();
 	}
 
@@ -75,7 +74,6 @@ public class RoleBean {
 	public List<RoleDescriptor> getRolesList() {
 		this.rolesList = new ArrayList<RoleDescriptor>();
 		rolesList.addAll(this.roleService.getRolesDescriptor());
-		this.logger.debug("roles list =" + this.rolesList);
 		return this.rolesList;
 	}
 
@@ -95,7 +93,6 @@ public class RoleBean {
 	 *            The roleDescriptor to set.
 	 */
 	public void setRoleDescriptor(RoleDescriptor _roleDescriptor) {
-		this.logger.debug("### Participant = " + _roleDescriptor + " ###");
 		this.roleDescriptor = _roleDescriptor;
 	}
 

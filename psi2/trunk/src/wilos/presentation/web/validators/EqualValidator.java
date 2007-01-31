@@ -24,7 +24,6 @@ public class EqualValidator implements Validator {
 		String valeur = (String) component.getAttributes().get("value") ;
 
 		if(!_value.equals(valeur) || valeur.equals("") || _value.equals("")){
-			this.logger.debug("### THE FIELDS ARE NOT EQUALS ###") ;
 			FacesMessage message = new FacesMessage() ;
 			message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 			message.setDetail("Les deux champs ne sont pas identiques") ;

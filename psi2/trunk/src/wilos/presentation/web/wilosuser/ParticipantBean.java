@@ -204,7 +204,6 @@ public class ParticipantBean {
 	public List<RoleDescriptor> getRolesList() {
 		this.rolesList = new ArrayList<RoleDescriptor>() ;
 		rolesList.addAll(this.participantService.getRolesListForAParticipant(this.participant.getLogin())) ;
-		this.logger.debug("roles list =" + this.rolesList) ;
 		return this.rolesList ;
 	}
 
@@ -264,7 +263,6 @@ public class ParticipantBean {
 	 *            The participant to set.
 	 */
 	public void setParticipant(Participant _participant) {
-		this.logger.debug("### Participant = " + _participant + " ###") ;
 		this.participant = _participant ;
 	}
 
@@ -454,7 +452,9 @@ public class ParticipantBean {
 					
 					if(projectManager == null){
 						
-						this.logger.debug("### Projet : " + currentProject.getName() + "/ Affecte : PERSONNE ###") ;
+						/**
+						 * TODO : nobody à bundliser
+						 */
 						ligne.put("projectManagerName", "nobody") ;
 						ligne.put("projectManager_id", "") ;
 						ligne.put("affected", (new Boolean(false)).toString()) ;
@@ -462,14 +462,12 @@ public class ParticipantBean {
 					}
 					else
 					{
-						this.logger.debug("### Projet : " + currentProject.getName() + "/ Affecte : " +projectManager.getLogin()+ "###") ;
 						String projectManagerName = projectManager.getName().concat(" " +projectManager.getFirstname()) ;
 						ligne.put("projectManager_id", projectManager.getWilosuser_id()) ;
 						ligne.put("projectManagerName", projectManagerName) ;
 						//the project is manageable by the current logged participant
 						if(projectManager.getLogin().equals(user.getLogin()))
 						{
-							this.logger.debug("### MANAGEABLE : "+user.getLogin()+" ###");
 							ligne.put("affected", (new Boolean(true)).toString()) ;
 							this.manageableProjectsList.add(ligne) ;
 						}
@@ -503,7 +501,6 @@ public class ParticipantBean {
 				currentProject = (Project) iter.next() ;
 				Participant projectManager = notManageableProjects.get(currentProject);
 				
-				this.logger.debug("### Projet : " + currentProject.getName() + "/ Affecte : " + notManageableProjects.get(currentProject) + "###") ;
 				if(notManageableProjects.get(currentProject) != null){
 					if(!projectManager.getLogin().equals(user.getLogin()))
 					{

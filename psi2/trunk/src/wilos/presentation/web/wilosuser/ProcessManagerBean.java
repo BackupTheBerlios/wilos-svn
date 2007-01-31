@@ -40,7 +40,6 @@ public class ProcessManagerBean {
 	 * 
 	 */
 	public ProcessManagerBean() {
-		this.logger.debug("--- ProcessManagerBean --- == creating ..." + this) ;
 		this.processManager = new ProcessManager() ;
 	}
 

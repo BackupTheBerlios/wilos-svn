@@ -18,6 +18,7 @@ import org.apache.commons.logging.LogFactory;
 import wilos.business.services.project.ProjectService;
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.misc.project.Project;
+import wilos.model.misc.wilosuser.WilosUser;
 import wilos.model.spem2.process.Process;
 
 /**
@@ -46,22 +47,20 @@ public class ProjectBean {
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
 	private SimpleDateFormat formatter;
+	
+	private String selectProcessAffectation ;
+	
+	private String processName;
 
 	/**
 	 * Constructor.
 	 * 
 	 */
 	public ProjectBean() {
-		this.logger.debug("--- Project --- == creating ..." + this) ;
 		this.project = new Project() ;
 		this.selectedProcessGuid="";
 		this.processNamesList = new ArrayList<SelectItem>();
 		this.formatter = new SimpleDateFormat("dd/MM/yyyy");
-		/*
-		 * this.projectList = (HashSet<Project>)this.projectService.getAllProjects(); for(Project
-		 * projectTmp : this.projectList){ this.logger.debug("### Project"+projectTmp.getName()+"
-		 * ###") ; }
-		 */
 	}
 
 	/**
@@ -126,10 +125,8 @@ public class ProjectBean {
 		//tmpProjId = "2c90a1b2104ad70601104ad906f90001";//debug
 		if(tmpProjId!=null){		
 			Project projTmp = projectService.getProject(tmpProjId);
-			this.logger.debug("Project a affecter au process: "+projTmp) ;
 			if(projTmp!=null){
 				Process procTmp = processService.getProcessDao().getProcessFromGuid(selectedProcessGuid);
-				this.logger.debug("Process a appliquer au projet: "+procTmp) ;
 				if(procTmp!=null){
 					projectService.saveProcessProjectAffectation(procTmp, projTmp);
 				}
@@ -238,12 +235,8 @@ public class ProjectBean {
 		
 		for(int i = 0; i < tmpListProcess.size(); i++ ){
 			tmpListNames.add(new SelectItem(tmpListProcess.get(i).getGuid(),tmpListProcess.get(i).getName()));
-			this.logger.debug("NEW PROCESS DETECTED !!!!!") ;
 		}
-		this.logger.debug("tmpListNames:"+tmpListNames) ;
 		processNamesList = tmpListNames;
-		this.logger.debug("processNamesList:"+processNamesList) ;
-
 		return this.processNamesList ;
 	}
 
@@ -285,12 +278,8 @@ public class ProjectBean {
 		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
 		HttpSession sess = req.getSession() ;
 		String tmpProjId = (String)sess.getAttribute("projectId");
-		this.logger.debug("Process selectionne avt get: "+this.selectedProcessGuid) ;
-		this.logger.debug("Id du Projet selectionne: "+tmpProjId) ;
-		//tmpProjId = "2c90a1b2104ad70601104ad906f90001";//debug
 		if(tmpProjId!=null){
 			Project projTmp = projectService.getProject(tmpProjId) ;
-			this.logger.debug("Project recupere de la cession: "+projTmp) ;
 			if(projTmp!=null){
 				Process procTmp = projTmp.getProcess();
 				if(procTmp!=null){
@@ -298,7 +287,6 @@ public class ProjectBean {
 				}
 			}
 		}
-		this.logger.debug("Process selectionne apres get: "+this.selectedProcessGuid) ;
 		return this.selectedProcessGuid ;
 	}
 
@@ -308,8 +296,68 @@ public class ProjectBean {
 	 * @param _selectedProcessGuid The selectedProcessGuid to set.
 	 */
 	public void setSelectedProcessGuid(String _selectedProcessGuid) {
-		this.logger.debug("Process selectionne "+this.selectedProcessGuid) ;
 		this.selectedProcessGuid = _selectedProcessGuid ;
+	}
+
+	/**
+	 * @return the selectProcessAffectation
+	 */
+	public String getSelectProcessAffectation() {
+		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
+		HttpSession sess = req.getSession() ;
+		
+		String tmpProjId = (String)sess.getAttribute("projectId");
+		Project currentProject = this.projectService.getProject(tmpProjId);
+		
+		
+		
+		WilosUser tmpWilosUser = (WilosUser)sess.getAttribute("wilosUser");
+				
+		if (currentProject.getProcess() == null)
+		{
+			if (currentProject.getProjectManager() != null)
+			{
+				if (currentProject.getProjectManager().getLogin().equals(tmpWilosUser.getLogin())  )
+				{
+					this.selectProcessAffectation = "process_affectation_view" ;
+				}
+				else
+				{
+					this.selectProcessAffectation = "no_process_affectation_view" ;
+				}
+			}
+			else
+			{
+				this.selectProcessAffectation = "no_process_affectation_view" ;
+			}
+		}
+		else
+		{
+			this.setProcessName(currentProject.getProcess().getName());
+			this.selectProcessAffectation = "selected_process_view" ;
+		}
+		return this.selectProcessAffectation;
+	}
+
+	/**
+	 * @param selectProcessAffectation the selectProcessAffectation to set
+	 */
+	public void setSelectProcessAffectation(String selectProcessAffectation) {
+		this.selectProcessAffectation = selectProcessAffectation;
+	}
+	
+	/**
+	 * @return the processName
+	 */
+	public String getProcessName() {
+		return processName;
+	}
+
+	/**
+	 * @param processName the processName to set
+	 */
+	public void setProcessName(String processName) {
+		this.processName = processName;
 	}
 
 }

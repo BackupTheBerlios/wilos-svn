@@ -4,28 +4,47 @@
 <ice:form>
 	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1"
 		border="0" bgcolor="#BEB4CC">
-		<ice:panelTabSet bgcolor="#BEB4CC">
+		<ice:panelTabSet id="panelTabSet_project" styleClass="componentPanelTabSetLayout">
 			<br />
-			<ice:panelTab label="Project Display">
+			<ice:panelTab id="panelTab_projectDisplay" label="Project Display" imageDir="images">
 				<br />
-				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2"
-					border="0">
+				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2" border="0">
 					<ice:outputText value="name " />
-					<ice:outputText
-						value="#{ProjectViewerBean.project.name}" />
+					<ice:outputText	value="#{ProjectViewerBean.project.name}" />
 					<ice:outputText value="description " />
-					<ice:outputText
-						value="#{ProjectViewerBean.project.description}" />
+					<ice:outputText	value="#{ProjectViewerBean.project.description}" />
 					<ice:outputText value="creationDate " />
-					<ice:outputText
-						value="#{ProjectViewerBean.project.launchingDate}" />
+					<ice:outputText	value="#{ProjectViewerBean.project.creationDate}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</ice:outputText>
 					<ice:outputText value="launchingDate " />
-					<ice:outputText
-						value="#{ProjectViewerBean.project.launchingDate}" />
+					<ice:outputText	value="#{ProjectViewerBean.project.launchingDate}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</ice:outputText>
 					<ice:outputText value="isFinished " />
-					<ice:outputText
-						value="#{ProjectViewerBean.project.isFinished}" />
+					<ice:outputText	value="#{ProjectViewerBean.project.isFinished}" />
 				</ice:panelGrid>
+
+				<ice:outputText styleClass="propertyLabel" value="#{msgs['component.tableparticipantProcessProject.processList']}"/>
+				<ice:panelStack id="panelStack_projectProcess" selectedPanel="#{ProjectBean.selectProcessAffectation}">
+	                <f:subview id="process_affectation_view">
+						<ice:panelGroup id="projectProcessPanelGroup" styleClass="contentIncludePanelGroup">
+							<ice:selectOneRadio value="#{ProjectBean.selectedProcessGuid}" layout="pageDirection">
+								<f:selectItems value="#{ProjectBean.processNamesList}"/><br />
+							</ice:selectOneRadio>
+							<br/>
+							<ice:commandButton value="#{msgs['component.tableparticipantProcessProject.affectButton']}" 
+										action="#{ProjectBean.saveProjectProcessAffectation}"/>
+						</ice:panelGroup>
+					</f:subview>
+					<f:subview id="no_process_affectation_view">
+						<ice:outputText value="#{msgs['component.tableparticipantProcessProject.noallowed']}" />
+					</f:subview>
+					<f:subview id="selected_process_view">
+						<ice:outputText value="#{msgs['component.tableparticipantProcessProject.selected']}" />
+						<ice:outputText value="#{ProjectBean.processName}" />
+					</f:subview>
+				</ice:panelStack>
 			</ice:panelTab>
 		</ice:panelTabSet>
 	</ice:panelGrid>

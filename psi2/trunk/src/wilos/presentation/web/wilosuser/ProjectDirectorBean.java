@@ -40,7 +40,6 @@ public class ProjectDirectorBean {
 	 * 
 	 */
 	public ProjectDirectorBean() {
-		this.logger.debug("--- ProjectDirectorBean --- == creating ..." + this);
 		this.projectDirector = new ProjectDirector();
 	}
 
