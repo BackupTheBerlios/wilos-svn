@@ -148,7 +148,24 @@
             'images/connect_disconnected.gif',
             'images/connect_idle.gif'
     );
+    
+    function submitOnEnter(evt){
+			if( evt.keyCode == 13 ){
+				var inputs = document.getElementsByTagName('input');	
+				var submit;			
+				for( var i=0;i<=inputs.length;i+=1){
+					if( inputs[i].id.indexOf('submit') > -1 ){
+						submit = inputs[i];
+						submit.click();
+						break;
+					}
+				}
+			}
+			else
+				return true;
+		};
     ]]>
+    
 </script>
     </body>
     </html>
