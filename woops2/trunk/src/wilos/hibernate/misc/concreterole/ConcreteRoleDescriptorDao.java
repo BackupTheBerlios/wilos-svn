@@ -15,7 +15,7 @@ import wilos.utils.ExceptionManager;
  * ConcreteRoleDescriptorDao manage requests from the system to store
  * ConcreteRoleDescriptorDao to the database
  * 
- * @author mat,seb
+ * @author nanawel
  * 
  */
 public class ConcreteRoleDescriptorDao extends HibernateDaoSupport {
