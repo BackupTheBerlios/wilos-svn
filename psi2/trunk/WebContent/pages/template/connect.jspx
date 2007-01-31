@@ -19,24 +19,25 @@
                         styleClass=""
                         selectedPanel="#{connect.selectedPanel.templateName}">
 		<ice:panelGroup id="not_connected">
-			<f:subview id="not_connected_view">
+			<f:subview id="not_connected_view" >
 				<ice:form id="connect_form">
 					<ice:panelGrid columns="2">			
 						<ice:outputLabel value="#{msgs['component.authentificationfield.login']}" style="iceInputtext"/>
 						<ice:inputText size="15" immediate="true" value="#{LoginBean.login}" />
 						<ice:outputText value="#{msgs['component.authentificationfield.password']}"/>
-						<ice:inputSecret size="15" value="#{LoginBean.password}"/>
+						<h:inputSecret size="15" value="#{LoginBean.password}" onkeydown="submitOnEnter(this);"/>
 					</ice:panelGrid>
 					<ice:panelGrid columns="2">
-						<ice:commandButton type="submit" value="#{msgs['component.authentificationfield.connexion']}" action="#{LoginBean.authentificationAction}"/>
-						<ice:commandLink immediate="true" type="submit" value="#{msgs['component.authentificationfield.inscription']}" action="#{menu.subscribe}"/>
-					</ice:panelGrid>	
-				</ice:form>
+						<h:commandButton type="submit" value="#{msgs['component.authentificationfield.connexion']}" action="#{LoginBean.authentificationAction}"/>
+						<ice:commandLink immediate="true"  value="#{msgs['component.authentificationfield.inscription']}" action="#{menu.subscribe}"/>
+					</ice:panelGrid>
+				</ice:form>	
+				
 			</f:subview>
 		</ice:panelGroup>
 		<ice:panelGroup id="connected">
 			<f:subview id="connected_view">
-				<ice:form id="connected_form">
+				<ice:form id="connected_form" >
 					<ice:panelGrid columns="2">			
 						<ice:outputLabel value="#{msgs['component.constant.welcome']}"/>
 						<ice:outputLabel value="#{LoginBean.login}"/>
