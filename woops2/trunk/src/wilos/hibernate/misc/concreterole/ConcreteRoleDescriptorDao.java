@@ -87,6 +87,9 @@ public class ConcreteRoleDescriptorDao extends HibernateDaoSupport {
 		}
 	}
 
+	/*
+	 * Rk: Needs to be corrected
+	 * 
 	@SuppressWarnings("unchecked")
 	public List<ConcreteRoleDescriptor> getConcreteRoleDescriptorFromProject(
 			String _projectId) {
@@ -97,4 +100,5 @@ public class ConcreteRoleDescriptorDao extends HibernateDaoSupport {
 						_projectId);
 		return ctds;
 	}
+	*/
 }
