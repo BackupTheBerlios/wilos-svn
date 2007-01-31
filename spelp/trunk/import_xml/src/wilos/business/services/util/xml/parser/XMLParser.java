@@ -120,14 +120,9 @@ public class XMLParser {
 	}
 	
 
-
-	
-
-
-
 	/**
 	 * fillGuidesList
-	 * @return
+	 * @return a Guideline vector 
 	 */
 	private static Vector<Guideline> fillGuidesList() {
 		Vector<Guideline> theGuidelineList; // the return of the function
@@ -155,6 +150,10 @@ public class XMLParser {
 		return theGuidelineList;
 	}
 
+	/**
+	 * getAllActivities
+	 * @return the Set of all activity
+	 */
 	private static Set<Activity> getAllActivities() {
 		Set<Activity> activitiesList = new LinkedHashSet<Activity>();
 		
@@ -183,19 +182,18 @@ public class XMLParser {
 	 * @param aSet
 	 */
 	private static void setAllDependencyActivity(Set<Activity> aSet) {
-		Set<Activity> activitiesList = new LinkedHashSet<Activity>();
 		
-		/* evaluate the XPAth request and return the nodeList*/
+		// evaluate the XPAth request and return the nodeList
 		NodeList activities = (NodeList)XMLUtils.evaluate(xpath_activity,XPathConstants.NODESET);
 		
 
-		/* For each node */
+		// For each node 
 		Node aNode;
 		for(int i = 0 ; i < activities.getLength(); i++){
-			/* for each list element , get the list item */
+			// for each list element , get the list item 
 			aNode = activities.item(i);
 			Activity anActivity = new Activity();
-			/* Filler for the iteration and the item (node)*/
+			// Filler for the iteration and the item (node)
 			FillerActivity itFiller = new FillerActivity(anActivity, aNode);	
 			Activity returnedActivityFilled = (Activity) itFiller.getFilledElement();
 			
@@ -204,6 +202,11 @@ public class XMLParser {
 		
 	}
 
+	/**
+	 * setDependencyByActivity
+	 * @param _act
+	 * @param _node
+	 */
 	private static void setDependencyByActivity(Activity _act, Node _node) {
 		// search the predecessor
 		Activity ActivityTobereturn = null;
@@ -220,16 +223,11 @@ public class XMLParser {
 			ActivityTobereturn = getActivityById(allActivities, idAct_pred);
 			// if the task doesn't exist
 			if (ActivityTobereturn != null){
-				//set the task in the taskdescriptor
+				//Add the predecessor to the activity
 				_act.addPredecessor(ActivityTobereturn);
 			}			
 		}
 	}
-
-
-
-
-
 
 
 	/**
@@ -411,15 +409,16 @@ public class XMLParser {
 			taskTobereturn = getTaskDescriptorById(allTaskDescriptors, idTask_pred);
 			// if the task doesn't exist
 			if (taskTobereturn != null){
-				//set the task in the taskdescriptor
+				//add the predecessor to the TaskDescriptor
 				_t.addPredecessor(taskTobereturn);				
 			}
-			
 		}
-
 	}
 	
-	
+	/**
+	 * setAllDependencyTD
+	 * @param _allTaskD
+	 */
 	private static void setAllDependencyTD(Set<TaskDescriptor> _allTaskD) {
 		// gets all the roles in the file
 		NodeList taskDescriptors = (NodeList)XMLUtils.evaluate(xpath_taskDescriptor,XPathConstants.NODESET);
@@ -435,11 +434,6 @@ public class XMLParser {
 		}
 	}
 		
-		
-		
-
-
-
 
 	/**
 	 * setTaskByTaskDescriptor
@@ -851,6 +845,12 @@ public class XMLParser {
 		return returnedBde;
 	}
 	
+	/**
+	 * getActivityById
+	 * @param aSetActivity
+	 * @param bdeId
+	 * @return a Activity
+	 */
 	private static Activity getActivityById(Set<Activity> aSetActivity, String bdeId) {
 		for (Iterator i = aSetActivity.iterator() ; i.hasNext() ;){
 			Activity tmp = (Activity) i .next();
@@ -897,7 +897,7 @@ public class XMLParser {
 	/**
 	 * getGuidelineById
 	 * @param bdeId
-	 * @return
+	 * @return a Guideline
 	 */
 	private static Guideline getGuidelineById(String bdeId) {
 		for (Iterator i = GuidesList.iterator() ; i.hasNext() ;){
