@@ -1,0 +1,27 @@
+<ice:panelTab label="Import Process File">
+
+					<ice:panelGrid styleClass="componentLayoutRootTable" columns="1">
+						<ice:panelGroup styleClass="formBorderHighlight"
+							style="text-align:left">
+							<br />
+							
+							<ice:outputText value="Select a ZIP or XML file:" />
+							<br />
+							<ice:inputFile style="border:none; width:400px; height:70px;"
+								progressListener="#{XmlFileImportBean.progressListener}"
+								actionListener="#{XmlFileImportBean.uploadFileActionListener}"
+								uniqueFolder="false" file="#{XmlFileImportBean.file}"
+								immediate="true" />
+							<ice:outputProgress id="pro" value="#{XmlFileImportBean.percent}" />
+							<ice:outputText value="File Name: #{XmlFileImportBean.fileName}" />
+							<br />
+							<ice:outputText value="Content Type: #{XmlFileImportBean.contentType}" />
+							<br />
+							<ice:outputText value="Upload status: #{XmlFileImportBean.uploadStatus}" />
+							<ice:messages />
+						</ice:panelGroup>
+
+						<br />
+
+					</ice:panelGrid>
+</ice:panelTab>

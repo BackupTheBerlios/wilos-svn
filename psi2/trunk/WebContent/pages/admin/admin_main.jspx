@@ -1,1 +1,11 @@
-<jsp:directive.include file="./pages/admin/processManager_create.jspx"/>
+<ice:form id="roles_form">
+	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
+		<ice:panelTabSet id="panelTabSet_adminAdd" styleClass="componentPanelTabSetLayout">
+			<jsp:directive.include file="./pages/admin/tabProcessManager.jspx"/>
+			<jsp:directive.include file="./pages/admin/tabProjectDirector.jspx"/>
+			<jsp:directive.include file="./pages/admin/tabParticipant_list.jspx"/>		
+			<jsp:directive.include file="./pages/admin/tabProcess_managers_list.jspx"/>	
+			<jsp:directive.include file="./pages/admin/tabProject_directors_list.jspx"/>
+		</ice:panelTabSet>
+	</ice:panelGrid>
+</ice:form>
