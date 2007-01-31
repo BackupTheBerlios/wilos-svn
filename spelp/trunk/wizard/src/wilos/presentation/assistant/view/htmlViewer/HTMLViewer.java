@@ -30,8 +30,11 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.element.Element;
 import wilos.model.spem2.guide.Guideline;
+import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.ressources.Bundle;
 
@@ -109,6 +112,7 @@ public class HTMLViewer extends JFrame {
 		guidesList.setVisible(false);
 		//guidesList.setAutoscrolls(true);
 		guidesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		guidesList.setVisibleRowCount(2);
 		//guidesList.setPreferredSize(new Dimension(25,25));
 		this.guidesScrollPane = new JScrollPane(guidesList);
 		this.southPanel.add(this.guidesScrollPane);
@@ -130,17 +134,24 @@ public class HTMLViewer extends JFrame {
 		
 		this.myEditorPane.setText(this.HTMLCode);
 		
-		if(message.length() != 0)
+		if(message.length() != 0){
 			this.myEditorPane.setCaretPosition(1); // revient au debut du texte
+		}
 		
 		this.setVisible(true);
 	}
 	
 	private void displayElement(Element e) {
-		guidesList.setVisible(e instanceof Guideline);
-		
+		guidesList.setVisible(e instanceof Guideline || e instanceof TaskDescriptor);
+			
 		/* Affichage du nom */
-		this.myElementLabel.setText(e.getName()) ;
+		if (e instanceof BreakdownElement) {
+			BreakdownElement bde = (BreakdownElement)e ;
+			this.myElementLabel.setText(bde.getPresentationName()) ;
+		}
+		else {
+			this.myElementLabel.setText(e.getName()) ;
+		}
 		
 		/* Affichage de la description (ancienne methode setMessage) */
 		String description = e.getDescription();
@@ -150,14 +161,12 @@ public class HTMLViewer extends JFrame {
 		
 		if(description.length() != 0)
 			this.myEditorPane.setCaretPosition(1); // revient au debut du texte
-		
-//		if(e instanceof Guideline)
-//			this.southPanel.setVisible(false);
-//		else
-//			this.southPanel.setVisible(true);
-		
+			
 		this.setVisible(true);
 		
+	}
+
+	private void manageArrows() {
 		/* Activation/Desactivation des boutons d'historique */
 		if(this.cursorStack < 1)
 			this.prevButton.setEnabled(false);
@@ -170,26 +179,54 @@ public class HTMLViewer extends JFrame {
 			this.nextButton.setEnabled(false);
 	}
 
+	public void viewObject (Object o) {
+		boolean ok = false ;
+		if(o instanceof ConcreteTaskDescriptor){
+			ConcreteTaskDescriptor t = (ConcreteTaskDescriptor)o;
+			o = getConcreteTaskDescriptorAndDisplay(t);
+			Element tmp = (Element)o;
+			displayElement(tmp);
+			ok = true ;
+		}
+		else if (o instanceof RoleDescriptor){
+			RoleDescriptor r = (RoleDescriptor)o;
+			displayElement(r);
+			ok = true ;
+		}
+		else if (o instanceof Element){
+			Element e = (Element)o;
+			displayElement(e);
+			ok = true ;
+		}
+		// if ok = true then object is an element
+		if (ok) {
+			Element e = (Element)o;
+			if(!this.historyStack.empty()) {
+				while(this.cursorStack != this.historyStack.size()-1) {
+					this.historyStack.pop();
+				}
+			}
+			
+			this.historyStack.push(e);
+			
+			if(this.historyStack.size() > 6){
+				this.historyStack.remove(0);
+			}
+			else {
+				this.cursorStack = this.historyStack.size()-1;
+			}
+			manageArrows();
+		}
+		
+	}
+
 	/**
 	 * Affiche les informations de l'element
-	 * 
+	 * et recupere les guides
 	 * @param ConcreteTaskDescriptor ctd
 	 */
-	public void setConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
+	public TaskDescriptor getConcreteTaskDescriptorAndDisplay(ConcreteTaskDescriptor ctd) {
 		TaskDescriptor td = ctd.getTaskDescriptor();
-		
-		if(!this.historyStack.empty())
-			while(this.cursorStack != this.historyStack.size()-1)
-				this.historyStack.pop();
-		
-		this.historyStack.push(td);
-		
-		if(this.historyStack.size() > 6)
-			this.historyStack.remove(0);
-		else
-			this.cursorStack = this.historyStack.size()-1;
-		
-		this.displayElement(td);
 		
 		/* Affichage des guides */
 		Set<Guideline> guides = new HashSet<Guideline>(); 
@@ -201,20 +238,22 @@ public class HTMLViewer extends JFrame {
 		vectGuides.addAll(guides);
 		
 		guidesList.setListData(vectGuides);
-		guidesList.setVisibleRowCount(2);
 		guidesList.setCellRenderer(new GuidesRenderer());
 		guidesList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				JList list = (JList)e.getSource();
 				Object value = list.getSelectedValue();
-				if(value != null)
-					displayElement((Element)value);
+				if(value != null){
+					viewObject((Element)value);
+				}
 			}
 		});
+		
 		if (guides.size() != 0){
 			guidesList.setVisible(true);
 		}
 		
+		return td ;
 	}
 	
 	private class GuidesRenderer extends DefaultListCellRenderer {
@@ -224,11 +263,13 @@ public class HTMLViewer extends JFrame {
 	}
 	
 	private void setPrevElement() {
-		this.displayElement(this.historyStack.get(--this.cursorStack)) ;
+		this.displayElement(this.historyStack.get(--this.cursorStack));
+		manageArrows();
 	}
 	
 	private void setNextElement() {
 		this.displayElement(this.historyStack.get(++this.cursorStack)) ;
+		manageArrows();
 	}
 	
 	/**

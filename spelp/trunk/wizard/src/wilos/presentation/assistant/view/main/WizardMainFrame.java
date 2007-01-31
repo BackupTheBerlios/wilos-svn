@@ -69,6 +69,7 @@ public class WizardMainFrame extends JFrame {
 		ContextualMenu menu = new ContextualMenu();
 		WizardStateMachine.getInstance().initUIElements(actionToolBar,jTree,menu);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.moveHTML();
 		this.addComponentListener(new ComponentListener(){
 	   		public void componentHidden(ComponentEvent e) {
 			// TODO Auto-generated method stub	

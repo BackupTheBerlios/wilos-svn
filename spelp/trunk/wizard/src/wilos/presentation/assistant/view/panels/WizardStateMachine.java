@@ -99,11 +99,12 @@ public class WizardStateMachine {
 			lastCtd = ctd;
 			
 			if (showInfo){
-				HTMLViewer.getInstance(null).setConcreteTaskDescriptor(ctd);
+				HTMLViewer.getInstance(null).viewObject(ctd);
 			}
 			
 		}
 		else {
+			HTMLViewer.getInstance(null).viewObject(object);
 			updateState(this.STATE_NOTHING);
 		}
 	}
@@ -146,7 +147,7 @@ public class WizardStateMachine {
 	public void changeHTMLViewerBehavior(boolean newBehavior) {
 		showInfo = newBehavior;
 		if (showInfo){
-			HTMLViewer.getInstance(null).setConcreteTaskDescriptor(lastCtd);
+			HTMLViewer.getInstance(null).viewObject(lastCtd);
 		}
 		else {
 			HTMLViewer.getInstance(null).setVisible(false);

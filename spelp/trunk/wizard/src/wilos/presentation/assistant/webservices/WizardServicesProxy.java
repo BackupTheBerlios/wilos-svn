@@ -135,7 +135,8 @@ public class WizardServicesProxy {
             aTmpRole.setName("Developper");
             aTmpRole.setDescription("Un gars qui developpe");
 
-            aTmpTask.setName("Coder le programme");
+            aTmpTask.setName("Coder le programme Partie I");
+            aTmpTask.setPresentationName("Coder le programme Partie I");
             aTmpTask.setDescription("Un grand moment de solitude");
             aTmpTask.addConcreteTaskDescriptor(aTmpConcrete);
 
