@@ -243,7 +243,7 @@ public class HTMLViewer extends JFrame {
 			public void valueChanged(ListSelectionEvent e) {
 				JList list = (JList)e.getSource();
 				Object value = list.getSelectedValue();
-				if(value != null){
+				if(value != null && e.getValueIsAdjusting()){
 					viewObject((Element)value);
 				}
 			}
