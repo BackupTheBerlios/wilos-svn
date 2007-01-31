@@ -48,6 +48,21 @@ public class AssistantService {
 		concreteTaskDescriptorService.startConcreteTaskDescriptor(ct);
 	}
 
+	public void suspendConcreteTaskDescriptor (String id) {
+		ConcreteTaskDescriptor ct = concreteTaskDescriptorService.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(id);
+		concreteTaskDescriptorService.suspendConcreteTaskDescriptor(ct);
+	}
+
+	public void resumeConcreteTaskDescriptor (String id) {
+		ConcreteTaskDescriptor ct = concreteTaskDescriptorService.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(id);
+// TODO JF : décommenter apres implémentation de la fonct° par woops		concreteTaskDescriptorService.resumeConcreteTaskDescriptor(ct);
+	}
+
+	public void finishConcreteTaskDescriptor (String id) {
+		ConcreteTaskDescriptor ct = concreteTaskDescriptorService.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(id);
+		concreteTaskDescriptorService.finishConcreteTaskDescriptor(ct);
+	}
+
 	public ConcreteTaskDescriptorService getConcreteTaskDescriptorService() {
 		return concreteTaskDescriptorService;
 	}

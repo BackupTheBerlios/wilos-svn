@@ -77,7 +77,36 @@ public class WizardServices {
     
     @WebMethod
     public void startConcreteTaskDescriptor (@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="id") String id) throws Exception {
+		System.out.println("APPEL DE METHODE : startConcreteTaskDescriptor");
     	if (getAuthentifiedParticipant (login, password)!=null) {
+    		System.out.println("le Participant est loggé");
+    		as.startConcreteTaskDescriptor(id);
+    	}
+    }
+    
+    @WebMethod
+    public void suspendConcreteTaskDescriptor (@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="id") String id) throws Exception {
+		System.out.println("APPEL DE METHODE : suspendConcreteTaskDescriptor");
+    	if (getAuthentifiedParticipant (login, password)!=null) {
+    		System.out.println("le Participant est loggé");
+    		as.suspendConcreteTaskDescriptor(id);
+    	}
+    }
+    
+    @WebMethod
+    public void resumeConcreteTaskDescriptor (@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="id") String id) throws Exception {
+		System.out.println("APPEL DE METHODE : resumeConcreteTaskDescriptor");
+    	if (getAuthentifiedParticipant (login, password)!=null) {
+    		System.out.println("le Participant est loggé");
+    		as.resumeConcreteTaskDescriptor(id);
+    	}
+    }
+    
+    @WebMethod
+    public void stopConcreteTaskDescriptor (@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="id") String id) throws Exception {
+		System.out.println("APPEL DE METHODE : stopConcreteTaskDescriptor");
+    	if (getAuthentifiedParticipant (login, password)!=null) {
+    		System.out.println("le Participant est loggé");
     		as.startConcreteTaskDescriptor(id);
     	}
     }
