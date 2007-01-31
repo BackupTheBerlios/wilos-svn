@@ -15,22 +15,22 @@ import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.task.TaskDescriptor;
 
 /**
- * 
+ *
  * @author Soosuske
  *
  */
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class TaskDescriptorService {
-	
+
 	private TaskDescriptorDao taskDescriptorDao ;
-	
+
 	private ConcreteTaskDescriptorDao concreteTaskDescriptorDao ;
-	
+
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
-	
+
 	/**
 	 * Return activities list
-	 * 
+	 *
 	 * @return
 	 */
 	@Transactional(readOnly = true)
@@ -38,7 +38,7 @@ public class TaskDescriptorService {
 		List<TaskDescriptor> tempList =  this.taskDescriptorDao.getAllTaskDescriptors() ;
 		List<TaskDescriptor> returnedList =  new ArrayList<TaskDescriptor>();
 		boolean flag = false;
-		
+
 		for (TaskDescriptor rd : tempList) {
 			flag = false;
 			for (Activity a : rd.getSuperActivities()) {
@@ -50,24 +50,24 @@ public class TaskDescriptorService {
 			if (flag){
 				returnedList.add(rd);
 				logger.debug("###TaskDescriptorDao ### added => "+rd);
-			}	
+			}
 		}
 		return returnedList;
 	}
-	
+
 	/**
 	 * TODO Method description
 	 *
 	 * @param _td
 	 */
 	public void taskDescriptorInstanciation (String _projectId, TaskDescriptor td) {
-		
+
 		ConcreteTaskDescriptor ctd = new ConcreteTaskDescriptor();
-		
-		ctd.setConcreteName(td.getName());
+
+		ctd.setConcreteName(td.getPresentationName());
 		ctd.setProjectId(_projectId);
 		ctd.addTaskDescriptor(td);
-		
+
 		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(ctd);
 	}
 
