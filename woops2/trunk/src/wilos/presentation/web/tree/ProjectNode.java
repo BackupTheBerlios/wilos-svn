@@ -38,8 +38,8 @@ public class ProjectNode extends DefaultMutableTreeNode {
 		if (this.project.getProcess() != null) {
 			//Project node name.
 			iceUserObject.setText(this.project.getName() + " ("
-					+ this.project.getProcess().getName() + ")");
-			
+					+ this.project.getProcess().getPresentationName() + ")");
+
 			//Nested nodes.
 			for (BreakdownElement breakdownElement : this.project.getProcess().getBreakDownElements()) {
 				if (breakdownElement instanceof Phase) {
