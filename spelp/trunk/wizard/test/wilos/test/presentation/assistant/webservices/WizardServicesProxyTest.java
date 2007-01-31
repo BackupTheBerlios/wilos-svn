@@ -29,29 +29,5 @@ public class WizardServicesProxyTest extends TestCase {
     protected void tearDown() throws Exception {
     }
 
-    /**
-     * Test of getRolesByUser method, of class webservices.WizardServicesProxy.
-     */
-    public void testGetRolesByUser() {
-        System.out.println("getRolesByUser");
-        
-        String login = "";
-        String password = "";
-        String adresseServeur = "localhost:9014/remote";
-        
-
-        ArrayList<RoleDescriptor> result = WizardServicesProxy.getRolesByUser(login, password, adresseServeur);
-        assertNotNull(result);
-        assertTrue(result.size()==0);       
-        
-        login = "testSansBD";
-        password = "testSansBD";
-        adresseServeur = "http://localhost:9014/remote";        
-
-        result = WizardServicesProxy.getRolesByUser(login, password, adresseServeur);
-        assertNotNull(result);
-        assertTrue(result.size()>=1);       
-
-    }
     
 }

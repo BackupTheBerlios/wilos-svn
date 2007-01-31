@@ -49,24 +49,6 @@ public class WizardServicesProxy {
     	WizardServicesProxy.address = anAddress;
     }
     
-	public static ArrayList<RoleDescriptor> getRolesByUser(String login, String password, String address) {	
-            ArrayList<RoleDescriptor> myRoleListe = new  ArrayList<RoleDescriptor>();
-            /*List<Process> pros = getAllProcess(login, password,adresseServeur);
-            for (Process pro : pros) {
-                for (BreakdownElement bre: pro.getBreakDownElements()) {
-                    if (bre instanceof RoleDescriptor) {
-                        myRoleListe.add((RoleDescriptor)bre);
-                    }
-                }
-            }*/
-            Participant myParticipant = getParticipant();
-            if (myParticipant!= null) {
-                for (RoleDescriptor rd : myParticipant.getRolesListForAProject()) {
-                    myRoleListe.add(rd);
-                }
-            }
-            return myRoleListe;
-	}
         
         public static Participant getParticipant()
         {
@@ -102,6 +84,49 @@ public class WizardServicesProxy {
                 e.printStackTrace();
             }
         }
+   
+        
+
+        public static  void stopConcreteTaskDescriptor (String theConcreteTaskId) {
+            try { 
+            	if (!login.equalsIgnoreCase(testIHMLoginString)) {
+            		WizardServicesService service = new WizardServicesService(new URL(address+ENDPOINT), new QName(URLWebService, nameWebService));            	
+                    WizardServices port = service.getWizardServicesPort();
+                    port.stopConcreteTaskDescriptor(login, password, theConcreteTaskId);
+            	}
+            }
+            catch (java.lang.Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        public static  void suspendConcreteTaskDescriptor (String theConcreteTaskId) {
+            try { 
+            	if (!login.equalsIgnoreCase(testIHMLoginString)) {
+            		WizardServicesService service = new WizardServicesService(new URL(address+ENDPOINT), new QName(URLWebService, nameWebService));            	
+                    WizardServices port = service.getWizardServicesPort();
+                    port.suspendConcreteTaskDescriptor(login, password, theConcreteTaskId);
+            	}
+            }
+            catch (java.lang.Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        public static  void resumeConcreteTaskDescriptor (String theConcreteTaskId) {
+            try { 
+            	if (!login.equalsIgnoreCase(testIHMLoginString)) {
+            		WizardServicesService service = new WizardServicesService(new URL(address+ENDPOINT), new QName(URLWebService, nameWebService));            	
+                    WizardServices port = service.getWizardServicesPort();
+                    port.resumeConcreteTaskDescriptor(login, password, theConcreteTaskId);
+            	}
+            }
+            catch (java.lang.Exception e) {
+                e.printStackTrace();
+            }
+        }
+    
+        
         
         private static Participant getParticipantExample () {
         	Participant p = new Participant();
