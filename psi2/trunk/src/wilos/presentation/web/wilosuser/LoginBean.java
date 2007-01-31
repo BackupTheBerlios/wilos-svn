@@ -1,6 +1,8 @@
 
 package wilos.presentation.web.wilosuser ;
 
+import java.util.ResourceBundle;
+
 import javax.faces.application.FacesMessage ;
 import javax.faces.context.FacesContext ;
 import javax.servlet.http.* ;
@@ -86,6 +88,14 @@ public class LoginBean {
 	 * @return the faces-config id of the page
 	 */
 	public String authentificationAction() {
+		
+
+
+		FacesContext context = FacesContext.getCurrentInstance();
+
+		ResourceBundle bundle = ResourceBundle.getBundle(
+		"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
+
 		String url = "" ;
 		String applicationRole = "";
 		WilosUser user = this.loginService.getAuthentifiedUser(this.login, Security.encode(this.password)) ;
@@ -121,7 +131,7 @@ public class LoginBean {
 		}
 		else{
 			FacesMessage message = new FacesMessage() ;
-			message.setSummary("Login ou Mot de passe incorrects") ;
+			message.setSummary(bundle.getString("component.authentificationerror.loginError"));
 			message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 
 			FacesContext facesContext = FacesContext.getCurrentInstance() ;
