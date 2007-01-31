@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.role.RoleDescriptor;
 
@@ -11,49 +12,53 @@ public class ConcreteRoleDescriptor {
 
 	private String id;
 
-	private String projectId;
+	//TODO
+	//private Project project;
 
+	private String projectId;
+	
 	private String concreteName;
 
 	private RoleDescriptor roleDescriptor;
 
 	private Set<ConcreteTaskDescriptor> concreteTaskDescriptors;
-	
+
 	private Participant participant;
 
 	public ConcreteRoleDescriptor() {
 		this.concreteTaskDescriptors = new HashSet<ConcreteTaskDescriptor>();
 	}
-	
+
 	/*
 	 * relation between ConcreteRoleDescriptor and Participant.
 	 */
 
 	public void addParticipant(Participant _participant) {
 		this.participant = _participant;
-		//_participant.getConcreteRoleDescriptors().add(this);
+		_participant.getConcreteRoleDescriptors().add(this);
 	}
 
 	public void removeParticipant(Participant _participant) {
-		//_participant.getConcreteRoleDescriptors().remove(this);
+		_participant.getConcreteRoleDescriptors().remove(this);
 		this.participant = null;
 	}
-	
+
 	/*
 	 * Relation between ConcreteRoleDescriptor and RoleDescriptor.
-	 *
+	 * 
 	 */
+
 	public void addRoleDescriptor(RoleDescriptor _roleDescriptor) {
-		this.roleDescriptor = _roleDescriptor ;
-		_roleDescriptor.getConcreteRoleDescriptors().add(this) ;
+		this.roleDescriptor = _roleDescriptor;
+		_roleDescriptor.getConcreteRoleDescriptors().add(this);
 	}
 
 	public void removeRoleDescriptor(RoleDescriptor _roleDescriptor) {
-		_roleDescriptor.getConcreteRoleDescriptors().remove(this) ;
-		this.roleDescriptor = null ;
+		_roleDescriptor.getConcreteRoleDescriptors().remove(this);
+		this.roleDescriptor = null;
 	}
 
-	/*
+/*
 	 * Relation between ConcreteRoleDescriptor and ConcreteTaskDescriptor.
 	 *
 	 */
@@ -89,29 +94,21 @@ public class ConcreteRoleDescriptor {
 	 * Getter and Setter.
 	 *
 	 */
-	
+
 	public String getConcreteName() {
 		return concreteName;
 	}
 
-	public void setConcreteName(String _concreteName) {
-		this.concreteName = _concreteName;
+	public void setConcreteName(String concreteName) {
+		this.concreteName = concreteName;
 	}
 
 	public String getId() {
 		return id;
 	}
 
-	public void setId(String _id) {
-		this.id = _id;
-	}
-
-	public String getProjectId() {
-		return projectId;
-	}
-
-	public void setProjectId(String _projectId) {
-		this.projectId = _projectId;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public RoleDescriptor getRoleDescriptor() {
@@ -130,12 +127,20 @@ public class ConcreteRoleDescriptor {
 			Set<ConcreteTaskDescriptor> concreteTaskDescriptors) {
 		this.concreteTaskDescriptors = concreteTaskDescriptors;
 	}
-	
+
 	public Participant getParticipant() {
 		return participant;
 	}
 
-	public void setParticipant(Participant _participant) {
-		this.participant = _participant;
+	public void setParticipant(Participant participant) {
+		this.participant = participant;
+	}
+
+	public String getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
 	}
 }
