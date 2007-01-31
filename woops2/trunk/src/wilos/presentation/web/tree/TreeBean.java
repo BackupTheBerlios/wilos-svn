@@ -108,15 +108,15 @@ public class TreeBean {
 				HttpSession httpSession = httpServletRequest.getSession();
 				Participant participant = (Participant) httpSession
 						.getAttribute("wilosUser");
-
-				if (participant != null) {
+				//TODO sur le roleservice
+				/*if (participant != null) {
 					Set<RoleDescriptor> roleDescriptorsList = new HashSet<RoleDescriptor>();
 					roleDescriptorsList.addAll(this.roleService
 							.getAffectedRolesForAParticipant(participant
 									.getLogin()));
 					projectNode = new ProjectNode(this.project,
 							roleDescriptorsList);
-				}
+				}*/
 			} else {
 				projectNode = new ProjectNode(this.project, null);
 			}

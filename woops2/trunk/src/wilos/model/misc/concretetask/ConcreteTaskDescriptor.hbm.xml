@@ -14,7 +14,7 @@
 		</id>
 
 		<property name="projectId" type="java.lang.String"
-			column="projectid" length="256" />
+			column="project_id" length="256" />
 
 		<property name="concreteName" type="java.lang.String"
 			column="concretename" length="256" />
@@ -48,7 +48,7 @@
 			column="accomplishedtime" />
 		
 		<many-to-one name="concreteRoleDescriptor"
-			class="wilos.model.misc.concreterole.concreteRoleDescriptor"
+			class="wilos.model.misc.concreterole.ConcreteRoleDescriptor"
 			column="concreteroledescriptor_id">
 		</many-to-one>
 
