@@ -26,14 +26,14 @@ public class IterationNode extends DefaultMutableTreeNode {
 		this.setUserObject(iceUserObject);
 
 		iceUserObject.setExpanded(true);
-		iceUserObject.setText(this.iteration.getName());
+		iceUserObject.setText(this.iteration.getPresentationName());
 		iceUserObject.setLeaf(false);
 		iceUserObject.setBranchContractedIcon("images/tree/icon_iteration.gif");
 		iceUserObject.setBranchExpandedIcon("images/tree/icon_iteration.gif");
 		// node information
 		iceUserObject.setId(this.iteration.getId());
 		iceUserObject.setPageId(WilosObjectNode.ITERATIONNODE);
-		
+
 		for (BreakdownElement breakdownElement : this.iteration
 				.getBreakDownElements()) {
 			//FIXME LazyExceptrion
