@@ -104,8 +104,10 @@ public class WizardStateMachine {
 			
 		}
 		else {
-			HTMLViewer.getInstance(null).viewObject(object);
-			updateState(this.STATE_NOTHING);
+			if (showInfo){
+				HTMLViewer.getInstance(null).viewObject(object);
+				updateState(this.STATE_NOTHING);
+			}
 		}
 	}
 
