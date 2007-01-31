@@ -1,1 +1,6 @@
-<jsp:directive.include file="./pages/projectDirector/project_create.jspx"/>
+<ice:form id="project_create_form">
+	<ice:panelTabSet id="panelTabSet_project" styleClass="componentPanelTabSetLayout">
+		<jsp:directive.include file="./pages/projectDirector/tabProject_list.jspx"/>
+		<jsp:directive.include file="./pages/projectDirector/tabProject_create.jspx"/>
+	</ice:panelTabSet>
+</ice:form>
