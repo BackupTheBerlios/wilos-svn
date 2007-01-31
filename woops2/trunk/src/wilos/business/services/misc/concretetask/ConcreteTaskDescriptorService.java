@@ -17,8 +17,6 @@ import wilos.hibernate.spem2.role.RoleDescriptorDao;
 import wilos.hibernate.spem2.task.TaskDescriptorDao;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.wilosuser.Participant;
-import wilos.model.spem2.role.RoleDescriptor;
-import wilos.model.spem2.task.TaskDescriptor;
 import wilos.utils.Constantes;
 import wilos.utils.Constantes.State;
 
