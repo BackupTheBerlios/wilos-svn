@@ -43,6 +43,7 @@
 			<value>wilos/model/misc/wilosuser/ProjectDirector.hbm.xml</value>
 			<value>wilos/model/misc/project/Project.hbm.xml</value>
 			<value>wilos/model/misc/concretetask/ConcreteTaskDescriptor.hbm.xml</value>
+			<value>wilos/model/misc/concreterole/ConcreteRoleDescriptor.hbm.xml</value>
 			<value>wilos/model/spem2/element/Element.hbm.xml</value>
 			<value>wilos/model/spem2/breakdownelement/BreakdownElement.hbm.xml</value>
 			<value>wilos/model/spem2/workbreakdownelement/WorkBreakdownElement.hbm.xml</value>
@@ -333,6 +334,9 @@
 		<property name="concreteTaskDescriptorDao" ref="ConcreteTaskDescriptorDao" />
 		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
 		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
+		<property name="taskDescriptorService" ref="TaskDescriptorService" />
+		<property name="roleDescriptorService" ref="RoleDescriptorService" />
+		
 	</bean>
 	
 	<bean id="PhaseService"

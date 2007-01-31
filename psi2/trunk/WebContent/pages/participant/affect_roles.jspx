@@ -49,7 +49,7 @@
 							<f:facet name="header">
 						    	<ice:outputText value="#{msgs['component.tableparticipantproject.column2']}"/>
 						    </f:facet>
-						    <ice:outputText value="#{project1.creationDate}"/>						    
+						    <ice:outputText value="#{project1.creationDate}"/>
 						</ice:column>
 						<ice:column>
 							<f:facet name="header">
