@@ -36,7 +36,7 @@ public class IterationNode extends DefaultMutableTreeNode {
 		
 		for (BreakdownElement breakdownElement : this.iteration
 				.getBreakDownElements()) {
-			//FIXME LazyExceptrion
+			//FIXME LazyException
 			if (breakdownElement instanceof Activity) {
 				this.add(new ActivityNode((Activity) breakdownElement,
 						_roleDescriptors));

@@ -97,6 +97,7 @@ public class TreeBean {
 				sess.setAttribute("projectId", this.projectId);
 
 				// Retrieve the entire project.
+				//FIXME preparer TreeService pour reconstruire un getProject sans persistentSet pour  remplacer l'appel ce dessous
 				this.project = this.projectService.getProject(this.projectId);
 			}
 			ProjectNode projectNode = null;
@@ -108,17 +109,17 @@ public class TreeBean {
 				HttpSession httpSession = httpServletRequest.getSession();
 				Participant participant = (Participant) httpSession
 						.getAttribute("wilosUser");
-
+				logger.debug("### TreeBean ### buildModel :: wilosUser: "+participant);
 				if (participant != null) {
 					Set<RoleDescriptor> roleDescriptorsList = new HashSet<RoleDescriptor>();
-					roleDescriptorsList.addAll(this.roleService
-							.getAffectedRolesForAParticipant(participant
-									.getLogin()));
+					roleDescriptorsList.addAll(this.roleService.getAffectedRolesForAParticipant(participant.getLogin()));
+					logger.debug("### TreeBean ### roleDescriptorList.size: " + roleDescriptorsList.size());
 					projectNode = new ProjectNode(this.project,
 							roleDescriptorsList);
 				}
 			} else {
-				projectNode = new ProjectNode(this.project, null);
+				//projectNode = new ProjectNode(this.project, null);
+				projectNode = new ProjectNode(this.project, new HashSet<RoleDescriptor>());
 			}
 			this.model = new DefaultTreeModel(projectNode);
 		}
@@ -165,6 +166,8 @@ public class TreeBean {
 
 	public void filterTreeActionListener(ValueChangeEvent evt) {
 		this.buildModel(false);
+		logger.debug("### TreeBean ### filterTreeActionListener -> buildModel=false");
+		//this.buildModel(true);
 	}
 
 	public void selectNodeActionListener(ActionEvent evt) {
@@ -260,10 +263,12 @@ public class TreeBean {
 	}
 
 	public Boolean getAffectedTaskFilter() {
+		logger.debug("### TreeBean ### getAffectedTaskFilter: " + affectedTaskFilter);
 		return affectedTaskFilter;
 	}
 
 	public void setAffectedTaskFilter(Boolean _affectedTaskFilter) {
+		logger.debug("### TreeBean ### setAffectedTaskFilter: " + affectedTaskFilter);
 		this.affectedTaskFilter = _affectedTaskFilter;
 	}
 
