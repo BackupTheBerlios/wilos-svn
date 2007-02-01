@@ -303,7 +303,8 @@
 		<property name="workBreakdownElementDao"
 			ref="WorkBreakdownElementDao" />
 		<property name="breakdownElementService" ref="BreakdownElementService" />
-		<property name="taskDescriptorService" ref="TaskDescriptorService" />
+		<property name="guidelineDao" ref="GuidelineDao" />
+		
 	</bean>
 	
 	  <bean id="BreakdownElementService"
