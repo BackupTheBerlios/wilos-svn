@@ -372,7 +372,7 @@ public class ProcessService {
 		}
 
 		_rd.getAdditionalTasks().clear();
-		//FIXME _rd.getParticipants().clear();
+		_rd.getConcreteRoleDescriptors().clear();
 		_rd.getPrimaryTasks().clear();
 		_rd.getSuperActivities().clear();
 		_rd.setRoleDefinition(null);
@@ -381,7 +381,7 @@ public class ProcessService {
 		System.out.println("###RoleDescriptor sauve");
 
 		_rd.addAllAdditionalTasks(clone.getAdditionalTasks());
-		//FIXME _rd.addAllParticipants(clone.getParticipants());
+		_rd.addAllConcreteRoleDescriptors(clone.getConcreteRoleDescriptors());
 		_rd.addAllPrimaryTasks(clone.getPrimaryTasks());
 		_rd.addAllSuperActivities(clone.getSuperActivities());
 		_rd.setRoleDefinition(clone.getRoleDefinition());
