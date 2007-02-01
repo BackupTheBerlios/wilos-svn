@@ -2,6 +2,7 @@ package wilos.presentation.web.wilosuser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -49,6 +50,8 @@ public class ProjectDirectorBean {
 	 * @return
 	 */
 	public String saveProjectDirectorAction() {
+		ResourceBundle bundle = ResourceBundle.getBundle(
+				"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
 		String url = "";
 		boolean error=false;
 		FacesMessage message = new FacesMessage();
@@ -57,7 +60,7 @@ public class ProjectDirectorBean {
 		if (this.projectDirector.getName().trim().length()==0)
 		{
 			FacesMessage errName = new FacesMessage() ;
-			errName.setSummary("Le champ nom est obligatoire");
+			errName.setSummary(bundle.getString("component.projectdirectorcreate.err.lastnameRequired"));
 			errName.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 			error=true;
 			facesContext.addMessage(null, errName) ;
@@ -66,7 +69,7 @@ public class ProjectDirectorBean {
 		if (this.projectDirector.getFirstname().trim().length()==0)
 		{
 			FacesMessage errFirstName = new FacesMessage() ;
-			errFirstName.setSummary("Le champ prénom est obligatoire");
+			errFirstName.setSummary(bundle.getString("component.projectdirectorcreate.err.firstnameRequired"));
 			errFirstName.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 			error=true;
 			facesContext.addMessage(null, errFirstName) ;
@@ -74,7 +77,7 @@ public class ProjectDirectorBean {
 		if (this.projectDirector.getLogin().trim().length()==0)
 		{
 			FacesMessage errLogin = new FacesMessage() ;
-			errLogin.setSummary("Le champ login est obligatoire");
+			errLogin.setSummary(bundle.getString("component.projectdirectorcreate.err.loginRequired"));
 			errLogin.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 			error=true;
 			facesContext.addMessage(null, errLogin) ;
@@ -82,7 +85,7 @@ public class ProjectDirectorBean {
 		if (this.projectDirector.getPassword().trim().length()==0)
 		{
 			FacesMessage errpasswd = new FacesMessage() ;
-			errpasswd.setSummary("Le champ password est obligatoire");
+			errpasswd.setSummary(bundle.getString("component.projectdirectorcreate.err.passwordRequired"));
 			errpasswd.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 			error=true;
 			facesContext.addMessage(null, errpasswd) ;
@@ -90,7 +93,7 @@ public class ProjectDirectorBean {
 		if (this.passwordConfirmation.trim().length()==0)
 		{
 			FacesMessage errConfirmation = new FacesMessage() ;
-			errConfirmation.setSummary("Le champ de confirmation du password est obligatoire");
+			errConfirmation.setSummary(bundle.getString("component.projectdirectorcreate.err.confirmpasswordRequired"));
 			errConfirmation.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 			error=true;
 			facesContext.addMessage(null, errConfirmation) ;
@@ -99,11 +102,11 @@ public class ProjectDirectorBean {
 		if (!error)
 		{
 			if (this.loginService.loginExist(this.projectDirector.getLogin())) {			
-				message.setSummary("Ce Login existe deja");
+				message.setSummary(bundle.getString("component.projectdirectorcreate.err.loginalreadyexist"));
 				message.setSeverity(FacesMessage.SEVERITY_ERROR);
 			} else {
 				this.projectDirectorService.saveProjectDirector(this.projectDirector);
-				message.setSummary("Project Director bien enregistré");
+				message.setSummary(bundle.getString("component.projectdirectorcreate.success"));
 				message.setSeverity(FacesMessage.SEVERITY_INFO);
 			}
 			facesContext.addMessage(null, message);
@@ -123,6 +126,8 @@ public class ProjectDirectorBean {
 	 */
 	public void passwordEqualValidation(FacesContext _context, UIComponent _toValidate, Object _value) throws ValidatorException
 	{
+		ResourceBundle bundle = ResourceBundle.getBundle(
+				"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
 		String passConfirm = (String) _value;
 
 		//TODO : recuperer le nom de l autre champs de password via une f:param
@@ -137,7 +142,7 @@ public class ProjectDirectorBean {
 		if(!passConfirm.equals(passValue))
 		{
 			FacesMessage message = new FacesMessage();
-			message.setSummary("Les 2 mots de passe ne sont pas identiques");
+			message.setSummary(bundle.getString("component.projectdirectorcreate.err.passwordnotequals"));
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 			throw new ValidatorException(message) ;
 		}

@@ -6,6 +6,7 @@ import java.util.ArrayList ;
 import java.util.HashMap ;
 import java.util.Iterator ;
 import java.util.Map ;
+import java.util.ResourceBundle;
 
 import java.util.List ;
 import java.util.regex.Matcher ;
@@ -102,14 +103,19 @@ public class ParticipantBean {
 	 * @return
 	 */
 	public String saveParticipantAction() {
+		
+		FacesContext facesContext = FacesContext.getCurrentInstance() ;
+		ResourceBundle bundle = ResourceBundle.getBundle(
+		"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
+		
 		String url = "" ;
 		boolean error = false ;
 		FacesMessage message = new FacesMessage() ;
-		FacesContext facesContext = FacesContext.getCurrentInstance() ;
+		
 		// test if the fields are correctly completed
 		if(this.participant.getName().trim().length() == 0){
 			FacesMessage errName = new FacesMessage() ;
-			errName.setSummary("Le champ nom est obligatoire") ;
+			errName.setSummary(bundle.getString("component.forminscription.err.lastnameRequired")) ;
 			errName.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 			error = true ;
 			facesContext.addMessage(null, errName) ;
@@ -117,35 +123,35 @@ public class ParticipantBean {
 
 		if(this.participant.getFirstname().trim().length() == 0){
 			FacesMessage errFirstName = new FacesMessage() ;
-			errFirstName.setSummary("Le champ prénom est obligatoire") ;
+			errFirstName.setSummary(bundle.getString("component.forminscription.err.firstnameRequired")) ;
 			errFirstName.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 			error = true ;
 			facesContext.addMessage(null, errFirstName) ;
 		}
 		if(this.participant.getEmailAddress().trim().length() == 0){
 			FacesMessage errMail = new FacesMessage() ;
-			errMail.setSummary("Le champ adrese e-mail est obligatoire") ;
+			errMail.setSummary(bundle.getString("component.forminscription.err.emailRequired")) ;
 			errMail.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 			error = true ;
 			facesContext.addMessage(null, errMail) ;
 		}
 		if(this.participant.getLogin().trim().length() == 0){
 			FacesMessage errLogin = new FacesMessage() ;
-			errLogin.setSummary("Le champ login est obligatoire") ;
+			errLogin.setSummary(bundle.getString("component.forminscription.err.loginRequired")) ;
 			errLogin.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 			error = true ;
 			facesContext.addMessage(null, errLogin) ;
 		}
 		if(this.participant.getPassword().trim().length() == 0){
 			FacesMessage errpasswd = new FacesMessage() ;
-			errpasswd.setSummary("Le champ password est obligatoire") ;
+			errpasswd.setSummary(bundle.getString("component.forminscription.err.passwordRequired")) ;
 			errpasswd.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 			error = true ;
 			facesContext.addMessage(null, errpasswd) ;
 		}
 		if(this.passwordConfirmation.trim().length() == 0){
 			FacesMessage errConfirmation = new FacesMessage() ;
-			errConfirmation.setSummary("Le champ de confirmation du password est obligatoire") ;
+			errConfirmation.setSummary(bundle.getString("component.forminscription.err.confirmpasswordRequired")) ;
 			errConfirmation.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 			error = true ;
 			facesContext.addMessage(null, errConfirmation) ;
@@ -153,13 +159,13 @@ public class ParticipantBean {
 
 		if(!error){
 			if(this.loginService.loginExist(this.participant.getLogin())){
-				message.setSummary("Ce Login existe deja") ;
+				message.setSummary(bundle.getString("component.forminscription.err.loginalreadyexist")) ;
 				message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 				facesContext.addMessage(null, message) ;
 			}
 			else{
 				this.participantService.saveParticipant(this.participant) ;
-				message.setSummary("Participant bien enregistré") ;
+				message.setSummary(bundle.getString("component.forminscription.success")) ;
 				message.setSeverity(FacesMessage.SEVERITY_INFO) ;
 				facesContext.addMessage(null, message) ;
 				url = "wilos" ; // TODO :Passer eventuellement sur une page de confirmation
@@ -181,6 +187,8 @@ public class ParticipantBean {
 	 * @throws ValidatorException
 	 */
 	public void emailValidation(FacesContext _context, UIComponent _toValidate, Object _value) throws ValidatorException {
+		ResourceBundle bundle = ResourceBundle.getBundle(
+				"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
 		String enteredEmail = (String) _value ;
 		// Set the email pattern string
 		Pattern p = Pattern.compile(".+@.+\\.[a-z]+") ;
@@ -190,7 +198,7 @@ public class ParticipantBean {
 		boolean matchFound = m.matches() ;
 		if(!matchFound){
 			FacesMessage message = new FacesMessage() ;
-			message.setSummary("L'email est invalide") ;
+			message.setSummary(bundle.getString("component.forminscription.err.invalidemail")) ;
 			message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 			throw new ValidatorException(message) ;
 		}
@@ -228,20 +236,21 @@ public class ParticipantBean {
 	 */
 	public void passwordEqualValidation(FacesContext _context, UIComponent _toValidate, Object _value) throws ValidatorException {
 		String passConfirm = (String) _value ;
-
+		ResourceBundle bundle = ResourceBundle.getBundle(
+				"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
 		// TODO : recuperer le nom de l autre champs de password via une f:param
 		/*
 		 * ExternalContext ec = (ExternalContext)_context.getExternalContext(); HashMap hm = new
 		 * HashMap(ec.getRequestParameterMap()); String passName = (String)hm.get("forPassword");
 		 * UIComponent passcomponent = _toValidate.findComponent(passName) ;
 		 */
-
+		
 		UIComponent passcomponent = _toValidate.findComponent("equal1") ;
 		String passValue = (String) passcomponent.getAttributes().get("value") ;
 
 		if(!passConfirm.equals(passValue)){
 			FacesMessage message = new FacesMessage() ;
-			message.setSummary("Les 2 mots de passe ne sont pas identiques") ;
+			message.setSummary(bundle.getString("component.forminscription.err.passwordnotequals")) ;
 			message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 			throw new ValidatorException(message) ;
 		}
@@ -396,6 +405,8 @@ public class ParticipantBean {
 	}
 
 	public void saveProjectsAffectation() {
+		ResourceBundle bundle = ResourceBundle.getBundle(
+				"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
 		// getting the participant stored into the session
 		Participant user = getParticipantFromSession() ;
 
@@ -414,7 +425,7 @@ public class ParticipantBean {
 
 		// displaying a message to express the good validation
 		FacesMessage saveAffectationMessage = new FacesMessage() ;
-		saveAffectationMessage.setSummary("Votre affectation à ces projets à bien été enregistrée") ;
+		saveAffectationMessage.setSummary(bundle.getString("component.tableparticipantproject.success")) ;
 		saveAffectationMessage.setSeverity(FacesMessage.SEVERITY_INFO) ;
 		FacesContext.getCurrentInstance().addMessage(null, saveAffectationMessage) ;
 	}
@@ -539,7 +550,8 @@ public class ParticipantBean {
 	 *
 	 */
 	public void saveProjectManagerAffectation() {
-
+		ResourceBundle bundle = ResourceBundle.getBundle(
+				"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
 		Participant user = getParticipantFromSession() ;
 		Map<String, Boolean> affectedManagedProjects = new HashMap<String, Boolean>() ;
 		for(HashMap ligne : this.manageableProjectsList){
@@ -550,7 +562,7 @@ public class ParticipantBean {
 		this.participantService.saveManagedProjectsForAParticipant(user, affectedManagedProjects) ;
 
 		FacesMessage saveAffectationMessage = new FacesMessage() ;
-		saveAffectationMessage.setSummary("Votre affectation en tant que chef de projet à ces projets à bien été enregistrée") ;
+		saveAffectationMessage.setSummary(bundle.getString("component.table1participantprojectManager.success")) ;
 		saveAffectationMessage.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 		FacesContext.getCurrentInstance().addMessage(null, saveAffectationMessage) ;
 	}

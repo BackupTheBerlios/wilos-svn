@@ -4,6 +4,7 @@ package wilos.presentation.web.project ;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.faces.application.FacesMessage;
@@ -69,6 +70,8 @@ public class ProjectBean {
 	 * @return
 	 */
 	public String saveProjectAction() {
+		ResourceBundle bundle = ResourceBundle.getBundle(
+				"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
 		String url = "" ;
 		boolean error=false;
 		FacesMessage message = new FacesMessage();
@@ -77,7 +80,7 @@ public class ProjectBean {
 		if (this.project.getName().trim().length()==0)
 		{
 			FacesMessage errName = new FacesMessage() ;
-			errName.setSummary("Le champ nom est obligatoire");
+			errName.setSummary(bundle.getString("component.projectcreate.err.namerequired"));
 			errName.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 			error=true;
 			facesContext.addMessage(null, errName) ;
@@ -86,7 +89,7 @@ public class ProjectBean {
 		if (this.project.getLaunchingDate()==null)
 		{
 			FacesMessage errDate = new FacesMessage() ;
-			errDate.setSummary("La date de lancement est obligatoire");
+			errDate.setSummary(bundle.getString("component.projectcreate.err.launchingdaterequired"));
 			errDate.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 			error=true;
 			facesContext.addMessage(null, errDate) ;
@@ -95,12 +98,12 @@ public class ProjectBean {
 		{
 			if(this.projectService.projectExist(this.project.getName())){
 			
-				message.setSummary("Ce Projet existe déjà");
+				message.setSummary(bundle.getString("component.projectcreate.err.projectalreadyexists"));
 				message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 			}
 			else{
 				this.projectService.saveProject(this.project) ;
-				message.setSummary("Le Projet a bien été créé");
+				message.setSummary(bundle.getString("component.projectcreate.success"));
 				message.setSeverity(FacesMessage.SEVERITY_ERROR);
 			}
 		
