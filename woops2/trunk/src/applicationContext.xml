@@ -344,6 +344,11 @@
 		
 	</bean>
 	
+	<bean id="ConcreteRoleDescriptorService"
+		class="wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService">
+		<property name="concreteRoleDescriptorDao" ref="ConcreteRoleDescriptorDao" />
+	</bean>
+	
 	<bean id="PhaseService"
 		class="wilos.business.services.spem2.phase.PhaseService">
 		<property name="phaseDao" ref="PhaseDao" />
