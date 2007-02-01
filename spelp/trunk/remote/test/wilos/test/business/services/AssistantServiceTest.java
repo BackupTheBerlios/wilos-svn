@@ -19,6 +19,7 @@ public class AssistantServiceTest extends TestCase {
 	private LoginService ls ;
 	private ParticipantService ps ;
 	private ConcreteTaskDescriptorService cts;
+	private ConcreteTaskDescriptor ct;
 
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -26,10 +27,17 @@ public class AssistantServiceTest extends TestCase {
    	 	ps = (ParticipantService) TestConfiguration.getInstance().getApplicationContext().getBean("ParticipantService");
    	 	assistantService = (AssistantService) TestConfiguration.getInstance().getApplicationContext().getBean("AssistantService");
    	 	cts = (ConcreteTaskDescriptorService) TestConfiguration.getInstance().getApplicationContext().getBean("ConcreteTaskDescriptorService");
+		ct = new ConcreteTaskDescriptor();
+		ct.setConcreteName("ConcreteTest");
+		ct.setState(Constantes.State.READY);
+		ct.setTaskDescriptor(null);
+		ct.setProjectId("projectId");
+		cts.getConcreteTaskDescriptorDao().saveOrUpdateConcreteTaskDescriptor(ct);
 	}
 
 	protected void tearDown() throws Exception {
 		super.tearDown();
+		cts.getConcreteTaskDescriptorDao().deleteConcreteTaskDescriptor(ct);
 	}
 
 	public void testGetParticipantTO() {
@@ -58,19 +66,23 @@ public class AssistantServiceTest extends TestCase {
 		assertNotNull(assistantService.getParticipantDao());
 	}
 
-	public void testStartConcreteTaskDescriptor() {
-		/*ConcreteTaskDescriptor ct = new ConcreteTaskDescriptor();
-		ct.setConcreteName("ConcreteTest");
-		ct.setState(Constantes.State.READY);
-		ct.setTaskDescriptor(null);
-		ct.setProjectId("projectId");
-		cts.getConcreteTaskDescriptorDao().saveOrUpdateConcreteTaskDescriptor(ct);*/
-		ConcreteTaskDescriptor ct = cts.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor("2c90a3b0105ace6d01105ace983f0004");
-		
-		assistantService.startConcreteTaskDescriptor("2c90a3b0105ace6d01105ace983f0004");
-		ct = cts.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor("2c90a3b0105ace6d01105ace983f0004");
-		System.out.println(ct.getState());
-		assertTrue(ct.getState()==Constantes.State.STARTED);
-		
+	public void testStartConcreteTaskDescriptor() {		
+		assistantService.startConcreteTaskDescriptor(ct.getId());	
+		assertEquals(Constantes.State.STARTED, ct.getState());		
+	}
+	
+	public void testSuspendConcreteTaskDescriptor() {		
+		assistantService.suspendConcreteTaskDescriptor(ct.getId());	
+		assertEquals(Constantes.State.SUSPENDED, ct.getState());		
+	}
+	
+	public void testFinishConcreteTaskDescriptor() {		
+		assistantService.finishConcreteTaskDescriptor(ct.getId());	
+		assertEquals(Constantes.State.FINISHED, ct.getState());		
+	}
+	
+	public void testResumeConcreteTaskDescriptor() {		
+		assistantService.resumeConcreteTaskDescriptor(ct.getId());	
+		assertEquals(Constantes.State.FINISHED, ct.getState());		
 	}
 }
