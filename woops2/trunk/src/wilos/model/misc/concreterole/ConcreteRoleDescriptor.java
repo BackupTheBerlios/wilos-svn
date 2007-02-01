@@ -32,7 +32,7 @@ public class ConcreteRoleDescriptor {
 	/*
 	 * relation between ConcreteRoleDescriptor and Participant.
 	 */
-
+	
 	public void addParticipant(Participant _participant) {
 		this.participant = _participant;
 		_participant.getConcreteRoleDescriptors().add(this);
