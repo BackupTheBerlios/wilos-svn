@@ -304,6 +304,7 @@
 			ref="WorkBreakdownElementDao" />
 		<property name="breakdownElementService" ref="BreakdownElementService" />
 		<property name="taskDescriptorService" ref="TaskDescriptorService" />
+		<property name="guidelineDao" ref="GuidelineDao" />
 	</bean>
 	
 	  <bean id="BreakdownElementService"
@@ -341,6 +342,11 @@
 		<property name="taskDescriptorService" ref="TaskDescriptorService" />
 		<property name="roleDescriptorService" ref="RoleDescriptorService" />
 		
+	</bean>
+	
+	<bean id="ConcreteRoleDescriptorService"
+		class="wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService">
+		<property name="concreteRoleDescriptorDao" ref="ConcreteRoleDescriptorDao" />
 	</bean>
 	
 	<bean id="PhaseService"
