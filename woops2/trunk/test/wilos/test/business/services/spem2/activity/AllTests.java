@@ -1,5 +1,5 @@
 
-package wilos.test.business.services.activity ;
+package wilos.test.business.services.spem2.activity ;
 
 import junit.framework.Test ;
 import junit.framework.TestSuite ;

@@ -1,4 +1,4 @@
-package wilos.test.business.services.concretetask;
+package wilos.test.business.services.misc.concretetask;
 
 import java.util.List;
 
@@ -57,10 +57,15 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 	public void testGetConcreteTaskDescriptorsForProject() {
 		// Rk: the setUp method is called here.
 
+		this.concreteTaskDescriptor.setProjectId(PROJECT_ID);
+		this.concreteTaskDescriptorService
+				.getConcreteTaskDescriptorDao()
+				.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
 		List<ConcreteTaskDescriptor> list = this.concreteTaskDescriptorService
-				.getConcreteTaskDescriptorsForProject(PROJECT_ID);
+		.getConcreteTaskDescriptorsForProject(PROJECT_ID);
+		
 		assertNotNull(list);
-		assertEquals(list.size(), 1);
+		assertTrue(list.size() >= 1);
 		assertTrue(list.contains(this.concreteTaskDescriptor));
 
 		// Rk: the tearDown method is called here.
@@ -119,27 +124,4 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 
 		// Rk: the tearDown method is called here.
 	}
-	
-	public void testDep(){
-		TaskDescriptor taskDescriptor = new TaskDescriptor() ;
-		taskDescriptor.setDescription(DESCRIPTION) ;
-		taskDescriptor.setName(NAME) ;
-		
-		ConcreteTaskDescriptor concreteTaskDescriptor = new ConcreteTaskDescriptor();
-		concreteTaskDescriptor.setTaskDescriptor(taskDescriptor);
-		
-		this.concreteTaskDescriptorService
-		.getConcreteTaskDescriptorDao()
-		.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
-		
-		String id = this.concreteTaskDescriptor.getId();
-		
-		ConcreteTaskDescriptor ct = this.concreteTaskDescriptorService.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(id);
-		
-		assertTrue(ct.getTaskDescriptor() != null);
-		
-	}
-	
-	
-
 }

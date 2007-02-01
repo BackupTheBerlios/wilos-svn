@@ -1,5 +1,5 @@
 
-package wilos.test.business.services.concretetask ;
+package wilos.test.business.services.spem2.process ;
 
 import junit.framework.Test ;
 import junit.framework.TestSuite ;
@@ -11,9 +11,9 @@ import junit.framework.TestSuite ;
 public class AllTests {
 
 	public static Test suite () {
-		TestSuite suite = new TestSuite("Test for wilos.test.business.services.concretetask") ;
+		TestSuite suite = new TestSuite("Test for wilos.test.business.services.process") ;
 		// $JUnit-BEGIN$
-		suite.addTestSuite(ConcreteTaskDescriptorServiceTest.class) ;
+		suite.addTestSuite(ProcessServiceTest.class) ;
 		// $JUnit-END$
 		return suite ;
 	}

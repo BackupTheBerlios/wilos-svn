@@ -1,5 +1,5 @@
 
-package wilos.test.business.services.task ;
+package wilos.test.business.services.spem2.task ;
 
 import junit.framework.TestCase ;
 import wilos.business.services.spem2.task.StepService;

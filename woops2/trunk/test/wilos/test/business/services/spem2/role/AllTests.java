@@ -1,5 +1,5 @@
 
-package wilos.test.business.services.role ;
+package wilos.test.business.services.spem2.role ;
 
 import junit.framework.Test ;
 import junit.framework.TestSuite ;
