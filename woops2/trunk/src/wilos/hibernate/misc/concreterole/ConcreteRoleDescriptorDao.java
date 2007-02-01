@@ -14,15 +14,15 @@ import wilos.utils.ExceptionManager;
 /**
  * ConcreteRoleDescriptorDao manage requests from the system to store
  * ConcreteRoleDescriptorDao to the database
- * 
+ *
  * @author nanawel
- * 
+ *
  */
 public class ConcreteRoleDescriptorDao extends HibernateDaoSupport {
 
 	/**
 	 * Save or update a ConcreteRoleDescriptorDao
-	 * 
+	 *
 	 * @param _concreteRoledescriptor
 	 */
 	public void saveOrUpdateConcreteRoleDescriptor(
@@ -43,7 +43,7 @@ public class ConcreteRoleDescriptorDao extends HibernateDaoSupport {
 
 	/**
 	 * Return a set of ConcreteRoleDescriptor
-	 * 
+	 *
 	 * @return set <ConcreteRoleDescriptor>
 	 */
 	@SuppressWarnings("unchecked")
@@ -62,7 +62,7 @@ public class ConcreteRoleDescriptorDao extends HibernateDaoSupport {
 
 	/**
 	 * Return the ConcreteRoleDescriptor which have the id _id
-	 * 
+	 *
 	 * @param _id
 	 * @return ConcreteRoleDescriptor
 	 */
@@ -73,7 +73,7 @@ public class ConcreteRoleDescriptorDao extends HibernateDaoSupport {
 
 	/**
 	 * Delete the ConcreteRoleDescriptor
-	 * 
+	 *
 	 * @param _concreteRoledescriptor
 	 */
 	public void deleteConcreteRoleDescriptor(
@@ -87,11 +87,8 @@ public class ConcreteRoleDescriptorDao extends HibernateDaoSupport {
 		}
 	}
 
-	/*
-	 * Rk: Needs to be corrected
-	 * 
 	@SuppressWarnings("unchecked")
-	public List<ConcreteRoleDescriptor> getConcreteRoleDescriptorFromProject(
+	public List<ConcreteRoleDescriptor> getConcreteRoleDescriptorsFromProject(
 			String _projectId) {
 		List ctds = this
 				.getHibernateTemplate()
@@ -100,5 +97,4 @@ public class ConcreteRoleDescriptorDao extends HibernateDaoSupport {
 						_projectId);
 		return ctds;
 	}
-	*/
 }

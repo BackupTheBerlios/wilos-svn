@@ -6,7 +6,7 @@ import junit.framework.TestSuite ;
 
 /**
  * @author deder
- * 
+ *
  */
 public class AllTests {
 
@@ -14,6 +14,7 @@ public class AllTests {
 		TestSuite suite = new TestSuite("Test for wilos.test.hibernate.misc") ;
 		// $JUnit-BEGIN$
 		suite.addTest(wilos.test.hibernate.misc.concretetaskdescriptor.AllTests.suite()) ;
+		suite.addTest(wilos.test.hibernate.misc.concreterole.AllTests.suite()) ;
 		// $JUnit-END$
 		return suite ;
 	}

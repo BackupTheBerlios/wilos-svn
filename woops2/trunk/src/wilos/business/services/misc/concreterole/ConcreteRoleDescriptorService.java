@@ -20,9 +20,9 @@ import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 public class ConcreteRoleDescriptorService {
 
 		private ConcreteRoleDescriptorDao concreteRoleDescriptorDao;
-		
+
 		protected final Log logger = LogFactory.getLog(this.getClass()) ;
-		
+
 		/**
 		 * Return concreteRoleDescriptor for a project list
 		 *
@@ -34,7 +34,7 @@ public class ConcreteRoleDescriptorService {
 			List<ConcreteRoleDescriptor> returnedList = new ArrayList<ConcreteRoleDescriptor>();
 
 			for (ConcreteRoleDescriptor concreteRoleDescriptor : roleDescriptorsList) {
-				if (concreteRoleDescriptor.getProjectId().equals(_projectId)) {
+				if (concreteRoleDescriptor.getProject().getProject_id().equals(_projectId)) {
 					returnedList.add(concreteRoleDescriptor);
 				}
 			}
