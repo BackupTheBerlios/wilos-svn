@@ -10,6 +10,11 @@
 		extends="wilos.model.spem2.activity.Activity"
 		table="phase" lazy="true">
 		<key column="phase_id"></key>
+		
+		<set name="concretePhases" lazy="true">
+			<key column="phase_id" />
+			<one-to-many class="wilos.model.misc.concretephase" ></one-to-many>
+		</set>
 	</joined-subclass>
 	
 </hibernate-mapping>

@@ -1,8 +1,11 @@
 package wilos.model.spem2.phase;
 
+import java.util.Set;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
+import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.spem2.activity.Activity;
 
 /**
@@ -12,7 +15,11 @@ import wilos.model.spem2.activity.Activity;
  */
 public class Phase extends Activity implements Cloneable{
 	
-
+	/**
+	 * The ConcretePhases 
+	 */
+	private Set<ConcretePhase> concretePhases;
+	
 	/**
 	 * Default constructor
 	 * 
@@ -66,6 +73,45 @@ public class Phase extends Activity implements Cloneable{
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode() ;
+	}
+	
+	/**
+	 * relation between Phase and ConcretePhase
+	 * @return
+	 */
+	public void removeConcretePhase(ConcretePhase _concretePhase) {
+		_concretePhase.setPhase(null);
+		this.concretePhases.remove(_concretePhase);
+	} 
+	
+	/**
+	 * Add a concrete Phase
+	 * @param _concretePhase
+	 */
+	
+	public void addConcretePhase(ConcretePhase _concretePhase) {
+		   this.concretePhases.add(_concretePhase);
+		   _concretePhase.setPhase(this);
+	}
+	
+	/**
+	 * remove all concretePhase
+	 *
+	 */
+	public void removeAllConcretePhase() {
+		   for (ConcretePhase concretePhase : this.concretePhases) {
+			   concretePhase.removeFromPhase(this);
+		   }
+		   this.concretePhases.clear();
+		} 
+	
+	
+	public Set<ConcretePhase> getConcretePhases() {
+		return concretePhases;
+	}
+
+	public void setConcretePhases(Set<ConcretePhase> concretePhases) {
+		this.concretePhases = concretePhases;
 	}
 
 }
