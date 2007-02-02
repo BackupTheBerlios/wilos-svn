@@ -4,22 +4,10 @@
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 
 <hibernate-mapping>
-	<class name="wilos.model.misc.concretetask.ConcreteTaskDescriptor"
+	<joined-subclass name="wilos.model.misc.concretetask.ConcreteTaskDescriptor"
+		extends="wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement"
 		table="concretetaskdescriptor" lazy="true">
-
-		<id name="id" type="string"
-			column="concretetaskdescriptor_id">
-			<!--identifiant auto-incrementé -->
-			<generator class="uuid" />
-		</id>
-		
-		<many-to-one name="project"
-			class="wilos.model.misc.project.Project"
-			column="project_id">
-		</many-to-one>
-
-		<property name="concreteName" type="java.lang.String"
-			column="concretename" length="256" />
+		<key column="concretetaskdescriptor_id"></key>
 
 		<property name="state" type="java.lang.String" column="state"
 			length="256" />
@@ -48,11 +36,11 @@
 
 		<property name="accomplishedTime" type="float"
 			column="accomplishedtime" />
-		
+
 		<many-to-one name="concreteRoleDescriptor"
 			class="wilos.model.misc.concreterole.ConcreteRoleDescriptor"
 			column="concreteroledescriptor_id">
 		</many-to-one>
 
-	</class>
+	</joined-subclass>
 </hibernate-mapping>

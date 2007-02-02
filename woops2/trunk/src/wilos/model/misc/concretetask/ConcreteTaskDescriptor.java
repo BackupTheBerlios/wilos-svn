@@ -6,11 +6,12 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
+import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.utils.Constantes.State;
 
-public class ConcreteTaskDescriptor {
+public class ConcreteTaskDescriptor extends ConcreteWorkBreakdownElement{
 
 	private String id;
 
@@ -59,6 +60,7 @@ public class ConcreteTaskDescriptor {
 	 * Copy the _roleDescriptor into this.
 	 */
 	protected void copy(final ConcreteTaskDescriptor _concreteTaskDescriptor) {
+		super.copy(_concreteTaskDescriptor);
 		this.setAccomplishedTime(_concreteTaskDescriptor.getAccomplishedTime());
 		this.setConcreteName(_concreteTaskDescriptor.getConcreteName());
 		this.setId(_concreteTaskDescriptor.getId());
@@ -88,7 +90,7 @@ public class ConcreteTaskDescriptor {
 			return true;
 		}
 		ConcreteTaskDescriptor concreteTaskDescriptor = (ConcreteTaskDescriptor) obj;
-		return new EqualsBuilder().append(this.accomplishedTime,
+		return new EqualsBuilder().appendSuper(super.equals(concreteTaskDescriptor)).append(this.accomplishedTime,
 				concreteTaskDescriptor.accomplishedTime).append(
 				this.concreteName, concreteTaskDescriptor.concreteName).append(
 				this.plannedFinishingDate,
@@ -112,7 +114,7 @@ public class ConcreteTaskDescriptor {
 	 *
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(this.id).append(
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.id).append(
 				this.accomplishedTime).append(this.concreteName).append(
 				this.plannedFinishingDate).append(this.plannedStartingDate)
 				.append(this.plannedTime).append(this.project).append(
