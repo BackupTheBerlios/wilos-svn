@@ -1,15 +1,14 @@
 package wilos.presentation.assistant.view.htmlViewer;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
@@ -34,7 +33,6 @@ import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.element.Element;
 import wilos.model.spem2.guide.Guideline;
 import wilos.model.spem2.role.RoleDescriptor;
-import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.ressources.Bundle;
 
@@ -109,6 +107,29 @@ public class HTMLViewer extends JFrame {
 		this.southPanel.setBorder(getCommonBorder(Bundle.getText("htmlViewer.guidelines")));
 		
 		guidesList = new JList();
+
+		// add a listener
+		guidesList.addMouseListener(new MouseListener() {
+			public void mouseClicked(MouseEvent e) {
+				JList list = (JList)e.getSource();
+				Object value = list.getSelectedValue();
+				viewObject((Element)value);
+				
+			}
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+		});
+		
 		guidesList.setVisible(false);
 		//guidesList.setAutoscrolls(true);
 		guidesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -200,22 +221,23 @@ public class HTMLViewer extends JFrame {
 		}
 		// if ok = true then object is an element
 		if (ok) {
-			Element e = (Element)o;
-			if(!this.historyStack.empty()) {
-				while(this.cursorStack != this.historyStack.size()-1) {
-					this.historyStack.pop();
+				Element e = (Element)o;
+				if(!this.historyStack.empty()) {
+					while(this.cursorStack != this.historyStack.size()-1) {
+						this.historyStack.pop();
+					}
 				}
-			}
-			
-			this.historyStack.push(e);
-			
-			if(this.historyStack.size() > 6){
-				this.historyStack.remove(0);
-			}
-			else {
-				this.cursorStack = this.historyStack.size()-1;
-			}
-			manageArrows();
+				
+					this.historyStack.push(e);
+					
+					if(this.historyStack.size() > 6){
+						this.historyStack.remove(0);
+					}
+					else {
+						this.cursorStack = this.historyStack.size()-1;
+					}
+					
+				manageArrows();
 		}
 		
 	}
@@ -239,15 +261,7 @@ public class HTMLViewer extends JFrame {
 		
 		guidesList.setListData(vectGuides);
 		guidesList.setCellRenderer(new GuidesRenderer());
-		guidesList.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent e) {
-				JList list = (JList)e.getSource();
-				Object value = list.getSelectedValue();
-				if(value != null && e.getValueIsAdjusting()){
-					viewObject((Element)value);
-				}
-			}
-		});
+		
 		
 		if (guides.size() != 0){
 			guidesList.setVisible(true);
