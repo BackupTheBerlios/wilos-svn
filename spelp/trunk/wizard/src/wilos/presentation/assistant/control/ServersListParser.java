@@ -18,19 +18,28 @@ import org.jdom.output.XMLOutputter;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.thoughtworks.xstream.XStream;
-
 import wilos.presentation.assistant.model.WizardServer;
 
 public class ServersListParser {
 	
-	private File XML_File = new File("wilos/presentation/assistant/ressources/servers.xml");
+	private static final String fic = "src/wilos/presentation/assistant/ressources/servers.xml";
+	private File XML_File;
 	private ArrayList<WizardServer> serversList = null;
 	private static final String xpath_server ="//Server";
 	
+	public ServersListParser(String f) {
+		XML_File = new File (f);
+		XMLUtils.setDocument(XML_File);
+	}
+	
+	public ServersListParser() {
+		XML_File = new File (ServersListParser.fic);
+		XMLUtils.setDocument(XML_File);
+	}
+
 	public List<WizardServer> getServersList() {
-		
 		if (serversList == null) {
+			
 			if (XML_File.exists() && XML_File.length() > 2) {
 				serversList = new ArrayList<WizardServer>();
 				
@@ -39,16 +48,18 @@ public class ServersListParser {
 				if (nodeReturned != null) {
 					Node aNode;
 					
-					String al = "";
-					String add = "";
-					int id = 1;
+					String al;
+					String add;
+					int id;
 					
 					for(int i = 0; i < nodeReturned.getLength(); i++) {
 						aNode = nodeReturned.item(i);
+						al = "";
+						add = "";
+						id = -1;
 						
 						NodeList attributesNode = aNode.getChildNodes();
 						for (int j = 0 ; j < attributesNode.getLength() ; j++) {
-							//System.out.println(attributesNode.item(j).getName);
 							if (attributesNode.item(j).getNodeName().equals("Alias")) {
 								al = attributesNode.item(j).getTextContent();
 							}
@@ -61,9 +72,11 @@ public class ServersListParser {
 							}*/
 						}
 						
-						WizardServer ws = new WizardServer (al, add,id);
-												
-						serversList.add(ws);		
+						// Don't add the server if it's not valid
+						if (!al.equals("") && !add.equals("")) {		//TODO condition sur id
+							WizardServer ws = new WizardServer (al, add,id);
+							serversList.add(ws);
+						}
 					}	
 				}
 			}
@@ -117,34 +130,6 @@ public class ServersListParser {
 			e.printStackTrace();
 		}
 	}
-	
-	/*
-	private void add() {
-		// Creation d'un Noeud Contact, et des Noeuds Name, Number et Id
-		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_data, XPathConstants.NODESET);
-		System.out.println("ici");
-		if (nodeReturned != null) {
-//			Node aNode;
-//			Node newContact;
-//			for(int i = 0; i < nodeReturned.getLength(); i++) {
-//				aNode = nodeReturned.item(i);
-//				newContact = XMLUtils.addElement("Contact");
-////				Element 
-////				aNode.appendChild(arg0);		
-//			}
-			
-			String toadd;
-			XStream xstream = new XStream();
-			
-			xstream.alias("Contact", Contact.class);
-			
-			toadd = xstream.toXML(this);
-			
-			//nodeReturned.item(0).
-			
-			//System.out.println(toadd);
-		}
-	}*/
 }
 /**
 package model;

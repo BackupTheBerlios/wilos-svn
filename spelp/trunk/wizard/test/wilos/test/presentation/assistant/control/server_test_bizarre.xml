@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Servers>
+	<Server>
+		<Aliasse>marine</Aliasse>
+		<Address>http://marine.edu.ups-tlse.fr:9014/wilos</Address>
+		<!--<Id>1</Id>-->
+	</Server>
+	<Server>
+		<Alias>marine</Alias>
+		<Address>http://marine.edu.ups-tlse.fr:9014/wilos</Address>
+		<!--<Id>1</Id>-->
+	</Server>
+	<Server>
+		<Aliasse>marine</Aliasse>
+		<Address>http://marine.edu.ups-tlse.fr:9014/wilos</Address>
+		<!--<Id>1</Id>-->
+	</Server>
+	<Servereyh>
+		<Alias>marine2</Alias>
+		<Address>http://marine.edu.ups-tlse.fr:9014/wilos/truc</Address>
+		<!--<Id>2</Id>-->
+	</Servereyh>
+</Servers>
