@@ -99,10 +99,11 @@ public class ServersListParser {
 		Element tmp;
 		Element server;
 		Document myDocument = new  Document(data);
+		int id = 1;
 		
 		WizardServer ws;
-		
-		Iterator it = wsl.iterator();		
+				
+		Iterator it = wsl.iterator();
 		while(it.hasNext())
 		{
 			ws = (WizardServer) it.next();
@@ -118,8 +119,9 @@ public class ServersListParser {
 			server.addContent(tmp);
 			
 			tmp = new Element("Id");
-			tmp.addContent(""+ws.getId());
+			tmp.addContent(""+id);
 			server.addContent(tmp);
+			id++;
 			
 			data.addContent(server);
 		}
@@ -138,6 +140,28 @@ public class ServersListParser {
 	}
 	
 	public void lastUsedServer (int no) {
+		int i;
+		for (i = 0 ; i < serversList.size() && serversList.get(i).getId() != no ; i++) { }
 		
+		WizardServer elem = serversList.get(i);
+		serversList.remove(i);
+		
+		trierAlias();
+		serversList.add(0, elem);
+		saveServersList(serversList);
+	}
+	
+	private void trierAlias ()
+	{
+		for (int i = 1 ; i < serversList.size() ; i++)
+		{
+			WizardServer elem = serversList.get(i);
+			serversList.remove(i);
+			
+			int j;
+			for (j = 0 ; (j < i+1) && (elem.getAlias().compareTo(serversList.get(j).getAlias()) > 0); j++) { }
+			
+			serversList.add(j, elem);
+		}
 	}
 }

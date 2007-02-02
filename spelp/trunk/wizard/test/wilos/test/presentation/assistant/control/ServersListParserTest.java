@@ -34,9 +34,9 @@ public class ServersListParserTest extends TestCase {
 	}
 
 	public void testSaveServersList() {
-		WizardServer ws1 = new WizardServer("lala", "http://marine.edu.ups-tlse.fr:9014/wi",1);
-		WizardServer ws2 = new WizardServer("hello", "http://www.youpi.com",1);
-		WizardServer ws3 = new WizardServer("mon_serveur", "http://blablabla.fr",1);
+		WizardServer ws1 = new WizardServer("lala", "http://marine.edu.ups-tlse.fr:9014/wi",2);
+		WizardServer ws2 = new WizardServer("hello", "http://www.youpi.com",7);
+		WizardServer ws3 = new WizardServer("mon_serveur", "http://blablabla.fr",3);
 		
 		ServersListParser slp = new ServersListParser("test/wilos/test/presentation/assistant/control/servers_test_save.xml");
 		ArrayList<WizardServer> wsl1 = new ArrayList<WizardServer>();
@@ -46,15 +46,15 @@ public class ServersListParserTest extends TestCase {
 		slp.saveServersList(wsl1);
 		
 		ArrayList<WizardServer> wsl2 = slp.getServersList();
-		assertTrue(wsl2.get(0).getAlias().equals(ws1.getAlias()));
-		assertTrue(wsl2.get(0).getAddress().equals(ws1.getAddress()));
-		assertEquals(wsl2.get(0).getId(),ws1.getId());
-		assertTrue(wsl2.get(1).getAlias().equals(ws2.getAlias()));
-		assertTrue(wsl2.get(1).getAddress().equals(ws2.getAddress()));
-		assertEquals(wsl2.get(1).getId(),ws2.getId());
+		assertTrue(wsl2.get(0).getAlias().equals(ws2.getAlias()));
+		assertTrue(wsl2.get(0).getAddress().equals(ws2.getAddress()));
+		assertEquals(wsl2.get(0).getId(),1);
+		assertTrue(wsl2.get(1).getAlias().equals(ws1.getAlias()));
+		assertTrue(wsl2.get(1).getAddress().equals(ws1.getAddress()));
+		assertEquals(wsl2.get(1).getId(),2);
 		assertTrue(wsl2.get(2).getAlias().equals(ws3.getAlias()));
 		assertTrue(wsl2.get(2).getAddress().equals(ws3.getAddress()));
-		assertEquals(wsl2.get(2).getId(),ws3.getId());
+		assertEquals(wsl2.get(2).getId(),3);
 	}
 
 }
