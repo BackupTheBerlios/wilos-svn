@@ -50,11 +50,11 @@ public class ConcreteTaskDescriptorService {
 				.getAllConcreteTaskDescriptors();
 		List<ConcreteTaskDescriptor> returnedList = new ArrayList<ConcreteTaskDescriptor>();
 
-		for (ConcreteTaskDescriptor concreteTaskDescriptor : tempList) {
+		/*FIXME Urgent (project) !!! for (ConcreteTaskDescriptor concreteTaskDescriptor : tempList) {
 			if (concreteTaskDescriptor.getProject().getProject_id().equals(_projectId)) {
 				returnedList.add(concreteTaskDescriptor);
 			}
-		}
+		}*/
 
 		return returnedList;
 	}

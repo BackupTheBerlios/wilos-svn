@@ -65,9 +65,9 @@ public class TaskDescriptorService {
 
 		ConcreteTaskDescriptor ctd = new ConcreteTaskDescriptor();
 
+		/*FIXME concretetaskdescriptor
 		ctd.setConcreteName(td.getPresentationName());
-		ctd.setProject(_project);
-		ctd.addTaskDescriptor(td);
+		ctd.addTaskDescriptor(td);*/
 
 		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(ctd);
 	}

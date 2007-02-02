@@ -7,17 +7,10 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
-import wilos.model.misc.project.Project;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.utils.Constantes.State;
 
-public class ConcreteTaskDescriptor extends ConcreteWorkBreakdownElement{
-
-	private String id;
-
-	private Project project;
-
-	private String concreteName;
+public class ConcreteTaskDescriptor extends ConcreteWorkBreakdownElement {
 
 	private String state;
 
@@ -62,14 +55,11 @@ public class ConcreteTaskDescriptor extends ConcreteWorkBreakdownElement{
 	protected void copy(final ConcreteTaskDescriptor _concreteTaskDescriptor) {
 		super.copy(_concreteTaskDescriptor);
 		this.setAccomplishedTime(_concreteTaskDescriptor.getAccomplishedTime());
-		this.setConcreteName(_concreteTaskDescriptor.getConcreteName());
-		this.setId(_concreteTaskDescriptor.getId());
 		this.setPlannedFinishingDate(_concreteTaskDescriptor
 				.getPlannedFinishingDate());
 		this.setPlannedStartingDate(_concreteTaskDescriptor
 				.getPlannedStartingDate());
 		this.setPlannedTime(_concreteTaskDescriptor.getPlannedTime());
-		this.setProject(_concreteTaskDescriptor.getProject());
 		this.setRealFinishingDate(_concreteTaskDescriptor
 				.getRealFinishingDate());
 		this.setRealStartingDate(_concreteTaskDescriptor.getRealStartingDate());
@@ -90,19 +80,19 @@ public class ConcreteTaskDescriptor extends ConcreteWorkBreakdownElement{
 			return true;
 		}
 		ConcreteTaskDescriptor concreteTaskDescriptor = (ConcreteTaskDescriptor) obj;
-		return new EqualsBuilder().appendSuper(super.equals(concreteTaskDescriptor)).append(this.accomplishedTime,
-				concreteTaskDescriptor.accomplishedTime).append(
-				this.concreteName, concreteTaskDescriptor.concreteName).append(
-				this.plannedFinishingDate,
-				concreteTaskDescriptor.plannedFinishingDate).append(
-				this.plannedStartingDate,
-				concreteTaskDescriptor.plannedStartingDate).append(
-				this.plannedTime, concreteTaskDescriptor.plannedTime).append(
-				this.project, concreteTaskDescriptor.project).append(
-				this.realFinishingDate,
-				concreteTaskDescriptor.realFinishingDate).append(
-				this.realStartingDate, concreteTaskDescriptor.realStartingDate)
-				.append(this.remainingTime,
+		return new EqualsBuilder().appendSuper(
+				super.equals(concreteTaskDescriptor)).append(
+				this.accomplishedTime, concreteTaskDescriptor.accomplishedTime)
+				.append(this.plannedFinishingDate,
+						concreteTaskDescriptor.plannedFinishingDate).append(
+						this.plannedStartingDate,
+						concreteTaskDescriptor.plannedStartingDate).append(
+						this.plannedTime, concreteTaskDescriptor.plannedTime)
+				.append(this.realFinishingDate,
+						concreteTaskDescriptor.realFinishingDate).append(
+						this.realStartingDate,
+						concreteTaskDescriptor.realStartingDate).append(
+						this.remainingTime,
 						concreteTaskDescriptor.remainingTime).append(
 						this.state, concreteTaskDescriptor.state).append(
 						this.taskDescriptor,
@@ -114,11 +104,11 @@ public class ConcreteTaskDescriptor extends ConcreteWorkBreakdownElement{
 	 *
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.id).append(
-				this.accomplishedTime).append(this.concreteName).append(
-				this.plannedFinishingDate).append(this.plannedStartingDate)
-				.append(this.plannedTime).append(this.project).append(
-						this.realFinishingDate).append(this.realStartingDate)
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
+				.append(this.accomplishedTime).append(
+						this.plannedFinishingDate).append(
+						this.plannedStartingDate).append(this.plannedTime)
+				.append(this.realFinishingDate).append(this.realStartingDate)
 				.append(this.remainingTime).append(this.taskDescriptor)
 				.toHashCode();
 	}
@@ -160,14 +150,6 @@ public class ConcreteTaskDescriptor extends ConcreteWorkBreakdownElement{
 	 *
 	 */
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public String getState() {
 		return state;
 	}
@@ -190,14 +172,6 @@ public class ConcreteTaskDescriptor extends ConcreteWorkBreakdownElement{
 
 	public void setAccomplishedTime(float accomplishedTime) {
 		this.accomplishedTime = accomplishedTime;
-	}
-
-	public String getConcreteName() {
-		return concreteName;
-	}
-
-	public void setConcreteName(String concreteName) {
-		this.concreteName = concreteName;
 	}
 
 	public Date getPlannedFinishingDate() {
@@ -246,14 +220,6 @@ public class ConcreteTaskDescriptor extends ConcreteWorkBreakdownElement{
 
 	public void setRemainingTime(float remainingTime) {
 		this.remainingTime = remainingTime;
-	}
-
-	public Project getProject() {
-		return project;
-	}
-
-	public void setProject(Project project) {
-		this.project = project;
 	}
 
 	public ConcreteRoleDescriptor getConcreteRoleDescriptor() {
