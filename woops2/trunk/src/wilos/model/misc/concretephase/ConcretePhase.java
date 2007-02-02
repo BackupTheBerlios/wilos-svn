@@ -3,20 +3,21 @@ package wilos.model.misc.concretephase;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
+import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.spem2.phase.Phase;
 
 /**
- * 
+ *
  * @author Soosuske
  *
  */
 public class ConcretePhase extends ConcreteActivity implements Cloneable{
-	
+
 	Phase phase;
-	
+
 	/**
 	 * Default constructor
-	 * 
+	 *
 	 */
 	public ConcretePhase() {
 		super() ;
@@ -24,7 +25,7 @@ public class ConcretePhase extends ConcreteActivity implements Cloneable{
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#clone()
 	 */
 	@ Override
@@ -36,7 +37,7 @@ public class ConcretePhase extends ConcreteActivity implements Cloneable{
 
 	/**
 	 * Copy the object.
-	 * 
+	 *
 	 * @param _cnocretePhase
 	 *            The concretePhase to copy.
 	 */
@@ -46,7 +47,7 @@ public class ConcretePhase extends ConcreteActivity implements Cloneable{
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see woops2.model.activity.Activity#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
@@ -62,13 +63,13 @@ public class ConcretePhase extends ConcreteActivity implements Cloneable{
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see wilos.model.misc.concretePhase.Concrete#hashCode()
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode() ;
 	}
-	
+
 	/**
 	 * add a phase
 	 * @param phase
@@ -76,8 +77,8 @@ public class ConcretePhase extends ConcreteActivity implements Cloneable{
 	public void addToPhase(Phase phase){
 		   this.phase = phase;
 		   phase.getConcretePhases().add(this);
-		} 
-	
+		}
+
 	/**
 	 * remove a phase
 	 * @param phase
@@ -93,7 +94,7 @@ public class ConcretePhase extends ConcreteActivity implements Cloneable{
 
 	public void setPhase(Phase phase) {
 		this.phase = phase;
-	} 
+	}
 
 }
 

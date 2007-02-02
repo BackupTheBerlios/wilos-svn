@@ -5,20 +5,19 @@ import java.util.List;
 import java.util.Set;
 
 import junit.framework.TestCase;
-import wilos.hibernate.spem2.breakdownelement.BreakdownElementDao;
-import wilos.model.spem2.activity.Activity;
-import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.hibernate.misc.concretebreakdownelement.ConcreteBreakdownElementDao;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
+import wilos.model.spem2.activity.Activity;
 import wilos.test.TestConfiguration;
 
 /**
  * Unit test for ConcreteConcreteBreakdownElementDao
- * 
+ *
  * @author nanawel
  */
 public class ConcreteBreakdownElementDaoTest extends TestCase {
-	
-	private ConcreteBreakdownElementDao breakdownElementDao = null;
+
+	private ConcreteBreakdownElementDao concreteBreakdownElementDao = null;
 
 	private ConcreteBreakdownElement concreteBreakdownElement = null;
 
@@ -28,7 +27,7 @@ public class ConcreteBreakdownElementDaoTest extends TestCase {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see junit.framework.TestCase#setUp()
 	 */
 	@Override
@@ -45,7 +44,7 @@ public class ConcreteBreakdownElementDaoTest extends TestCase {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see junit.framework.TestCase#tearDown()
 	 */
 	@Override
@@ -58,28 +57,28 @@ public class ConcreteBreakdownElementDaoTest extends TestCase {
 	/**
 	 * Test method for
 	 * {@link wilos.hibernate.misc.concretebreakdownElement.ConcreteBreakdownElementDao#saveOrUpdateConcreteBreakdownElement(wilos.model.misc.concretebreakdownElement.concreteBreakdownElement)}.
-	 * 
+	 *
 	 */
 	public void testSaveOrUpdateConcreteBreakdownElement() {
 		// Rk: the setUp method is called here.
 
 		// Saves the activity with the method to test.
 		this.concreteBreakdownElementDao
-				.saveOrUpdateBreakdownElement(this.concreteBreakdownElement);
+				.saveOrUpdateConcreteBreakdownElement(this.concreteBreakdownElement);
 
 		// Checks the saving.
 		String id = this.concreteBreakdownElement.getId();
 		ConcreteBreakdownElement cbdeTmp = (ConcreteBreakdownElement) this.concreteBreakdownElementDao
 				.getHibernateTemplate().load(ConcreteBreakdownElement.class, id);
 		assertNotNull(cbdeTmp);
-		
+
 		// Rk: the tearDown method is called here.
 	}
 
 	/**
 	 * Test method for
 	 * {@link wilos.hibernate.misc.concretebreakdownelement.ConcreteBreakdownElementDao#getAllConcreteBreakdownElements()}.
-	 * 
+	 *
 	 */
 	public void testGetAllConcreteBreakdownElements() {
 		// Rk: the setUp method is called here.
@@ -101,16 +100,16 @@ public class ConcreteBreakdownElementDaoTest extends TestCase {
 	/**
 	 * Test method for
 	 * {@link wilos.hibernate.spem2.breakdownelement.ConcreteBreakdownElementDao#getBreakdownElement()}.
-	 * 
+	 *
 	 */
 	public void testGetBreakdownElement() {
 		// Rk: the setUp method is called here.
 
 		// Adds properties to the concreteBreakdownElement.
 		this.concreteBreakdownElement.setConcreteName(CONCRETE_NAME);
-		
+
 		// Saves the concreteBreakdownElement into the database.
-		this.concreteBreakdownElement.getHibernateTemplate().saveOrUpdate(
+		this.concreteBreakdownElementDao.saveOrUpdateConcreteBreakdownElement(
 				this.concreteBreakdownElement);
 		String id = this.concreteBreakdownElement.getId();
 
@@ -120,7 +119,7 @@ public class ConcreteBreakdownElementDaoTest extends TestCase {
 				.getConcreteBreakdownElement(id);
 		assertNotNull(cbdeTmp);
 		assertEquals("Name", cbdeTmp.getConcreteName(), CONCRETE_NAME);
-		
+
 		// Tests the method getConcreteBreakdownElement with an unexisting
 		// concreteBreakdownElement.
 		this.concreteBreakdownElementDao.getHibernateTemplate().delete(
@@ -134,7 +133,7 @@ public class ConcreteBreakdownElementDaoTest extends TestCase {
 	/**
 	 * Test method for
 	 * {@link wilos.hibernate.misc.concretebreakdownelement.ConcreteBreakdownElementDao#deleteConcreteBreakdownElement()}.
-	 * 
+	 *
 	 */
 	public void testDeleteConcreteBreakdownElement() {
 		// Rk: the setUp method is called here.

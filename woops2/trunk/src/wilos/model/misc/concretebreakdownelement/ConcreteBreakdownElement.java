@@ -1,13 +1,13 @@
 package wilos.model.misc.concretebreakdownelement;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-import wilos.model.spem2.activity.Activity;
+import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
-import wilos.model.spem2.task.TaskDescriptor;
 
 public class ConcreteBreakdownElement implements Cloneable {
 
