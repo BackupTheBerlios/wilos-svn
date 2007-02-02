@@ -600,6 +600,9 @@ public class XMLParserTest extends TestCase {
 				assertTrue(itAct.hasNext());
 				tmpAct = itAct.next();
 			}
+			else {
+				System.out.println(tmpAct.getPresentationName());
+			}
 			
 			Phase secondPhase = (Phase) tmpAct;
 			// We get the set of activities of the second Phase
@@ -608,8 +611,14 @@ public class XMLParserTest extends TestCase {
 			secondPhaseActivitiesIterator = secondPhaseActivities.iterator();
 			
 			assertTrue(secondPhaseActivitiesIterator.hasNext());
+			BreakdownElement tmpBde =  secondPhaseActivitiesIterator.next();
 			
-			Iteration secondPhaseIteration = (Iteration) secondPhaseActivitiesIterator.next();
+			while (! (tmpBde instanceof Iteration) && secondPhaseActivitiesIterator.hasNext()) {
+				tmpBde =  secondPhaseActivitiesIterator.next();
+			}
+			
+			assertTrue(tmpBde instanceof Iteration);
+			Iteration secondPhaseIteration = (Iteration) tmpBde;
 			
 			Iterator<BreakdownElement> it;
 			
