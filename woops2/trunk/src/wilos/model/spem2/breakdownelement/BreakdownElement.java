@@ -1,13 +1,13 @@
 
 package wilos.model.spem2.breakdownelement ;
 
-import java.util.HashSet ;
-import java.util.Set ;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.apache.commons.lang.builder.EqualsBuilder ;
-import org.apache.commons.lang.builder.HashCodeBuilder ;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
-import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
+import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.element.Element;
 
@@ -75,6 +75,7 @@ public class BreakdownElement extends Element implements Cloneable {
 		this.hasMultipleOccurrences = _breakdownElement.hasMultipleOccurrences ;
 		this.isPlanned = _breakdownElement.isPlanned ;
 		this.isOptional = _breakdownElement.isOptional ;
+	    this.setConcreteBreakdownElements(_breakdownElement.getConcreteBreakdownElements());
 		this.setSuperActivities(_breakdownElement.getSuperActivities()) ;
 	}
 
@@ -93,7 +94,7 @@ public class BreakdownElement extends Element implements Cloneable {
 		BreakdownElement breakdownElement = (BreakdownElement) obj ;
 		return new EqualsBuilder().appendSuper(super.equals(breakdownElement)).append(this.presentationName, breakdownElement.presentationName).append(this.prefix, breakdownElement.prefix).append(this.isPlanned,
 				breakdownElement.isPlanned).append(this.hasMultipleOccurrences, breakdownElement.hasMultipleOccurrences).append(this.isOptional,
-				breakdownElement.isOptional).append(this.superActivities, breakdownElement.superActivities).isEquals() ;
+				breakdownElement.isOptional).append(this.concreteBreakdownElements, breakdownElement.concreteBreakdownElements).append(this.superActivities, breakdownElement.superActivities).isEquals() ;
 	}
 
 	/*
@@ -120,7 +121,7 @@ public class BreakdownElement extends Element implements Cloneable {
 	public void removeConcreteBreakdownElement(
 			ConcreteBreakdownElement _concreteBreakdownElement) {
 		_concreteBreakdownElement.removeBreakdownElement(this);
-		this.concreteBreakdownElement.remove(_concreteBreakdownElement);
+		this.concreteBreakdownElements.remove(_concreteBreakdownElement);
 	}
 
 	public void addAllConcreteBreakdownElements(
