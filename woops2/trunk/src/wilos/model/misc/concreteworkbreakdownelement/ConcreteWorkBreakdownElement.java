@@ -4,6 +4,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
+import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 
 
@@ -68,14 +69,29 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement imple
 	 */
 	protected void copy(final ConcreteWorkBreakdownElement _concreteWorkBreakdownElement) {
 		super.copy(_concreteWorkBreakdownElement);
-		this.setWorkbreakdownelement(_concreteWorkBreakdownElement.getWorkbreakdownelement());
+		this.setWorkBreakdownElement(_concreteWorkBreakdownElement.getWorkbreakdownelement());
+	}
+	
+	/*
+	 * Relation between WorkBreakdownElement and ConcreteWorkBreakdownElement.
+	 *
+	 */
+
+	public void addWorkBreakdownElement(WorkBreakdownElement _workbreakdownElement) {
+		this.workbreakdownelement = _workbreakdownElement;
+		_workbreakdownElement.getConcreteBreakdownElements().add(this);
+	}
+
+	public void removeWorkBreakdownElement(WorkBreakdownElement _workbreakdownElement) {
+		_workbreakdownElement.getConcreteWorkBreakdownElements().remove(this);
+		this.workbreakdownelement = null;
 	}
 
 	public WorkBreakdownElement getWorkbreakdownelement() {
 		return workbreakdownelement;
 	}
 
-	public void setWorkbreakdownelement(WorkBreakdownElement _workbreakdownelement) {
+	public void setWorkBreakdownElement(WorkBreakdownElement _workbreakdownelement) {
 		this.workbreakdownelement = _workbreakdownelement;
 	}
 }

@@ -6,6 +6,8 @@ import java.util.Set;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
+import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
+import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 
 /**
@@ -14,7 +16,7 @@ import wilos.model.spem2.breakdownelement.BreakdownElement;
  * specific properties for Breakdown Elements that represent or refer to Work
  * Definitions.
  * 
- * @author deder
+ * @author eperico
  * 
  */
 public class WorkBreakdownElement extends BreakdownElement implements Cloneable {
@@ -28,6 +30,8 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	private Set<WorkBreakdownElement> predecessors;
 
 	private Set<WorkBreakdownElement> successors;
+		
+	private Set<ConcreteWorkBreakdownElement> concreteWorkBreakdownElements;
 
 	public WorkBreakdownElement() {
 		super();
@@ -36,12 +40,13 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 		this.isRepeatable = false;
 		this.predecessors = new HashSet<WorkBreakdownElement>();
 		this.successors = new HashSet<WorkBreakdownElement>();
+		this.concreteWorkBreakdownElements = new HashSet<ConcreteWorkBreakdownElement>() ;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see woops2.model.breakdownelement.BreakdownElement#equals(java.lang.Object)
+	 * @see woops2.model.spem2.workbreakdownelement.WorkBreakdownElement#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
 		if (obj instanceof BreakdownElement == false) {
@@ -57,13 +62,15 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 				workBreakdownElement.isOngoing).append(this.isRepeatable,
 				workBreakdownElement.isRepeatable).append(this.successors,
 				workBreakdownElement.successors).append(this.predecessors,
-				workBreakdownElement.predecessors).isEquals();
+				workBreakdownElement.predecessors).append(this.concreteWorkBreakdownElements,
+				workBreakdownElement.concreteWorkBreakdownElements)
+				.isEquals();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see woops2.model.breakdownelement.BreakdownElement#hashCode()
+	 * @see woops2.model.spem2.workbreakdownelement.WorkBreakdownElement#hashCode()
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
@@ -82,6 +89,36 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 		workBreakdownElement.copy(this);
 		return workBreakdownElement;
 	}
+	
+	/*
+	 * relation between WorkBreakdownElement and ConcreteWorkBreakdownElement.
+	 *
+	 */
+
+	public void addConcreteWorkBreakdownElement(
+			ConcreteWorkBreakdownElement _concreteWorkBreakdownElement) {
+		this.concreteWorkBreakdownElements.add(_concreteWorkBreakdownElement);
+		_concreteWorkBreakdownElement.addWorkBreakdownElement(this);
+	}
+
+	public void removeConcreteWorkBreakdownElement(
+			ConcreteWorkBreakdownElement _concreteWorkBreakdownElement) {
+		_concreteWorkBreakdownElement.removeWorkBreakdownElement(this);
+		this.concreteWorkBreakdownElements.remove(_concreteWorkBreakdownElement);
+	}
+
+	public void addAllConcreteWorkBreakdownElements(
+			Set<ConcreteWorkBreakdownElement> _concreteWorkBreakdownElements) {
+		for (ConcreteWorkBreakdownElement cwbde : _concreteWorkBreakdownElements) {
+			cwbde.addWorkBreakdownElement(this);
+		}
+	}
+
+	public void removeAllConcreteWorkBreakdownElements() {
+		for (ConcreteWorkBreakdownElement cwbde : this.getConcreteWorkBreakdownElements())
+			cwbde.setWorkBreakdownElement(null);
+		this.getConcreteWorkBreakdownElements().clear();
+	}
 
 	/**
 	 * Copy the _workBreakdownElement into this.
@@ -91,6 +128,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 		this.setIsEvenDriven(_workBreakdownElement.getIsEvenDriven());
 		this.setIsOngoing(_workBreakdownElement.getIsOngoing());
 		this.setIsRepeatable(_workBreakdownElement.getIsRepeatable());
+		this.setConcreteworkbreakdownelements(_workBreakdownElement.getConcreteWorkBreakdownElements());
 		//todo
 	}
 
@@ -255,5 +293,14 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 
 	public void setSuccessors(Set<WorkBreakdownElement> successors) {
 		this.successors = successors;
+	}
+	
+	public Set<ConcreteWorkBreakdownElement> getConcreteWorkBreakdownElements() {
+		return this.concreteWorkBreakdownElements;
+	}
+
+	public void setConcreteworkbreakdownelements(
+			Set<ConcreteWorkBreakdownElement> _concreteWorkBreakdownElements) {
+		this.concreteWorkBreakdownElements = _concreteWorkBreakdownElements;
 	}
 }
