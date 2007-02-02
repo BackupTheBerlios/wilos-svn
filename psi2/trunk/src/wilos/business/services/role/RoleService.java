@@ -80,12 +80,12 @@ public class RoleService {
 		{
 			globalRoleTemp = (RoleDescriptor)globalRolesIter.next();
 			
-			if(currentParticipant.getRolesListForAProject().contains(globalRoleTemp))
+			//if(currentParticipant.getRolesListForAProject().contains(globalRoleTemp))
 			{
 				test = new Boolean(true);
 				if(!participantRoles.containsKey(globalRoleTemp))
 					participantRoles.put(globalRoleTemp, test);
-			} else {
+		//	} else {
 				test = new Boolean(false);
 				if(!participantRoles.containsKey(globalRoleTemp))
 					participantRoles.put(globalRoleTemp, test);
@@ -148,10 +148,10 @@ public class RoleService {
 			RoleDescriptor roleDescriptor = this.getRoleDescriptorByName(roleName);
 			if(roleDescriptor!=null)
 			{
-				if(rolesParticipant.get(roleName).booleanValue())		
-					currentParticipant.addToRoleDescriptor(roleDescriptor);
-				else
-					currentParticipant.removeFromRoleDescriptor(roleDescriptor);
+			//	if(rolesParticipant.get(roleName).booleanValue())		
+		//			currentParticipant.addToRoleDescriptor(roleDescriptor);
+			//	else
+			//		currentParticipant.removeFromRoleDescriptor(roleDescriptor);
 			}
 		}
 		return "";

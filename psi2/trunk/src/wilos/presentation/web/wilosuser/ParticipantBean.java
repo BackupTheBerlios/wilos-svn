@@ -24,7 +24,7 @@ import org.apache.commons.logging.LogFactory ;
 import wilos.business.services.project.ProjectService ;
 import wilos.business.services.wilosuser.LoginService ;
 import wilos.business.services.wilosuser.ParticipantService ;
-import wilos.model.spem2.role.RoleDescriptor ;
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor ;
 import wilos.model.misc.project.Project ;
 import wilos.model.misc.wilosuser.Participant ;
 import wilos.presentation.web.template.MenuBean ;
@@ -38,7 +38,11 @@ import wilos.presentation.web.template.MenuBean ;
  */
 public class ParticipantBean {
 
-	private List<RoleDescriptor> rolesList ;
+	private List<String> concreteRoleDescriptorHeaders;
+	
+	private List<ConcreteRoleDescriptor> concreteRoleDescriptors;
+	
+	private HashMap<String,Boolean> concreteRoleDescriptorsMap;
 
 	private ParticipantService participantService ;
 
@@ -206,23 +210,23 @@ public class ParticipantBean {
 
 	/**
 	 * Getter of rolesList.
-	 * 
+	 * TODO method description + test
 	 * @return the rolesList.
 	 */
-	public List<RoleDescriptor> getRolesList() {
-		this.rolesList = new ArrayList<RoleDescriptor>() ;
-		rolesList.addAll(this.participantService.getRolesListForAParticipant(this.participant.getLogin())) ;
-		return this.rolesList ;
+	public List<ConcreteRoleDescriptor> getConcreteRoleDescriptors() {
+		this.concreteRoleDescriptors = new ArrayList<ConcreteRoleDescriptor>() ;
+		//concreteRoleDescriptors.addAll(this.participantService.getConcreteRoleDescriptorsForAParticipantAndForAProject(_projectId, _login);
+		return this.concreteRoleDescriptors ;
 	}
 
 	/**
 	 * Setter of rolesList.
-	 * 
+	 * TODO method description
 	 * @param _rolesList
 	 *            The rolesList to set.
 	 */
-	public void setRolesList(List<RoleDescriptor> _rolesList) {
-		this.rolesList = _rolesList ;
+	public void setConcreteRoleDescriptors(List<ConcreteRoleDescriptor> _concreteRoleDescriptors) {
+		this.concreteRoleDescriptors = _concreteRoleDescriptors ;
 	}
 
 	/**
@@ -619,5 +623,59 @@ public class ParticipantBean {
 	public void setSelectNotManageableProjectView(
 			String selectNotManageableProjectView) {
 		this.selectNotManageableProjectView = selectNotManageableProjectView;
+	}
+
+	
+	
+	/**
+	 * Getter of concreteRoleDescriptorHeaders.
+	 *
+	 * @return the concreteRoleDescriptorHeaders.
+	 */
+	public List<String> getConcreteRoleDescriptorHeaders() {
+		this.concreteRoleDescriptorHeaders.addAll(this.getConcreteRoleDescriptorsMap().keySet());
+		return this.concreteRoleDescriptorHeaders ;
+	}
+	
+
+	/**
+	 * Setter of concreteRoleDescriptorHeaders.
+	 *
+	 * @param _concreteRoleDescriptorHeaders The concreteRoleDescriptorHeaders to set.
+	 */
+	public void setConcreteRoleDescriptorHeaders(List<String> _concreteRoleDescriptorHeaders) {
+		this.concreteRoleDescriptorHeaders = _concreteRoleDescriptorHeaders ;
+	}
+	
+	
+
+	/**
+	 * Getter of concreteRoleDescriptorsMap.
+	 *
+	 * @return the concreteRoleDescriptorsMap.
+	 */
+	public HashMap<String, Boolean> getConcreteRoleDescriptorsMap() {
+		//participantService.getConcreteRoleDescriptorsForAProject(String _project_id, String _participant_id);
+		this.concreteRoleDescriptorsMap = new HashMap<String, Boolean>();
+		List<ConcreteRoleDescriptor> concreteRoleDescriptorsForAParticipant  = new ArrayList<ConcreteRoleDescriptor>();
+		//concreteRoleDescriptorsForAParticipant.addAll(this.participantService.getConcreteRoleDescriptorsForAParticipant(this.getParticipantFromSession().getLogin()));
+		//Ajouter les CRD ki ne sont pas affectés au participant
+		//a recup direct ds le CRDService :D
+		for(Iterator iter = concreteRoleDescriptorsForAParticipant.iterator(); iter.hasNext();){
+			ConcreteRoleDescriptor currentCRD = (ConcreteRoleDescriptor) iter.next() ;
+			this.concreteRoleDescriptorsMap.put(currentCRD.getConcreteName(), true);
+			
+		}
+		return this.concreteRoleDescriptorsMap ;
+	}
+	
+
+	/**
+	 * Setter of concreteRoleDescriptorsMap.
+	 *
+	 * @param _concreteRoleDescriptorsMap The concreteRoleDescriptorsMap to set.
+	 */
+	public void setConcreteRoleDescriptorsMap(HashMap<String, Boolean> _concreteRoleDescriptorsMap) {
+		this.concreteRoleDescriptorsMap = _concreteRoleDescriptorsMap ;
 	}
 }

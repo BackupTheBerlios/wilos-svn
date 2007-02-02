@@ -2,13 +2,14 @@ package wilos.hibernate.misc.wilosuser;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import wilos.model.misc.wilosuser.Participant;
-import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 
 /**
  * ParticipantDao manage requests from the system to store Participant into the
@@ -35,35 +36,37 @@ public class ParticipantDao extends HibernateDaoSupport {
 
 	/**
 	 * Return a list of elements.
-	 * 
+	 * TODO
 	 * @return
 	 */
-	public Set<RoleDescriptor> getAllRoles() {
-		Set<RoleDescriptor> loadAll = new HashSet<RoleDescriptor>();
-		loadAll.addAll(this.getHibernateTemplate().loadAll(RoleDescriptor.class));
+	public Set<ConcreteRoleDescriptor> getAllConcreteRoleDescriptors() {
+		Set<ConcreteRoleDescriptor> loadAll = new HashSet<ConcreteRoleDescriptor>();
+		loadAll.addAll(this.getHibernateTemplate().loadAll(ConcreteRoleDescriptor.class));
 		return loadAll;
 	}
 	
 	/**
 	 * Return a list of elements.
-	 * 
+	 * TODO test + description
 	 * @return
 	 */
-	public Set<RoleDescriptor> getAllRolesForAParticipant(String _login) {
-		Set<RoleDescriptor> loadAll = new HashSet<RoleDescriptor>();
+	public Set<ConcreteRoleDescriptor> getAllConcreteRolesForAParticipant(String _login) {
+		Set<ConcreteRoleDescriptor> concreteRoleDescriptorsForAParticipant = new HashSet<ConcreteRoleDescriptor>();
+		
 		Participant participant = this.getParticipant(_login);
-		List roles = this.getHibernateTemplate().find("from RoleDescriptor role join role.play p where p.id=?",participant.getWilosuser_id());
-		List<RoleDescriptor> rolesList = new ArrayList<RoleDescriptor>();
-        if (roles.get(0) instanceof List){
-                for (Object o : (ArrayList) roles.get(0)) {
-                        if (o instanceof RoleDescriptor) {
-                        	RoleDescriptor role = (RoleDescriptor) o;
-                                rolesList.add(role);
-                        }
-                }
-        }
-        loadAll.addAll(rolesList);
-		return loadAll;
+		List<ConcreteRoleDescriptor> concreteRoleDescriptors = new ArrayList<ConcreteRoleDescriptor>();
+		concreteRoleDescriptors.addAll(this.getAllConcreteRoleDescriptors());
+		
+		for(Iterator iter = concreteRoleDescriptors.iterator(); iter.hasNext();){
+			ConcreteRoleDescriptor concreteRoleDescriptor = (ConcreteRoleDescriptor) iter.next() ;
+			Participant currentParticipant = concreteRoleDescriptor.getParticipant();
+			if(currentParticipant != null){
+				if(currentParticipant.getWilosuser_id().equals(participant.getWilosuser_id())){
+					concreteRoleDescriptorsForAParticipant.add(concreteRoleDescriptor);
+				}
+			}			
+		}		
+		return concreteRoleDescriptorsForAParticipant;
 	}
 
 	/**

@@ -8,7 +8,7 @@ import org.apache.commons.lang.builder.EqualsBuilder ;
 import org.apache.commons.lang.builder.HashCodeBuilder ;
 
 import wilos.model.misc.project.Project ;
-import wilos.model.spem2.role.RoleDescriptor ;
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 
 /**
  * This class represents a participant of a project This type of user can work on projects and
@@ -20,7 +20,7 @@ import wilos.model.spem2.role.RoleDescriptor ;
  */
 public class Participant extends WilosUser implements Cloneable {
 
-	private Set<RoleDescriptor> rolesListForAProject ;
+	private Set<ConcreteRoleDescriptor> concreteRoleDescriptors ;
 
 	private Set<Project> affectedProjectList ;
 
@@ -28,69 +28,59 @@ public class Participant extends WilosUser implements Cloneable {
 
 	public Participant() {
 		super() ;
-		rolesListForAProject = new HashSet<RoleDescriptor>() ;
+		concreteRoleDescriptors = new HashSet<ConcreteRoleDescriptor>() ;
 		affectedProjectList = new HashSet<Project>() ;
 		managedProjects = new HashSet<Project>() ;
 	}
 
 	/**
 	 * Getter of rolesListForAProject.
-	 * 
+	 * TODO
 	 * @return the rolesListForAProject.
 	 */
-	public Set<RoleDescriptor> getRolesListForAProject() {
-		return this.rolesListForAProject ;
+	public Set<ConcreteRoleDescriptor> getConcreteRoleDescriptors() {
+		return this.concreteRoleDescriptors ;
 	}
 
 	/**
 	 * Setter of rolesListForAProject.
-	 * 
+	 * TODO
 	 * @param _rolesListForAProject
 	 *            The rolesListForAProject to set.
 	 */
-	public void setRolesListForAProject(Set<RoleDescriptor> _rolesListForAProject) {
-		this.rolesListForAProject = _rolesListForAProject ;
+	public void setConcreteRoleDescriptors(Set<ConcreteRoleDescriptor> _concreteRoleDescriptors) {
+		this.concreteRoleDescriptors = _concreteRoleDescriptors ;
 	}
 
 	/**
 	 * adds a role descriptor to the Set
-	 * 
+	 * TODO
 	 * @param _roleDescriptor
 	 */
-	public void addToRoleDescriptor(RoleDescriptor _roleDesc) {
-		this.rolesListForAProject.add(_roleDesc) ;
-		_roleDesc.getParticipants().add(this) ;
+	public void addConcreteRoleDescriptor(ConcreteRoleDescriptor _roleDesc) {
+		this.concreteRoleDescriptors.add(_roleDesc) ;
+		_roleDesc.setParticipant(this) ;
 	}
 
 	/**
 	 * remove a RoleDescriptor
-	 * 
+	 * TODO
 	 * @param _roleDesc
 	 */
-	public void removeFromRoleDescriptor(RoleDescriptor _roleDesc) {
-		this.rolesListForAProject.remove(_roleDesc) ;
-		_roleDesc.getParticipants().remove(this) ;
+	public void removeConcreteRoleDescriptor(ConcreteRoleDescriptor _roleDesc) {
+		this.concreteRoleDescriptors.remove(_roleDesc) ;
+		_roleDesc.setParticipant(null) ;
 	}
 
 	/**
 	 * Remove all the role descriptors
-	 * 
+	 * TODO
 	 */
-	public void removeAllRoleDescriptors() {
-		for(RoleDescriptor _roleD : this.rolesListForAProject){
+	public void removeAllConcreteRoleDescriptors() {
+		for(ConcreteRoleDescriptor _roleD : this.concreteRoleDescriptors){
 			_roleD.removeParticipant(this) ;
 		}
-		this.rolesListForAProject.clear() ;
-	}
-
-	/**
-	 * Removes all Participants from a RoleDescriptor
-	 * 
-	 */
-	public void removeFromAllRoleDescriptor() {
-		for(RoleDescriptor _roleD : this.rolesListForAProject){
-			this.removeFromRoleDescriptor(_roleD) ;
-		}
+		this.concreteRoleDescriptors.clear() ;
 	}
 
 	/**
@@ -154,7 +144,7 @@ public class Participant extends WilosUser implements Cloneable {
 	 */
 	protected void copy(final Participant _participant) {
 		super.copy(_participant) ;
-		this.setRolesListForAProject(_participant.getRolesListForAProject()) ;
+		this.setConcreteRoleDescriptors(_participant.getConcreteRoleDescriptors()) ;
 	}
 
 	/*
@@ -170,7 +160,7 @@ public class Participant extends WilosUser implements Cloneable {
 			return true ;
 		}
 		Participant participant = (Participant) _obj ;
-		return new EqualsBuilder().appendSuper(super.equals(participant)).append(this.rolesListForAProject, participant.rolesListForAProject).isEquals() ;
+		return new EqualsBuilder().appendSuper(super.equals(participant)).append(this.concreteRoleDescriptors, participant.concreteRoleDescriptors).isEquals() ;
 	}
 
 	/*
@@ -179,7 +169,7 @@ public class Participant extends WilosUser implements Cloneable {
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.rolesListForAProject).toHashCode() ;
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode() ;
 	}
 
 	/**

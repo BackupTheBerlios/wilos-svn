@@ -18,7 +18,7 @@ import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.role.RoleService;
 import wilos.model.misc.wilosuser.WilosUser;
-import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 
 /**
  * Managed-Bean link to participant_logging.jsp
@@ -29,13 +29,13 @@ import wilos.model.spem2.role.RoleDescriptor;
  */
 public class RoleBean {
 
-	private List<RoleDescriptor> rolesList;
+	private List<ConcreteRoleDescriptor> rolesList;
 
 	private HashMap<String, Boolean> rolesParticipant = new HashMap<String, Boolean>();
 
 	private List<String> keysRolesParticipant = new ArrayList<String>();
 
-	private RoleDescriptor roleDescriptor ;
+	private ConcreteRoleDescriptor roleDescriptor ;
 	
 	private RoleService roleService;
 	
@@ -48,7 +48,8 @@ public class RoleBean {
 	 * 
 	 */
 	public RoleBean() {
-		this.roleDescriptor = new RoleDescriptor();
+		this.logger.debug("--- RoleBean --- == creating ..." + this);
+		this.roleDescriptor = new ConcreteRoleDescriptor();
 	}
 
 	/**
@@ -58,7 +59,7 @@ public class RoleBean {
 	 */
 	public String saveRoleAction() {
 		String url = "participant";
-		this.roleService.saveRoleDescriptor(this.roleDescriptor);
+		//this.roleService.saveRoleDescriptor(this.roleDescriptor);
 		return url;
 	}
 
@@ -71,9 +72,10 @@ public class RoleBean {
 	 * 
 	 * @return the rolesList.
 	 */
-	public List<RoleDescriptor> getRolesList() {
-		this.rolesList = new ArrayList<RoleDescriptor>();
-		rolesList.addAll(this.roleService.getRolesDescriptor());
+	public List<ConcreteRoleDescriptor> getRolesList() {
+		this.rolesList = new ArrayList<ConcreteRoleDescriptor>();
+		//rolesList.addAll(this.roleService.getRolesDescriptor());
+		this.logger.debug("roles list =" + this.rolesList);
 		return this.rolesList;
 	}
 
@@ -82,7 +84,7 @@ public class RoleBean {
 	 * 
 	 * @return the roleDescriptor.
 	 */
-	public RoleDescriptor getRoleDescriptor() {
+	public ConcreteRoleDescriptor getRoleDescriptor() {
 		return this.roleDescriptor;
 	}
 
@@ -92,7 +94,8 @@ public class RoleBean {
 	 * @param _roleDescriptor
 	 *            The roleDescriptor to set.
 	 */
-	public void setRoleDescriptor(RoleDescriptor _roleDescriptor) {
+	public void setRoleDescriptor(ConcreteRoleDescriptor _roleDescriptor) {
+		this.logger.debug("### Participant = " + _roleDescriptor + " ###");
 		this.roleDescriptor = _roleDescriptor;
 	}
 
@@ -140,7 +143,7 @@ public class RoleBean {
 	 * @param _rolesList
 	 *            The rolesList to set.
 	 */
-	public void setRolesList(List<RoleDescriptor> _rolesList) {
+	public void setRolesList(List<ConcreteRoleDescriptor> _rolesList) {
 		this.rolesList = _rolesList;
 	}
 
@@ -172,19 +175,19 @@ public class RoleBean {
 	 * @return the rolesParticipant.
 	 */
 	public HashMap<String, Boolean> getRolesParticipant() {
-		RoleDescriptor rd = null;
+		ConcreteRoleDescriptor rd = null;
 		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
 		HttpSession sess = req.getSession() ;
 		WilosUser user = (WilosUser) sess.getAttribute("wilosUser") ;
 		String user_login = user.getLogin();
 		
-		HashMap<RoleDescriptor, Boolean> hashTemp = this.roleService
-				.getRolesForAParticipant(user_login);
-		for (Iterator iter = hashTemp.keySet().iterator(); iter.hasNext();) {
-			rd = (RoleDescriptor) iter.next();
+		/*HashMap<ConcreteRoleDescriptor, Boolean> hashTemp = this.roleService
+				.getRolesForAParticipant(user_login);*/
+		/*for (Iterator iter = hashTemp.keySet().iterator(); iter.hasNext();) {
+			rd = (ConcreteRoleDescriptor) iter.next();
 			if(!this.rolesParticipant.containsKey(rd.getName()))
 				this.rolesParticipant.put(rd.getName(), hashTemp.get(rd));
-		}
+		}*/
 		return this.rolesParticipant;
 	}
 

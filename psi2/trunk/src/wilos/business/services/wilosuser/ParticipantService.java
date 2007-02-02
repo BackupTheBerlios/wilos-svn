@@ -15,7 +15,8 @@ import org.springframework.transaction.annotation.Transactional ;
 import wilos.hibernate.misc.wilosuser.ParticipantDao ;
 import wilos.model.misc.project.Project ;
 import wilos.model.misc.wilosuser.Participant ;
-import wilos.model.spem2.role.RoleDescriptor ;
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor ;
+import wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService;
 import wilos.business.services.project.ProjectService ;
 import wilos.business.util.Security ;
 
@@ -32,6 +33,8 @@ public class ParticipantService {
 	private ParticipantDao participantDao ;
 
 	private ProjectService projectService ;
+
+	private ConcreteRoleDescriptorService concreteRoleDescriptorService;
 
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
@@ -75,13 +78,15 @@ public class ParticipantService {
 
 	/**
 	 * Return all the roles
-	 * 
+	 * TODO : method description
 	 * @return the roles
 	 */
 	@Transactional(readOnly = true)
-	public Set<RoleDescriptor> getRolesListForAParticipant(String _login) {
+	public Set<ConcreteRoleDescriptor> getConcreteRoleDescriptorsForAParticipantAndForAProject(String _projectId, String _login) {
 		// TODO: getRolesListForAParticipant à deplacer dans le RoleService
-		return this.participantDao.getAllRolesForAParticipant(_login);
+		this.concreteRoleDescriptorService.getConcreteRoleDescriptorsForProject(_projectId);
+		
+		return this.participantDao.getAllConcreteRolesForAParticipant(_login);
 	}
 
 	/**
