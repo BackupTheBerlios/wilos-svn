@@ -1,0 +1,30 @@
+		<ice:panelTab id="panelTab_participant_list" label="#{msgs['component.participantlist.title']}" imageDir="images">
+				<ice:panelGroup id="participantPanelGroup" styleClass="contentIncludePanelGroup">
+					<ice:dataTable value="#{ParticipantBean.participantsList}" columnWidths="100px,100px,100px,100px" border="1" var="participant">
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="#{msgs['component.participantlist.column1']}"/>
+						    </f:facet>
+						    <ice:outputText value="#{participant.login}"/>
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="#{msgs['component.participantlist.column2']}"/>
+						    </f:facet>
+						    <ice:outputText value="#{participant.name}"/>
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="#{msgs['component.participantlist.column3']}"/>
+						    </f:facet>
+						    <ice:outputText value="#{participant.firstname}"/>
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="#{msgs['component.participantlist.column4']}"/>
+						    </f:facet>
+						    <ice:outputText value="#{participant.emailAddress}"/>
+						</ice:column>
+					</ice:dataTable>
+				</ice:panelGroup>
+			</ice:panelTab>	
