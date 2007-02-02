@@ -10,6 +10,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreteiteration.ConcreteIteration;
+import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.utils.ExceptionManager;
 
 /**
@@ -59,7 +60,7 @@ public class ConcreteIterationDao extends HibernateDaoSupport {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<BreakdownElement> getBreakdownElementsFromConcreteIteration(
+	public List<ConcreteBreakdownElement> getBreakdownElementsFromConcreteIteration(
 			String _concreteIterationId) {
 		List bdes = this
 				.getHibernateTemplate()
