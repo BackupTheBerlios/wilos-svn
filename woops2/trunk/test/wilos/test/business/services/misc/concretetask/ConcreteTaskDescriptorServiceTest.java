@@ -63,7 +63,7 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 
 		this.projectDao.saveOrUpdateProject(project);
 
-		this.concreteTaskDescriptor.setProjectId(project.getProject_id());
+		this.concreteTaskDescriptor.setProject(project);
 		this.concreteTaskDescriptorService
 				.getConcreteTaskDescriptorDao()
 				.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);

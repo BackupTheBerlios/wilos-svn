@@ -51,7 +51,7 @@ public class ConcreteTaskDescriptorService {
 		List<ConcreteTaskDescriptor> returnedList = new ArrayList<ConcreteTaskDescriptor>();
 
 		for (ConcreteTaskDescriptor concreteTaskDescriptor : tempList) {
-			if (concreteTaskDescriptor.getProjectId().equals(_projectId)) {
+			if (concreteTaskDescriptor.getProject().getProject_id().equals(_projectId)) {
 				returnedList.add(concreteTaskDescriptor);
 			}
 		}
@@ -130,6 +130,7 @@ public class ConcreteTaskDescriptorService {
 			ConcreteTaskDescriptor _concreteTaskDescriptor) {
 		// update changings.
 		_concreteTaskDescriptor.setState(State.FINISHED);
+		/*
 		try {
 			_concreteTaskDescriptor.setRealFinishingDate(Constantes.DATE_FORMAT
 					.parse(Calendar.getInstance().getTime().toString()));
@@ -137,7 +138,7 @@ public class ConcreteTaskDescriptorService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+*/
 		// save changings.
 		this.concreteTaskDescriptorDao
 				.saveOrUpdateConcreteTaskDescriptor(_concreteTaskDescriptor);

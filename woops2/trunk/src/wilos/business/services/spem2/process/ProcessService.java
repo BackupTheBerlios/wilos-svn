@@ -563,7 +563,7 @@ public class ProcessService {
 		List<TaskDescriptor> forSaving = this.getTaskDescriptors(p);
 
 		for (TaskDescriptor td : forSaving) {
-			this.taskDescriptorService.taskDescriptorInstanciation(_project.getProject_id(), td);
+			this.taskDescriptorService.taskDescriptorInstanciation(_project, td);
 		}
 	}
 

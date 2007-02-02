@@ -6,6 +6,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
+import wilos.model.misc.project.Project;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.utils.Constantes.State;
 
@@ -13,7 +14,7 @@ public class ConcreteTaskDescriptor {
 
 	private String id;
 
-	private String projectId;
+	private Project project;
 
 	private String concreteName;
 
@@ -66,7 +67,7 @@ public class ConcreteTaskDescriptor {
 		this.setPlannedStartingDate(_concreteTaskDescriptor
 				.getPlannedStartingDate());
 		this.setPlannedTime(_concreteTaskDescriptor.getPlannedTime());
-		this.setProjectId(_concreteTaskDescriptor.getProjectId());
+		this.setProject(_concreteTaskDescriptor.getProject());
 		this.setRealFinishingDate(_concreteTaskDescriptor
 				.getRealFinishingDate());
 		this.setRealStartingDate(_concreteTaskDescriptor.getRealStartingDate());
@@ -95,7 +96,7 @@ public class ConcreteTaskDescriptor {
 				this.plannedStartingDate,
 				concreteTaskDescriptor.plannedStartingDate).append(
 				this.plannedTime, concreteTaskDescriptor.plannedTime).append(
-				this.projectId, concreteTaskDescriptor.projectId).append(
+				this.project, concreteTaskDescriptor.project).append(
 				this.realFinishingDate,
 				concreteTaskDescriptor.realFinishingDate).append(
 				this.realStartingDate, concreteTaskDescriptor.realStartingDate)
@@ -114,7 +115,7 @@ public class ConcreteTaskDescriptor {
 		return new HashCodeBuilder(17, 37).append(this.id).append(
 				this.accomplishedTime).append(this.concreteName).append(
 				this.plannedFinishingDate).append(this.plannedStartingDate)
-				.append(this.plannedTime).append(this.projectId).append(
+				.append(this.plannedTime).append(this.project).append(
 						this.realFinishingDate).append(this.realStartingDate)
 				.append(this.remainingTime).append(this.taskDescriptor)
 				.toHashCode();
@@ -245,12 +246,12 @@ public class ConcreteTaskDescriptor {
 		this.remainingTime = remainingTime;
 	}
 
-	public String getProjectId() {
-		return projectId;
+	public Project getProject() {
+		return project;
 	}
 
-	public void setProjectId(String projectId) {
-		this.projectId = projectId;
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 	public ConcreteRoleDescriptor getConcreteRoleDescriptor() {

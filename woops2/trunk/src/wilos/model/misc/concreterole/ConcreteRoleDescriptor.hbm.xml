@@ -13,7 +13,9 @@
 			<generator class="uuid" />
 		</id>
 
-		<many-to-one name="project" class="wilos.model.misc.project.Project" column="project_id">
+		<many-to-one name="project"
+			class="wilos.model.misc.project.Project"
+			column="project_id">
 		</many-to-one>
 
 		<property name="concreteName" type="java.lang.String"

@@ -12,9 +12,11 @@
 			<!--identifiant auto-incrementé -->
 			<generator class="uuid" />
 		</id>
-
-		<property name="projectId" type="java.lang.String"
-			column="project_id" length="256" />
+		
+		<many-to-one name="project"
+			class="wilos.model.misc.project.Project"
+			column="project_id">
+		</many-to-one>
 
 		<property name="concreteName" type="java.lang.String"
 			column="concretename" length="256" />
@@ -31,7 +33,7 @@
 			column="plannedstartingdate" length="256" />
 
 		<property name="plannedFinishingDate" type="java.util.Date"
-			column="plannedfinishingdate" length="256" />
+			column="plannedfinishingdate" length="256" ></property>
 
 		<property name="realStartingDate" type="java.util.Date"
 			column="realstartingdate" length="256" />

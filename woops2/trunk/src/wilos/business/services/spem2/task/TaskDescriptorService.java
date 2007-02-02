@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import wilos.hibernate.misc.concretetask.ConcreteTaskDescriptorDao;
 import wilos.hibernate.spem2.task.TaskDescriptorDao;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.task.TaskDescriptor;
 
@@ -60,12 +61,12 @@ public class TaskDescriptorService {
 	 *
 	 * @param _td
 	 */
-	public void taskDescriptorInstanciation (String _projectId, TaskDescriptor td) {
+	public void taskDescriptorInstanciation (Project _project, TaskDescriptor td) {
 
 		ConcreteTaskDescriptor ctd = new ConcreteTaskDescriptor();
 
 		ctd.setConcreteName(td.getPresentationName());
-		ctd.setProjectId(_projectId);
+		ctd.setProject(_project);
 		ctd.addTaskDescriptor(td);
 
 		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(ctd);
