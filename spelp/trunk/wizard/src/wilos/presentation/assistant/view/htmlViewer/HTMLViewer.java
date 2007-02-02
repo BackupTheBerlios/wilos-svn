@@ -2,6 +2,8 @@ package wilos.presentation.assistant.view.htmlViewer;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -66,12 +68,11 @@ public class HTMLViewer extends JFrame {
 		this.setSize(Toolkit.getDefaultToolkit().getScreenSize().width / 2, Toolkit.getDefaultToolkit().getScreenSize().height / 2);
 		if (p!=null) this.setLocation(p);
 		
-		JPanel northPanel = new JPanel() ;
-		northPanel.setLayout(new GridLayout(1,4,5,5));
+		JPanel elementPanel = new JPanel();
 		//northPanel.add(new JLabel(Bundle.getText("htmlViewer.element")));
-		northPanel.setBorder(getCommonBorder(Bundle.getText("htmlViewer.element")));
+		elementPanel.setBorder(getCommonBorder(Bundle.getText("htmlViewer.element")));
 		this.myElementLabel = new JLabel() ;
-		northPanel.add(this.myElementLabel);
+		elementPanel.add(this.myElementLabel);
 		
 		this.historyStack = new Stack<Element>() ;
 		
@@ -87,8 +88,17 @@ public class HTMLViewer extends JFrame {
 				setNextElement();
 			}
 		});
-		northPanel.add(this.prevButton);
-		northPanel.add(this.nextButton);
+		
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new BorderLayout (5,100));
+		buttonPanel.add(this.prevButton,BorderLayout.WEST);
+		buttonPanel.add(this.nextButton,BorderLayout.EAST);
+		
+		JPanel northPanel = new JPanel() ;
+		northPanel.setLayout(new BorderLayout());
+		northPanel.setPreferredSize(new Dimension(50,50));
+		northPanel.add(elementPanel, BorderLayout.CENTER);
+		northPanel.add(buttonPanel, BorderLayout.EAST);
 		
 		this.myEditorPane = new JEditorPane();
 		this.myEditorPane.setVisible(true);
