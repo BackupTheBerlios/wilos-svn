@@ -1,17 +1,25 @@
 package wilos.model.spem2.iteration;
 
+import java.util.Set;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
+import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.model.spem2.activity.Activity;
+import wilos.model.spem2.task.TaskDescriptor;
 
 /**
- * 
+ * Iteration is a special Activity, which prescribes pre-defined values for its instances for the attributes prefix ('Iteration') and isRepeatable ('True'). 
+ * It has been included into the meta-model for convenience and to provide a special stereotype, because it represents a very commonly used Activity type. 
+ * Iteration groups a set of nested Activities that are repeated more than once. It represents an important structuring element to organize work in repetitive cycles
+
  * @author Soosuske
  *
  */
 public class Iteration extends Activity implements Cloneable{
 	
+	private Set<ConcreteIteration> concreteIterations;
 
 	/**
 	 * Default constructor
@@ -66,6 +74,64 @@ public class Iteration extends Activity implements Cloneable{
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode() ;
+	}
+	
+	/**
+	 * Add a concreteIteration to an iteration 
+	 * 
+	 * @param _concreteIteration
+	 */
+	public void addConcreteIteration(ConcreteIteration _concreteIteration) {
+		this.concreteIterations.add(_concreteIteration);
+		_concreteIteration.setIteration(this);
+	}
+
+	/**
+	 * Add a concreteIteration collection to the concreteIteration collection of a
+	 * Iteration
+	 * 
+	 * @param _concreteIteration
+	 */
+	public void addAllConcreteIterations(Set<ConcreteIteration> _concreteIterations) {
+		for (ConcreteIteration ci : _concreteIterations) {
+			ci.addIteration(this);
+		}
+	}
+	
+	/**
+	 * Remove a concreteIteration to its iteration
+	 * 
+	 * @param _concreteIteration
+	 */
+	public void removeConcreteIteration(ConcreteIteration _concreteIteration) {
+		_concreteIteration.setIteration(null);
+		this.concreteIterations.remove(_concreteIteration);
+	}
+
+	/**
+	 * Remove all concreteIterations to its iteration
+	 */
+	public void removeAllConcreteIterations() {
+		for (ConcreteIteration tmp : this.concreteIterations) {
+			tmp.setIteration(null);
+		}
+		this.concreteIterations.clear();
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Set<ConcreteIteration> getConcreteIterations() {
+		return concreteIterations;
+	}
+
+	/**
+	 * 
+	 * @param _concreteIterations
+	 */
+	public void setConcreteIterations(Set<ConcreteIteration> _concreteIterations) {
+		this.concreteIterations = concreteIterations;
 	}
 
 }

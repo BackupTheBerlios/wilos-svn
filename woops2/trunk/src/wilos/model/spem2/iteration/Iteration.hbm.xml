@@ -10,6 +10,12 @@
 		extends="wilos.model.spem2.activity.Activity"
 		table="iteration" lazy="true">
 		<key column="iteration_id"></key>
+		
+		<set name="concreteIterations" lazy="true">
+			<key column="iteration_id" />
+			<one-to-many class="wilos.model.misc.concreteiteration.ConcreteIteration"></one-to-many>
+		</set>
+		
 	</joined-subclass>
 	
 </hibernate-mapping>
