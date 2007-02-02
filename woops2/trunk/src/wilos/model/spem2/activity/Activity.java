@@ -7,6 +7,7 @@ import java.util.Set ;
 import org.apache.commons.lang.builder.EqualsBuilder ;
 import org.apache.commons.lang.builder.HashCodeBuilder ;
 
+import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 
@@ -24,6 +25,8 @@ import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 public class Activity extends WorkBreakdownElement implements Cloneable {
 
 	private Set<BreakdownElement> breakdownElements ;
+	
+	private Set<ConcreteActivity> concreteActivities;
 
 	/**
 	 * Constructor.
@@ -115,7 +118,30 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 		_breakdownElement.getSuperActivities().remove(this) ;
 		this.getBreakDownElements().remove(_breakdownElement) ;
 	}
-
+	
+	public void addConcreteActivity(ConcreteActivity _concreteActivity){
+		this.concreteActivities.add(_concreteActivity);
+		_concreteActivity.setActivity(this);
+	}
+	
+	public void addAllConcreteActivity(Set<ConcreteActivity> _concreteActivities){
+		for (ConcreteActivity ca : _concreteActivities){
+			this.addConcreteActivity(ca);
+		}
+	}
+	
+	public void removeConcreteActivity(ConcreteActivity _concreteActivity){
+		this.concreteActivities.remove(_concreteActivity);
+		_concreteActivity.setActivity(null);
+	}
+	
+	public void removeAllConcreteActivities(Set<ConcreteActivity> _concreteActivities){
+		for (ConcreteActivity ca : _concreteActivities){
+			this.removeConcreteActivity(ca);
+		}
+	}
+	
+	
 	/**
 	 * Remove from an activity all its breakdownElements
 	 * 
@@ -144,5 +170,13 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	@ SuppressWarnings ("unused")
 	private void setBreakDownElements(Set<BreakdownElement> _breakDownElements) {
 		this.breakdownElements.addAll(_breakDownElements) ;
+	}
+
+	public Set<ConcreteActivity> getConcreteActivities() {
+		return concreteActivities;
+	}
+
+	public void setConcreteActivities(Set<ConcreteActivity> concreteActivities) {
+		this.concreteActivities = concreteActivities;
 	}
 }
