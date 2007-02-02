@@ -26,13 +26,18 @@
 		<property name="isOptional" type="java.lang.Boolean"
 			column="isOptional" length="1" />
 
+		<set name="concreteBreakdownElements" lazy="false">
+			<key column="breakdownelement_id" />
+			<one-to-many class="wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement"></one-to-many>
+		</set>
+
 		<!-- Associations -->
 		<set name="superActivities" table="nesting" lazy="true">
 			<key column="breakdownelement_id"></key>
 			<many-to-many class="wilos.model.spem2.activity.Activity"
 				column="superactivity_id">
 			</many-to-many>
-		</set> 
-		
+		</set>
+
 	</joined-subclass>
 </hibernate-mapping>

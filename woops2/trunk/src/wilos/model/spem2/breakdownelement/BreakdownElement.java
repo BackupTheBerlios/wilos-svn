@@ -7,21 +7,22 @@ import java.util.Set ;
 import org.apache.commons.lang.builder.EqualsBuilder ;
 import org.apache.commons.lang.builder.HashCodeBuilder ;
 
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.element.Element;
 
 /**
- * 
+ *
  * Breakdown Element is an abstract generalization for any type of Element that is part of a
  * breakdown structure. It defines a set of properties available to all of its specializations.
- * 
+ *
  * @author deder
- * 
+ *
  */
 public class BreakdownElement extends Element implements Cloneable {
 
 	private String presentationName;
-	
+
 	private String prefix ;
 
 	private Boolean isPlanned ;
@@ -34,7 +35,7 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 */
 	public BreakdownElement() {
 		super() ;
@@ -48,7 +49,7 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see woops2.model.element.Element#clone()
 	 */
 	@ Override
@@ -60,7 +61,7 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	/**
 	 * Copy the object.
-	 * 
+	 *
 	 * @param _breakdownElement
 	 *            The BreakdownElement to copy.
 	 */
@@ -76,7 +77,7 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see woops2.model.element.Element#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
@@ -94,7 +95,7 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see woops2.model.element.Element#hashCode()
 	 */
 	public int hashCode() {
@@ -102,9 +103,39 @@ public class BreakdownElement extends Element implements Cloneable {
 				.append(this.isPlanned).toHashCode() ;
 	}
 
+	/*
+	 * relation between BreakdownElement and ConcreteBreakdownElement.
+	 *
+	 */
+
+	public void addConcreteBreakdownElement(
+			ConcreteBreakdownElement _concreteBreakdownElement) {
+		this.concreteBreakdownElements.add(_concreteBreakdownElement);
+		_concreteBreakdownElement.addBreakdownElement(this);
+	}
+
+	public void removeConcreteBreakdownElement(
+			ConcreteBreakdownElement _concreteBreakdownElement) {
+		_concreteBreakdownElement.removeBreakdownElement(this);
+		this.concreteBreakdownElement.remove(_concreteBreakdownElement);
+	}
+
+	public void addAllConcreteBreakdownElements(
+			Set<ConcreteBreakdownElement> _concreteBreakdownElements) {
+		for (ConcreteBreakdownElement cbde : _concreteBreakdownElements) {
+			cbde.addBreakdownElement(this);
+		}
+	}
+
+	public void removeAllConcreteBreakdownElements() {
+		for (ConcreteBreakdownElement cbde : this.getConcreteBreakdownElements())
+			cbde.setBreakdownElement(null);
+		this.getConcreteBreakdownElements().clear();
+	}
+
 	/**
 	 * Add an Activity to the activities collection of a BreakdownElement.
-	 * 
+	 *
 	 * @param _superActivity
 	 *            The activity to add
 	 */
@@ -115,7 +146,7 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	/**
 	 * Add an activity collection to the activity collection of a breakdownelement.
-	 * 
+	 *
 	 * @param _superActivities
 	 *            The set of Activity to add.
 	 */
@@ -127,7 +158,7 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	/**
 	 * Remove from a breakdownelement one of these activities.
-	 * 
+	 *
 	 * @param _superActivity
 	 *            The Activity to remove.
 	 */
@@ -138,7 +169,7 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	/**
 	 * Remove from a breakdownelement all its activities.
-	 * 
+	 *
 	 */
 	public void removeAllSuperActivities() {
 		for(Activity activity : this.getSuperActivities())
@@ -164,7 +195,7 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	/**
 	 * Getter of hasMultipleOccurrences.
-	 * 
+	 *
 	 * @return the hasMultipleOccurrences.
 	 */
 	public Boolean getHasMultipleOccurrences() {
@@ -173,7 +204,7 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	/**
 	 * Setter of hasMultipleOccurrences.
-	 * 
+	 *
 	 * @param _hasMultipleOccurrences
 	 *            The hasMultipleOccurrences to set.
 	 */
@@ -183,7 +214,7 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	/**
 	 * Getter of isOptional.
-	 * 
+	 *
 	 * @return the isOptional.
 	 */
 	public Boolean getIsOptional() {
@@ -192,7 +223,7 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	/**
 	 * Setter of isOptional.
-	 * 
+	 *
 	 * @param _isOptional
 	 *            The isOptional to set.
 	 */
@@ -202,7 +233,7 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	/**
 	 * Getter of isPlanned.
-	 * 
+	 *
 	 * @return the isPlanned.
 	 */
 	public Boolean getIsPlanned() {
@@ -211,7 +242,7 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	/**
 	 * Setter of isPlanned.
-	 * 
+	 *
 	 * @param _isPlanned
 	 *            The isPlanned to set.
 	 */
@@ -221,7 +252,7 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	/**
 	 * Getter of prefix.
-	 * 
+	 *
 	 * @return the prefix.
 	 */
 	public String getPrefix() {
@@ -230,7 +261,7 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	/**
 	 * Setter of prefix.
-	 * 
+	 *
 	 * @param _prefix
 	 *            The prefix to set.
 	 */
@@ -240,7 +271,7 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	/**
 	 * Getter of activities.
-	 * 
+	 *
 	 * @return the activities.
 	 */
 	public Set<Activity> getSuperActivities() {
@@ -249,7 +280,7 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	/**
 	 * Setter of activities.
-	 * 
+	 *
 	 * @param _superActivities
 	 *            The activities to set.
 	 */

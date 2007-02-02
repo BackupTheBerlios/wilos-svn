@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import wilos.hibernate.misc.concreterole.ConcreteRoleDescriptorDao;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
+import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.model.spem2.role.RoleDescriptor;
 
 /**
 *
@@ -41,6 +43,22 @@ public class ConcreteRoleDescriptorService {
 
 			return returnedList;
 		}
+
+		/**
+		 * TODO Method description
+		 *
+		 * @param _td
+		 */
+		/*public void roleDescriptorInstanciation (String _projectId, RoleDescriptor rd) {
+
+			ConcreteRoleDescriptor crd = new ConcreteRoleDescriptor();
+
+			crd.setConcreteName(rd.getPresentationName());
+			crd.setProject(_projectId);
+			crd.addRoleDescriptor(rd);
+
+			this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(ctd);
+		}*/
 
 		public ConcreteRoleDescriptorDao getConcreteRoleDescriptorDao() {
 			return concreteRoleDescriptorDao;
