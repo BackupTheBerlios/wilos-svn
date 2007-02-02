@@ -1,10 +1,10 @@
 package wilos.presentation.assistant.view.main;
 
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -13,16 +13,12 @@ import javax.swing.JToolBar;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
-import wilos.model.spem2.task.TaskDefinition;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
 import wilos.presentation.assistant.view.panels.WizardStateMachine;
-import wilos.presentation.assistant.view.panels.WorkTabbedPane;
-import wilos.presentation.assistant.view.panels.tabs.StepPanel;
-import wilos.presentation.assistant.view.panels.tabs.TaskPanel;
 
-public class ActionBar extends JToolBar {
+public class ActionBar extends JToolBar implements Observer{
 	public final int INVISIBLE = 1;
 	public final int ENABLED = 2;
 	public final int DISABLED = 3;
@@ -35,7 +31,14 @@ public class ActionBar extends JToolBar {
 	private JButton jButtonRefresh = null;
 	private JCheckBox jCheckBoxShowViewer;
 	
+	private static ActionBar barre = null;
 	
+	public static ActionBar getInstance (){
+		if (barre == null){
+			barre = new ActionBar() ;
+		}
+		return barre ;
+	}
 	
 	public ActionBar(){
 		super ();
@@ -59,14 +62,14 @@ public class ActionBar extends JToolBar {
 			new ActionListener() {
 
 				public void actionPerformed(ActionEvent e) {
-					DefaultMutableTreeNode dmt =  (DefaultMutableTreeNode)WizardStateMachine.getInstance().getTreePanel().getTree().getLastSelectedPathComponent();
+					DefaultMutableTreeNode dmt =  (DefaultMutableTreeNode)WizardControler.getInstance().getTreePanel().getTree().getLastSelectedPathComponent();
 					
 					if(dmt != null) {
 						ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
 						if(selectedTask.getId() != null) {
 							WizardStateMachine.getInstance().changeHTMLViewerBehavior(true);
 							WizardControler.getInstance().startConcreteTaskDescriptor(selectedTask);
-							WizardStateMachine.getInstance().refreshParticipant();
+							WizardControler.getInstance().refreshParticipant();
 						}
 					}
 					
@@ -141,7 +144,7 @@ public class ActionBar extends JToolBar {
 			jButtonRefresh.setIcon(ImagesService.getImageIcon("images.iconRefresh"));
 			jButtonRefresh.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					WizardStateMachine.getInstance().refreshParticipant();
+					WizardControler.getInstance().refreshParticipant();
 				}
 			});
 		}
@@ -204,5 +207,31 @@ public class ActionBar extends JToolBar {
 
 	public void setJCheckBoxShowViewerEnabled(boolean value) {
 		jCheckBoxShowViewer.setSelected(value);
+	}
+
+	public void update(Observable o, Object arg) {
+		switch (WizardStateMachine.getInstance().getCurrentState()){
+		case WizardStateMachine.STATE_PARTICIPANT :
+			setButtons(INVISIBLE,INVISIBLE, INVISIBLE);
+			break;
+		case WizardStateMachine.STATE_NOTHING :
+			setButtons(INVISIBLE, INVISIBLE, INVISIBLE);
+			break;
+		case WizardStateMachine.STATE_TASK_CREATED :	
+			setButtons(DISABLED, DISABLED, DISABLED);
+			break;
+		case WizardStateMachine.STATE_TASK_READY :	
+			setButtons(ENABLED, DISABLED, DISABLED);
+			break;
+		case WizardStateMachine.STATE_TASK_STARTED :	
+			setButtons(DISABLED, ENABLED, ENABLED);
+			break;
+		case WizardStateMachine.STATE_TASK_SUSPENDED :	
+			setButtons(ENABLED, DISABLED, DISABLED);		
+			break;
+		case WizardStateMachine.STATE_TASK_FINISHED :	
+			setButtons(DISABLED, DISABLED, DISABLED);
+			break;
+		}
 	}
 }

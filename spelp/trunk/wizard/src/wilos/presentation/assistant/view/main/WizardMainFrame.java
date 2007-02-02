@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import org.jdesktop.swingx.JXTree;
 
 import wilos.model.misc.wilosuser.Participant;
+import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 import wilos.presentation.assistant.view.panels.InfoPanel;
@@ -67,7 +68,7 @@ public class WizardMainFrame extends JFrame {
 		this.setContentPane(getMainPanel());
 		this.setTitle(Bundle.getText("mainFrame.title"));
 		ContextualMenu menu = new ContextualMenu();
-		WizardStateMachine.getInstance().initUIElements(actionToolBar,jTree,menu);
+		WizardControler.getInstance().initUIElements(actionToolBar,jTree,menu);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.moveHTML();
 		this.addComponentListener(new ComponentListener(){
@@ -112,6 +113,7 @@ public class WizardMainFrame extends JFrame {
 	private ActionBar getJToolBar() {
 		if (actionToolBar == null) {
 			actionToolBar = new ActionBar();
+			WizardStateMachine.getInstance().addObserver(actionToolBar);
 		}
 		return actionToolBar;
 	}
