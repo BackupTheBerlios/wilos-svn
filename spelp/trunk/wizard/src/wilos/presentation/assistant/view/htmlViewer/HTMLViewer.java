@@ -98,7 +98,7 @@ public class HTMLViewer extends JFrame {
 		this.myEditorPane.setFocusable(false);
 		
 		this.myScrollPane = new JScrollPane(this.myEditorPane);
-		this.myScrollPane.setBorder(getCommonBorder("Description :"));
+		this.myScrollPane.setBorder(getCommonBorder(Bundle.getText("htmlViewer.description")));
 		
 		this.southPanel = new JPanel() ;
 		this.southPanel.setLayout(new GridLayout());
