@@ -43,6 +43,7 @@
 			<value>wilos/model/misc/wilosuser/ProjectDirector.hbm.xml</value>
 			<value>wilos/model/misc/project/Project.hbm.xml</value>
 			<value>wilos/model/misc/concretetask/ConcreteTaskDescriptor.hbm.xml</value>
+			<value>wilos/model/misc/concreterole/ConcreteRoleDescriptor.hbm.xml</value>
 			<value>wilos/model/spem2/element/Element.hbm.xml</value>
 			<value>wilos/model/spem2/breakdownelement/BreakdownElement.hbm.xml</value>
 			<value>wilos/model/spem2/workbreakdownelement/WorkBreakdownElement.hbm.xml</value>
@@ -218,8 +219,17 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 	
+	<bean id="ConcreteRoleDescriptorDao" class="wilos.hibernate.misc.concreterole.ConcreteRoleDescriptorDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+		
 	<!-- ========================= Business Layer ========================= -->
-
+	<!-- Spelp 
+	<bean id="AssistantService"
+		class="wilos.business.services.assistant.AssistantService">
+		<property name="participantDao" ref="ParticipantDao" />
+	</bean> -->
+	
 	<!-- =============================================================== -->
 	<!-- ======================= SPELP Service ========================= -->
 	<!-- =============================================================== -->
@@ -294,6 +304,7 @@
 			ref="WorkBreakdownElementDao" />
 		<property name="breakdownElementService" ref="BreakdownElementService" />
 		<property name="taskDescriptorService" ref="TaskDescriptorService" />
+		<property name="guidelineDao" ref="GuidelineDao" />
 	</bean>
 	
 	  <bean id="BreakdownElementService"
@@ -329,8 +340,13 @@
 		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
 		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
 		<property name="taskDescriptorService" ref="TaskDescriptorService" />
-		<!-- <property name="roleDescriptorService" ref="RoleDescriptorService" /> -->
+		<property name="roleDescriptorService" ref="RoleDescriptorService" />
 		
+	</bean>
+	
+	<bean id="ConcreteRoleDescriptorService"
+		class="wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService">
+		<property name="concreteRoleDescriptorDao" ref="ConcreteRoleDescriptorDao" />
 	</bean>
 	
 	<bean id="PhaseService"

@@ -31,7 +31,6 @@ public class AssistantServiceTest extends TestCase {
 		ct.setConcreteName("ConcreteTest");
 		ct.setState(Constantes.State.READY);
 		ct.setTaskDescriptor(null);
-		ct.setProjectId("projectId");
 		cts.getConcreteTaskDescriptorDao().saveOrUpdateConcreteTaskDescriptor(ct);
 	}
 
