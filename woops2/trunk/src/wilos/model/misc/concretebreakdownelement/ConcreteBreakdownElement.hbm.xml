@@ -4,7 +4,7 @@
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 
 <hibernate-mapping>
-	<class name="wilos.model.misc.concretebreakdownelement.ConcreteRBreakdownElement"
+	<class name="wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement"
 		table="concretebreakdownelement" lazy="true">
 
 		<id name="id" type="string"

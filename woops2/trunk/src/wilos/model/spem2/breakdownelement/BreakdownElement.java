@@ -33,6 +33,8 @@ public class BreakdownElement extends Element implements Cloneable {
 
 	private Set<Activity> superActivities ;
 
+	private Set<ConcreteBreakdownElement> concreteBreakdownElements;
+
 	/**
 	 * Constructor.
 	 *
@@ -45,6 +47,7 @@ public class BreakdownElement extends Element implements Cloneable {
 		this.isPlanned = true ;
 		this.hasMultipleOccurrences = false ;
 		this.superActivities = new HashSet<Activity>() ;
+		this.concreteBreakdownElements = new HashSet<ConcreteBreakdownElement>() ;
 	}
 
 	/*
@@ -287,5 +290,25 @@ public class BreakdownElement extends Element implements Cloneable {
 	@ SuppressWarnings ("unused")
 	private void setSuperActivities(Set<Activity> _superActivities) {
 		this.superActivities = _superActivities ;
+	}
+
+	/**
+	 * Getter of concreteBreakdownElements.
+	 *
+	 * @return the concreteBreakdownElements.
+	 */
+	public Set<ConcreteBreakdownElement> getConcreteBreakdownElements() {
+		return this.concreteBreakdownElements ;
+	}
+
+	/**
+	 * Setter of concreteBreakdownElements.
+	 *
+	 * @param _superActivities
+	 *            The activities to set.
+	 */
+	@ SuppressWarnings ("unused")
+	private void setConcreteBreakdownElements(Set<ConcreteBreakdownElement> _concreteBreakdownElements) {
+		this.concreteBreakdownElements = _concreteBreakdownElements ;
 	}
 }
