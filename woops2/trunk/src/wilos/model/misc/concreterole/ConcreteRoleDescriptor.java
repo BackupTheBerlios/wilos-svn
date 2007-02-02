@@ -6,24 +6,18 @@ import java.util.Set;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
+import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
-import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.role.RoleDescriptor;
 
-public class ConcreteRoleDescriptor {
-
-	private String id;
-
-	private Project project;
-
-	private String concreteName;
+public class ConcreteRoleDescriptor extends ConcreteBreakdownElement {
 
 	private RoleDescriptor roleDescriptor;
+	
+	private Participant participant;
 
 	private Set<ConcreteTaskDescriptor> concreteTaskDescriptors;
-
-	private Participant participant;
 
 	public ConcreteRoleDescriptor() {
 		this.concreteTaskDescriptors = new HashSet<ConcreteTaskDescriptor>();
@@ -45,9 +39,8 @@ public class ConcreteRoleDescriptor {
 	 * Copy the _roleDescriptor into this.
 	 */
 	protected void copy(final ConcreteRoleDescriptor _concreteRoleDescriptor) {
-		this.setConcreteName(_concreteRoleDescriptor.getConcreteName());
+		super.copy(_concreteRoleDescriptor);
 		this.setParticipant(_concreteRoleDescriptor.getParticipant());
-		this.setProject(_concreteRoleDescriptor.getProject());
 		this.setRoleDescriptor(_concreteRoleDescriptor.getRoleDescriptor());
 		this.setConcreteTaskDescriptors(_concreteRoleDescriptor
 				.getConcreteTaskDescriptors());
@@ -65,10 +58,9 @@ public class ConcreteRoleDescriptor {
 			return true;
 		}
 		ConcreteRoleDescriptor concreteRoleDescriptor = (ConcreteRoleDescriptor) obj;
-		return new EqualsBuilder().append(this.concreteName,concreteRoleDescriptor.concreteName)
+		return new EqualsBuilder().appendSuper(super.equals(concreteRoleDescriptor))
 								  .append(this.concreteTaskDescriptors,concreteRoleDescriptor.concreteTaskDescriptors)
 								  .append(this.participant, concreteRoleDescriptor.participant)
-								  .append(this.project, concreteRoleDescriptor.project)
 								  .append(this.roleDescriptor, concreteRoleDescriptor.roleDescriptor)
 								  .isEquals();
 	}
@@ -78,20 +70,25 @@ public class ConcreteRoleDescriptor {
 	 *
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(this.id).append(
-				this.concreteName).append(this.participant)
-				.append(this.project).append(this.roleDescriptor).toHashCode();
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.participant).append(this.roleDescriptor).toHashCode();
 	}
 
 	/*
 	 * relation between ConcreteRoleDescriptor and Participant.
 	 */
 
+	/**
+	 * 
+	 */
 	public void addParticipant(Participant _participant) {
 		this.participant = _participant;
 		_participant.getConcreteRoleDescriptors().add(this);
 	}
 
+	/**
+	 * 
+	 * @param _participant
+	 */
 	public void removeParticipant(Participant _participant) {
 		_participant.getConcreteRoleDescriptors().remove(this);
 		this.participant = null;
@@ -149,22 +146,6 @@ public class ConcreteRoleDescriptor {
 	 *
 	 */
 
-	public String getConcreteName() {
-		return concreteName;
-	}
-
-	public void setConcreteName(String concreteName) {
-		this.concreteName = concreteName;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public RoleDescriptor getRoleDescriptor() {
 		return roleDescriptor;
 	}
@@ -190,11 +171,4 @@ public class ConcreteRoleDescriptor {
 		this.participant = participant;
 	}
 
-	public Project getProject() {
-		return project;
-	}
-
-	public void setProject(Project project) {
-		this.project = project;
-	}
 }
