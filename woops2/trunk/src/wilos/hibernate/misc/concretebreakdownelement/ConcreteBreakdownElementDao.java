@@ -9,7 +9,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import wilos.model.spem2.concretebreakdownelement.ConcreteBreakdownElement;
+import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.utils.ExceptionManager;
 
 /**
