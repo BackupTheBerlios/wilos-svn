@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import junit.framework.TestCase;
+import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 
 /**
@@ -107,6 +108,76 @@ public class WorkBreakdownElementTest extends TestCase {
 		bdeTmp2.setIsRepeatable(true);
 		assertFalse("Not equals", this.workBreakdownElement.equals(bdeTmp2));
 
+		// Rk: the tearDown method is called here.
+	}
+	
+	public final void testAddConcreteWorkBreakdownElement() {
+		// Rk: the setUp method is called here.
+
+		ConcreteWorkBreakdownElement tmp = new ConcreteWorkBreakdownElement();
+		this.workBreakdownElement.addConcreteWorkBreakdownElement(tmp);
+		
+		assertTrue(this.workBreakdownElement.getConcreteWorkBreakdownElements().contains(tmp));
+		assertTrue(tmp.getWorkbreakdownelement().equals(this.workBreakdownElement));
+		
+		// Rk: the tearDown method is called here.
+	}
+	
+	public final void testRemoveConcreteWorkBreakdownElement() {
+		// Rk: the setUp method is called here.
+
+		ConcreteWorkBreakdownElement tmp = new ConcreteWorkBreakdownElement();
+		this.workBreakdownElement.addConcreteBreakdownElement(tmp);
+		this.workBreakdownElement.removeConcreteWorkBreakdownElement(tmp);
+		
+		assertFalse(this.workBreakdownElement.getConcreteWorkBreakdownElements().contains(tmp));
+		assertFalse(tmp.getWorkbreakdownelement().equals(this.workBreakdownElement));
+		
+		// Rk: the tearDown method is called here.
+	}
+	
+	public final void testAddAllConcreteWorkBreakdownElements() {
+		// Rk: the setUp method is called here.
+
+		ConcreteWorkBreakdownElement tmp1 = new ConcreteWorkBreakdownElement();
+		tmp1.setConcreteName("tmp1");
+		ConcreteWorkBreakdownElement tmp2 = new ConcreteWorkBreakdownElement();
+		tmp2.setConcreteName("tmp2");
+		Set<ConcreteWorkBreakdownElement> list = new HashSet<ConcreteWorkBreakdownElement>();
+		list.add(tmp1);
+		list.add(tmp2);
+		
+		this.workBreakdownElement.addAllConcreteWorkBreakdownElements(list);
+		
+		assertTrue(this.workBreakdownElement.getConcreteWorkBreakdownElements().size() == 2);
+		assertTrue(this.workBreakdownElement.getConcreteWorkBreakdownElements().contains(tmp1));
+		assertTrue(this.workBreakdownElement.getConcreteWorkBreakdownElements().contains(tmp2));
+		assertTrue(tmp1.getWorkbreakdownelement().equals(this.workBreakdownElement));
+		assertTrue(tmp2.getWorkbreakdownelement().equals(this.workBreakdownElement));
+		
+		// Rk: the tearDown method is called here.
+	}
+	
+	public final void testRemoveAllConcreteWorkBreakdownElements() {
+		// Rk: the setUp method is called here.
+
+		ConcreteWorkBreakdownElement tmp1 = new ConcreteWorkBreakdownElement();
+		tmp1.setConcreteName("tmp1");
+		ConcreteWorkBreakdownElement tmp2 = new ConcreteWorkBreakdownElement();
+		tmp2.setConcreteName("tmp2");
+		Set<ConcreteWorkBreakdownElement> list = new HashSet<ConcreteWorkBreakdownElement>();
+		list.add(tmp1);
+		list.add(tmp2);
+		
+		this.workBreakdownElement.addAllConcreteWorkBreakdownElements(list);
+		this.workBreakdownElement.removeAllConcreteWorkBreakdownElements();
+		
+		assertTrue(this.workBreakdownElement.getConcreteWorkBreakdownElements().size() == 0);
+		assertFalse(this.workBreakdownElement.getConcreteWorkBreakdownElements().contains(tmp1));
+		assertFalse(this.workBreakdownElement.getConcreteWorkBreakdownElements().contains(tmp2));
+		assertFalse(tmp1.getWorkbreakdownelement().equals(this.workBreakdownElement));
+		assertFalse(tmp2.getWorkbreakdownelement().equals(this.workBreakdownElement));
+		
 		// Rk: the tearDown method is called here.
 	}
 	
