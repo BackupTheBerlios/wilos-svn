@@ -10,19 +10,18 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreteiteration.ConcreteIteration;
-import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.utils.ExceptionManager;
 
 /**
  * ConcreteIterationDao manage requests from the system to store iterations to the
  * database
- * 
+ *
  * @author Almiriad
  */
 public class ConcreteIterationDao extends HibernateDaoSupport {
 	/**
 	 * Save or update an ConcreteIteration
-	 * 
+	 *
 	 * @param _ConcreteIteration
 	 */
 	public void saveOrUpdateConcreteIteration(ConcreteIteration _concreteIteration) {
@@ -41,7 +40,7 @@ public class ConcreteIterationDao extends HibernateDaoSupport {
 
 	/**
 	 * Return a list of ConcreteIterations.
-	 * 
+	 *
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
@@ -81,7 +80,7 @@ public class ConcreteIterationDao extends HibernateDaoSupport {
 
 	/**
 	 * Return the ConcreteIteration which have the id _id
-	 * 
+	 *
 	 * @param _id
 	 * @return
 	 */
@@ -92,7 +91,7 @@ public class ConcreteIterationDao extends HibernateDaoSupport {
 
 	/**
 	 * Delete the ConcreteIteration
-	 * 
+	 *
 	 * @param _ConcreteIteration
 	 */
 	public void deleteConcreteIteration(ConcreteIteration _concreteIteration) {
