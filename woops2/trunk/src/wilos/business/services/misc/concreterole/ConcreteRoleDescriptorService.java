@@ -10,8 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import wilos.hibernate.misc.concreterole.ConcreteRoleDescriptorDao;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
-import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
-import wilos.model.spem2.role.RoleDescriptor;
 
 /**
 *
