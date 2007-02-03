@@ -6,18 +6,17 @@ import java.util.Set;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 
 /**
- * 
+ *
  * A Work Breakdown Element is a special Breakdown Element that provides
  * specific properties for Breakdown Elements that represent or refer to Work
  * Definitions.
- * 
+ *
  * @author eperico
- * 
+ *
  */
 public class WorkBreakdownElement extends BreakdownElement implements Cloneable {
 
@@ -30,7 +29,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	private Set<WorkBreakdownElement> predecessors;
 
 	private Set<WorkBreakdownElement> successors;
-		
+
 	private Set<ConcreteWorkBreakdownElement> concreteWorkBreakdownElements;
 
 	public WorkBreakdownElement() {
@@ -45,7 +44,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see woops2.model.spem2.workbreakdownelement.WorkBreakdownElement#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
@@ -69,7 +68,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see woops2.model.spem2.workbreakdownelement.WorkBreakdownElement#hashCode()
 	 */
 	public int hashCode() {
@@ -80,7 +79,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
@@ -89,7 +88,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 		workBreakdownElement.copy(this);
 		return workBreakdownElement;
 	}
-	
+
 	/*
 	 * relation between WorkBreakdownElement and ConcreteWorkBreakdownElement.
 	 *
@@ -134,7 +133,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 
 	/**
 	 * Add a successor to the successors collection of a wbde.
-	 * 
+	 *
 	 * @param _workBreakdownElements
 	 *            The successor to add.
 	 */
@@ -145,7 +144,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 
 	/**
 	 * Remove from a wbde one of these successor.
-	 * 
+	 *
 	 * @param _workBreakdownElements
 	 *            The successor to remove.
 	 */
@@ -156,7 +155,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 
 	/**
 	 * Add a successor collection to the successors collection of a wbde.
-	 * 
+	 *
 	 * @param _workBreakdownElements
 	 *            The set of successors to add.
 	 */
@@ -169,7 +168,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 
 	/**
 	 * Remove from an wbde all its successors.
-	 * 
+	 *
 	 */
 	public void removeAllSuccessors() {
 		for (WorkBreakdownElement wbde : this.getSuccessors())
@@ -179,7 +178,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 
 	/**
 	 * Add a predecessor to the predecessors collection of a wbde.
-	 * 
+	 *
 	 * @param _workBreakdownElements
 	 *            The predecessor to add.
 	 */
@@ -190,7 +189,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 
 	/**
 	 * Remove from a wbde one of these predecessor
-	 * 
+	 *
 	 * @param _workBreakdownElements
 	 *            The predecessor to remove.
 	 */
@@ -201,7 +200,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 
 	/**
 	 * Add a predecessor collection to the predecessors collection of a wbde.
-	 * 
+	 *
 	 * @param _workBreakdownElements
 	 *            The set of predecessors to add.
 	 */
@@ -214,7 +213,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 
 	/**
 	 * Remove from an wbde all its predecessors.
-	 * 
+	 *
 	 */
 	public void removeAllPredecessors() {
 		for (WorkBreakdownElement wbde : this.getPredecessors())
@@ -224,7 +223,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 
 	/**
 	 * Getter of isEvenDriven.
-	 * 
+	 *
 	 * @return the isEvenDriven.
 	 */
 	public Boolean getIsEvenDriven() {
@@ -233,7 +232,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 
 	/**
 	 * Setter of isEvenDriven.
-	 * 
+	 *
 	 * @param _isEvenDriven
 	 *            The isEvenDriven to set.
 	 */
@@ -243,7 +242,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 
 	/**
 	 * Getter of isOngoing.
-	 * 
+	 *
 	 * @return the isOngoing.
 	 */
 	public Boolean getIsOngoing() {
@@ -252,7 +251,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 
 	/**
 	 * Setter of isOngoing.
-	 * 
+	 *
 	 * @param _isOngoing
 	 *            The isOngoing to set.
 	 */
@@ -262,7 +261,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 
 	/**
 	 * Getter of isRepeatable.
-	 * 
+	 *
 	 * @return the isRepeatable.
 	 */
 	public Boolean getIsRepeatable() {
@@ -271,7 +270,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 
 	/**
 	 * Setter of isRepeatable.
-	 * 
+	 *
 	 * @param _isRepeatable
 	 *            The isRepeatable to set.
 	 */
@@ -294,7 +293,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	public void setSuccessors(Set<WorkBreakdownElement> successors) {
 		this.successors = successors;
 	}
-	
+
 	public Set<ConcreteWorkBreakdownElement> getConcreteWorkBreakdownElements() {
 		return this.concreteWorkBreakdownElements;
 	}
