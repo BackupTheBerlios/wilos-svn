@@ -9,21 +9,21 @@ import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 
 /**
- * 
+ *
  * Concrete instanciation of a SPEM2 Activity
- * 
+ *
  * @author garwind
- * 
+ *
  */
 public class ConcreteActivity extends WorkBreakdownElement implements Cloneable {
 
 	private Set<ConcreteBreakdownElement> concreteBreakdownElements ;
-	
+
 	private Activity activity;
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 */
 	public ConcreteActivity() {
 		super() ;
@@ -32,7 +32,7 @@ public class ConcreteActivity extends WorkBreakdownElement implements Cloneable 
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see woops2.model.workbreakdownelement.WorkBreakdownElement#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
@@ -41,7 +41,7 @@ public class ConcreteActivity extends WorkBreakdownElement implements Cloneable 
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see woops2.model.workbreakdownelement.WorkBreakdownElement#hashCode()
 	 */
 	public int hashCode() {
@@ -50,7 +50,7 @@ public class ConcreteActivity extends WorkBreakdownElement implements Cloneable 
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#clone()
 	 */
 	@ Override
@@ -62,7 +62,7 @@ public class ConcreteActivity extends WorkBreakdownElement implements Cloneable 
 
 	/**
 	 * Copy the object.
-	 * 
+	 *
 	 * @param _activity
 	 *            The Activity to copy.
 	 */
@@ -73,7 +73,7 @@ public class ConcreteActivity extends WorkBreakdownElement implements Cloneable 
 
 	/**
 	 * Add a breakdownElement to the breakdownElement collection of an activity
-	 * 
+	 *
 	 * @param _breakdownElement
 	 *            The BreakdownElement to add.
 	 */
@@ -86,24 +86,24 @@ public class ConcreteActivity extends WorkBreakdownElement implements Cloneable 
 
 	/**
 	 * Add a breakdownElement collection to the breakdownElement collection of an activity
-	 * 
+	 *
 	 * @param _breakdownElements
 	 *            The set of BreakdownElement to add.
 	 */
 	public void addAllConcreteBreakdownElements(Set<ConcreteBreakdownElement> _concreteBreakdownElements) {
 		for(ConcreteBreakdownElement cbde : _concreteBreakdownElements){
-			//cbde.addSuperConcreteActivity(this) ;
-			// FIXME addSuperConcreteActivity for Concretes
+			cbde.addSuperConcreteActivity(this) ;
+			//FIXME addSuperConcreteActivity for Concretes
 		}
 	}
 
 	/**
 	 * Remove from an activity one of these breakdownElements
-	 * 
+	 *
 	 * @param _breakdownElement
 	 *            The BreakdownElement to remove.
 	 */
-	public void removeBreakdownElement(ConcreteBreakdownElement _concreteBreakdownElement) {
+	public void removeConcreteBreakdownElement(ConcreteBreakdownElement _concreteBreakdownElement) {
 		//FIXME _concreteBreakdownElement.getSuperConcreteActivities
 		/*
 		_concreteBreakdownElement.getSuperConcreteActivities().remove(this) ;
@@ -113,7 +113,7 @@ public class ConcreteActivity extends WorkBreakdownElement implements Cloneable 
 
 	/**
 	 * Remove from an activity all its breakdownElements
-	 * 
+	 *
 	 */
 	public void removeAllConcreteBreakdownElements() {
 		/*
@@ -123,21 +123,21 @@ public class ConcreteActivity extends WorkBreakdownElement implements Cloneable 
 		*/
 //		FIXME cbde.getSuperConcreteActivities().remove
 	}
-	
+
 	public void addActivity(Activity _activity){
 		this.activity = _activity;
 		_activity.addConcreteActivity(this);
 	}
-	
+
 	public void removeActivity(Activity _activity){
 		this.activity = null;
 		_activity.removeConcreteActivity(this);
 	}
-	
+
 	public Set<ConcreteBreakdownElement> getConcreteBreakdownElements() {
 		return concreteBreakdownElements;
 	}
-	
+
 	public void setConcreteBreakdownElements(
 			Set<ConcreteBreakdownElement> concreteBreakdownElements) {
 		this.concreteBreakdownElements = concreteBreakdownElements;
