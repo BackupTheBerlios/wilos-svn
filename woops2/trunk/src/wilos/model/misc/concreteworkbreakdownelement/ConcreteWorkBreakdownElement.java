@@ -4,16 +4,15 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
-import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 
 
 /**
- * 
+ *
  * A Concrete Work Breakdown Element is a special Concrete Breakdown Element
- * 
+ *
  * @author eperico
- * 
+ *
  */
 public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement implements Cloneable {
 
@@ -24,9 +23,9 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement imple
 		this.workbreakdownelement = new WorkBreakdownElement();
 	}
 
-	/* 
+	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see woops2.model.misc.concretebreakdownelement.ConcreteBreakdownElement#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
@@ -44,7 +43,7 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement imple
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see woops2.model.misc.concretebreakdownelement.ConcreteBreakdownElement#hashCode()
 	 */
 	public int hashCode() {
@@ -54,7 +53,7 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement imple
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
@@ -71,7 +70,7 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement imple
 		super.copy(_concreteWorkBreakdownElement);
 		this.setWorkBreakdownElement(_concreteWorkBreakdownElement.getWorkbreakdownelement());
 	}
-	
+
 	/*
 	 * Relation between WorkBreakdownElement and ConcreteWorkBreakdownElement.
 	 *
