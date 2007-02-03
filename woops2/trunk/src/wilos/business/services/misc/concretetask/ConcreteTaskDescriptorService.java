@@ -1,8 +1,6 @@
 package wilos.business.services.misc.concretetask;
 
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,7 +15,6 @@ import wilos.hibernate.spem2.role.RoleDescriptorDao;
 import wilos.hibernate.spem2.task.TaskDescriptorDao;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.wilosuser.Participant;
-import wilos.utils.Constantes;
 import wilos.utils.Constantes.State;
 
 /**
