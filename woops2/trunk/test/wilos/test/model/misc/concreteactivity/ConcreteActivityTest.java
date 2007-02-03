@@ -1,18 +1,14 @@
 
 package wilos.test.model.misc.concreteactivity;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import junit.framework.TestCase;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
-import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 
 /**
  * @author Sebastien
- * 
+ *
  * This class represents the class test of the Concrete Activity class.
- * 
+ *
  */
 public class ConcreteActivityTest  extends TestCase {
 
@@ -20,7 +16,7 @@ public class ConcreteActivityTest  extends TestCase {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see junit.framework.TestCase#setUp()
 	 */
 	protected void setUp() throws Exception {
@@ -40,7 +36,7 @@ public class ConcreteActivityTest  extends TestCase {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see junit.framework.TestCase#tearDown()
 	 */
 	protected void tearDown() throws Exception {
