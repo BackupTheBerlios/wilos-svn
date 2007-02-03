@@ -18,7 +18,7 @@ import wilos.utils.ExceptionManager;
  * 
  */
 
-public class ConcreteWorkBreakDownElementDao extends HibernateDaoSupport {
+public class ConcreteWorkBreakdownElementDao extends HibernateDaoSupport {
 	/**
 	 * Save or update an activity
 	 * 
