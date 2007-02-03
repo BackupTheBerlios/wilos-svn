@@ -91,6 +91,33 @@ public class ConcreteBreakdownElement implements Cloneable {
 	}
 
 	/*
+	 * Relation between ConcreteActivity and ConcreteBreakdownElement.
+	 *
+	 */
+
+	public void addSuperConcreteActivity(ConcreteActivity _superConcreteActivity) {
+		this.getSuperConcreteActivities().add(_superConcreteActivity) ;
+		_superConcreteActivity.getConcreteBreakdownElements().add(this) ;
+	}
+
+	public void addAllSuperActivities(Set<ConcreteActivity> _superConcreteActivities) {
+		for(ConcreteActivity concreteActivity : _superConcreteActivities){
+			concreteActivity.addConcreteBreakdownElement(this) ;
+		}
+	}
+
+	public void removeSuperConcreteActivity(ConcreteActivity _superConcreteActivity) {
+		_superConcreteActivity.getConcreteBreakdownElements().remove(this) ;
+		this.getSuperConcreteActivities().remove(_superConcreteActivity) ;
+	}
+
+	public void removeAllSuperConcreteActivities() {
+		for(ConcreteActivity concreteActivity : this.getSuperConcreteActivities())
+			concreteActivity.getConcreteBreakdownElements().remove(this) ;
+		this.getSuperConcreteActivities().clear() ;
+	}
+
+	/*
 	 * Getter & Setter.
 	 *
 	 */
