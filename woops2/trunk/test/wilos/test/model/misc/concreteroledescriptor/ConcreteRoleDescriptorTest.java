@@ -7,7 +7,6 @@ import java.util.Set;
 import junit.framework.TestCase;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
-import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.role.RoleDescriptor;
 
@@ -25,7 +24,6 @@ public class ConcreteRoleDescriptorTest extends TestCase {
 		this.concreteRoleDescriptor = new ConcreteRoleDescriptor() ;
 		this.concreteRoleDescriptor.setConcreteName("Concrete Name");
 		this.concreteRoleDescriptor.setId("465");
-		this.concreteRoleDescriptor.setProject(new Project());
 	}
 
 	/*
