@@ -5,19 +5,18 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.spem2.iteration.Iteration;
-import wilos.model.spem2.task.TaskDefinition;
 
 /**
  * @author Sebastien
  *
  */
 public class ConcreteIteration extends ConcreteActivity implements Cloneable {
-	
+
 	private Iteration iteration;
 
 	/**
 	 * Default constructor
-	 * 
+	 *
 	 */
 	public ConcreteIteration() {
 		super() ;
@@ -25,7 +24,7 @@ public class ConcreteIteration extends ConcreteActivity implements Cloneable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#clone()
 	 */
 	@ Override
@@ -37,7 +36,7 @@ public class ConcreteIteration extends ConcreteActivity implements Cloneable {
 
 	/**
 	 * Copy the object.
-	 * 
+	 *
 	 * @param _iteration
 	 *            The iteration to copy.
 	 */
@@ -47,7 +46,7 @@ public class ConcreteIteration extends ConcreteActivity implements Cloneable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see woops2.model.activity.Activity#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
@@ -63,13 +62,13 @@ public class ConcreteIteration extends ConcreteActivity implements Cloneable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see woops2.model.activity.Activity#hashCode()
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.iteration).toHashCode() ;
 	}
-	
+
 	/**
 	 * Attach a iteration to a concreteIteration
 	 *
