@@ -21,7 +21,7 @@ import wilos.test.TestConfiguration;
 public class ConcreteRoleDescriptorServiceTest extends TestCase {
 
 	ConcreteRoleDescriptor concreteRoleDescriptor;
-	
+
 	ConcreteRoleDescriptorService concreteRoleDescriptorService = (ConcreteRoleDescriptorService) TestConfiguration.getInstance().getApplicationContext().getBean("ConcreteRoleDescriptorService");
 
 	ProjectDao projectDao = (ProjectDao) TestConfiguration.getInstance().getApplicationContext().getBean("ProjectDao");
@@ -65,22 +65,21 @@ public class ConcreteRoleDescriptorServiceTest extends TestCase {
 
 		// add a project
 		Project project = new Project();
-		project.setName("projectName");		
+		project.setName("projectName");
 		this.projectDao.saveOrUpdateProject(project);
-		
+
 		// add a roledescriptor
 		RoleDescriptor roledescriptor = new RoleDescriptor();
 		roledescriptor.setName("RDName");
 		this.roledescriptorDao.saveOrUpdateRoleDescriptor(roledescriptor);
-		
+
 		// add a participant
 		Participant participant = new Participant();
 		participant.setName("PartName");
 		participant.addConcreteRoleDescriptor(this.concreteRoleDescriptor);
 		participant.addToProject(project);
 		this.participantDao.saveOrUpdateParticipant(participant);
-		
-		this.concreteRoleDescriptor.setProject(project);
+
 		this.concreteRoleDescriptor.addRoleDescriptor(roledescriptor);
 		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao().saveOrUpdateConcreteRoleDescriptor(this.concreteRoleDescriptor);
 
