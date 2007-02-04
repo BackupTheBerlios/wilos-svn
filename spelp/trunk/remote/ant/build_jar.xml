@@ -19,6 +19,11 @@
 			<include name="**/*.jar" />
 		</fileset>
 	</path>
+	
+	<!-- Taches webservices -->
+	<taskdef name="apt" classname="com.sun.tools.ws.ant.Apt">
+		<classpath refid="classpath" />  
+	</taskdef>
 
 	<!-- Gestion de l'application -->
 	<target name="clean" depends="clean_dist">
@@ -42,6 +47,24 @@
 			<include name="**/*.xml" />
 			<classpath refid="classpath" />
 		</javac>
+		
+		<!-- Generation des webservices -->
+		<mkdir dir="${ant.dir}/tmp" />
+		
+		<apt
+		   debug="${debug}"
+		   verbose="${verbose}"
+		   destdir="${build.dir}/${project.name}/"
+		   sourcedestdir="${ant.dir}/tmp"
+		   sourcepath="${src.java.dir}">
+		   <classpath refid="classpath" /> 
+		   <source dir="${src.java.dir}">		  
+		      <include name="**/webservices/*.java"/>
+		   </source>			
+		</apt>
+		
+		<delete dir="${ant.dir}/tmp" />	
+		<!-- Fin Generation des webservices -->
 	
 		<copy todir="${build.dir}/${project.name}/">
 			<fileset dir="${src.java.dir}">
