@@ -13,6 +13,12 @@ import wilos.model.spem2.role.RoleDescriptor;
 public class ConcreteRoleDescriptorTest extends TestCase {
 
 	private ConcreteRoleDescriptor concreteRoleDescriptor ;
+	
+public static final String CONCRETENAME = "concreteName";
+	
+	public static final String PREFIX = "prefix" ;
+
+	public static final Boolean IS_OPTIONAL = true ;
 
 	/*
 	 * (non-Javadoc)
@@ -22,8 +28,7 @@ public class ConcreteRoleDescriptorTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp() ;
 		this.concreteRoleDescriptor = new ConcreteRoleDescriptor() ;
-		this.concreteRoleDescriptor.setConcreteName("Concrete Name");
-		this.concreteRoleDescriptor.setId("465");
+		this.concreteRoleDescriptor.setConcreteName(CONCRETENAME);
 	}
 
 	/*
@@ -33,6 +38,86 @@ public class ConcreteRoleDescriptorTest extends TestCase {
 	 */
 	protected void tearDown() throws Exception {
 		super.tearDown() ;
+	}
+	
+	/**
+	 * Test method for
+	 * {@link wilos.model.misc.concreteRoleDescriptor.ConcreteRoleDescriptor#hashCode()}.
+	 */
+	public void testHashCode() {
+		
+		// Rk: the setUp method is called here.
+
+		ConcreteRoleDescriptor tmp = new ConcreteRoleDescriptor();
+		tmp.setConcreteName(CONCRETENAME);
+		
+		RoleDescriptor roleDescriptor = new RoleDescriptor();
+		roleDescriptor.setPrefix(PREFIX) ;
+		roleDescriptor.setIsOptional(IS_OPTIONAL) ;
+		
+		tmp.setRoleDescriptor(roleDescriptor);
+		this.concreteRoleDescriptor.setRoleDescriptor(roleDescriptor);
+
+		assertNotNull(this.concreteRoleDescriptor.hashCode()) ;
+		assertNotNull(tmp.hashCode()) ;
+		assertEquals(this.concreteRoleDescriptor.hashCode(), tmp.hashCode()) ;
+
+		// Rk: the tearDown method is called here.
+	}
+
+	/**
+	 * Test method for
+	 * {@link wilos.model.misc.concreteRoleDescriptor.ConcreteRoleDescriptor#equals(java.lang.Object)}.
+	 */
+	public void testEqualsObject() {
+		
+		// Rk: the setUp method is called here.
+
+		ConcreteRoleDescriptor tmp = new ConcreteRoleDescriptor();
+		tmp.setConcreteName(CONCRETENAME);
+		
+		RoleDescriptor roleDescriptor = new RoleDescriptor();
+		roleDescriptor.setPrefix(PREFIX) ;
+		roleDescriptor.setIsOptional(IS_OPTIONAL) ;
+		
+		tmp.setRoleDescriptor(roleDescriptor);
+		this.concreteRoleDescriptor.setRoleDescriptor(roleDescriptor);
+
+		assertNotNull(this.concreteRoleDescriptor) ;
+		assertNotNull(tmp) ;
+		assertTrue(this.concreteRoleDescriptor.equals(tmp)) ;
+
+		// Rk: the tearDown method is called here.
+	}
+
+	/**
+	 * Test method for
+	 * {@link wilos.model.misc.concreteRoleDescriptor.ConcreteRoleDescriptor#clone()}.
+	 */
+	public void testClone() {
+		
+		// Rk: the setUp method is called here.
+		
+		ConcreteRoleDescriptor tmp = null;
+		
+		RoleDescriptor roleDescriptor = new RoleDescriptor();
+		roleDescriptor.setPrefix(PREFIX) ;
+		roleDescriptor.setIsOptional(IS_OPTIONAL) ;
+		
+		this.concreteRoleDescriptor.setRoleDescriptor(roleDescriptor);
+		
+		try{
+			tmp = this.concreteRoleDescriptor.clone();
+		}
+		catch(CloneNotSupportedException e){
+			fail("Error CloneNotSupportedException in the testClone method") ;
+		}
+		
+		assertNotNull(tmp);
+		assertEquals(tmp, this.concreteRoleDescriptor) ;
+		
+
+		// Rk: the tearDown method is called here.
 	}
 
 	public void testAddParticipant() {
