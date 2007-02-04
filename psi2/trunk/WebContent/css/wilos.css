@@ -1,0 +1,40 @@
+/*petit test sur les boutons*/
+.button{
+	background-color:rgb(219,207,239);
+	border: 1px solid black;	
+}
+.boutton:hover{
+	background-color:rgb(231,222,243);
+}
+	
+#body{
+	border:3px solid #FFFFFF;
+	padding: 0px 0px 0px 0px;  
+	margin:10px 0px 0px 10px;
+	background-color:#BEB4CC;
+	outline:#8B82A2 solid medium;
+	overflow:hidden;
+}
+
+#connection { 
+	width:210px;
+	border-right:2px solid #FFFFFF;
+	border-top:2px solid #FFFFFF;
+	border-bottom:2px solid #FFFFFF;
+}
+
+#roles_actions {
+	position:absolute;
+	top:10%;
+	left:210px;
+	height:60px;
+	width:60%;
+	overflow:hidden;
+	line-height:25px;
+}
+
+#menu { 
+	width:210px;
+	height:300px;
+	border-right:2px solid #FFFFFF;
+}

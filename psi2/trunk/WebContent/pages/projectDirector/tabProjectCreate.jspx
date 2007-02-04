@@ -1,4 +1,6 @@
-<ice:panelTab id="panelTab_project_create" label="#{msgs['component.projectcreate.title2']}" imageDir="images">
+<ice:form id="project_create_form">
+	<ice:panelTabSet id="panelTabSet_project" styleClass="componentPanelTabSetLayout">
+		<ice:panelTab id="panelTab_project_create" label="#{msgs['component.projectcreate.title2']}" imageDir="images">
 			<ice:panelGroup id="project_create_PanelGroup" styleClass="contentIncludePanelGroup">
 				<ice:panelGrid columns="2">
 					<ice:outputText value="#{msgs['component.projectcreate.name']}" />
@@ -22,6 +24,8 @@
 				</ice:panelGrid>
 			</ice:panelGroup>
 		</ice:panelTab>
+	</ice:panelTabSet>
+</ice:form>
 		
 		
 		

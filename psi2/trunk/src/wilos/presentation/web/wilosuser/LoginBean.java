@@ -106,17 +106,17 @@ public class LoginBean {
 			//if(user instanceof Participant){
 			if(this.loginService.isParticipant(user)){
 				sess.setAttribute("role", "participant") ;
-				url = "welcome" ;
+				url = "participant_main" ;
 				applicationRole = "participant_role";
 			}
 			else if(this.loginService.isProcessManager(user)){
 				sess.setAttribute("role", "processManager") ;
-				url = "welcomeProcessManager" ;
+				url = "process_manager_main" ;
 				applicationRole = "processManager_role";
 			}
 			else if(this.loginService.isProjectDirector(user)){
 				sess.setAttribute("role", "projectDirector") ;
-				url = "welcomeProjectDirector" ;
+				url = "project_director_main" ;
 				applicationRole = "projectDirector_role";
 			}
 			else if(this.loginService.isAdministrator(user)){

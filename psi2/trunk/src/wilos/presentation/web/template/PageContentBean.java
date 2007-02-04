@@ -47,6 +47,9 @@ public class PageContentBean extends IceUserObject {
 
     // template, default panel to make visible in a panel stack
     private String templateName = "";
+    
+    /*TODO comments*/
+    private String templateNameForARole = ""; 
 
     // text to be displayed in navigation link
     private String menuDisplayText;
@@ -222,4 +225,22 @@ public class PageContentBean extends IceUserObject {
             setExpanded(!isExpanded());
         }
     }
+
+	/**
+	 * Getter of templateNameForARole.
+	 *
+	 * @return the templateNameForARole.
+	 */
+	public String getTemplateNameForARole() {
+		return this.templateNameForARole ;
+	}
+
+	/**
+	 * Setter of templateNameForARole.
+	 *
+	 * @param _templateNameForARole The templateNameForARole to set.
+	 */
+	public void setTemplateNameForARole(String _templateNameForARole) {
+		this.templateNameForARole = _templateNameForARole ;
+	}
 }

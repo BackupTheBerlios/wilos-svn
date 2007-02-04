@@ -1,0 +1,13 @@
+<ice:form id="participant_actions_form">
+	<ice:panelGrid columns="3">			
+		<ice:commandLink immediate="true" type="submit" value="#{msgs['action.link.affectRoles']}" action="" styleClass="button" actionListener="#{ActionBean.selectNodeActionListener}">
+			<f:param name="pageToShow" value="#{ActionBean.affectRoles}" />
+		</ice:commandLink>
+		<ice:commandLink immediate="true" type="submit" value="#{msgs['action.link.affectProject']}" action="" styleClass="button" actionListener="#{ActionBean.selectNodeActionListener}">
+			<f:param name="pageToShow" value="#{ActionBean.affectProject}" />
+		</ice:commandLink>
+		<ice:commandLink immediate="true" type="submit" value="#{msgs['action.link.affectProjectAsManager']}" action="" styleClass="button" actionListener="#{ActionBean.selectNodeActionListener}">
+			<f:param name="pageToShow" value="#{ActionBean.affectProjectAsManager}" />
+		</ice:commandLink>
+	</ice:panelGrid>		
+</ice:form>
