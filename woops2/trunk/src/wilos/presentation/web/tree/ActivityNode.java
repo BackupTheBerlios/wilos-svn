@@ -33,7 +33,7 @@ public class ActivityNode extends DefaultMutableTreeNode {
 		iceUserObject.setPageId(WilosObjectNode.ACTIVITYNODE);
 
 		for (BreakdownElement breakdownElement : this.activity
-				.getBreakDownElements()) {
+				.getBreakdownElements()) {
 			if (breakdownElement instanceof Activity) {
 				this.add(new ActivityNode(
 						(Activity) breakdownElement, _roleDescriptors));

@@ -29,10 +29,10 @@ public class PhaseService {
 
 	public Set<BreakdownElement> getBreakdownElementsFromPhase(Phase _ph) {
 		Set<BreakdownElement> bdes = new HashSet<BreakdownElement>();
-		bdes.addAll(_ph.getBreakDownElements());
+		bdes.addAll(_ph.getBreakdownElements());
 		
 		Set<BreakdownElement> allBdes = new HashSet<BreakdownElement>();
-		allBdes.addAll(_ph.getBreakDownElements());
+		allBdes.addAll(_ph.getBreakdownElements());
 		
 		for (BreakdownElement bde : bdes) {
 			if (bde instanceof Iteration) {

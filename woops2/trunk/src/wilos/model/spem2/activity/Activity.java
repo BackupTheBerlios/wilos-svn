@@ -82,7 +82,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 */
 	protected void copy(final Activity _activity) {
 		super.copy(_activity) ;
-		this.setBreakDownElements(_activity.getBreakDownElements()) ;
+		this.setBreakdownElements(_activity.getBreakdownElements()) ;
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 *            The BreakdownElement to add.
 	 */
 	public void addBreakdownElement(BreakdownElement _breakdownElement) {
-		this.getBreakDownElements().add(_breakdownElement) ;
+		this.getBreakdownElements().add(_breakdownElement) ;
 		_breakdownElement.getSuperActivities().add(this) ;
 	}
 
@@ -116,7 +116,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 */
 	public void removeBreakdownElement(BreakdownElement _breakdownElement) {
 		_breakdownElement.getSuperActivities().remove(this) ;
-		this.getBreakDownElements().remove(_breakdownElement) ;
+		this.getBreakdownElements().remove(_breakdownElement) ;
 	}
 	
 	public void addConcreteActivity(ConcreteActivity _concreteActivity){
@@ -147,9 +147,9 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 * 
 	 */
 	public void removeAllBreakdownElements() {
-		for(BreakdownElement bde : this.getBreakDownElements())
+		for(BreakdownElement bde : this.getBreakdownElements())
 			bde.getSuperActivities().remove(this) ;
-		this.getBreakDownElements().clear() ;
+		this.getBreakdownElements().clear() ;
 	}
 
 	/**
@@ -157,7 +157,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 * 
 	 * @return the breakDownElements.
 	 */
-	public Set<BreakdownElement> getBreakDownElements() {
+	public Set<BreakdownElement> getBreakdownElements() {
 		return this.breakdownElements ;
 	}
 
@@ -168,7 +168,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 *            The breakDownElements to set.
 	 */
 	@ SuppressWarnings ("unused")
-	private void setBreakDownElements(Set<BreakdownElement> _breakDownElements) {
+	private void setBreakdownElements(Set<BreakdownElement> _breakDownElements) {
 		this.breakdownElements.addAll(_breakDownElements) ;
 	}
 

@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
+import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
 import wilos.model.spem2.activity.Activity;
-import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 
 /**
  *
@@ -15,7 +15,7 @@ import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
  * @author garwind
  *
  */
-public class ConcreteActivity extends WorkBreakdownElement implements Cloneable {
+public class ConcreteActivity extends ConcreteWorkBreakdownElement implements Cloneable {
 
 	private Set<ConcreteBreakdownElement> concreteBreakdownElements ;
 

@@ -126,7 +126,7 @@ public class ProcessService {
 
 		// elements of collection getting
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
-		bdes.addAll(_process.getBreakDownElements());
+		bdes.addAll(_process.getBreakdownElements());
 
 		// in function of element type
 		for (BreakdownElement bde : bdes) {
@@ -155,7 +155,7 @@ public class ProcessService {
 		}
 
 		// dependencies erasing
-		_process.getBreakDownElements().clear();
+		_process.getBreakdownElements().clear();
 		_process.getPredecessors().clear();
 		_process.getProjects().clear();
 		_process.getSuccessors().clear();
@@ -166,7 +166,7 @@ public class ProcessService {
 		System.out.println("###Process sauve");
 
 		// clone dependencies getting
-		_process.addAllBreakdownElements(clone.getBreakDownElements());
+		_process.addAllBreakdownElements(clone.getBreakdownElements());
 		_process.addAllPredecessors(clone.getPredecessors());
 		_process.addAllProjects(clone.getProjects());
 		_process.addAllSuccessors(clone.getSuccessors());
@@ -194,7 +194,7 @@ public class ProcessService {
 		}
 
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
-		bdes.addAll(_ph.getBreakDownElements());
+		bdes.addAll(_ph.getBreakdownElements());
 
 		for (BreakdownElement bde : bdes) {
 			if (bde instanceof Iteration) {
@@ -217,7 +217,7 @@ public class ProcessService {
 		}
 
 		// clean of dependancies of _ph
-		_ph.getBreakDownElements().clear();
+		_ph.getBreakdownElements().clear();
 		_ph.getPredecessors().clear();
 		_ph.getSuccessors().clear();
 		_ph.getSuperActivities().clear();
@@ -225,7 +225,7 @@ public class ProcessService {
 		this.phaseDao.saveOrUpdatePhase(_ph);
 		System.out.println("###Phase sauve");
 
-		_ph.addAllBreakdownElements(clone.getBreakDownElements());
+		_ph.addAllBreakdownElements(clone.getBreakdownElements());
 		_ph.addAllPredecessors(clone.getPredecessors());
 		_ph.addAllSuccessors(clone.getSuccessors());
 		_ph.addAllSuperActivities(clone.getSuperActivities());
@@ -251,7 +251,7 @@ public class ProcessService {
 		}
 
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
-		bdes.addAll(_it.getBreakDownElements());
+		bdes.addAll(_it.getBreakdownElements());
 		/*
 		 * System.out.println("###"+bdes.size()); for (BreakdownElement bde :
 		 * bdes) { String s = bde.getClass().getName(); String sbis =
@@ -273,7 +273,7 @@ public class ProcessService {
 			}
 		}
 
-		_it.getBreakDownElements().clear();
+		_it.getBreakdownElements().clear();
 		_it.getPredecessors().clear();
 		_it.getSuccessors().clear();
 		_it.getSuperActivities().clear();
@@ -281,7 +281,7 @@ public class ProcessService {
 		this.iterationDao.saveOrUpdateIteration(_it);
 		System.out.println("###Iteration sauve");
 
-		_it.addAllBreakdownElements(clone.getBreakDownElements());
+		_it.addAllBreakdownElements(clone.getBreakdownElements());
 		_it.addAllPredecessors(clone.getPredecessors());
 		_it.addAllSuccessors(clone.getSuccessors());
 		_it.addAllSuperActivities(clone.getSuperActivities());
@@ -307,7 +307,7 @@ public class ProcessService {
 		}
 
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
-		bdes.addAll(_act.getBreakDownElements());
+		bdes.addAll(_act.getBreakdownElements());
 		// System.out.println("###"+bdes.size());
 
 		/*
@@ -331,7 +331,7 @@ public class ProcessService {
 			}
 		}
 
-		_act.getBreakDownElements().clear();
+		_act.getBreakdownElements().clear();
 		_act.getPredecessors().clear();
 		_act.getSuccessors().clear();
 		_act.getSuperActivities().clear();
@@ -339,7 +339,7 @@ public class ProcessService {
 		this.activityDao.saveOrUpdateActivity(_act);
 		System.out.println("###Activity sauve");
 
-		_act.addAllBreakdownElements(clone.getBreakDownElements());
+		_act.addAllBreakdownElements(clone.getBreakdownElements());
 		_act.addAllPredecessors(clone.getPredecessors());
 		_act.addAllSuccessors(clone.getSuccessors());
 		_act.addAllSuperActivities(clone.getSuperActivities());
@@ -575,7 +575,7 @@ public class ProcessService {
 	private List<TaskDescriptor> getTaskDescriptors(Activity _act) {
 
 		// elements of collection getting
-		Set<BreakdownElement> bdes = _act.getBreakDownElements();
+		Set<BreakdownElement> bdes = _act.getBreakdownElements();
 
 		List<TaskDescriptor> tds = new ArrayList<TaskDescriptor>();
 

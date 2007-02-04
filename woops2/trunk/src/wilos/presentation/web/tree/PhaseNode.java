@@ -35,7 +35,7 @@ public class PhaseNode extends DefaultMutableTreeNode {
 		iceUserObject.setPageId(WilosObjectNode.PHASENODE);
 
 		for (BreakdownElement breakdownElement : this.phase
-				.getBreakDownElements()) {
+				.getBreakdownElements()) {
 			if (breakdownElement instanceof Iteration) {
 				this.add(new IterationNode((Iteration) breakdownElement, _roleDescriptors));
 			}

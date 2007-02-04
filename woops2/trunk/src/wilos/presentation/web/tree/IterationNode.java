@@ -35,7 +35,7 @@ public class IterationNode extends DefaultMutableTreeNode {
 		iceUserObject.setPageId(WilosObjectNode.ITERATIONNODE);
 
 		for (BreakdownElement breakdownElement : this.iteration
-				.getBreakDownElements()) {
+				.getBreakdownElements()) {
 			//FIXME LazyExceptrion
 			if (breakdownElement instanceof Activity) {
 				this.add(new ActivityNode((Activity) breakdownElement,

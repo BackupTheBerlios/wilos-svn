@@ -145,7 +145,7 @@ public class BreakdownElement extends Element implements Cloneable {
 	 */
 	public void addSuperActivity(Activity _superActivity) {
 		this.getSuperActivities().add(_superActivity) ;
-		_superActivity.getBreakDownElements().add(this) ;
+		_superActivity.getBreakdownElements().add(this) ;
 	}
 
 	/**
@@ -167,7 +167,7 @@ public class BreakdownElement extends Element implements Cloneable {
 	 *            The Activity to remove.
 	 */
 	public void removeSuperActivity(Activity _superActivity) {
-		_superActivity.getBreakDownElements().remove(this) ;
+		_superActivity.getBreakdownElements().remove(this) ;
 		this.getSuperActivities().remove(_superActivity) ;
 	}
 
@@ -177,7 +177,7 @@ public class BreakdownElement extends Element implements Cloneable {
 	 */
 	public void removeAllSuperActivities() {
 		for(Activity activity : this.getSuperActivities())
-			activity.getBreakDownElements().remove(this) ;
+			activity.getBreakdownElements().remove(this) ;
 		this.getSuperActivities().clear() ;
 	}
 

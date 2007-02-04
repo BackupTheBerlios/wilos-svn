@@ -12,8 +12,6 @@ public class ConcreteBreakdownElementTest extends TestCase {
 	
 	private ConcreteActivity concreteActivity ; 
 
-	private static final String ID = "thisId" ;
-
 	private static final String CONCRETE_NAME = "Concrete name" ;
 
 	/*
@@ -27,7 +25,6 @@ public class ConcreteBreakdownElementTest extends TestCase {
 		
 		this.concreteBreakdownElement = new ConcreteBreakdownElement() ;
 		this.concreteBreakdownElement.setConcreteName(CONCRETE_NAME);
-		this.concreteBreakdownElement.setId(ID);
 		this.concreteBreakdownElement.setBreakdownElement(new BreakdownElement()) ;
 	}
 
@@ -60,7 +57,6 @@ public class ConcreteBreakdownElementTest extends TestCase {
 		this.concreteBreakdownElement.addSuperConcreteActivity(this.concreteActivity) ;
 		
 		ConcreteBreakdownElement cbe = new ConcreteBreakdownElement() ;
-		cbe.setId(ID) ;
 		cbe.setConcreteName(CONCRETE_NAME) ;
 		cbe.setBreakdownElement(new BreakdownElement()) ;
 		cbe.addSuperConcreteActivity(new ConcreteActivity()) ;

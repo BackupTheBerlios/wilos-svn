@@ -69,7 +69,7 @@ public class ConcreteBreakdownElement implements Cloneable {
 	 *
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(this.concreteName)/*.append(this.id)*/.append(this.breakdownElement).toHashCode();
+		return new HashCodeBuilder(17, 37).append(this.id).append(this.concreteName).append(this.breakdownElement).toHashCode();
 	}
 
 	/*

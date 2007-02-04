@@ -91,7 +91,7 @@ public class Element implements Cloneable {
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(this.guid).append(this.name).append(this.description).toHashCode() ;
+		return new HashCodeBuilder(17, 37).append(this.id).append(this.guid).append(this.name).append(this.description).toHashCode() ;
 	}
 
 	/**

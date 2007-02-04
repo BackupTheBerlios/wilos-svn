@@ -41,7 +41,7 @@ public class ProjectNode extends DefaultMutableTreeNode {
 					+ this.project.getProcess().getPresentationName() + ")");
 
 			//Nested nodes.
-			for (BreakdownElement breakdownElement : this.project.getProcess().getBreakDownElements()) {
+			for (BreakdownElement breakdownElement : this.project.getProcess().getBreakdownElements()) {
 				if (breakdownElement instanceof Phase) {
 					this.add(new PhaseNode((Phase) breakdownElement,
 							_roleDescriptors));
