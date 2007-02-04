@@ -7,23 +7,22 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.model.spem2.activity.Activity;
-import wilos.model.spem2.task.TaskDescriptor;
 
 /**
- * Iteration is a special Activity, which prescribes pre-defined values for its instances for the attributes prefix ('Iteration') and isRepeatable ('True'). 
- * It has been included into the meta-model for convenience and to provide a special stereotype, because it represents a very commonly used Activity type. 
+ * Iteration is a special Activity, which prescribes pre-defined values for its instances for the attributes prefix ('Iteration') and isRepeatable ('True').
+ * It has been included into the meta-model for convenience and to provide a special stereotype, because it represents a very commonly used Activity type.
  * Iteration groups a set of nested Activities that are repeated more than once. It represents an important structuring element to organize work in repetitive cycles
 
  * @author Soosuske
  *
  */
 public class Iteration extends Activity implements Cloneable{
-	
+
 	private Set<ConcreteIteration> concreteIterations;
 
 	/**
 	 * Default constructor
-	 * 
+	 *
 	 */
 	public Iteration() {
 		super() ;
@@ -31,7 +30,7 @@ public class Iteration extends Activity implements Cloneable{
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#clone()
 	 */
 	@ Override
@@ -43,7 +42,7 @@ public class Iteration extends Activity implements Cloneable{
 
 	/**
 	 * Copy the object.
-	 * 
+	 *
 	 * @param _iteration
 	 *            The iteration to copy.
 	 */
@@ -53,7 +52,7 @@ public class Iteration extends Activity implements Cloneable{
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see woops2.model.activity.Activity#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
@@ -69,16 +68,16 @@ public class Iteration extends Activity implements Cloneable{
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see woops2.model.activity.Activity#hashCode()
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode() ;
 	}
-	
+
 	/**
-	 * Add a concreteIteration to an iteration 
-	 * 
+	 * Add a concreteIteration to an iteration
+	 *
 	 * @param _concreteIteration
 	 */
 	public void addConcreteIteration(ConcreteIteration _concreteIteration) {
@@ -89,7 +88,7 @@ public class Iteration extends Activity implements Cloneable{
 	/**
 	 * Add a concreteIteration collection to the concreteIteration collection of a
 	 * Iteration
-	 * 
+	 *
 	 * @param _concreteIteration
 	 */
 	public void addAllConcreteIterations(Set<ConcreteIteration> _concreteIterations) {
@@ -97,10 +96,10 @@ public class Iteration extends Activity implements Cloneable{
 			ci.addIteration(this);
 		}
 	}
-	
+
 	/**
 	 * Remove a concreteIteration to its iteration
-	 * 
+	 *
 	 * @param _concreteIteration
 	 */
 	public void removeConcreteIteration(ConcreteIteration _concreteIteration) {
@@ -119,7 +118,7 @@ public class Iteration extends Activity implements Cloneable{
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public Set<ConcreteIteration> getConcreteIterations() {
@@ -127,11 +126,11 @@ public class Iteration extends Activity implements Cloneable{
 	}
 
 	/**
-	 * 
+	 *
 	 * @param _concreteIterations
 	 */
 	public void setConcreteIterations(Set<ConcreteIteration> _concreteIterations) {
-		this.concreteIterations = concreteIterations;
+		this.concreteIterations = _concreteIterations;
 	}
 
 }
