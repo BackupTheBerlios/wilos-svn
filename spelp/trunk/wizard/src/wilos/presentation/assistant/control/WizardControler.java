@@ -1,5 +1,10 @@
 package wilos.presentation.assistant.control;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.tree.DefaultMutableTreeNode;
+
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 import wilos.presentation.assistant.view.main.ActionBar;
@@ -15,8 +20,21 @@ public class WizardControler {
 	private ContextualMenu menuContextuel = null ;
 	private boolean showInfo = true ;
 	
+	private ConcreteTaskDescriptor lastCtd;
+	
 	private WizardControler() {
 		
+	}
+	
+	public void changeHTMLViewerBehavior(boolean newBehavior) {
+		showInfo = newBehavior;
+		if (showInfo){
+			HTMLViewer.getInstance(null).viewObject(lastCtd);
+		}
+		else {
+			HTMLViewer.getInstance(null).setVisible(false);
+		}
+		actionBar.setJCheckBoxShowViewerEnabled(newBehavior);
 	}
 	
 	public static WizardControler getInstance() {
@@ -26,20 +44,99 @@ public class WizardControler {
 		return wc;
 	}
 	
+	/**
+	 * Start a concrete task descriptor
+	 * @param ctd
+	 */
 	public void startConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
 		if (ctd.getState() == Constantes.State.READY) {
 			WizardServicesProxy.startConcreteTaskDescriptor(ctd.getId());
 		}
 	}
 	
-	public void initUIElements(ActionBar theActionToolBar,TreePanel theTreePanel, ContextualMenu menu) {
-		//actionToolBar = theActionToolBar;
+	/**
+	 * Suspend a concrete task descriptor
+	 * @param ctd
+	 */	
+	public void pauseConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
+		if (ctd.getState() == Constantes.State.STARTED) {
+			WizardServicesProxy.suspendConcreteTaskDescriptor(ctd.getId());
+		}
+	}
+	
+	/**
+	 * Finish  a concrete task descriptor
+	 * @param ctd
+	 */
+	public void finishConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
+		if (ctd.getState() == Constantes.State.STARTED) {
+			WizardServicesProxy.stopConcreteTaskDescriptor(ctd.getId());
+		}
+	}
+	
+	public void initUIElements(ActionBar theActionToolBar,TreePanel theTreePanel, ContextualMenu menu) {;
 		actionBar = theActionToolBar ;
 		treePanel = theTreePanel;
 		menuContextuel = menu ;
 		showInfo = true;
+		initActions() ;
+		
 	}
 	
+	private void initActions() {
+		ActionListener actionPlay = new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				DefaultMutableTreeNode dmt =  (DefaultMutableTreeNode)WizardControler.getInstance().getTreePanel().getTree().getLastSelectedPathComponent();
+				
+				if(dmt != null) {
+					ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
+					if(selectedTask.getId() != null) {
+						WizardControler.getInstance().changeHTMLViewerBehavior(true);
+						WizardControler.getInstance().startConcreteTaskDescriptor(selectedTask);
+						WizardControler.getInstance().refreshParticipant();
+					}
+				}
+				
+			}
+		};
+		ActionListener actionPause = new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				DefaultMutableTreeNode dmt =  (DefaultMutableTreeNode)WizardControler.getInstance().getTreePanel().getTree().getLastSelectedPathComponent();
+				
+				if(dmt != null) {
+					ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
+					if(selectedTask.getId() != null) {
+						WizardControler.getInstance().changeHTMLViewerBehavior(true);
+						WizardControler.getInstance().pauseConcreteTaskDescriptor(selectedTask);
+						WizardControler.getInstance().refreshParticipant();
+					}
+				}
+				
+			}
+		};
+		ActionListener actionFinish = new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				DefaultMutableTreeNode dmt =  (DefaultMutableTreeNode)WizardControler.getInstance().getTreePanel().getTree().getLastSelectedPathComponent();
+				if(dmt != null) {
+					ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
+					if(selectedTask.getId() != null) {
+						WizardControler.getInstance().changeHTMLViewerBehavior(true);
+						WizardControler.getInstance().finishConcreteTaskDescriptor(selectedTask);
+						WizardControler.getInstance().refreshParticipant();
+					}
+				}
+				
+			}
+		};
+		
+		actionBar.getJButtonPlayTask().addActionListener(actionPlay);
+		menuContextuel.getJButtonPlayTask().addActionListener(actionPlay);
+		actionBar.getJButtonPauseTask().addActionListener(actionPause);
+		menuContextuel.getJButtonPauseTask().addActionListener(actionPause);
+		actionBar.getJButtonFinished().addActionListener(actionFinish);
+		menuContextuel.getJButtonFinished().addActionListener(actionPlay);
+	}
+
 	public void refreshParticipant() {
 		treePanel.setParticipant(WizardServicesProxy.getParticipant());		
 	}
@@ -62,5 +159,9 @@ public class WizardControler {
 
 	public TreePanel getTreePanel() {
 		return treePanel;
+	}
+
+	public void setLastCtd(ConcreteTaskDescriptor lastCtd) {
+		this.lastCtd = lastCtd;
 	}
 }

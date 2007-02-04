@@ -5,6 +5,7 @@ import java.util.Observable;
 import javax.swing.JPopupMenu;
 
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 import wilos.presentation.assistant.view.main.ActionBar;
 import wilos.presentation.assistant.view.main.ContextualMenu;
@@ -21,8 +22,7 @@ public class WizardStateMachine extends Observable{
 	public static final int STATE_TASK_FINISHED = 6;
 		
 	private int currentState = 0;
-	private boolean showInfo;
-	private ConcreteTaskDescriptor lastCtd;
+	
 	
 	private static WizardStateMachine wsm = null;
 			
@@ -30,16 +30,7 @@ public class WizardStateMachine extends Observable{
 		
 	}
 	
-	public void changeHTMLViewerBehavior(boolean newBehavior) {
-		showInfo = newBehavior;
-		if (showInfo){
-			HTMLViewer.getInstance(null).viewObject(lastCtd);
-		}
-		else {
-			HTMLViewer.getInstance(null).setVisible(false);
-		}
-		ActionBar.getInstance().setJCheckBoxShowViewerEnabled(newBehavior);
-	}
+	
 	
 	public static WizardStateMachine getInstance() {
 		if (wsm == null) {
@@ -88,15 +79,15 @@ public class WizardStateMachine extends Observable{
 				updateState(STATE_NOTHING);
 			}
 
-			lastCtd = ctd;
+			WizardControler.getInstance().setLastCtd(ctd);
 			
-			if (showInfo){
+			if (WizardControler.getInstance().isShowInfo()){
 				HTMLViewer.getInstance(null).viewObject(ctd);
 			}
 			
 		}
 		else {
-			if (showInfo){
+			if (WizardControler.getInstance().isShowInfo()){
 				HTMLViewer.getInstance(null).viewObject(object);
 				updateState(STATE_NOTHING);
 			}

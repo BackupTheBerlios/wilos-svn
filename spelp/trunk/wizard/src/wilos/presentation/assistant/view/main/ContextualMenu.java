@@ -1,17 +1,16 @@
 package wilos.presentation.assistant.view.main;
 
-import java.awt.Event;
-import java.awt.event.KeyEvent;
+import java.util.Observable;
+import java.util.Observer;
 
-import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.KeyStroke;
 
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
+import wilos.presentation.assistant.view.panels.WizardStateMachine;
 
-public class ContextualMenu extends JPopupMenu
+public class ContextualMenu extends JPopupMenu implements Observer
 {
 	
 	public static final int INVISIBLE = 0;
@@ -21,21 +20,37 @@ public class ContextualMenu extends JPopupMenu
 	private JMenuItem jButtonPauseTask;
 	private JMenuItem jButtonFinished;
 	private JMenuItem jButtonPlayTask;
+	private JMenuItem noOptions ;
+	private JMenuItem title;
 
 	public ContextualMenu(){
 		super(Bundle.getText("mainFrame.option"));  
-		jButtonPlayTask = new JMenuItem(ImagesService.getImageIcon("images.iconPlay"));
+		 
+		title = new JMenuItem(Bundle.getText("mainFrame.option"));
+		//title.setFocusable(false);
+		title.setEnabled(false);
+		this.add(title);
+		this.addSeparator();
+		jButtonPlayTask = new JMenuItem(ImagesService.getImageIcon("images.iconPlayS"));
 		jButtonPlayTask.setText(Bundle.getText("action.run"));
 		this.add(jButtonPlayTask);
-		jButtonPauseTask = new JMenuItem(ImagesService.getImageIcon("images.iconPause"));
+		jButtonPauseTask = new JMenuItem(ImagesService.getImageIcon("images.iconPauseS"));
 		jButtonPauseTask.setText(Bundle.getText("action.pause"));
 		this.add(jButtonPauseTask);
-		jButtonFinished = new JMenuItem(ImagesService.getImageIcon("images.iconFinished"));
+		jButtonFinished = new JMenuItem(ImagesService.getImageIcon("images.iconFinishedS"));
 		jButtonFinished.setText(Bundle.getText("action.finish"));
 		this.add(jButtonFinished);
+		
+		noOptions = new JMenuItem(Bundle.getText("context.noOptions"));
+		noOptions.setVisible(false);
+		noOptions.setEnabled(false);
+		this.add(noOptions);
+		this.addSeparator();
+		WizardStateMachine.getInstance().addObserver(this);
 	}
 	
 	public void setButtons(int buttonPlayTaskState, int buttonPauseTaskState, int buttonFinishedState) {
+		noOptions.setVisible(false);
 		switch (buttonPlayTaskState) {
 		case INVISIBLE :
 			jButtonPlayTask.setVisible(false);
@@ -74,5 +89,49 @@ public class ContextualMenu extends JPopupMenu
 			jButtonFinished.setVisible(true);
 			jButtonFinished.setEnabled(false);
 		}
+	}
+	
+	private void showNothing (){
+		noOptions.setVisible(true);
+	}
+
+	public void update(Observable o, Object arg) {
+		switch (WizardStateMachine.getInstance().getCurrentState()){
+		case WizardStateMachine.STATE_PARTICIPANT :
+			setButtons(INVISIBLE,INVISIBLE, INVISIBLE);
+			break;
+		case WizardStateMachine.STATE_NOTHING :
+			setButtons(INVISIBLE, INVISIBLE, INVISIBLE);
+			showNothing();
+			break;
+		case WizardStateMachine.STATE_TASK_CREATED :	
+			setButtons(DISABLED, DISABLED, DISABLED);
+			break;
+		case WizardStateMachine.STATE_TASK_READY :	
+			setButtons(ENABLED, DISABLED, DISABLED);
+			break;
+		case WizardStateMachine.STATE_TASK_STARTED :	
+			setButtons(DISABLED, ENABLED, ENABLED);
+			break;
+		case WizardStateMachine.STATE_TASK_SUSPENDED :	
+			setButtons(ENABLED, DISABLED, DISABLED);		
+			break;
+		case WizardStateMachine.STATE_TASK_FINISHED :	
+			setButtons(DISABLED, DISABLED, DISABLED);
+			break;
+		}
+		
+	}
+
+	public JMenuItem getJButtonFinished() {
+		return jButtonFinished;
+	}
+
+	public JMenuItem getJButtonPauseTask() {
+		return jButtonPauseTask;
+	}
+
+	public JMenuItem getJButtonPlayTask() {
+		return jButtonPlayTask;
 	}
 }

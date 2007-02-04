@@ -58,23 +58,7 @@ public class ActionBar extends JToolBar implements Observer{
 		this.add(getJCheckBoxShowViewer());
 		this.setFloatable(false);
 		//this.setBounds(0, 0, 150, 300);
-		this.jButtonPlayTask.addActionListener(
-			new ActionListener() {
-
-				public void actionPerformed(ActionEvent e) {
-					DefaultMutableTreeNode dmt =  (DefaultMutableTreeNode)WizardControler.getInstance().getTreePanel().getTree().getLastSelectedPathComponent();
-					
-					if(dmt != null) {
-						ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
-						if(selectedTask.getId() != null) {
-							WizardStateMachine.getInstance().changeHTMLViewerBehavior(true);
-							WizardControler.getInstance().startConcreteTaskDescriptor(selectedTask);
-							WizardControler.getInstance().refreshParticipant();
-						}
-					}
-					
-				}
-		});
+		
 		
 		/*runButton.addActionListener(
 				new ActionListener(){
@@ -102,7 +86,7 @@ public class ActionBar extends JToolBar implements Observer{
 		return bt ;
 	}
 	
-	private JButton getJButtonPlayTask() {
+	public JButton getJButtonPlayTask() {
 		if (jButtonPlayTask == null) {
 			jButtonPlayTask = new JButton();
 			jButtonPlayTask.setIcon(ImagesService.getImageIcon("images.iconPlay"));
@@ -118,7 +102,7 @@ public class ActionBar extends JToolBar implements Observer{
 			jCheckBoxShowViewer.addActionListener(new ActionListener() {
 
 				public void actionPerformed(ActionEvent e) {
-					WizardStateMachine.getInstance().changeHTMLViewerBehavior(jCheckBoxShowViewer.isSelected());
+					WizardControler.getInstance().changeHTMLViewerBehavior(jCheckBoxShowViewer.isSelected());
 				}
 		});
 		}
@@ -130,7 +114,7 @@ public class ActionBar extends JToolBar implements Observer{
 	 * 	
 	 * @return javax.swing.JButton	
 	 */
-	private JButton getJButtonPauseTask() {
+	public JButton getJButtonPauseTask() {
 		if (jButtonPauseTask == null) {
 			jButtonPauseTask = new JButton();
 			jButtonPauseTask.setIcon(ImagesService.getImageIcon("images.iconPause"));
@@ -156,7 +140,7 @@ public class ActionBar extends JToolBar implements Observer{
 	 * 	
 	 * @return javax.swing.JButton	
 	 */
-	private JButton getJButtonFinished() {
+	public JButton getJButtonFinished() {
 		if (jButtonFinished == null) {
 			jButtonFinished = new JButton();
 			jButtonFinished.setIcon(ImagesService.getImageIcon("images.iconFinished"));

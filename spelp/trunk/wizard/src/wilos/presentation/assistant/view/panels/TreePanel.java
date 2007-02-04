@@ -30,6 +30,7 @@ import wilos.model.spem2.element.Element;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDescriptor;
+import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.ImagesService;
 import wilos.utils.Constantes;
 
@@ -72,17 +73,16 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 			}
 
 			public void mouseReleased(MouseEvent arg0) {
-//				if (arg0.getButton() == MouseEvent.BUTTON3){
-//					TreePath path = TreePanel.this.tree.getPathForLocation(arg0.getX(), arg0.getY()); 
-//					if (path != null) { 
-//							if (path.getLastPathComponent() == TreePanel.this.tree.getLastSelectedPathComponent()){
-//								System.out.println(path.getLastPathComponent());
-//								//WizardStateMachine.getInstance().setFocusedObject(path.getLastPathComponent());
-//								WizardStateMachine.getInstance().getMenuContextuel().show(arg0.getComponent(),arg0.getX(),arg0.getY());
-//							}
-//					}
-//					
-//				}
+				if (arg0.getButton() == MouseEvent.BUTTON3){
+					TreePath path = TreePanel.this.tree.getPathForLocation(arg0.getX(), arg0.getY()); 
+					if (path != null) { 
+							if (path.getLastPathComponent() == TreePanel.this.tree.getLastSelectedPathComponent()){
+								//WizardStateMachine.getInstance().setFocusedObject(path.getLastPathComponent());
+								WizardControler.getInstance().getMenuContextuel().show(arg0.getComponent(),arg0.getX(),arg0.getY());
+							}
+					}
+					
+				}
 				
 			}
 			

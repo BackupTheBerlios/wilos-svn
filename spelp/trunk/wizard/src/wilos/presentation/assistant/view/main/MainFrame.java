@@ -38,15 +38,17 @@ public class MainFrame extends JFrame{
 	private void initialize() {
 		this.setSize(350, 300);
                 
-                this.setLocation(300,200);
-                
-                myLoginPanel = new LoginPanel(this);
-                this.setContentPane(myLoginPanel);
-                this.pack();
-                myLoginPanel.setVisible(true);                
-                
-                this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocation(300,200);
+        
+        myLoginPanel = new LoginPanel(this);
+        this.setContentPane(myLoginPanel);
+        this.pack();
+        myLoginPanel.setVisible(true);                
+        
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+   
+        
 		// ajout listener deplacement
 	   	this.addComponentListener(new ComponentListener(){
 	   		public void componentHidden(ComponentEvent e) {
