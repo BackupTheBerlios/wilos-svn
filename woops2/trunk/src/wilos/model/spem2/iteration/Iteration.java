@@ -1,5 +1,6 @@
 package wilos.model.spem2.iteration;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -26,6 +27,7 @@ public class Iteration extends Activity implements Cloneable{
 	 */
 	public Iteration() {
 		super() ;
+		this.concreteIterations = new HashSet<ConcreteIteration>();
 	}
 
 	/*

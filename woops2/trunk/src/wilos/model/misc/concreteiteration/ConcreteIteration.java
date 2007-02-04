@@ -42,6 +42,7 @@ public class ConcreteIteration extends ConcreteActivity implements Cloneable {
 	 */
 	protected void copy(final ConcreteIteration _concreteIteration) {
 		super.copy(_concreteIteration) ;
+		this.setIteration(_concreteIteration.getIteration());
 	}
 
 	/*
