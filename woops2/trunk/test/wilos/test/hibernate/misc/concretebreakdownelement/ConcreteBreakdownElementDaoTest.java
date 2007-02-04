@@ -50,7 +50,7 @@ public class ConcreteBreakdownElementDaoTest extends TestCase {
 	@Override
 	protected void tearDown() throws Exception {
 		super.tearDown();
-
+		
 		this.concreteBreakdownElementDao.deleteConcreteBreakdownElement(this.concreteBreakdownElement);
 	}
 
@@ -152,8 +152,8 @@ public class ConcreteBreakdownElementDaoTest extends TestCase {
 				.getHibernateTemplate().get(ConcreteBreakdownElement.class, id);
 		assertNull(cbdeTmp);
 
-		// Tests the method deleteConcreteBreakdownElement with a ConcreteBreakdownElement
-		// unexisting into the db.
+		// Tests the method deleteConcreteBreakdownElement with a nonexistent
+		// ConcreteBreakdownElement into the db.
 		this.concreteBreakdownElementDao.deleteConcreteBreakdownElement(this.concreteBreakdownElement);
 
 		// Rk: the tearDown method is called here.
