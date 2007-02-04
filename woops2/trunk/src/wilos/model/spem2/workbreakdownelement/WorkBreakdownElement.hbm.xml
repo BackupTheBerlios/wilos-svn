@@ -41,7 +41,7 @@
 			</composite-element>
 		</set>
 		
-		<set name="concreteWorkBreakdownElements" lazy="false">
+		<set name="concreteWorkBreakdownElements" lazy="true">
 			<key column="workbreakdownelement_id" />
 			<one-to-many class="wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement"></one-to-many>
 		</set>

@@ -127,7 +127,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 		this.setIsEvenDriven(_workBreakdownElement.getIsEvenDriven());
 		this.setIsOngoing(_workBreakdownElement.getIsOngoing());
 		this.setIsRepeatable(_workBreakdownElement.getIsRepeatable());
-		this.setConcreteworkbreakdownelements(_workBreakdownElement.getConcreteWorkBreakdownElements());
+		this.setConcreteWorkBreakdownElements(_workBreakdownElement.getConcreteWorkBreakdownElements());
 		//todo
 	}
 
@@ -298,7 +298,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 		return this.concreteWorkBreakdownElements;
 	}
 
-	public void setConcreteworkbreakdownelements(
+	public void setConcreteWorkBreakdownElements(
 			Set<ConcreteWorkBreakdownElement> _concreteWorkBreakdownElements) {
 		this.concreteWorkBreakdownElements = _concreteWorkBreakdownElements;
 	}

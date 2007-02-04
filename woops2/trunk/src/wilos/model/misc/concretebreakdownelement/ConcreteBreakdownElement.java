@@ -40,7 +40,6 @@ public class ConcreteBreakdownElement implements Cloneable {
 	 */
 	protected void copy(final ConcreteBreakdownElement _concreteBreakdownElement) {
 		this.setConcreteName(_concreteBreakdownElement.getConcreteName());
-		this.setId(_concreteBreakdownElement.getId());
 		this.setBreakdownElement(_concreteBreakdownElement.getBreakdownElement());
 		this.setSuperConcreteActivities(_concreteBreakdownElement
 				.getSuperConcreteActivities());
@@ -70,9 +69,7 @@ public class ConcreteBreakdownElement implements Cloneable {
 	 *
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
-				.append(this.concreteName).append(this.id).append(this.breakdownElement)
-				.append(this.superConcreteActivities).toHashCode();
+		return new HashCodeBuilder(17, 37).append(this.concreteName)/*.append(this.id)*/.append(this.breakdownElement).toHashCode();
 	}
 
 	/*
@@ -131,11 +128,12 @@ public class ConcreteBreakdownElement implements Cloneable {
 	}
 
 	public String getId() {
-		return id;
+		return this.id ;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	@ SuppressWarnings ("unused")
+	private void setId(String _id) {
+		this.id = _id;
 	}
 
 	public Set<ConcreteActivity> getSuperConcreteActivities() {

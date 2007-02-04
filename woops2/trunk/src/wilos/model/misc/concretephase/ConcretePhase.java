@@ -13,7 +13,7 @@ import wilos.model.spem2.phase.Phase;
  */
 public class ConcretePhase extends ConcreteActivity implements Cloneable{
 
-	Phase phase;
+	private Phase phase;
 
 	/**
 	 * Default constructor
@@ -43,6 +43,7 @@ public class ConcretePhase extends ConcreteActivity implements Cloneable{
 	 */
 	protected void copy(final ConcretePhase _concretePhase) {
 		super.copy(_concretePhase) ;
+		this.setPhase(_concretePhase.getPhase());
 	}
 
 	/*
@@ -58,7 +59,7 @@ public class ConcretePhase extends ConcreteActivity implements Cloneable{
 			return true ;
 		}
 		ConcretePhase concretePhase = (ConcretePhase) obj ;
-		return new EqualsBuilder().appendSuper(super.equals(concretePhase)).isEquals() ;
+		return new EqualsBuilder().appendSuper(super.equals(concretePhase)).append(this.phase, concretePhase.phase).isEquals() ;
 	}
 
 	/*
@@ -67,33 +68,33 @@ public class ConcretePhase extends ConcreteActivity implements Cloneable{
 	 * @see wilos.model.misc.concretePhase.Concrete#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode() ;
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.phase).toHashCode() ;
 	}
 
 	/**
 	 * add a phase
 	 * @param phase
 	 */
-	public void addToPhase(Phase phase){
-		   this.phase = phase;
-		   phase.getConcretePhases().add(this);
+	public void addToPhase(Phase _phase){
+		   this.phase = _phase;
+		   _phase.getConcretePhases().add(this);
 		}
 
 	/**
 	 * remove a phase
 	 * @param phase
 	 */
-	public void removeFromPhase(Phase phase){
+	public void removeFromPhase(Phase _phase){
 		   this.phase = null;
-		   phase.getConcretePhases().remove(this);
+		   _phase.getConcretePhases().remove(this);
 		}
 
 	public Phase getPhase() {
 		return phase;
 	}
 
-	public void setPhase(Phase phase) {
-		this.phase = phase;
+	public void setPhase(Phase _phase) {
+		this.phase = _phase;
 	}
 
 }

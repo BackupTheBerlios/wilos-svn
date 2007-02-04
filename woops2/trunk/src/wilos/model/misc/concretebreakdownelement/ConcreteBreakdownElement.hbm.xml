@@ -9,7 +9,7 @@
 
 		<id name="id" type="string"
 			column="concretebreakdownelement_id">
-			<!--identifiant auto-incremente -->
+			<!--identifiant auto-incrementé -->
 			<generator class="uuid" />
 		</id>
 

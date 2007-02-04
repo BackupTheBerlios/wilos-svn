@@ -26,7 +26,7 @@
 		<property name="isOptional" type="java.lang.Boolean"
 			column="isOptional" length="1" />
 
-		<set name="concreteBreakdownElements" lazy="false">
+		<set name="concreteBreakdownElements" lazy="true">
 			<key column="breakdownelement_id" />
 			<one-to-many class="wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement"></one-to-many>
 		</set>

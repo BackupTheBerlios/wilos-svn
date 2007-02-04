@@ -13,7 +13,7 @@
 		
 		<set name="concretePhases" lazy="true">
 			<key column="phase_id" />
-			<one-to-many class="wilos.model.misc.concretephase" ></one-to-many>
+			<one-to-many class="wilos.model.misc.concretephase.ConcretePhase" ></one-to-many>
 		</set>
 	</joined-subclass>
 	

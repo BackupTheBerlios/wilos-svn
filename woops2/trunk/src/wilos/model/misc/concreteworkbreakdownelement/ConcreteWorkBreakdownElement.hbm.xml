@@ -10,8 +10,8 @@
 		table="concreteworkbreakdownelement" lazy="true">
 		<key column="concreteworkbreakdownelement_id"></key>
 
-		<many-to-one name="workbreakdownElement"
-			class="wilos.model.misc.workbreakdownelement.WorkBreakdownElement"
+		<many-to-one name="workBreakdownElement"
+			class="wilos.model.spem2.workbreakdownelement.WorkBreakdownElement"
 			column="workbreakdownelement_id">
 		</many-to-one>
 		

@@ -12,7 +12,7 @@
 		<key column="concreteactivity_id"></key>
 		
 		<!-- Associations -->
-		<set name="concretebreakDownElements" table="concretenesting" lazy="true" inverse="true">
+		<set name="concreteBreakdownElements" table="concretenesting" lazy="true" inverse="true">
 			<key column="superconcreteactivity_id"></key>
 			<many-to-many class="wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement"
 				column="concretebreakdownelement_id">

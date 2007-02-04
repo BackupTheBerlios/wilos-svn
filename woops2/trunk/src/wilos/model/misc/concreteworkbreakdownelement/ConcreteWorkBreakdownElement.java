@@ -16,11 +16,10 @@ import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
  */
 public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement implements Cloneable {
 
-	private WorkBreakdownElement workbreakdownelement;
+	private WorkBreakdownElement workBreakdownElement;
 
 	public ConcreteWorkBreakdownElement() {
 		super();
-		this.workbreakdownelement = new WorkBreakdownElement();
 	}
 
 	/*
@@ -38,7 +37,7 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement imple
 		ConcreteWorkBreakdownElement concreteworkBreakdownElement = (ConcreteWorkBreakdownElement) obj;
 		return new EqualsBuilder().appendSuper(
 				super.equals(concreteworkBreakdownElement))
-				.append(this.workbreakdownelement,concreteworkBreakdownElement.workbreakdownelement).isEquals();
+				.append(this.workBreakdownElement,concreteworkBreakdownElement.workBreakdownElement).isEquals();
 	}
 
 	/*
@@ -48,7 +47,7 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement imple
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
-				.append(this.workbreakdownelement).toHashCode();
+				.append(this.workBreakdownElement).toHashCode();
 	}
 
 	/*
@@ -68,7 +67,7 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement imple
 	 */
 	protected void copy(final ConcreteWorkBreakdownElement _concreteWorkBreakdownElement) {
 		super.copy(_concreteWorkBreakdownElement);
-		this.setWorkBreakdownElement(_concreteWorkBreakdownElement.getWorkbreakdownelement());
+		this.setWorkBreakdownElement(_concreteWorkBreakdownElement.getWorkBreakdownElement());
 	}
 
 	/*
@@ -77,20 +76,20 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement imple
 	 */
 
 	public void addWorkBreakdownElement(WorkBreakdownElement _workbreakdownElement) {
-		this.workbreakdownelement = _workbreakdownElement;
+		this.workBreakdownElement = _workbreakdownElement;
 		_workbreakdownElement.getConcreteBreakdownElements().add(this);
 	}
 
 	public void removeWorkBreakdownElement(WorkBreakdownElement _workbreakdownElement) {
 		_workbreakdownElement.getConcreteWorkBreakdownElements().remove(this);
-		this.workbreakdownelement = null;
+		this.workBreakdownElement = null;
 	}
 
-	public WorkBreakdownElement getWorkbreakdownelement() {
-		return workbreakdownelement;
+	public WorkBreakdownElement getWorkBreakdownElement() {
+		return workBreakdownElement;
 	}
 
 	public void setWorkBreakdownElement(WorkBreakdownElement _workbreakdownelement) {
-		this.workbreakdownelement = _workbreakdownelement;
+		this.workBreakdownElement = _workbreakdownelement;
 	}
 }
