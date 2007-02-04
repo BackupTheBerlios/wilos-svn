@@ -16,6 +16,7 @@ public class AllTests {
 		suite.addTest(wilos.test.model.misc.concreteactivity.AllTests.suite()) ;
 		suite.addTest(wilos.test.model.misc.concretebreakdownelement.AllTests.suite()) ;
 		suite.addTest(wilos.test.model.misc.concreteiteration.AllTests.suite()) ;
+		suite.addTest(wilos.test.model.misc.concretephase.AllTests.suite()) ;
 		suite.addTest(wilos.test.model.misc.concretetaskdescriptor.AllTests.suite()) ;
 		suite.addTest(wilos.test.model.misc.concreteroledescriptor.AllTests.suite()) ;
 		suite.addTest(wilos.test.model.misc.concreteworkbreakdownelement.AllTests.suite()) ;
