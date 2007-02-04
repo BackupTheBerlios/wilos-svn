@@ -49,13 +49,13 @@
 		</javac>
 		
 		<!-- Generation des webservices -->
-		<mkdir dir="${ant.dir}/tmp" />
+		<mkdir dir="${build.dir}/tmp" />
 		
 		<apt
 		   debug="${debug}"
 		   verbose="${verbose}"
 		   destdir="${build.dir}/${project.name}/"
-		   sourcedestdir="${ant.dir}/tmp"
+		   sourcedestdir="${build.dir}/tmp"
 		   sourcepath="${src.java.dir}">
 		   <classpath refid="classpath" /> 
 		   <source dir="${src.java.dir}">		  
@@ -63,7 +63,7 @@
 		   </source>			
 		</apt>
 		
-		<delete dir="${ant.dir}/tmp" />	
+		<delete dir="${build.dir}/tmp" />	
 		<!-- Fin Generation des webservices -->
 	
 		<copy todir="${build.dir}/${project.name}/">
