@@ -1,7 +1,10 @@
 /*petit test sur les boutons*/
 .button{
-	background-color:rgb(219,207,239);
-	border: 1px solid black;	
+	background-color:BEB4CC;
+	border: 2px outset  #CAC0D6;
+	/*outline:#8B82A2 solid thin;*/
+	color:#FFFFFF;
+	padding: 0px 5px  0px 5px;
 }
 .boutton:hover{
 	background-color:rgb(231,222,243);
