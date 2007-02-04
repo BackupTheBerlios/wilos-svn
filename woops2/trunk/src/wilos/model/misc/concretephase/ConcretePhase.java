@@ -85,8 +85,9 @@ public class ConcretePhase extends ConcreteActivity implements Cloneable{
 	 * @param phase
 	 */
 	public void removeFromPhase(Phase _phase){
+		  _phase.getConcretePhases().remove(this);
 		   this.phase = null;
-		   _phase.getConcretePhases().remove(this);
+		  
 		}
 
 	public Phase getPhase() {

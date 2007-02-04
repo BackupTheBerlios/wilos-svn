@@ -1,7 +1,12 @@
 package wilos.test.model.spem2.phase;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import junit.framework.TestCase;
+import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.spem2.phase.Phase;
+import wilos.model.spem2.task.TaskDescriptor;
 
 /**
  * 
@@ -14,6 +19,8 @@ public class PhaseTest extends TestCase{
 	public static final String PREFIX = "prefix" ;
 
 	public static final Boolean IS_OPTIONAL = true ;
+	
+	public static final String CONCRETENAME = "ConcreteName" ;
 
 	/*
 	 * (non-Javadoc)
@@ -95,5 +102,66 @@ public class PhaseTest extends TestCase{
 		}
 
 		// Rk: the tearDown method is called here.
+	}
+	
+	public void testAddConcretePhase() {
+		ConcretePhase concretePhase = new ConcretePhase() ;
+		concretePhase.setConcreteName(CONCRETENAME) ;
+
+		this.phase.addConcretePhase(concretePhase) ;
+
+		assertTrue(this.phase.getConcretePhases().size() == 1) ;
+		assertNotNull(concretePhase.getPhase()) ;
+	}
+	
+	public void testAddToAllConcretePhase() {
+		ConcretePhase cp1 = new ConcretePhase() ;
+		cp1.setConcreteName("name1") ;
+
+		ConcretePhase cp2 = new ConcretePhase() ;
+		cp2.setConcreteName("name2")  ;
+
+		Set<ConcretePhase> set = new HashSet<ConcretePhase>() ;
+		set.add(cp1) ;
+		set.add(cp2) ;
+
+		this.phase.addAllConcretePhases(set) ;
+
+		assertFalse(this.phase.getConcretePhases().isEmpty()) ;
+		assertEquals(2, this.phase.getConcretePhases().size()) ;
+		assertNotNull(cp1.getPhase()) ;
+		assertNotNull(cp2.getPhase()) ;
+	}
+	
+	public void testRemoveConcretePhase() {
+		ConcretePhase concretePhase = new ConcretePhase() ;
+		concretePhase.setConcreteName(CONCRETENAME);
+
+		this.phase.removeConcretePhase(concretePhase) ;
+
+		assertTrue(this.phase.getConcretePhases().isEmpty()) ;
+		assertNull(concretePhase.getPhase()) ;
+	}
+	
+	public void testRemoveAllConcretePhases() {
+		ConcretePhase cp1 = new ConcretePhase() ;
+		cp1.setConcreteName("name1") ;
+
+		ConcretePhase cp2 = new ConcretePhase() ;
+		cp2.setConcreteName("name2")  ;
+
+		Set<ConcretePhase> set = new HashSet<ConcretePhase>() ;
+		set.add(cp1) ;
+		set.add(cp2) ;
+
+		this.phase.addAllConcretePhases(set) ;
+		assertTrue(this.phase.getConcretePhases().size() == 2) ;
+		assertNotNull(cp1.getPhase()) ;
+		assertNotNull(cp2.getPhase()) ;
+
+		this.phase.removeAllConcretePhase() ;
+		assertTrue(this.phase.getConcretePhases().isEmpty()) ;
+		assertNull(cp1.getPhase()) ;
+		assertNull(cp2.getPhase()) ;
 	}
 }

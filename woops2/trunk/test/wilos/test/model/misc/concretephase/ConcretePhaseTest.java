@@ -106,6 +106,19 @@ public class ConcretePhaseTest extends TestCase{
 		assertNotNull(this.concretephase.getPhase()) ;
 		assertTrue(phase.getConcretePhases().size() == 1) ;
 	}
+	
+	public void testRemoveFromPhase() {
+		Phase phase = new Phase() ;
+		phase.setName(NAME) ;
+
+		this.concretephase.addToPhase(phase) ;
+		assertNotNull("null", this.concretephase.getPhase()) ;
+		assertTrue("empty", phase.getConcretePhases().size() == 1) ;
+		
+		this.concretephase.removeFromPhase(phase);
+		assertNull("null", this.concretephase.getPhase()) ;
+		assertTrue("empty", phase.getConcretePhases().isEmpty()) ;
+	}
 
 	
 	

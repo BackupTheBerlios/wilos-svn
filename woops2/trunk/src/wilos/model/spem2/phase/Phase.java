@@ -9,6 +9,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.spem2.activity.Activity;
+import wilos.model.spem2.task.TaskDescriptor;
 
 /**
  * 
@@ -108,6 +109,12 @@ public class Phase extends Activity implements Cloneable{
 		   this.concretePhases.clear();
 		} 
 	
+	
+	public void addAllConcretePhases(Set<ConcretePhase> _concretePhase) {
+		for (ConcretePhase td : _concretePhase) {
+			td.addToPhase(this);
+		}
+	}
 	
 	public Set<ConcretePhase> getConcretePhases() {
 		return concretePhases;
