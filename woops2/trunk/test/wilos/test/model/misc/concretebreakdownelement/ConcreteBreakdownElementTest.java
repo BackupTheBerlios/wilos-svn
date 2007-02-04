@@ -9,6 +9,8 @@ import wilos.model.spem2.breakdownelement.BreakdownElement;
 public class ConcreteBreakdownElementTest extends TestCase {
 
 	private ConcreteBreakdownElement concreteBreakdownElement ;
+	
+	private ConcreteActivity concreteActivity ; 
 
 	private static final String ID = "thisId" ;
 
@@ -21,9 +23,12 @@ public class ConcreteBreakdownElementTest extends TestCase {
 	 */
 	protected void setUp() throws Exception {
 		super.setUp() ;
+		this.concreteActivity = new ConcreteActivity() ;
+		
 		this.concreteBreakdownElement = new ConcreteBreakdownElement() ;
 		this.concreteBreakdownElement.setConcreteName(CONCRETE_NAME);
 		this.concreteBreakdownElement.setId(ID);
+		this.concreteBreakdownElement.setBreakdownElement(new BreakdownElement()) ;
 	}
 
 	/*
@@ -36,7 +41,7 @@ public class ConcreteBreakdownElementTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link wilos.model.spem2.activity.Activity#clone()}.
+	 * Test method for {@link wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement#clone()}.
 	 */
 	public void testClone() {
 		try{
@@ -48,14 +53,17 @@ public class ConcreteBreakdownElementTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link wilos.model.spem2.activity.Activity#hashCode()}.
+	 * Test method for {@link wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement#hashCode()}.
 	 */
 	public void testHashCode() {
 
+		this.concreteBreakdownElement.addSuperConcreteActivity(this.concreteActivity) ;
+		
 		ConcreteBreakdownElement cbe = new ConcreteBreakdownElement() ;
 		cbe.setId(ID) ;
 		cbe.setConcreteName(CONCRETE_NAME) ;
 		cbe.setBreakdownElement(new BreakdownElement()) ;
+		cbe.addSuperConcreteActivity(new ConcreteActivity()) ;
 
 		assertNotNull(this.concreteBreakdownElement.hashCode()) ;
 		assertNotNull(cbe.hashCode()) ;
@@ -63,38 +71,47 @@ public class ConcreteBreakdownElementTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link wilos.model.spem2.activity.Activity#equals(java.lang.Object)}.
+	 * Test method for {@link wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement#equals(java.lang.Object)}.
 	 */
 	public void testEqualsObject() {
 
+		this.concreteBreakdownElement.addSuperConcreteActivity(this.concreteActivity) ;
+		
 		ConcreteBreakdownElement cbe = new ConcreteBreakdownElement() ;
 		cbe.setConcreteName(CONCRETE_NAME) ;
 		cbe.setBreakdownElement(new BreakdownElement()) ;
+		cbe.addSuperConcreteActivity(new ConcreteActivity()) ;
 
 		assertTrue(this.concreteBreakdownElement.equals(cbe)) ;
 
 		ConcreteBreakdownElement cbe2 = new ConcreteBreakdownElement() ;
 		cbe.setConcreteName("Another concrete name") ;
 		cbe.setBreakdownElement(new BreakdownElement()) ;
-
+		cbe.addSuperConcreteActivity(new ConcreteActivity()) ;
+			
 		assertFalse(this.concreteBreakdownElement.equals(cbe2)) ;
 	}
 
+	/**
+	 * Test method for {@link wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement#addSuperConcreteActivity(ConcreteActivity)}.
+	 */
 	public void testAddSuperConcreteActivity() {
 		// Rk: the setUp method is called here.
 
-		ConcreteActivity superConcreteActivity = new ConcreteActivity();
-		this.concreteBreakdownElement.addSuperConcreteActivity(superConcreteActivity);
+		this.concreteBreakdownElement.addSuperConcreteActivity(this.concreteActivity) ;
 
 		assertNotNull(this.concreteBreakdownElement.getSuperConcreteActivities());
 		assertTrue(this.concreteBreakdownElement.getSuperConcreteActivities().size() == 1);
-		assertTrue(this.concreteBreakdownElement.getSuperConcreteActivities().contains(superConcreteActivity));
+		assertTrue(this.concreteBreakdownElement.getSuperConcreteActivities().contains(this.concreteActivity));
 
-		assertTrue(superConcreteActivity.getConcreteBreakdownElements().size() >= 1);
+		assertTrue(this.concreteActivity.getConcreteBreakdownElements().size() >= 1);
 
 		// Rk: the tearDown method is called here.
 	}
 
+	/**
+	 * Test method for {@link wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement#removeSuperConcreteActivity()}.
+	 */
 	public void testRemoveSuperConcreteActivity() {
 		// Rk: the setUp method is called here.
 
@@ -107,7 +124,10 @@ public class ConcreteBreakdownElementTest extends TestCase {
 		this.concreteBreakdownElement.removeSuperConcreteActivity(concreteSuperActivity);
 		assertTrue(this.concreteBreakdownElement.getSuperConcreteActivities().size() == 0);
 
-		assertNull(concreteSuperActivity.getConcreteBreakdownElements());
+		assertNotNull(concreteSuperActivity.getConcreteBreakdownElements());
+		
+		this.concreteBreakdownElement.removeSuperConcreteActivity(this.concreteActivity);
+		assertTrue(this.concreteBreakdownElement.getSuperConcreteActivities().size() == 0);
 
 		// Rk: the tearDown method is called here.
 	}
