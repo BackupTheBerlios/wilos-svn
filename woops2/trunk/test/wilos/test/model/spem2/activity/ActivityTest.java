@@ -136,6 +136,8 @@ public class ActivityTest extends TestCase {
 		assertFalse(breakdownElement.getSuperActivities().isEmpty()) ;
 		assertTrue(this.activity.getBreakdownElements().size() == 1) ;
 		assertTrue(breakdownElement.getSuperActivities().size() == 1) ;
+		assertTrue(this.activity.getBreakdownElements().contains(breakdownElement));
+		assertTrue(breakdownElement.getSuperActivities().contains(this.activity));
 	}
 
 	/**

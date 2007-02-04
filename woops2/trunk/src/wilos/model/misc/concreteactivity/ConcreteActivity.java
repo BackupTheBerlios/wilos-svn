@@ -48,7 +48,7 @@ public class ConcreteActivity extends ConcreteWorkBreakdownElement implements
 	}
 
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(this.activity).toHashCode();
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.activity).toHashCode();
 	}
 
 	/*

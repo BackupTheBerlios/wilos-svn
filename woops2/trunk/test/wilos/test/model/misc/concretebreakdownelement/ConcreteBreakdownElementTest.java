@@ -96,13 +96,11 @@ public class ConcreteBreakdownElementTest extends TestCase {
 	public void testAddSuperConcreteActivity() {
 		// Rk: the setUp method is called here.
 
-		this.concreteBreakdownElement.addSuperConcreteActivity(this.concreteActivity) ;
-
 		assertNotNull(this.concreteBreakdownElement.getSuperConcreteActivities());
 		assertTrue(this.concreteBreakdownElement.getSuperConcreteActivities().size() == 1);
 		assertTrue(this.concreteBreakdownElement.getSuperConcreteActivities().contains(this.concreteActivity));
 
-		assertTrue(this.concreteActivity.getConcreteBreakdownElements().size() >= 1);
+		assertTrue(this.concreteActivity.getConcreteBreakdownElements().size() == 1);
 		assertTrue(this.concreteActivity.getConcreteBreakdownElements().contains(this.concreteBreakdownElement));
 
 		// Rk: the tearDown method is called here.
@@ -116,7 +114,6 @@ public class ConcreteBreakdownElementTest extends TestCase {
 
 		ConcreteActivity concreteSuperActivity = new ConcreteActivity();
 
-		this.concreteBreakdownElement.addSuperConcreteActivity(concreteSuperActivity);
 		assertNotNull(this.concreteBreakdownElement.getSuperConcreteActivities());
 		assertNotNull(concreteSuperActivity.getConcreteBreakdownElements());
 
