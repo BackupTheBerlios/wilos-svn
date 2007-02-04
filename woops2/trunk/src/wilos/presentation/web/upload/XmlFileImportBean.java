@@ -7,7 +7,6 @@ import java.util.EventObject;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.faces.model.SelectItem;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,13 +30,13 @@ public class XmlFileImportBean {
 	private ProcessService processService;
 
 	private TreeBean treeBean;
-	
+
 	protected final Log logger = LogFactory.getLog(this.getClass());
-	
+
 	private String fileName = "";
 
 	private String contentType = "";
-	
+
 	private String uploadStatus = "" ;
 
 	public String getUploadStatus() {
@@ -71,11 +70,11 @@ public class XmlFileImportBean {
 	public void uploadFileActionListener(ActionEvent event) {
 		InputFile inputFile = (InputFile) event.getSource();
 		if (inputFile.getStatus() == InputFile.SAVED) {
-			fileName = inputFile.getFileInfo().getFileName();	
+			fileName = inputFile.getFileInfo().getFileName();
 			contentType = inputFile.getFileInfo().getContentType();
 			setFile(inputFile.getFile());
 		}
-		
+
 		if (! contentType.equalsIgnoreCase("application/zip")) {
 			if (! contentType.equalsIgnoreCase("text/xml")) {
 				uploadStatus = "File type error! Expecting XML or ZIP, please select another file." ;
@@ -85,12 +84,12 @@ public class XmlFileImportBean {
 			}
 			else {
 				uploadStatus = "XML file successfully uploaded to server!" ;
-			}	
+			}
 		}
 		else {
 			uploadStatus = "ZIP file successfully uploaded to server!" ;
 		}
-		
+
 		if (inputFile.getStatus() == InputFile.INVALID) {
 			inputFile.getFileInfo().getException().printStackTrace();
 		}
@@ -118,7 +117,7 @@ public class XmlFileImportBean {
 		logger.debug("### getRequestPathInfo = " + extCtx.getRequestPathInfo());
 		extCtx.getResourceAsStream("");
 
-		
+
 		try {
 			Process p = processService.spelpParsingXML(file);
 			// save the process

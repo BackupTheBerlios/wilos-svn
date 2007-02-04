@@ -2,10 +2,8 @@ package wilos.presentation.web.tree;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -26,7 +24,6 @@ import wilos.business.services.wilosuser.ParticipantService;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
-import wilos.model.spem2.role.RoleDescriptor;
 import wilos.presentation.web.template.MenuBean;
 import wilos.presentation.web.viewer.ActivityViewerBean;
 import wilos.presentation.web.viewer.ConcreteTaskViewerBean;
@@ -73,7 +70,7 @@ public class TreeBean {
 	public TreeBean() {
 		this.model = new DefaultTreeModel(this.getDefaultTree());
 	}
-	
+
 	public DefaultMutableTreeNode getDefaultTree(){
 		DefaultMutableTreeNode defaultTree = new DefaultMutableTreeNode();
 		WilosObjectNode iceUserObject = new WilosObjectNode(defaultTree);
@@ -84,7 +81,7 @@ public class TreeBean {
 
 	/**
 	 * Gets the tree's default model.
-	 * 
+	 *
 	 * @return tree model.
 	 */
 	private void buildModel(boolean _mustBuildProject) {
@@ -100,7 +97,7 @@ public class TreeBean {
 				this.project = this.projectService.getProject(this.projectId);
 			}
 			ProjectNode projectNode = null;
-			
+
 			if (this.affectedTaskFilter) {
 				// participant into session
 				HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext
@@ -125,7 +122,7 @@ public class TreeBean {
 		else{
 			//Build the default tree.
 			this.model = new DefaultTreeModel(this.getDefaultTree());
-			
+
 			//hide tree.
 			this.loadTree = true;
 		}
@@ -178,12 +175,12 @@ public class TreeBean {
 		String pageId = (String) map.get("pageId");
 		logger.debug("### TreeBean ### selectNodeActionListener - pageId ="
 				+ pageId);
-		// 
+		//
 		this.selectNodeToShow(nodeId, pageId);
 	}
 
 	/**
-	 * 
+	 *
 	 * @param _objectId
 	 * @param _pageId
 	 *            node selection function
@@ -251,7 +248,7 @@ public class TreeBean {
 
 	/**
 	 * Setter of processId.
-	 * 
+	 *
 	 * @param _processId
 	 *            The processId to set.
 	 */
