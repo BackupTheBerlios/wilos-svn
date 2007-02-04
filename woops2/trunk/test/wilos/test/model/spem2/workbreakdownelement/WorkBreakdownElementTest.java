@@ -115,6 +115,7 @@ public class WorkBreakdownElementTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		ConcreteWorkBreakdownElement tmp = new ConcreteWorkBreakdownElement();
+		tmp.setConcreteName("Concrete Name");
 		this.workBreakdownElement.addConcreteWorkBreakdownElement(tmp);
 
 		assertTrue(this.workBreakdownElement.getConcreteWorkBreakdownElements().contains(tmp));
@@ -131,8 +132,8 @@ public class WorkBreakdownElementTest extends TestCase {
 		this.workBreakdownElement.removeConcreteWorkBreakdownElement(tmp);
 
 		assertFalse(this.workBreakdownElement.getConcreteWorkBreakdownElements().contains(tmp));
-		assertFalse(tmp.getWorkBreakdownElement().equals(this.workBreakdownElement));
-
+		assertFalse(this.workBreakdownElement.equals(tmp.getWorkBreakdownElement()));
+		
 		// Rk: the tearDown method is called here.
 	}
 
