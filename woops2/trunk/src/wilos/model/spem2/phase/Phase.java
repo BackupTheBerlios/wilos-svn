@@ -1,10 +1,12 @@
 package wilos.model.spem2.phase;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
+import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.spem2.activity.Activity;
 
@@ -26,6 +28,7 @@ public class Phase extends Activity implements Cloneable{
 	 */
 	public Phase() {
 		super() ;
+		this.concretePhases = new HashSet<ConcretePhase>();
 	}
 
 	/*

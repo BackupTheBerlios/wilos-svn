@@ -3,6 +3,7 @@ package wilos.test.model.misc.concretephase;
 import junit.framework.TestCase;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.spem2.phase.Phase;
+import wilos.model.spem2.task.TaskDefinition;
 
 /**
  * 
@@ -14,6 +15,7 @@ public class ConcretePhaseTest extends TestCase{
 
 	public static final String CONCRETENAME = "ConcreteName" ;
 
+	public static final String NAME = "Name" ;
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -91,6 +93,20 @@ public class ConcretePhaseTest extends TestCase{
 
 		// Rk: the tearDown method is called here.
 	}
+	
+	/**
+	 * Test method for {@link wilos.model.misc.concretephase.ConcretePhase#testAddToPhase}.
+	 */
+	public void testAddToPhase() {
+		Phase phase = new Phase() ;
+		phase.setName(NAME) ;
+
+		this.concretephase.addToPhase(phase) ;
+
+		assertNotNull(this.concretephase.getPhase()) ;
+		assertTrue(phase.getConcretePhases().size() == 1) ;
+	}
+
 	
 	
 }
