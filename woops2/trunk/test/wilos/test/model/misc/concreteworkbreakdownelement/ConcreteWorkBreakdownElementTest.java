@@ -1,6 +1,7 @@
 package wilos.test.model.misc.concreteworkbreakdownelement;
 
 import junit.framework.TestCase;
+import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 
@@ -21,7 +22,6 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 		super.setUp() ;
 		this.concreteWorkBreakdownElement = new ConcreteWorkBreakdownElement() ;
 		this.concreteWorkBreakdownElement.setConcreteName(CONCRETE_NAME);
-		this.concreteWorkBreakdownElement.setId(ID);
 	}
 
 	/*
@@ -51,9 +51,7 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 	public void testHashCode() {
 
 		ConcreteWorkBreakdownElement cwbe = new ConcreteWorkBreakdownElement() ;
-		cwbe.setId(ID) ;
 		cwbe.setConcreteName(CONCRETE_NAME) ;
-		cwbe.setWorkBreakdownElement(new WorkBreakdownElement()) ;
 
 		assertNotNull(this.concreteWorkBreakdownElement.hashCode()) ;
 		assertNotNull(cwbe.hashCode()) ;
@@ -67,14 +65,12 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 
 		ConcreteWorkBreakdownElement cwbe = new ConcreteWorkBreakdownElement() ;
 		cwbe.setConcreteName(CONCRETE_NAME) ;
-		cwbe.setWorkBreakdownElement(new WorkBreakdownElement()) ;
 
 		assertTrue(this.concreteWorkBreakdownElement.equals(cwbe)) ;
 
 		ConcreteWorkBreakdownElement cwbe2 = new ConcreteWorkBreakdownElement() ;
 		cwbe.setConcreteName("Another concrete name") ;
-		cwbe.setWorkBreakdownElement(new WorkBreakdownElement()) ;
-
+		
 		assertFalse(this.concreteWorkBreakdownElement.equals(cwbe2)) ;
 	}
 
@@ -84,8 +80,8 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 		WorkBreakdownElement workBreakdownElement = new WorkBreakdownElement();
 		this.concreteWorkBreakdownElement.addWorkBreakdownElement(workBreakdownElement);
 
-		assertNotNull(this.concreteWorkBreakdownElement.getWorkbreakdownelement());
-		assertTrue(this.concreteWorkBreakdownElement.getWorkbreakdownelement().equals(workBreakdownElement));
+		assertNotNull(this.concreteWorkBreakdownElement.getWorkBreakdownElement());
+		assertTrue(this.concreteWorkBreakdownElement.getWorkBreakdownElement().equals(workBreakdownElement));
 		
 		// Rk: the tearDown method is called here.
 	}
@@ -95,10 +91,14 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 
 		WorkBreakdownElement workBreakdownElement = new WorkBreakdownElement();
 		this.concreteWorkBreakdownElement.addWorkBreakdownElement(workBreakdownElement);
-		this.concreteWorkBreakdownElement.removeBreakdownElement(workBreakdownElement);
+		
+		assertNotNull(this.concreteWorkBreakdownElement.getWorkBreakdownElement());
+		assertTrue(this.concreteWorkBreakdownElement.getWorkBreakdownElement().equals(workBreakdownElement));
+		
+		this.concreteWorkBreakdownElement.removeWorkBreakdownElement(workBreakdownElement);
 
-		assertFalse(this.concreteWorkBreakdownElement.getBreakdownElement().equals(workBreakdownElement));
-		assertNull(this.concreteWorkBreakdownElement.getBreakdownElement());
+		assertFalse(workBreakdownElement.equals(this.concreteWorkBreakdownElement.getWorkBreakdownElement()));
+		assertNull(this.concreteWorkBreakdownElement.getWorkBreakdownElement());
 		
 		// Rk: the tearDown method is called here.
 	}
