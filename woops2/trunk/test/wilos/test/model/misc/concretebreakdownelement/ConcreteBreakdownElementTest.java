@@ -9,8 +9,10 @@ import wilos.model.spem2.breakdownelement.BreakdownElement;
 public class ConcreteBreakdownElementTest extends TestCase {
 
 	private ConcreteBreakdownElement concreteBreakdownElement ;
-	
-	private ConcreteActivity concreteActivity ; 
+
+	private ConcreteActivity concreteActivity ;
+
+	private BreakdownElement breakdownElement;
 
 	private static final String CONCRETE_NAME = "Concrete name" ;
 
@@ -22,10 +24,14 @@ public class ConcreteBreakdownElementTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp() ;
 		this.concreteActivity = new ConcreteActivity() ;
-		
+		this.concreteActivity.setConcreteName("concreteactivityname");
+		this.breakdownElement = new BreakdownElement();
+		this.breakdownElement.setName("name");
+
 		this.concreteBreakdownElement = new ConcreteBreakdownElement() ;
 		this.concreteBreakdownElement.setConcreteName(CONCRETE_NAME);
-		this.concreteBreakdownElement.setBreakdownElement(new BreakdownElement()) ;
+		this.concreteBreakdownElement.addSuperConcreteActivity(this.concreteActivity) ;
+		this.concreteBreakdownElement.addBreakdownElement(this.breakdownElement);
 	}
 
 	/*
@@ -54,12 +60,10 @@ public class ConcreteBreakdownElementTest extends TestCase {
 	 */
 	public void testHashCode() {
 
-		this.concreteBreakdownElement.addSuperConcreteActivity(this.concreteActivity) ;
-		
 		ConcreteBreakdownElement cbe = new ConcreteBreakdownElement() ;
 		cbe.setConcreteName(CONCRETE_NAME) ;
-		cbe.setBreakdownElement(new BreakdownElement()) ;
-		cbe.addSuperConcreteActivity(new ConcreteActivity()) ;
+		cbe.addBreakdownElement(this.breakdownElement);
+		cbe.addSuperConcreteActivity(this.concreteActivity) ;
 
 		assertNotNull(this.concreteBreakdownElement.hashCode()) ;
 		assertNotNull(cbe.hashCode()) ;
@@ -71,20 +75,18 @@ public class ConcreteBreakdownElementTest extends TestCase {
 	 */
 	public void testEqualsObject() {
 
-		this.concreteBreakdownElement.addSuperConcreteActivity(this.concreteActivity) ;
-		
 		ConcreteBreakdownElement cbe = new ConcreteBreakdownElement() ;
 		cbe.setConcreteName(CONCRETE_NAME) ;
-		cbe.setBreakdownElement(new BreakdownElement()) ;
-		cbe.addSuperConcreteActivity(new ConcreteActivity()) ;
+		cbe.addBreakdownElement(this.breakdownElement);
+		cbe.addSuperConcreteActivity(this.concreteActivity) ;
 
 		assertTrue(this.concreteBreakdownElement.equals(cbe)) ;
 
 		ConcreteBreakdownElement cbe2 = new ConcreteBreakdownElement() ;
 		cbe.setConcreteName("Another concrete name") ;
-		cbe.setBreakdownElement(new BreakdownElement()) ;
+		cbe.addBreakdownElement(new BreakdownElement()) ;
 		cbe.addSuperConcreteActivity(new ConcreteActivity()) ;
-			
+
 		assertFalse(this.concreteBreakdownElement.equals(cbe2)) ;
 	}
 
@@ -101,6 +103,7 @@ public class ConcreteBreakdownElementTest extends TestCase {
 		assertTrue(this.concreteBreakdownElement.getSuperConcreteActivities().contains(this.concreteActivity));
 
 		assertTrue(this.concreteActivity.getConcreteBreakdownElements().size() >= 1);
+		assertTrue(this.concreteActivity.getConcreteBreakdownElements().contains(this.concreteBreakdownElement));
 
 		// Rk: the tearDown method is called here.
 	}
@@ -121,7 +124,7 @@ public class ConcreteBreakdownElementTest extends TestCase {
 		assertTrue(this.concreteBreakdownElement.getSuperConcreteActivities().size() == 0);
 
 		assertNotNull(concreteSuperActivity.getConcreteBreakdownElements());
-		
+
 		this.concreteBreakdownElement.removeSuperConcreteActivity(this.concreteActivity);
 		assertTrue(this.concreteBreakdownElement.getSuperConcreteActivities().size() == 0);
 

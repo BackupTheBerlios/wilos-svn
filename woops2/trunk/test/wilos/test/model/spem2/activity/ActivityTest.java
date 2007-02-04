@@ -10,9 +10,9 @@ import wilos.model.spem2.breakdownelement.BreakdownElement;
 
 /**
  * @author Sebastien
- * 
+ *
  * This class represents the class test of the Activity class.
- * 
+ *
  */
 public class ActivityTest extends TestCase {
 
@@ -20,7 +20,7 @@ public class ActivityTest extends TestCase {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see junit.framework.TestCase#setUp()
 	 */
 	protected void setUp() throws Exception {
@@ -40,7 +40,7 @@ public class ActivityTest extends TestCase {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see junit.framework.TestCase#tearDown()
 	 */
 	protected void tearDown() throws Exception {
@@ -132,9 +132,9 @@ public class ActivityTest extends TestCase {
 
 		this.activity.addBreakdownElement(breakdownElement) ;
 
-		assertFalse(this.activity.getBreakDownElements().isEmpty()) ;
+		assertFalse(this.activity.getBreakdownElements().isEmpty()) ;
 		assertFalse(breakdownElement.getSuperActivities().isEmpty()) ;
-		assertTrue(this.activity.getBreakDownElements().size() == 1) ;
+		assertTrue(this.activity.getBreakdownElements().size() == 1) ;
 		assertTrue(breakdownElement.getSuperActivities().size() == 1) ;
 	}
 
@@ -168,8 +168,8 @@ public class ActivityTest extends TestCase {
 
 		this.activity.addAllBreakdownElements(set) ;
 
-		assertFalse("bdes vides", this.activity.getBreakDownElements().isEmpty()) ;
-		assertTrue("bdes = 2", this.activity.getBreakDownElements().size() == 2) ;
+		assertFalse("bdes vides", this.activity.getBreakdownElements().isEmpty()) ;
+		assertTrue("bdes = 2", this.activity.getBreakdownElements().size() == 2) ;
 		assertFalse("brk acts vide", breakdownElement.getSuperActivities().isEmpty()) ;
 		assertTrue("brk acts = 1", breakdownElement.getSuperActivities().size() == 1) ;
 		assertFalse("tmp acts vide", tmp.getSuperActivities().isEmpty()) ;
@@ -193,7 +193,7 @@ public class ActivityTest extends TestCase {
 		this.activity.addBreakdownElement(breakdownElement) ;
 		this.activity.removeBreakdownElement(breakdownElement) ;
 
-		assertTrue(this.activity.getBreakDownElements().isEmpty()) ;
+		assertTrue(this.activity.getBreakdownElements().isEmpty()) ;
 		assertTrue(breakdownElement.getSuperActivities().isEmpty()) ;
 	}
 
@@ -229,7 +229,7 @@ public class ActivityTest extends TestCase {
 		this.activity.addAllBreakdownElements(set) ;
 		this.activity.removeAllBreakdownElements() ;
 
-		assertTrue("bdes", this.activity.getBreakDownElements().isEmpty()) ;
+		assertTrue("bdes", this.activity.getBreakdownElements().isEmpty()) ;
 		assertTrue("bde.acts", breakdownElement.getSuperActivities().isEmpty()) ;
 		assertTrue("tmp.acts", tmp.getSuperActivities().isEmpty()) ;
 	}

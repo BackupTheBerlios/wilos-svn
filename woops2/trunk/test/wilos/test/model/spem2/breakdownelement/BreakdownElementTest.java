@@ -10,9 +10,9 @@ import wilos.model.spem2.breakdownelement.BreakdownElement;
 
 /**
  * This class represents the class test of the BreakdownElement class.
- * 
+ *
  * @author deder
- * 
+ *
  */
 public class BreakdownElementTest extends TestCase {
 
@@ -20,7 +20,7 @@ public class BreakdownElementTest extends TestCase {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see junit.framework.TestCase#setUp()
 	 */
 	protected void setUp() throws Exception {
@@ -37,7 +37,7 @@ public class BreakdownElementTest extends TestCase {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see junit.framework.TestCase#tearDown()
 	 */
 	protected void tearDown() throws Exception {
@@ -134,7 +134,7 @@ public class BreakdownElementTest extends TestCase {
 		activity1.setIsRepeatable(true) ;
 		this.breakdownElement.addSuperActivity(activity1) ;
 		assertTrue("acts.size == 1", this.breakdownElement.getSuperActivities().size() == 1) ;
-		assertTrue("bdes.size1 == 1", activity1.getBreakDownElements().size() == 1) ;
+		assertTrue("bdes.size1 == 1", activity1.getBreakdownElements().size() == 1) ;
 
 		Activity activity2 = new Activity() ;
 		activity2.setGuid("idEPF") ;
@@ -149,7 +149,7 @@ public class BreakdownElementTest extends TestCase {
 		activity2.setIsRepeatable(true) ;
 		this.breakdownElement.addSuperActivity(activity2) ;
 		assertTrue("acts.size ==  2", this.breakdownElement.getSuperActivities().size() == 2) ;
-		assertTrue("bdes.size2 ==  1", activity2.getBreakDownElements().size() == 1) ;
+		assertTrue("bdes.size2 ==  1", activity2.getBreakdownElements().size() == 1) ;
 
 		// Rk: the tearDown method is called here.
 	}
@@ -192,8 +192,8 @@ public class BreakdownElementTest extends TestCase {
 		this.breakdownElement.addAllSuperActivities(activities) ;
 
 		assertTrue("acts.size ==  2", this.breakdownElement.getSuperActivities().size() == 2) ;
-		assertTrue("bdes1.size == 1", activity1.getBreakDownElements().size() == 1) ;
-		assertTrue("bdes2.size == 1", activity2.getBreakDownElements().size() == 1) ;
+		assertTrue("bdes1.size == 1", activity1.getBreakdownElements().size() == 1) ;
+		assertTrue("bdes2.size == 1", activity2.getBreakdownElements().size() == 1) ;
 
 		// Rk: the tearDown method is called here.
 	}
@@ -220,7 +220,7 @@ public class BreakdownElementTest extends TestCase {
 		this.breakdownElement.removeSuperActivity(activity) ;
 
 		assertTrue(this.breakdownElement.getSuperActivities().isEmpty()) ;
-		assertTrue(activity.getBreakDownElements().isEmpty()) ;
+		assertTrue(activity.getBreakdownElements().isEmpty()) ;
 
 		// Rk: the tearDown method is called here.
 	}
@@ -264,8 +264,8 @@ public class BreakdownElementTest extends TestCase {
 		this.breakdownElement.removeAllSuperActivities() ;
 
 		assertTrue(this.breakdownElement.getSuperActivities().isEmpty()) ;
-		assertTrue(activity.getBreakDownElements().isEmpty()) ;
-		assertTrue(activity2.getBreakDownElements().isEmpty()) ;
+		assertTrue(activity.getBreakdownElements().isEmpty()) ;
+		assertTrue(activity2.getBreakdownElements().isEmpty()) ;
 
 		// Rk: the tearDown method is called here.
 	}

@@ -1,8 +1,10 @@
-
-package wilos.model.misc.concreteactivity ;
+package wilos.model.misc.concreteactivity;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
@@ -15,9 +17,10 @@ import wilos.model.spem2.activity.Activity;
  * @author garwind
  *
  */
-public class ConcreteActivity extends ConcreteWorkBreakdownElement implements Cloneable {
+public class ConcreteActivity extends ConcreteWorkBreakdownElement implements
+		Cloneable {
 
-	private Set<ConcreteBreakdownElement> concreteBreakdownElements ;
+	private Set<ConcreteBreakdownElement> concreteBreakdownElements;
 
 	private Activity activity;
 
@@ -26,26 +29,26 @@ public class ConcreteActivity extends ConcreteWorkBreakdownElement implements Cl
 	 *
 	 */
 	public ConcreteActivity() {
-		super() ;
-		this.concreteBreakdownElements = new HashSet<ConcreteBreakdownElement>() ;
+		super();
+		this.concreteBreakdownElements = new HashSet<ConcreteBreakdownElement>();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see woops2.model.workbreakdownelement.WorkBreakdownElement#equals(java.lang.Object)
-	 */
 	public boolean equals(Object obj) {
-		return super.equals(obj);
+		if (obj instanceof ConcreteActivity == false) {
+			return false;
+		}
+		if (this == obj) {
+			return true;
+		}
+		ConcreteActivity concreteActivity = (ConcreteActivity) obj;
+		return new EqualsBuilder().appendSuper(super.equals(concreteActivity))
+				.append(this.activity, concreteActivity.activity).append(
+						this.concreteBreakdownElements,
+						concreteActivity.concreteBreakdownElements).isEquals();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see woops2.model.workbreakdownelement.WorkBreakdownElement#hashCode()
-	 */
 	public int hashCode() {
-		return super.hashCode() ;
+		return new HashCodeBuilder(17, 37).append(this.activity).toHashCode();
 	}
 
 	/*
@@ -53,11 +56,11 @@ public class ConcreteActivity extends ConcreteWorkBreakdownElement implements Cl
 	 *
 	 * @see java.lang.Object#clone()
 	 */
-	@ Override
+	@Override
 	public ConcreteActivity clone() throws CloneNotSupportedException {
-		ConcreteActivity concreteActivity = new ConcreteActivity() ;
-		concreteActivity.copy(this) ;
-		return concreteActivity ;
+		ConcreteActivity concreteActivity = new ConcreteActivity();
+		concreteActivity.copy(this);
+		return concreteActivity;
 	}
 
 	/**
@@ -67,72 +70,61 @@ public class ConcreteActivity extends ConcreteWorkBreakdownElement implements Cl
 	 *            The Activity to copy.
 	 */
 	protected void copy(final ConcreteActivity _concreteActivity) {
-		super.copy(_concreteActivity) ;
-		this.setConcreteBreakdownElements(_concreteActivity.getConcreteBreakdownElements());
+		super.copy(_concreteActivity);
+		this.setActivity(_concreteActivity.getActivity());
+		this.setConcreteBreakdownElements(_concreteActivity
+				.getConcreteBreakdownElements());
 	}
 
-	/**
-	 * Add a breakdownElement to the breakdownElement collection of an activity
+	/*
+	 * Relation between ConcreteActivity and ConcreteBreakdownElement.
 	 *
-	 * @param _breakdownElement
-	 *            The BreakdownElement to add.
 	 */
-	public void addConcreteBreakdownElement(ConcreteBreakdownElement _concreteBeakdownElement) {
-		//this.getConcreteBreakDownElements().add(_concreteBeakdownElement) ;
+
+	public void addConcreteBreakdownElement(
+			ConcreteBreakdownElement _concreteBeakdownElement) {
 		this.getConcreteBreakdownElements().add(_concreteBeakdownElement);
-		//FIXME superConreteactivities
-		//_concreteBeakdownElement.getSuperActivities().add(this) ;
+		_concreteBeakdownElement.getSuperConcreteActivities().add(this);
 	}
 
-	/**
-	 * Add a breakdownElement collection to the breakdownElement collection of an activity
-	 *
-	 * @param _breakdownElements
-	 *            The set of BreakdownElement to add.
-	 */
-	public void addAllConcreteBreakdownElements(Set<ConcreteBreakdownElement> _concreteBreakdownElements) {
-		for(ConcreteBreakdownElement cbde : _concreteBreakdownElements){
-			cbde.addSuperConcreteActivity(this) ;
-			//FIXME addSuperConcreteActivity for Concretes
+	public void addAllConcreteBreakdownElements(
+			Set<ConcreteBreakdownElement> _concreteBreakdownElements) {
+		for (ConcreteBreakdownElement cbde : _concreteBreakdownElements) {
+			cbde.addSuperConcreteActivity(this);
 		}
 	}
 
-	/**
-	 * Remove from an activity one of these breakdownElements
-	 *
-	 * @param _breakdownElement
-	 *            The BreakdownElement to remove.
-	 */
-	public void removeConcreteBreakdownElement(ConcreteBreakdownElement _concreteBreakdownElement) {
-		//FIXME _concreteBreakdownElement.getSuperConcreteActivities
-		/*
-		_concreteBreakdownElement.getSuperConcreteActivities().remove(this) ;
-		this.getConcreteBreakDownElements().remove(_concreteBreakdownElement) ;
-		*/
+	public void removeConcreteBreakdownElement(
+			ConcreteBreakdownElement _concreteBreakdownElement) {
+		_concreteBreakdownElement.getSuperConcreteActivities().remove(this);
+		this.getConcreteBreakdownElements().remove(_concreteBreakdownElement);
 	}
 
-	/**
-	 * Remove from an activity all its breakdownElements
-	 *
-	 */
 	public void removeAllConcreteBreakdownElements() {
-		/*
-		for(ConcreteBreakdownElement bde : this.getConcreteBreakDownElements())
-			bde.getSuperConcreteActivities().remove(this) ;
-		this.getConcreteBreakDownElements().clear() ;
-		*/
-//		FIXME cbde.getSuperConcreteActivities().remove
+		for (ConcreteBreakdownElement bde : this.getConcreteBreakdownElements())
+			bde.getSuperConcreteActivities().remove(this);
+		this.getConcreteBreakdownElements().clear();
 	}
 
-	public void addActivity(Activity _activity){
+	/*
+	 * Relation between ConcreteActivity and Activity.
+	 *
+	 */
+
+	public void addActivity(Activity _activity) {
 		this.activity = _activity;
 		_activity.addConcreteActivity(this);
 	}
 
-	public void removeActivity(Activity _activity){
+	public void removeActivity(Activity _activity) {
 		this.activity = null;
 		_activity.removeConcreteActivity(this);
 	}
+
+	/*
+	 * Getter & Setter.
+	 *
+	 */
 
 	public Set<ConcreteBreakdownElement> getConcreteBreakdownElements() {
 		return concreteBreakdownElements;
