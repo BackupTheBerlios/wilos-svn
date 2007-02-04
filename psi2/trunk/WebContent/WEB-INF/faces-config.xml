@@ -100,6 +100,28 @@
 			<value>#{ProcessService}</value>
 		</managed-property>
 	</managed-bean>
+	
+	
+	
+	<managed-bean>
+		<managed-bean-name>salesRecordsManager</managed-bean-name>
+		<managed-bean-class>
+			test.TestManager
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>salesRecords</managed-bean-name>
+		<managed-bean-class>
+			test.Test
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	
+	
+	
 
 	<!-- <managed-bean>
 		<managed-bean-name>RoleBean</managed-bean-name>
