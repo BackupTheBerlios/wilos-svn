@@ -72,6 +72,7 @@
 		</copy>
 	</target>
 	
+	<!-- Generate Webservices -->
 	<target name="generate-webservices" description="Compile webservices">
 		<mkdir dir="${build.dir}/Spelp-webservices-server-generated" />
 		<mkdir dir="${build.dir}/Spelp-webservices-server-generated/src" />
