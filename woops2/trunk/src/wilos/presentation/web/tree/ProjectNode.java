@@ -4,14 +4,13 @@ import java.util.Set;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
+import wilos.model.misc.concreteiteration.ConcreteIteration;
+import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
-import wilos.model.spem2.activity.Activity;
-import wilos.model.spem2.breakdownelement.BreakdownElement;
-import wilos.model.spem2.iteration.Iteration;
-import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.role.RoleDescriptor;
-import wilos.model.spem2.task.TaskDescriptor;
 
 public class ProjectNode extends DefaultMutableTreeNode {
 
@@ -41,26 +40,21 @@ public class ProjectNode extends DefaultMutableTreeNode {
 					+ this.project.getProcess().getPresentationName() + ")");
 
 			//Nested nodes.
-			for (BreakdownElement breakdownElement : this.project.getProcess().getBreakdownElements()) {
-				if (breakdownElement instanceof Phase) {
-					this.add(new PhaseNode((Phase) breakdownElement,
+			/*FIXME for (ConcreteBreakdownElement concreteBreakdownElement : this.project.getConcreteBreakdownElements()) {
+				if (concreteBreakdownElement instanceof ConcretePhase) {
+					this.add(new ConcretePhaseNode((ConcretePhase) concreteBreakdownElement,
 							_roleDescriptors));
-				} else if (breakdownElement instanceof Iteration) {
-					this.add(new IterationNode((Iteration) breakdownElement,
+				} else if (concreteBreakdownElement instanceof ConcreteIteration) {
+					this.add(new ConcreteIterationNode((ConcreteIteration) concreteBreakdownElement,
 							_roleDescriptors));
-				} else if (breakdownElement instanceof Activity) {
-					this.add(new ActivityNode((Activity) breakdownElement,
+				} else if (concreteBreakdownElement instanceof ConcreteActivity) {
+					this.add(new ConcreteActivityNode((ConcreteActivity) concreteBreakdownElement,
 							_roleDescriptors));
-				} else if (breakdownElement instanceof TaskDescriptor) {
-					TaskDescriptor td = (TaskDescriptor) breakdownElement;
-					if ((_roleDescriptors == null) || (_roleDescriptors.size() == 0)
-							|| (_roleDescriptors.contains(td.getMainRole())))
-						for (ConcreteTaskDescriptor ctd : td
-								.getConcreteTaskDescriptors())
-							this.add(new ConcreteTaskDescriptorNode(ctd,
+				} else if (concreteBreakdownElement instanceof ConcreteTaskDescriptor) {
+					this.add(new ConcreteTaskDescriptorNode((ConcreteTaskDescriptor) concreteBreakdownElement,
 									_roleDescriptors));
 				}
-			}
+			}*/
 		}
 	}
 }
