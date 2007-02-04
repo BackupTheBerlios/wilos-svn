@@ -207,5 +207,10 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 
 		// Rk: the tearDown method is called here.
 	}
+	
+	public void testgetConcreteTaskDescriptorFromProject(){
+		
+		
+	}
 
 }

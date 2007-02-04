@@ -91,21 +91,21 @@ public class ConcreteIterationDaoTest extends TestCase {
 		//Rk: the setUp method is called here.
 
 		// Add properties to the ConcreteIteration.
-		this.concreteIteration.setName(CONCRETE_NAME) ;
+		this.concreteIteration.setConcreteName(CONCRETE_NAME) ;
 		
 		// Save the ConcreteIteration into the database.
 		this.concreteIterationDao.saveOrUpdateConcreteIteration(this.concreteIteration) ;
 		String id = this.concreteIteration.getId() ;
 
 		// Test the method getConcreteIteration with an existing ConcreteIteration.
-		ConcreteIteration ConcreteIterationTmp = this.concreteIterationDao.getConcreteIteration(id) ;
-		assertNotNull(ConcreteIterationTmp) ;
-		assertEquals("Name", ConcreteIterationTmp.getName(), CONCRETE_NAME) ;
+		ConcreteIteration concreteIterationTmp = this.concreteIterationDao.getConcreteIteration(id) ;
+		assertNotNull(concreteIterationTmp) ;
+		assertEquals("Name", concreteIterationTmp.getConcreteName(), CONCRETE_NAME) ;
 		
 		// Test the method getConcreteIteration with an unexisting ConcreteIteration.
 		this.concreteIterationDao.deleteConcreteIteration(this.concreteIteration) ;
-		ConcreteIterationTmp = this.concreteIterationDao.getConcreteIteration(id) ;
-		assertNull(ConcreteIterationTmp) ;
+		concreteIterationTmp = this.concreteIterationDao.getConcreteIteration(id) ;
+		assertNull(concreteIterationTmp) ;
 
 		// Rk: the tearDown method is called here.
 	}
