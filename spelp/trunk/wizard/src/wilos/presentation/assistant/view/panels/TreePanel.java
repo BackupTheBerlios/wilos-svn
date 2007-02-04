@@ -78,7 +78,9 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 					if (path != null) { 
 							if (path.getLastPathComponent() == TreePanel.this.tree.getLastSelectedPathComponent()){
 								//WizardStateMachine.getInstance().setFocusedObject(path.getLastPathComponent());
-								WizardControler.getInstance().getMenuContextuel().show(arg0.getComponent(),arg0.getX(),arg0.getY());
+								if (WizardStateMachine.getInstance().getCurrentState() != WizardStateMachine.STATE_NOTHING){
+									WizardControler.getInstance().getMenuContextuel().show(arg0.getComponent(),arg0.getX(),arg0.getY());
+								}
 							}
 					}
 					

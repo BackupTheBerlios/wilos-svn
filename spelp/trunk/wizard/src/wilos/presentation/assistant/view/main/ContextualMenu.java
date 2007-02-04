@@ -20,17 +20,10 @@ public class ContextualMenu extends JPopupMenu implements Observer
 	private JMenuItem jButtonPauseTask;
 	private JMenuItem jButtonFinished;
 	private JMenuItem jButtonPlayTask;
-	private JMenuItem noOptions ;
-	private JMenuItem title;
 
 	public ContextualMenu(){
 		super(Bundle.getText("mainFrame.option"));  
 		 
-		title = new JMenuItem(Bundle.getText("mainFrame.option"));
-		//title.setFocusable(false);
-		title.setEnabled(false);
-		this.add(title);
-		this.addSeparator();
 		jButtonPlayTask = new JMenuItem(ImagesService.getImageIcon("images.iconPlayS"));
 		jButtonPlayTask.setText(Bundle.getText("action.run"));
 		this.add(jButtonPlayTask);
@@ -40,17 +33,10 @@ public class ContextualMenu extends JPopupMenu implements Observer
 		jButtonFinished = new JMenuItem(ImagesService.getImageIcon("images.iconFinishedS"));
 		jButtonFinished.setText(Bundle.getText("action.finish"));
 		this.add(jButtonFinished);
-		
-		noOptions = new JMenuItem(Bundle.getText("context.noOptions"));
-		noOptions.setVisible(false);
-		noOptions.setEnabled(false);
-		this.add(noOptions);
-		this.addSeparator();
 		WizardStateMachine.getInstance().addObserver(this);
 	}
 	
 	public void setButtons(int buttonPlayTaskState, int buttonPauseTaskState, int buttonFinishedState) {
-		noOptions.setVisible(false);
 		switch (buttonPlayTaskState) {
 		case INVISIBLE :
 			jButtonPlayTask.setVisible(false);
@@ -91,9 +77,7 @@ public class ContextualMenu extends JPopupMenu implements Observer
 		}
 	}
 	
-	private void showNothing (){
-		noOptions.setVisible(true);
-	}
+	
 
 	public void update(Observable o, Object arg) {
 		switch (WizardStateMachine.getInstance().getCurrentState()){
@@ -102,7 +86,6 @@ public class ContextualMenu extends JPopupMenu implements Observer
 			break;
 		case WizardStateMachine.STATE_NOTHING :
 			setButtons(INVISIBLE, INVISIBLE, INVISIBLE);
-			showNothing();
 			break;
 		case WizardStateMachine.STATE_TASK_CREATED :	
 			setButtons(DISABLED, DISABLED, DISABLED);
@@ -120,7 +103,6 @@ public class ContextualMenu extends JPopupMenu implements Observer
 			setButtons(DISABLED, DISABLED, DISABLED);
 			break;
 		}
-		
 	}
 
 	public JMenuItem getJButtonFinished() {
