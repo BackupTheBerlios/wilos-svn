@@ -6,6 +6,8 @@ import java.util.List;
 
 import junit.framework.TestCase;
 import wilos.hibernate.misc.concreterole.ConcreteRoleDescriptorDao;
+import wilos.hibernate.misc.project.ProjectDao;
+import wilos.hibernate.misc.wilosuser.ParticipantDao;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.project.Project;
@@ -33,12 +35,11 @@ public class ConcreteRoleDescriptorDaoTest extends TestCase {
 	/**
 	 * attributes from Project
 	 */
+	
 	public static final String PROJECT_NAME = "projectname";
 	
-	public static final String PROJECT_DESCRIPTION = "description";
-	
 	public static final Date CREATION_DATE = new Date();
-	
+		
 	public static final Date LAUNCHING_DATE = new Date();
 	
 	public static final boolean IS_FINISHED = false;
@@ -46,15 +47,16 @@ public class ConcreteRoleDescriptorDaoTest extends TestCase {
 	/**
 	 * attributes from Participant
 	 */
-	public static final String PARTICIPANT_NAME = "Participant";
 	
-	public static final String FIRST_NAME = "Participant";
+	public static final String PARTICIPANT_NAME = "participantname";
 	
-	public static final String EMAIL = "Participant@wilos.com";
+	public static final String PARTICIPANT_FIRSTNAME = "participantfirstname";
 	
-	public static final String LOGIN = "Participant";
+	public static final String EMAIL = "email";
 	
-	public static final String PASSWORD = "Participant";
+	public static final String LOGIN = "login";
+	
+	public static final String PASSWORD = "password";
 
 	public ConcreteRoleDescriptorDaoTest(){
 
@@ -156,7 +158,7 @@ public class ConcreteRoleDescriptorDaoTest extends TestCase {
 		ConcreteBreakdownElement cbdeTmp = this.concreteRoleDescriptorDao
 				.getConcreteRoleDescriptor(id);
 		assertNotNull(cbdeTmp);
-		assertEquals("Name", cbdeTmp.getConcreteName(), CONCRETE_NAME);
+		assertEquals("concreteName", cbdeTmp.getConcreteName(), CONCRETE_NAME);
 
 		// Tests the method getConcreteBreakdownElement with an unexisting
 		// concreteBreakdownElement.
@@ -169,6 +171,7 @@ public class ConcreteRoleDescriptorDaoTest extends TestCase {
 	}
 	
 	public void testGetConcreteRoleDescriptorsFromProject() {
+		//TODO
 		/*
 		 //Rk: the setUp method is called here.
 
@@ -181,38 +184,44 @@ public class ConcreteRoleDescriptorDaoTest extends TestCase {
 		String id = this.concreteRoleDescriptor.getId();
 		
 		Project project = new Project();
-		
 		project.setName(PROJECT_NAME);
-		project.setDescription(PROJECT_DESCRIPTION);
 		project.setCreationDate(CREATION_DATE);
 		project.setLaunchingDate(LAUNCHING_DATE);
 		project.setIsFinished(IS_FINISHED);
-			
-		Participant participant = new Participant() ;
+		ProjectDao projectDao = (ProjectDao)TestConfiguration.getInstance().getApplicationContext().getBean("ProjectDao") ;
+		projectDao.saveOrUpdateProject(project);
+		String projectId = project.getProject_id();
 		
+		Participant participant = new Participant();
 		participant.setName(PARTICIPANT_NAME);
-		participant.setFirstname(FIRST_NAME);
+		participant.setFirstname(PARTICIPANT_FIRSTNAME);
 		participant.setEmailAddress(EMAIL);
 		participant.setLogin(LOGIN);
 		participant.setPassword(PASSWORD);
+		ParticipantDao participantDao = (ParticipantDao)TestConfiguration.getInstance().getApplicationContext().getBean("ParticipantDao") ;
+		participantDao.saveOrUpdateParticipant(participant);
+		//String participantId = participant.getWilosuser_id();
+		
 		participant.addConcreteRoleDescriptor(this.concreteRoleDescriptor);
 		participant.addToProject(project);
 		project.addToParticipant(participant);
+		
 		this.concreteRoleDescriptor.addParticipant(participant);
 		
 //		 Tests the method getConcreteRoleDescriptorsFromProject with an existing
 		// concreteRoleDescriptor.
 		List<ConcreteRoleDescriptor> listCRDTmp = this.concreteRoleDescriptorDao
-				.getConcreteRoleDescriptorsFromProject(project.getProject_id());
+				.getConcreteRoleDescriptorsFromProject(projectId);
 		assertNotNull(listCRDTmp);
 		Iterator it =listCRDTmp.iterator();		
-		assertEquals("Name", ((ConcreteRoleDescriptor)it.next()).getConcreteName(), CONCRETE_NAME);
+		assertEquals("concreteName", ((ConcreteRoleDescriptor)it.next()).getConcreteName(), CONCRETE_NAME);
 
 //		 Tests the method getConcreteBreakdownElement with an unexisting
 		// concreteBreakdownElement.
 		this.concreteRoleDescriptorDao.getHibernateTemplate().delete(
 				this.concreteRoleDescriptor);
 		listCRDTmp = this.concreteRoleDescriptorDao.getConcreteRoleDescriptorsFromProject(project.getProject_id());
-		assertNull(listCRDTmp);*/
+		it =listCRDTmp.iterator();	
+		assertNull(it.next());*/
 	}
 }

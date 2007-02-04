@@ -209,8 +209,7 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 	}
 	
 	public void testgetConcreteTaskDescriptorFromProject(){
-		
-		
+		//TODO
 	}
 
 }
