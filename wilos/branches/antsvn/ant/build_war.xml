@@ -60,34 +60,44 @@
 			</fileset>
 		</copy>
 	</target>
-
-	<!-- Build Target -->
-	<target name="build" depends="prepare,copyJars" description="Compile Java files and copy static files.">
-		<!-- web -->
-		<copy todir="${build.dir}/${project.name}">
-			<fileset dir="${web.dir}">
-				<include name="**/*.*" />
-			</fileset>
-		</copy>
-		
-		<!-- Generation des webservices -->
-		<mkdir dir="${ant.dir}/tmp" />
+	
+	<!-- Generate Webservices -->
+	<target name="generate-webservices" description="Compile webservices">
+		<mkdir dir="${build.dir}/Spelp-webservices-server-generated" />
+		<mkdir dir="${build.dir}/Spelp-webservices-server-generated/src" />
 		
 		<apt
 		   debug="${debug}"
 		   verbose="${verbose}"
-		   destdir="${build.dir}/${project.name}/WEB-INF/classes"
-		   sourcedestdir="${ant.dir}/tmp"
+		   destdir="${build.dir}/Spelp-webservices-server-generated"
+		   sourcedestdir="${build.dir}/Spelp-webservices-server-generated/src"
 		   sourcepath="${src.java.dir}">
 		   <classpath refid="classpath" /> 
-		   <option key="r" value="${build.dir}/${project.name}/WEB-INF/"/>
+		   
 		   <source dir="${src.java.dir}">		  
 		      <include name="**/webservices/*.java"/>
 		   </source>			
 		</apt>
 		
-		<delete dir="${ant.dir}/tmp" />	
-		<!-- Fin Generation des webservices -->
+		<delete dir="${build.dir}/Spelp-webservices-server-generated/src" />
+		
+		<jar destfile="${lib.dir}/Spelp-webservices-server-generated.jar">
+			<fileset dir="${build.dir}/Spelp-webservices-server-generated/">
+				<include name="**/*.*" />
+			</fileset>
+		</jar>
+		
+		<delete dir="${build.dir}/Spelp-webservices-server-generated" />	
+	</target>
+
+	<!-- Build Target -->
+	<target name="build" depends="prepare,generate-webservices,copyJars" description="Compile Java files and copy static files.">
+		<!-- web -->
+		<copy todir="${build.dir}/${project.name}">
+			<fileset dir="${web.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>	
 
 		<!-- java sources -->
 		<javac srcdir="${src.java.dir}" destdir="${build.dir}/${project.name}/WEB-INF/classes" source="1.5">
