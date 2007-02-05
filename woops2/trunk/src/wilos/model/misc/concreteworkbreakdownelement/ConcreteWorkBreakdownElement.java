@@ -1,6 +1,7 @@
 package wilos.model.misc.concreteworkbreakdownelement;
 
 import java.util.Date;
+import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -25,6 +26,10 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 	private float plannedTime;
 
 	private WorkBreakdownElement workBreakdownElement;
+
+	private Set<ConcreteWorkBreakdownElement> concretePredecessors;
+
+	private Set<ConcreteWorkBreakdownElement> concreteSuccessors;
 
 	public ConcreteWorkBreakdownElement() {
 		super();
@@ -144,5 +149,23 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 
 	public void setPlannedTime(float plannedTime) {
 		this.plannedTime = plannedTime;
+	}
+
+	public Set<ConcreteWorkBreakdownElement> getConcretePredecessors() {
+		return concretePredecessors;
+	}
+
+	public void setConcretePredecessors(
+			Set<ConcreteWorkBreakdownElement> concretePredecessors) {
+		this.concretePredecessors = concretePredecessors;
+	}
+
+	public Set<ConcreteWorkBreakdownElement> getConcreteSuccessors() {
+		return concreteSuccessors;
+	}
+
+	public void setConcreteSuccessors(
+			Set<ConcreteWorkBreakdownElement> concreteSuccessors) {
+		this.concreteSuccessors = concreteSuccessors;
 	}
 }

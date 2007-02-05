@@ -17,7 +17,7 @@
 			column="plannedfinishingdate" length="256">
 		</property>
 
-		<property name="plannedTime" type="java.lang.float"
+		<property name="plannedTime" type="float"
 			column="plannedtime" />
 
 		<many-to-one name="workBreakdownElement"
@@ -30,7 +30,7 @@
 			<key column="concretepredecessor_id" />
 			<composite-element
 				class="wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkOrder">
-				<many-to-one name="concretesuccessor"
+				<many-to-one name="concreteSuccessor"
 					class="wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement"
 					column="concretesuccessor_id">
 				</many-to-one>
@@ -44,7 +44,7 @@
 				class="wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkOrder">
 				<property name="concreteLinkType"
 					type="java.lang.String" column="concretelinktype" />
-				<many-to-one name="concretepredecessor"
+				<many-to-one name="concretePredecessor"
 					class="wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement"
 					column="concretepredecessor_id">
 				</many-to-one>
