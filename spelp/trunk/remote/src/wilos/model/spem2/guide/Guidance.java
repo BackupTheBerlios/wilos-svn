@@ -18,10 +18,32 @@ public class Guidance extends Element {
 	private RoleDefinition roledefinition;
 	private Activity activity;
 	
+	private String guideType = "";
 	
+	/* Type guide constant */
+	public static final String guideline = "Guideline";
+	public static final String checklist = "Checklist";
+	public static final String concept = "Concept";
+	public static final String estimationConsiderations = "EstimationConsiderations";
+	public static final String example = "Example";
+	public static final String practice = "Practice";
+	public static final String report = "Report";
+	public static final String reusableAsset = "ReusableAsset";
+	public static final String roadMap = "RoadMap";
+	public static final String supportingMaterial = "SupportingMaterial";
+	public static final String template = "Template";
+	public static final String termDefinition = "TermDefinition";
+	public static final String toolMentor = "ToolMentor";
+	public static final String whitepaper = "Whitepaper";
+	
+	
+	/* constructor */
 	public Guidance() {
 		this.taskdefinition = new TaskDefinition();
+		this.roledefinition = new RoleDefinition();
+		this.activity = new Activity();
 	}
+	
 	
 	/**
 	 * @param _taskdefinition
@@ -175,6 +197,22 @@ public class Guidance extends Element {
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.taskdefinition).append(this.roledefinition).append(this.activity).toHashCode();
+	}
+
+	/**
+	 * getGuideType
+	 * @return the String guideType 
+	 */
+	public String getGuideType() {
+		return guideType;
+	}
+
+	/**
+	 * setGuideType
+	 * @param guideType
+	 */
+	public void setGuideType(String guideType) {
+		this.guideType = guideType;
 	}
 	
 }
