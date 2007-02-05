@@ -8,5 +8,9 @@
 		extends="wilos.model.misc.wilosuser.WilosUser" table="processmanager">
 		<key column="processmanager_id"></key>
 
+		<set name="processesManaged" lazy="true">
+			<key column="processmanager_id"></key>
+			<one-to-many class="wilos.model.spem2.process.Process"></one-to-many>
+		</set>
 	</joined-subclass>
 </hibernate-mapping>

@@ -8,6 +8,7 @@ import org.apache.commons.lang.builder.EqualsBuilder ;
 import org.apache.commons.lang.builder.HashCodeBuilder ;
 
 import wilos.model.misc.wilosuser.Participant ;
+import wilos.model.misc.wilosuser.ProjectDirector;
 
 /**
  * This class represents a project.
@@ -33,6 +34,8 @@ public class Project implements Cloneable {
 	private Set<Participant> participants ;
 	
 	private Participant projectManager;
+	
+	private ProjectDirector projectDirector;
 	
 	public Project() {
 		this.creationDate = new Date() ;
@@ -320,5 +323,46 @@ public class Project implements Cloneable {
 		   this.projectManager = null;
 		   projectManager.getManagedProjects().remove(this);
 		}
+
+	/**
+	 * Getter of projectDirector.
+	 *
+	 * @return the projectDirector.
+	 */
+	public ProjectDirector getProjectDirector() {
+		return this.projectDirector ;
+	}
+
+	/**
+	 * Setter of projectDirector.
+	 *
+	 * @param _projectDirector The projectDirector to set.
+	 */
+	public void setProjectDirector(ProjectDirector _projectDirector) {
+		this.projectDirector = _projectDirector ;
+	}
+	
+	/**
+	 * 
+	 * TODO Method description
+	 *
+	 * @param project
+	 */
+	public void addProjectDirector(ProjectDirector _projectDirector) {
+		this.projectDirector = _projectDirector;
+		_projectDirector.getProjectMonitored().add(this) ;
+	}
+
+	/**
+	 * 
+	 * TODO Method description
+	 *
+	 * @param project
+	 */
+	public void removeProjectDirector(ProjectDirector _projectDirector) {
+		_projectDirector.getProjectMonitored().remove(this);
+		this.projectDirector.removeMonitoredProject(this) ;
+		this.projectDirector  = null;
+	}
 
 }

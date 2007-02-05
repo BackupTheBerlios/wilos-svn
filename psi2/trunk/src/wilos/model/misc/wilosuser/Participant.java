@@ -68,8 +68,8 @@ public class Participant extends WilosUser implements Cloneable {
 	 * @param _roleDesc
 	 */
 	public void removeConcreteRoleDescriptor(ConcreteRoleDescriptor _roleDesc) {
-		this.concreteRoleDescriptors.remove(_roleDesc) ;
 		_roleDesc.setParticipant(null) ;
+		this.concreteRoleDescriptors.remove(_roleDesc) ;		
 	}
 
 	/**

@@ -21,13 +21,13 @@ import wilos.test.configuration.TestConfiguration ;
  */
 public class ParticipantServiceTest extends TestCase {
 
-	private ParticipantService ps ;
+	private ParticipantService participantService ;
 
 	private ProjectService projectService ;
 
-	private RoleService rs ;
+	//private RoleService rs ;
 
-	private Participant p ;
+	private Participant participant ;
 
 	private Project p1 ;
 
@@ -54,8 +54,8 @@ public class ParticipantServiceTest extends TestCase {
 	 */
 	protected void setUp() throws Exception {
 		super.setUp() ;
-		this.ps = (ParticipantService) TestConfiguration.getInstance().getApplicationContext().getBean("ParticipantService") ;
-		this.rs = (RoleService) TestConfiguration.getInstance().getApplicationContext().getBean("RoleService") ;
+		this.participantService = (ParticipantService) TestConfiguration.getInstance().getApplicationContext().getBean("ParticipantService") ;
+		//this.rs = (RoleService) TestConfiguration.getInstance().getApplicationContext().getBean("RoleService") ;
 		this.projectService = (ProjectService) TestConfiguration.getInstance().getApplicationContext().getBean("ProjectService") ;
 
 		p1 = new Project() ;
@@ -65,10 +65,11 @@ public class ParticipantServiceTest extends TestCase {
 		p2.setName("projectTestPS2") ;
 		this.projectService.saveProject(p2) ;
 
-		p = new Participant() ;
-		p.setLogin(LOGIN) ;
-		p.setName(NAME) ;
-		p.setPassword(PASS) ;
+		participant = new Participant() ;
+		participant.setLogin(LOGIN) ;
+		participant.setName(NAME) ;
+		participant.setPassword(PASS) ;
+		participantService.saveParticipant(participant);
 	}
 
 	/*
@@ -79,7 +80,7 @@ public class ParticipantServiceTest extends TestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown() ;
 		// Delete the tmp participant from the database.
-		this.ps.getParticipantDao().deleteParticipant(this.p) ;
+		this.participantService.getParticipantDao().deleteParticipant(this.participant) ;
 		this.projectService.getProjectDao().deleteProject(this.p1) ;
 		this.projectService.getProjectDao().deleteProject(this.p2) ;
 
@@ -87,13 +88,14 @@ public class ParticipantServiceTest extends TestCase {
 
 	/**
 	 * Test method for {@link woops2.business.wilosuser.ParticipantService#getRolesList()}.
+	 * TODO methode a refaire apres modele metier
 	 */
 	public void testGetRolesList() {
 		// TODO: finir ce test quand la fonction sera placée dans la bonne classe
-		HashMap<String, Boolean> roles = new HashMap<String, Boolean>() ;
-		roles.put(ROLE1, VROLE1) ;
-		roles.put(ROLE2, VROLE2) ;
-		rs.saveParticipantRoles(roles, LOGIN) ;
+//		HashMap<String, Boolean> roles = new HashMap<String, Boolean>() ;
+//		roles.put(ROLE1, VROLE1) ;
+//		roles.put(ROLE2, VROLE2) ;
+//		rs.saveParticipantRoles(roles, LOGIN) ;
 
 		assertTrue(false) ;
 	}
@@ -103,8 +105,8 @@ public class ParticipantServiceTest extends TestCase {
 	 * {@link woops2.business.wilosuser.ParticipantService#saveParticipant(woops2.model.wilosuser.Participant)}.
 	 */
 	public void testSaveParticipant() {
-		this.ps.saveParticipant(this.p) ;
-		Participant ParticipantTmp = (Participant) this.ps.getParticipantDao().getParticipant(LOGIN) ;
+		this.participantService.saveParticipant(this.participant) ;
+		Participant ParticipantTmp = (Participant) this.participantService.getParticipantDao().getParticipant(LOGIN) ;
 
 		assertNotNull(ParticipantTmp) ;
 		assertEquals(ParticipantTmp.getName(), NAME) ;
@@ -118,22 +120,22 @@ public class ParticipantServiceTest extends TestCase {
 	 * 
 	 */
 	public void testGetProjectsForAParticipant() {
-		/*this.p.addToProject(this.p1) ;
+		/*this.participant.addToProject(this.p1) ;
 		this.ps.saveParticipant(this.p) ;
 
 		Participant ParticipantTmp = (Participant) this.ps.getParticipantDao().getParticipant(LOGIN) ;
 		//HashMap<String, Boolean> premove
 		HashMap<Project, Boolean> plist = this.ps.getProjectsForAParticipant(ParticipantTmp) ;
 		for(Project p : plist.keySet()){
-			if(p.getName().equals(this.p1.getName())){
+			if(participant.getName().equals(this.p1.getName())){
 				assertTrue(plist.get(p) == true) ;
 			}
 			else{
 				assertTrue(plist.get(p) == false) ;
 			}
 		}
-		this.p.removeAllProject();
-		this.p.removeAllManagedProjects();
+		this.participant.removeAllProject();
+		this.participant.removeAllManagedProjects();
 		this.ps.saveParticipant(this.p) ;*/
 	}
 
@@ -153,15 +155,15 @@ public class ParticipantServiceTest extends TestCase {
 		Participant ParticipantTmp = (Participant) this.ps.getParticipantDao().getParticipant(LOGIN) ;
 		HashMap<Project, Boolean> plist = this.ps.getProjectsForAParticipant(ParticipantTmp) ;
 		for(Project p : plist.keySet()){
-			if(p.getName().equals(this.p1.getName())){
+			if(participant.getName().equals(this.p1.getName())){
 				assertTrue(plist.get(p) == true) ;
 			}
 			else{
 				assertTrue(plist.get(p) == false) ;
 			}
 		}
-		this.p.removeAllProject();
-		this.p.removeAllManagedProjects();
+		this.participant.removeAllProject();
+		this.participant.removeAllManagedProjects();
 		this.ps.saveParticipant(this.p) ;*/
 	}
 
@@ -171,22 +173,22 @@ public class ParticipantServiceTest extends TestCase {
 	 *
 	 */
 	public void testGetManageableProjectsForAParticipant() {
-		/*this.p.addToProject(this.p1) ;
+		/*this.participant.addToProject(this.p1) ;
 		this.ps.saveParticipant(this.p) ;
 
 		Participant ParticipantTmp = (Participant) this.ps.getParticipantDao().getParticipant(LOGIN) ;
 
 		HashMap<Project, Participant> plist = this.ps.getManageableProjectsForAParticipant(ParticipantTmp) ;
 		for(Project p : plist.keySet()){
-			if(p.getName().equals(this.p1.getName()) && p.getProjectManager() == null){
+			if(participant.getName().equals(this.p1.getName()) && participant.getProjectManager() == null){
 				assertTrue(plist.get(p) == null) ;
 			}
 			else{
 				assertFalse(plist.get(p).getWilosuser_id() != null) ;
 			}
 		}
-		this.p.removeAllProject();
-		this.p.removeAllManagedProjects();
+		this.participant.removeAllProject();
+		this.participant.removeAllManagedProjects();
 		this.ps.saveParticipant(this.p) ;*/
 	}
 
@@ -206,15 +208,15 @@ public class ParticipantServiceTest extends TestCase {
 		Participant ParticipantTmp = (Participant) this.ps.getParticipantDao().getParticipant(LOGIN) ;
 		HashMap<Project, Participant> plist = this.ps.getManageableProjectsForAParticipant(ParticipantTmp) ;
 		for(Project p : plist.keySet()){
-			if(p.getName().equals(this.p1.getName()) && p.getProjectManager() == null){
+			if(participant.getName().equals(this.p1.getName()) && participant.getProjectManager() == null){
 				assertTrue(plist.get(p) == null) ;
 			}
 			else{
 				assertFalse(plist.get(p).getWilosuser_id() != null) ;
 			}
 		}
-		this.p.removeAllProject();
-		this.p.removeAllManagedProjects();
+		this.participant.removeAllProject();
+		this.participant.removeAllManagedProjects();
 		this.ps.saveParticipant(this.p) ;*/
 	}
 }

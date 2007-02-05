@@ -1,8 +1,14 @@
 
 package wilos.model.misc.wilosuser ;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.apache.commons.lang.builder.EqualsBuilder ;
 import org.apache.commons.lang.builder.HashCodeBuilder ;
+
+import wilos.model.misc.project.Project;
+import wilos.model.spem2.process.Process;
 
 /**
  * This class represents a process manager using Wilos.
@@ -11,11 +17,14 @@ import org.apache.commons.lang.builder.HashCodeBuilder ;
  */
 public class ProcessManager extends WilosUser implements Cloneable {
 
+	private Set<Process> processesManaged;
+	
 	/**
 	 * Default Constructor.
-	 * 
+	 * TODO
 	 */
 	public ProcessManager() {
+		this.processesManaged = new HashSet<Process>();
 	}
 
 	/**
@@ -66,7 +75,7 @@ public class ProcessManager extends WilosUser implements Cloneable {
 			return true ;
 		}
 		ProcessManager processManager = (ProcessManager) _obj ;
-		return new EqualsBuilder().appendSuper(super.equals(processManager)).isEquals() ;
+		return new EqualsBuilder().appendSuper(super.equals(processManager)).append(this.processesManaged,processManager.processesManaged).isEquals() ;
 	}
 
 	/*
@@ -76,5 +85,57 @@ public class ProcessManager extends WilosUser implements Cloneable {
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode() ;
+	}
+
+	/**
+	 * Getter of processManaged.
+	 *TODO
+	 * @return the processManaged.
+	 */
+	public Set<Process> getProcessesManaged() {
+		return this.processesManaged ;
+	}
+
+	/**
+	 * Setter of processManaged.
+	 *TODO
+	 * @param _processManaged The processManaged to set.
+	 */
+	public void setProcessesManaged(Set<Process> _processManaged) {
+		this.processesManaged = _processManaged ;
+	}
+	
+	/**
+	 * 
+	 * TODO Method description
+	 *
+	 * @param project
+	 */
+	public void addManagedProcess(Process _process) {
+		this.processesManaged.add(_process) ;
+		_process.setProcessManager(this) ;
+	}
+
+	/**
+	 * 
+	 * TODO Method description
+	 *
+	 * @param project
+	 */
+	public void removeManagedProject(Process _process) {
+		this.processesManaged.remove(_process) ;
+		_process.setProcessManager(null) ;
+	}
+
+	/**
+	 * 
+	 * TODO Method description
+	 *
+	 */
+	public void removeAllManagedProjects() {
+		for(Process process : this.processesManaged){
+			process.removeFromProcessManager(this) ;
+		}
+		this.processesManaged.clear() ;
 	}
 }

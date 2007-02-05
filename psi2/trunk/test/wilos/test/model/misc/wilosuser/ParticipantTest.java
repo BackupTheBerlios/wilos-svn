@@ -33,69 +33,81 @@ public class ParticipantTest extends TestCase {
 
 	/**
 	 * Test method for {@link woops2.model.wilosuser.Participant#getRolesListForAProject()}.
+	 * TODO methode a refaire apres modele metier
 	 */
 	public void testGetRolesListForAProject() {
-		Set<RoleDescriptor> roles= new HashSet<RoleDescriptor>();
+		/*Set<RoleDescriptor> roles= new HashSet<RoleDescriptor>();
 		roles.add(new RoleDescriptor());
 		p.setRolesListForAProject(roles);
-		assertTrue(p.getRolesListForAProject().equals(roles));
+		assertTrue(p.getRolesListForAProject().equals(roles));*/
+		assertTrue(false);
 
 	}
 
 	/**
 	 * Test method for {@link woops2.model.wilosuser.Participant#setRolesListForAProject(java.util.Set)}.
+	 * TODO methode a refaire apres modele metier
 	 */
 	public void testSetRolesListForAProject() {
-		Set<RoleDescriptor> roles= new HashSet<RoleDescriptor>();
+		/*Set<RoleDescriptor> roles= new HashSet<RoleDescriptor>();
 		roles.add(new RoleDescriptor());
 		p.setRolesListForAProject(roles);
-		assertTrue(p.getRolesListForAProject().equals(roles));
+		assertTrue(p.getRolesListForAProject().equals(roles));*/
+		assertTrue(false);
 
 	}
 
 	/**
 	 * Test method for {@link woops2.model.wilosuser.Participant#addToRoleDescriptor(woops2.model.role.RoleDescriptor)}.
+	 * TODO methode a refaire apres modele metier
 	 */
 	public void testAddToRoleDescriptor() {
-		RoleDescriptor r =new RoleDescriptor();
+		/*RoleDescriptor r =new RoleDescriptor();
 		p.addToRoleDescriptor(r);
-		assertTrue(p.getRolesListForAProject().contains(r));
+		assertTrue(p.getRolesListForAProject().contains(r));*/
+		assertTrue(false);
 	}
 
 	/**
 	 * Test method for {@link woops2.model.wilosuser.Participant#removeFromRoleDescriptor(woops2.model.role.RoleDescriptor)}.
+	 * TODO methode a refaire apres modele metier
 	 */
 	public void testRemoveFromRoleDescriptor() {
-		RoleDescriptor r =new RoleDescriptor();
+		/*RoleDescriptor r =new RoleDescriptor();
 		RoleDescriptor r1 =new RoleDescriptor();
 		p.addToRoleDescriptor(r);
 		p.addToRoleDescriptor(r1);
 		p.removeFromRoleDescriptor(r1);
-		assertFalse(p.getRolesListForAProject().contains(r1));
+		assertFalse(p.getRolesListForAProject().contains(r1));*/
+		assertTrue(false);
 	}
 
 	/**
 	 * Test method for {@link woops2.model.wilosuser.Participant#removeAllRoleDescriptors()}.
+	 * TODO methode a refaire apres modele metier
 	 */
 	public void testRemoveAllRoleDescriptors() {
-		RoleDescriptor r =new RoleDescriptor();
-		RoleDescriptor r1 =new RoleDescriptor();
-		p.addToRoleDescriptor(r);
-		p.addToRoleDescriptor(r1);
-		p.removeAllRoleDescriptors();
-		assertTrue(p.getRolesListForAProject().isEmpty());
+//		RoleDescriptor r =new RoleDescriptor();
+//		RoleDescriptor r1 =new RoleDescriptor();
+//		p.addToRoleDescriptor(r);
+//		p.addToRoleDescriptor(r1);
+//		p.removeAllRoleDescriptors();
+//		assertTrue(p.getRolesListForAProject().isEmpty());
+		assertTrue(false);
 	}
 
 	/**
 	 * Test method for {@link woops2.model.wilosuser.Participant#removeFromAllRoleDescriptor()}.
+	 * TODO methode a refaire apres modele metier
 	 */
 	public void testRemoveFromAllRoleDescriptor() {
-		RoleDescriptor r =new RoleDescriptor();
-		RoleDescriptor r1 =new RoleDescriptor();
-		p.addToRoleDescriptor(r);
-		p.addToRoleDescriptor(r1);
-		p.removeAllRoleDescriptors();
-		assertTrue(p.getRolesListForAProject().isEmpty());
+//		RoleDescriptor r =new RoleDescriptor();
+//		RoleDescriptor r1 =new RoleDescriptor();
+//		p.addToRoleDescriptor(r);
+//		p.addToRoleDescriptor(r1);
+//		p.removeAllRoleDescriptors();
+//		assertTrue(p.getRolesListForAProject().isEmpty());
+		assertTrue(false);
 	}
 
 }
