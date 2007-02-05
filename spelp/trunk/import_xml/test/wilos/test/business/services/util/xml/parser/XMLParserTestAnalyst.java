@@ -40,20 +40,20 @@ public class XMLParserTestAnalyst extends TestCase {
 		System.out.println("==> Procedure de test des task de analyst by SPELP\n");
 		while (itProc.hasNext()) {
 			// Iterator on the set of the four Phases of OpenUP
-			itTopLevelAct = itProc.next().getBreakDownElements().iterator();
+			itTopLevelAct = itProc.next().getBreakdownElements().iterator();
 			
 			// We want the third Phase : Construction Iteration
 			while (itTopLevelAct.hasNext()) {
 				secondLevelActivity = (Activity) itTopLevelAct.next();
 				
 				rentreDansInitiateProject = true;
-				BdeIterator = secondLevelActivity.getBreakDownElements().iterator();
+				BdeIterator = secondLevelActivity.getBreakdownElements().iterator();
 				nbRoleDescriptors = 0;
 				while (BdeIterator.hasNext()) {
 					tmpBde = BdeIterator.next();
 					if (tmpBde instanceof Activity) {
 						Activity a = (Activity)tmpBde ;
-						Iterator<BreakdownElement> Actiterator = a.getBreakDownElements().iterator();
+						Iterator<BreakdownElement> Actiterator = a.getBreakdownElements().iterator();
 						while (Actiterator.hasNext()){
 							BreakdownElement bdee = Actiterator.next();
 							if (bdee instanceof RoleDescriptor && bdee.getPresentationName().equals("Analyst")){
