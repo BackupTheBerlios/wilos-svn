@@ -1,19 +1,23 @@
 package wilos.test.model.spem2.iteration;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import junit.framework.TestCase;
+import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.model.spem2.iteration.Iteration;
 
-/**
- * 
- * @author Soosuske
- *
- */
+
 public class IterationTest extends TestCase{
 	private Iteration iteration ;
 
 	public static final String PREFIX = "prefix" ;
 
 	public static final Boolean IS_OPTIONAL = true ;
+	
+	public static final String CONCRETENAME = "ConcreteName1" ;
+	
+	public static final String CONCRETENAME2 = "ConcreteName2" ;
 
 	/*
 	 * (non-Javadoc)
@@ -95,5 +99,67 @@ public class IterationTest extends TestCase{
 		}
 
 		// Rk: the tearDown method is called here.
+	}
+	
+	public void testAddConcreteIteration() {
+		ConcreteIteration concreteIteration = new ConcreteIteration() ;
+		concreteIteration.setConcreteName(CONCRETENAME) ;
+
+		this.iteration.addConcreteIteration(concreteIteration) ;
+
+		assertTrue(this.iteration.getConcreteIterations().size() == 1) ;
+		assertNotNull(concreteIteration.getIteration()) ;
+	}
+	
+	public void testAddToAllConcreteIteration() {
+		ConcreteIteration concreteIteration1 = new ConcreteIteration() ;
+		concreteIteration1.setConcreteName(CONCRETENAME) ;
+
+		ConcreteIteration concreteIteration2 = new ConcreteIteration() ;
+		concreteIteration2.setConcreteName(CONCRETENAME2) ;
+
+		Set<ConcreteIteration> set = new HashSet<ConcreteIteration>() ;
+		set.add(concreteIteration1) ;
+		set.add(concreteIteration2) ;
+
+		this.iteration.addAllConcreteIterations(set) ;
+
+		assertFalse(this.iteration.getConcreteIterations().isEmpty()) ;
+		assertTrue(this.iteration.getConcreteIterations().size() == 2) ;
+		assertNotNull(concreteIteration1.getIteration()) ;
+		assertNotNull(concreteIteration2.getIteration()) ;
+	}
+	
+	public void testRemoveConcreteIteration() {
+		ConcreteIteration concreteIteration = new ConcreteIteration() ;
+		concreteIteration.setConcreteName(CONCRETENAME) ;
+
+		this.iteration.removeConcreteIteration(concreteIteration) ;
+
+		assertTrue(this.iteration.getConcreteIterations().isEmpty()) ;
+		assertNull(concreteIteration.getIteration()) ;
+	}
+	
+	public void testRemoveAllConcreteIterations() {
+		ConcreteIteration concreteIteration1 = new ConcreteIteration() ;
+		concreteIteration1.setConcreteName(CONCRETENAME) ;
+
+		ConcreteIteration concreteIteration2 = new ConcreteIteration() ;
+		concreteIteration2.setConcreteName(CONCRETENAME2) ;
+
+		Set<ConcreteIteration> set = new HashSet<ConcreteIteration>() ;
+		set.add(concreteIteration1) ;
+		set.add(concreteIteration2) ;
+
+		this.iteration.addAllConcreteIterations(set) ;
+
+		assertTrue(this.iteration.getConcreteIterations().size() == 2) ;
+		assertNotNull(concreteIteration1.getIteration()) ;
+		assertNotNull(concreteIteration2.getIteration()) ;
+
+		this.iteration.removeAllConcreteIterations() ;
+		assertTrue(this.iteration.getConcreteIterations().isEmpty()) ;
+		assertNull(concreteIteration1.getIteration()) ;
+		assertNull(concreteIteration2.getIteration()) ;
 	}
 }
