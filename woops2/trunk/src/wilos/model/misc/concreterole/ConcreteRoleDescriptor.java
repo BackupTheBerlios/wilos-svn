@@ -14,7 +14,7 @@ import wilos.model.spem2.role.RoleDescriptor;
 public class ConcreteRoleDescriptor extends ConcreteBreakdownElement {
 
 	private RoleDescriptor roleDescriptor;
-	
+
 	private Participant participant;
 
 	private Set<ConcreteTaskDescriptor> concreteTaskDescriptors;
@@ -78,7 +78,7 @@ public class ConcreteRoleDescriptor extends ConcreteBreakdownElement {
 	 */
 
 	/**
-	 * 
+	 *
 	 */
 	public void addParticipant(Participant _participant) {
 		this.participant = _participant;
@@ -86,7 +86,7 @@ public class ConcreteRoleDescriptor extends ConcreteBreakdownElement {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param _participant
 	 */
 	public void removeParticipant(Participant _participant) {
@@ -122,8 +122,8 @@ public class ConcreteRoleDescriptor extends ConcreteBreakdownElement {
 
 	public void removeConcreteTaskDescriptor(
 			ConcreteTaskDescriptor _concreteTaskDescriptor) {
-		this.concreteTaskDescriptors.remove(_concreteTaskDescriptor);
 		_concreteTaskDescriptor.setConcreteRoleDescriptor(null);
+		this.concreteTaskDescriptors.remove(_concreteTaskDescriptor);
 	}
 
 	public void addAllConcreteTaskDescriptors(
