@@ -26,6 +26,12 @@ public class ActionBean {
 	
 	private String projectCreate="projectCreate";
 	private String projectList = "projectList";
+	
+	private String adminMain = "admin_main";
+	private String participantMain = "participant_main";
+	private String projectDirectorMain = "project_director_main";
+	private String processManagerMain = "process_manager_main";
+	
 
 	/**
 	 * Getter of importProcessFile.
@@ -65,11 +71,13 @@ public class ActionBean {
 	}
 
 	public void selectNodeActionListener(ActionEvent _evt) {
-		FacesContext context = FacesContext.getCurrentInstance() ;
-		Map map = context.getExternalContext().getRequestParameterMap() ;
-		String pageToShow = (String) map.get("pageToShow") ;
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map map = context.getExternalContext().getRequestParameterMap();
+		String mainPage = (String) map.get("mainPage");
+		String pageToShow = (String) map.get("pageToShow");
 		Map map2 = context.getExternalContext().getApplicationMap();
 		MenuBean menuBean = (MenuBean)context.getExternalContext().getSessionMap().get("menu");
+		menuBean.getSelectedPanel().setTemplateName(mainPage);
 		menuBean.getSelectedPanel().setTemplateNameForARole(pageToShow);
 	}
 
@@ -197,5 +205,77 @@ public class ActionBean {
 	 */
 	public void setProjectList(String _projectList) {
 		this.projectList = _projectList ;
+	}
+
+	/**
+	 * Getter of adminMain.
+	 *
+	 * @return the adminMain.
+	 */
+	public String getAdminMain() {
+		return this.adminMain ;
+	}
+
+	/**
+	 * Setter of adminMain.
+	 *
+	 * @param _adminMain The adminMain to set.
+	 */
+	public void setAdminMain(String _adminMain) {
+		this.adminMain = _adminMain ;
+	}
+
+	/**
+	 * Getter of participantMain.
+	 *
+	 * @return the participantMain.
+	 */
+	public String getParticipantMain() {
+		return this.participantMain ;
+	}
+
+	/**
+	 * Setter of participantMain.
+	 *
+	 * @param _participantMain The participantMain to set.
+	 */
+	public void setParticipantMain(String _participantMain) {
+		this.participantMain = _participantMain ;
+	}
+
+	/**
+	 * Getter of processManagerMain.
+	 *
+	 * @return the processManagerMain.
+	 */
+	public String getProcessManagerMain() {
+		return this.processManagerMain ;
+	}
+
+	/**
+	 * Setter of processManagerMain.
+	 *
+	 * @param _processManagerMain The processManagerMain to set.
+	 */
+	public void setProcessManagerMain(String _processManagerMain) {
+		this.processManagerMain = _processManagerMain ;
+	}
+
+	/**
+	 * Getter of projectDirectorMain.
+	 *
+	 * @return the projectDirectorMain.
+	 */
+	public String getProjectDirectorMain() {
+		return this.projectDirectorMain ;
+	}
+
+	/**
+	 * Setter of projectDirectorMain.
+	 *
+	 * @param _projectDirectorMain The projectDirectorMain to set.
+	 */
+	public void setProjectDirectorMain(String _projectDirectorMain) {
+		this.projectDirectorMain = _projectDirectorMain ;
 	}
 }
