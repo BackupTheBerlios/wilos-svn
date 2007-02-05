@@ -152,7 +152,7 @@ public class WizardControler {
 		actionBar.getJButtonPauseTask().addActionListener(actionPause);
 		menuContextuel.getJButtonPauseTask().addActionListener(actionPause);
 		actionBar.getJButtonFinished().addActionListener(actionFinish);
-		menuContextuel.getJButtonFinished().addActionListener(actionPlay);
+		menuContextuel.getJButtonFinished().addActionListener(actionFinish);
 	}
 
 	public void refreshParticipant() {
