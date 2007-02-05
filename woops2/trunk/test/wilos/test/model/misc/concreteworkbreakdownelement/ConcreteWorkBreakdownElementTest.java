@@ -39,7 +39,6 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 		super.setUp() ;
 		this.concreteWorkBreakdownElement = new ConcreteWorkBreakdownElement() ;
 		this.concreteWorkBreakdownElement.setConcreteName(CONCRETE_NAME);
-		this.concreteWorkBreakdownElement.setAccomplishedTime(ACCOMPLISHED_TIME);
 		this.concreteWorkBreakdownElement.setPlannedTime(PLANNED_TIME);
 		this.concreteWorkBreakdownElement.setPlannedFinishingDate(this.date);
 	}
@@ -72,7 +71,6 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 
 		ConcreteWorkBreakdownElement cwbe = new ConcreteWorkBreakdownElement() ;
 		cwbe.setConcreteName(CONCRETE_NAME) ;
-		cwbe.setAccomplishedTime(ACCOMPLISHED_TIME);
 		cwbe.setPlannedTime(PLANNED_TIME);
 		cwbe.setPlannedFinishingDate(this.date);
 
@@ -88,7 +86,6 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 
 		ConcreteWorkBreakdownElement cwbe = new ConcreteWorkBreakdownElement() ;
 		cwbe.setConcreteName(CONCRETE_NAME) ;
-		cwbe.setAccomplishedTime(ACCOMPLISHED_TIME);
 		cwbe.setPlannedTime(PLANNED_TIME);
 		cwbe.setPlannedFinishingDate(this.date);
 
@@ -96,7 +93,6 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 
 		ConcreteWorkBreakdownElement cwbe2 = new ConcreteWorkBreakdownElement() ;
 		cwbe.setConcreteName("Another concrete name") ;
-		cwbe.setAccomplishedTime(ACCOMPLISHED_TIME);
 		cwbe.setPlannedTime(PLANNED_TIME);
 		cwbe.setPlannedFinishingDate(this.date);
 

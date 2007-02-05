@@ -19,5 +19,20 @@
 			column="concreteroledescriptor_id">
 		</many-to-one>
 
+		<property name="state" type="java.lang.String" column="state"
+			length="256" />
+
+		<property name="realStartingDate" type="java.util.Date"
+			column="realstartingdate" length="256" />
+
+		<property name="realFinishingDate" type="java.util.Date"
+			column="realfinishingdate" length="256" />
+
+		<property name="remainingTime" type="float"
+			column="remainingtime" />
+
+		<property name="accomplishedTime" type="float"
+			column="accomplishedtime" />
+
 	</joined-subclass>
 </hibernate-mapping>

@@ -7,7 +7,6 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
-import wilos.utils.Constantes.State;
 
 /**
  *
@@ -19,27 +18,16 @@ import wilos.utils.Constantes.State;
 public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 		implements Cloneable {
 
-	private String state;
-
 	private Date plannedStartingDate;
 
 	private Date plannedFinishingDate;
 
-	private Date realStartingDate;
-
-	private Date realFinishingDate;
-
 	private float plannedTime;
-
-	private float remainingTime;
-
-	private float accomplishedTime;
 
 	private WorkBreakdownElement workBreakdownElement;
 
 	public ConcreteWorkBreakdownElement() {
 		super();
-		this.state = State.CREATED;
 	}
 
 	/*
@@ -57,21 +45,12 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 		ConcreteWorkBreakdownElement concreteworkBreakdownElement = (ConcreteWorkBreakdownElement) obj;
 		return new EqualsBuilder().appendSuper(
 				super.equals(concreteworkBreakdownElement)).append(
-				this.accomplishedTime,
-				concreteworkBreakdownElement.accomplishedTime).append(
 				this.plannedFinishingDate,
 				concreteworkBreakdownElement.plannedFinishingDate).append(
 				this.plannedStartingDate,
 				concreteworkBreakdownElement.plannedStartingDate).append(
 				this.plannedTime, concreteworkBreakdownElement.plannedTime)
-				.append(this.realFinishingDate,
-						concreteworkBreakdownElement.realFinishingDate).append(
-						this.realStartingDate,
-						concreteworkBreakdownElement.realStartingDate).append(
-						this.remainingTime,
-						concreteworkBreakdownElement.remainingTime).append(
-						this.state, concreteworkBreakdownElement.state).append(
-						this.workBreakdownElement,
+				.append(this.workBreakdownElement,
 						concreteworkBreakdownElement.workBreakdownElement)
 				.isEquals();
 	}
@@ -83,11 +62,9 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
-				.append(this.accomplishedTime)
 				.append(this.plannedFinishingDate).append(
 						this.plannedStartingDate).append(this.plannedTime)
-				.append(this.realFinishingDate).append(this.realStartingDate)
-				.append(this.remainingTime).append(this.workBreakdownElement)
+				.append(this.workBreakdownElement)
 				.toHashCode();
 	}
 
@@ -112,19 +89,11 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 		super.copy(_concreteWorkBreakdownElement);
 		this.setWorkBreakdownElement(_concreteWorkBreakdownElement
 				.getWorkBreakdownElement());
-		this.setAccomplishedTime(_concreteWorkBreakdownElement
-				.getAccomplishedTime());
 		this.setPlannedFinishingDate(_concreteWorkBreakdownElement
 				.getPlannedFinishingDate());
 		this.setPlannedStartingDate(_concreteWorkBreakdownElement
 				.getPlannedStartingDate());
 		this.setPlannedTime(_concreteWorkBreakdownElement.getPlannedTime());
-		this.setRealFinishingDate(_concreteWorkBreakdownElement
-				.getRealFinishingDate());
-		this.setRealStartingDate(_concreteWorkBreakdownElement
-				.getRealStartingDate());
-		this.setRemainingTime(_concreteWorkBreakdownElement.getRemainingTime());
-		this.setState(_concreteWorkBreakdownElement.getState());
 	}
 
 	/*
@@ -153,14 +122,6 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 		this.workBreakdownElement = _workbreakdownelement;
 	}
 
-	public float getAccomplishedTime() {
-		return accomplishedTime;
-	}
-
-	public void setAccomplishedTime(float accomplishedTime) {
-		this.accomplishedTime = accomplishedTime;
-	}
-
 	public Date getPlannedFinishingDate() {
 		return plannedFinishingDate;
 	}
@@ -183,37 +144,5 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 
 	public void setPlannedTime(float plannedTime) {
 		this.plannedTime = plannedTime;
-	}
-
-	public Date getRealFinishingDate() {
-		return realFinishingDate;
-	}
-
-	public void setRealFinishingDate(Date realFinishingDate) {
-		this.realFinishingDate = realFinishingDate;
-	}
-
-	public Date getRealStartingDate() {
-		return realStartingDate;
-	}
-
-	public void setRealStartingDate(Date realStartingDate) {
-		this.realStartingDate = realStartingDate;
-	}
-
-	public float getRemainingTime() {
-		return remainingTime;
-	}
-
-	public void setRemainingTime(float remainingTime) {
-		this.remainingTime = remainingTime;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
 	}
 }
