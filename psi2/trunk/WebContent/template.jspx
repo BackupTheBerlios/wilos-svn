@@ -23,8 +23,7 @@
 
         <f:facet name="north">
             <ice:panelGroup>  
-					<img src="images/logo_wilosold.png"/>						
-            
+					<img src="images/logo_wilos.png"/>
             <div id="roles_actions">
             	<jsp:directive.include file="./pages/template/roles_actions.jspx" />
             </div>
