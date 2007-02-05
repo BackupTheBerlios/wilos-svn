@@ -96,6 +96,7 @@ public class ConcreteTaskDescriptor extends ConcreteWorkBreakdownElement {
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
 				.append(this.accomplishedTime)
+				.append(this.state)
 				.append(this.taskDescriptor)
 				.append(this.concreteRoleDescriptor)
 				.append(this.realFinishingDate).append(this.realStartingDate)
