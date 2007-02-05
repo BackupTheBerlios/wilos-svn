@@ -103,11 +103,11 @@ public class Phase extends Activity implements Cloneable{
 	 *
 	 */
 	public void removeAllConcretePhase() {
-		   for (ConcretePhase concretePhase : this.concretePhases) {
-			   concretePhase.removeFromPhase(this);
-		   }
-		   this.concretePhases.clear();
-		} 
+		for (ConcretePhase tmp : this.concretePhases) {
+			tmp.setPhase(null);
+		}
+		this.concretePhases.clear();
+	}
 	
 	
 	public void addAllConcretePhases(Set<ConcretePhase> _concretePhase) {
