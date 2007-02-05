@@ -7,11 +7,6 @@ import junit.framework.TestCase;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.spem2.phase.Phase;
 
-/**
- * 
- * @author Soosuske
- *
- */
 public class PhaseTest extends TestCase{
 	private Phase phase ;
 
