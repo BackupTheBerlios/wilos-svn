@@ -1,6 +1,5 @@
 package wilos.business.services.guide;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -9,9 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import wilos.hibernate.spem2.guide.GuidanceDao;
-import wilos.hibernate.spem2.task.StepDao;
 import wilos.model.spem2.guide.Guidance;
-import wilos.model.spem2.task.Step;
 
 /**
  * 

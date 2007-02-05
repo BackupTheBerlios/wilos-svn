@@ -3,7 +3,6 @@ package wilos.business.transfertobject;
 import java.io.Serializable;
 
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
-import wilos.model.spem2.guide.Guidance;
 
 public class ConcreteTaskDescriptorTO extends ConcreteTaskDescriptor implements Serializable {
 	/** Creates a new instance of ParticipantTO */

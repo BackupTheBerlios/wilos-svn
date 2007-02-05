@@ -9,9 +9,6 @@
 
 package wilos.business.webservices;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -20,14 +17,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import wilos.business.services.assistant.AssistantService;
-import wilos.business.services.role.RoleService;
 import wilos.business.services.wilosuser.LoginService;
-import wilos.business.services.wilosuser.ParticipantService;
 import wilos.business.transfertobject.ParticipantTO;
-import wilos.hibernate.misc.wilosuser.ParticipantDao;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
-import wilos.model.spem2.process.Process;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;

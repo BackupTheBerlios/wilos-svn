@@ -1,11 +1,7 @@
 package wilos.business.transfertobject;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
-import wilos.model.spem2.role.RoleDescriptor;
 
 public class ConcreteRoleDescriptorTO extends ConcreteRoleDescriptor {
 	
