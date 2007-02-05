@@ -22,7 +22,7 @@ public class GuidanceServiceTest extends TestCase {
 		super.setUp() ;
 
 		// Get the GuidelineService Singleton for managing Guideline data
-		this.guidanceService = (GuidanceService) TestConfiguration.getInstance().getApplicationContext().getBean("GuidelineService") ;
+		this.guidanceService = (GuidanceService) TestConfiguration.getInstance().getApplicationContext().getBean("GuidanceService") ;
 
 		// Create empty Guideline
 		this.guidance = new Guidance() ;
