@@ -18,10 +18,17 @@
 				column="breakdownelement_id">
 			</many-to-many>
 		</set>
+		
 		<!-- ConcreteActivities -->
 		<set name="concreteActivities" lazy="true">
 			<key column="activity_id"></key>
 			<one-to-many class="wilos.model.misc.concreteactivity.ConcreteActivity" />
+		</set>
+		
+		<!-- Guidances -->
+		<set name="guidances" lazy="true">
+			<key column="activity_id" />
+			<one-to-many class="wilos.model.spem2.guide.Guidance" ></one-to-many>
 		</set>
 		
 	</joined-subclass>

@@ -1,14 +1,15 @@
 
 package wilos.model.spem2.activity ;
 
-import java.util.HashSet ;
-import java.util.Set ;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.apache.commons.lang.builder.EqualsBuilder ;
-import org.apache.commons.lang.builder.HashCodeBuilder ;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 
 /**
@@ -20,13 +21,15 @@ import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
  * 
  * @author deder.
  * @author morpheus
- * 
+ * @author garwind 
  */
 public class Activity extends WorkBreakdownElement implements Cloneable {
 
 	private Set<BreakdownElement> breakdownElements ;
 	
 	private Set<ConcreteActivity> concreteActivities;
+	
+	private Set<Guidance> guidances;
 
 	/**
 	 * Constructor.
@@ -160,7 +163,36 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	public Set<BreakdownElement> getBreakdownElements() {
 		return this.breakdownElements ;
 	}
+	
+	
+	/*
+	 * connection to guidances
+	 */
+	public void removeGuidance(Guidance _guidance) {
+		_guidance.setActivity(null);
+		this.guidances.remove(_guidance);
+	}
 
+	
+	public void addGuidance(Guidance _guidance) {
+		this.guidances.add(_guidance);
+		_guidance.setActivity(this);
+	}
+
+	
+	public void removeAllGuidances() {
+		for (Guidance guidance : this.guidances) {
+			guidance.setActivity(null);
+		}
+		this.guidances.clear();
+	}
+	
+	public void addAllGuidances(Set<Guidance> _guidances) {
+		for (Guidance _guid1 : _guidances) {
+			_guid1.addActivity(this);
+		}
+	}
+	
 	/**
 	 * Setter of breakDownElements.
 	 * 
@@ -178,5 +210,13 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 
 	public void setConcreteActivities(Set<ConcreteActivity> concreteActivities) {
 		this.concreteActivities = concreteActivities;
+	}
+
+	public Set<Guidance> getGuidances() {
+		return guidances;
+	}
+
+	public void setGuidances(Set<Guidance> guidances) {
+		this.guidances = guidances;
 	}
 }

@@ -20,7 +20,7 @@
 		 
 		<set name="guidelines" lazy="true">
 			<key column="taskdefinition_id" />
-			<one-to-many class="wilos.model.spem2.guide.Guideline" ></one-to-many>
+			<one-to-many class="wilos.model.spem2.guide.Guidance" ></one-to-many>
 		</set>
 		
 	</joined-subclass>

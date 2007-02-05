@@ -9,7 +9,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import wilos.model.spem2.element.Element;
-import wilos.model.spem2.guide.Guideline;
+import wilos.model.spem2.guide.Guidance;
 
 /**
  * 
@@ -20,6 +20,7 @@ import wilos.model.spem2.guide.Guideline;
  * @author Sebastien BALARD
  * @author eperico
  * @author Soosuske
+ * @author garwind
  * 
  */
 public class TaskDefinition extends Element implements Cloneable {
@@ -35,7 +36,7 @@ public class TaskDefinition extends Element implements Cloneable {
 	private Set<TaskDescriptor> taskDescriptors;
 
 	// The Project of Process
-	private Set<Guideline> guidelines;
+	private Set<Guidance> guidances;
 
 	/**
 	 * Default constructor
@@ -44,7 +45,7 @@ public class TaskDefinition extends Element implements Cloneable {
 		super();
 		this.steps = new TreeSet<Step>();
 		this.taskDescriptors = new HashSet<TaskDescriptor>();
-		this.guidelines = new HashSet<Guideline>();
+		this.guidances = new HashSet<Guidance>();
 	}
 
 	/*
@@ -219,58 +220,41 @@ public class TaskDefinition extends Element implements Cloneable {
 		this.taskDescriptors = _taskDescriptors;
 	}
 
-	/**
-	 * connection to guideline
+	
+	/*
+	 * connection to guidances
 	 */
-	/**
-	 * remove a guideline
-	 * 
-	 * @param _guideline
-	 */
-	public void removeGuideline(Guideline _guideline) {
-		// _guideline.setTaskDefinition(null);
-		this.guidelines.remove(_guideline);
+	public void removeGuidance(Guidance _guidance) {
+		_guidance.setTaskdefinition(null);
+		this.guidances.remove(_guidance);
 	}
 
-	/**
-	 * add a guideline
-	 * 
-	 * @param _guideline
-	 */
-	public void addGuideline(Guideline _guideline) {
-		this.guidelines.add(_guideline);
-		_guideline.setTaskdefinition(this);
+	
+	public void addGuidance(Guidance _guidance) {
+		this.guidances.add(_guidance);
+		_guidance.setTaskdefinition(this);
 	}
 
-	/**
-	 * remove all Guideline
-	 * 
-	 */
-	public void removeAllGuidelines() {
-		for (Guideline guideline : this.guidelines) {
-			guideline.setTaskdefinition(null);
+	
+	public void removeAllGuidances() {
+		for (Guidance guidance : this.guidances) {
+			guidance.setTaskdefinition(null);
 		}
-		this.guidelines.clear();
+		this.guidances.clear();
 	}
-
-	/**
-	 * Add a RoleDescriptor collection to the RoleDescriptor collection of an
-	 * RoleDefinition
-	 * 
-	 * @param _role
-	 */
-	public void addAllGuidelines(Set<Guideline> _guideline) {
-		for (Guideline _guid1 : _guideline) {
+	
+	public void addAllGuidances(Set<Guidance> _guidances) {
+		for (Guidance _guid1 : _guidances) {
 			 _guid1.addTaskDefinition(this);
 		}
 	}
 
-	public Set<Guideline> getGuidelines() {
-		return guidelines;
+	public Set<Guidance> getGuidances() {
+		return this.guidances;
 	}
 
-	public void setGuidelines(Set<Guideline> guidelines) {
-		this.guidelines = guidelines;
+	public void setGuidances(Set<Guidance> _guidances) {
+		this.guidances = _guidances;
 	}
 
 }

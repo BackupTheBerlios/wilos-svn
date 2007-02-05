@@ -1,13 +1,14 @@
 
 package wilos.model.spem2.role ;
 
-import java.util.HashSet ;
-import java.util.Set ;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.apache.commons.lang.builder.EqualsBuilder ;
-import org.apache.commons.lang.builder.HashCodeBuilder ;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import wilos.model.spem2.element.Element;
+import wilos.model.spem2.guide.Guidance;
 
 /**
  * 
@@ -17,6 +18,7 @@ import wilos.model.spem2.element.Element;
  * 
  * @author deder
  * @author soosuske
+ * @author garwind 
  * 
  */
 public class RoleDefinition extends Element implements Cloneable {
@@ -25,6 +27,8 @@ public class RoleDefinition extends Element implements Cloneable {
 	 * Collection of TaskDescriptor
 	 */
 	private Set<RoleDescriptor> roleDescriptors ;
+	
+	private Set<Guidance> guidances;
 
 	/**
 	 * Constructor.
@@ -125,6 +129,34 @@ public class RoleDefinition extends Element implements Cloneable {
 			_role1.addRoleDefinition(this) ;
 		}
 	}
+	
+	/*
+	 * connection to guidances
+	 */
+	public void removeGuidance(Guidance _guidance) {
+		_guidance.setRoleDefinition(null);
+		this.guidances.remove(_guidance);
+	}
+
+	
+	public void addGuidance(Guidance _guidance) {
+		this.guidances.add(_guidance);
+		_guidance.setRoleDefinition(this);
+	}
+
+	
+	public void removeAllGuidances() {
+		for (Guidance guidance : this.guidances) {
+			guidance.setRoleDefinition(null);
+		}
+		this.guidances.clear();
+	}
+	
+	public void addAllGuidances(Set<Guidance> _guidances) {
+		for (Guidance _guid1 : _guidances) {
+			_guid1.addRoleDefinition(this);
+		}
+	}
 
 	/**
 	 * Getter of roleDescriptors.
@@ -144,5 +176,13 @@ public class RoleDefinition extends Element implements Cloneable {
 	@ SuppressWarnings ("unused")
 	private void setRoleDescriptors(Set<RoleDescriptor> _roleDescriptors) {
 		this.roleDescriptors = _roleDescriptors ;
+	}
+
+	public Set<Guidance> getGuidances() {
+		return guidances;
+	}
+
+	public void setGuidances(Set<Guidance> guidances) {
+		this.guidances = guidances;
 	}
 }

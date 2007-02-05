@@ -21,7 +21,6 @@ import wilos.hibernate.misc.project.ProjectDao;
 import wilos.hibernate.spem2.activity.ActivityDao;
 import wilos.hibernate.spem2.breakdownelement.BreakdownElementDao;
 import wilos.hibernate.spem2.element.ElementDao;
-import wilos.hibernate.spem2.guide.GuidelineDao;
 import wilos.hibernate.spem2.iteration.IterationDao;
 import wilos.hibernate.spem2.phase.PhaseDao;
 import wilos.hibernate.spem2.process.ProcessDao;
@@ -34,7 +33,6 @@ import wilos.hibernate.spem2.workbreakdownelement.WorkBreakdownElementDao;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
-import wilos.model.spem2.guide.Guideline;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.process.Process;
@@ -94,7 +92,7 @@ public class ProcessService {
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
-	private GuidelineDao guidelineDao;
+	//private GuidelineDao guidelineDao;
 
 	public Process spelpParsingXML(File _file) {
 		Process spelpProcess = null;
@@ -470,7 +468,7 @@ public class ProcessService {
 	private void parseTaskDefinition(TaskDefinition _tdef) {
 
 		TaskDefinition clone = null;
-		Set<Guideline> guidelines = new HashSet<Guideline>();
+		//Set<Guideline> guidelines = new HashSet<Guideline>();
 		
 		try {
 			clone = _tdef.clone();
@@ -499,20 +497,22 @@ public class ProcessService {
 		this.taskDefinitionDao.saveOrUpdateTaskDefinition(_tdef);
 		
 		// Delegating parsing for guidelines
-		guidelines.addAll(_tdef.getGuidelines());
-		
-		this.parseGuidelines(guidelines);
+		// FIXME Mettre à jours le parseur depuis maj du model (Guidance)
+		//guidelines.addAll(_tdef.getGuidelines());
+		//
+		//this.parseGuidelines(guidelines);
 	}
 	
 	/**
 	 * Method for saving guidelines 
 	 * @param guidelines
 	 */
+	/*
 	private void parseGuidelines(Set<Guideline> _guidelines) {
 		for (Guideline g : _guidelines){
 			this.guidelineDao.saveOrUpdateGuideline(g);
 		}
-	}
+	}*/
 
 	/**
 	 *
@@ -872,13 +872,5 @@ public class ProcessService {
 
 	public void setProjectDao(ProjectDao projectDao) {
 		this.projectDao = projectDao;
-	}
-
-	public GuidelineDao getGuidelineDao() {
-		return guidelineDao;
-	}
-
-	public void setGuidelineDao(GuidelineDao guidelineDao) {
-		this.guidelineDao = guidelineDao;
 	}
 }

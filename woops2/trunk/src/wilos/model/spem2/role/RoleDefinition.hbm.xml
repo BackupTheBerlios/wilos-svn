@@ -7,9 +7,15 @@
 	<joined-subclass name="wilos.model.spem2.role.RoleDefinition"
 		extends="wilos.model.spem2.element.Element" table="roledefinition" lazy="false">
 		<key column="roledefinition_id"></key>
+		
 		<set name="roleDescriptors" lazy="true">
 			<key column="roledefinition_id" />
 			<one-to-many class="wilos.model.spem2.role.RoleDescriptor" ></one-to-many>
+		</set>
+		
+		<set name="guidances" lazy="true">
+			<key column="roledefinition_id" />
+			<one-to-many class="wilos.model.spem2.guide.Guidance" ></one-to-many>
 		</set>
 	</joined-subclass>
 </hibernate-mapping>
