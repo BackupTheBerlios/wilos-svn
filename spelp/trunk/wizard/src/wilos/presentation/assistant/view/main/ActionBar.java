@@ -23,8 +23,6 @@ public class ActionBar extends JToolBar implements Observer{
 	public final int ENABLED = 2;
 	public final int DISABLED = 3;
 	
-	private JButton runButton ;
-	
 	private JButton jButtonPauseTask = null;
 	private JButton jButtonFinished = null;
 	private JButton jButtonPlayTask = null;
@@ -43,9 +41,6 @@ public class ActionBar extends JToolBar implements Observer{
 	public ActionBar(){
 		super ();
 		this.setLayout(new FlowLayout());
-		runButton = createButton(null,
-				Bundle.getText("ActionBar.tooltip.run"), 
-				ImagesService.getImageIcon("images.run"));
 		//this.add(runButton);
 		this.add(getJButtonPlayTask());
 		this.add(getJButtonPauseTask());

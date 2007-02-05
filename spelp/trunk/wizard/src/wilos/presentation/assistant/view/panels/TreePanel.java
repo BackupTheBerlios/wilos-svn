@@ -2,18 +2,13 @@ package wilos.presentation.assistant.view.panels;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Event;
-import java.awt.event.KeyEvent;
+import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Set;
 
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
-import javax.swing.KeyStroke;
-import javax.swing.LookAndFeel;
 import javax.swing.ScrollPaneLayout;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -77,10 +72,7 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 					TreePath path = TreePanel.this.tree.getPathForLocation(arg0.getX(), arg0.getY()); 
 					if (path != null) { 
 							if (path.getLastPathComponent() == TreePanel.this.tree.getLastSelectedPathComponent()){
-								//WizardStateMachine.getInstance().setFocusedObject(path.getLastPathComponent());
-								if (WizardStateMachine.getInstance().getCurrentState() != WizardStateMachine.STATE_NOTHING){
-									WizardControler.getInstance().getMenuContextuel().show(arg0.getComponent(),arg0.getX(),arg0.getY());
-								}
+								WizardControler.getInstance().showContextualMenu(arg0);								
 							}
 					}
 					
@@ -226,6 +218,8 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 					}
 					else if (ctd.getState() == Constantes.State.FINISHED) {
 						this.setForeground(Color.cyan);
+						
+						
 					}
 					else if (ctd.getState() == Constantes.State.CREATED) {
 						this.setForeground(Color.black);

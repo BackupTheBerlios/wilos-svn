@@ -2,14 +2,9 @@ package wilos.presentation.assistant.view.panels;
 
 import java.util.Observable;
 
-import javax.swing.JPopupMenu;
-
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
-import wilos.presentation.assistant.view.main.ActionBar;
-import wilos.presentation.assistant.view.main.ContextualMenu;
-import wilos.presentation.assistant.webservices.WizardServicesProxy;
 import wilos.utils.Constantes;
 
 public class WizardStateMachine extends Observable{

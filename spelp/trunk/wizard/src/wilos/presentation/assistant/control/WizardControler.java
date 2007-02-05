@@ -2,6 +2,7 @@ package wilos.presentation.assistant.control;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -10,6 +11,7 @@ import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 import wilos.presentation.assistant.view.main.ActionBar;
 import wilos.presentation.assistant.view.main.ContextualMenu;
 import wilos.presentation.assistant.view.panels.TreePanel;
+import wilos.presentation.assistant.view.panels.WizardStateMachine;
 import wilos.presentation.assistant.webservices.WizardServicesProxy;
 import wilos.utils.Constantes;
 
@@ -24,6 +26,12 @@ public class WizardControler {
 	
 	private WizardControler() {
 		
+	}
+	
+	public void showContextualMenu (MouseEvent arg0){
+		if (WizardStateMachine.getInstance().getCurrentState() != WizardStateMachine.STATE_NOTHING){
+			menuContextuel.show(arg0.getComponent(),arg0.getX(),arg0.getY());
+		}
 	}
 	
 	public void changeHTMLViewerBehavior(boolean newBehavior) {
