@@ -15,7 +15,7 @@ import org.w3c.dom.NodeList;
 
 import wilos.business.services.util.xml.fillers.FillerActivity;
 import wilos.business.services.util.xml.fillers.FillerElement;
-import wilos.business.services.util.xml.fillers.FillerGuideline;
+import wilos.business.services.util.xml.fillers.FillerGuidance;
 import wilos.business.services.util.xml.fillers.FillerIteration;
 import wilos.business.services.util.xml.fillers.FillerPhase;
 import wilos.business.services.util.xml.fillers.FillerProcess;
@@ -26,7 +26,7 @@ import wilos.business.services.util.xml.fillers.FillerTask;
 import wilos.business.services.util.xml.fillers.FillerTaskDescriptor;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
-import wilos.model.spem2.guide.Guideline;
+import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.process.Process;
@@ -83,7 +83,7 @@ public class XMLParser {
 	// Filled by fillTaskDefinitionsList and fillRoleDefinitionsList
 	protected static Vector<TaskDefinition> TaskDefinitionsList = new Vector<TaskDefinition> ();
 	protected static Vector<RoleDefinition> RoleDefinitionsList = new Vector<RoleDefinition>() ;
-	protected static Vector<Guideline> GuidesList = new Vector<Guideline>() ;
+	protected static Vector<Guidance> GuidesList = new Vector<Guidance>() ;
 	
 	
 	// this variables contain all the Elements that concern them
@@ -122,14 +122,14 @@ public class XMLParser {
 
 	/**
 	 * fillGuidesList
-	 * @return a Guideline vector 
+	 * @return a Guidance vector 
 	 */
-	private static Vector<Guideline> fillGuidesList() {
-		Vector<Guideline> theGuidelineList; // the return of the function
+	private static Vector<Guidance> fillGuidesList() {
+		Vector<Guidance> theGuidanceList; // the return of the function
 		
 		// initializes the List
-		theGuidelineList = new Vector<Guideline>();
-		theGuidelineList.clear();
+		theGuidanceList = new Vector<Guidance>();
+		theGuidanceList.clear();
 		
 		// gets all the nodes containing guideline
 		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_guideline,XPathConstants.NODESET);
@@ -140,14 +140,14 @@ public class XMLParser {
 				aNode = nodeReturned.item(i);
 				
 				// Fills the RoleDefinition from the node
-				Guideline  aGuideline = new Guideline();
-				FillerGuideline aFiller = new FillerGuideline(aGuideline,aNode);	
-				aGuideline = (Guideline)aFiller.getFilledElement();
+				Guidance  aGuidance = new Guidance();
+				FillerGuidance aFiller = new FillerGuidance(aGuidance,aNode);	
+				aGuidance = (Guidance)aFiller.getFilledElement();
 				// add the guideline in the list
-				theGuidelineList.add(aGuideline);
+				theGuidanceList.add(aGuidance);
 			}			
 		}
-		return theGuidelineList;
+		return theGuidanceList;
 	}
 
 	/**
@@ -511,7 +511,7 @@ public class XMLParser {
 	 */
 	private static void setGuideByTaskDefinition(TaskDefinition _taskDefinition, Node _node) {
 		NodeList listOfTdNodes = _node.getChildNodes() ;
-		Guideline GuideTobereturn = null;
+		Guidance GuideTobereturn = null;
 
 		String idGuide = "";
 		
@@ -521,11 +521,11 @@ public class XMLParser {
 				// recuperation des differents id des guidelines
 				idGuide = listOfTdNodes.item(i).getTextContent();				
 				
-				GuideTobereturn = getGuidelineById(idGuide);
+				GuideTobereturn = getGuidanceById(idGuide);
 				// if the guideline doesn't exist
 				if (GuideTobereturn != null){
 					 //set the guideline in the taskDefinition
-					_taskDefinition.addGuideline(GuideTobereturn);
+					// TODO:_taskDefinition.addGuidance(GuideTobereturn);
 				}
 				
 			}
@@ -895,13 +895,13 @@ public class XMLParser {
 	
 	
 	/**
-	 * getGuidelineById
+	 * getGuidanceById
 	 * @param bdeId
-	 * @return a Guideline
+	 * @return a Guidance
 	 */
-	private static Guideline getGuidelineById(String bdeId) {
+	private static Guidance getGuidanceById(String bdeId) {
 		for (Iterator i = GuidesList.iterator() ; i.hasNext() ;){
-			Guideline tmp = (Guideline) i .next();
+			Guidance tmp = (Guidance) i .next();
 			if (tmp.getGuid().equals(bdeId)){
 				return tmp;
 			}

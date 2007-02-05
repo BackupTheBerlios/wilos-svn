@@ -10,7 +10,7 @@ import junit.framework.TestCase;
 import wilos.business.services.util.xml.parser.XMLParser;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
-import wilos.model.spem2.guide.Guideline;
+import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.process.Process;
@@ -640,11 +640,11 @@ public class XMLParserTest extends TestCase {
 		Iterator<BreakdownElement> itSecondLevelAct;
 		Activity topLevelActivity,secondLevelActivity;
 		boolean rentreDansManageRequirements;
-		int nbTaskDescriptors, nbGuidelines = 0;
+		int nbTaskDescriptors, nbGuidances = 0;
 		Iterator<BreakdownElement> BdeIterator;
 		BreakdownElement tmpBde;
 		
-		Set<Guideline> listGuides = null;
+		Set<Guidance> listGuides = null;
 		
 		HashSet<String> expectedResults = new HashSet<String>();
 		expectedResults.add("Find and Outline Requirements");
@@ -684,16 +684,16 @@ public class XMLParserTest extends TestCase {
 							assertNotNull(tmpBde);
 							
 							TaskDefinition g = ((TaskDescriptor)tmpBde).getTaskDefinition();
-							listGuides = g.getGuidelines();
+							// TODO:listGuides = g.get();
 							if (!listGuides.isEmpty()) {
 								if (tmpBde.getName().equals("detail_requirements")) {
-									Iterator<Guideline> itGuide = listGuides.iterator();
+									Iterator<Guidance> itGuide = listGuides.iterator();
 																		
 									while (itGuide.hasNext()) {										
-										nbGuidelines++;
+										nbGuidances++;
 										itGuide.next();
 									}
-									assertTrue(nbGuidelines == 5);
+									assertTrue(nbGuidances == 5);
 								}
 							}
 							
