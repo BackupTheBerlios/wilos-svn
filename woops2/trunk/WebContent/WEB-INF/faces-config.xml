@@ -143,7 +143,7 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
-	
+
 	<!-- =============================================================== -->
 	<!-- ======================== WOOPS2 Beans ========================= -->
 	<!-- =============================================================== -->
@@ -189,15 +189,11 @@
 			<value>#{LoginService}</value>
 		</managed-property>
 		<managed-property>
-			<property-name>roleService</property-name>
-			<value>#{RoleService}</value>
-		</managed-property>
-		<managed-property>
 			<property-name>participantService</property-name>
 			<value>#{ParticipantService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>ConcreteTaskViewerBean</managed-bean-name>
 		<managed-bean-class>
@@ -221,7 +217,7 @@
 			<value>#{PhaseService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>ActivityViewerBean</managed-bean-name>
 		<managed-bean-class>
@@ -233,7 +229,7 @@
 			<value>#{ActivityService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>IterationViewerBean</managed-bean-name>
 		<managed-bean-class>
@@ -245,7 +241,7 @@
 			<value>#{IterationService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>ProjectViewerBean</managed-bean-name>
 		<managed-bean-class>
