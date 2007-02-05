@@ -3,7 +3,6 @@ package wilos.test.model.misc.concretephase;
 import junit.framework.TestCase;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.spem2.phase.Phase;
-import wilos.model.spem2.task.TaskDefinition;
 
 /**
  * 

@@ -6,7 +6,6 @@ import java.util.Set;
 import junit.framework.TestCase;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.spem2.phase.Phase;
-import wilos.model.spem2.task.TaskDescriptor;
 
 /**
  * 

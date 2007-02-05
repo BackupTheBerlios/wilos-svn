@@ -4,11 +4,6 @@ import java.util.Set;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import wilos.model.misc.concreteactivity.ConcreteActivity;
-import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
-import wilos.model.misc.concreteiteration.ConcreteIteration;
-import wilos.model.misc.concretephase.ConcretePhase;
-import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.role.RoleDescriptor;
 

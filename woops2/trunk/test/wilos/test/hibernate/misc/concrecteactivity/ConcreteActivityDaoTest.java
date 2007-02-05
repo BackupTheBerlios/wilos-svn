@@ -6,7 +6,6 @@ import java.util.List;
 import junit.framework.TestCase;
 import wilos.hibernate.misc.concreteactivity.ConcreteActivityDao;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
-import wilos.model.spem2.activity.Activity;
 import wilos.test.TestConfiguration;
 
 /*
