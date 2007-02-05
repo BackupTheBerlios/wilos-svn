@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
-import wilos.model.spem2.guide.Guideline;
+import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.task.TaskDescriptor;
 
 /**

@@ -8,9 +8,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import wilos.hibernate.spem2.guide.GuidelineDao;
+import wilos.hibernate.spem2.guide.GuidanceDao;
 import wilos.hibernate.spem2.task.StepDao;
-import wilos.model.spem2.guide.Guideline;
+import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.task.Step;
 
 /**
@@ -19,25 +19,25 @@ import wilos.model.spem2.task.Step;
  * 
  */
 @ Transactional (readOnly = false, propagation = Propagation.REQUIRED)
-public class GuidelineService {
-	private GuidelineDao guidelineDao ;
+public class GuidanceService {
+	private GuidanceDao guidanceDao ;
 
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
-	public Guideline getGuideline(String _id) {
-		return this.guidelineDao.getGuideline(_id) ;
+	public Guidance getGuidance(String _id) {
+		return this.guidanceDao.getGuidance(_id) ;
 	}
 
-	public List<Guideline> getAllGuidelines() {
-		return this.guidelineDao.getAllGuidelines() ;
+	public List<Guidance> getAllGuidances() {
+		return this.guidanceDao.getAllGuidances() ;
 	}
 
-	public void saveGuideline(Guideline _guideline) {
-		this.guidelineDao.saveOrUpdateGuideline(_guideline) ;
+	public void saveGuidance(Guidance _guidance) {
+		this.guidanceDao.saveOrUpdateGuidance(_guidance) ;
 	}
 
-	public void deleteGuideline(Guideline _guideline) {
-		this.guidelineDao.deleteGuideline(_guideline) ;
+	public void deleteGuidance(Guidance _guidance) {
+		this.guidanceDao.deleteGuidance(_guidance) ;
 	}
 
 	/**
@@ -45,17 +45,17 @@ public class GuidelineService {
 	 * 
 	 * @return the guidelineDao.
 	 */
-	public GuidelineDao getGuidelineDao() {
-		return this.guidelineDao ;
+	public GuidanceDao getGuidanceDao() {
+		return this.guidanceDao ;
 	}
 
 	/**
 	 * Setter of guidelineDao.
 	 * 
-	 * @param _guidelineDao
+	 * @param _guidanceDao
 	 *            The guidelineDao to set.
 	 */
-	public void setGuidelineDao(GuidelineDao _guidelineDao) {
-		this.guidelineDao = _guidelineDao ;
+	public void setGuidanceDao(GuidanceDao _guidanceDao) {
+		this.guidanceDao = _guidanceDao ;
 	}
 }

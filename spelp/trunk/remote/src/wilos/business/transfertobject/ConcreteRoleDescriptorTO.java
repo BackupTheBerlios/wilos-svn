@@ -15,7 +15,8 @@ public class ConcreteRoleDescriptorTO extends ConcreteRoleDescriptor {
     }    
   
     public ConcreteRoleDescriptorTO(ConcreteRoleDescriptor myConcreteRoleDescriptor) {
-    	this.setId(myConcreteRoleDescriptor.getId());
+    	// TODO
+    	// this.setId(myConcreteRoleDescriptor.getId());
     	this.setConcreteName(myConcreteRoleDescriptor.getConcreteName());
     	this.setRoleDescriptor(new RoleDescriptorTO(myConcreteRoleDescriptor.getRoleDescriptor()));
     	

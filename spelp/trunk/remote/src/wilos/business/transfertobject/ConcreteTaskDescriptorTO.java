@@ -3,7 +3,7 @@ package wilos.business.transfertobject;
 import java.io.Serializable;
 
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
-import wilos.model.spem2.guide.Guideline;
+import wilos.model.spem2.guide.Guidance;
 
 public class ConcreteTaskDescriptorTO extends ConcreteTaskDescriptor implements Serializable {
 	/** Creates a new instance of ParticipantTO */
@@ -12,7 +12,8 @@ public class ConcreteTaskDescriptorTO extends ConcreteTaskDescriptor implements 
     }    
   
     public ConcreteTaskDescriptorTO(ConcreteTaskDescriptor myConcreteTaskDescriptor) {
-    	this.setId(myConcreteTaskDescriptor.getId());
+    	// TODO
+    	//this.setId(myConcreteTaskDescriptor.getId());
     	this.setConcreteName(myConcreteTaskDescriptor.getConcreteName());
     	this.setAccomplishedTime(myConcreteTaskDescriptor.getAccomplishedTime());
     	this.setPlannedFinishingDate(myConcreteTaskDescriptor.getPlannedFinishingDate());

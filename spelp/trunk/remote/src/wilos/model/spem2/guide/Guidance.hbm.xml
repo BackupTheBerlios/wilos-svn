@@ -6,15 +6,25 @@
 <hibernate-mapping>
 
 	<joined-subclass
-		name="wilos.model.spem2.guide.Guideline"
+		name="wilos.model.spem2.guide.Guidance"
 		extends="wilos.model.spem2.element.Element"
-		table="guideline" lazy="true">
-		<key column="guideline_id"></key>
+		table="guidance" lazy="true">
+		<key column="guidance_id"></key>
 
 		<!-- Associations -->
 		<many-to-one name="taskdefinition" class="wilos.model.spem2.task.TaskDefinition"
 			column="taskdefinition_id" lazy="false">
 		</many-to-one>
+		
+		<many-to-one name="roledefinition" class="wilos.model.spem2.task.RoleDefinition"
+			column="roledefinition_id" lazy="false">
+		</many-to-one>
+
+		<many-to-one name="activity" class="wilos.model.spem2.task.Activity"
+			column="activity_id" lazy="false">
+		</many-to-one>
+
+		
 		
 	</joined-subclass>
 </hibernate-mapping>

@@ -8,19 +8,19 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import wilos.model.spem2.guide.Guideline;
+import wilos.model.spem2.guide.Guidance;
 import wilos.utils.ExceptionManager;
 
-public class GuidelineDao extends HibernateDaoSupport {
+public class GuidanceDao extends HibernateDaoSupport {
 	
 	/**
 	 * Save or update Guideline object
 	 * 
-	 * @param _guideline
+	 * @param _guidance
 	 */
-	public void saveOrUpdateGuideline(Guideline _guideline) {
+	public void saveOrUpdateGuidance(Guidance _guidance) {
 		try{
-			this.getHibernateTemplate().saveOrUpdate(_guideline) ;
+			this.getHibernateTemplate().saveOrUpdate(_guidance) ;
 		}
 		catch(DataIntegrityViolationException _e){
 			ExceptionManager.getInstance().manageDataIntegrityViolationException(this.getClass().getName(), "saveOrUpdateGuideline", _e);
@@ -36,13 +36,13 @@ public class GuidelineDao extends HibernateDaoSupport {
 	 * @return
 	 */
 	@ SuppressWarnings ("unchecked")
-	public List<Guideline> getAllGuidelines() {
-		List<Guideline> loadAll = new ArrayList<Guideline>() ;
+	public List<Guidance> getAllGuidances() {
+		List<Guidance> loadAll = new ArrayList<Guidance>() ;
 		try{
-			loadAll.addAll(this.getHibernateTemplate().loadAll(Guideline.class)) ;
+			loadAll.addAll(this.getHibernateTemplate().loadAll(Guidance.class)) ;
 		}
 		catch(DataAccessException _e){
-			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "getAllGuidelines", _e);
+			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "getAllGuidances", _e);
 		}
 		return loadAll ;
 	}
@@ -53,8 +53,8 @@ public class GuidelineDao extends HibernateDaoSupport {
 	 * @param _id
 	 * @return
 	 */
-	public Guideline getGuideline(String _id) {
-		return (Guideline) this.getHibernateTemplate().get(Guideline.class, _id) ;
+	public Guidance getGuidance(String _id) {
+		return (Guidance) this.getHibernateTemplate().get(Guidance.class, _id) ;
 	}
 
 	/**
@@ -62,9 +62,9 @@ public class GuidelineDao extends HibernateDaoSupport {
 	 * 
 	 * @param _step
 	 */
-	public void deleteGuideline(Guideline _guideline) {
+	public void deleteGuidance(Guidance _guidance) {
 		try{
-			this.getHibernateTemplate().delete(_guideline) ;
+			this.getHibernateTemplate().delete(_guidance) ;
 		}
 		catch(DataAccessException _e){
 			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "deleteGuideline", _e);
