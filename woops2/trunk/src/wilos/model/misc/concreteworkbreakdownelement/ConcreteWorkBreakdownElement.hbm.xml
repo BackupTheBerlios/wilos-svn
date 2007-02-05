@@ -10,18 +10,46 @@
 		table="concreteworkbreakdownelement" lazy="true">
 		<key column="concreteworkbreakdownelement_id"></key>
 
+		<property name="plannedStartingDate" type="java.util.Date"
+			column="plannedstartingdate" length="256" />
+
+		<property name="plannedFinishingDate" type="java.util.Date"
+			column="plannedfinishingdate" length="256">
+		</property>
+
+		<property name="plannedTime" type="java.lang.float"
+			column="plannedtime" />
+
 		<many-to-one name="workBreakdownElement"
 			class="wilos.model.spem2.workbreakdownelement.WorkBreakdownElement"
 			column="workbreakdownelement_id">
 		</many-to-one>
 
-		<property name="plannedStartingDate" type="java.util.Date"
-			column="plannedstartingdate" length="256" />
+		<set name="concretePredecessors" table="concreteworkorder"
+			lazy="true">
+			<key column="concretepredecessor_id" />
+			<composite-element
+				class="wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkOrder">
+				<many-to-one name="concretesuccessor"
+					class="wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement"
+					column="concretesuccessor_id">
+				</many-to-one>
+			</composite-element>
+		</set>
 
-		<property name="plannedFinishingDate" type="java.util.Date"
-			column="plannedfinishingdate" length="256" ></property>
-
-		<property name="plannedTime" type="float" column="plannedtime" />
+		<set name="concreteSuccessors" table="concreteworkorder"
+			lazy="true" inverse="true">
+			<key column="concretesuccessor_id" />
+			<composite-element
+				class="wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkOrder">
+				<property name="concreteLinkType"
+					type="java.lang.String" column="concretelinktype" />
+				<many-to-one name="concretepredecessor"
+					class="wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement"
+					column="concretepredecessor_id">
+				</many-to-one>
+			</composite-element>
+		</set>
 
 	</joined-subclass>
 </hibernate-mapping>

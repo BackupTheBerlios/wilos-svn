@@ -9,7 +9,6 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.ProcessManager;
 import wilos.model.spem2.activity.Activity;
-import wilos.model.spem2.phase.Phase;
 
 /**
  * 
