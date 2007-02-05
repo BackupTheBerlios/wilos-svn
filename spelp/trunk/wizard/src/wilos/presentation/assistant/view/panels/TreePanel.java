@@ -2,6 +2,8 @@ package wilos.presentation.assistant.view.panels;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Set;
@@ -75,7 +77,7 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 					
 					if (path != null) { 
 							if (path.getLastPathComponent() == TreePanel.this.tree.getLastSelectedPathComponent()){
-								WizardControler.getInstance().showContextualMenu(arg0);								
+								WizardControler.getInstance().showContextualMenu(arg0);
 							}
 					}
 					

@@ -1,5 +1,6 @@
 package wilos.presentation.assistant.control;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -57,8 +58,10 @@ public class WizardControler {
 	 * @param ctd
 	 */
 	public void startConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
-		if (ctd.getState() == Constantes.State.READY) {
+		if (ctd.getState() == Constantes.State.READY || ctd.getState() == Constantes.State.SUSPENDED ) {
 			WizardServicesProxy.startConcreteTaskDescriptor(ctd.getId());
+			ctd.setState(Constantes.State.STARTED);
+			WizardStateMachine.getInstance().setFocusedObject(ctd);
 		}
 	}
 	
@@ -69,6 +72,8 @@ public class WizardControler {
 	public void pauseConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
 		if (ctd.getState() == Constantes.State.STARTED) {
 			WizardServicesProxy.suspendConcreteTaskDescriptor(ctd.getId());
+			ctd.setState(Constantes.State.SUSPENDED);
+			WizardStateMachine.getInstance().setFocusedObject(ctd);
 		}
 	}
 	
@@ -79,6 +84,8 @@ public class WizardControler {
 	public void finishConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
 		if (ctd.getState() == Constantes.State.STARTED) {
 			WizardServicesProxy.stopConcreteTaskDescriptor(ctd.getId());
+			ctd.setState(Constantes.State.FINISHED);
+			WizardStateMachine.getInstance().setFocusedObject(ctd);
 		}
 	}
 	
@@ -101,7 +108,7 @@ public class WizardControler {
 					if(selectedTask.getId() != null) {
 						WizardControler.getInstance().changeHTMLViewerBehavior(true);
 						WizardControler.getInstance().startConcreteTaskDescriptor(selectedTask);
-						WizardControler.getInstance().refreshParticipant();
+						//WizardControler.getInstance().refreshParticipant();
 					}
 				}
 				
@@ -116,7 +123,7 @@ public class WizardControler {
 					if(selectedTask.getId() != null) {
 						WizardControler.getInstance().changeHTMLViewerBehavior(true);
 						WizardControler.getInstance().pauseConcreteTaskDescriptor(selectedTask);
-						WizardControler.getInstance().refreshParticipant();
+						//WizardControler.getInstance().refreshParticipant();
 					}
 				}
 				
@@ -130,7 +137,7 @@ public class WizardControler {
 					if(selectedTask.getId() != null) {
 						WizardControler.getInstance().changeHTMLViewerBehavior(true);
 						WizardControler.getInstance().finishConcreteTaskDescriptor(selectedTask);
-						WizardControler.getInstance().refreshParticipant();
+						//WizardControler.getInstance().refreshParticipant();
 					}
 				}
 				

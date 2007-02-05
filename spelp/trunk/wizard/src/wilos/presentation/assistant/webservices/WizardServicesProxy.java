@@ -151,6 +151,7 @@ public class WizardServicesProxy {
             
             
             aTmpConcrete.setConcreteName("Coder le programme Partie I");
+            aTmpConcrete.setId("test1");
             aTmpConcrete.setAccomplishedTime(42);
             aTmpConcrete.setPlannedFinishingDate(new Date());
             aTmpConcrete.setState(Constantes.State.CREATED);
@@ -255,7 +256,7 @@ public class WizardServicesProxy {
             aTmpConcrete.setState(Constantes.State.STARTED);
             aTmpConcrete.setPlannedStartingDate(new Date());
             aTmpConcrete.setPlannedTime(24);
-    			
+            aTmpConcrete.setId("test2");
             aTmpTask.setName("Passer le balai");
             aTmpTask.setDescription("Et c'est plus propre");        
             aTmpRole.addPrimaryTask(aTmpTask);
@@ -275,6 +276,7 @@ public class WizardServicesProxy {
             aTmpTask = new TaskDescriptor();
 
             aTmpConcrete = new ConcreteTaskDescriptor();
+            aTmpConcrete.setId("test3");
             aTmpConcrete.setConcreteName("concr_faire_essais");
             aTmpConcrete.setAccomplishedTime(42);
             aTmpConcrete.setPlannedFinishingDate(new Date());
@@ -313,6 +315,7 @@ public class WizardServicesProxy {
             aTmpTask = new TaskDescriptor();
 
             aTmpConcrete = new ConcreteTaskDescriptor();
+            aTmpConcrete.setId("test4");
             aTmpConcrete.setConcreteName("concr_detester le prog");
             aTmpConcrete.setAccomplishedTime(42);
             aTmpConcrete.setPlannedFinishingDate(new Date());

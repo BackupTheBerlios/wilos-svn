@@ -87,13 +87,17 @@ public class WizardStateMachine extends Observable{
 				updateState(STATE_NOTHING);
 			}
 		}
-		// notifying all the objects managed by the state machine
+	}
+	
+	public void maj (){
 		this.setChanged();
 		notifyObservers();
 	}
-
+	
 	private void updateState(int newState) {
 		this.currentState = newState;
+//		 notifying all the objects managed by the state machine
+		maj();
 //		switch (this.currentState) {
 //		case STATE_PARTICIPANT :
 //			actionToolBar.setButtons(actionToolBar.INVISIBLE, actionToolBar.INVISIBLE, actionToolBar.INVISIBLE);
