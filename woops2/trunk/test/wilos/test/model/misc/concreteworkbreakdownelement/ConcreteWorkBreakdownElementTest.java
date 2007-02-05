@@ -72,9 +72,9 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 
 		ConcreteWorkBreakdownElement cwbe = new ConcreteWorkBreakdownElement() ;
 		cwbe.setConcreteName(CONCRETE_NAME) ;
-		this.concreteWorkBreakdownElement.setAccomplishedTime(ACCOMPLISHED_TIME);
-		this.concreteWorkBreakdownElement.setPlannedTime(PLANNED_TIME);
-		this.concreteWorkBreakdownElement.setPlannedFinishingDate(this.date);
+		cwbe.setAccomplishedTime(ACCOMPLISHED_TIME);
+		cwbe.setPlannedTime(PLANNED_TIME);
+		cwbe.setPlannedFinishingDate(this.date);
 
 		assertNotNull(this.concreteWorkBreakdownElement.hashCode()) ;
 		assertNotNull(cwbe.hashCode()) ;
@@ -88,17 +88,17 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 
 		ConcreteWorkBreakdownElement cwbe = new ConcreteWorkBreakdownElement() ;
 		cwbe.setConcreteName(CONCRETE_NAME) ;
-		this.concreteWorkBreakdownElement.setAccomplishedTime(ACCOMPLISHED_TIME);
-		this.concreteWorkBreakdownElement.setPlannedTime(PLANNED_TIME);
-		this.concreteWorkBreakdownElement.setPlannedFinishingDate(this.date);
+		cwbe.setAccomplishedTime(ACCOMPLISHED_TIME);
+		cwbe.setPlannedTime(PLANNED_TIME);
+		cwbe.setPlannedFinishingDate(this.date);
 
 		assertTrue(this.concreteWorkBreakdownElement.equals(cwbe)) ;
 
 		ConcreteWorkBreakdownElement cwbe2 = new ConcreteWorkBreakdownElement() ;
 		cwbe.setConcreteName("Another concrete name") ;
-		this.concreteWorkBreakdownElement.setAccomplishedTime(ACCOMPLISHED_TIME);
-		this.concreteWorkBreakdownElement.setPlannedTime(PLANNED_TIME);
-		this.concreteWorkBreakdownElement.setPlannedFinishingDate(this.date);
+		cwbe.setAccomplishedTime(ACCOMPLISHED_TIME);
+		cwbe.setPlannedTime(PLANNED_TIME);
+		cwbe.setPlannedFinishingDate(this.date);
 
 		assertFalse(this.concreteWorkBreakdownElement.equals(cwbe2)) ;
 	}
