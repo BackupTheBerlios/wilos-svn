@@ -52,6 +52,7 @@ public class ActionBar extends JToolBar implements Observer{
 		this.addSeparator();
 		this.add(getJCheckBoxShowViewer());
 		this.setFloatable(false);
+		this.setButtons(DISABLED, DISABLED, DISABLED);
 		//this.setBounds(0, 0, 150, 300);
 		
 		
@@ -194,7 +195,7 @@ public class ActionBar extends JToolBar implements Observer{
 			setButtons(INVISIBLE,INVISIBLE, INVISIBLE);
 			break;
 		case WizardStateMachine.STATE_NOTHING :
-			setButtons(INVISIBLE, INVISIBLE, INVISIBLE);
+			setButtons(DISABLED, DISABLED, DISABLED);
 			break;
 		case WizardStateMachine.STATE_TASK_CREATED :	
 			setButtons(DISABLED, DISABLED, DISABLED);
