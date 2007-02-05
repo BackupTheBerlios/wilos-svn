@@ -16,11 +16,11 @@
 			column="taskdefinition_id" lazy="false">
 		</many-to-one>
 		
-		<many-to-one name="roledefinition" class="wilos.model.spem2.task.RoleDefinition"
+		<many-to-one name="roledefinition" class="wilos.model.spem2.role.RoleDefinition"
 			column="roledefinition_id" lazy="false">
 		</many-to-one>
 
-		<many-to-one name="activity" class="wilos.model.spem2.task.Activity"
+		<many-to-one name="activity" class="wilos.model.spem2.activity.Activity"
 			column="activity_id" lazy="false">
 		</many-to-one>
 
