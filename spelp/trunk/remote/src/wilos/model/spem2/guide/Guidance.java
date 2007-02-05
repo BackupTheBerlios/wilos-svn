@@ -32,11 +32,19 @@ public class Guidance extends Element {
 		(_taskdefinition.getGuidances()).add(this);
 	}
 
+	/**
+	 * addRoleDefinition
+	 * @param _roleDefinition
+	 */
 	public void addRoleDefinition(RoleDefinition _roleDefinition) {
 		this.roledefinition = _roleDefinition;
 		(_roleDefinition.getGuidances()).add(this);
 	}
 
+	/**
+	 * addActivity
+	 * @param _activity
+	 */
 	public void addActivity(Activity _activity) {
 		this.activity = _activity;
 		(_activity.getGuidances()).add(this);
@@ -50,13 +58,71 @@ public class Guidance extends Element {
 		this.taskdefinition = null ;
 		_taskdefinition.getGuidances().remove(this);
 	}
+	
+	/**
+	 * removeFromRoleDefinition
+	 * @param _roleDefinition
+	 */
+	public void removeFromRoleDefinition(RoleDefinition _roleDefinition) {
+		this.roledefinition = null;
+		_roleDefinition.getGuidances().remove(this);
+	}
+	
+	/**
+	 * removeFromActivity
+	 * @param _activity
+	 */
+	public void removeFromActivity(Activity _activity) {
+		this.activity = null;
+		_activity.getGuidances().remove(this);
+	}
 
+	/**
+	 * getTaskdefinition
+	 * @return the taskDefinition
+	 */
 	public TaskDefinition getTaskdefinition() {
 		return taskdefinition;
 	}
 
+	/**
+	 * setTaskdefinition
+	 * @param _taskdefinition
+	 */
 	public void setTaskdefinition(TaskDefinition _taskdefinition) {
 		this.taskdefinition = _taskdefinition;
+	}
+	
+	/**
+	 * getActivity
+	 * @return the activity
+	 */
+	public Activity getActivity() {
+		return activity;
+	}
+
+	/**
+	 * setActivity
+	 * @param _activity
+	 */
+	public void setActivity(Activity _activity) {
+		this.activity = _activity;
+	}
+
+	/**
+	 * getRoledefinition
+	 * @return the roleDefinition
+	 */
+	public RoleDefinition getRoledefinition() {
+		return roledefinition;
+	}
+
+	/**
+	 * setRoledefinition
+	 * @param _roleDefinition
+	 */
+	public void setRoledefinition(RoleDefinition _roleDefinition) {
+		this.roledefinition = _roleDefinition;
 	}
 	
 	/*
@@ -107,24 +173,5 @@ public class Guidance extends Element {
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.taskdefinition).toHashCode() ;
 	}
-
 	
-	public Activity getActivity() {
-		return activity;
-	}
-
-	
-	public void setActivity(Activity _activity) {
-		this.activity = _activity;
-	}
-
-	
-	public RoleDefinition getRoledefinition() {
-		return roledefinition;
-	}
-
-	
-	public void setRoledefinition(RoleDefinition _roleDefinition) {
-		this.roledefinition = _roleDefinition;
-	}
 }
