@@ -5,8 +5,8 @@ package wilos.test.hibernate.misc.concretephase;
 import java.util.List;
 
 import junit.framework.TestCase;
-import wilos.hibernate.spem2.phase.PhaseDao;
-import wilos.model.spem2.phase.Phase;
+import wilos.hibernate.misc.concretephase.ConcretePhaseDao;
+import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.test.TestConfiguration;
 
 /**
@@ -19,23 +19,8 @@ public class ConcretePhaseDaoTest extends TestCase{
 
 	private ConcretePhase concretePhase = null ;
 	
-	public static final String NAME = "thisPhase" ;
+	public static final String CONCRETENAME = "thisPhase" ;
 
-	public static final String DESCRIPTION = "Concretephase description" ;
-
-	public static final String PREFIX = "prefix" ;
-
-	public static final Boolean IS_OPTIONAL = true ;
-
-	public static final Boolean HAS_MULTIPLE_OCCURENCES = true ;
-
-	public static final Boolean IS_EVEN_DRIVEN = true ;
-
-	public static final Boolean IS_ON_GOING = true ;
-
-	public static final Boolean IS_PLANNED = true ;
-
-	public static final Boolean IS_REPEATABLE = true ;
 
 	/*
 	 * (non-Javadoc)
@@ -109,15 +94,8 @@ public class ConcretePhaseDaoTest extends TestCase{
 		//Rk: the setUp method is called here.
 
 		// Add properties to the activity.
-		this.concretePhase.setName(NAME) ;
-		this.concretePhase.setDescription(DESCRIPTION) ;
-		this.concretePhase.setPrefix(PREFIX) ;
-		this.concretePhase.setHasMultipleOccurrences(HAS_MULTIPLE_OCCURENCES) ;
-		this.concretePhase.setIsEvenDriven(IS_EVEN_DRIVEN) ;
-		this.concretePhase.setIsOngoing(IS_ON_GOING) ;
-		this.concretePhase.setIsOptional(IS_OPTIONAL) ;
-		this.concretePhase.setIsPlanned(IS_PLANNED) ;
-		this.concretePhase.setIsRepeatable(IS_REPEATABLE) ;
+		this.concretePhase.setConcreteName(CONCRETENAME) ;
+		
 
 		// Save the activity into the database.
 		this.concretePhaseDao.saveOrUpdateConcretePhase(this.concretePhase) ;
@@ -126,15 +104,8 @@ public class ConcretePhaseDaoTest extends TestCase{
 		// Test the method getActivity with an existing activity.
 		ConcretePhase concretePhasesTmp = this.concretePhaseDao.getConcretePhase(id) ;
 		assertNotNull(concretePhasesTmp) ;
-		assertEquals("Name", concretePhasesTmp.getName(), NAME) ;
-		assertEquals("Description", concretePhasesTmp.getDescription(), DESCRIPTION) ;
-		assertEquals("Prefix", concretePhasesTmp.getPrefix(), PREFIX) ;
-		assertEquals("HasMultipleOccurences", concretePhasesTmp.getHasMultipleOccurrences(), HAS_MULTIPLE_OCCURENCES) ;
-		assertEquals("IsEvenDriven", concretePhasesTmp.getIsEvenDriven(), IS_EVEN_DRIVEN) ;
-		assertEquals("IsOnGoing", concretePhasesTmp.getIsOngoing(), IS_ON_GOING) ;
-		assertEquals("IsOptional", concretePhasesTmp.getIsOptional(), IS_OPTIONAL) ;
-		assertEquals("IsPlanned", concretePhasesTmp.getIsPlanned(), IS_PLANNED) ;
-		assertEquals("IsRepeatale", concretePhasesTmp.getIsRepeatable(), IS_REPEATABLE) ;
+		assertEquals("Name", concretePhasesTmp.getConcreteName(), CONCRETENAME) ;
+		
 
 		// Test the method getActivity with an unexisting activity.
 		this.concretePhaseDao.deleteConcretePhase(this.concretePhase) ;
@@ -163,7 +134,7 @@ public class ConcretePhaseDaoTest extends TestCase{
 
 		// Test the method deleteActivity with an activity unexisting into the db.
 		// Normally here there are no exception thrown.
-		this.concretPhaseDao.deleteConcretePhase(this.concretePhase) ;
+		this.concretePhaseDao.deleteConcretePhase(this.concretePhase) ;
 
 		// Rk: the tearDown method is called here.
 	}
