@@ -27,6 +27,7 @@ public class ProjectDirectorServiceTest extends TestCase {
 		this.projectDirector.setLogin("john");
 		this.projectDirector.setName("georges");
 		this.projectDirector.setPassword("pass") ;
+		this.projectDirectorService.getProjectDirectorDao().saveOrUpdateProjectDirector(projectDirector);
 	}
 
 	/* (non-Javadoc)

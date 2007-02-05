@@ -18,6 +18,8 @@ public class ParticipantDaoTest extends TestCase {
 	private Participant participant;
 	public static String LOGIN="john";
 	public static String NAME="georges";
+	public static String FIRSTNAME="jean";
+	public static String EMAIL="example@example.com";
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#setUp()
 	 */
@@ -27,6 +29,9 @@ public class ParticipantDaoTest extends TestCase {
 		this.participant= new Participant();
 		this.participant.setLogin(LOGIN);
 		this.participant.setName(NAME);
+		this.participant.setFirstname(FIRSTNAME);
+		this.participant.setEmailAddress(EMAIL);
+		this.participantDao.saveOrUpdateParticipant(this.participant) ;
 	}
 
 	/* (non-Javadoc)
@@ -35,27 +40,17 @@ public class ParticipantDaoTest extends TestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown() ;
 		//Delete the tmp participant from the database.
-		try{
-			this.participantDao.deleteParticipant(this.participant) ;
-		}
-		catch(Exception exception){
-			System.err.println("exception e ="+exception);
-		}
+		this.participantDao.deleteParticipant(this.participant) ;
 	}
 
 	/**
 	 * Test method for {@link woops2.hibernate.wilosuser.ParticipantDao#saveOrUpdateParticipant(woops2.model.wilosuser.Participant)}.
 	 */
 	public void testSaveOrUpdateParticipant() {
-		// Save the activity with the method to test.
-		this.participantDao.saveOrUpdateParticipant(this.participant) ;
-		
-		// Check the saving.
 		Participant participantTmp = (Participant) this.participantDao.getParticipant(LOGIN) ;
 		assertNotNull(participantTmp) ;
 		assertTrue(participant.getLogin().equals(participantTmp.getLogin()));
 		assertTrue(participant.getName().equals(participantTmp.getName()));
-		
 	}
 
 	/**
@@ -63,16 +58,14 @@ public class ParticipantDaoTest extends TestCase {
 	 */
 	public void testGetAllRoles() {
 		// TODO : tester cette methode quand elle sera placée dans la bonne classe
-		assertTrue(true);
+		fail("En attendant le retour des roles.");
 	}
 
 	/**
 	 * Test method for {@link woops2.hibernate.wilosuser.ParticipantDao#getAllParticipants()}.
 	 */
 	public void testGetAllParticipants() {
-		this.participantDao.saveOrUpdateParticipant(this.participant) ;
-		
-		// Check the saving.
+		//Check the saving.
 		Set<Participant> participantsTmp = this.participantDao.getAllParticipants() ;
 		assertNotNull(participantsTmp) ;
 		assertTrue(participantsTmp.size() >= 1);
@@ -82,21 +75,18 @@ public class ParticipantDaoTest extends TestCase {
 	 * Test method for {@link woops2.hibernate.wilosuser.ParticipantDao#getParticipant(java.lang.String)}.
 	 */
 	public void testGetParticipant() {
-		participant.setFirstname("jean");
-		participant.setEmailAddress("example@example.com");
-		this.participantDao.saveOrUpdateParticipant(this.participant) ;
 		Participant participantTmp=this.participantDao.getParticipant(LOGIN);
+		
 		assertNotNull(participantTmp);
-		assertTrue(participantTmp.getEmailAddress().equals("example@example.com"));
 		assertTrue(participantTmp.getLogin().equals(LOGIN));
-		assertTrue(participantTmp.getFirstname().equals("jean"));
+		assertTrue(participantTmp.getFirstname().equals(FIRSTNAME));
+		assertTrue(participantTmp.getEmailAddress().equals(EMAIL));
 	}
 
 	/**
 	 * Test method for {@link woops2.hibernate.wilosuser.ParticipantDao#deleteParticipant(woops2.model.wilosuser.Participant)}.
 	 */
 	public void testDeleteParticipant() {
-		this.participantDao.saveOrUpdateParticipant(this.participant) ;
 		this.participantDao.deleteParticipant(this.participant);
 		Participant participantTmp=this.participantDao.getParticipant(LOGIN);
 		assertNull(participantTmp);

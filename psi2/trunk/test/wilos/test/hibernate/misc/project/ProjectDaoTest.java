@@ -32,6 +32,7 @@ public class ProjectDaoTest extends TestCase {
 		this.p = new Project() ;
 		this.p.setName("testProject") ;
 		this.p.setDescription("testDesc") ;
+		this.pDao.saveOrUpdateProject(p);
 	}
 
 	/*

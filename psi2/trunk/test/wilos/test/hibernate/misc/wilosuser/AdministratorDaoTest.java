@@ -17,6 +17,8 @@ public class AdministratorDaoTest extends TestCase {
 	private AdministratorDao ad ;
 
 	private Administrator a ;
+	
+	private Administrator a2 ;
 
 	/*
 	 * (non-Javadoc)
@@ -29,6 +31,7 @@ public class AdministratorDaoTest extends TestCase {
 		this.a = new Administrator() ;
 		this.a.setLogin("testAdmin") ;
 		this.a.setPassword("pass") ;
+		this.ad.saveOrUpdateAdministrator(this.a);
 	}
 
 	/*
@@ -46,8 +49,6 @@ public class AdministratorDaoTest extends TestCase {
 	 * {@link wilos.hibernate.misc.wilosuser.AdministratorDao#saveOrUpdateAdministrator(wilos.model.misc.wilosuser.Administrator)}.
 	 */
 	public void testSaveOrUpdateAdministrator() {
-		this.ad.saveOrUpdateAdministrator(this.a) ;
-
 		Administrator admTmp = this.ad.getAdministrator("testAdmin") ;
 		assertNotNull(admTmp) ;
 		assertTrue(this.a.getLogin().equals(admTmp.getLogin())) ;
@@ -59,7 +60,6 @@ public class AdministratorDaoTest extends TestCase {
 	 * {@link wilos.hibernate.misc.wilosuser.AdministratorDao#getAdministrator(java.lang.String)}.
 	 */
 	public void testGetAdministrator() {
-		this.ad.saveOrUpdateAdministrator(this.a) ;
 		Administrator admTmp = this.ad.getAdministrator("testAdmin") ;
 		assertNotNull(admTmp) ;
 		assertEquals(admTmp.getLogin(), "testAdmin") ;
@@ -71,10 +71,13 @@ public class AdministratorDaoTest extends TestCase {
 	 * {@link wilos.hibernate.misc.wilosuser.AdministratorDao#deleteAdministrator(wilos.model.misc.wilosuser.Administrator)}.
 	 */
 	public void testDeleteAdministrator() {
-		this.ad.saveOrUpdateAdministrator(this.a) ;
-		this.ad.deleteAdministrator(this.a) ;
-		Administrator admTmp = this.ad.getAdministrator("testAdmin") ;
-		assertNull(admTmp) ;
+		this.a2 = new Administrator() ;
+		this.a2.setLogin("testAdmin2") ;
+		this.a2.setPassword("pass") ;
+		this.ad.deleteAdministrator(this.a2) ;
+		
+		Administrator admTmp2 = this.ad.getAdministrator("testAdmin2") ;
+		assertNull(admTmp2) ;
 	}
 
 }

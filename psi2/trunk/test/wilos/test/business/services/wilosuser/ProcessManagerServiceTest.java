@@ -27,6 +27,7 @@ public class ProcessManagerServiceTest extends TestCase {
 		this.processManager.setLogin("john");
 		this.processManager.setName("georges");
 		this.processManager.setPassword("pass") ;
+		this.processManagerService.getProcessManagerDao().saveOrUpdateProcessManager(processManager);
 	}
 
 	/* (non-Javadoc)

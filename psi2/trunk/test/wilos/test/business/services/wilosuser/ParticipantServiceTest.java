@@ -61,6 +61,7 @@ public class ParticipantServiceTest extends TestCase {
 		p1 = new Project() ;
 		p1.setName("projectTestPS1") ;
 		this.projectService.saveProject(p1) ;
+		
 		p2 = new Project() ;
 		p2.setName("projectTestPS2") ;
 		this.projectService.saveProject(p2) ;
@@ -91,7 +92,6 @@ public class ParticipantServiceTest extends TestCase {
 	 * TODO methode a refaire apres modele metier
 	 */
 	public void testGetRolesList() {
-		// TODO: finir ce test quand la fonction sera placée dans la bonne classe
 //		HashMap<String, Boolean> roles = new HashMap<String, Boolean>() ;
 //		roles.put(ROLE1, VROLE1) ;
 //		roles.put(ROLE2, VROLE2) ;

@@ -42,11 +42,13 @@ public class ProjectServiceTest extends TestCase {
 		p.setName("Wilos") ;
 		p.setDescription("projet de test") ;
 		p.setIsFinished(true) ;
+		this.ps.getProjectDao().saveOrUpdateProject(p);
 
 		p2 = new Project() ;
 		p2.setName("Wilos2") ;
 		p2.setDescription("projet de test2") ;
 		p2.setIsFinished(false) ;
+		this.ps.getProjectDao().saveOrUpdateProject(p2);
 	}
 
 	/*
