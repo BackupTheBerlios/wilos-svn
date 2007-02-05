@@ -52,6 +52,8 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 	 */
 	protected void tearDown() throws Exception {
 		super.tearDown() ;
+		//this.concreteWorkBreakdownElement.getConcretePredecessors().clear();
+		//this.concreteWorkBreakdownElement.getConcreteSuccessors().clear();
 	}
 
 	/**
@@ -129,13 +131,6 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 
 		// Rk: the tearDown method is called here.
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	public final void testAddConcreteSuccessor() {
 		// Rk: the setUp method is called here.
@@ -254,7 +249,7 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	public final void testRemoveAllPredecessors() {
+	public final void testRemoveAllConcretePredecessors() {
 		// Rk: the setUp method is called here.
 		
 		ConcreteWorkBreakdownElement tmp1 = new ConcreteWorkBreakdownElement();

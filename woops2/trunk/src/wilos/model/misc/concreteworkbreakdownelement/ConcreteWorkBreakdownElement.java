@@ -1,6 +1,7 @@
 package wilos.model.misc.concreteworkbreakdownelement;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -27,9 +28,9 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 
 	private WorkBreakdownElement workBreakdownElement;
 
-	private Set<ConcreteWorkBreakdownElement> concretePredecessors;
+	private Set<ConcreteWorkBreakdownElement> concretePredecessors = new HashSet<ConcreteWorkBreakdownElement>();
 
-	private Set<ConcreteWorkBreakdownElement> concreteSuccessors;
+	private Set<ConcreteWorkBreakdownElement> concreteSuccessors = new HashSet<ConcreteWorkBreakdownElement>();
 
 	public ConcreteWorkBreakdownElement() {
 		super();
