@@ -112,15 +112,7 @@ public class ConcreteActivityDaoTest  extends TestCase {
 		// Rk: the setUp method is called here.
 
 		// Add properties to the concrete activity.
-		this.concreteactivity.setName(NAME) ;
-		this.concreteactivity.setDescription(DESCRIPTION) ;
-		this.concreteactivity.setPrefix(PREFIX) ;
-		this.concreteactivity.setHasMultipleOccurrences(HAS_MULTIPLE_OCCURENCES) ;
-		this.concreteactivity.setIsEvenDriven(IS_EVEN_DRIVEN) ;
-		this.concreteactivity.setIsOngoing(IS_ON_GOING) ;
-		this.concreteactivity.setIsOptional(IS_OPTIONAL) ;
-		this.concreteactivity.setIsPlanned(IS_PLANNED) ;
-		this.concreteactivity.setIsRepeatable(IS_REPEATABLE) ;
+		this.concreteactivity.setConcreteName(NAME) ;
 
 		// Save the concrete activity into the database.
 		this.concreteactivityDao.saveOrUpdateConcreteActivity(this.concreteactivity) ;
@@ -129,15 +121,7 @@ public class ConcreteActivityDaoTest  extends TestCase {
 		// Test the method getConcreteActivity with an existing activity.
 		ConcreteActivity concreteactivityTmp = this.concreteactivityDao.getConcreteActivity(id) ;
 		assertNotNull(concreteactivityTmp) ;
-		assertEquals("Name", concreteactivityTmp.getName(), NAME) ;
-		assertEquals("Description", concreteactivityTmp.getDescription(), DESCRIPTION) ;
-		assertEquals("Prefix", concreteactivityTmp.getPrefix(), PREFIX) ;
-		assertEquals("HasMultipleOccurences", concreteactivityTmp.getHasMultipleOccurrences(), HAS_MULTIPLE_OCCURENCES) ;
-		assertEquals("IsEvenDriven", concreteactivityTmp.getIsEvenDriven(), IS_EVEN_DRIVEN) ;
-		assertEquals("IsOnGoing", concreteactivityTmp.getIsOngoing(), IS_ON_GOING) ;
-		assertEquals("IsOptional", concreteactivityTmp.getIsOptional(), IS_OPTIONAL) ;
-		assertEquals("IsPlanned", concreteactivityTmp.getIsPlanned(), IS_PLANNED) ;
-		assertEquals("IsRepeatale", concreteactivityTmp.getIsRepeatable(), IS_REPEATABLE) ;
+		assertEquals("Name", concreteactivityTmp.getConcreteName(), NAME) ;
 
 		// Test the method getConcreteActivity with an unexisting activity.
 		this.concreteactivityDao.deleteConcreteActivity(this.concreteactivity) ;

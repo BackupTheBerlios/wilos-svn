@@ -13,6 +13,8 @@ import wilos.model.misc.concreteactivity.ConcreteActivity;
 public class ConcreteActivityTest  extends TestCase {
 
 	private ConcreteActivity concreteactivity ;
+	
+	private static final String NAME = "Concrete Name";
 
 	/*
 	 * (non-Javadoc)
@@ -22,16 +24,7 @@ public class ConcreteActivityTest  extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp() ;
 		this.concreteactivity = new ConcreteActivity() ;
-		this.concreteactivity.setGuid("idEPF1") ;
-		this.concreteactivity.setName("name1") ;
-		this.concreteactivity.setDescription("description1") ;
-		this.concreteactivity.setPrefix("prefix1") ;
-		this.concreteactivity.setIsOptional(true) ;
-		this.concreteactivity.setIsPlanned(false) ;
-		this.concreteactivity.setHasMultipleOccurrences(false) ;
-		this.concreteactivity.setIsEvenDriven(true) ;
-		this.concreteactivity.setIsOngoing(false) ;
-		this.concreteactivity.setIsRepeatable(true) ;
+		this.concreteactivity.setConcreteName(NAME);
 	}
 
 	/*
@@ -62,16 +55,7 @@ public class ConcreteActivityTest  extends TestCase {
 	public void testHashCode() {
 
 		ConcreteActivity tmp = new ConcreteActivity() ;
-		tmp.setGuid("idEPF1") ;
-		tmp.setName("name1") ;
-		tmp.setDescription("description1") ;
-		tmp.setPrefix("prefix1") ;
-		tmp.setIsOptional(true) ;
-		tmp.setIsPlanned(false) ;
-		tmp.setHasMultipleOccurrences(false) ;
-		tmp.setIsEvenDriven(true) ;
-		tmp.setIsOngoing(false) ;
-		tmp.setIsRepeatable(true) ;
+		tmp.setConcreteName(NAME) ;
 
 		assertNotNull(this.concreteactivity.hashCode()) ;
 		assertNotNull(tmp.hashCode()) ;
@@ -84,31 +68,13 @@ public class ConcreteActivityTest  extends TestCase {
 	public void testEqualsObject() {
 
 		ConcreteActivity tmp = new ConcreteActivity() ;
-		tmp.setGuid("idEPF1") ;
-		tmp.setName("name1") ;
-		tmp.setDescription("description1") ;
-		tmp.setPrefix("prefix1") ;
-		tmp.setIsOptional(true) ;
-		tmp.setIsPlanned(false) ;
-		tmp.setHasMultipleOccurrences(false) ;
-		tmp.setIsEvenDriven(true) ;
-		tmp.setIsOngoing(false) ;
-		tmp.setIsRepeatable(true) ;
+		tmp.setConcreteName(NAME) ;
 
 		assertTrue(this.concreteactivity.equals(tmp)) ;
 
 		ConcreteActivity act = new ConcreteActivity() ;
-		act.setGuid("idEPF2") ;
-		act.setName("name2") ;
-		act.setDescription("description2") ;
-		act.setPrefix("prefix2") ;
-		act.setIsOptional(true) ;
-		act.setIsPlanned(false) ;
-		act.setHasMultipleOccurrences(false) ;
-		act.setIsEvenDriven(true) ;
-		act.setIsOngoing(false) ;
-		act.setIsRepeatable(true) ;
-
+		act.setConcreteName("name2") ;
+		
 		assertFalse(this.concreteactivity.equals(act)) ;
 	}
 
