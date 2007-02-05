@@ -9,9 +9,9 @@ import wilos.model.spem2.role.RoleDefinition;
 import wilos.model.spem2.task.TaskDefinition;
 
 /**
- * This class represents a Guideline.
+ * This class represents a Guidance and contains different guides type.
  * 
- * @author Nicolas CASTEL
+ * 
  */
 public class Guidance extends Element {
 	private TaskDefinition taskdefinition;
@@ -146,6 +146,8 @@ public class Guidance extends Element {
 	protected void copy(final Guidance _guidance) {
 		super.copy(_guidance) ;
 		this.setTaskdefinition(_guidance.getTaskdefinition()) ;
+		this.setActivity(_guidance.getActivity());
+		this.setRoledefinition(_guidance.getRoledefinition());
 	}
 	
 	/*
@@ -162,7 +164,8 @@ public class Guidance extends Element {
 		}
 
 		Guidance guidance = (Guidance) obj ;
-		return new EqualsBuilder().appendSuper(super.equals(guidance)).append(this.taskdefinition, guidance.taskdefinition).isEquals() ;
+		return new EqualsBuilder().appendSuper(super.equals(guidance)).append(this.taskdefinition, guidance.taskdefinition).append(this.roledefinition,
+				guidance.roledefinition).append(this.activity, guidance.activity).isEquals() ;
 	}
 
 	/*
@@ -171,7 +174,7 @@ public class Guidance extends Element {
 	 * @see woops2.model.breakdownelement.BreakdownElement#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.taskdefinition).toHashCode() ;
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.taskdefinition).append(this.roledefinition).append(this.activity).toHashCode();
 	}
 	
 }
