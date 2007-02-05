@@ -36,13 +36,16 @@ public class MainFrame extends JFrame{
 	 */
 	
 	private void initialize() {
-		this.setSize(350, 300);
-                
-        this.setLocation(300,200);
-        
-        myLoginPanel = new LoginPanel(this);
+	    myLoginPanel = new LoginPanel(this);
         this.setContentPane(myLoginPanel);
         this.pack();
+        
+        int p1 = (int)(Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getSize().width/2);
+		int p2 = (int)(Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getSize().height/2) ; 
+		this.setLocation(new Point(
+				p1,p2
+        ));
+		
         myLoginPanel.setVisible(true);                
         
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
