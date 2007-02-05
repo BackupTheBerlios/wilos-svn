@@ -58,10 +58,8 @@ public class ParticipantBean {
 
 	private List<HashMap<String, String>> affectedProjectsList ;
 
-	private List<HashMap<String, String>> manageableProjectsList ;
+	private List<HashMap<String, Object>> manageableProjectsList ;
 
-	private List<HashMap<String, String>> notManageableProjectsList ;
-	
 	private String selectManageableProjectView ;
 	
 	private String selectNotManageableProjectView;
@@ -78,7 +76,6 @@ public class ParticipantBean {
 		this.participant = new Participant() ;
 		this.affectedProjectsList = new ArrayList() ;
 		this.manageableProjectsList = new ArrayList() ;
-		this.notManageableProjectsList = new ArrayList() ;
 		this.selectManageableProjectView = new String();
 		this.selectNotManageableProjectView = new String();
 		this.formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -441,13 +438,17 @@ public class ParticipantBean {
 	 * 
 	 * @return
 	 */
-	public List<HashMap<String, String>> getManageableProjectsList() {
+	public List<HashMap<String, Object>> getManageableProjectsList() {
 		
 		Participant user = getParticipantFromSession() ;
-
+		
+		//FacesContext context = FacesContext.getCurrentInstance();
+		ResourceBundle bundle = ResourceBundle.getBundle(
+		"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
+		
 		if(user instanceof Participant)
 		{
-			this.manageableProjectsList = new ArrayList<HashMap<String, String>>() ;
+			this.manageableProjectsList = new ArrayList<HashMap<String, Object>>() ;
 			HashMap<Project, Participant> manageableProjects = (HashMap<Project, Participant>) this.participantService
 					.getManageableProjectsForAParticipant(user) ;
 				
@@ -457,7 +458,7 @@ public class ParticipantBean {
 					currentProject = (Project) iter.next() ;
 					Participant projectManager = manageableProjects.get(currentProject);
 	
-					HashMap<String, String> ligne = new HashMap<String, String>() ;
+					HashMap<String, Object> ligne = new HashMap<String, Object>() ;
 					
 					ligne.put("project_id", currentProject.getProject_id()) ;
 					ligne.put("name", currentProject.getName()) ;
@@ -466,13 +467,12 @@ public class ParticipantBean {
 					ligne.put("description", currentProject.getDescription()) ;
 					
 					if(projectManager == null){
-						
-						/**
-						 * TODO : nobody à bundliser
-						 */
-						ligne.put("projectManagerName", "nobody") ;
+
+						ligne.put("projectManagerName", bundle.getString("component.table1participantprojectManager.noAffectation")) ;
 						ligne.put("projectManager_id", "") ;
 						ligne.put("affected", (new Boolean(false)).toString()) ;
+						ligne.put("hasOtherManager", new Boolean(false)) ;
+						
 						this.manageableProjectsList.add(ligne) ;
 					}
 					else
@@ -480,73 +480,28 @@ public class ParticipantBean {
 						String projectManagerName = projectManager.getName().concat(" " +projectManager.getFirstname()) ;
 						ligne.put("projectManager_id", projectManager.getWilosuser_id()) ;
 						ligne.put("projectManagerName", projectManagerName) ;
-						//the project is manageable by the current logged participant
-						if(projectManager.getLogin().equals(user.getLogin()))
+						if(projectManager.getWilosuser_id().equals(user.getWilosuser_id()))
 						{
 							ligne.put("affected", (new Boolean(true)).toString()) ;
+							ligne.put("hasOtherManager", new Boolean(false)) ;
+							this.manageableProjectsList.add(ligne) ;
+						}
+						else
+						{
+							ligne.put("affected", (new Boolean(true)).toString()) ;
+							ligne.put("hasOtherManager", new Boolean(true)) ;
 							this.manageableProjectsList.add(ligne) ;
 						}
 					}
-					
 				}
 		}
 		return this.manageableProjectsList ;
 	}
 
-	public void setManageableProjectsList(List<HashMap<String, String>> manageableProjectsList) {
+	public void setManageableProjectsList(List<HashMap<String, Object>> manageableProjectsList) {
 		this.manageableProjectsList = manageableProjectsList ;
 	}
 
-	/**
-	 * Getter of notManageableProjectsList.
-	 * 
-	 * @return the notManageableProjectsList.
-	 */
-	public List<HashMap<String, String>> getNotManageableProjectsList() {
-		Participant user = getParticipantFromSession() ;
-
-		if(user instanceof Participant){
-
-			this.notManageableProjectsList = new ArrayList<HashMap<String, String>>() ;
-			HashMap<Project, Participant> notManageableProjects = (HashMap<Project, Participant>) this.participantService
-					.getManageableProjectsForAParticipant(user) ;
-
-			Project currentProject = new Project() ;
-			for(Iterator iter = notManageableProjects.keySet().iterator(); iter.hasNext();){
-				currentProject = (Project) iter.next() ;
-				Participant projectManager = notManageableProjects.get(currentProject);
-				
-				if(notManageableProjects.get(currentProject) != null){
-					if(!projectManager.getLogin().equals(user.getLogin()))
-					{
-						// projectManager Name construction
-						String projectManagerName = projectManager.getName().concat(" " +projectManager.getFirstname()) ;
-	
-						HashMap<String, String> ligne = new HashMap<String, String>() ;
-						ligne.put("project_id", currentProject.getProject_id()) ;
-						ligne.put("projectManager_id", ((Participant) notManageableProjects.get(currentProject)).getWilosuser_id()) ;
-						ligne.put("projectManagerName", projectManagerName) ;
-						ligne.put("name", currentProject.getName()) ;
-						ligne.put("creationDate", formatter.format(currentProject.getCreationDate())) ;
-						ligne.put("launchingDate", formatter.format(currentProject.getLaunchingDate())) ;
-						ligne.put("description", currentProject.getDescription()) ;
-						this.notManageableProjectsList.add(ligne) ;
-					}
-				}
-			}
-		}
-		return this.notManageableProjectsList ;
-	}
-
-	/**
-	 * Setter of notManageableProjectsList.
-	 * 
-	 * @param _notManageableProjectsList
-	 *            The notManageableProjectsList to set.
-	 */
-	public void setNotManageableProjectsList(List<HashMap<String, String>> _notManageableProjectsList) {
-		this.notManageableProjectsList = _notManageableProjectsList ;
-	}
 
 	/**
 	 * 
@@ -608,18 +563,6 @@ public class ParticipantBean {
 		this.formatter = formatter;
 	}
 
-	public String getSelectNotManageableProjectView() {
-		if (this.notManageableProjectsList.size()==0 )
-		{
-			this.selectNotManageableProjectView  = "notmanageable_no_records_view";
-		}
-		else
-		{
-			this.selectNotManageableProjectView ="notmanageable_records_view";
-		}
-		return selectNotManageableProjectView;
-	}
-
 	public void setSelectNotManageableProjectView(
 			String selectNotManageableProjectView) {
 		this.selectNotManageableProjectView = selectNotManageableProjectView;
@@ -678,4 +621,5 @@ public class ParticipantBean {
 	public void setConcreteRoleDescriptorsMap(HashMap<String, Boolean> _concreteRoleDescriptorsMap) {
 		this.concreteRoleDescriptorsMap = _concreteRoleDescriptorsMap ;
 	}
+
 }

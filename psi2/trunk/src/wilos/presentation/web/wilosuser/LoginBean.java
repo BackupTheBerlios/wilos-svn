@@ -88,10 +88,7 @@ public class LoginBean {
 	 * @return the faces-config id of the page
 	 */
 	public String authentificationAction() {
-		
 
-		
-		FacesContext context = FacesContext.getCurrentInstance();
 		ResourceBundle bundle = ResourceBundle.getBundle(
 		"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
 

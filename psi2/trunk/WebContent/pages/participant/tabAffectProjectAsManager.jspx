@@ -4,105 +4,51 @@
 			<ice:panelTab id="panelTab_participant_projectManager" label="#{msgs['component.participantprojectManager.tabTitle']}" imageDir="images">
 				<ice:panelGroup id="projectManagerPanelGroup" styleClass="contentIncludePanelGroup">
 					<h3><ice:outputText value="#{msgs['component.table1participantprojectManager.title']}" /></h3>
-					
-						<ice:panelStack id="panelStack_manageableProjects" selectedPanel="#{ParticipantBean.selectManageableProjectView}">
-						
+					<ice:panelStack id="panelStack_manageableProjects" selectedPanel="#{ParticipantBean.selectManageableProjectView}">
 						<ice:panelGroup id="manageable_records_view">
-			            			<!-- <f:subview id="manageable_records_view"> -->
-						<ice:dataTable value="#{ParticipantBean.manageableProjectsList}" columnWidths="50px,150px,150px,100px,100px,300px" border="1" var="manageableProject">
-							<ice:column>
-								<f:facet name="header">         			
-							    	<ice:outputText value="#{msgs['component.table1participantprojectManager.assignedto']}"/>
-								</f:facet>
-								<ice:selectBooleanCheckbox value="#{manageableProject.affected}" />
-							</ice:column>
-							<ice:column>
-								<f:facet name="header">
-							    	<ice:outputText value="#{msgs['component.table2participantprojectManager.projectManagerName']}"/>
-							    </f:facet>
-							    <ice:outputText value="#{manageableProject.projectManagerName}"/>
-							</ice:column>
-							  <ice:column>
-								<f:facet name="header">
-							    	<ice:outputText value="#{msgs['component.table1participantprojectManager.name']}"/>
-							    </f:facet>
-							    <ice:outputText value="#{manageableProject.name}"/>
-							</ice:column>
-							<ice:column>
-								<f:facet name="header">
-							    	<ice:outputText value="#{msgs['component.table1participantprojectManager.creationDate']}"/>
-							    </f:facet>
-							    <ice:outputText value="#{manageableProject.creationDate}"/>
-							</ice:column>
-							<ice:column>
-								<f:facet name="header">
-							    	<ice:outputText value="#{msgs['component.table1participantprojectManager.lauchingDate']}"/>
-							    </f:facet>
-							    <ice:outputText value="#{manageableProject.launchingDate}"/>
-							</ice:column>
-							<ice:column>
-								<f:facet name="header">
-							    	<ice:outputText value="#{msgs['component.table1participantprojectManager.description']}"/>
-							    </f:facet>
-							    <ice:outputText value="#{manageableProject.description}"/>
-							</ice:column>
-						</ice:dataTable>
-						<ice:commandButton value="#{msgs['component.table1participantprojectManager.validationButton']}" action="#{ParticipantBean.saveProjectManagerAffectation}"/>
-					<!--  </f:subview>-->
-					</ice:panelGroup>
-					<ice:panelGroup id="manageable_no_records_view">
-					<!-- <f:subview id="manageable_no_records_view">-->
-						<h4><ice:outputText value="#{msgs['component.table1participantprojectManager.norecords']}"/></h4>
-						
-					<!-- </f:subview>-->
-					</ice:panelGroup>
-				</ice:panelStack>
-			
-				<br/>
-				<br/>
-				<h3><ice:outputText value="#{msgs['component.table2participantprojectManager.title']}" /></h3>
-				
-				<ice:panelStack id="panelStack_notmanageableProjects" selectedPanel="#{ParticipantBean.selectNotManageableProjectView}">
-			
-			            	<f:subview id="notmanageable_records_view">
-					<ice:dataTable value="#{ParticipantBean.notManageableProjectsList}" columnWidths="150px,150px,100px,100px,300px" border="1" var="notManageableProject">
-						<ice:column>
-							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.table2participantprojectManager.projectManagerName']}"/>
-						    </f:facet>
-						    <ice:outputText value="#{notManageableProject.projectManagerName}"/>
-						</ice:column>
-						  <ice:column>
-							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.table2participantprojectManager.name']}"/>
-						    </f:facet>
-						    <ice:outputText value="#{notManageableProject.name}"/>
-						</ice:column>
-						<ice:column>
-							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.table2participantprojectManager.creationDate']}"/>
-						    </f:facet>
-						    <ice:outputText value="#{notManageableProject.creationDate}"/>
-						</ice:column>
-						<ice:column>
-							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.table2participantprojectManager.lauchingDate']}"/>
-						    </f:facet>
-						    <ice:outputText value="#{notManageableProject.launchingDate}"/>
-						</ice:column>
-						<ice:column>
-							<f:facet name="header">
-						    	<ice:outputText value="#{msgs['component.table2participantprojectManager.description']}"/>
-						    </f:facet>
-						    <ice:outputText value="#{notManageableProject.description}"/>
-						</ice:column>
-					</ice:dataTable>
-				</f:subview>
-				
-				<f:subview id="notmanageable_no_records_view">
-					<h4><ice:outputText value="#{msgs['component.table2participantprojectManager.norecords']}"/></h4>
-						
-					</f:subview>
+							<ice:dataTable value="#{ParticipantBean.manageableProjectsList}" columnWidths="50px,200px,200px,100px,100px,300px" border="1" var="manageableProject">
+								<ice:column>
+									<f:facet name="header">         			
+								    	<ice:outputText value="#{msgs['component.table1participantprojectManager.assignedto']}"/>
+									</f:facet>
+									<ice:selectBooleanCheckbox value="#{manageableProject.affected}" disabled="#{manageableProject.hasOtherManager}" />
+								</ice:column>
+								<ice:column>
+									<f:facet name="header">
+								    	<ice:outputText value="#{msgs['component.table1participantprojectManager.projectManagerName']}"/>
+								    </f:facet>
+								    <ice:outputText value="#{manageableProject.projectManagerName}"/>
+								</ice:column>
+								  <ice:column>
+									<f:facet name="header">
+								    	<ice:outputText value="#{msgs['component.table1participantprojectManager.name']}"/>
+								    </f:facet>
+								    <ice:outputText value="#{manageableProject.name}"/>
+								</ice:column>
+								<ice:column>
+									<f:facet name="header">
+								    	<ice:outputText value="#{msgs['component.table1participantprojectManager.creationDate']}"/>
+								    </f:facet>
+								    <ice:outputText value="#{manageableProject.creationDate}"/>
+								</ice:column>
+								<ice:column>
+									<f:facet name="header">
+								    	<ice:outputText value="#{msgs['component.table1participantprojectManager.lauchingDate']}"/>
+								    </f:facet>
+								    <ice:outputText value="#{manageableProject.launchingDate}"/>
+								</ice:column>
+								<ice:column>
+									<f:facet name="header">
+								    	<ice:outputText value="#{msgs['component.table1participantprojectManager.description']}"/>
+								    </f:facet>
+								    <ice:outputText value="#{manageableProject.description}"/>
+								</ice:column>
+							</ice:dataTable>
+							<ice:commandButton value="#{msgs['component.table1participantprojectManager.validationButton']}" action="#{ParticipantBean.saveProjectManagerAffectation}"/>
+						</ice:panelGroup>
+						<ice:panelGroup id="manageable_no_records_view">
+							<h4><ice:outputText value="#{msgs['component.table1participantprojectManager.norecords']}"/></h4>
+						</ice:panelGroup>
 					</ice:panelStack>
 				</ice:panelGroup>
 			</ice:panelTab>
