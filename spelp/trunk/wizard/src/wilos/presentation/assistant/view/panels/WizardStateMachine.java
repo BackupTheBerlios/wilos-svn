@@ -79,7 +79,6 @@ public class WizardStateMachine extends Observable{
 			if (WizardControler.getInstance().isShowInfo()){
 				HTMLViewer.getInstance(null).viewObject(ctd);
 			}
-			
 		}
 		else {
 			if (WizardControler.getInstance().isShowInfo()){
