@@ -149,8 +149,8 @@ public class WorkBreakdownElementTest extends TestCase {
 		list.add(tmp2);
 
 		this.workBreakdownElement.addAllConcreteWorkBreakdownElements(list);
-
-		assertTrue(this.workBreakdownElement.getConcreteWorkBreakdownElements().size() == 2);
+		
+		assertTrue(this.workBreakdownElement.getConcreteWorkBreakdownElements().size() >= 2);
 		assertTrue(this.workBreakdownElement.getConcreteWorkBreakdownElements().contains(tmp1));
 		assertTrue(this.workBreakdownElement.getConcreteWorkBreakdownElements().contains(tmp2));
 		assertTrue(tmp1.getWorkBreakdownElement().equals(this.workBreakdownElement));
@@ -176,8 +176,8 @@ public class WorkBreakdownElementTest extends TestCase {
 		assertTrue(this.workBreakdownElement.getConcreteWorkBreakdownElements().size() == 0);
 		assertFalse(this.workBreakdownElement.getConcreteWorkBreakdownElements().contains(tmp1));
 		assertFalse(this.workBreakdownElement.getConcreteWorkBreakdownElements().contains(tmp2));
-		assertFalse(tmp1.getWorkBreakdownElement().equals(this.workBreakdownElement));
-		assertFalse(tmp2.getWorkBreakdownElement().equals(this.workBreakdownElement));
+		assertFalse(this.workBreakdownElement.equals(tmp1.getWorkBreakdownElement()));
+		assertFalse(this.workBreakdownElement.equals(tmp2.getWorkBreakdownElement()));
 
 		// Rk: the tearDown method is called here.
 	}

@@ -134,8 +134,8 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 
 	public void addWorkBreakdownElement(
 			WorkBreakdownElement _workbreakdownElement) {
-		this.workBreakdownElement = _workbreakdownElement;
-		_workbreakdownElement.getConcreteBreakdownElements().add(this);
+		this.setWorkBreakdownElement(_workbreakdownElement);
+		_workbreakdownElement.getConcreteWorkBreakdownElements().add(this);
 	}
 
 	public void removeWorkBreakdownElement(
