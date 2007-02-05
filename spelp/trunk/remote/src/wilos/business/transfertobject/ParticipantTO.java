@@ -12,6 +12,8 @@ package wilos.business.transfertobject;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.role.RoleDescriptor;
 
@@ -32,12 +34,10 @@ public class ParticipantTO extends Participant implements Serializable {
         this.setLogin(myParticipant.getLogin());
         this.setPassword(myParticipant.getPassword());
         this.setFirstname(myParticipant.getFirstname());
-        this.setEmailAddress(myParticipant.getEmailAddress());  
-        Set<RoleDescriptor> roleDescriptorTos= new HashSet<RoleDescriptor>();
-        for (RoleDescriptor rd : myParticipant.getRolesListForAProject()) {
-            roleDescriptorTos.add(new RoleDescriptorTO(rd));
+        this.setEmailAddress(myParticipant.getEmailAddress());        
+        for (ConcreteRoleDescriptor crd : myParticipant.getConcreteRoleDescriptors()) {
+        	 this.addConcreteRoleDescriptor(new ConcreteRoleDescriptorTO(crd));
         }
-        this.setRolesListForAProject(roleDescriptorTos);
     }
 
 }

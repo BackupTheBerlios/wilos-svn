@@ -41,31 +41,9 @@ public class WizardServicesTest extends TestCase {
     }
 
     protected void tearDown() throws Exception {
-    }
-    
-     public void testGetParticipantSansBD() {
-        System.out.println("GetParticipant");
-        System.out.println("testSansBD");
-        
-        WizardServices instance = new WizardServices();
-        
-        String passCrypt = wilos.business.util.Security.encode("test");
-        Participant pt = null;
-        String result = null;
-        try {
-            
-            result = instance.getParticipant("testSansBD", passCrypt);
-            XStream xstream = new XStream();     
-            pt = (Participant)xstream.fromXML(result);
-           
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        assertNotNull(result);
-        assertEquals(pt.getName(),"testSansBD");
-     }
+    }  
      
-     public void testGetParticipantException() {
+    public void testGetParticipantException() {
          System.out.println("GetParticipant");
          System.out.println("testException");
          
