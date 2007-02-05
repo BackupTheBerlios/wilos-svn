@@ -1,8 +1,12 @@
 
 package wilos.test.model.misc.concreteactivity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import junit.framework.TestCase;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 
 /**
  * @author Sebastien
@@ -83,23 +87,17 @@ public class ConcreteActivityTest  extends TestCase {
 	 * {@link wilos.test.model.misc.concreteactivity.Concrete.Activity#addConcreteBreakdownElement(wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement)}.
 	 */
 	public void testAddBreakdownElement() {
-		/*
+		
 		ConcreteBreakdownElement concretebreakdownElement = new ConcreteBreakdownElement() ;
-		concretebreakdownElement.setGuid("idEPF1") ;
-		concretebreakdownElement.setName("name1") ;
-		concretebreakdownElement.setDescription("description1") ;
-		concretebreakdownElement.setPrefix("prefix1") ;
-		concretebreakdownElement.setIsOptional(true) ;
-		concretebreakdownElement.setIsPlanned(false) ;
-		concretebreakdownElement.setHasMultipleOccurrences(false) ;
+		concretebreakdownElement.setConcreteName("name1") ;
 
 		this.concreteactivity.addConcreteBreakdownElement(concretebreakdownElement) ;
 
-		assertFalse(this.concreteactivity.getConcreteBreakDownElements().isEmpty()) ;
+		assertFalse(this.concreteactivity.getConcreteBreakdownElements().isEmpty()) ;
 		assertFalse(concretebreakdownElement.getSuperConcreteActivities().isEmpty()) ;
-		assertTrue(this.concreteactivity.getConcreteBreakDownElements().size() == 1) ;
+		assertTrue(this.concreteactivity.getConcreteBreakdownElements().size() == 1) ;
 		assertTrue(concretebreakdownElement.getSuperConcreteActivities().size() == 1) ;
-		*/
+		
 	}
 
 	/**
@@ -107,24 +105,13 @@ public class ConcreteActivityTest  extends TestCase {
 	 * {@link wilos.test.model.misc.concreteactivity.Concrete.Activity#addAllConcreteBreakdownElements(java.util.Set)}.
 	 */
 	public void testAddAllConcreteBreakdownElement() {
-		/*
+		
 		ConcreteBreakdownElement concretebreakdownElement = new ConcreteBreakdownElement() ;
-		concretebreakdownElement.setGuid("idEPF1") ;
-		concretebreakdownElement.setName("name1") ;
-		concretebreakdownElement.setDescription("description1") ;
-		concretebreakdownElement.setPrefix("prefix1") ;
-		concretebreakdownElement.setIsOptional(true) ;
-		concretebreakdownElement.setIsPlanned(false) ;
-		concretebreakdownElement.setHasMultipleOccurrences(false) ;
+		concretebreakdownElement.setConcreteName("name1") ;
 
 		ConcreteBreakdownElement tmp = new ConcreteBreakdownElement() ;
-		tmp.setGuid("idEPF2") ;
-		tmp.setName("name2") ;
-		tmp.setDescription("description1") ;
-		tmp.setPrefix("prefix1") ;
-		tmp.setIsOptional(true) ;
-		tmp.setIsPlanned(false) ;
-		tmp.setHasMultipleOccurrences(false) ;
+		tmp.setConcreteName("name2") ;
+		
 
 		Set<ConcreteBreakdownElement> set = new HashSet<ConcreteBreakdownElement>() ;
 		set.add(concretebreakdownElement) ;
@@ -132,13 +119,13 @@ public class ConcreteActivityTest  extends TestCase {
 
 		this.concreteactivity.addAllConcreteBreakdownElements(set) ;
 
-		assertFalse("bdes vides", this.concreteactivity.getConcreteBreakDownElements().isEmpty()) ;
-		assertTrue("bdes = 2", this.concreteactivity.getConcreteBreakDownElements().size() == 2) ;
+		assertFalse("bdes vides", this.concreteactivity.getConcreteBreakdownElements().isEmpty()) ;
+		assertTrue("bdes = 2", this.concreteactivity.getConcreteBreakdownElements().size() == 2) ;
 		assertFalse("brk acts vide", concretebreakdownElement.getSuperConcreteActivities().isEmpty()) ;
 		assertTrue("brk acts = 1", concretebreakdownElement.getSuperConcreteActivities().size() == 1) ;
 		assertFalse("tmp acts vide", tmp.getSuperConcreteActivities().isEmpty()) ;
 		assertTrue("tmp acts = 1", tmp.getSuperConcreteActivities().size() == 1) ;
-		*/
+		
 	}
 
 	/**
@@ -146,46 +133,33 @@ public class ConcreteActivityTest  extends TestCase {
 	 * {@link wilos.test.model.misc.concreteactivity.Concrete.Activity#removeConcreteBreakdownElement(wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement)}.
 	 */
 	public void testRemoveConcreteBreakdownElement() {
-		/*
+		
 		ConcreteBreakdownElement concretebreakdownElement = new ConcreteBreakdownElement() ;
-		concretebreakdownElement.setGuid("idEPF1") ;
-		concretebreakdownElement.setName("name1") ;
-		concretebreakdownElement.setDescription("description1") ;
-		concretebreakdownElement.setPrefix("prefix1") ;
-		concretebreakdownElement.setIsOptional(true) ;
-		concretebreakdownElement.setIsPlanned(false) ;
-		concretebreakdownElement.setHasMultipleOccurrences(false) ;
+		concretebreakdownElement.setConcreteName("name1") ;
+
 
 		this.concreteactivity.addConcreteBreakdownElement(concretebreakdownElement) ;
 		this.concreteactivity.removeConcreteBreakdownElement(concretebreakdownElement) ;
 
-		assertTrue(this.concreteactivity.getConcreteBreakDownElements().isEmpty()) ;
+		assertTrue(this.concreteactivity.getConcreteBreakdownElements().isEmpty()) ;
 		assertTrue(concretebreakdownElement.getSuperConcreteActivities().isEmpty()) ;
-		*/
+		
 	}
 
 	/**
 	 * Test method for {@link wilos.test.model.misc.concreteactivity.Concrete.Activity#removeAllConcreteBreakdownElements()}.
 	 */
 	public void testRemoveAllConcreteBreakdownElements() {
-/*
+
 		ConcreteBreakdownElement concretebreakdownElement = new ConcreteBreakdownElement() ;
-		concretebreakdownElement.setGuid("idEPF1") ;
-		concretebreakdownElement.setName("name1") ;
-		concretebreakdownElement.setDescription("description1") ;
-		concretebreakdownElement.setPrefix("prefix1") ;
-		concretebreakdownElement.setIsOptional(true) ;
-		concretebreakdownElement.setIsPlanned(false) ;
-		concretebreakdownElement.setHasMultipleOccurrences(false) ;
+	
+		concretebreakdownElement.setConcreteName("name1") ;
+		
 
 		ConcreteBreakdownElement tmp = new ConcreteBreakdownElement() ;
-		tmp.setGuid("idEPF2") ;
-		tmp.setName("name2") ;
-		tmp.setDescription("description1") ;
-		tmp.setPrefix("prefix1") ;
-		tmp.setIsOptional(true) ;
-		tmp.setIsPlanned(false) ;
-		tmp.setHasMultipleOccurrences(false) ;
+
+		tmp.setConcreteName("name2") ;
+		
 
 		Set<ConcreteBreakdownElement> set = new HashSet<ConcreteBreakdownElement>() ;
 		set.add(concretebreakdownElement) ;
@@ -196,9 +170,9 @@ public class ConcreteActivityTest  extends TestCase {
 		this.concreteactivity.addAllConcreteBreakdownElements(set) ;
 		this.concreteactivity.removeAllConcreteBreakdownElements() ;
 
-		assertTrue("bdes", this.concreteactivity.getConcreteBreakDownElements().isEmpty()) ;
+		assertTrue("bdes", this.concreteactivity.getConcreteBreakdownElements().isEmpty()) ;
 		assertTrue("bde.acts", concretebreakdownElement.getSuperConcreteActivities().isEmpty()) ;
 		assertTrue("tmp.acts", tmp.getSuperConcreteActivities().isEmpty()) ;
-		*/
+		
 	}
 }
