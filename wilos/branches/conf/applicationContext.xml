@@ -56,7 +56,7 @@
 			<value>wilos/model/spem2/task/Step.hbm.xml</value>
 			<value>wilos/model/spem2/role/RoleDescriptor.hbm.xml</value>
 			<value>wilos/model/spem2/role/RoleDefinition.hbm.xml</value>
-			<value>wilos/model/spem2/guide/Guideline.hbm.xml</value>
+			<value>wilos/model/spem2/guide/Guidance.hbm.xml</value>
 			</list>
 		</property>
 
@@ -116,8 +116,8 @@
 	<!-- =============================================================== -->
 	<!-- ========================= SPELP DAO =========================== -->
 	<!-- =============================================================== -->	
-	<bean id="GuidelineDao"
-		class="wilos.hibernate.spem2.guide.GuidelineDao">
+	<bean id="GuidanceDao"
+		class="wilos.hibernate.spem2.guide.GuidanceDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 	
@@ -239,9 +239,9 @@
 		<property name="concreteTaskDescriptorService" ref="ConcreteTaskDescriptorService" />
 	</bean>
 	
-	<bean id="GuidelineService"
-		class="wilos.business.services.guide.GuidelineService">
-		<property name="guidelineDao" ref="GuidelineDao" />
+	<bean id="GuidanceService"
+		class="wilos.business.services.guide.GuidanceService">
+		<property name="guidanceDao" ref="GuidanceDao" />
 	</bean>
 
 	
@@ -304,7 +304,7 @@
 			ref="WorkBreakdownElementDao" />
 		<property name="breakdownElementService" ref="BreakdownElementService" />
 		<property name="taskDescriptorService" ref="TaskDescriptorService" />
-		<property name="guidelineDao" ref="GuidelineDao" />
+		<property name="guidanceDao" ref="GuidanceDao" />
 	</bean>
 	
 	  <bean id="BreakdownElementService"
