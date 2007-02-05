@@ -108,6 +108,7 @@ public class WizardControler {
 					if(selectedTask.getId() != null) {
 						WizardControler.getInstance().changeHTMLViewerBehavior(true);
 						WizardControler.getInstance().startConcreteTaskDescriptor(selectedTask);
+						treePanel.getTree().treeDidChange();
 						//WizardControler.getInstance().refreshParticipant();
 					}
 				}
@@ -123,6 +124,7 @@ public class WizardControler {
 					if(selectedTask.getId() != null) {
 						WizardControler.getInstance().changeHTMLViewerBehavior(true);
 						WizardControler.getInstance().pauseConcreteTaskDescriptor(selectedTask);
+						treePanel.getTree().treeDidChange();
 						//WizardControler.getInstance().refreshParticipant();
 					}
 				}
@@ -137,6 +139,7 @@ public class WizardControler {
 					if(selectedTask.getId() != null) {
 						WizardControler.getInstance().changeHTMLViewerBehavior(true);
 						WizardControler.getInstance().finishConcreteTaskDescriptor(selectedTask);
+						treePanel.getTree().treeDidChange();
 						//WizardControler.getInstance().refreshParticipant();
 					}
 				}
