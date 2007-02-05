@@ -7,7 +7,9 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import wilos.model.misc.project.Project;
+import wilos.model.misc.wilosuser.ProcessManager;
 import wilos.model.spem2.activity.Activity;
+import wilos.model.spem2.phase.Phase;
 
 /**
  * 
@@ -27,6 +29,8 @@ public class Process extends Activity implements Cloneable {
 
 	// The Project of Process
 	private Set<Project> projects;
+	
+	private ProcessManager processManager;
 
 	/**
 	 * Default constructor
@@ -72,7 +76,7 @@ public class Process extends Activity implements Cloneable {
 			return true;
 		}
 		Process process = (Process) obj;
-		return new EqualsBuilder().appendSuper(super.equals(process))
+		return new EqualsBuilder().appendSuper(super.equals(process)).append(this.projects, process.projects).append(this.processManager, process.processManager)
 				.isEquals();
 	}
 
@@ -82,7 +86,7 @@ public class Process extends Activity implements Cloneable {
 	 * @see woops2.model.activity.Activity#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.processManager)
 				.toHashCode();
 	}
 
@@ -136,4 +140,37 @@ public class Process extends Activity implements Cloneable {
 	public void setProjects(Set<Project> project) {
 		this.projects = project;
 	}
+	
+	/*
+	 * relation between Process et Project Manager
+	 */
+	
+	/**
+	 * add a ProcessManager
+	 * @param ProcessManager
+	 */
+	public void addProcessManager(ProcessManager _processManager){
+		   this.processManager = _processManager;
+		   _processManager.getProcessesManaged().add(this);
+		}
+
+	/**
+	 * remove a ProcessManager
+	 * @param ProcessManager
+	 */
+	public void removeFromProcessManager(ProcessManager _processManager){
+		   _processManager.getProcessesManaged().remove(this);
+		   this.processManager = null;
+		  
+		}
+
+	public ProcessManager getProcessManager() {
+		return processManager;
+	}
+
+	public void setProcessManager(ProcessManager processManager) {
+		this.processManager = processManager;
+	}
+
+	
 }
