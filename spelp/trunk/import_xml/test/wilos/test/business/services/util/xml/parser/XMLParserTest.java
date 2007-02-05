@@ -89,9 +89,9 @@ public class XMLParserTest extends TestCase {
 		assertTrue(it.hasNext());
 		while (it.hasNext()) {
 			process = it.next();
-			assertTrue(process.getBreakDownElements().size() > 0);
+			assertTrue(process.getBreakdownElements().size() > 0);
 			
-			phases = (HashSet<BreakdownElement>) process.getBreakDownElements();
+			phases = (HashSet<BreakdownElement>) process.getBreakdownElements();
 			int nbPhases = 0;
 			int nbIterations = 0;
 			itBde = phases.iterator();
@@ -122,14 +122,14 @@ public class XMLParserTest extends TestCase {
 		itProc = processes.iterator();
 		assertTrue(itProc.hasNext());
 		while (itProc.hasNext()) {
-			itAct = itProc.next().getBreakDownElements().iterator();
+			itAct = itProc.next().getBreakdownElements().iterator();
 			
 			assertTrue(itAct.hasNext());
 			while (itAct.hasNext()) {
 				BreakdownElement tmpBDE = itAct.next();
 				assertTrue(tmpBDE instanceof Activity);
 				
-				assertTrue(((Activity) tmpBDE).getBreakDownElements().size() > 0);
+				assertTrue(((Activity) tmpBDE).getBreakdownElements().size() > 0);
 			}
 		}
 	}
@@ -147,7 +147,7 @@ public class XMLParserTest extends TestCase {
 		itProc = processes.iterator();
 		assertTrue(itProc.hasNext());
 		while (itProc.hasNext()) {
-			itAct = itProc.next().getBreakDownElements().iterator();
+			itAct = itProc.next().getBreakdownElements().iterator();
 			
 				// Only the first Phase has role Descriptors !!!
 				assertTrue(itAct.hasNext());
@@ -158,7 +158,7 @@ public class XMLParserTest extends TestCase {
 				}
 				
 				if (tmpAct instanceof Phase) {
-					bdeSet = (HashSet<BreakdownElement>) tmpAct.getBreakDownElements();
+					bdeSet = (HashSet<BreakdownElement>) tmpAct.getBreakdownElements();
 					itBde = bdeSet.iterator();
 					
 					//assertTrue(itBde.hasNext());
@@ -188,7 +188,7 @@ public class XMLParserTest extends TestCase {
 		itProc = processes.iterator();
 		assertTrue(itProc.hasNext());
 		while (itProc.hasNext()) {
-			itAct = itProc.next().getBreakDownElements().iterator();
+			itAct = itProc.next().getBreakdownElements().iterator();
 			
 				// Only the first Phase has role Descriptors !!!
 				assertTrue(itAct.hasNext());
@@ -199,7 +199,7 @@ public class XMLParserTest extends TestCase {
 				}
 			
 				if (tmpAct instanceof Phase) {
-					bdeSet = (HashSet<BreakdownElement>) tmpAct.getBreakDownElements();
+					bdeSet = (HashSet<BreakdownElement>) tmpAct.getBreakdownElements();
 					itBde = bdeSet.iterator();
 					
 					//assertTrue(itBde.hasNext());
@@ -225,7 +225,7 @@ public class XMLParserTest extends TestCase {
 		assertTrue(itProc.hasNext());
 		while (itProc.hasNext()) {
 			// Iterator on the set of the two Phases of Scrum
-			itAct = itProc.next().getBreakDownElements().iterator();
+			itAct = itProc.next().getBreakdownElements().iterator();
 			
 //			 We work on the second Phase
 			assertTrue(itAct.hasNext());
@@ -237,7 +237,7 @@ public class XMLParserTest extends TestCase {
 			
 			Phase secondPhase = (Phase) tmpAct;
 			// We get the set of activities of the second Phase
-			actSet = (HashSet<BreakdownElement>) secondPhase.getBreakDownElements();
+			actSet = (HashSet<BreakdownElement>) secondPhase.getBreakdownElements();
 			// And an iterator on it
 			itAct2 = actSet.iterator();
 			
@@ -276,7 +276,7 @@ public class XMLParserTest extends TestCase {
 		assertTrue(itProc.hasNext());
 		while (itProc.hasNext()) {
 			// Iterator on the set of the two Phases of Scrum
-			itAct = itProc.next().getBreakDownElements().iterator();
+			itAct = itProc.next().getBreakdownElements().iterator();
 			
 //			 We work on the second Phase
 			assertTrue(itAct.hasNext());
@@ -288,7 +288,7 @@ public class XMLParserTest extends TestCase {
 			
 			Phase secondPhase = (Phase) tmpAct;
 			// We get the set of activities of the second Phase
-			secondPhaseActivities = (HashSet<BreakdownElement>) secondPhase.getBreakDownElements();
+			secondPhaseActivities = (HashSet<BreakdownElement>) secondPhase.getBreakdownElements();
 			// And an iterator on it
 			secondPhaseActivitiesIterator = secondPhaseActivities.iterator();
 			
@@ -298,7 +298,7 @@ public class XMLParserTest extends TestCase {
 			
 			Iterator<BreakdownElement> it;
 			
-			it = secondPhaseIteration.getBreakDownElements().iterator();
+			it = secondPhaseIteration.getBreakdownElements().iterator();
 			
 			int i = 0;
 			while (it.hasNext()) {
@@ -321,7 +321,7 @@ public class XMLParserTest extends TestCase {
 		assertTrue(itProc.hasNext());
 		while (itProc.hasNext()) {
 			// Iterator on the set of the four Phases of OpenUP
-			itAct = itProc.next().getBreakDownElements().iterator();
+			itAct = itProc.next().getBreakdownElements().iterator();
 			
 			// Activity 1
 			assertTrue(itAct.hasNext());
@@ -361,13 +361,13 @@ public class XMLParserTest extends TestCase {
 		assertTrue(itProc.hasNext());
 		while (itProc.hasNext()) {
 			// Iterator on the set of the four Phases of OpenUP
-			itTopLevelAct = itProc.next().getBreakDownElements().iterator();
+			itTopLevelAct = itProc.next().getBreakdownElements().iterator();
 			
 			// Activity 1
 			while (itTopLevelAct.hasNext()) {
 				topLevelActivity = (Activity) itTopLevelAct.next();
-				assertTrue(topLevelActivity.getBreakDownElements().size() >= nbMiniSndLevelActivities);
-				assertTrue(topLevelActivity.getBreakDownElements().size() <= nbMaxiSndLevelActivities);
+				assertTrue(topLevelActivity.getBreakdownElements().size() >= nbMiniSndLevelActivities);
+				assertTrue(topLevelActivity.getBreakdownElements().size() <= nbMaxiSndLevelActivities);
 			}
 		}
 	}
@@ -396,7 +396,7 @@ public class XMLParserTest extends TestCase {
 		assertTrue(itProc.hasNext());
 		while (itProc.hasNext()) {
 			// Iterator on the set of the four Phases of OpenUP
-			itTopLevelAct = itProc.next().getBreakDownElements().iterator();
+			itTopLevelAct = itProc.next().getBreakdownElements().iterator();
 			
 			// Activity 1
 			assertTrue(itTopLevelAct.hasNext());
@@ -410,14 +410,14 @@ public class XMLParserTest extends TestCase {
 				}
 			}
 			
-			itSecondLevelAct = topLevelActivity.getBreakDownElements().iterator();
+			itSecondLevelAct = topLevelActivity.getBreakdownElements().iterator();
 			
 			rentreDansInitiateProject = false;
 			while (itSecondLevelAct.hasNext()) {
 				secondLevelActivity = (Activity) itSecondLevelAct.next();
 				if (secondLevelActivity.getPresentationName().equals("Initiate Project")) {
 					rentreDansInitiateProject = true;
-					BdeIterator = secondLevelActivity.getBreakDownElements().iterator();
+					BdeIterator = secondLevelActivity.getBreakdownElements().iterator();
 					nbRoleDescriptors = 0;
 					while (BdeIterator.hasNext()) {
 						tmpBde = BdeIterator.next();
@@ -456,7 +456,7 @@ public class XMLParserTest extends TestCase {
 		assertTrue(itProc.hasNext());
 		while (itProc.hasNext()) {
 			// Iterator on the set of the four Phases of OpenUP
-			itTopLevelAct = itProc.next().getBreakDownElements().iterator();
+			itTopLevelAct = itProc.next().getBreakdownElements().iterator();
 			
 			topLevelActivity = null;
 			// We want the third Phase : Construction Iteration
@@ -467,14 +467,14 @@ public class XMLParserTest extends TestCase {
 				}
 			}
 			
-			itSecondLevelAct = topLevelActivity.getBreakDownElements().iterator();
+			itSecondLevelAct = topLevelActivity.getBreakdownElements().iterator();
 			
 			rentreDansManageRequirements = false;
 			while (itSecondLevelAct.hasNext()) {
 				secondLevelActivity = (Activity) itSecondLevelAct.next();
 				if (secondLevelActivity.getPresentationName().equals("Manage Requirements")) {
 					rentreDansManageRequirements = true;
-					BdeIterator = secondLevelActivity.getBreakDownElements().iterator();
+					BdeIterator = secondLevelActivity.getBreakdownElements().iterator();
 					nbTaskDescriptors = 0;
 					while (BdeIterator.hasNext()) {
 						tmpBde = BdeIterator.next();
@@ -513,7 +513,7 @@ public class XMLParserTest extends TestCase {
 		assertNotNull(theTestedProcess);
 		if (theTestedProcess != null) {
 			// Iterator on the set of the four Phases of OpenUP
-			itTopLevelAct = theTestedProcess.getBreakDownElements().iterator();
+			itTopLevelAct = theTestedProcess.getBreakdownElements().iterator();
 			
 			topLevelActivity = null;
 			// We want the third Phase : Construction Iteration
@@ -524,14 +524,14 @@ public class XMLParserTest extends TestCase {
 				}
 			}
 			
-			itSecondLevelAct = topLevelActivity.getBreakDownElements().iterator();
+			itSecondLevelAct = topLevelActivity.getBreakdownElements().iterator();
 			
 			rentreDansManageRequirements = false;
 			while (itSecondLevelAct.hasNext()) {
 				secondLevelActivity = (Activity) itSecondLevelAct.next();
 				if (secondLevelActivity.getPresentationName().equals("Manage Requirements")) {
 					rentreDansManageRequirements = true;
-					BdeIterator = secondLevelActivity.getBreakDownElements().iterator();
+					BdeIterator = secondLevelActivity.getBreakdownElements().iterator();
 					nbTaskDescriptors = 0;
 					while (BdeIterator.hasNext()) {
 						tmpBde = BdeIterator.next();
@@ -590,7 +590,7 @@ public class XMLParserTest extends TestCase {
 		assertTrue(itProc.hasNext());
 		while (itProc.hasNext()) {
 			// Iterator on the set of the two Phases of Scrum
-			itAct = itProc.next().getBreakDownElements().iterator();
+			itAct = itProc.next().getBreakdownElements().iterator();
 			
 //			 We work on the second Phase
 			BreakdownElement tmpAct = itAct.next();
@@ -606,7 +606,7 @@ public class XMLParserTest extends TestCase {
 			
 			Phase secondPhase = (Phase) tmpAct;
 			// We get the set of activities of the second Phase
-			secondPhaseActivities = (HashSet<BreakdownElement>) secondPhase.getBreakDownElements();
+			secondPhaseActivities = (HashSet<BreakdownElement>) secondPhase.getBreakdownElements();
 			// And an iterator on it
 			secondPhaseActivitiesIterator = secondPhaseActivities.iterator();
 			
@@ -622,7 +622,7 @@ public class XMLParserTest extends TestCase {
 			
 			Iterator<BreakdownElement> it;
 			
-			it = secondPhaseIteration.getBreakDownElements().iterator();
+			it = secondPhaseIteration.getBreakdownElements().iterator();
 			
 			int i = 0;
 			while (it.hasNext()) {
@@ -655,7 +655,7 @@ public class XMLParserTest extends TestCase {
 		assertNotNull(theTestedProcess);
 		if (theTestedProcess != null) {
 			// Iterator on the set of the four Phases of OpenUP
-			itTopLevelAct = theTestedProcess.getBreakDownElements().iterator();
+			itTopLevelAct = theTestedProcess.getBreakdownElements().iterator();
 			
 			topLevelActivity = null;
 			// We want the third Phase : Construction Iteration
@@ -666,14 +666,14 @@ public class XMLParserTest extends TestCase {
 				}
 			}
 			
-			itSecondLevelAct = topLevelActivity.getBreakDownElements().iterator();
+			itSecondLevelAct = topLevelActivity.getBreakdownElements().iterator();
 			
 			rentreDansManageRequirements = false;
 			while (itSecondLevelAct.hasNext()) {
 				secondLevelActivity = (Activity) itSecondLevelAct.next();
 				if (secondLevelActivity.getPresentationName().equals("Manage Requirements")) {
 					rentreDansManageRequirements = true;
-					BdeIterator = secondLevelActivity.getBreakDownElements().iterator();
+					BdeIterator = secondLevelActivity.getBreakdownElements().iterator();
 					nbTaskDescriptors = 0;
 					while (BdeIterator.hasNext()) {
 						tmpBde = BdeIterator.next();
@@ -728,7 +728,7 @@ public class XMLParserTest extends TestCase {
 		assertNotNull(theTestedProcess);
 		if (theTestedProcess != null) {
 			// Iterator on the set of the four Phases of OpenUP
-			itTopLevelAct = theTestedProcess.getBreakDownElements().iterator();
+			itTopLevelAct = theTestedProcess.getBreakdownElements().iterator();
 			
 			topLevelActivity = null;
 			// We want the third Phase : Construction Iteration
@@ -739,14 +739,14 @@ public class XMLParserTest extends TestCase {
 				}
 			}
 			
-			itSecondLevelAct = topLevelActivity.getBreakDownElements().iterator();
+			itSecondLevelAct = topLevelActivity.getBreakdownElements().iterator();
 			
 			rentreDansDevelopSolution = false;
 			while (itSecondLevelAct.hasNext()) {
 				secondLevelActivity = (Activity) itSecondLevelAct.next();
 				if (secondLevelActivity.getPresentationName().equals("Develop Solution (for requirement) (within context)")) {
 					rentreDansDevelopSolution = true;
-					BdeIterator = secondLevelActivity.getBreakDownElements().iterator();
+					BdeIterator = secondLevelActivity.getBreakdownElements().iterator();
 					nbTaskDescriptors = 0;
 					while (BdeIterator.hasNext()) {
 						tmpBde = BdeIterator.next();					
@@ -799,7 +799,7 @@ public class XMLParserTest extends TestCase {
 		assertNotNull(theTestedProcess);
 		if (theTestedProcess != null) {
 			// Iterator on the set of the four Phases of OpenUP
-			itTopLevelAct = theTestedProcess.getBreakDownElements().iterator();
+			itTopLevelAct = theTestedProcess.getBreakdownElements().iterator();
 			
 			topLevelActivity = null;
 			// We want the third Phase : Construction Iteration
@@ -810,7 +810,7 @@ public class XMLParserTest extends TestCase {
 				}
 			}			
 			
-			itSecondLevelAct = topLevelActivity.getBreakDownElements().iterator();			
+			itSecondLevelAct = topLevelActivity.getBreakdownElements().iterator();			
 			rentreDansInitiateProject = false;
 			while (itSecondLevelAct.hasNext()) {
 				secondLevelActivity = (Activity) itSecondLevelAct.next();
