@@ -1,6 +1,6 @@
 package wilos.presentation.web.viewer;
 
-import wilos.business.services.project.ProjectService;
+import wilos.business.services.misc.project.ProjectService;
 import wilos.model.misc.project.Project;
 
 
