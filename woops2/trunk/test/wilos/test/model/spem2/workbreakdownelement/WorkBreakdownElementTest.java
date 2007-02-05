@@ -276,7 +276,7 @@ public class WorkBreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	public final void testRemoveSuccessors() {
+	public final void testRemoveAllSuccessors() {
 		// Rk: the setUp method is called here.
 
 		WorkBreakdownElement tmp1 = new WorkBreakdownElement();
@@ -299,7 +299,7 @@ public class WorkBreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	public final void testRemovepredecessors() {
+	public final void testRemoveAllPredecessors() {
 		// Rk: the setUp method is called here.
 
 		WorkBreakdownElement tmp1 = new WorkBreakdownElement();
