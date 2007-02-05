@@ -14,6 +14,29 @@
 			class="wilos.model.spem2.workbreakdownelement.WorkBreakdownElement"
 			column="workbreakdownelement_id">
 		</many-to-one>
-		
+
+		<property name="state" type="java.lang.String" column="state"
+			length="256" />
+
+		<property name="plannedStartingDate" type="java.util.Date"
+			column="plannedstartingdate" length="256" />
+
+		<property name="plannedFinishingDate" type="java.util.Date"
+			column="plannedfinishingdate" length="256" ></property>
+
+		<property name="realStartingDate" type="java.util.Date"
+			column="realstartingdate" length="256" />
+
+		<property name="realFinishingDate" type="java.util.Date"
+			column="realfinishingdate" length="256" />
+
+		<property name="plannedTime" type="float" column="plannedtime" />
+
+		<property name="remainingTime" type="float"
+			column="remainingtime" />
+
+		<property name="accomplishedTime" type="float"
+			column="accomplishedtime" />
+
 	</joined-subclass>
 </hibernate-mapping>

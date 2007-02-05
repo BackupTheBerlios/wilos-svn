@@ -12,18 +12,18 @@ import wilos.utils.Constantes.State;
 public class ConcreteTaskDescriptorTest extends TestCase {
 
 	private ConcreteTaskDescriptor concreteTaskDescriptor ;
-	
-	Date date;
-	
+
+	private Date date;
+
 	public static final String CONCRETE_NAME = "Concrete name" ;
-	
+
 	public static final int ACCOMPLISHED_TIME = 15 ;
-	
+
 	public static final int PLANNED_TIME = 24 ;
-	
+
 	public static final String PLANNED_FINISHING_DATE_STRING = "18/01/2007 10:00" ;
-	
-	
+
+
 	public ConcreteTaskDescriptorTest(){
 		try {
 			date = Constantes.DATE_FORMAT.parse(PLANNED_FINISHING_DATE_STRING);
@@ -34,7 +34,7 @@ public class ConcreteTaskDescriptorTest extends TestCase {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see junit.framework.TestCase#setUp()
 	 */
 	protected void setUp() throws Exception {
@@ -48,16 +48,16 @@ public class ConcreteTaskDescriptorTest extends TestCase {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see junit.framework.TestCase#tearDown()
 	 */
 	protected void tearDown() throws Exception {
 		super.tearDown() ;
 	}
-	
+
 	/**
 	 * TODO
-	 * 
+	 *
 	 */
 	public void testClone () {
 		try{
@@ -67,10 +67,10 @@ public class ConcreteTaskDescriptorTest extends TestCase {
 			fail("Error CloneNotSupportedException in the testClone method") ;
 		}
 	}
-	
+
 	/**
 	 * TODO
-	 * 
+	 *
 	 */
 	public void testHashCode() {
 		ConcreteTaskDescriptor ctd = new ConcreteTaskDescriptor();
@@ -78,15 +78,15 @@ public class ConcreteTaskDescriptorTest extends TestCase {
 		ctd.setAccomplishedTime(ACCOMPLISHED_TIME);
 		ctd.setPlannedTime(PLANNED_TIME);
 		ctd.setPlannedFinishingDate(this.date);
-		
+
 		assertNotNull(this.concreteTaskDescriptor.hashCode());
 		assertNotNull(ctd.hashCode());
 		assertEquals(this.concreteTaskDescriptor.hashCode(),ctd.hashCode());
 	}
-	
+
 	/**
 	 * TODO
-	 * 
+	 *
 	 */
 	public void testAddTaskDescriptor() {
 		TaskDescriptor taskDescriptor = new TaskDescriptor();
@@ -102,15 +102,15 @@ public class ConcreteTaskDescriptorTest extends TestCase {
 
 	/**
 	 * TODO
-	 * 
+	 *
 	 */
 	public void testRemoveTaskDescriptor() {
 		TaskDescriptor taskDescriptor = new TaskDescriptor();
-		
+
 		this.concreteTaskDescriptor.addTaskDescriptor(taskDescriptor);
 		assertNotNull(this.concreteTaskDescriptor.getTaskDescriptor());
 		assertEquals(this.concreteTaskDescriptor.getTaskDescriptor(), taskDescriptor);
-		
+
 		this.concreteTaskDescriptor.removeTaskDescriptor(taskDescriptor);
 		assertNull(this.concreteTaskDescriptor.getTaskDescriptor());
 		assertTrue(taskDescriptor.getConcreteTaskDescriptors().size() == 0);

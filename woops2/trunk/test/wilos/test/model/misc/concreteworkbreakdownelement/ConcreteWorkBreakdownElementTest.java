@@ -1,17 +1,34 @@
 package wilos.test.model.misc.concreteworkbreakdownelement;
 
+import java.text.ParseException;
+import java.util.Date;
+
 import junit.framework.TestCase;
-import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
+import wilos.utils.Constantes;
 
 public class ConcreteWorkBreakdownElementTest extends TestCase {
 
 	private ConcreteWorkBreakdownElement concreteWorkBreakdownElement ;
 
-	private static final String ID = "thisId" ;
-
 	private static final String CONCRETE_NAME = "Work Concrete name" ;
+
+	private Date date;
+
+	public static final int ACCOMPLISHED_TIME = 15 ;
+
+	public static final int PLANNED_TIME = 24 ;
+
+	public static final String PLANNED_FINISHING_DATE_STRING = "18/01/2007 10:00" ;
+
+	public ConcreteWorkBreakdownElementTest(){
+		try {
+			date = Constantes.DATE_FORMAT.parse(PLANNED_FINISHING_DATE_STRING);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -22,6 +39,9 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 		super.setUp() ;
 		this.concreteWorkBreakdownElement = new ConcreteWorkBreakdownElement() ;
 		this.concreteWorkBreakdownElement.setConcreteName(CONCRETE_NAME);
+		this.concreteWorkBreakdownElement.setAccomplishedTime(ACCOMPLISHED_TIME);
+		this.concreteWorkBreakdownElement.setPlannedTime(PLANNED_TIME);
+		this.concreteWorkBreakdownElement.setPlannedFinishingDate(this.date);
 	}
 
 	/*
@@ -52,6 +72,9 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 
 		ConcreteWorkBreakdownElement cwbe = new ConcreteWorkBreakdownElement() ;
 		cwbe.setConcreteName(CONCRETE_NAME) ;
+		this.concreteWorkBreakdownElement.setAccomplishedTime(ACCOMPLISHED_TIME);
+		this.concreteWorkBreakdownElement.setPlannedTime(PLANNED_TIME);
+		this.concreteWorkBreakdownElement.setPlannedFinishingDate(this.date);
 
 		assertNotNull(this.concreteWorkBreakdownElement.hashCode()) ;
 		assertNotNull(cwbe.hashCode()) ;
@@ -65,12 +88,18 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 
 		ConcreteWorkBreakdownElement cwbe = new ConcreteWorkBreakdownElement() ;
 		cwbe.setConcreteName(CONCRETE_NAME) ;
+		this.concreteWorkBreakdownElement.setAccomplishedTime(ACCOMPLISHED_TIME);
+		this.concreteWorkBreakdownElement.setPlannedTime(PLANNED_TIME);
+		this.concreteWorkBreakdownElement.setPlannedFinishingDate(this.date);
 
 		assertTrue(this.concreteWorkBreakdownElement.equals(cwbe)) ;
 
 		ConcreteWorkBreakdownElement cwbe2 = new ConcreteWorkBreakdownElement() ;
 		cwbe.setConcreteName("Another concrete name") ;
-		
+		this.concreteWorkBreakdownElement.setAccomplishedTime(ACCOMPLISHED_TIME);
+		this.concreteWorkBreakdownElement.setPlannedTime(PLANNED_TIME);
+		this.concreteWorkBreakdownElement.setPlannedFinishingDate(this.date);
+
 		assertFalse(this.concreteWorkBreakdownElement.equals(cwbe2)) ;
 	}
 
@@ -82,24 +111,24 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 
 		assertNotNull(this.concreteWorkBreakdownElement.getWorkBreakdownElement());
 		assertTrue(this.concreteWorkBreakdownElement.getWorkBreakdownElement().equals(workBreakdownElement));
-		
+
 		// Rk: the tearDown method is called here.
 	}
-	
+
 	public void testRemoveWorkBreakdownElement() {
 		// Rk: the setUp method is called here.
 
 		WorkBreakdownElement workBreakdownElement = new WorkBreakdownElement();
 		this.concreteWorkBreakdownElement.addWorkBreakdownElement(workBreakdownElement);
-		
+
 		assertNotNull(this.concreteWorkBreakdownElement.getWorkBreakdownElement());
 		assertTrue(this.concreteWorkBreakdownElement.getWorkBreakdownElement().equals(workBreakdownElement));
-		
+
 		this.concreteWorkBreakdownElement.removeWorkBreakdownElement(workBreakdownElement);
 
 		assertFalse(workBreakdownElement.equals(this.concreteWorkBreakdownElement.getWorkBreakdownElement()));
 		assertNull(this.concreteWorkBreakdownElement.getWorkBreakdownElement());
-		
+
 		// Rk: the tearDown method is called here.
 	}
 }
