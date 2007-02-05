@@ -149,7 +149,14 @@ public class Project implements Cloneable {
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(this.name).append(this.description).append(this.creationDate).append(this.launchingDate).toHashCode() ;
+		return new HashCodeBuilder(17, 37)	.append(this.name)
+											.append(this.description)
+											.append(this.creationDate)
+											.append(this.launchingDate)
+											.append(this.isFinished)
+											.append(this.process)
+											.append(this.projectManager)
+											.toHashCode() ;
 	}
 
 	/*
@@ -165,8 +172,15 @@ public class Project implements Cloneable {
 			return true ;
 		}
 		Project project = (Project) _obj ;
-		return new EqualsBuilder().append(this.name, project.name).append(this.description, project.description)
-				.append(this.creationDate, project.creationDate).append(this.launchingDate, project.launchingDate).isEquals() ;
+		return new EqualsBuilder()	.append(this.name, project.name)
+									.append(this.description, project.description)
+									.append(this.creationDate, project.creationDate)
+									.append(this.launchingDate, project.launchingDate)
+									.append(this.isFinished, project.isFinished)
+									.append(this.process, project.process)
+									.append(this.participants, project.participants)
+									.append(this.projectManager, project.projectManager)
+									.isEquals() ;
 	}
 
 	/**

@@ -169,8 +169,12 @@ public abstract class WilosUser implements Cloneable {
 			return true ;
 		}
 		WilosUser wilosUser = (WilosUser) obj ;
-		return new EqualsBuilder().append(this.name, wilosUser.name).append(this.firstname, wilosUser.firstname).append(this.emailAddress,
-				wilosUser.emailAddress).append(this.login, wilosUser.login).append(this.password, wilosUser.password).isEquals() ;
+		return new EqualsBuilder()	.append(this.name, wilosUser.name)
+									.append(this.firstname, wilosUser.firstname)
+									.append(this.emailAddress, wilosUser.emailAddress)
+									.append(this.login, wilosUser.login)
+									.append(this.password, wilosUser.password)
+									.isEquals() ;
 	}
 
 	/*
@@ -179,9 +183,14 @@ public abstract class WilosUser implements Cloneable {
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode() ;
+		return new HashCodeBuilder(17, 37)	.append(this.name)
+											.append(this.firstname)
+											.append(this.emailAddress)
+											.append(this.login)
+											.append(this.password)
+											.toHashCode() ;
 	}
-
+	
 	public String getWilosuser_id() {
 		return wilosuser_id;
 	}
