@@ -15,7 +15,7 @@ import wilos.model.spem2.task.TaskDefinition;
  */
 public class Guidance extends Element {
 	private TaskDefinition taskdefinition;
-	private RoleDefinition roleDefinition;
+	private RoleDefinition roledefinition;
 	private Activity activity;
 	
 	
@@ -33,7 +33,7 @@ public class Guidance extends Element {
 	}
 
 	public void addRoleDefinition(RoleDefinition _roleDefinition) {
-		this.roleDefinition = _roleDefinition;
+		this.roledefinition = _roleDefinition;
 		(_roleDefinition.getGuidances()).add(this);
 	}
 
@@ -119,12 +119,12 @@ public class Guidance extends Element {
 	}
 
 	
-	public RoleDefinition getRoleDefinition() {
-		return roleDefinition;
+	public RoleDefinition getRoledefinition() {
+		return roledefinition;
 	}
 
 	
-	public void setRoleDefinition(RoleDefinition _roleDefinition) {
-		this.roleDefinition = _roleDefinition;
+	public void setRoledefinition(RoleDefinition _roleDefinition) {
+		this.roledefinition = _roleDefinition;
 	}
 }
