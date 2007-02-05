@@ -50,7 +50,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 			return true ;
 		}
 		Activity activity = (Activity) obj ;
-		return new EqualsBuilder().appendSuper(super.equals(activity)).append(this.breakdownElements, activity.breakdownElements).isEquals() ;
+		return new EqualsBuilder().appendSuper(super.equals(activity)).append(this.breakdownElements, activity.breakdownElements).append(this.concreteActivities,activity.concreteActivities).isEquals() ;
 	}
 
 	/*
