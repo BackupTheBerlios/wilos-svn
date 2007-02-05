@@ -15,7 +15,7 @@ import wilos.test.TestConfiguration;
 public class ConcreteIterationDaoTest extends TestCase {
 	private ConcreteIterationDao concreteIterationDao = (ConcreteIterationDao) TestConfiguration.getInstance().getApplicationContext().getBean("ConcreteIterationDao") ;
 
-	private ConcreteIteration concreteIteration = (ConcreteIteration) TestConfiguration.getInstance().getApplicationContext().getBean("ConcreteIteration");
+	private ConcreteIteration concreteIteration;
 	
 	public static final String CONCRETE_NAME = "thisConcreteIteration" ;
 
