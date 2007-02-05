@@ -684,7 +684,8 @@ public class XMLParserTest extends TestCase {
 							assertNotNull(tmpBde);
 							
 							TaskDefinition g = ((TaskDescriptor)tmpBde).getTaskDefinition();
-							// TODO:listGuides = g.get();
+							
+							listGuides = g.getGuidances();
 							if (!listGuides.isEmpty()) {
 								if (tmpBde.getName().equals("detail_requirements")) {
 									Iterator<Guidance> itGuide = listGuides.iterator();
