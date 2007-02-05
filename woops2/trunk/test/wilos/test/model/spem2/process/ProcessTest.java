@@ -5,6 +5,8 @@ import java.util.Set;
 
 import junit.framework.TestCase;
 import wilos.model.misc.project.Project;
+import wilos.model.misc.wilosuser.ProcessManager;
+import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.process.Process;
 
 /**
@@ -176,4 +178,29 @@ public class ProcessTest extends TestCase {
 		assertNotNull(proj.getProcess());
 		assertNotNull(tmp.getProcess());
 	}
+	
+	
+	public void testAddToProcessManager() {
+		ProcessManager processManager = new ProcessManager() ;
+		processManager.setName(NAME) ;
+
+		this.process.addProcessManager(processManager) ;
+
+		assertNotNull(this.process.getProcessManager()) ;
+		assertTrue(processManager.getProcessesManaged().size() == 1) ;
+	}
+	
+	public void testRemoveFromProcessManager() {
+		ProcessManager processManager = new ProcessManager() ;
+		processManager.setName(NAME) ;
+
+		this.process.addProcessManager(processManager) ;
+		assertNotNull("null", this.process.getProcessManager()) ;
+		assertTrue("empty", processManager.getProcessesManaged().size() == 1) ;
+		
+		this.process.removeFromProcessManager(processManager);
+		assertNull("null", this.process.getProcessManager()) ;
+		assertTrue("empty", processManager.getProcessesManaged().isEmpty()) ;
+	}
+
 }
