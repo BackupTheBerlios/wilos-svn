@@ -67,7 +67,7 @@ public class Phase extends Activity implements Cloneable{
 			return true ;
 		}
 		Phase phase = (Phase) obj ;
-		return new EqualsBuilder().appendSuper(super.equals(phase)).isEquals() ;
+		return new EqualsBuilder().appendSuper(super.equals(phase)).append(this.concretePhases,phase.concretePhases).isEquals() ;
 	}
 
 	/*
