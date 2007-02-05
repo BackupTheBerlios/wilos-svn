@@ -15,6 +15,10 @@
 			<one-to-many class="wilos.model.misc.project.Project"></one-to-many>
 		</set>
 
+		<many-to-one name="processManager"
+			class="wilos.model.misc.wilosuser.ProcessManager"
+			column="processmanager_id">
+		</many-to-one>
 	</joined-subclass>
 
 
