@@ -18,7 +18,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.project.ProjectService;
-import wilos.business.services.role.RoleService;
 import wilos.business.services.wilosuser.LoginService;
 import wilos.business.services.wilosuser.ParticipantService;
 import wilos.model.misc.project.Project;
@@ -47,8 +46,6 @@ public class TreeBean {
 	private ProjectService projectService;
 
 	private LoginService loginService;
-
-	private RoleService roleService;
 
 	private ParticipantService participantService;
 
@@ -294,14 +291,6 @@ public class TreeBean {
 
 	public void setLoginService(LoginService loginService) {
 		this.loginService = loginService;
-	}
-
-	public RoleService getRoleService() {
-		return roleService;
-	}
-
-	public void setRoleService(RoleService _roleService) {
-		this.roleService = _roleService;
 	}
 
 	public ParticipantService getParticipantService() {
