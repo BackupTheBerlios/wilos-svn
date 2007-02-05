@@ -13,8 +13,11 @@ public class AllTests {
 	public static Test suite() {
 		TestSuite suite = new TestSuite("Test for model.misc.wilosuser") ;
 		//$JUnit-BEGIN$
-		suite.addTestSuite(ParticipantTest.class) ;
-		//$JUnit-END$
+		suite.addTestSuite(ParticipantTest.class);
+		suite.addTestSuite(AdministratorTest.class);
+		suite.addTestSuite(ProcessManagerTest.class);
+		suite.addTestSuite(ProjectDirectorTest.class);
+		//$JUnit-END$		
 		return suite ;
 	}
 

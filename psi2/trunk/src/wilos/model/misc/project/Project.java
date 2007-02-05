@@ -249,9 +249,9 @@ public class Project implements Cloneable {
 	 * @param participant
 	 *            the participant to remove from
 	 */
-	public void removeFromParticipant(Participant participant) {
-		this.participants.remove(participant) ;
+	public void removeFromParticipant(Participant participant) {		
 		participant.getAffectedProjectList().remove(this) ;
+		this.participants.remove(participant) ;
 	}
 
 	/**
@@ -361,7 +361,6 @@ public class Project implements Cloneable {
 	 */
 	public void removeProjectDirector(ProjectDirector _projectDirector) {
 		_projectDirector.getProjectMonitored().remove(this);
-		this.projectDirector.removeMonitoredProject(this) ;
 		this.projectDirector  = null;
 	}
 

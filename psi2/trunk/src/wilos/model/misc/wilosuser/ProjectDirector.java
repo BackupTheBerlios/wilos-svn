@@ -1,6 +1,8 @@
 
 package wilos.model.misc.wilosuser ;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder ;
@@ -19,6 +21,7 @@ public class ProjectDirector extends WilosUser implements Cloneable {
 	private Set<Project> projectMonitored;
 	
 	public ProjectDirector() {
+		this.projectMonitored = new HashSet<Project>();
 	}
 
 	/**
@@ -32,6 +35,7 @@ public class ProjectDirector extends WilosUser implements Cloneable {
 	 */
 	public ProjectDirector(String _name, String _fName, String _email, String _login, String _password) {
 		super(_name, _fName, _email, _login, _password) ;
+		this.projectMonitored = new HashSet<Project>();
 	}
 
 	/*
@@ -117,8 +121,9 @@ public class ProjectDirector extends WilosUser implements Cloneable {
 	 * @param project
 	 */
 	public void removeMonitoredProject(Project _project) {
-		this.projectMonitored.remove(_project) ;
-		_project.setProjectDirector(null) ;
+		_project.setProjectDirector(null);
+		this.projectMonitored.remove(_project);
+		
 	}
 
 	/**

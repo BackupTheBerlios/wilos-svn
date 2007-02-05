@@ -38,6 +38,7 @@ public class ProcessManager extends WilosUser implements Cloneable {
 	 */
 	public ProcessManager(String _name, String _fName, String _email, String _login, String _password) {
 		super(_name, _fName, _email, _login, _password) ;
+		this.processesManaged = new HashSet<Process>();
 	}
 
 	/*
@@ -122,9 +123,9 @@ public class ProcessManager extends WilosUser implements Cloneable {
 	 *
 	 * @param project
 	 */
-	public void removeManagedProject(Process _process) {
-		this.processesManaged.remove(_process) ;
+	public void removeManagedProcess(Process _process) {
 		_process.setProcessManager(null) ;
+		this.processesManaged.remove(_process) ;		
 	}
 
 	/**
@@ -132,7 +133,7 @@ public class ProcessManager extends WilosUser implements Cloneable {
 	 * TODO Method description
 	 *
 	 */
-	public void removeAllManagedProjects() {
+	public void removeAllManagedProcess() {
 		for(Process process : this.processesManaged){
 			process.removeFromProcessManager(this) ;
 		}

@@ -1,27 +1,46 @@
 package wilos.test.model.misc.wilosuser;
 
-import java.util.HashSet;
-import java.util.Set;
-import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
+import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import junit.framework.TestCase;
 
 /**
- * @author Martial
+ * @author BlackMilk
  *
- * This class represents  the class test of the Participant class.
+ * This class represents the class test of the Participant class
  *
  */
 public class ParticipantTest extends TestCase {
+	
+	private Participant participant1;
+	
+	private Participant participant2;
+	
+	private final static String LOGIN = "john" ;
+	
+	private final static String LOGIN2 = "cathy" ;
 
-		private Participant p;
-		
+	private final static String NAME = "georges" ;
+	
+	private final static String NAME2 = "willis" ;
+	
+	private final static String FIRSTNAME = "johnny" ;
+	
+	private final static String FIRSTNAME2 = "catherine" ;
+
+	private final static String PASS = "pass" ;
+	
+	private final static String PASS2 = "pass2" ;
+	
+
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#setUp()
 	 */
 	protected void setUp() throws Exception {
 		super.setUp() ;
-		p=new Participant();
+		participant1 = new Participant();
+		participant2 = new Participant();
 	}
 
 	/* (non-Javadoc)
@@ -32,82 +51,192 @@ public class ParticipantTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link woops2.model.wilosuser.Participant#getRolesListForAProject()}.
-	 * TODO methode a refaire apres modele metier
+	 * Test method for {@link wilos.model.misc.wilosuser.Participant#equals(java.lang.Object)}.
 	 */
-	public void testGetRolesListForAProject() {
-		/*Set<RoleDescriptor> roles= new HashSet<RoleDescriptor>();
-		roles.add(new RoleDescriptor());
-		p.setRolesListForAProject(roles);
-		assertTrue(p.getRolesListForAProject().equals(roles));*/
-		assertTrue(false);
-
+	public void testEqualsObject() {
+		participant1.setLogin(LOGIN);
+		participant1.setFirstname(FIRSTNAME);
+		participant1.setName(NAME);
+		participant1.setPassword(PASS);
+		participant2.setLogin(LOGIN);
+		participant2.setFirstname(FIRSTNAME);
+		participant2.setName(NAME);
+		participant2.setPassword(PASS);
+		assertTrue(participant1.equals(participant2));
+		/*Login test*/
+		participant2.setLogin(LOGIN2);
+		assertFalse(participant1.equals(participant2));
+		/*Name test*/
+		participant2.setLogin(LOGIN);
+		participant2.setName(NAME2);
+		assertFalse(participant1.equals(participant2));
+		/*FirstName test*/
+		participant2.setName(NAME);
+		participant2.setFirstname(FIRSTNAME2);
+		assertFalse(participant1.equals(participant2));
+		/*Password test*/
+		participant2.setFirstname(FIRSTNAME);
+		participant2.setPassword(PASS2);
+		assertFalse(participant1.equals(participant2));
 	}
 
 	/**
-	 * Test method for {@link woops2.model.wilosuser.Participant#setRolesListForAProject(java.util.Set)}.
-	 * TODO methode a refaire apres modele metier
+	 * Test method for {@link wilos.model.misc.wilosuser.Participant#getConcreteRoleDescriptors()}.
 	 */
-	public void testSetRolesListForAProject() {
-		/*Set<RoleDescriptor> roles= new HashSet<RoleDescriptor>();
-		roles.add(new RoleDescriptor());
-		p.setRolesListForAProject(roles);
-		assertTrue(p.getRolesListForAProject().equals(roles));*/
-		assertTrue(false);
-
+	public void testGetConcreteRoleDescriptors() {
+		ConcreteRoleDescriptor crd = new ConcreteRoleDescriptor();
+		participant1.addConcreteRoleDescriptor(crd);
+		assertNotNull(participant1.getConcreteRoleDescriptors());
+		assertEquals(crd, participant1.getConcreteRoleDescriptors().toArray()[0]);
 	}
 
 	/**
-	 * Test method for {@link woops2.model.wilosuser.Participant#addToRoleDescriptor(woops2.model.role.RoleDescriptor)}.
-	 * TODO methode a refaire apres modele metier
+	 * Test method for {@link wilos.model.misc.wilosuser.Participant#addConcreteRoleDescriptor(wilos.model.misc.concreterole.ConcreteRoleDescriptor)}.
 	 */
-	public void testAddToRoleDescriptor() {
-		/*RoleDescriptor r =new RoleDescriptor();
-		p.addToRoleDescriptor(r);
-		assertTrue(p.getRolesListForAProject().contains(r));*/
-		assertTrue(false);
+	public void testAddConcreteRoleDescriptor() {
+		ConcreteRoleDescriptor crd = new ConcreteRoleDescriptor();
+		participant1.addConcreteRoleDescriptor(crd);
+		assertNotNull(participant1.getConcreteRoleDescriptors());
+		assertEquals(crd, participant1.getConcreteRoleDescriptors().toArray()[0]);
+		assertEquals(crd.getParticipant(),participant1);
 	}
 
 	/**
-	 * Test method for {@link woops2.model.wilosuser.Participant#removeFromRoleDescriptor(woops2.model.role.RoleDescriptor)}.
-	 * TODO methode a refaire apres modele metier
+	 * Test method for {@link wilos.model.misc.wilosuser.Participant#removeConcreteRoleDescriptor(wilos.model.misc.concreterole.ConcreteRoleDescriptor)}.
 	 */
-	public void testRemoveFromRoleDescriptor() {
-		/*RoleDescriptor r =new RoleDescriptor();
-		RoleDescriptor r1 =new RoleDescriptor();
-		p.addToRoleDescriptor(r);
-		p.addToRoleDescriptor(r1);
-		p.removeFromRoleDescriptor(r1);
-		assertFalse(p.getRolesListForAProject().contains(r1));*/
-		assertTrue(false);
+	public void testRemoveConcreteRoleDescriptor() {
+		ConcreteRoleDescriptor crd = new ConcreteRoleDescriptor();
+		participant1.addConcreteRoleDescriptor(crd);
+		assertNotNull(participant1.getConcreteRoleDescriptors());
+		participant1.removeConcreteRoleDescriptor(crd);
+		assertTrue(participant1.getConcreteRoleDescriptors().isEmpty());
+		assertEquals(crd.getParticipant(),null);
 	}
 
 	/**
-	 * Test method for {@link woops2.model.wilosuser.Participant#removeAllRoleDescriptors()}.
-	 * TODO methode a refaire apres modele metier
+	 * Test method for {@link wilos.model.misc.wilosuser.Participant#removeAllConcreteRoleDescriptors()}.
 	 */
-	public void testRemoveAllRoleDescriptors() {
-//		RoleDescriptor r =new RoleDescriptor();
-//		RoleDescriptor r1 =new RoleDescriptor();
-//		p.addToRoleDescriptor(r);
-//		p.addToRoleDescriptor(r1);
-//		p.removeAllRoleDescriptors();
-//		assertTrue(p.getRolesListForAProject().isEmpty());
-		assertTrue(false);
+	public void testRemoveAllConcreteRoleDescriptors() {
+		ConcreteRoleDescriptor crd = new ConcreteRoleDescriptor();
+		ConcreteRoleDescriptor crd2 = new ConcreteRoleDescriptor();
+		participant1.addConcreteRoleDescriptor(crd);
+		participant1.addConcreteRoleDescriptor(crd2);
+		assertNotNull(participant1.getConcreteRoleDescriptors());
+		participant1.removeAllConcreteRoleDescriptors();
+		assertTrue(participant1.getConcreteRoleDescriptors().isEmpty());
+		assertEquals(null,crd.getParticipant());
+		assertEquals(null,crd2.getParticipant());
 	}
 
 	/**
-	 * Test method for {@link woops2.model.wilosuser.Participant#removeFromAllRoleDescriptor()}.
-	 * TODO methode a refaire apres modele metier
+	 * Test method for {@link wilos.model.misc.wilosuser.Participant#addToProject(wilos.model.misc.project.Project)}.
 	 */
-	public void testRemoveFromAllRoleDescriptor() {
-//		RoleDescriptor r =new RoleDescriptor();
-//		RoleDescriptor r1 =new RoleDescriptor();
-//		p.addToRoleDescriptor(r);
-//		p.addToRoleDescriptor(r1);
-//		p.removeAllRoleDescriptors();
-//		assertTrue(p.getRolesListForAProject().isEmpty());
-		assertTrue(false);
+	public void testAddToProject() {
+		Project project = new Project();
+		participant1.addToProject(project);
+		assertNotNull(participant1.getAffectedProjectList());
+		assertEquals(project, participant1.getAffectedProjectList().toArray()[0]);
+		assertEquals(project.getParticipants().toArray()[0],participant1);
+	}
+
+	/**
+	 * Test method for {@link wilos.model.misc.wilosuser.Participant#removeFromProject(wilos.model.misc.project.Project)}.
+	 */
+	public void testRemoveFromProject() {
+		Project project = new Project();
+		participant1.addToProject(project);
+		assertNotNull(participant1.getAffectedProjectList());
+		participant1.removeFromProject(project);
+		assertTrue(participant1.getAffectedProjectList().isEmpty());
+		assertTrue(project.getParticipants().isEmpty());
+	}
+
+	/**
+	 * Test method for {@link wilos.model.misc.wilosuser.Participant#removeAllProject()}.
+	 */
+	public void testRemoveAllProject() {
+		Project project = new Project();
+		Project project2 = new Project();
+		participant1.addToProject(project);
+		participant1.addToProject(project2);
+		assertNotNull(participant1.getAffectedProjectList());
+		participant1.removeAllProject();
+		assertTrue(participant1.getAffectedProjectList().isEmpty());
+		assertTrue(project.getParticipants().isEmpty());
+		assertTrue(project2.getParticipants().isEmpty());
+	}
+
+	/**
+	 * Test method for {@link wilos.model.misc.wilosuser.Participant#removeFromAllProject()}.
+	 */
+	public void testRemoveFromAllProject() {
+		Project project = new Project();
+		Project project2 = new Project();
+		participant1.addToProject(project);
+		participant1.addToProject(project2);
+		assertNotNull(participant1.getAffectedProjectList());
+		participant1.removeFromAllProject();
+		assertTrue(participant1.getAffectedProjectList().isEmpty());
+		assertTrue(project.getParticipants().isEmpty());
+		assertTrue(project2.getParticipants().isEmpty());
+	}
+
+	/**
+	 * Test method for {@link wilos.model.misc.wilosuser.Participant#getAffectedProjectList()}.
+	 */
+	public void testGetAffectedProjectList() {
+		Project project = new Project();
+		participant1.addToProject(project);
+		assertNotNull(participant1.getAffectedProjectList());
+		assertEquals(project, participant1.getAffectedProjectList().toArray()[0]);
+	}
+
+	/**
+	 * Test method for {@link wilos.model.misc.wilosuser.Participant#addManagedProject(wilos.model.misc.project.Project)}.
+	 */
+	public void testAddManagedProject() {
+		Project project = new Project();
+		participant1.addManagedProject(project);
+		assertNotNull(participant1.getManagedProjects());
+		assertEquals(project, participant1.getManagedProjects().toArray()[0]);
+		assertEquals(project.getProjectManager(),participant1);
+	}
+
+	/**
+	 * Test method for {@link wilos.model.misc.wilosuser.Participant#removeManagedProject(wilos.model.misc.project.Project)}.
+	 */
+	public void testRemoveManagedProject() {
+		Project project = new Project();
+		participant1.addToProject(project);
+		assertNotNull(participant1.getManagedProjects());
+		participant1.removeFromProject(project);
+		assertTrue(participant1.getManagedProjects().isEmpty());
+		assertNull(project.getProjectManager());
+	}
+
+	/**
+	 * Test method for {@link wilos.model.misc.wilosuser.Participant#removeAllManagedProjects()}.
+	 */
+	public void testRemoveAllManagedProjects() {
+		Project project = new Project();
+		Project project2 = new Project();
+		participant1.addManagedProject(project);
+		participant1.addManagedProject(project2);
+		assertNotNull(participant1.getManagedProjects());
+		participant1.removeAllManagedProjects();
+		assertTrue(participant1.getManagedProjects().isEmpty());
+		assertEquals(null,project.getProjectManager());
+		assertEquals(null,project2.getProjectManager());
+	}
+
+	/**
+	 * Test method for {@link wilos.model.misc.wilosuser.Participant#getManagedProjects()}.
+	 */
+	public void testGetManagedProjects() {
+		Project project = new Project();
+		participant1.addManagedProject(project);
+		assertNotNull(participant1.getManagedProjects());
+		assertEquals(project, participant1.getManagedProjects().toArray()[0]);
 	}
 
 }
