@@ -134,20 +134,20 @@ public class RoleDefinition extends Element implements Cloneable {
 	 * connection to guidances
 	 */
 	public void removeGuidance(Guidance _guidance) {
-		_guidance.setRoleDefinition(null);
+		_guidance.setRoledefinition(null);
 		this.guidances.remove(_guidance);
 	}
 
 	
 	public void addGuidance(Guidance _guidance) {
 		this.guidances.add(_guidance);
-		_guidance.setRoleDefinition(this);
+		_guidance.setRoledefinition(this);
 	}
 
 	
 	public void removeAllGuidances() {
 		for (Guidance guidance : this.guidances) {
-			guidance.setRoleDefinition(null);
+			guidance.setRoledefinition(null);
 		}
 		this.guidances.clear();
 	}
