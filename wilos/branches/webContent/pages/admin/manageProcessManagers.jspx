@@ -1,0 +1,8 @@
+<ice:form id="manageProcessManagers_form">
+	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
+		<ice:panelTabSet id="panelTabSet_manageProcessManagers" styleClass="componentPanelTabSetLayout">
+			<jsp:directive.include file="./pages/admin/tabProcessManagersList.jspx"/>
+			<jsp:directive.include file="./pages/admin/tabProcessManagerCreate.jspx"/>
+		</ice:panelTabSet>
+	</ice:panelGrid>
+</ice:form>
