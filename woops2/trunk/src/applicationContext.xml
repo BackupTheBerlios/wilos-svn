@@ -421,6 +421,12 @@
 			ref="ConcreteRoleDescriptorDao" />
 	</bean>
 
+	<bean id="ConcreteActivityService"
+		class="wilos.business.services.misc.concreteactivity.ConcreteActivityService">
+		<property name="concreteActivityDao"
+			ref="ConcreteActivityDao" />
+	</bean>
+
 	<bean id="PhaseService"
 		class="wilos.business.services.spem2.phase.PhaseService">
 		<property name="concretePhaseDao" ref="ConcretePhaseDao" />

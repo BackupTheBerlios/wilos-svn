@@ -1,21 +1,20 @@
 package wilos.presentation.web.viewer;
 
-import wilos.business.services.spem2.activity.ActivityService;
+import wilos.business.services.misc.concreteactivity.ConcreteActivityService;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
 
 public class ConcreteActivityViewerBean {
 
 	private ConcreteActivity concreteActivity = null;
 
-	private ActivityService activityService;
+	private ConcreteActivityService concreteActivityService;
 
 	private String concreteActivityId = "";
 
 	public void buildConcreteActivity() {
 		this.concreteActivity = new ConcreteActivity();
 		if (!(this.concreteActivityId.equals("")) || this.concreteActivityId != null) {
-			// FIXME maj d'ActivityService => getConcreteActivityDao
-			this.concreteActivity = this.activityService.getConcreteActivityDao().getConcreteActivity(this.concreteActivityId);
+			this.concreteActivity = this.concreteActivityService.getConcreteActivity(this.concreteActivityId);
 		}
 	}
 
@@ -35,12 +34,12 @@ public class ConcreteActivityViewerBean {
 		this.concreteActivityId = _activityId;
 	}
 
-	public ActivityService getActivityService() {
-		return activityService;
+	public ConcreteActivityService getConcreteActivityService() {
+		return this.concreteActivityService;
 	}
 
-	public void setActivityService(ActivityService _activityService) {
-		this.activityService = _activityService;
+	public void setConcreteActivityService(ConcreteActivityService _concreteActivityService) {
+		this.concreteActivityService = _concreteActivityService;
 	}
 
 
