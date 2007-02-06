@@ -16,9 +16,9 @@ public class ConcreteTaskViewerBean {
 	private ConcreteTaskDescriptorService concreteTaskDescriptorService;
 
 	private String concreteTaskDescriptorId = "";
-	
+
 	private boolean visibleAffected;
-	
+
 	private boolean visibleStart;
 
 	public void buildConcreteTaskDescriptor() {
@@ -30,7 +30,7 @@ public class ConcreteTaskViewerBean {
 							this.concreteTaskDescriptorId);
 		}
 	}
-	
+
 	/**
 	 * soosuske
 	 * methodes for the buton affected
@@ -38,18 +38,18 @@ public class ConcreteTaskViewerBean {
 	public void affectedActionListener(ActionEvent event) {
 		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
 		HttpSession sess = req.getSession() ;
-		Participant user = (Participant) sess.getAttribute("wilosUser") ; 
-		
+		Participant user = (Participant) sess.getAttribute("wilosUser") ;
+
 		this.concreteTaskDescriptorService.affectedConcreteTaskDescriptor(this.concreteTaskDescriptor, user);
 	}
 
 	public boolean isVisibleAffected() {
 		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
 		HttpSession sess = req.getSession() ;
-		Participant user = (Participant) sess.getAttribute("wilosUser") ; 
-		
+		Participant user = (Participant) sess.getAttribute("wilosUser") ;
+
 		boolean vis = this.concreteTaskDescriptorService.affectedVisible(this.concreteTaskDescriptor, user);
-		
+
 		return vis;
 	}
 
@@ -78,12 +78,15 @@ public class ConcreteTaskViewerBean {
 	public void setConcreteTaskDescriptorId(String concreteTaskDescriptorId) {
 		this.concreteTaskDescriptorId = concreteTaskDescriptorId;
 	}
-	
+
+	public boolean getVisibleAffected(){
+		return this.visibleAffected;
+	}
 
 	public void setVisibleAffected(boolean visibleAffected) {
 		this.visibleAffected = visibleAffected;
 	}
-	
+
 	/**
 	 * action for button start
 	 * @param event
@@ -91,12 +94,12 @@ public class ConcreteTaskViewerBean {
 	public void startActionListener(ActionEvent event) {
 		this.concreteTaskDescriptorService.startConcreteTaskDescriptor(this.concreteTaskDescriptor);
 	}
-	
+
 	public boolean isVisibleStart() {
 		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
 		HttpSession sess = req.getSession() ;
-		Participant user = (Participant) sess.getAttribute("wilosUser") ; 
-		
+		Participant user = (Participant) sess.getAttribute("wilosUser") ;
+
 		boolean vis = this.concreteTaskDescriptorService.startVisible(this.concreteTaskDescriptor, user);
 		if(vis)
 		{
@@ -107,6 +110,10 @@ public class ConcreteTaskViewerBean {
 			return true;
 		}
 
+	}
+
+	public boolean getVisibleStart(){
+		return this.visibleStart;
 	}
 
 	public void setVisibleStart(boolean visibleStart) {

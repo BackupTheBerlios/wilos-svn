@@ -6,13 +6,12 @@ import java.util.Set;
 import junit.framework.TestCase;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.ProcessManager;
-import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.process.Process;
 
 /**
  * @author soosuske
  * @author deder
- * 
+ *
  */
 public class ProcessTest extends TestCase {
 
@@ -30,7 +29,7 @@ public class ProcessTest extends TestCase {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see junit.framework.TestCase#setUp()
 	 */
 	protected void setUp() throws Exception {
@@ -42,7 +41,7 @@ public class ProcessTest extends TestCase {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see junit.framework.TestCase#tearDown()
 	 */
 	protected void tearDown() throws Exception {
@@ -157,7 +156,7 @@ public class ProcessTest extends TestCase {
 		assertTrue(this.process.getProjects().isEmpty());
 	}
 
-	
+
 	public void testAddToAllProjects() {
 		Project proj = new Project();
 		proj.setName(NAME);
@@ -178,8 +177,8 @@ public class ProcessTest extends TestCase {
 		assertNotNull(proj.getProcess());
 		assertNotNull(tmp.getProcess());
 	}
-	
-	
+
+
 	public void testAddToProcessManager() {
 		ProcessManager processManager = new ProcessManager() ;
 		processManager.setName(NAME) ;
@@ -189,7 +188,7 @@ public class ProcessTest extends TestCase {
 		assertNotNull(this.process.getProcessManager()) ;
 		assertTrue(processManager.getProcessesManaged().size() == 1) ;
 	}
-	
+
 	public void testRemoveFromProcessManager() {
 		ProcessManager processManager = new ProcessManager() ;
 		processManager.setName(NAME) ;
@@ -197,7 +196,7 @@ public class ProcessTest extends TestCase {
 		this.process.addProcessManager(processManager) ;
 		assertNotNull("null", this.process.getProcessManager()) ;
 		assertTrue("empty", processManager.getProcessesManaged().size() == 1) ;
-		
+
 		this.process.removeFromProcessManager(processManager);
 		assertNull("null", this.process.getProcessManager()) ;
 		assertTrue("empty", processManager.getProcessesManaged().isEmpty()) ;

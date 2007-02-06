@@ -1,12 +1,11 @@
 
 package wilos.test.model.spem2.activity ;
 
-import java.util.HashSet ;
-import java.util.Set ;
+import java.util.HashSet;
+import java.util.Set;
 
-import junit.framework.TestCase ;
+import junit.framework.TestCase;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
-import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.guide.Guidance;
@@ -238,7 +237,7 @@ public class ActivityTest extends TestCase {
 		assertTrue("bde.acts", breakdownElement.getSuperActivities().isEmpty()) ;
 		assertTrue("tmp.acts", tmp.getSuperActivities().isEmpty()) ;
 	}
-	
+
 	public void testAddConcreteActivity() {
 		ConcreteActivity concreteActivity = new ConcreteActivity() ;
 		concreteActivity.setConcreteName("name") ;
@@ -248,7 +247,7 @@ public class ActivityTest extends TestCase {
 		assertTrue(this.activity.getConcreteActivities().size() == 1) ;
 		assertNotNull(concreteActivity.getActivity()) ;
 	}
-	
+
 	public void testaddAllConcreteActivity() {
 		ConcreteActivity ca1 = new ConcreteActivity() ;
 		ca1.setConcreteName("name1") ;
@@ -267,7 +266,7 @@ public class ActivityTest extends TestCase {
 		assertNotNull(ca1.getActivity()) ;
 		assertNotNull(ca2.getActivity()) ;
 	}
-	
+
 	public void testRemoveConcreteActivity() {
 		ConcreteActivity concreteActivity = new ConcreteActivity() ;
 		concreteActivity.setConcreteName("name");
@@ -277,8 +276,8 @@ public class ActivityTest extends TestCase {
 		assertTrue(this.activity.getConcreteActivities().isEmpty()) ;
 		assertNull(concreteActivity.getActivity()) ;
 	}
-	
-	
+
+
 	public void testRemoveAllConcreteActivities() {
 		ConcreteActivity ca1 = new ConcreteActivity() ;
 		ca1.setConcreteName("name1") ;
@@ -300,12 +299,12 @@ public class ActivityTest extends TestCase {
 		assertNull(ca1.getActivity()) ;
 		assertNull(ca2.getActivity()) ;
 	}
-	
+
 	/**
 	 * test for the relation between Guidance and Activity
 	 *
 	 */
-	
+
 	public void testAddGuidance() {
 		Guidance guidance = new Guidance() ;
 		guidance.setName("name") ;
@@ -315,7 +314,7 @@ public class ActivityTest extends TestCase {
 		assertTrue(this.activity.getGuidances().size() == 1) ;
 		assertNotNull(guidance.getActivity()) ;
 	}
-	
+
 	public void testaddAllGuidances() {
 		Guidance g1 = new Guidance() ;
 		g1.setName("name1") ;
@@ -334,7 +333,7 @@ public class ActivityTest extends TestCase {
 		assertNotNull(g1.getActivity()) ;
 		assertNotNull(g2.getActivity()) ;
 	}
-	
+
 	public void testRemoveGuidance() {
 		Guidance guidance = new Guidance() ;
 		guidance.setName("name");
@@ -344,7 +343,7 @@ public class ActivityTest extends TestCase {
 		assertTrue(this.activity.getGuidances().isEmpty()) ;
 		assertNull(guidance.getActivity()) ;
 	}
-	
+
 	public void testRemoveAllGuidances() {
 		Guidance g1 = new Guidance() ;
 		g1.setName("name1") ;
