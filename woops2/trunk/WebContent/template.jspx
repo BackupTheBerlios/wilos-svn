@@ -14,6 +14,7 @@
         <title><ice:outputText value="" /></title>
 
         <link href="css/ice.css" rel="stylesheet" type="text/css" />
+    	<link href="css/wilos.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
     
