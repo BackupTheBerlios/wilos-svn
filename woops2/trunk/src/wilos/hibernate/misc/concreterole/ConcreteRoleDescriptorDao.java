@@ -86,15 +86,4 @@ public class ConcreteRoleDescriptorDao extends HibernateDaoSupport {
 					_e);
 		}
 	}
-
-	@SuppressWarnings("unchecked")
-	public List<ConcreteRoleDescriptor> getConcreteRoleDescriptorsFromProject(
-			String _projectId) {
-		List ctds = this
-				.getHibernateTemplate()
-				.find(
-						"from ConcreteRoleDescriptor ctd where ctd.projectid=?",
-						_projectId);
-		return ctds;
-	}
 }
