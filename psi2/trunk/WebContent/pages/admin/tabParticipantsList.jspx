@@ -1,4 +1,4 @@
-			<ice:panelTab id="panelTab_participant_list" label="#{msgs['component.participantlist.title']}" imageDir="images">
+		<ice:panelTab id="panelTab_participant_list" label="#{msgs['component.participantlist.title']}" imageDir="images">
 				<ice:panelGroup id="participantPanelGroup" styleClass="contentIncludePanelGroup">
 					<ice:dataTable value="#{ParticipantBean.participantsList}" columnWidths="100px,100px,100px,100px" border="1" var="participant">
 						<ice:column>

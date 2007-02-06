@@ -22,9 +22,6 @@
 						<ice:outputText value="Upload status: #{XmlFileImportBean.uploadStatus}" />
 						<ice:messages />
 					</ice:panelGroup>
-	
-					<br />
-	
 				</ice:panelGrid>
 			</ice:panelTab>
 		</ice:panelTabSet>

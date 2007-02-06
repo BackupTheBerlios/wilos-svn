@@ -25,7 +25,7 @@
             <ice:panelGroup>  
 					<img src="images/logo_wilos.png"/>
             <div id="roles_actions">
-            	<jsp:directive.include file="./pages/template/roles_actions.jspx" />
+            	<jsp:directive.include file="./pages/template/rolesActions.jspx" />
             </div>
             </ice:panelGroup>
         </f:facet>
