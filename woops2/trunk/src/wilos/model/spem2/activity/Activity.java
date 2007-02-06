@@ -172,6 +172,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 		_guidance.setActivity(null);
 		this.guidances.remove(_guidance);
 	}
+	
 
 	
 	public void addGuidance(Guidance _guidance) {

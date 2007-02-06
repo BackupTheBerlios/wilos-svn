@@ -28,6 +28,7 @@ public class RoleDefinition extends Element implements Cloneable {
 	 */
 	private Set<RoleDescriptor> roleDescriptors ;
 	
+	
 	private Set<Guidance> guidances;
 
 	/**
@@ -158,6 +159,7 @@ public class RoleDefinition extends Element implements Cloneable {
 		}
 	}
 
+	
 	/**
 	 * Getter of roleDescriptors.
 	 * 

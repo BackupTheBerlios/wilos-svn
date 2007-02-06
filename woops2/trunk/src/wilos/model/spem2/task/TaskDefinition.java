@@ -36,6 +36,7 @@ public class TaskDefinition extends Element implements Cloneable {
 	private Set<TaskDescriptor> taskDescriptors;
 
 	// The Project of Process
+
 	private Set<Guidance> guidances;
 
 	/**
@@ -256,5 +257,4 @@ public class TaskDefinition extends Element implements Cloneable {
 	public void setGuidances(Set<Guidance> _guidances) {
 		this.guidances = _guidances;
 	}
-
 }

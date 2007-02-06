@@ -16,7 +16,7 @@ import wilos.business.services.spem2.breakdownelement.BreakdownElementService;
 import wilos.business.services.spem2.iteration.IterationService;
 import wilos.business.services.spem2.phase.PhaseService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
-import wilos.business.services.util.xml.parser.XMLParser;
+//import wilos.business.services.util.xml.parser.XMLParser;
 import wilos.hibernate.misc.project.ProjectDao;
 import wilos.hibernate.spem2.activity.ActivityDao;
 import wilos.hibernate.spem2.breakdownelement.BreakdownElementDao;
@@ -97,7 +97,8 @@ public class ProcessService {
 	public Process spelpParsingXML(File _file) {
 		Process spelpProcess = null;
 		try {
-			spelpProcess = XMLParser.getProcess(_file);
+//			 FIXME XMLServices
+			//spelpProcess = XMLServices .getProcess(_file);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
