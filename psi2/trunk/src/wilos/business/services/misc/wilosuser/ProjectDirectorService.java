@@ -1,4 +1,4 @@
-package wilos.business.services.wilosuser;
+package wilos.business.services.misc.wilosuser;
 
 import java.util.Set;
 

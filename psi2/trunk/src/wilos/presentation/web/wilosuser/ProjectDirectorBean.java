@@ -12,8 +12,8 @@ import javax.faces.validator.ValidatorException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import wilos.business.services.wilosuser.LoginService;
-import wilos.business.services.wilosuser.ProjectDirectorService;
+import wilos.business.services.misc.wilosuser.LoginService;
+import wilos.business.services.misc.wilosuser.ProjectDirectorService;
 import wilos.model.misc.wilosuser.ProjectDirector;
 
 /**

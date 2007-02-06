@@ -1,5 +1,5 @@
 
-package wilos.business.services.wilosuser ;
+package wilos.business.services.misc.wilosuser ;
 
 import java.util.HashMap ;
 import java.util.HashSet ;
@@ -17,7 +17,7 @@ import wilos.model.misc.project.Project ;
 import wilos.model.misc.wilosuser.Participant ;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor ;
 import wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService;
-import wilos.business.services.project.ProjectService ;
+import wilos.business.services.misc.project.ProjectService ;
 import wilos.business.util.Security ;
 
 /**

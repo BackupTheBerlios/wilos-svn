@@ -1,7 +1,7 @@
 package wilos.test.business.services.wilosuser;
 
 import wilos.test.configuration.TestConfiguration;
-import wilos.business.services.wilosuser.LoginService;
+import wilos.business.services.misc.wilosuser.LoginService;
 import wilos.hibernate.misc.wilosuser.ParticipantDao;
 import wilos.hibernate.misc.wilosuser.ProcessManagerDao;
 import wilos.hibernate.misc.wilosuser.ProjectDirectorDao;

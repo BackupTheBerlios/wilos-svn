@@ -5,9 +5,9 @@ import java.util.HashMap ;
 import java.util.HashSet ;
 
 import junit.framework.TestCase ;
-import wilos.business.services.project.ProjectService ;
-import wilos.business.services.role.RoleService ;
-import wilos.business.services.wilosuser.ParticipantService ;
+import wilos.business.services.misc.project.ProjectService ;
+import wilos.business.services.misc.role.RoleService ;
+import wilos.business.services.misc.wilosuser.ParticipantService ;
 import wilos.business.util.Security ;
 import wilos.model.misc.project.Project ;
 import wilos.model.misc.wilosuser.Participant ;

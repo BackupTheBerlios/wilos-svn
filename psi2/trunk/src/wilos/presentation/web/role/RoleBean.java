@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import wilos.business.services.role.RoleService;
+import wilos.business.services.misc.role.RoleService;
 import wilos.model.misc.wilosuser.WilosUser;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 

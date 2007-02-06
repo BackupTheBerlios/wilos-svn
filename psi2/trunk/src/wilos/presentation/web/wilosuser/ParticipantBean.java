@@ -21,9 +21,9 @@ import javax.servlet.http.HttpSession ;
 
 import org.apache.commons.logging.Log ;
 import org.apache.commons.logging.LogFactory ;
-import wilos.business.services.project.ProjectService ;
-import wilos.business.services.wilosuser.LoginService ;
-import wilos.business.services.wilosuser.ParticipantService ;
+import wilos.business.services.misc.project.ProjectService ;
+import wilos.business.services.misc.wilosuser.LoginService ;
+import wilos.business.services.misc.wilosuser.ParticipantService ;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor ;
 import wilos.model.misc.project.Project ;
 import wilos.model.misc.wilosuser.Participant ;

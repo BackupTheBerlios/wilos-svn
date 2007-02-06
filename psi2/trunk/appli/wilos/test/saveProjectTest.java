@@ -2,7 +2,7 @@ package wilos.test ;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import wilos.business.services.project.ProjectService;
+import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.hibernate.misc.project.ProjectDao;
 import wilos.hibernate.misc.wilosuser.ParticipantDao;
@@ -29,7 +29,7 @@ public class saveProjectTest {
 		Project project = new Project();
 		ProjectDao projectDao = (ProjectDao)ctx.getBean("ProjectDao") ;
 		ProjectService projectService = (ProjectService)ctx.getBean("ProjectService") ;
-		project.setName("projTest");
+		project.setConcreteName("projTest");
 		projectDao.saveOrUpdateProject(project);
 		projectService.saveProcessProjectAffectation(((Process)projectService.getProcessService().getProcessesList().get(0)),project);
 	}

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import wilos.business.services.project.ProjectService;
+import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.WilosUser;

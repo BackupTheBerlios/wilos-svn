@@ -6,11 +6,11 @@ import java.util.Iterator;
 import java.util.Set;
 
 import junit.framework.TestCase ;
-import wilos.business.services.project.ProjectService ;
+import wilos.business.services.misc.project.ProjectService ;
 import wilos.model.misc.project.Project ;
 import wilos.test.configuration.TestConfiguration ;
 import junit.framework.TestCase;
-import wilos.business.services.project.ProjectService;
+import wilos.business.services.misc.project.ProjectService;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.test.configuration.TestConfiguration;
@@ -39,13 +39,13 @@ public class ProjectServiceTest extends TestCase {
 		super.setUp() ;
 		this.ps = (ProjectService) TestConfiguration.getInstance().getApplicationContext().getBean("ProjectService") ;
 		p = new Project() ;
-		p.setName("Wilos") ;
+		p.setConcreteName("Wilos") ;
 		p.setDescription("projet de test") ;
 		p.setIsFinished(true) ;
 		this.ps.getProjectDao().saveOrUpdateProject(p);
 
 		p2 = new Project() ;
-		p2.setName("Wilos2") ;
+		p2.setConcreteName("Wilos2") ;
 		p2.setDescription("projet de test2") ;
 		p2.setIsFinished(false) ;
 		this.ps.getProjectDao().saveOrUpdateProject(p2);
@@ -70,9 +70,9 @@ public class ProjectServiceTest extends TestCase {
 	 */
 	public void testSaveProject() {
 		this.ps.saveProject(this.p) ;
-		Project ProjectTmp = (Project) this.ps.getProjectDao().getProject(this.p.getProject_id()) ;
+		Project ProjectTmp = (Project) this.ps.getProjectDao().getProject(this.p.getId()) ;
 		assertNotNull(ProjectTmp) ;
-		assertEquals(ProjectTmp.getName(), "Wilos") ;
+		assertEquals(ProjectTmp.getConcreteName(), "Wilos") ;
 		assertEquals(ProjectTmp.getDescription(), "projet de test") ;
 		// assertEquals(ProjectTmp.getIsFinished(), true) ;
 	}

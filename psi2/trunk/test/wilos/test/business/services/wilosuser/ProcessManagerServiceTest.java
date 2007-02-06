@@ -2,7 +2,7 @@ package wilos.test.business.services.wilosuser;
 
 import junit.framework.TestCase;
 import wilos.test.configuration.TestConfiguration;
-import wilos.business.services.wilosuser.ProcessManagerService;
+import wilos.business.services.misc.wilosuser.ProcessManagerService;
 import wilos.business.util.Security;
 import wilos.model.misc.wilosuser.ProcessManager;
 

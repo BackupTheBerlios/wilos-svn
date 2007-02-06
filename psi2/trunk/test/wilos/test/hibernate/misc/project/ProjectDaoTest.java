@@ -30,7 +30,7 @@ public class ProjectDaoTest extends TestCase {
 		super.setUp() ;
 		this.pDao = (ProjectDao) TestConfiguration.getInstance().getApplicationContext().getBean("ProjectDao") ;
 		this.p = new Project() ;
-		this.p.setName("testProject") ;
+		this.p.setConcreteName("testProject") ;
 		this.p.setDescription("testDesc") ;
 		this.pDao.saveOrUpdateProject(p);
 	}
@@ -54,7 +54,7 @@ public class ProjectDaoTest extends TestCase {
 
 		Project pTmp = this.pDao.getProject("testProject") ;
 		assertNotNull(pTmp) ;
-		assertTrue(this.p.getName().equals(pTmp.getName())) ;
+		assertTrue(this.p.getConcreteName().equals(pTmp.getConcreteName())) ;
 		assertTrue(this.p.getDescription().equals(pTmp.getDescription())) ;
 	}
 
@@ -77,7 +77,7 @@ public class ProjectDaoTest extends TestCase {
 
 		Project pTmp = this.pDao.getProject("testProject") ;
 		assertNotNull(pTmp) ;
-		assertEquals(pTmp.getName(), "testProject") ;
+		assertEquals(pTmp.getConcreteName(), "testProject") ;
 		assertEquals(pTmp.getDescription(), "testDesc") ;
 	}
 

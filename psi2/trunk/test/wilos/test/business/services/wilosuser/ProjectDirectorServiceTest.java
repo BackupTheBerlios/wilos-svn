@@ -1,7 +1,7 @@
 package wilos.test.business.services.wilosuser;
 
 import junit.framework.TestCase;
-import wilos.business.services.wilosuser.ProjectDirectorService;
+import wilos.business.services.misc.wilosuser.ProjectDirectorService;
 import wilos.business.util.Security;
 import wilos.model.misc.wilosuser.ProjectDirector;
 import wilos.test.configuration.TestConfiguration;

@@ -8,7 +8,7 @@ import java.util.Set;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import wilos.business.services.project.ProjectService;
+import wilos.business.services.misc.project.ProjectService;
 import wilos.hibernate.misc.project.ProjectDao;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
