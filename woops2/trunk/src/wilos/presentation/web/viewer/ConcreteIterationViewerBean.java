@@ -1,13 +1,13 @@
 package wilos.presentation.web.viewer;
 
-import wilos.business.services.spem2.iteration.IterationService;
+import wilos.business.services.misc.concreteiteration.ConcreteIterationService;
 import wilos.model.misc.concreteiteration.ConcreteIteration;
 
 public class ConcreteIterationViewerBean {
 
 	private ConcreteIteration concreteIteration;
 
-	private IterationService iterationService;
+	private ConcreteIterationService concreteIterationService;
 
 	private String concreteIterationId = "";
 
@@ -15,7 +15,7 @@ public class ConcreteIterationViewerBean {
 		this.concreteIteration = new ConcreteIteration();
 		if (!(this.concreteIterationId.equals("")) || this.concreteIterationId != null) {
 			//FIXME maj d'IterationService => getConcreteIterationDao
-			this.concreteIteration = this.iterationService.getConcreteIterationDao().getConcreteIteration(this.concreteIterationId);
+			this.concreteIteration = this.concreteIterationService.getConcreteIteration(this.concreteIterationId);
 		}
 	}
 
@@ -35,11 +35,18 @@ public class ConcreteIterationViewerBean {
 		this.concreteIterationId = _concreteIterationId;
 	}
 
-	public IterationService getIterationService() {
-		return iterationService;
+	/**
+	 * @return the concreteIterationService
+	 */
+	public ConcreteIterationService getConcreteIterationService() {
+		return concreteIterationService;
 	}
 
-	public void setIterationService(IterationService _iterationService) {
-		this.iterationService = _iterationService;
+	/**
+	 * @param concreteIterationService the concreteIterationService to set
+	 */
+	public void setConcreteIterationService(
+			ConcreteIterationService concreteIterationService) {
+		this.concreteIterationService = concreteIterationService;
 	}
 }

@@ -25,8 +25,7 @@ public class ConcreteTaskViewerBean {
 		this.concreteTaskDescriptor = new ConcreteTaskDescriptor();
 		if (!(this.concreteTaskDescriptorId.equals(""))
 				|| this.concreteTaskDescriptorId != null) {
-			this.concreteTaskDescriptor = this.concreteTaskDescriptorService
-					.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(
+			this.concreteTaskDescriptor = this.concreteTaskDescriptorService.getConcreteTaskDescriptor(
 							this.concreteTaskDescriptorId);
 		}
 	}

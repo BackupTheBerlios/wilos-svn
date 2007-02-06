@@ -1,5 +1,6 @@
 package wilos.test.business.services.misc.concretetask;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -17,13 +18,14 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 
 	ConcreteTaskDescriptor concreteTaskDescriptor;
 
-	ProjectDao projectDao = (ProjectDao) TestConfiguration.getInstance().getApplicationContext().getBean("ProjectDao");
+	ProjectDao projectDao = (ProjectDao) TestConfiguration.getInstance()
+			.getApplicationContext().getBean("ProjectDao");
 
 	TaskDescriptor taskDescriptor;
 
-	public static final String NAME = "name" ;
+	public static final String NAME = "name";
 
-	public static final String DESCRIPTION = "description" ;
+	public static final String DESCRIPTION = "description";
 
 	public ConcreteTaskDescriptorServiceTest() {
 		this.concreteTaskDescriptorService = (ConcreteTaskDescriptorService) TestConfiguration
@@ -66,8 +68,9 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 		this.concreteTaskDescriptorService
 				.getConcreteTaskDescriptorDao()
 				.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
-		List<ConcreteTaskDescriptor> list = this.concreteTaskDescriptorService
-		.getConcreteTaskDescriptorsForProject(project.getProject_id());
+		List<ConcreteTaskDescriptor> list = new ArrayList<ConcreteTaskDescriptor>();
+		list.addAll(this.concreteTaskDescriptorService
+				.getConcreteTaskDescriptorsForProject(project.getProject_id()));
 
 		assertNotNull(list);
 		assertTrue(list.size() >= 1);
@@ -88,8 +91,9 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 				.startConcreteTaskDescriptor(this.concreteTaskDescriptor);
 
 		// Get this concreteTaskDescriptor.
-		List<ConcreteTaskDescriptor> list = this.concreteTaskDescriptorService
-				.getConcreteTaskDescriptorsForProject(project.getProject_id());
+		List<ConcreteTaskDescriptor> list = new ArrayList<ConcreteTaskDescriptor>();
+		list.addAll(this.concreteTaskDescriptorService
+				.getConcreteTaskDescriptorsForProject(project.getProject_id()));
 		ConcreteTaskDescriptor tmp = list.get(0);
 
 		assertNotNull(tmp);
@@ -111,8 +115,9 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 				.suspendConcreteTaskDescriptor(this.concreteTaskDescriptor);
 
 		// Get this concreteTaskDescriptor.
-		List<ConcreteTaskDescriptor> list = this.concreteTaskDescriptorService
-				.getConcreteTaskDescriptorsForProject(project.getProject_id());
+		List<ConcreteTaskDescriptor> list = new ArrayList<ConcreteTaskDescriptor>();
+		list.addAll(this.concreteTaskDescriptorService
+				.getConcreteTaskDescriptorsForProject(project.getProject_id()));
 		ConcreteTaskDescriptor tmp = list.get(0);
 
 		assertNotNull(tmp);
@@ -133,8 +138,9 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 				.finishConcreteTaskDescriptor(this.concreteTaskDescriptor);
 
 		// Get this concreteTaskDescriptor.
-		List<ConcreteTaskDescriptor> list = this.concreteTaskDescriptorService
-				.getConcreteTaskDescriptorsForProject(project.getProject_id());
+		List<ConcreteTaskDescriptor> list = new ArrayList<ConcreteTaskDescriptor>();
+		list.addAll(this.concreteTaskDescriptorService
+				.getConcreteTaskDescriptorsForProject(project.getProject_id()));
 		ConcreteTaskDescriptor tmp = list.get(0);
 
 		assertNotNull(tmp);

@@ -5,18 +5,18 @@ import wilos.model.misc.project.Project;
 
 
 public class ProjectViewerBean {
-	
+
 	private Project project;
 	private ProjectService projectService;
 	private String projectId ="";
-	
+
 	public void buildProjectModel(){
 		this.project = new Project();
 		if (!(projectId.equals("")) || projectId != null){
-			this.project = this.projectService.getProjectDao().getProject(this.projectId);
+			this.project = this.projectService.getProject(this.projectId);
 		}
 	}
-	
+
 	public Project getProject() {
 		return project;
 	}
