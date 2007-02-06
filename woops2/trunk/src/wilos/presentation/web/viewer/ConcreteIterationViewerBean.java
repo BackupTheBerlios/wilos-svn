@@ -2,16 +2,15 @@ package wilos.presentation.web.viewer;
 
 import wilos.business.services.spem2.iteration.IterationService;
 import wilos.model.misc.concreteiteration.ConcreteIteration;
-import wilos.model.spem2.iteration.Iteration;
 
 public class ConcreteIterationViewerBean {
-	
+
 	private ConcreteIteration concreteIteration;
-	
+
 	private IterationService iterationService;
-	
+
 	private String concreteIterationId = "";
-	
+
 	public void buildConcreteIteration() {
 		this.concreteIteration = new ConcreteIteration();
 		if (!(this.concreteIterationId.equals("")) || this.concreteIterationId != null) {

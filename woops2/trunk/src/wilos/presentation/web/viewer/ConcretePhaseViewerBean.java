@@ -2,7 +2,6 @@ package wilos.presentation.web.viewer;
 
 import wilos.business.services.spem2.phase.PhaseService;
 import wilos.model.misc.concretephase.ConcretePhase;
-import wilos.model.spem2.phase.Phase;
 
 public class ConcretePhaseViewerBean {
 

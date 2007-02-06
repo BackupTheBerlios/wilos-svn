@@ -2,7 +2,6 @@ package wilos.business.services.spem2.process;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -91,7 +90,7 @@ public class ProcessService {
 	private WorkBreakdownElementDao workBreakdownElementDao;
 
 	private ProjectDao projectDao;
-	
+
 	private GuidanceDao guidanceDao;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
@@ -201,13 +200,13 @@ public class ProcessService {
 		// Guides
 		Set<Guidance> guidances = _ph.getGuidances();
 		this.saveGuidances(guidances);
-		
+
 		try {
 			clone = _ph.clone();
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
-		
+
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 		bdes.addAll(_ph.getBreakdownElements());
 
@@ -245,7 +244,7 @@ public class ProcessService {
 		_ph.addAllSuccessors(clone.getSuccessors());
 		_ph.addAllSuperActivities(clone.getSuperActivities());
 		_ph.addAllGuidances(guidances);
-		
+
 		// Parse for guidances
 		this.phaseDao.saveOrUpdatePhase(_ph);
 	}
@@ -259,10 +258,10 @@ public class ProcessService {
 	private void parseIteration(Iteration _it) {
 
 		Iteration clone = null;
-		
+
 		Set<Guidance> guidances = _it.getGuidances();
 		this.saveGuidances(guidances);
-		
+
 		try {
 			clone = _it.clone();
 		} catch (CloneNotSupportedException e) {
@@ -300,7 +299,7 @@ public class ProcessService {
 		_it.addAllSuccessors(clone.getSuccessors());
 		_it.addAllSuperActivities(clone.getSuperActivities());
 		_it.addAllGuidances(guidances);
-		
+
 		this.iterationDao.saveOrUpdateIteration(_it);
 	}
 
@@ -315,7 +314,7 @@ public class ProcessService {
 		Activity clone = null;
 		Set<Guidance> guidances = _act.getGuidances();
 		this.saveGuidances(guidances);
-		
+
 		try {
 			clone = _act.clone();
 		} catch (CloneNotSupportedException e) {
@@ -406,10 +405,10 @@ public class ProcessService {
 	private void parseRoleDefinition(RoleDefinition _rdef) {
 
 		RoleDefinition clone = null;
-		
+
 		Set<Guidance> guidances = _rdef.getGuidances();
 		this.saveGuidances(guidances);
-		
+
 		try {
 			clone = _rdef.clone();
 		} catch (CloneNotSupportedException e) {
@@ -484,7 +483,7 @@ public class ProcessService {
 
 		Set<Guidance> guidances = _tdef.getGuidances();
 		this.saveGuidances(guidances);
-		
+
 		try {
 			clone = _tdef.clone();
 		} catch (CloneNotSupportedException e) {
@@ -494,7 +493,7 @@ public class ProcessService {
 		List<Step> steps = new ArrayList<Step>();
 		// recuperation des breakdownelements du processus
 		steps.addAll(_tdef.getSteps());
-		
+
 		for (Step step : steps) {
 			this.parseStep(step);
 		}
@@ -502,14 +501,14 @@ public class ProcessService {
 		_tdef.getSteps().clear();
 		_tdef.getTaskDescriptors().clear();
 		_tdef.getGuidances().clear();
-		
+
 		this.taskDefinitionDao.saveOrUpdateTaskDefinition(_tdef);
 		System.out.println("###TaskDefinition sauve");
 
 		_tdef.addAllSteps(clone.getSteps());
 		_tdef.addAllTaskDesciptors(clone.getTaskDescriptors());
 		_tdef.addAllGuidances(guidances);
-		
+
 		this.taskDefinitionDao.saveOrUpdateTaskDefinition(_tdef);
 	}
 
@@ -534,7 +533,7 @@ public class ProcessService {
 		_step.setTaskDefinition(clone.getTaskDefinition());
 		this.stepDao.saveOrUpdateStep(_step);
 	}
-	
+
 	/**
 	 *
 	 * TODO Method description
@@ -553,20 +552,20 @@ public class ProcessService {
 		_guidance.setActivity(null);
 		_guidance.setTaskdefinition(null);
 		_guidance.setRoledefinition(null);
-		
+
 
 		this.guidanceDao.saveOrUpdateGuidance(_guidance);
 
 		_guidance.setActivity(clone.getActivity());
 		_guidance.setTaskdefinition(clone.getTaskdefinition());
 		_guidance.setRoledefinition(clone.getRoledefinition());
-		
+
 		this.guidanceDao.saveOrUpdateGuidance(_guidance);
 	}
-	
+
 	/**
 	 * Method for saving all guidances in the submitted set
-	 * 
+	 *
 	 * @param _guidances
 	 */
 	private void saveGuidances(Set<Guidance> _guidances) {
@@ -640,20 +639,6 @@ public class ProcessService {
 			}
 		}
 		return tds;
-	}
-
-	/**
-	 * @param _processId
-	 * @return
-	 */
-	@Transactional(readOnly = true)
-	public Process getEntireProcess(String _processId) {
-		Process process = this.processDao.getProcess(_processId);
-		Set<BreakdownElement> bdes = new HashSet<BreakdownElement>();
-		bdes.addAll(this.breakdownElementService.getBreakdownElementsFromProcess(_processId));
-		process.addAllBreakdownElements(bdes);
-
-		return process;
 	}
 
 	/**

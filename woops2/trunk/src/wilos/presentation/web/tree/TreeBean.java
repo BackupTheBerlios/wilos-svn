@@ -25,9 +25,9 @@ import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
 import wilos.presentation.web.template.MenuBean;
 import wilos.presentation.web.viewer.ConcreteActivityViewerBean;
-import wilos.presentation.web.viewer.ConcreteTaskViewerBean;
 import wilos.presentation.web.viewer.ConcreteIterationViewerBean;
-import wilos.presentation.web.viewer.PhaseViewerBean;
+import wilos.presentation.web.viewer.ConcreteTaskViewerBean;
+import wilos.presentation.web.viewer.ConcretePhaseViewerBean;
 import wilos.presentation.web.viewer.ProjectViewerBean;
 
 /**
@@ -195,7 +195,7 @@ public class TreeBean {
 						.resolveVariable(context, "ActivityViewerBean");
 				av.setActivityId(_objectId);
 				// model building
-				av.buildActivity();
+				av.buildConcreteActivity();
 				mb.changePage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.CONCRETETASKNODE)) {
 				ConcreteTaskViewerBean ctv = (ConcreteTaskViewerBean) context
@@ -209,17 +209,17 @@ public class TreeBean {
 				ConcreteIterationViewerBean iv = (ConcreteIterationViewerBean) context
 						.getApplication().getVariableResolver()
 						.resolveVariable(context, "IterationViewerBean");
-				iv.setIterationId(_objectId);
+				iv.setConcreteIterationId(_objectId);
 				// model building
-				iv.buildIteration();
+				iv.buildConcreteIteration();
 				mb.changePage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.PHASENODE)) {
-				PhaseViewerBean pb = (PhaseViewerBean) context.getApplication()
+				ConcretePhaseViewerBean pb = (ConcretePhaseViewerBean) context.getApplication()
 						.getVariableResolver().resolveVariable(context,
 								"PhaseViewerBean");
-				pb.setPhaseId(_objectId);
+				pb.setConcretePhaseId(_objectId);
 				// model building
-				pb.buildPhaseModel();
+				pb.buildConcretePhaseModel();
 				mb.changePage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.PROJECTNODE)) {
 				ProjectViewerBean p = (ProjectViewerBean) context
