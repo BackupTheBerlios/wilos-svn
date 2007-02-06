@@ -327,7 +327,7 @@
 		<property name="workBreakdownElementDao"
 			ref="WorkBreakdownElementDao" />
 		<property name="breakdownElementService" ref="BreakdownElementService" />
-
+		<property name="guidanceDao" ref="GuidanceDao" />
 	</bean>
 	
 	  <bean id="BreakdownElementService"

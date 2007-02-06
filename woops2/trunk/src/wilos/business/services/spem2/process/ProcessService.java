@@ -17,11 +17,11 @@ import wilos.business.services.spem2.iteration.IterationService;
 import wilos.business.services.spem2.phase.PhaseService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.business.services.util.xml.parser.XMLServices;
-//import wilos.business.services.util.xml.parser.XMLParser;
 import wilos.hibernate.misc.project.ProjectDao;
 import wilos.hibernate.spem2.activity.ActivityDao;
 import wilos.hibernate.spem2.breakdownelement.BreakdownElementDao;
 import wilos.hibernate.spem2.element.ElementDao;
+import wilos.hibernate.spem2.guide.GuidanceDao;
 import wilos.hibernate.spem2.iteration.IterationDao;
 import wilos.hibernate.spem2.phase.PhaseDao;
 import wilos.hibernate.spem2.process.ProcessDao;
@@ -34,6 +34,7 @@ import wilos.hibernate.spem2.workbreakdownelement.WorkBreakdownElementDao;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.process.Process;
@@ -90,6 +91,8 @@ public class ProcessService {
 	private WorkBreakdownElementDao workBreakdownElementDao;
 
 	private ProjectDao projectDao;
+	
+	private GuidanceDao guidanceDao;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -131,7 +134,6 @@ public class ProcessService {
 		try {
 			clone = _process.clone();
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -196,14 +198,16 @@ public class ProcessService {
 	private void parsePhase(Phase _ph) {
 
 		Phase clone = null;
-
+		// Guides
+		Set<Guidance> guidances = _ph.getGuidances();
+		this.saveGuidances(guidances);
+		
 		try {
 			clone = _ph.clone();
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 		bdes.addAll(_ph.getBreakdownElements());
 
@@ -232,7 +236,7 @@ public class ProcessService {
 		_ph.getPredecessors().clear();
 		_ph.getSuccessors().clear();
 		_ph.getSuperActivities().clear();
-
+		_ph.getGuidances().clear();
 		this.phaseDao.saveOrUpdatePhase(_ph);
 		System.out.println("###Phase sauve");
 
@@ -240,7 +244,9 @@ public class ProcessService {
 		_ph.addAllPredecessors(clone.getPredecessors());
 		_ph.addAllSuccessors(clone.getSuccessors());
 		_ph.addAllSuperActivities(clone.getSuperActivities());
-
+		_ph.addAllGuidances(guidances);
+		
+		// Parse for guidances
 		this.phaseDao.saveOrUpdatePhase(_ph);
 	}
 
@@ -253,21 +259,18 @@ public class ProcessService {
 	private void parseIteration(Iteration _it) {
 
 		Iteration clone = null;
-
+		
+		Set<Guidance> guidances = _it.getGuidances();
+		this.saveGuidances(guidances);
+		
 		try {
 			clone = _it.clone();
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 		bdes.addAll(_it.getBreakdownElements());
-		/*
-		 * System.out.println("###"+bdes.size()); for (BreakdownElement bde :
-		 * bdes) { String s = bde.getClass().getName(); String sbis =
-		 * s.substring(s.lastIndexOf('.')+1); System.out.println("###"+sbis); }
-		 */
 
 		for (BreakdownElement bde : bdes) {
 			if (bde instanceof Activity) {
@@ -288,7 +291,7 @@ public class ProcessService {
 		_it.getPredecessors().clear();
 		_it.getSuccessors().clear();
 		_it.getSuperActivities().clear();
-
+		_it.getGuidances().clear();
 		this.iterationDao.saveOrUpdateIteration(_it);
 		System.out.println("###Iteration sauve");
 
@@ -296,7 +299,8 @@ public class ProcessService {
 		_it.addAllPredecessors(clone.getPredecessors());
 		_it.addAllSuccessors(clone.getSuccessors());
 		_it.addAllSuperActivities(clone.getSuperActivities());
-
+		_it.addAllGuidances(guidances);
+		
 		this.iterationDao.saveOrUpdateIteration(_it);
 	}
 
@@ -309,23 +313,17 @@ public class ProcessService {
 	private void parseActivity(Activity _act) {
 
 		Activity clone = null;
-
+		Set<Guidance> guidances = _act.getGuidances();
+		this.saveGuidances(guidances);
+		
 		try {
 			clone = _act.clone();
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 		bdes.addAll(_act.getBreakdownElements());
-		// System.out.println("###"+bdes.size());
-
-		/*
-		 * for (BreakdownElement bde : bdes) { String s =
-		 * bde.getClass().getName(); String sbis =
-		 * s.substring(s.lastIndexOf('.')+1); System.out.println("OOO"+sbis); }
-		 */
 
 		for (BreakdownElement bde : bdes) {
 			if (bde instanceof Activity) {
@@ -346,7 +344,7 @@ public class ProcessService {
 		_act.getPredecessors().clear();
 		_act.getSuccessors().clear();
 		_act.getSuperActivities().clear();
-
+		_act.getGuidances().clear();
 		this.activityDao.saveOrUpdateActivity(_act);
 		System.out.println("###Activity sauve");
 
@@ -354,6 +352,7 @@ public class ProcessService {
 		_act.addAllPredecessors(clone.getPredecessors());
 		_act.addAllSuccessors(clone.getSuccessors());
 		_act.addAllSuperActivities(clone.getSuperActivities());
+		_act.addAllGuidances(guidances);
 
 		this.activityDao.saveOrUpdateActivity(_act);
 	}
@@ -371,14 +370,12 @@ public class ProcessService {
 		try {
 			clone = _rd.clone();
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		RoleDefinition rdef = _rd.getRoleDefinition();
 
 		if (rdef != null) {
-			// System.out.println("OOO"+rdef.getName());
 			this.parseRoleDefinition(rdef);
 		}
 
@@ -409,20 +406,24 @@ public class ProcessService {
 	private void parseRoleDefinition(RoleDefinition _rdef) {
 
 		RoleDefinition clone = null;
-
+		
+		Set<Guidance> guidances = _rdef.getGuidances();
+		this.saveGuidances(guidances);
+		
 		try {
 			clone = _rdef.clone();
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		_rdef.getRoleDescriptors().clear();
+		_rdef.getGuidances().clear();
 
 		this.roleDefinitionDao.saveOrUpdateRoleDefinition(_rdef);
 		System.out.println("###RoleDefinition sauve");
 
 		_rdef.addAllRoleDescriptors(clone.getRoleDescriptors());
+		_rdef.addAllGuidances(guidances);
 
 		this.roleDefinitionDao.saveOrUpdateRoleDefinition(_rdef);
 	}
@@ -440,7 +441,6 @@ public class ProcessService {
 		try {
 			clone = _td.clone();
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -481,51 +481,37 @@ public class ProcessService {
 	private void parseTaskDefinition(TaskDefinition _tdef) {
 
 		TaskDefinition clone = null;
-		//Set<Guideline> guidelines = new HashSet<Guideline>();
+
+		Set<Guidance> guidances = _tdef.getGuidances();
+		this.saveGuidances(guidances);
 		
 		try {
 			clone = _tdef.clone();
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		List<Step> steps = new ArrayList<Step>();
 		// recuperation des breakdownelements du processus
 		steps.addAll(_tdef.getSteps());
-		// System.out.println("###"+steps.size());
+		
 		for (Step step : steps) {
 			this.parseStep(step);
 		}
 
 		_tdef.getSteps().clear();
 		_tdef.getTaskDescriptors().clear();
-
+		_tdef.getGuidances().clear();
+		
 		this.taskDefinitionDao.saveOrUpdateTaskDefinition(_tdef);
 		System.out.println("###TaskDefinition sauve");
 
 		_tdef.addAllSteps(clone.getSteps());
 		_tdef.addAllTaskDesciptors(clone.getTaskDescriptors());
-
-		this.taskDefinitionDao.saveOrUpdateTaskDefinition(_tdef);
+		_tdef.addAllGuidances(guidances);
 		
-		// Delegating parsing for guidelines
-		// FIXME Mettre à jours le parseur depuis maj du model (Guidance)
-		//guidelines.addAll(_tdef.getGuidelines());
-		//
-		//this.parseGuidelines(guidelines);
+		this.taskDefinitionDao.saveOrUpdateTaskDefinition(_tdef);
 	}
-	
-	/**
-	 * Method for saving guidelines 
-	 * @param guidelines
-	 */
-	/*
-	private void parseGuidelines(Set<Guideline> _guidelines) {
-		for (Guideline g : _guidelines){
-			this.guidelineDao.saveOrUpdateGuideline(g);
-		}
-	}*/
 
 	/**
 	 *
@@ -540,15 +526,54 @@ public class ProcessService {
 		try {
 			clone = _step.clone();
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// System.out.println("$$$"+step.getName());
 		_step.setTaskDefinition(null);
 		this.stepDao.saveOrUpdateStep(_step);
 
 		_step.setTaskDefinition(clone.getTaskDefinition());
 		this.stepDao.saveOrUpdateStep(_step);
+	}
+	
+	/**
+	 *
+	 * TODO Method description
+	 *
+	 * @param _step
+	 */
+	private void parseGuidance(Guidance _guidance) {
+
+		Guidance clone = null;
+
+		try {
+			clone = _guidance.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		_guidance.setActivity(null);
+		_guidance.setTaskdefinition(null);
+		_guidance.setRoledefinition(null);
+		
+
+		this.guidanceDao.saveOrUpdateGuidance(_guidance);
+
+		_guidance.setActivity(clone.getActivity());
+		_guidance.setTaskdefinition(clone.getTaskdefinition());
+		_guidance.setRoledefinition(clone.getRoledefinition());
+		
+		this.guidanceDao.saveOrUpdateGuidance(_guidance);
+	}
+	
+	/**
+	 * Method for saving all guidances in the submitted set
+	 * 
+	 * @param _guidances
+	 */
+	private void saveGuidances(Set<Guidance> _guidances) {
+		if ((_guidances != null) && (_guidances.size() > 0))
+			for (Guidance g : _guidances) {
+				this.parseGuidance(g);
+			}
 	}
 
 	/**
@@ -885,5 +910,13 @@ public class ProcessService {
 
 	public void setProjectDao(ProjectDao projectDao) {
 		this.projectDao = projectDao;
+	}
+
+	public GuidanceDao getGuidanceDao() {
+		return guidanceDao;
+	}
+
+	public void setGuidanceDao(GuidanceDao guidanceDao) {
+		this.guidanceDao = guidanceDao;
 	}
 }
