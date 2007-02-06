@@ -78,15 +78,15 @@
                         </f:subview>
                     </ice:panelGroup>
                     
-                    <ice:panelGroup id="welcomeProjectDirector" styleClass="contentIncludePanelGroup" >
+                    <ice:panelGroup id="project_director_main" styleClass="contentIncludePanelGroup" >
                         <f:subview id="projectDirector_view">
-                            <jsp:directive.include file="./pages/projectDirector/welcomeProjectDirector.jspx" />
+                            <jsp:directive.include file="./pages/projectDirector/projectDirectorMain.jspx" />
                         </f:subview>
                     </ice:panelGroup>
-
-                    <ice:panelGroup id="welcomeProcessManager" styleClass="contentIncludePanelGroup" >
+                    
+                    <ice:panelGroup id="process_manager_main" styleClass="contentIncludePanelGroup" >
                         <f:subview id="processManager_view">
-                            <jsp:directive.include file="./pages/processManager/welcomeProcessManager.jspx" />
+                            <jsp:directive.include file="./pages/processManager/processManagerMain.jspx" />
                         </f:subview>
                     </ice:panelGroup>
                     
