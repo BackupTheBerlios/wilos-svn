@@ -77,7 +77,7 @@ public class ProjectBean {
 		FacesMessage message = new FacesMessage();
 		FacesContext facesContext = FacesContext.getCurrentInstance() ;
 		// test if the fields are correctly completed
-		if (this.project.getName().trim().length()==0)
+		if (this.project.getConcreteName().trim().length()==0)
 		{
 			FacesMessage errName = new FacesMessage() ;
 			errName.setSummary(bundle.getString("component.projectcreate.err.namerequired"));
@@ -96,7 +96,7 @@ public class ProjectBean {
 		}
 		if(!error)
 		{
-			if(this.projectService.projectExist(this.project.getName())){
+			if(this.projectService.projectExist(this.project.getConcreteName())){
 			
 				message.setSummary(bundle.getString("component.projectcreate.err.projectalreadyexists"));
 				message.setSeverity(FacesMessage.SEVERITY_ERROR) ;

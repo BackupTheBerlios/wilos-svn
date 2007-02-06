@@ -55,7 +55,7 @@ public class ProjectService {
 		String projectName ;
 		Set<Project> projects = this.projectDao.getAllProject() ;
 		for(Project project : projects){
-			projectName = project.getName().toUpperCase() ;
+			projectName = project.getConcreteName().toUpperCase() ;
 			if(projectName.equals(_projectName.toUpperCase())){
 				this.logger.debug("### new project " + projectName + " already exists ###") ;
 				return true ;
@@ -243,7 +243,7 @@ public class ProjectService {
 	@Transactional(readOnly = false)
 	public void saveProcessProjectAffectation(wilos.model.spem2.process.Process _process, Project _project) {
 		//TODO: A tester
-		Project loadedProject = this.getProject(_project.getProject_id()) ;
+		Project loadedProject = this.getProject(_project.getId()) ;
 		Process loadedProcess = this.processService.getProcessDao().getProcessFromGuid(_process.getGuid()) ;
 		loadedProject.addProcess(loadedProcess) ;
 		this.projectDao.saveOrUpdateProject(loadedProject) ;

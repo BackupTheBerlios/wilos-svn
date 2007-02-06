@@ -387,9 +387,9 @@ public class ParticipantBean {
 				
 				currentProject = (Project) iter.next() ;
 
-				ligne.put("project_id", currentProject.getProject_id()) ;
+				ligne.put("project_id", currentProject.getId()) ;
 				ligne.put("affected", plist.get(currentProject).toString()) ;
-				ligne.put("name", currentProject.getName()) ;
+				ligne.put("name", currentProject.getConcreteName()) ;
 				ligne.put("creationDate", formatter.format(currentProject.getCreationDate())) ;
 				ligne.put("launchingDate", formatter.format(currentProject.getLaunchingDate())) ;
 				ligne.put("description", currentProject.getDescription()) ;
@@ -458,8 +458,8 @@ public class ParticipantBean {
 	
 					HashMap<String, Object> ligne = new HashMap<String, Object>() ;
 					
-					ligne.put("project_id", currentProject.getProject_id()) ;
-					ligne.put("name", currentProject.getName()) ;
+					ligne.put("project_id", currentProject.getId()) ;
+					ligne.put("name", currentProject.getConcreteName()) ;
 					ligne.put("creationDate", formatter.format(currentProject.getCreationDate())) ;
 					ligne.put("launchingDate", formatter.format(currentProject.getLaunchingDate())) ;
 					ligne.put("description", currentProject.getDescription()) ;

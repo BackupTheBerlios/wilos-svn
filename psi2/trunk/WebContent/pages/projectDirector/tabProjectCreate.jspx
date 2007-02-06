@@ -4,7 +4,7 @@
 			<ice:panelGroup id="project_create_PanelGroup" styleClass="contentIncludePanelGroup">
 				<ice:panelGrid columns="2">
 					<ice:outputText value="#{msgs['component.projectcreate.name']}" />
-					<ice:inputText id="nom" value="#{ProjectBean.project.name}" required="false" />
+					<ice:inputText id="nom" value="#{ProjectBean.project.concreteName}" required="false" />
 
 					<ice:outputText value="#{msgs['component.projectcreate.description']}" />
 					<ice:inputTextarea id="description" value="#{ProjectBean.project.description}" required="false" cols="60" rows="7" />

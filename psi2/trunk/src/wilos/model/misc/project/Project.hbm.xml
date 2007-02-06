@@ -5,14 +5,10 @@
 
 <hibernate-mapping>
 
-	<class name="wilos.model.misc.project.Project" table="project" lazy="false">
-		<id name="project_id" type="string" column="project_id">
-			<!--identifiant auto-incremente -->
-			<generator class="uuid" />
-		</id>
-		<property name="name" type="string" column="name"/>
-		<property name="description" type="java.lang.String" column="description"
-			length="1024" />
+	<joined-subclass name="wilos.model.misc.project.Project" extends="wilos.model.misc.concreteactivity.ConcreteActivity" table="project" lazy="false">
+		<key column="project_id"></key>
+
+		<property name="description" type="java.lang.String" column="description" length="1024" />
 		<property name="creationDate" type="java.util.Date" column="creationDate"/>
 		<property name="launchingDate" type="java.util.Date" column="launchingDate"/>
 		<property name="isFinished" type="java.lang.Boolean" column="isFinished"/>
@@ -35,6 +31,6 @@
 				column="participant_id">
 			</many-to-many>
 		</set>
-	</class>
+	</joined-subclass>
 
 </hibernate-mapping>

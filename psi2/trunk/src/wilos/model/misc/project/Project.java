@@ -7,6 +7,7 @@ import java.util.Set ;
 import org.apache.commons.lang.builder.EqualsBuilder ;
 import org.apache.commons.lang.builder.HashCodeBuilder ;
 
+import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.wilosuser.Participant ;
 import wilos.model.misc.wilosuser.ProjectDirector;
 
@@ -15,11 +16,7 @@ import wilos.model.misc.wilosuser.ProjectDirector;
  * 
  * @author martial
  */
-public class Project implements Cloneable {
-
-	private String project_id ;
-
-	private String name ;
+public class Project extends ConcreteActivity implements Cloneable {
 
 	private String description ;
 
@@ -107,21 +104,6 @@ public class Project implements Cloneable {
 		this.launchingDate = launchingDate ;
 	}
 
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name ;
-	}
-
-	/**
-	 * @param name
-	 *            the name to set
-	 */
-	public void setName(String name) {
-		this.name = name ;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -140,7 +122,6 @@ public class Project implements Cloneable {
 	 *            The project to copy.
 	 */
 	protected void copy(final Project _project) {
-		this.name = _project.name ;
 		this.description = _project.description ;
 		this.creationDate = _project.creationDate ;
 		this.launchingDate = _project.launchingDate ;
@@ -152,7 +133,7 @@ public class Project implements Cloneable {
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37)	.append(this.name)
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
 											.append(this.description)
 											.append(this.creationDate)
 											.append(this.launchingDate)
@@ -175,7 +156,7 @@ public class Project implements Cloneable {
 			return true ;
 		}
 		Project project = (Project) _obj ;
-		return new EqualsBuilder()	.append(this.name, project.name)
+		return new EqualsBuilder().appendSuper(super.equals(project))
 									.append(this.description, project.description)
 									.append(this.creationDate, project.creationDate)
 									.append(this.launchingDate, project.launchingDate)
@@ -273,14 +254,6 @@ public class Project implements Cloneable {
 		for(Participant participant : this.participants){
 			this.removeFromParticipant(participant) ;
 		}
-	}
-
-	public String getProject_id() {
-		return project_id ;
-	}
-
-	public void setProject_id(String project_id) {
-		this.project_id = project_id ;
 	}
 
 	/**
