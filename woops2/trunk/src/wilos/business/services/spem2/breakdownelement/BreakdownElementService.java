@@ -1,66 +1,47 @@
 
 package wilos.business.services.spem2.breakdownelement ;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import wilos.hibernate.spem2.breakdownelement.BreakdownElementDao;
-import wilos.model.spem2.activity.Activity;
+import wilos.hibernate.misc.concretebreakdownelement.ConcreteBreakdownElementDao;
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
+import wilos.model.misc.project.Project;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 
 /**
- * 
+ *
  * @author Soosuske
- * 
+ *
  */
 @ Transactional (readOnly = false, propagation = Propagation.REQUIRED)
 public class BreakdownElementService {
-	
-	private BreakdownElementDao breakdownElementDao ;
 
-	/**
-	 * Return activities list
-	 * 
-	 * @return
-	 */
-	@ Transactional (readOnly = true)
-	public List<BreakdownElement> getBreakdownElementsFromProcess(String _id) {
-		List<BreakdownElement> tempList = this.breakdownElementDao.getAllBreakdownElements() ;
-		List<BreakdownElement> returnedList = new ArrayList<BreakdownElement>() ;
-		boolean flag = false ;
+	private ConcreteBreakdownElementDao concreteBreakdownElementDao ;
 
-		for(BreakdownElement bde : tempList){
-			flag = false ;
-			for(Activity a : bde.getSuperActivities()){
-				if(a.getId().equals(_id)){
-					flag = true ;
-					break ;
-				}
-			}
-			if(flag){
-				returnedList.add(bde) ;
-			}
-		}
-		return returnedList ;
+	public void breakdownElementInstanciation (Project _project, BreakdownElement _bde) {
+
+		ConcreteRoleDescriptor crd = new ConcreteRoleDescriptor();
+
+		crd.setConcreteName(_bde.getPresentationName());
+		crd.addBreakdownElement(_bde);
+
+		this.concreteBreakdownElementDao.saveOrUpdateConcreteBreakdownElement(crd);
 	}
 
 	/**
-	 * @return the breakDownElementDao
+	 * @return the concreteBreakdownElementDao
 	 */
-	public BreakdownElementDao getBreakdownElementDao() {
-		return this.breakdownElementDao ;
+	public ConcreteBreakdownElementDao getConcreteBreakdownElementDao() {
+		return concreteBreakdownElementDao;
 	}
 
 	/**
-	 * Setter of breakDownElementDao.
-	 * 
-	 * @param _breakDownElementDao
-	 *            The breakDownElementDao to set.
+	 * @param concreteBreakdownElementDao the concreteBreakdownElementDao to set
 	 */
-	public void setBreakdownElementDao(BreakdownElementDao _breakdownElementDao) {
-		this.breakdownElementDao = _breakdownElementDao ;
+	public void setConcreteBreakdownElementDao(
+			ConcreteBreakdownElementDao concreteBreakdownElementDao) {
+		this.concreteBreakdownElementDao = concreteBreakdownElementDao;
 	}
+
 }

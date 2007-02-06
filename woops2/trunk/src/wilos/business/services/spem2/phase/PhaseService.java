@@ -1,89 +1,39 @@
 package wilos.business.services.spem2.phase;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import wilos.business.services.spem2.activity.ActivityService;
-import wilos.business.services.spem2.iteration.IterationService;
-import wilos.business.services.spem2.task.TaskDescriptorService;
-import wilos.hibernate.spem2.phase.PhaseDao;
-import wilos.model.spem2.activity.Activity;
-import wilos.model.spem2.breakdownelement.BreakdownElement;
-import wilos.model.spem2.iteration.Iteration;
+import wilos.hibernate.misc.concretephase.ConcretePhaseDao;
+import wilos.model.misc.concretephase.ConcretePhase;
+import wilos.model.misc.project.Project;
 import wilos.model.spem2.phase.Phase;
-import wilos.model.spem2.task.TaskDescriptor;
 
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class PhaseService {
-	
-	private PhaseDao phaseDao;
-	
-	private IterationService iterationService;
 
-	private ActivityService activityService;
-	
-	private TaskDescriptorService taskDescriptorService;
+	private ConcretePhaseDao concretePhaseDao;
 
-	public Set<BreakdownElement> getBreakdownElementsFromPhase(Phase _ph) {
-		Set<BreakdownElement> bdes = new HashSet<BreakdownElement>();
-		bdes.addAll(_ph.getBreakdownElements());
-		
-		Set<BreakdownElement> allBdes = new HashSet<BreakdownElement>();
-		allBdes.addAll(_ph.getBreakdownElements());
-		
-		for (BreakdownElement bde : bdes) {
-			if (bde instanceof Iteration) {
-				Iteration it = (Iteration) bde;
-				allBdes.addAll(this.iterationService.getBreakdownElementsFromIteration(it.getId()));
-			} else {
-				if (bde instanceof Activity) {
-					Activity act = (Activity) bde;
-					allBdes.addAll(this.activityService.getBreakdownElementsFromActivity(act.getId()));
-				} else {
-					if (bde instanceof TaskDescriptor) {
-						TaskDescriptor td = (TaskDescriptor) bde;
-						allBdes.add(td);
-					}
-				}
-			}
-		}
-		
-		return allBdes;
-	}
-	
-	public PhaseDao getPhaseDao() {
-		return phaseDao;
+	public void phaseInstanciation (Project _project, Phase _phase) {
+
+		ConcretePhase cp = new ConcretePhase();
+
+		cp.setConcreteName(_phase.getPresentationName());
+		cp.addPhase(_phase);
+
+		this.concretePhaseDao.saveOrUpdateConcretePhase(cp);
 	}
 
-	public void setPhaseDao(PhaseDao phaseDao) {
-		this.phaseDao = phaseDao;
+	/**
+	 * @return the concretePhaseDao
+	 */
+	public ConcretePhaseDao getConcretePhaseDao() {
+		return concretePhaseDao;
 	}
 
-	public ActivityService getActivityService() {
-		return activityService;
+	/**
+	 * @param concretePhaseDao the concretePhaseDao to set
+	 */
+	public void setConcretePhaseDao(ConcretePhaseDao concretePhaseDao) {
+		this.concretePhaseDao = concretePhaseDao;
 	}
-
-	public void setActivityService(ActivityService activityService) {
-		this.activityService = activityService;
-	}
-
-	public IterationService getIterationService() {
-		return iterationService;
-	}
-
-	public void setIterationService(IterationService iterationService) {
-		this.iterationService = iterationService;
-	}
-
-	public TaskDescriptorService getTaskDescriptorService() {
-		return taskDescriptorService;
-	}
-
-	public void setTaskDescriptorService(TaskDescriptorService taskDescriptorService) {
-		this.taskDescriptorService = taskDescriptorService;
-	}
-
 }

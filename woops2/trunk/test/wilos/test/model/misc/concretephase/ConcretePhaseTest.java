@@ -5,7 +5,7 @@ import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.spem2.phase.Phase;
 
 /**
- * 
+ *
  * @author Soosuske
  *
  */
@@ -17,7 +17,7 @@ public class ConcretePhaseTest extends TestCase{
 	public static final String NAME = "Name" ;
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see junit.framework.TestCase#setUp()
 	 */
 	protected void setUp() throws Exception {
@@ -28,7 +28,7 @@ public class ConcretePhaseTest extends TestCase{
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see junit.framework.TestCase#tearDown()
 	 */
 	protected void tearDown() throws Exception {
@@ -92,7 +92,7 @@ public class ConcretePhaseTest extends TestCase{
 
 		// Rk: the tearDown method is called here.
 	}
-	
+
 	/**
 	 * Test method for {@link wilos.model.misc.concretephase.ConcretePhase#testAddToPhase}.
 	 */
@@ -100,25 +100,25 @@ public class ConcretePhaseTest extends TestCase{
 		Phase phase = new Phase() ;
 		phase.setName(NAME) ;
 
-		this.concretephase.addToPhase(phase) ;
+		this.concretephase.addPhase(phase) ;
 
 		assertNotNull(this.concretephase.getPhase()) ;
 		assertTrue(phase.getConcretePhases().size() == 1) ;
 	}
-	
+
 	public void testRemoveFromPhase() {
 		Phase phase = new Phase() ;
 		phase.setName(NAME) ;
 
-		this.concretephase.addToPhase(phase) ;
+		this.concretephase.addPhase(phase) ;
 		assertNotNull("null", this.concretephase.getPhase()) ;
 		assertTrue("empty", phase.getConcretePhases().size() == 1) ;
-		
-		this.concretephase.removeFromPhase(phase);
+
+		this.concretephase.removePhase(phase);
 		assertNull("null", this.concretephase.getPhase()) ;
 		assertTrue("empty", phase.getConcretePhases().isEmpty()) ;
 	}
 
-	
-	
+
+
 }

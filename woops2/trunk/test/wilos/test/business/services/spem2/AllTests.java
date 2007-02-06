@@ -6,7 +6,7 @@ import junit.framework.TestSuite ;
 
 /**
  * @author deder
- * 
+ *
  */
 public class AllTests {
 
@@ -16,7 +16,6 @@ public class AllTests {
 		suite.addTest(wilos.test.business.services.spem2.activity.AllTests.suite()) ;
 		suite.addTest(wilos.test.business.services.spem2.process.AllTests.suite()) ;
 		suite.addTest(wilos.test.business.services.spem2.role.AllTests.suite()) ;
-		suite.addTest(wilos.test.business.services.spem2.task.AllTests.suite()) ;
 		// $JUnit-END$
 		return suite ;
 	}

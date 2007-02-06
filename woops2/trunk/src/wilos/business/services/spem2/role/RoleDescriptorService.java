@@ -1,17 +1,11 @@
 package wilos.business.services.spem2.role;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import wilos.hibernate.spem2.role.RoleDefinitionDao;
-import wilos.hibernate.spem2.role.RoleDescriptorDao;
-import wilos.model.spem2.activity.Activity;
-import wilos.model.spem2.role.RoleDefinition;
+import wilos.hibernate.misc.concreterole.ConcreteRoleDescriptorDao;
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
+import wilos.model.misc.project.Project;
 import wilos.model.spem2.role.RoleDescriptor;
 
 /**
@@ -22,89 +16,30 @@ import wilos.model.spem2.role.RoleDescriptor;
  */
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class RoleDescriptorService {
-	
-	private RoleDescriptorDao roleDescriptorDao ;
-	
-	private RoleDefinitionDao roleDefinitionDao; 
-	
-	protected final Log logger = LogFactory.getLog(this.getClass()) ;
-	
+
+	private ConcreteRoleDescriptorDao concreteRoleDescriptorDao;
+
 	/**
-	 * Return activities list
-	 * 
-	 * @return
-	 */
-	//@Transactional(readOnly = true)
-	public List<RoleDescriptor> getRoleDescriptorsFromProcess(String _id) {
-		List<RoleDescriptor> tempList =  this.roleDescriptorDao.getAllRoleDescriptors() ;
-		List<RoleDescriptor> returnedList =  new ArrayList<RoleDescriptor>();
-		boolean flag = false;
-		
-		for (RoleDescriptor rd : tempList) {
-			flag = false;
-			for (Activity a : rd.getSuperActivities()) {
-				if (a.getId().equals(_id)) {
-					flag = true;
-					break;
-				}
-			}
-			if (flag){
-				//rd.setRoleDefinition(this.getRoleDefinitionFromRoleDescriptor(rd.getId()));
-				returnedList.add(rd);
-				logger.debug("###RoleDescriptorDao ### added => "+rd);
-			}	
-		}
-		return returnedList;
-	}
-	
-	public RoleDefinition getRoleDefinitionFromRoleDescriptor(String _id){
-		RoleDefinition rdf = null;
-		boolean found = false;
-		List<RoleDefinition> listRdf = this.roleDefinitionDao.getAllRoleDefinitions();
-		for (RoleDefinition r : listRdf){
-			for(RoleDescriptor rd : r.getRoleDescriptors()){
-				if (rd.getId().equals(_id)){
-					found = true;
-					break;
-				}
-			}
-			if (found) { rdf = r; break;}
-		}
-		return rdf;
-	}
-	
-	/**
-	 * Getter of roleDescriptorDao.
 	 *
-	 * @return the roleDescriptorDao.
+	 * @param _project
+	 * @param _rd
 	 */
-	public RoleDescriptorDao getRoleDescriptorDao() {
-		return this.roleDescriptorDao ;
+	public void roleDescriptorInstanciation (Project _project, RoleDescriptor _rd) {
+
+		ConcreteRoleDescriptor crd = new ConcreteRoleDescriptor();
+
+		crd.setConcreteName(_rd.getPresentationName());
+		crd.addRoleDescriptor(_rd);
+
+		this.concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(crd);
 	}
 
-	/**
-	 * Setter of roleDescriptorDao.
-	 *
-	 * @param _roleDescriptorDao The roleDescriptorDao to set.
-	 */
-	public void setRoleDescriptorDao(RoleDescriptorDao _roleDescriptorDao) {
-		this.roleDescriptorDao = _roleDescriptorDao ;
+	public ConcreteRoleDescriptorDao getConcreteRoleDescriptorDao() {
+		return concreteRoleDescriptorDao;
 	}
 
-	/**
-	 * @return the roleDefinitionDao
-	 */
-	public RoleDefinitionDao getRoleDefinitionDao() {
-		return this.roleDefinitionDao ;
+	public void setConcreteRoleDescriptorDao(
+			ConcreteRoleDescriptorDao concreteRoleDescriptorDao) {
+		this.concreteRoleDescriptorDao = concreteRoleDescriptorDao;
 	}
-
-	/**
-	 * Setter of roleDefinitionDao.
-	 *
-	 * @param _roleDefinitionDao The roleDefinitionDao to set.
-	 */
-	public void setRoleDefinitionDao(RoleDefinitionDao _roleDefinitionDao) {
-		this.roleDefinitionDao = _roleDefinitionDao ;
-	}
-
 }

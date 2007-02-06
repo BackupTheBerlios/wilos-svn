@@ -1,58 +1,43 @@
 package wilos.business.services.spem2.iteration;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import wilos.business.services.spem2.activity.ActivityService;
-import wilos.hibernate.spem2.iteration.IterationDao;
-import wilos.model.spem2.activity.Activity;
-import wilos.model.spem2.breakdownelement.BreakdownElement;
-import wilos.model.spem2.task.TaskDescriptor;
+import wilos.hibernate.misc.concreteiteration.ConcreteIterationDao;
+import wilos.model.misc.concreteiteration.ConcreteIteration;
+import wilos.model.misc.project.Project;
+import wilos.model.spem2.iteration.Iteration;
 
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class IterationService {
-	
-	private IterationDao iterationDao;
-	
-	private ActivityService activityService;
-	
-	public Set<BreakdownElement> getBreakdownElementsFromIteration(String _iterationId) {
-		Set<BreakdownElement> bdes = new HashSet<BreakdownElement>();
-		bdes.addAll(this.iterationDao.getBreakdownElementsFromIteration(_iterationId));
-		
-		Set<BreakdownElement> allBdes = new HashSet<BreakdownElement>();
-		allBdes.addAll(this.iterationDao.getBreakdownElementsFromIteration(_iterationId));
-		
-		for (BreakdownElement bde : bdes) {
-			if (bde instanceof Activity) {
-				Activity act = (Activity) bde;
-				allBdes.addAll(this.activityService.getBreakdownElementsFromActivity(act.getId()));
-			} else {
-				if (bde instanceof TaskDescriptor) {
-					TaskDescriptor td = (TaskDescriptor) bde;
-					allBdes.add(td);
-				}
-			}
-		}
-		return allBdes;
-}
 
-	public IterationDao getIterationDao() {
-		return iterationDao;
+	private ConcreteIterationDao concreteIterationDao;
+
+	public void iterationInstanciation (Project _project, Iteration _iteration) {
+
+		ConcreteIteration ci = new ConcreteIteration();
+
+		ci.setConcreteName(_iteration.getPresentationName());
+		ci.addIteration(_iteration);
+
+		this.concreteIterationDao.saveOrUpdateConcreteIteration(ci);
 	}
 
-	public void setIterationDao(IterationDao iterationDao) {
-		this.iterationDao = iterationDao;
+	/**
+	 * @return the concreteIterationDao
+	 */
+	public ConcreteIterationDao getConcreteIterationDao() {
+		return concreteIterationDao;
 	}
 
-	public ActivityService getActivityService() {
-		return activityService;
+	/**
+	 * @param concreteIterationDao the concreteIterationDao to set
+	 */
+	public void setConcreteIterationDao(ConcreteIterationDao concreteIterationDao) {
+		this.concreteIterationDao = concreteIterationDao;
 	}
 
-	public void setActivityService(ActivityService activityService) {
-		this.activityService = activityService;
-	}
+
+
+
 }

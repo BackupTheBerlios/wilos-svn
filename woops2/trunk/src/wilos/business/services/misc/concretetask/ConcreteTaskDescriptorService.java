@@ -1,6 +1,8 @@
 package wilos.business.services.misc.concretetask;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,6 +17,7 @@ import wilos.hibernate.spem2.role.RoleDescriptorDao;
 import wilos.hibernate.spem2.task.TaskDescriptorDao;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.wilosuser.Participant;
+import wilos.utils.Constantes;
 import wilos.utils.Constantes.State;
 
 /**
@@ -47,11 +50,12 @@ public class ConcreteTaskDescriptorService {
 				.getAllConcreteTaskDescriptors();
 		List<ConcreteTaskDescriptor> returnedList = new ArrayList<ConcreteTaskDescriptor>();
 
-		/*FIXME Urgent (project) !!! for (ConcreteTaskDescriptor concreteTaskDescriptor : tempList) {
-			if (concreteTaskDescriptor.getProject().getProject_id().equals(_projectId)) {
-				returnedList.add(concreteTaskDescriptor);
-			}
-		}*/
+		/*
+		 * FIXME Urgent (project) !!! for (ConcreteTaskDescriptor
+		 * concreteTaskDescriptor : tempList) { if
+		 * (concreteTaskDescriptor.getProject().getProject_id().equals(_projectId)) {
+		 * returnedList.add(concreteTaskDescriptor); } }
+		 */
 
 		return returnedList;
 	}
@@ -65,16 +69,15 @@ public class ConcreteTaskDescriptorService {
 	 */
 	public void startConcreteTaskDescriptor(
 			ConcreteTaskDescriptor _concreteTaskDescriptor) {
-		// update changings.
 
 		_concreteTaskDescriptor.setState(State.STARTED);
-	/*	try {
+		try {
 			_concreteTaskDescriptor.setRealStartingDate(Constantes.DATE_FORMAT
 					.parse(Calendar.getInstance().getTime().toString()));
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 
 		// save changings.
 		this.concreteTaskDescriptorDao
@@ -90,13 +93,15 @@ public class ConcreteTaskDescriptorService {
 	public void affectedConcreteTaskDescriptor(
 			ConcreteTaskDescriptor _concreteTaskDescriptor, Participant _user) {
 
-		/*FIXME TaskDescriptor td = _concreteTaskDescriptor.getTaskDescriptor();
-		TaskDescriptor tmp = this.taskDescriptorService.getTaskDescriptorDao()
-				.getTaskDescriptor(td.getId());
-		RoleDescriptor roleDescriptor = tmp.getMainRole();
-		roleDescriptor.addParticipant(_user);
-		// save changings.
-		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(roleDescriptor);*/
+		/*
+		 * FIXME TaskDescriptor td =
+		 * _concreteTaskDescriptor.getTaskDescriptor(); TaskDescriptor tmp =
+		 * this.taskDescriptorService.getTaskDescriptorDao()
+		 * .getTaskDescriptor(td.getId()); RoleDescriptor roleDescriptor =
+		 * tmp.getMainRole(); roleDescriptor.addParticipant(_user); // save
+		 * changings.
+		 * this.roleDescriptorDao.saveOrUpdateRoleDescriptor(roleDescriptor);
+		 */
 	}
 
 	/**
@@ -128,14 +133,12 @@ public class ConcreteTaskDescriptorService {
 		// update changings.
 		_concreteTaskDescriptor.setState(State.FINISHED);
 		/*
-		try {
-			_concreteTaskDescriptor.setRealFinishingDate(Constantes.DATE_FORMAT
-					.parse(Calendar.getInstance().getTime().toString()));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-*/
+		 * try {
+		 * _concreteTaskDescriptor.setRealFinishingDate(Constantes.DATE_FORMAT
+		 * .parse(Calendar.getInstance().getTime().toString())); } catch
+		 * (ParseException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); }
+		 */
 		// save changings.
 		this.concreteTaskDescriptorDao
 				.saveOrUpdateConcreteTaskDescriptor(_concreteTaskDescriptor);
@@ -164,18 +167,19 @@ public class ConcreteTaskDescriptorService {
 
 		boolean visi = true;
 
-		/*FIXME TaskDescriptor td = _concreteTaskDescriptor.getTaskDescriptor();
-		TaskDescriptor tmp = this.taskDescriptorService.getTaskDescriptorDao().getTaskDescriptor(td.getId());
-		RoleDescriptor roleDescriptor = tmp.getMainRole();
-		RoleDescriptor tmpRd = this.roleDescriptorService.getRoleDescriptorDao().getRoleDescriptor(roleDescriptor.getId());
-		Set<Participant> part = tmpRd.getParticipants();
-
-			for (Participant parti : part) {
-				if(parti.getWilosuser_id().equals(_user.getWilosuser_id()))
-				{
-					visi= false;
-				}
-			}*/
+		/*
+		 * FIXME TaskDescriptor td =
+		 * _concreteTaskDescriptor.getTaskDescriptor(); TaskDescriptor tmp =
+		 * this.taskDescriptorService.getTaskDescriptorDao().getTaskDescriptor(td.getId());
+		 * RoleDescriptor roleDescriptor = tmp.getMainRole(); RoleDescriptor
+		 * tmpRd =
+		 * this.roleDescriptorService.getRoleDescriptorDao().getRoleDescriptor(roleDescriptor.getId());
+		 * Set<Participant> part = tmpRd.getParticipants();
+		 *
+		 * for (Participant parti : part) {
+		 * if(parti.getWilosuser_id().equals(_user.getWilosuser_id())) { visi=
+		 * false; } }
+		 */
 
 		return visi;
 
@@ -184,25 +188,24 @@ public class ConcreteTaskDescriptorService {
 	/**
 	 * Visible ob affected buton
 	 */
-	public boolean startVisible(
-			ConcreteTaskDescriptor _concreteTaskDescriptor, Participant _user) {
+	public boolean startVisible(ConcreteTaskDescriptor _concreteTaskDescriptor,
+			Participant _user) {
 
 		boolean visi = true;
 
-		/*FIXME TaskDescriptor td = _concreteTaskDescriptor.getTaskDescriptor();
-		TaskDescriptor tmp = this.taskDescriptorService.getTaskDescriptorDao().getTaskDescriptor(td.getId());
-		RoleDescriptor roleDescriptor = tmp.getMainRole();
-		RoleDescriptor tmpRd = this.roleDescriptorService.getRoleDescriptorDao().getRoleDescriptor(roleDescriptor.getId());
-		Set<Participant> part = tmpRd.getParticipants();
-		if(!_concreteTaskDescriptor.getState().equals("Started"))
-		{
-			for (Participant parti : part) {
-				if(parti.getWilosuser_id().equals(_user.getWilosuser_id()))
-				{
-					visi= false;
-				}
-			}
-		}*/
+		/*
+		 * FIXME TaskDescriptor td =
+		 * _concreteTaskDescriptor.getTaskDescriptor(); TaskDescriptor tmp =
+		 * this.taskDescriptorService.getTaskDescriptorDao().getTaskDescriptor(td.getId());
+		 * RoleDescriptor roleDescriptor = tmp.getMainRole(); RoleDescriptor
+		 * tmpRd =
+		 * this.roleDescriptorService.getRoleDescriptorDao().getRoleDescriptor(roleDescriptor.getId());
+		 * Set<Participant> part = tmpRd.getParticipants();
+		 * if(!_concreteTaskDescriptor.getState().equals("Started")) { for
+		 * (Participant parti : part) {
+		 * if(parti.getWilosuser_id().equals(_user.getWilosuser_id())) { visi=
+		 * false; } } }
+		 */
 		return visi;
 
 	}
@@ -256,7 +259,8 @@ public class ConcreteTaskDescriptorService {
 		return roleDescriptorService;
 	}
 
-	public void setRoleDescriptorService(RoleDescriptorService roleDescriptorService) {
+	public void setRoleDescriptorService(
+			RoleDescriptorService roleDescriptorService) {
 		this.roleDescriptorService = roleDescriptorService;
 	}
 }

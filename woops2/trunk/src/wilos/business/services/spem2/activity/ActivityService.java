@@ -1,22 +1,21 @@
 
 package wilos.business.services.spem2.activity ;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import wilos.hibernate.misc.concreteactivity.ConcreteActivityDao;
 import wilos.hibernate.spem2.activity.ActivityDao;
+import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
-import wilos.model.spem2.breakdownelement.BreakdownElement;
-import wilos.model.spem2.task.TaskDescriptor;
 
 /**
  * ActivityManager is a transactional class, that manage operations about activity, requested by web pages (activity.jsp &
  * activityform.jsp)
- * 
+ *
  * @author garwind
  * @author deder.
  */
@@ -24,41 +23,32 @@ import wilos.model.spem2.task.TaskDescriptor;
 public class ActivityService {
 
 	private ActivityDao activityDao ;
-	
+
+	private ConcreteActivityDao concreteActivityDao;
+
+	public void activityInstanciation (Project _project, Activity _activity) {
+
+		ConcreteActivity cact = new ConcreteActivity();
+
+		cact.setConcreteName(_activity.getPresentationName());
+		cact.addActivity(_activity);
+
+		this.concreteActivityDao.saveOrUpdateConcreteActivity(cact);
+	}
+
 	/**
 	 * Return activities list
-	 * 
+	 *
 	 * @return
 	 */
 	@Transactional(readOnly = true)
 	public List<Activity> getActivitiesList() {
 		return this.activityDao.getAllActivities() ;
 	}
-	
-	public Set<BreakdownElement> getBreakdownElementsFromActivity(String _activityId) {
-		Set<BreakdownElement> bdes = new HashSet<BreakdownElement>();
-		bdes.addAll(this.activityDao.getBreakdownElementsFromActivity(_activityId));
-				
-		Set<BreakdownElement> allBdes = new HashSet<BreakdownElement>();
-		allBdes.addAll(this.activityDao.getBreakdownElementsFromActivity(_activityId));
-		
-		for (BreakdownElement bde : bdes) {
-			if (bde instanceof Activity) {
-				Activity act = (Activity) bde;
-				allBdes.addAll(this.getBreakdownElementsFromActivity(act.getId()));
-			} else {
-				if (bde instanceof TaskDescriptor) {
-					TaskDescriptor td = (TaskDescriptor) bde;
-					allBdes.add(td);
-				}
-			}
-		}
-		return allBdes;
-	}
-	
+
 	/**
 	 * Save activity
-	 * 
+	 *
 	 * @param _activity
 	 */
 	public void saveActivity(Activity _activity) {
@@ -67,7 +57,7 @@ public class ActivityService {
 
 	/**
 	 * Getter of activityDao.
-	 * 
+	 *
 	 * @return the activityDao.
 	 */
 	public ActivityDao getActivityDao() {
@@ -76,11 +66,25 @@ public class ActivityService {
 
 	/**
 	 * Setter of activityDao.
-	 * 
+	 *
 	 * @param _activityDao
 	 *            The activityDao to set.
 	 */
 	public void setActivityDao(ActivityDao _activityDao) {
 		this.activityDao = _activityDao ;
+	}
+
+	/**
+	 * @return the concreteActivityDao
+	 */
+	public ConcreteActivityDao getConcreteActivityDao() {
+		return concreteActivityDao;
+	}
+
+	/**
+	 * @param concreteActivityDao the concreteActivityDao to set
+	 */
+	public void setConcreteActivityDao(ConcreteActivityDao concreteActivityDao) {
+		this.concreteActivityDao = concreteActivityDao;
 	}
 }

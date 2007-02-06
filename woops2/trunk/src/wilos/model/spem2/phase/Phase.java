@@ -10,20 +10,20 @@ import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.spem2.activity.Activity;
 
 /**
- * 
+ *
  * @author Soosuske
  *
  */
 public class Phase extends Activity implements Cloneable{
-	
+
 	/**
-	 * The ConcretePhases 
+	 * The ConcretePhases
 	 */
 	private Set<ConcretePhase> concretePhases;
-	
+
 	/**
 	 * Default constructor
-	 * 
+	 *
 	 */
 	public Phase() {
 		super() ;
@@ -32,7 +32,7 @@ public class Phase extends Activity implements Cloneable{
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#clone()
 	 */
 	@ Override
@@ -44,17 +44,18 @@ public class Phase extends Activity implements Cloneable{
 
 	/**
 	 * Copy the object.
-	 * 
+	 *
 	 * @param _phase
 	 *            The iteration to copy.
 	 */
 	protected void copy(final Phase _phase) {
 		super.copy(_phase) ;
+		this.setConcretePhases(_phase.getConcretePhases());
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see woops2.model.activity.Activity#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
@@ -70,13 +71,13 @@ public class Phase extends Activity implements Cloneable{
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see woops2.model.activity.Activity#hashCode()
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode() ;
 	}
-	
+
 	/**
 	 * relation between Phase and ConcretePhase
 	 * @return
@@ -84,18 +85,18 @@ public class Phase extends Activity implements Cloneable{
 	public void removeConcretePhase(ConcretePhase _concretePhase) {
 		_concretePhase.setPhase(null);
 		this.concretePhases.remove(_concretePhase);
-	} 
-	
+	}
+
 	/**
 	 * Add a concrete Phase
 	 * @param _concretePhase
 	 */
-	
+
 	public void addConcretePhase(ConcretePhase _concretePhase) {
 		   this.concretePhases.add(_concretePhase);
 		   _concretePhase.setPhase(this);
 	}
-	
+
 	/**
 	 * remove all concretePhase
 	 *
@@ -106,14 +107,14 @@ public class Phase extends Activity implements Cloneable{
 		}
 		this.concretePhases.clear();
 	}
-	
-	
+
+
 	public void addAllConcretePhases(Set<ConcretePhase> _concretePhase) {
 		for (ConcretePhase td : _concretePhase) {
-			td.addToPhase(this);
+			td.addPhase(this);
 		}
 	}
-	
+
 	public Set<ConcretePhase> getConcretePhases() {
 		return concretePhases;
 	}
