@@ -23,7 +23,7 @@
 				<ice:form id="connect_form">
 					<ice:panelGrid columns="2">			
 						<ice:outputLabel value="#{msgs['component.authentificationfield.login']}" style="iceInputtext"/>
-						<ice:inputText size="15" immediate="true" value="#{LoginBean.login}" />
+						<h:inputText size="15" immediate="true" value="#{LoginBean.login}" />
 						<ice:outputText value="#{msgs['component.authentificationfield.password']}"/>
 						<h:inputSecret size="15" value="#{LoginBean.password}" onkeydown="submitOnEnter(this);"/>
 					</ice:panelGrid>

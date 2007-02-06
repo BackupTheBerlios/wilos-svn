@@ -301,11 +301,11 @@
 		<property name="processService" ref="ProcessService" />
 	</bean>
 	
-	<bean id="RoleService"
+	<!--<bean id="RoleService"
 		class="wilos.business.services.role.RoleService">
 		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
 		<property name="participantDao" ref="ParticipantDao" />
-	</bean>
+	</bean>-->
 	
 	
 	<!-- =============================================================== -->
@@ -365,9 +365,9 @@
 		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
 		<property name="taskDescriptorService" ref="TaskDescriptorService" />
 		<property name="roleDescriptorService" ref="RoleDescriptorService" />
-		
+
 	</bean>
-	
+
 	<bean id="ConcreteRoleDescriptorService"
 		class="wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService">
 		<property name="concreteRoleDescriptorDao" ref="ConcreteRoleDescriptorDao" />

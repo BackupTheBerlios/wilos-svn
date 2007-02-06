@@ -14,17 +14,16 @@
         <title><ice:outputText value="" /></title>
 
         <link href="css/ice.css" rel="stylesheet" type="text/css" />
+        <link href="css/wilos.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
-    <div id="body">
-    
+
     <ice:panelBorder layout="hide east" border="0" cellpadding="0"
         cellspacing="0" styleClass="mainBorderLayout" >
 
         <f:facet name="north">
             <ice:panelGroup>  
-					<img src="images/logo_wilos.png"/>						
-            
+					<img src="images/logo_wilos.png"/>
             <div id="roles_actions">
             	<jsp:directive.include file="./pages/template/roles_actions.jspx" />
             </div>
@@ -61,9 +60,9 @@
                         </f:subview>
                     </ice:panelGroup>
                     
-                    <ice:panelGroup id="welcome" styleClass="contentIncludePanelGroup" >
+                    <ice:panelGroup id="participant_main" styleClass="contentIncludePanelGroup" >
                         <f:subview id="welcome_view">
-                            <jsp:directive.include file="./pages/participant/welcome.jspx" />
+                            <jsp:directive.include file="./pages/participant/participantMain.jspx" />
                         </f:subview>
                     </ice:panelGroup>
 
@@ -75,19 +74,19 @@
                     
                     <ice:panelGroup id="admin_main" styleClass="contentIncludePanelGroup" >
                         <f:subview id="admin_view">
-                            <jsp:directive.include file="./pages/admin/admin_main.jspx" />
+                            <jsp:directive.include file="./pages/admin/adminMain.jspx" />
                         </f:subview>
                     </ice:panelGroup>
                     
-                    <ice:panelGroup id="welcomeProjectDirector" styleClass="contentIncludePanelGroup" >
+                    <ice:panelGroup id="project_director_main" styleClass="contentIncludePanelGroup" >
                         <f:subview id="projectDirector_view">
-                            <jsp:directive.include file="./pages/projectDirector/welcomeProjectDirector.jspx" />
+                            <jsp:directive.include file="./pages/projectDirector/projectDirectorMain.jspx" />
                         </f:subview>
                     </ice:panelGroup>
                     
-                    <ice:panelGroup id="welcomeProcessManager" styleClass="contentIncludePanelGroup" >
+                    <ice:panelGroup id="process_manager_main" styleClass="contentIncludePanelGroup" >
                         <f:subview id="processManager_view">
-                            <jsp:directive.include file="./pages/processManager/welcomeProcessManager.jspx" />
+                            <jsp:directive.include file="./pages/processManager/processManagerMain.jspx" />
                         </f:subview>
                     </ice:panelGroup>
                     
@@ -131,8 +130,7 @@
             </ice:panelGroup>
         </f:facet>
     </ice:panelBorder>
-
-	</div>
+    
 	<script language="JavaScript">
     <![CDATA[
     var preloaded = new Array();

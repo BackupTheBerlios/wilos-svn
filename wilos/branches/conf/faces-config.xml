@@ -100,8 +100,38 @@
 			<value>#{ProcessService}</value>
 		</managed-property>
 	</managed-bean>
-
+	
+	
+	
 	<managed-bean>
+		<managed-bean-name>salesRecordsManager</managed-bean-name>
+		<managed-bean-class>
+			test.TestManager
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>salesRecords</managed-bean-name>
+		<managed-bean-class>
+			test.Test
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>ActionBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.template.ActionBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	
+	
+	
+
+	<!-- <managed-bean>
 		<managed-bean-name>RoleBean</managed-bean-name>
 		<managed-bean-class>
 			wilos.presentation.web.role.RoleBean
@@ -111,7 +141,7 @@
 			<property-name>roleService</property-name>
 			<value>#{RoleService}</value>
 		</managed-property>
-	</managed-bean>
+	</managed-bean>-->
 
 	<!-- =============================================================== -->
 	<!-- ========================= PSI2 Bean =========================== -->
