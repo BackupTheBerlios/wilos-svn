@@ -16,17 +16,16 @@
         <link href="css/ice.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
-    <div id="body">
     
     <ice:panelBorder layout="hide east" border="0" cellpadding="0"
         cellspacing="0" styleClass="mainBorderLayout" >
 
         <f:facet name="north">
-            <ice:panelGroup>  
-					<img src="images/logo_wilos.png"/>						
-            
+            <ice:panelGroup>
+					<img src="images/logo_wilos.png"/>
+
             <div id="roles_actions">
-            	<jsp:directive.include file="./pages/template/roles_actions.jspx" />
+            	<jsp:directive.include file="./pages/template/rolesActions.jspx" />
             </div>
             </ice:panelGroup>
         </f:facet>
@@ -49,7 +48,7 @@
                     <!-- Connection Status -->
                     <ice:outputConnectionStatus style="iceOutConStat"/>
                 </ice:panelGrid>
-                
+				
 				<ice:messages styleClass="pageHeader"/>
                     <ice:panelStack id="panelStack"
                         styleClass="componentContentPanelStack"
@@ -60,10 +59,10 @@
                             <jsp:directive.include file="./pages/common/wilos.jspx" />
                         </f:subview>
                     </ice:panelGroup>
-                    
-                    <ice:panelGroup id="welcome" styleClass="contentIncludePanelGroup" >
+					
+                    <ice:panelGroup id="participant_main" styleClass="contentIncludePanelGroup" >
                         <f:subview id="welcome_view">
-                            <jsp:directive.include file="./pages/participant/welcome.jspx" />
+                            <jsp:directive.include file="./pages/participant/participantMain.jspx" />
                         </f:subview>
                     </ice:panelGroup>
 
@@ -72,53 +71,53 @@
                             <jsp:directive.include file="./pages/common/participantSubscribe.jspx" />
                         </f:subview>
                     </ice:panelGroup>
-                    
+
                     <ice:panelGroup id="admin_main" styleClass="contentIncludePanelGroup" >
                         <f:subview id="admin_view">
-                            <jsp:directive.include file="./pages/admin/admin_main.jspx" />
+                            <jsp:directive.include file="./pages/admin/adminMain.jspx" />
                         </f:subview>
                     </ice:panelGroup>
-                    
+
                     <ice:panelGroup id="welcomeProjectDirector" styleClass="contentIncludePanelGroup" >
                         <f:subview id="projectDirector_view">
                             <jsp:directive.include file="./pages/projectDirector/welcomeProjectDirector.jspx" />
                         </f:subview>
                     </ice:panelGroup>
-                    
+
                     <ice:panelGroup id="welcomeProcessManager" styleClass="contentIncludePanelGroup" >
                         <f:subview id="processManager_view">
                             <jsp:directive.include file="./pages/processManager/welcomeProcessManager.jspx" />
                         </f:subview>
                     </ice:panelGroup>
-                    
+
                       <ice:panelGroup id="ConcreteTaskViewer"
 						styleClass="contentIncludePanelGroup">
 						<f:subview id="ConcreteTaskViewer_view">
 							<jsp:directive.include file="./pages/common/ConcreteTaskViewer.jspx" />
 						</f:subview>
 					</ice:panelGroup>
-					
-					 <ice:panelGroup id="PhaseViewer"
+
+					 <ice:panelGroup id="ConcretePhaseViewer"
 						styleClass="contentIncludePanelGroup">
-						<f:subview id="PhaseViewer_view">
-							<jsp:directive.include file="./pages/common/PhaseViewer.jspx" />
+						<f:subview id="ConcretePhaseViewer_view">
+							<jsp:directive.include file="./pages/common/ConcretePhaseViewer.jspx" />
 						</f:subview>
 					</ice:panelGroup>
-					
-					 <ice:panelGroup id="ActivityViewer"
+
+					 <ice:panelGroup id="ConcreteActivityViewer"
 						styleClass="contentIncludePanelGroup">
-						<f:subview id="ActivityViewer_view">
-							<jsp:directive.include file="./pages/common/ActivityViewer.jspx" />
+						<f:subview id="ConcreteActivityViewer_view">
+							<jsp:directive.include file="./pages/common/ConcreteActivityViewer.jspx" />
 						</f:subview>
 					</ice:panelGroup>
-					
-					<ice:panelGroup id="IterationViewer"
+
+					<ice:panelGroup id="ConcreteIterationViewer"
 						styleClass="contentIncludePanelGroup">
-						<f:subview id="IterationViewer_view">
-							<jsp:directive.include file="./pages/common/IterationViewer.jspx" />
+						<f:subview id="ConcreteIterationViewer_view">
+							<jsp:directive.include file="./pages/common/ConcreteIterationViewer.jspx" />
 						</f:subview>
 					</ice:panelGroup>
-					
+
 					<ice:panelGroup id="ProjectViewer"
 						styleClass="contentIncludePanelGroup">
 						<f:subview id="ProjectViewer_view">
@@ -131,8 +130,7 @@
             </ice:panelGroup>
         </f:facet>
     </ice:panelBorder>
-
-	</div>
+	
 	<script language="JavaScript">
     <![CDATA[
     var preloaded = new Array();
@@ -148,11 +146,11 @@
             'images/connect_disconnected.gif',
             'images/connect_idle.gif'
     );
-    
+
     function submitOnEnter(evt){
 			if( evt.keyCode == 13 ){
-				var inputs = document.getElementsByTagName('input');	
-				var submit;			
+				var inputs = document.getElementsByTagName('input');
+				var submit;
 				for( var i=0;i<=inputs.length;i+=1){
 					if( inputs[i].id.indexOf('submit') > -1 ){
 						submit = inputs[i];
@@ -165,7 +163,7 @@
 				return true;
 		};
     ]]>
-    
+
 </script>
     </body>
     </html>
