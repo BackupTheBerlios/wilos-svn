@@ -97,27 +97,27 @@
 						</f:subview>
 					</ice:panelGroup>
 					
-					 <ice:panelGroup id="PhaseViewer"
+					 <ice:panelGroup id="ConcretePhaseViewer"
 						styleClass="contentIncludePanelGroup">
-						<f:subview id="PhaseViewer_view">
-							<jsp:directive.include file="./pages/common/PhaseViewer.jspx" />
+						<f:subview id="ConcretePhaseViewer_view">
+							<jsp:directive.include file="./pages/common/ConcretePhaseViewer.jspx" />
 						</f:subview>
 					</ice:panelGroup>
-					
-					 <ice:panelGroup id="ActivityViewer"
+
+					 <ice:panelGroup id="ConcreteActivityViewer"
 						styleClass="contentIncludePanelGroup">
-						<f:subview id="ActivityViewer_view">
-							<jsp:directive.include file="./pages/common/ActivityViewer.jspx" />
+						<f:subview id="ConcreteActivityViewer_view">
+							<jsp:directive.include file="./pages/common/ConcreteActivityViewer.jspx" />
 						</f:subview>
 					</ice:panelGroup>
-					
-					<ice:panelGroup id="IterationViewer"
+
+					<ice:panelGroup id="ConcreteIterationViewer"
 						styleClass="contentIncludePanelGroup">
-						<f:subview id="IterationViewer_view">
-							<jsp:directive.include file="./pages/common/IterationViewer.jspx" />
+						<f:subview id="ConcreteIterationViewer_view">
+							<jsp:directive.include file="./pages/common/ConcreteIterationViewer.jspx" />
 						</f:subview>
 					</ice:panelGroup>
-					
+
 					<ice:panelGroup id="ProjectViewer"
 						styleClass="contentIncludePanelGroup">
 						<f:subview id="ProjectViewer_view">
