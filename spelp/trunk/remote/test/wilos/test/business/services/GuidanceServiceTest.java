@@ -41,7 +41,7 @@ public class GuidanceServiceTest extends TestCase {
 	
 	
 	// TODO JF : mettre la javadoc
-	public void testSaveGuideline() {
+	public void testSaveGuidance() {
 		// Rk: the setUp method is called here.
 
 		// Save the guideline to test the method saveGuideline.
@@ -49,6 +49,8 @@ public class GuidanceServiceTest extends TestCase {
 		this.guidance.setName(name);
 		this.guidance.setDescription(description);
 		this.guidance.setTaskdefinition(null);
+		this.guidance.setRoledefinition(null);
+		this.guidance.setActivity(null);
 		
 		
 
