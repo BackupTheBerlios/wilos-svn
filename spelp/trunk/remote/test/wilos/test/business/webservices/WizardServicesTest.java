@@ -12,12 +12,15 @@ import junit.framework.TestCase;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService;
 import wilos.business.services.misc.wilosuser.LoginService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
 import wilos.business.util.Security;
 import wilos.business.webservices.WizardServices;
+import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.test.TestConfiguration;
+import wilos.utils.Constantes;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -26,71 +29,65 @@ import com.thoughtworks.xstream.XStream;
  * @author toine
  */
 public class WizardServicesTest extends TestCase {
-	LoginService ls;
-	ParticipantService ps;
-	WizardServices instance;
+	private LoginService ls;
+	private ParticipantService ps;
+	private WizardServices instance;
+	private ConcreteTaskDescriptor ct;
+	private ConcreteTaskDescriptorService cts;
+	private Participant p;
     
     public WizardServicesTest(String testName) {
         super(testName);
     }
 
     protected void setUp() throws Exception {
-    	 ls = (LoginService) TestConfiguration.getInstance().getApplicationContext().getBean("LoginService");
-    	 ps = (ParticipantService) TestConfiguration.getInstance().getApplicationContext().getBean("ParticipantService");
-    	 instance = new WizardServices();     
+		super.setUp();
+		ls = (LoginService) TestConfiguration.getInstance().getApplicationContext().getBean("LoginService");
+		ps = (ParticipantService) TestConfiguration.getInstance().getApplicationContext().getBean("ParticipantService");
+		cts = (ConcreteTaskDescriptorService) TestConfiguration.getInstance().getApplicationContext().getBean("ConcreteTaskDescriptorService");
+		
+		instance = new WizardServices();     
+	 
+	 	ct = new ConcreteTaskDescriptor();
+		ct.setConcreteName("ConcreteTest");
+		ct.setState(Constantes.State.READY);
+		ct.setTaskDescriptor(null);
+		cts.getConcreteTaskDescriptorDao().saveOrUpdateConcreteTaskDescriptor(ct);
+		
+		p = new Participant();
+		
+		p.setLogin("test");
+	    p.setPassword(Security.encode("testtest"));
+	    p.setName("test");
+	    p.setEmailAddress("test@test.com");
+	    p.setFirstname("test");
+	    ps.getParticipantDao().saveOrUpdateParticipant(p);
     }
 
     protected void tearDown() throws Exception {
+    	super.tearDown();
+		cts.getConcreteTaskDescriptorDao().deleteConcreteTaskDescriptor(ct);
+		ps.getParticipantDao().deleteParticipant(p);         
     }  
      
     public void testGetParticipantException() {
          System.out.println("GetParticipant");
-         System.out.println("testException");
-         
-    	 Participant p = new Participant();
-         p.setLogin("test");
-         p.setPassword(Security.encode("testtest"));
-         p.setName("test");
-         p.setEmailAddress("test@test.com");
-         p.setFirstname("test");
-         
-         if (ls.getAuthentifiedUser(p.getLogin(), p.getPassword()) != null) 
-     		ps.getParticipantDao().deleteParticipant(p);         
+         System.out.println("testException");    	
          
          try {             
-        	 instance.getParticipant(p.getLogin(), p.getPassword());            
-            assertFalse(true);
+        	instance.getParticipant("qsdfqsdfqsdf", "dfqsdfqs");            
+            fail();          
          } catch (Exception ex) {
-             assertTrue(true);
+            assertTrue(true);
          }
          
      }
     
      public void testGetParticipant() {
         System.out.println("GetParticipant");
-        System.out.println("testBD");
-	
-        Participant p = new Participant();
-        p.setLogin("test");
-        p.setPassword(Security.encode("testtest"));
-        p.setName("test");
-        p.setEmailAddress("test@test.com");
-        p.setFirstname("test");
+        System.out.println("testBD");	
         
-        /*RoleDescriptor rd = new RoleDescriptor();
-        rd.setName("testRole");
-        
-        TaskDescriptor td = new TaskDescriptor();
-        td.setName("testTask");
-        
-        rd.addPrimaryTask(td);
-        p.addToRoleDescriptor(rd);*/
-        
-        if (ls.getAuthentifiedUser(p.getLogin(), p.getPassword()) != null) 
-    		ps.getParticipantDao().deleteParticipant(p);
-      
-        ps.getParticipantDao().saveOrUpdateParticipant(p);
-
+     
         Participant pt = null;
         String result = null;
         try {
@@ -105,10 +102,6 @@ public class WizardServicesTest extends TestCase {
         assertNotNull(result);
         assertNotNull(pt);
         assertEquals(pt.getName(),"test");
-        
-        if (ls.getAuthentifiedUser(p.getLogin(), p.getPassword()) != null) 
-    		ps.getParticipantDao().deleteParticipant(p);
-
      }
     
 }
