@@ -26,21 +26,7 @@ public class MenuBean {
             this.selectedPanel = selectedPanel;
         }
     }
-    
-    
-    /**
-     * TODO Method description
-     *
-     * @return
-     */
-    public String welcome(){
-    	PageContentBean pcb = new PageContentBean();
-    	pcb.setTemplateName("welcome");
-    	pcb.setNavigationSelection(this);
-    	this.selectedPanel = pcb;
-    	return "";
-    }
-    
+        
     
     /**
      * TODO Method description
@@ -71,8 +57,7 @@ public class MenuBean {
 
 	
 	/**
-	 * TODO Method description
-	 *
+	 * This method redirects to the url which is passed in parameter
 	 * @param url
 	 */
 	public void changePage(String url) {

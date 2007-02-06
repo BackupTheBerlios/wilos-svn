@@ -118,9 +118,9 @@ public class ProjectService {
 	}
 
 	/**
-	 * TODO Method description
+	 * This method returns all the projects with no process.
 	 * 
-	 * @return
+	 * @return A set of Project
 	 */
 	@Transactional(readOnly = true)
 	public Set<Project> getAllProjectsWithNoProcess() {
@@ -155,7 +155,7 @@ public class ProjectService {
 
 	/**
 	 * 
-	 * TODO Method description
+	 * Getter of project
 	 * 
 	 * @param _id
 	 * @return
@@ -176,9 +176,9 @@ public class ProjectService {
 	
 	/**
 	 * 
-	 * TODO Method description
+	 * Getter of processService
 	 *
-	 * @return
+	 * @return processService
 	 */
 	public ProcessService getProcessService() {
 		return this.processService ;
@@ -186,7 +186,7 @@ public class ProjectService {
 
 	/**
 	 * 
-	 * TODO Method description
+	 * Setter of processService
 	 *
 	 * @param _processService
 	 */

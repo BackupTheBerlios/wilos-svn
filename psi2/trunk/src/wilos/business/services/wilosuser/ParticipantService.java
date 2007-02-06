@@ -78,7 +78,6 @@ public class ParticipantService {
 
 	/**
 	 * Return all the roles
-	 * TODO : method description
 	 * @return the roles
 	 */
 	@Transactional(readOnly = true)

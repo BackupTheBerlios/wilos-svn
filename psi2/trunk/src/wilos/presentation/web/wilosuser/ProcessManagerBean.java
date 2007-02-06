@@ -113,6 +113,7 @@ public class ProcessManagerBean {
 			facesContext.addMessage(null, message) ;
 		}
 		this.processManager = new ProcessManager() ;
+		this.passwordConfirmation = new String();
 		
 		return url ;
 	}

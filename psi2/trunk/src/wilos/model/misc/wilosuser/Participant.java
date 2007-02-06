@@ -35,7 +35,6 @@ public class Participant extends WilosUser implements Cloneable {
 
 	/**
 	 * Getter of rolesListForAProject.
-	 * TODO
 	 * @return the rolesListForAProject.
 	 */
 	public Set<ConcreteRoleDescriptor> getConcreteRoleDescriptors() {
@@ -44,7 +43,6 @@ public class Participant extends WilosUser implements Cloneable {
 
 	/**
 	 * Setter of rolesListForAProject.
-	 * TODO
 	 * @param _rolesListForAProject
 	 *            The rolesListForAProject to set.
 	 */
@@ -54,7 +52,6 @@ public class Participant extends WilosUser implements Cloneable {
 
 	/**
 	 * adds a role descriptor to the Set
-	 * TODO
 	 * @param _roleDescriptor
 	 */
 	public void addConcreteRoleDescriptor(ConcreteRoleDescriptor _roleDesc) {
@@ -64,7 +61,6 @@ public class Participant extends WilosUser implements Cloneable {
 
 	/**
 	 * remove a RoleDescriptor
-	 * TODO
 	 * @param _roleDesc
 	 */
 	public void removeConcreteRoleDescriptor(ConcreteRoleDescriptor _roleDesc) {
@@ -74,7 +70,6 @@ public class Participant extends WilosUser implements Cloneable {
 
 	/**
 	 * Remove all the role descriptors
-	 * TODO
 	 */
 	public void removeAllConcreteRoleDescriptors() {
 		for(ConcreteRoleDescriptor _roleD : this.concreteRoleDescriptors){

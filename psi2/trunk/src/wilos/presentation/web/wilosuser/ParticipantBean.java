@@ -217,7 +217,6 @@ public class ParticipantBean {
 
 	/**
 	 * Setter of rolesList.
-	 * TODO method description
 	 * @param _rolesList
 	 *            The rolesList to set.
 	 */
@@ -503,7 +502,7 @@ public class ParticipantBean {
 
 	/**
 	 * 
-	 * TODO Method description
+	 * This method allows to save a project manager affectation
 	 *
 	 */
 	public void saveProjectManagerAffectation() {

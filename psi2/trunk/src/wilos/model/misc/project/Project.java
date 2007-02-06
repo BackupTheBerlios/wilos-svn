@@ -328,7 +328,7 @@ public class Project extends ConcreteActivity implements Cloneable {
 
 	/**
 	 * 
-	 * TODO Method description
+	 * Remove a project director from a project
 	 *
 	 * @param project
 	 */

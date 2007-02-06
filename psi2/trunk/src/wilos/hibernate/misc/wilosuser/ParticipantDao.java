@@ -36,7 +36,6 @@ public class ParticipantDao extends HibernateDaoSupport {
 
 	/**
 	 * Return a list of elements.
-	 * TODO
 	 * @return
 	 */
 	public Set<ConcreteRoleDescriptor> getAllConcreteRoleDescriptors() {

@@ -20,8 +20,7 @@ public class ProcessManager extends WilosUser implements Cloneable {
 	private Set<Process> processesManaged;
 	
 	/**
-	 * Default Constructor.
-	 * TODO
+	 * Constructor.
 	 */
 	public ProcessManager() {
 		this.processesManaged = new HashSet<Process>();
@@ -90,7 +89,6 @@ public class ProcessManager extends WilosUser implements Cloneable {
 
 	/**
 	 * Getter of processManaged.
-	 *TODO
 	 * @return the processManaged.
 	 */
 	public Set<Process> getProcessesManaged() {
@@ -99,7 +97,6 @@ public class ProcessManager extends WilosUser implements Cloneable {
 
 	/**
 	 * Setter of processManaged.
-	 *TODO
 	 * @param _processManaged The processManaged to set.
 	 */
 	public void setProcessesManaged(Set<Process> _processManaged) {
@@ -108,7 +105,7 @@ public class ProcessManager extends WilosUser implements Cloneable {
 	
 	/**
 	 * 
-	 * TODO Method description
+	 * Add a process to the process set
 	 *
 	 * @param project
 	 */

@@ -29,7 +29,7 @@ public class ConnectContentBean extends IceUserObject {
     private ConnectViewBean navigationBean;
 
     /**
-     * TODO Method description
+     * Constructor of the class ConnectContentBean
      */
     public ConnectContentBean() {
         super(null);
@@ -82,8 +82,7 @@ public class ConnectContentBean extends IceUserObject {
     }
 
     /**
-     * TODO Method description
-     *
+     * Setter of templateName
      * @param templateName valid panel name
      */
     public void setTemplateName(String templateName) {
@@ -91,7 +90,7 @@ public class ConnectContentBean extends IceUserObject {
     }
 
     /**
-     * TODO Method description
+     * This method permits to know if the page contains content or not
      *
      * @return true if the page contains content; otherwise, false.
      */
