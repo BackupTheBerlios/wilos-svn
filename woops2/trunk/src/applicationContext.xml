@@ -157,7 +157,7 @@
 	<!-- ========================= Start of BEAN DEFINITIONS ========================= -->
 
 	<!-- ========================= DAO Layer ========================= -->
-	
+
 	<!-- =============================================================== -->
 	<!-- ========================= SPELP DAO =========================== -->
 	<!-- =============================================================== -->
@@ -324,28 +324,28 @@
 	<!-- ======================= PSI2 Service ========================= -->
 	<!-- =============================================================== -->
 	<bean id="ParticipantService"
-		class="wilos.business.services.misc.wilosuser.ParticipantService">
+		class="wilos.business.services.wilosuser.ParticipantService">
 		<property name="participantDao" ref="ParticipantDao" />
 		<property name="projectService" ref="ProjectService" />
 	</bean>
 
 	<bean id="ProcessManagerService"
-		class="wilos.business.services.misc.wilosuser.ProcessManagerService">
+		class="wilos.business.services.wilosuser.ProcessManagerService">
 		<property name="processManagerDao" ref="ProcessManagerDao" />
 	</bean>
 
 	<bean id="ProjectDirectorService"
-		class="wilos.business.services.misc.wilosuser.ProjectDirectorService">
+		class="wilos.business.services.wilosuser.ProjectDirectorService">
 		<property name="projectDirectorDao" ref="ProjectDirectorDao" />
 	</bean>
 
 	<bean id="LoginService"
-		class="wilos.business.services.misc.wilosuser.LoginService">
+		class="wilos.business.services.wilosuser.LoginService">
 		<property name="wilosUserDao" ref="WilosUserDao" />
 	</bean>
 
 	<bean id="ProjectService"
-		class="wilos.business.services.misc.project.ProjectService">
+		class="wilos.business.services.project.ProjectService">
 		<property name="projectDao" ref="ProjectDao" />
 		<property name="participantDao" ref="ParticipantDao" />
 		<property name="processService" ref="ProcessService" />
