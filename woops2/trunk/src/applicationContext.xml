@@ -402,17 +402,20 @@
 			ref="ConcreteTaskDescriptorDao" />
 	</bean>
 
+	<bean id="PhaseService"
+		class="wilos.business.services.spem2.phase.PhaseService">
+		<property name="concretePhaseDao" ref="ConcretePhaseDao" />
+	</bean>
+
+	<bean id="IterationService"
+		class="wilos.business.services.spem2.iteration.IterationService">
+		<property name="concreteIterationDao" ref="ConcreteIterationDao" />
+	</bean>
+
 	<bean id="ConcreteTaskDescriptorService"
 		class="wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService">
 		<property name="concreteTaskDescriptorDao"
 			ref="ConcreteTaskDescriptorDao" />
-		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
-		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
-		<property name="taskDescriptorService"
-			ref="TaskDescriptorService" />
-		<property name="roleDescriptorService"
-			ref="RoleDescriptorService" />
-
 	</bean>
 
 	<bean id="ConcreteRoleDescriptorService"
@@ -427,14 +430,16 @@
 			ref="ConcreteActivityDao" />
 	</bean>
 
-	<bean id="PhaseService"
-		class="wilos.business.services.spem2.phase.PhaseService">
-		<property name="concretePhaseDao" ref="ConcretePhaseDao" />
+	<bean id="ConcreteIterationService"
+		class="wilos.business.services.misc.concreteiteration.ConcreteIterationService">
+		<property name="concreteIterationDao"
+			ref="ConcreteIterationDao" />
 	</bean>
 
-	<bean id="IterationService"
-		class="wilos.business.services.spem2.iteration.IterationService">
-		<property name="concreteIterationDao" ref="ConcreteIterationDao" />
+	<bean id="ConcretePhaseService"
+		class="wilos.business.services.misc.concretephase.ConcretePhaseService">
+		<property name="concretePhaseDao"
+			ref="ConcretePhaseDao" />
 	</bean>
 
 </beans>
