@@ -64,7 +64,8 @@ public class TaskDefinition extends Element implements Cloneable {
 		TaskDefinition task = (TaskDefinition) obj;
 		return new EqualsBuilder().appendSuper(super.equals(task)).append(
 				this.steps, task.steps).append(this.taskDescriptors,
-				task.taskDescriptors).isEquals();
+				task.taskDescriptors).append(this.guidances,
+						task.guidances).isEquals();
 	}
 
 	/*
