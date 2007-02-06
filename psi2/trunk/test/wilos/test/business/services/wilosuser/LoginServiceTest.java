@@ -5,6 +5,7 @@ import wilos.business.services.wilosuser.LoginService;
 import wilos.hibernate.misc.wilosuser.ParticipantDao;
 import wilos.hibernate.misc.wilosuser.ProcessManagerDao;
 import wilos.hibernate.misc.wilosuser.ProjectDirectorDao;
+import wilos.model.misc.wilosuser.Administrator;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.ProcessManager;
 import wilos.model.misc.wilosuser.ProjectDirector;
@@ -26,6 +27,9 @@ public class LoginServiceTest extends TestCase {
 	private Participant p;
 	private ProjectDirector pd;
 	private ProcessManager pm;
+	
+	private Administrator admin;
+	
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#setUp()
 	 */
@@ -106,4 +110,50 @@ public class LoginServiceTest extends TestCase {
 		
 	}
 
+	public void testIsParticipant(){
+		p=new Participant();
+		assertTrue(this.loginService.isParticipant(p));
+		pd = new ProjectDirector();
+		assertFalse(this.loginService.isParticipant(pd));
+		pm = new ProcessManager();
+		assertFalse(this.loginService.isParticipant(pm));
+		admin = new Administrator();
+		assertFalse(this.loginService.isParticipant(admin));
+	}
+	
+	public void testIsProcessManager(){
+
+		pm = new ProcessManager();
+		assertTrue(this.loginService.isProcessManager(pm));
+		p=new Participant();
+		assertFalse(this.loginService.isProcessManager(p));
+		pd = new ProjectDirector();
+		assertFalse(this.loginService.isProcessManager(pd));
+		admin = new Administrator();
+		assertFalse(this.loginService.isProcessManager(admin));
+	}
+	
+	public void testIsProjectDirector(){
+
+		pm = new ProcessManager();
+		assertFalse(this.loginService.isProjectDirector(pm));
+		p=new Participant();
+		assertFalse(this.loginService.isProjectDirector(p));
+		pd = new ProjectDirector();
+		assertTrue(this.loginService.isProjectDirector(pd));
+		admin = new Administrator();
+		assertFalse(this.loginService.isProjectDirector(admin));
+	}
+	
+	public void testIsAdministrator(){
+
+		pm = new ProcessManager();
+		assertFalse(this.loginService.isAdministrator(pm));
+		p=new Participant();
+		assertFalse(this.loginService.isAdministrator(p));
+		pd = new ProjectDirector();
+		assertFalse(this.loginService.isAdministrator(pd));
+		admin = new Administrator();
+		assertTrue(this.loginService.isAdministrator(admin));
+	}
 }

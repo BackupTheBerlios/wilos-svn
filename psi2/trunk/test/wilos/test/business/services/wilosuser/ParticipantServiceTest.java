@@ -59,11 +59,11 @@ public class ParticipantServiceTest extends TestCase {
 		this.projectService = (ProjectService) TestConfiguration.getInstance().getApplicationContext().getBean("ProjectService") ;
 
 		p1 = new Project() ;
-		p1.setName("projectTestPS1") ;
+		p1.setConcreteName("projectTestPS1") ;
 		this.projectService.saveProject(p1) ;
 		
 		p2 = new Project() ;
-		p2.setName("projectTestPS2") ;
+		p2.setConcreteName("projectTestPS2") ;
 		this.projectService.saveProject(p2) ;
 
 		participant = new Participant() ;
@@ -105,6 +105,10 @@ public class ParticipantServiceTest extends TestCase {
 	 * {@link woops2.business.wilosuser.ParticipantService#saveParticipant(woops2.model.wilosuser.Participant)}.
 	 */
 	public void testSaveParticipant() {
+		this.participant.setLogin(LOGIN);
+		this.participant.setName(NAME);
+		this.participant.setPassword(PASS);
+		
 		this.participantService.saveParticipant(this.participant) ;
 		Participant ParticipantTmp = (Participant) this.participantService.getParticipantDao().getParticipant(LOGIN) ;
 
