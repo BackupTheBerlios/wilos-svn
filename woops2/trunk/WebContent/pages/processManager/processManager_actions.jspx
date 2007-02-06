@@ -1,5 +1,0 @@
-<ice:form id="processManager_actions_form">
-	<ice:panelGrid columns="1">			
-		<ice:commandLink immediate="true" type="submit" value="processManager" action=""/>
-	</ice:panelGrid>		
-</ice:form>
