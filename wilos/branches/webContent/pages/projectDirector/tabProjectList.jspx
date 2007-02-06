@@ -1,4 +1,6 @@
-<ice:panelTab id="panelTab_project_list" label="#{msgs['component.projectcreate.title1']}" imageDir="images">
+<ice:form id="project_list_form">
+	<ice:panelTabSet id="panelTabSet_project" styleClass="componentPanelTabSetLayout">
+		<ice:panelTab id="panelTab_project_list" label="#{msgs['component.projectcreate.title1']}" imageDir="images">
 			<ice:panelGroup id="projectsPanelGroup" styleClass="contentIncludePanelGroup">
 				<ice:dataTable value="#{ProjectBean.projectList}" columnWidths="150px,100px,100px,300px" border="1" var="project">
 					<ice:column>
@@ -32,5 +34,7 @@
 				</ice:dataTable>
 			</ice:panelGroup>
 		</ice:panelTab>
+	</ice:panelTabSet>
+</ice:form>
 		
 		
