@@ -557,7 +557,6 @@ public class XMLParserTest extends TestCase {
 		try {
 			p = XMLParser.getProcess(pathScrumWithArte );
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}	
