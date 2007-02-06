@@ -587,7 +587,7 @@ public class ProcessService {
 
 	/**
 	 *
-	 * Create and associate COncreteTaskDescriptors from TaskDescriptors of the process whose id is id_process
+	 * Create and associate ConcreteTaskDescriptors from TaskDescriptors of the process whose id is id_process
 	 * to the project whose id is id_project
 	 *
 	 * @param id_process
@@ -597,11 +597,32 @@ public class ProcessService {
 
 		Process p = this.processDao.getProcess(_project.getProcess().getId());
 
-		List<TaskDescriptor> forSaving = this.getTaskDescriptors(p);
-
-		for (TaskDescriptor td : forSaving) {
-			this.taskDescriptorService.taskDescriptorInstanciation(_project, td);
-		}
+		List<BreakdownElement> forSaving = this.getInstanciableBreakdownElement(p);
+		
+		for (BreakdownElement bde : forSaving) {
+			if (bde instanceof Phase) {
+				Phase ph = (Phase) bde;
+				//this.phaseService.phaseInstanciation(_project, ph);
+			} else {
+				if (bde instanceof Iteration) {
+					Iteration it = (Iteration) bde;
+					//this.iterationService.iterationInstanciation(_project, it);
+				} else {
+					if (bde instanceof Activity) {
+						Activity act = (Activity) bde;
+						//this.activityService.activityInstanciation(_project, act);
+					} else {
+						if (bde instanceof RoleDescriptor) {
+							RoleDescriptor rd = (RoleDescriptor) bde;
+							//this.roleDescriptorService.roleDescriptorInstanciation(_project, rd);
+						} else {
+							TaskDescriptor td = (TaskDescriptor) bde;
+							this.taskDescriptorService.taskDescriptorInstanciation(_project, td);
+						}
+					}
+				}
+			}	
+		}		
 	}
 
 	/**
@@ -609,36 +630,41 @@ public class ProcessService {
 	 * @param _act
 	 * @return
 	 */
-	private List<TaskDescriptor> getTaskDescriptors(Activity _act) {
+	private List<BreakdownElement> getInstanciableBreakdownElement(Activity _act) {
 
 		// elements of collection getting
 		Set<BreakdownElement> bdes = _act.getBreakdownElements();
 
-		List<TaskDescriptor> tds = new ArrayList<TaskDescriptor>();
+		List<BreakdownElement> tmp = new ArrayList<BreakdownElement>();
 
 		// in function of element type
 		for (BreakdownElement bde : bdes) {
 			if (bde instanceof Phase) {
 				Phase ph = (Phase) bde;
-				tds.addAll(this.getTaskDescriptors(ph));
+				tmp.addAll(this.getInstanciableBreakdownElement(ph));
 			} else {
 				if (bde instanceof Iteration) {
 					Iteration it = (Iteration) bde;
-					tds.addAll(this.getTaskDescriptors(it));
+					tmp.addAll(this.getInstanciableBreakdownElement(it));
 				} else {
 					if (bde instanceof Activity) {
 						Activity act = (Activity) bde;
-						tds.addAll(this.getTaskDescriptors(act));
+						tmp.addAll(this.getInstanciableBreakdownElement(act));
 					} else {
 						if (bde instanceof TaskDescriptor) {
 							TaskDescriptor td = (TaskDescriptor) bde;
-							tds.add(td);
+							tmp.add(td);
+						} else {
+							if (bde instanceof RoleDescriptor) {
+								RoleDescriptor rd = (RoleDescriptor) bde;
+								tmp.add(rd);
+							}
 						}
 					}
 				}
 			}
 		}
-		return tds;
+		return tmp;
 	}
 
 	/**
