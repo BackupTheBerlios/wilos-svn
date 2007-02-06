@@ -99,12 +99,22 @@ public class ProcessService {
 		Process spelpProcess = null;
 		try {
 			logger.debug("### ProcessService ### spelpParsingXML "+_file.getAbsolutePath()+" abs path = "+_file.getPath());
-			
-			spelpProcess = XMLServices.getProcess(_file.getAbsolutePath(), _file.getPath());
+			spelpProcess = XMLServices.getProcess(_file.getAbsolutePath(), this.getPathFromFile(_file.getAbsolutePath()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return spelpProcess;
+	}
+
+	private String getPathFromFile(String _path) {
+		logger.debug("### ProcessService ### getPathFromFile "+_path);
+		String[] pathTab = _path.split("/");
+		String path = "";
+		for (String s : pathTab){
+			path += "/";
+			path +=  s;
+		}
+		return path;
 	}
 
 	/**
