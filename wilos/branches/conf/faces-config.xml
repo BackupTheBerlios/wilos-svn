@@ -101,8 +101,6 @@
 		</managed-property>
 	</managed-bean>
 	
-	
-	
 	<managed-bean>
 		<managed-bean-name>salesRecordsManager</managed-bean-name>
 		<managed-bean-class>
@@ -127,10 +125,6 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	
-	
-	
-	
-
 	<!-- <managed-bean>
 		<managed-bean-name>RoleBean</managed-bean-name>
 		<managed-bean-class>
@@ -237,41 +231,41 @@
 	</managed-bean>
 
 	<managed-bean>
-		<managed-bean-name>PhaseViewerBean</managed-bean-name>
+		<managed-bean-name>ConcretePhaseViewerBean</managed-bean-name>
 		<managed-bean-class>
-			wilos.presentation.web.viewer.PhaseViewerBean
+			wilos.presentation.web.viewer.ConcretePhaseViewerBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
-			<property-name>phaseService</property-name>
-			<value>#{PhaseService}</value>
+			<property-name>concretePhaseService</property-name>
+			<value>#{ConcretePhaseService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<managed-bean>
-		<managed-bean-name>ActivityViewerBean</managed-bean-name>
+		<managed-bean-name>ConcreteActivityViewerBean</managed-bean-name>
 		<managed-bean-class>
-			wilos.presentation.web.viewer.ActivityViewerBean
+			wilos.presentation.web.viewer.ConcreteActivityViewerBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
-			<property-name>activityService</property-name>
-			<value>#{ActivityService}</value>
+			<property-name>concreteActivityService</property-name>
+			<value>#{ConcreteActivityService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<managed-bean>
-		<managed-bean-name>IterationViewerBean</managed-bean-name>
+		<managed-bean-name>ConcreteIterationViewerBean</managed-bean-name>
 		<managed-bean-class>
-			wilos.presentation.web.viewer.IterationViewerBean
+			wilos.presentation.web.viewer.ConcreteIterationViewerBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
-			<property-name>iterationService</property-name>
-			<value>#{IterationService}</value>
+			<property-name>concreteIterationService</property-name>
+			<value>#{ConcreteIterationService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>ProjectViewerBean</managed-bean-name>
 		<managed-bean-class>
