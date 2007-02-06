@@ -5,8 +5,11 @@ import java.util.HashSet ;
 import java.util.Set ;
 
 import junit.framework.TestCase ;
+import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.guide.Guidance;
 
 /**
  * @author Sebastien
@@ -235,4 +238,98 @@ public class ActivityTest extends TestCase {
 		assertTrue("bde.acts", breakdownElement.getSuperActivities().isEmpty()) ;
 		assertTrue("tmp.acts", tmp.getSuperActivities().isEmpty()) ;
 	}
+	
+	public void testAddConcreteActivity() {
+		ConcreteActivity concreteActivity = new ConcreteActivity() ;
+		concreteActivity.setConcreteName("name") ;
+
+		this.activity.addConcreteActivity(concreteActivity) ;
+
+		assertTrue(this.activity.getConcreteActivities().size() == 1) ;
+		assertNotNull(concreteActivity.getActivity()) ;
+	}
+	
+	public void testaddAllConcreteActivity() {
+		ConcreteActivity ca1 = new ConcreteActivity() ;
+		ca1.setConcreteName("name1") ;
+
+		ConcreteActivity ca2 = new ConcreteActivity() ;
+		ca2.setConcreteName("name2")  ;
+
+		Set<ConcreteActivity> set = new HashSet<ConcreteActivity>() ;
+		set.add(ca1) ;
+		set.add(ca2) ;
+
+		this.activity.addAllConcreteActivity(set) ;
+
+		assertFalse(this.activity.getConcreteActivities().isEmpty()) ;
+		assertEquals(2, this.activity.getConcreteActivities().size()) ;
+		assertNotNull(ca1.getActivity()) ;
+		assertNotNull(ca2.getActivity()) ;
+	}
+	
+	public void testRemoveConcreteActivity() {
+		ConcreteActivity concreteActivity = new ConcreteActivity() ;
+		concreteActivity.setConcreteName("name");
+
+		this.activity.removeConcreteActivity(concreteActivity) ;
+
+		assertTrue(this.activity.getConcreteActivities().isEmpty()) ;
+		assertNull(concreteActivity.getActivity()) ;
+	}
+	
+	
+	public void testRemoveAllConcreteActivities() {
+		ConcreteActivity ca1 = new ConcreteActivity() ;
+		ca1.setConcreteName("name1") ;
+
+		ConcreteActivity ca2 = new ConcreteActivity() ;
+		ca2.setConcreteName("name2")  ;
+
+		Set<ConcreteActivity> set = new HashSet<ConcreteActivity>() ;
+		set.add(ca1) ;
+		set.add(ca2) ;
+
+		this.activity.addAllConcreteActivity(set) ;
+		assertTrue(this.activity.getConcreteActivities().size() == 2) ;
+		assertNotNull(ca1.getActivity()) ;
+		assertNotNull(ca2.getActivity()) ;
+
+		this.activity.removeAllConcreteActivities() ;
+		assertTrue(this.activity.getConcreteActivities().isEmpty()) ;
+		assertNull(ca1.getActivity()) ;
+		assertNull(ca2.getActivity()) ;
+	}
+	
+	
+	
+	public void testAddGuidance() {
+		Guidance guidance = new Guidance() ;
+		guidance.setName("name") ;
+
+		this.activity.addGuidance(guidance) ;
+
+		assertTrue(this.activity.getGuidances().size() == 1) ;
+		assertNotNull(guidance.getActivity()) ;
+	}
+	
+//	public void removeGuidance(Guidance _guidance) {
+//		_guidance.setActivity(null);
+//		this.guidances.remove(_guidance);
+//	}
+//	
+//	public void removeAllGuidances() {
+//		for (Guidance guidance : this.guidances) {
+//			guidance.setActivity(null);
+//		}
+//		this.guidances.clear();
+//	}
+//	
+//	public void addAllGuidances(Set<Guidance> _guidances) {
+//		for (Guidance _guid1 : _guidances) {
+//			_guid1.addActivity(this);
+//		}
+//	}
+	
+	
 }

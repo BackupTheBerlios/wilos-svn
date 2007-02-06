@@ -8,6 +8,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
@@ -38,6 +39,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	public Activity() {
 		super() ;
 		this.breakdownElements = new HashSet<BreakdownElement>() ;
+		this.concreteActivities = new HashSet<ConcreteActivity>();
 	}
 
 	/*
@@ -138,10 +140,12 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 		_concreteActivity.setActivity(null);
 	}
 	
-	public void removeAllConcreteActivities(Set<ConcreteActivity> _concreteActivities){
-		for (ConcreteActivity ca : _concreteActivities){
-			this.removeConcreteActivity(ca);
+	public void removeAllConcreteActivities(){
+
+		for (ConcreteActivity tmp : this.concreteActivities) {
+			tmp.setActivity(null);
 		}
+		this.concreteActivities.clear();
 	}
 	
 	
