@@ -23,10 +23,10 @@ public class GuidanceDao extends HibernateDaoSupport {
 			this.getHibernateTemplate().saveOrUpdate(_guidance) ;
 		}
 		catch(DataIntegrityViolationException _e){
-			ExceptionManager.getInstance().manageDataIntegrityViolationException(this.getClass().getName(), "saveOrUpdateGuideline", _e);
+			ExceptionManager.getInstance().manageDataIntegrityViolationException(this.getClass().getName(), "saveOrUpdateGuidance", _e);
 		}
 		catch(ConstraintViolationException _ex){
-			ExceptionManager.getInstance().manageConstraintViolationException(this.getClass().getName(), "saveOrUpdateGuideline", _ex);
+			ExceptionManager.getInstance().manageConstraintViolationException(this.getClass().getName(), "saveOrUpdateGuidance", _ex);
 		}
 	}
 
@@ -67,7 +67,7 @@ public class GuidanceDao extends HibernateDaoSupport {
 			this.getHibernateTemplate().delete(_guidance) ;
 		}
 		catch(DataAccessException _e){
-			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "deleteGuideline", _e);
+			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "deleteGuidance", _e);
 		}
 	}
 }
