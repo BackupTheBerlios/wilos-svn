@@ -17,17 +17,17 @@ import javax.swing.tree.DefaultTreeModel;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import wilos.business.services.misc.project.ProjectService;
-import wilos.business.services.misc.wilosuser.LoginService;
-import wilos.business.services.misc.wilosuser.ParticipantService;
+import wilos.business.services.project.ProjectService;
+import wilos.business.services.wilosuser.LoginService;
+import wilos.business.services.wilosuser.ParticipantService;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
 import wilos.presentation.web.template.MenuBean;
 import wilos.presentation.web.viewer.ConcreteActivityViewerBean;
 import wilos.presentation.web.viewer.ConcreteIterationViewerBean;
-import wilos.presentation.web.viewer.ConcreteTaskViewerBean;
 import wilos.presentation.web.viewer.ConcretePhaseViewerBean;
+import wilos.presentation.web.viewer.ConcreteTaskViewerBean;
 import wilos.presentation.web.viewer.ProjectViewerBean;
 
 /**
@@ -141,7 +141,7 @@ public class TreeBean {
 					.getProjectsForAParticipant((Participant) wilosUser);
 			for(Project project : projects.keySet()){
 				if(projects.get(project)){
-					projectsList.add(new SelectItem(project.getProject_id(), project.getName()));
+					projectsList.add(new SelectItem(project.getId(), project.getConcreteName()));
 				}
 			}
 		}

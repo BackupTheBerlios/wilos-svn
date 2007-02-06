@@ -4,6 +4,11 @@ import java.util.Set;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
+import wilos.model.misc.concreteiteration.ConcreteIteration;
+import wilos.model.misc.concretephase.ConcretePhase;
+import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.role.RoleDescriptor;
 
@@ -21,21 +26,20 @@ public class ProjectNode extends DefaultMutableTreeNode {
 		this.setUserObject(iceUserObject);
 
 		iceUserObject.setExpanded(true);
-		iceUserObject.setText(this.project.getName());
+		iceUserObject.setText(this.project.getConcreteName());
 		iceUserObject.setLeaf(false);
 		iceUserObject.setBranchContractedIcon("images/tree/icon_process.gif");
 		iceUserObject.setBranchExpandedIcon("images/tree/icon_process.gif");
 		// node information
-		iceUserObject.setId(this.project.getProject_id());
+		iceUserObject.setId(this.project.getId());
 		iceUserObject.setPageId(WilosObjectNode.PROJECTNODE);
 
 		if (this.project.getProcess() != null) {
-			//Project node name.
-			iceUserObject.setText(this.project.getName() + " ("
+			iceUserObject.setText(this.project.getConcreteName() + " ("
 					+ this.project.getProcess().getPresentationName() + ")");
 
 			//Nested nodes.
-			/*FIXME for (ConcreteBreakdownElement concreteBreakdownElement : this.project.getConcreteBreakdownElements()) {
+			for (ConcreteBreakdownElement concreteBreakdownElement : this.project.getConcreteBreakdownElements()) {
 				if (concreteBreakdownElement instanceof ConcretePhase) {
 					this.add(new ConcretePhaseNode((ConcretePhase) concreteBreakdownElement,
 							_roleDescriptors));
@@ -49,7 +53,7 @@ public class ProjectNode extends DefaultMutableTreeNode {
 					this.add(new ConcreteTaskDescriptorNode((ConcreteTaskDescriptor) concreteBreakdownElement,
 									_roleDescriptors));
 				}
-			}*/
+			}
 		}
 	}
 }

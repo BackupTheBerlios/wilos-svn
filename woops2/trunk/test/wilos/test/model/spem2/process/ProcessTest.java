@@ -110,7 +110,7 @@ public class ProcessTest extends TestCase {
 
 	public void testRemoveProjects() {
 		Project proj = new Project();
-		proj.setName(NAME);
+		proj.setConcreteName(NAME);
 		proj.setDescription(DESCRIPTION);
 
 		this.process.addProject(proj);
@@ -123,7 +123,7 @@ public class ProcessTest extends TestCase {
 
 	public void testAddProject() {
 		Project proj = new Project();
-		proj.setName(NAME);
+		proj.setConcreteName(NAME);
 		proj.setDescription(DESCRIPTION);
 
 		this.process.addProject(proj);
@@ -134,11 +134,11 @@ public class ProcessTest extends TestCase {
 
 	public void testRemoveAllProject() {
 		Project proj = new Project();
-		proj.setName(NAME);
+		proj.setConcreteName(NAME);
 		proj.setDescription(DESCRIPTION);
 
 		Project tmp = new Project();
-		tmp.setName(NAME2);
+		tmp.setConcreteName(NAME2);
 		//tmp.setDescription(DESCRIPTION);
 
 		Set<Project> set = new HashSet<Project>();
@@ -159,11 +159,11 @@ public class ProcessTest extends TestCase {
 
 	public void testAddToAllProjects() {
 		Project proj = new Project();
-		proj.setName(NAME);
+		proj.setConcreteName(NAME);
 		proj.setDescription(DESCRIPTION);
 
 		Project tmp = new Project();
-		tmp.setName(NAME2);
+		tmp.setConcreteName(NAME2);
 		tmp.setDescription(DESCRIPTION);
 
 		Set<Project> set = new HashSet<Project>();

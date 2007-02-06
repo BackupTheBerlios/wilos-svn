@@ -14,29 +14,29 @@ public class ConcreteTaskDescriptorsInstanciationTest {
 		// Getback the application context from the spring configuration file
 		ApplicationContext ctx = new ClassPathXmlApplicationContext(
 				"applicationContext.xml");
-		
+
 		ProjectDao pm = (ProjectDao) ctx.getBean("ProjectDao");
 		ProcessDao p = (ProcessDao) ctx.getBean("ProcessDao");
 		ProcessService am = (ProcessService) ctx.getBean("ProcessService");
-		
+
 		String s = am.getProcessDao().getProcessFromGuid("_9llsAQAvEdubGMceRDupFQ").getId();
-		Process scrum = p.getProcess(s);	
-		
+		Process scrum = p.getProcess(s);
+
 		Project project = new Project();
-		project.setName("Wilos");
+		project.setConcreteName("Wilos");
 		project.setProcess(scrum);
 		pm.saveOrUpdateProject(project);
-		
+
 		am.projectInstanciation(project);
-		
+
 		String s2 = am.getProcessDao().getProcessFromGuid("_0uyGoMlgEdmt3adZL5Dmdw").getId();
-		Process openup = p.getProcess(s2);	
-		
+		Process openup = p.getProcess(s2);
+
 		Project project2 = new Project();
-		project2.setName("IceOpenUP");
+		project2.setConcreteName("IceOpenUP");
 		project2.setProcess(openup);
 		pm.saveOrUpdateProject(project2);
-		
+
 		am.projectInstanciation(project2);
 		}
 }

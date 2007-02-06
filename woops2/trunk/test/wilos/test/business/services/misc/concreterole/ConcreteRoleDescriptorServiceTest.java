@@ -65,7 +65,7 @@ public class ConcreteRoleDescriptorServiceTest extends TestCase {
 
 		// add a project
 		Project project = new Project();
-		project.setName("projectName");
+		project.setConcreteName("projectName");
 		this.projectDao.saveOrUpdateProject(project);
 
 		// add a roledescriptor
@@ -84,7 +84,7 @@ public class ConcreteRoleDescriptorServiceTest extends TestCase {
 		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao().saveOrUpdateConcreteRoleDescriptor(this.concreteRoleDescriptor);
 
 		List<ConcreteRoleDescriptor> list = this.concreteRoleDescriptorService
-		.getConcreteRoleDescriptorsForProject(project.getProject_id());
+		.getConcreteRoleDescriptorsForProject(project.getId());
 
 		assertNotNull("notNull",list);
 		assertTrue("list.size",list.size() >= 1);
