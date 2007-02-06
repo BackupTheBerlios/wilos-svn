@@ -5,6 +5,7 @@ import java.util.HashSet ;
 import java.util.Set ;
 
 import junit.framework.TestCase ;
+import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.role.RoleDefinition;
 import wilos.model.spem2.role.RoleDescriptor;
 
@@ -178,5 +179,68 @@ public class RoleDefinitionTest extends TestCase {
 		assertTrue(this.roleDefinition.getRoleDescriptors().size() == 2) ;
 		assertNotNull(role.getRoleDefinition()) ;
 		assertNotNull(tmp.getRoleDefinition()) ;
+	}
+	
+	
+	
+	public void testAddGuidance() {
+		Guidance guidance = new Guidance() ;
+		guidance.setName("name") ;
+
+		this.roleDefinition.addGuidance(guidance) ;
+
+		assertTrue(this.roleDefinition.getGuidances().size() == 1) ;
+		assertNotNull(guidance.getRoledefinition()) ;
+	}
+	
+	public void testaddAllGuidances() {
+		Guidance g1 = new Guidance() ;
+		g1.setName("name1") ;
+
+		Guidance g2 = new Guidance() ;
+		g2.setName("name2")  ;
+
+		Set<Guidance> set = new HashSet<Guidance>() ;
+		set.add(g1) ;
+		set.add(g2) ;
+
+		this.roleDefinition.addAllGuidances(set) ;
+
+		assertFalse(this.roleDefinition.getGuidances().isEmpty()) ;
+		assertEquals(2, this.roleDefinition.getGuidances().size()) ;
+		assertNotNull(g1.getRoledefinition()) ;
+		assertNotNull(g2.getRoledefinition()) ;
+	}
+	
+	public void testRemoveGuidance() {
+		Guidance guidance = new Guidance() ;
+		guidance.setName("name");
+
+		this.roleDefinition.removeGuidance(guidance) ;
+
+		assertTrue(this.roleDefinition.getGuidances().isEmpty()) ;
+		assertNull(guidance.getRoledefinition()) ;
+	}
+	
+	public void testRemoveAllGuidances() {
+		Guidance g1 = new Guidance() ;
+		g1.setName("name1") ;
+
+		Guidance g2 = new Guidance() ;
+		g2.setName("name2")  ;
+
+		Set<Guidance> set = new HashSet<Guidance>() ;
+		set.add(g1) ;
+		set.add(g2) ;
+
+		this.roleDefinition.addAllGuidances(set) ;
+		assertTrue(this.roleDefinition.getGuidances().size() == 2) ;
+		assertNotNull(g1.getRoledefinition()) ;
+		assertNotNull(g2.getRoledefinition()) ;
+
+		this.roleDefinition.removeAllGuidances() ;
+		assertTrue(this.roleDefinition.getGuidances().isEmpty()) ;
+		assertNull(g1.getRoledefinition()) ;
+		assertNull(g2.getRoledefinition()) ;
 	}
 }

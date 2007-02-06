@@ -38,6 +38,7 @@ public class RoleDefinition extends Element implements Cloneable {
 	public RoleDefinition() {
 		super() ;
 		this.roleDescriptors = new HashSet<RoleDescriptor>() ;
+		this.guidances = new HashSet<Guidance>() ;
 	}
 
 	/*
@@ -53,7 +54,7 @@ public class RoleDefinition extends Element implements Cloneable {
 			return true ;
 		}
 		RoleDefinition role = (RoleDefinition) obj ;
-		return new EqualsBuilder().appendSuper(super.equals(role)).append(this.roleDescriptors, role.roleDescriptors).isEquals() ;
+		return new EqualsBuilder().appendSuper(super.equals(role)).append(this.roleDescriptors, role.roleDescriptors).append(this.guidances, role.guidances).isEquals() ;
 	}
 
 	/*
@@ -83,6 +84,7 @@ public class RoleDefinition extends Element implements Cloneable {
 	protected void copy(final RoleDefinition _roleDefinition) {
 		super.copy(_roleDefinition) ;
 		this.setRoleDescriptors(_roleDefinition.getRoleDescriptors()) ;
+		this.setGuidances(_roleDefinition.getGuidances()) ;
 	}
 
 	/**

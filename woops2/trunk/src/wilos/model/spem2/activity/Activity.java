@@ -40,6 +40,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 		super() ;
 		this.breakdownElements = new HashSet<BreakdownElement>() ;
 		this.concreteActivities = new HashSet<ConcreteActivity>();
+		this.guidances = new HashSet<Guidance>(); 
 	}
 
 	/*
@@ -55,7 +56,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 			return true ;
 		}
 		Activity activity = (Activity) obj ;
-		return new EqualsBuilder().appendSuper(super.equals(activity)).append(this.breakdownElements, activity.breakdownElements).append(this.concreteActivities,activity.concreteActivities).isEquals() ;
+		return new EqualsBuilder().appendSuper(super.equals(activity)).append(this.breakdownElements, activity.breakdownElements).append(this.concreteActivities,activity.concreteActivities).append(this.guidances, activity.guidances).isEquals() ;
 	}
 
 	/*

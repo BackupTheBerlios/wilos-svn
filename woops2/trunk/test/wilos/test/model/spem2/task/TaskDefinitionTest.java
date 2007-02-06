@@ -7,6 +7,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import junit.framework.TestCase;
+import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
@@ -244,4 +245,66 @@ public class TaskDefinitionTest extends TestCase {
 		assertNull(td1.getTaskDefinition()) ;
 		assertNull(td2.getTaskDefinition()) ;
 	}
+	
+	public void testAddGuidance() {
+		Guidance guidance = new Guidance() ;
+		guidance.setName("name") ;
+
+		this.taskDefinition.addGuidance(guidance) ;
+
+		assertTrue(this.taskDefinition.getGuidances().size() == 1) ;
+		assertNotNull(guidance.getTaskdefinition()) ;
+	}
+	
+	public void testaddAllGuidances() {
+		Guidance g1 = new Guidance() ;
+		g1.setName("name1") ;
+
+		Guidance g2 = new Guidance() ;
+		g2.setName("name2")  ;
+
+		Set<Guidance> set = new HashSet<Guidance>() ;
+		set.add(g1) ;
+		set.add(g2) ;
+
+		this.taskDefinition.addAllGuidances(set) ;
+
+		assertFalse(this.taskDefinition.getGuidances().isEmpty()) ;
+		assertEquals(2, this.taskDefinition.getGuidances().size()) ;
+		assertNotNull(g1.getTaskdefinition()) ;
+		assertNotNull(g2.getTaskdefinition()) ;
+	}
+	
+	public void testRemoveGuidance() {
+		Guidance guidance = new Guidance() ;
+		guidance.setName("name");
+
+		this.taskDefinition.removeGuidance(guidance) ;
+
+		assertTrue(this.taskDefinition.getGuidances().isEmpty()) ;
+		assertNull(guidance.getTaskdefinition()) ;
+	}
+	
+	public void testRemoveAllGuidances() {
+		Guidance g1 = new Guidance() ;
+		g1.setName("name1") ;
+
+		Guidance g2 = new Guidance() ;
+		g2.setName("name2")  ;
+
+		Set<Guidance> set = new HashSet<Guidance>() ;
+		set.add(g1) ;
+		set.add(g2) ;
+
+		this.taskDefinition.addAllGuidances(set) ;
+		assertTrue(this.taskDefinition.getGuidances().size() == 2) ;
+		assertNotNull(g1.getTaskdefinition()) ;
+		assertNotNull(g2.getTaskdefinition()) ;
+
+		this.taskDefinition.removeAllGuidances() ;
+		assertTrue(this.taskDefinition.getGuidances().isEmpty()) ;
+		assertNull(g1.getTaskdefinition()) ;
+		assertNull(g2.getTaskdefinition()) ;
+	}
+	
 }

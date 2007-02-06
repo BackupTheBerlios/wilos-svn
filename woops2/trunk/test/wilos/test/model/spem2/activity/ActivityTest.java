@@ -301,7 +301,10 @@ public class ActivityTest extends TestCase {
 		assertNull(ca2.getActivity()) ;
 	}
 	
-	
+	/**
+	 * test for the relation between Guidance and Activity
+	 *
+	 */
 	
 	public void testAddGuidance() {
 		Guidance guidance = new Guidance() ;
@@ -313,23 +316,54 @@ public class ActivityTest extends TestCase {
 		assertNotNull(guidance.getActivity()) ;
 	}
 	
-//	public void removeGuidance(Guidance _guidance) {
-//		_guidance.setActivity(null);
-//		this.guidances.remove(_guidance);
-//	}
-//	
-//	public void removeAllGuidances() {
-//		for (Guidance guidance : this.guidances) {
-//			guidance.setActivity(null);
-//		}
-//		this.guidances.clear();
-//	}
-//	
-//	public void addAllGuidances(Set<Guidance> _guidances) {
-//		for (Guidance _guid1 : _guidances) {
-//			_guid1.addActivity(this);
-//		}
-//	}
+	public void testaddAllGuidances() {
+		Guidance g1 = new Guidance() ;
+		g1.setName("name1") ;
+
+		Guidance g2 = new Guidance() ;
+		g2.setName("name2")  ;
+
+		Set<Guidance> set = new HashSet<Guidance>() ;
+		set.add(g1) ;
+		set.add(g2) ;
+
+		this.activity.addAllGuidances(set) ;
+
+		assertFalse(this.activity.getGuidances().isEmpty()) ;
+		assertEquals(2, this.activity.getGuidances().size()) ;
+		assertNotNull(g1.getActivity()) ;
+		assertNotNull(g2.getActivity()) ;
+	}
 	
+	public void testRemoveGuidance() {
+		Guidance guidance = new Guidance() ;
+		guidance.setName("name");
+
+		this.activity.removeGuidance(guidance) ;
+
+		assertTrue(this.activity.getGuidances().isEmpty()) ;
+		assertNull(guidance.getActivity()) ;
+	}
 	
+	public void testRemoveAllGuidances() {
+		Guidance g1 = new Guidance() ;
+		g1.setName("name1") ;
+
+		Guidance g2 = new Guidance() ;
+		g2.setName("name2")  ;
+
+		Set<Guidance> set = new HashSet<Guidance>() ;
+		set.add(g1) ;
+		set.add(g2) ;
+
+		this.activity.addAllGuidances(set) ;
+		assertTrue(this.activity.getGuidances().size() == 2) ;
+		assertNotNull(g1.getActivity()) ;
+		assertNotNull(g2.getActivity()) ;
+
+		this.activity.removeAllGuidances() ;
+		assertTrue(this.activity.getGuidances().isEmpty()) ;
+		assertNull(g1.getActivity()) ;
+		assertNull(g2.getActivity()) ;
+	}
 }
