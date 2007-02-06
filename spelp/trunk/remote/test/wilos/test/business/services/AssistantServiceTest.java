@@ -66,7 +66,7 @@ public class AssistantServiceTest extends TestCase {
 
 	public void testStartConcreteTaskDescriptor() {		
 		assistantService.startConcreteTaskDescriptor(ct.getId());
-		cts.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(ct.getId());
+		ct = cts.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(ct.getId());
 		assertEquals(Constantes.State.STARTED, ct.getState());		
 	}
 	
