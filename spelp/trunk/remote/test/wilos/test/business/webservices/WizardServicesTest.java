@@ -13,8 +13,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService;
-import wilos.business.services.wilosuser.LoginService;
-import wilos.business.services.wilosuser.ParticipantService;
+import wilos.business.services.misc.wilosuser.LoginService;
+import wilos.business.services.misc.wilosuser.ParticipantService;
 import wilos.business.util.Security;
 import wilos.business.webservices.WizardServices;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
