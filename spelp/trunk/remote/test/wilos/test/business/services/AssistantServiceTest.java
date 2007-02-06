@@ -54,10 +54,19 @@ public class AssistantServiceTest extends TestCase {
         
         try {             
         	assistantService.getParticipantTO("n'importe quoi");            
-           assertFalse(true);
+           fail();
         } catch (Exception ex) {
             assertTrue(true);
         }
+        
+        Participant pt = null;
+        try {             
+        	pt = assistantService.getParticipantTO(p.getLogin());            
+        } catch (Exception ex) {
+            fail();
+        }
+        assertNotNull(pt);
+        assertEquals(p.getLogin(),pt.getLogin());
 	}
 
 	public void testGetParticipantDao() {
