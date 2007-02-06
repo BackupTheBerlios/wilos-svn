@@ -25,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
@@ -37,6 +38,7 @@ import wilos.model.spem2.guide.Guideline;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.ressources.Bundle;
+import wilos.presentation.assistant.ressources.ImagesService;
 
 public class HTMLViewer extends JFrame {
 	private static HTMLViewer instance = null;
@@ -74,10 +76,17 @@ public class HTMLViewer extends JFrame {
 		this.myElementLabel = new JLabel() ;
 		elementPanel.add(this.myElementLabel);
 		
+		//************************************************************
+		elementPanel.setPreferredSize(new Dimension(400,40));
+		
 		this.historyStack = new Stack<Element>() ;
 		
-		this.prevButton = new JButton("<");
-		this.nextButton = new JButton(">");
+		//this.prevButton = new JButton("<");
+		//this.nextButton = new JButton(">");
+		this.prevButton = new JButton();
+		this.nextButton = new JButton();
+		this.prevButton.setIcon(ImagesService.getImageIcon("images.iconLeft"));
+		this.nextButton.setIcon(ImagesService.getImageIcon("images.iconRight"));
 		this.prevButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				setPrevElement();
@@ -89,16 +98,23 @@ public class HTMLViewer extends JFrame {
 			}
 		});
 		
-		JPanel buttonPanel = new JPanel();
+		/*JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BorderLayout (5,100));
+		buttonPanel.setLayout(new BorderLayout ());
 		buttonPanel.add(this.prevButton,BorderLayout.WEST);
-		buttonPanel.add(this.nextButton,BorderLayout.EAST);
+		buttonPanel.add(this.nextButton,BorderLayout.EAST);*/
 		
-		JPanel northPanel = new JPanel() ;
-		northPanel.setLayout(new BorderLayout());
-		northPanel.setPreferredSize(new Dimension(50,50));
-		northPanel.add(elementPanel, BorderLayout.CENTER);
-		northPanel.add(buttonPanel, BorderLayout.EAST);
+		//JPanel northPanel = new JPanel() ;
+		JToolBar northPanel = new JToolBar();
+		//northPanel.setLayout(new BorderLayout());
+		northPanel.setLayout(new FlowLayout());
+		//northPanel.setPreferredSize(new Dimension(50,50));
+		//northPanel.add(elementPanel, BorderLayout.CENTER);
+		//northPanel.add(buttonPanel, BorderLayout.EAST);
+		northPanel.add(elementPanel);
+		northPanel.add(this.prevButton);
+		northPanel.add(this.nextButton);
+		northPanel.setFloatable(false);
 		
 		this.myEditorPane = new JEditorPane();
 		this.myEditorPane.setVisible(true);
