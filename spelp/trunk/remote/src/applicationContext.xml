@@ -274,35 +274,35 @@
 	<!-- ======================= PSI2 Service ========================= -->
 	<!-- =============================================================== -->
 	<bean id="ParticipantService"
-		class="wilos.business.services.wilosuser.ParticipantService">
+		class="wilos.business.services.misc.wilosuser.ParticipantService">
 		<property name="participantDao" ref="ParticipantDao" />
 		<property name="projectService" ref="ProjectService" />
 	</bean>
 	
 	<bean id="ProcessManagerService"
-		class="wilos.business.services.wilosuser.ProcessManagerService">
+		class="wilos.business.services.misc.wilosuser.ProcessManagerService">
 		<property name="processManagerDao" ref="ProcessManagerDao" />
 	</bean>
 	
 	<bean id="ProjectDirectorService"
-		class="wilos.business.services.wilosuser.ProjectDirectorService">
+		class="wilos.business.services.misc.wilosuser.ProjectDirectorService">
 		<property name="projectDirectorDao" ref="ProjectDirectorDao" />
 	</bean>
 	
 	<bean id="LoginService"
-		class="wilos.business.services.wilosuser.LoginService">
+		class="wilos.business.services.misc.wilosuser.LoginService">
 		<property name="wilosUserDao" ref="WilosUserDao" />
 	</bean>
 	
 	<bean id="ProjectService"
-		class="wilos.business.services.project.ProjectService">
+		class="wilos.business.services.misc.project.ProjectService">
 		<property name="projectDao" ref="ProjectDao" />
 		<property name="participantDao" ref="ParticipantDao" />
 		<property name="processService" ref="ProcessService" />
 	</bean>
 	
 	<bean id="RoleService"
-		class="wilos.business.services.role.RoleService">
+		class="wilos.business.services.misc.role.RoleService">
 		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
 		<property name="participantDao" ref="ParticipantDao" />
 	</bean>
