@@ -29,7 +29,7 @@
 						    <ice:outputText value="#{project.launchingDate}" />
 						</ice:column>			
 					</ice:dataTable>
-					<!--  <ice:commandButton value="saveRoles" action="#{RoleBean.saveParticipantRoles}"/> -->
+					<!--  <ice:commandButton value="saveRoles" action="#{RoleBean.saveParticipantRoles}"/>-->
 				</ice:panelGroup>
 			</ice:panelTab>
 		</ice:panelTabSet>
