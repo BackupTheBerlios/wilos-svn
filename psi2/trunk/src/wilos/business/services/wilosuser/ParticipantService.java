@@ -104,6 +104,7 @@ public class ParticipantService {
 	 * 
 	 * @param _participant
 	 */
+	@Transactional(readOnly = false)
 	public void saveParticipant(Participant _participant) {
 		_participant.setPassword(Security.encode(_participant.getPassword())) ;
 		participantDao.saveOrUpdateParticipant(_participant) ;
@@ -151,26 +152,33 @@ public class ParticipantService {
 		Participant currentParticipant = this.getParticipantDao().getParticipant(participant.getLogin()) ;
 		Project currentProject ;
 
+		//for every project 
 		for(Iterator iter = affectedProjects.keySet().iterator(); iter.hasNext();){
+
 			String project_id = (String) iter.next() ;
-			
 			currentProject = this.projectService.getProject(project_id) ;
-			
-			if((Boolean) affectedProjects.get(project_id))
+
+			//if this is an affectation
+			if(Boolean.valueOf(affectedProjects.get(project_id)) == true)
 			{
 				currentParticipant.addToProject(currentProject) ;
 			}
+			//if this is an unaffectation
 			else
 			{
+				//removing the participant from the project
+				currentParticipant.removeFromProject(currentProject) ;
+				
+				//if the project have a project manager
 				if (currentProject.getProjectManager() != null)
 				{
-					if (currentProject.getProjectManager().getLogin() == currentParticipant.getLogin())
+					//if the project manager is the current participant
+					if (currentProject.getProjectManager().getWilosuser_id().equals(currentParticipant.getWilosuser_id()))
 					{
-						currentProject.removeFromProjectManager(currentParticipant);
+						currentParticipant.removeManagedProject(currentProject);
 						this.projectService.saveProject(currentProject);
 					}
 				}
-				currentParticipant.removeFromProject(currentProject) ;
 			}
 		}
 		this.participantDao.saveOrUpdateParticipant(currentParticipant) ;
@@ -184,6 +192,7 @@ public class ParticipantService {
 	 * @return HashMap with couples of this form : 
 	 * 				(Project,ProjectManager) or (Project,null)
 	 */
+	@Transactional(readOnly = true)
 	public HashMap<Project, Participant> getManageableProjectsForAParticipant(Participant participant) {
 		HashMap<Project, Boolean> affectedProjectList = new HashMap<Project, Boolean>() ;
 		HashMap<Project, Participant> manageableProjectList = new HashMap<Project, Participant>() ;

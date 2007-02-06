@@ -62,7 +62,7 @@ public class ParticipantBean {
 
 	private String selectManageableProjectView ;
 	
-	private String selectNotManageableProjectView;
+	private String selectAffectedProjectView;
 	
 	private SimpleDateFormat formatter ; 
 	
@@ -77,7 +77,6 @@ public class ParticipantBean {
 		this.affectedProjectsList = new ArrayList() ;
 		this.manageableProjectsList = new ArrayList() ;
 		this.selectManageableProjectView = new String();
-		this.selectNotManageableProjectView = new String();
 		this.formatter = new SimpleDateFormat("dd/MM/yyyy");
 	}
 
@@ -442,7 +441,6 @@ public class ParticipantBean {
 		
 		Participant user = getParticipantFromSession() ;
 		
-		//FacesContext context = FacesContext.getCurrentInstance();
 		ResourceBundle bundle = ResourceBundle.getBundle(
 		"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
 		
@@ -514,16 +512,22 @@ public class ParticipantBean {
 		Participant user = getParticipantFromSession() ;
 		Map<String, Boolean> affectedManagedProjects = new HashMap<String, Boolean>() ;
 		for(HashMap ligne : this.manageableProjectsList){
-			Boolean testAffectation = (Boolean) ligne.get("affected") ;
-			String project_id = (String) ligne.get("project_id") ;
-			affectedManagedProjects.put(project_id, testAffectation) ;
+			//if the current project is not already managed by an other participant
+			if (! ((Boolean) ligne.get("hasOtherManager")) )
+			{
+				Boolean testAffectation = (Boolean) ligne.get("affected") ;
+				String project_id = (String) ligne.get("project_id") ;
+				affectedManagedProjects.put(project_id, testAffectation) ;
+			}
 		}
 		this.participantService.saveManagedProjectsForAParticipant(user, affectedManagedProjects) ;
-
-		FacesMessage saveAffectationMessage = new FacesMessage() ;
-		saveAffectationMessage.setSummary(bundle.getString("component.table1participantprojectManager.success")) ;
-		saveAffectationMessage.setSeverity(FacesMessage.SEVERITY_ERROR) ;
-		FacesContext.getCurrentInstance().addMessage(null, saveAffectationMessage) ;
+		if (affectedManagedProjects.size() > 0)
+		{
+			FacesMessage saveAffectationMessage = new FacesMessage() ;
+			saveAffectationMessage.setSummary(bundle.getString("component.table1participantprojectManager.success")) ;
+			saveAffectationMessage.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			FacesContext.getCurrentInstance().addMessage(null, saveAffectationMessage) ;
+		}
 	}
 
 	/**
@@ -540,7 +544,7 @@ public class ParticipantBean {
 	}
 
 	public String getSelectManageableProjectView() {
-		if (this.manageableProjectsList.size()==0 )
+		if (this.getManageableProjectsList().size()==0 )
 		{
 			this.selectManageableProjectView  = "manageable_no_records_view";
 		}
@@ -563,13 +567,6 @@ public class ParticipantBean {
 		this.formatter = formatter;
 	}
 
-	public void setSelectNotManageableProjectView(
-			String selectNotManageableProjectView) {
-		this.selectNotManageableProjectView = selectNotManageableProjectView;
-	}
-
-	
-	
 	/**
 	 * Getter of concreteRoleDescriptorHeaders.
 	 *
@@ -620,6 +617,32 @@ public class ParticipantBean {
 	 */
 	public void setConcreteRoleDescriptorsMap(HashMap<String, Boolean> _concreteRoleDescriptorsMap) {
 		this.concreteRoleDescriptorsMap = _concreteRoleDescriptorsMap ;
+	}
+
+	/**
+	 * Getter of selectAffectedProjectView.
+	 *
+	 * @return the selectAffectedProjectView.
+	 */
+	public String getSelectAffectedProjectView() {
+		if (this.getAffectedProjectsList().size()==0 )
+		{
+			this.selectAffectedProjectView  = "affected_no_records_view";
+		}
+		else
+		{
+			this.selectAffectedProjectView ="affected_records_view";
+		}
+		return this.selectAffectedProjectView;
+	}
+
+	/**
+	 * Setter of selectAffectedProjectView.
+	 *
+	 * @param _selectAffectedProjectView The selectAffectedProjectView to set.
+	 */
+	public void setSelectAffectedProjectView(String _selectAffectedProjectView) {
+		this.selectAffectedProjectView = _selectAffectedProjectView ;
 	}
 
 }

@@ -38,6 +38,7 @@ public class ProjectService {
 	 * 
 	 * @param _processmanager
 	 */
+	@Transactional(readOnly = false)
 	public void saveProject(Project _project) {
 		this.projectDao.saveOrUpdateProject(_project) ;
 	}
@@ -48,6 +49,7 @@ public class ProjectService {
 	 * @param _projectName
 	 * @return True is the _projectName is already present
 	 */
+	@Transactional(readOnly = true)
 	public boolean projectExist(String _projectName) {
 		boolean found = false ;
 		String projectName ;
@@ -70,6 +72,7 @@ public class ProjectService {
 	 * 
 	 * @return a set of Projects
 	 */
+	@Transactional(readOnly = true)
 	public Set<Project> getUnfinishedProjects() {
 		Set<Project> unfinishedP = new HashSet<Project>();
 		Set<Project> projects = this.projectDao.getAllProject() ;
@@ -222,6 +225,7 @@ public class ProjectService {
 	 * @param project
 	 *            the project where the participant will be affected to
 	 */
+	@Transactional(readOnly = false)
 	public void addParticipant(Participant participant, Project project) {
 		project.addToParticipant(participant) ;
 	}
@@ -236,6 +240,7 @@ public class ProjectService {
 	 * @param project
 	 *            the project to affect
 	 */
+	@Transactional(readOnly = false)
 	public void saveProcessProjectAffectation(wilos.model.spem2.process.Process _process, Project _project) {
 		//TODO: A tester
 		Project loadedProject = this.getProject(_project.getProject_id()) ;
