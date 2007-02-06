@@ -17,7 +17,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import wilos.business.services.assistant.AssistantService;
-import wilos.business.services.wilosuser.LoginService;
+import wilos.business.services.misc.wilosuser.LoginService;
 import wilos.business.transfertobject.ParticipantTO;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
