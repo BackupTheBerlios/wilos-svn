@@ -7,7 +7,7 @@
 	</ice:panelGroup>
 	<ice:panelGroup id="tree_group">
 		<f:subview id="tree_subview">
-			<jsp:directive.include file="./pages/template/navigation.jspx"/>		
+<!--			suppression de l'arbre de woops pour debug, a ne pas merger avec branches	-->
 		</f:subview>
 	</ice:panelGroup>
 </ice:panelStack>
