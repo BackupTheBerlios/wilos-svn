@@ -66,21 +66,25 @@ public class AssistantServiceTest extends TestCase {
 
 	public void testStartConcreteTaskDescriptor() {		
 		assistantService.startConcreteTaskDescriptor(ct.getId());
+		cts.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(ct.getId());
 		assertEquals(Constantes.State.STARTED, ct.getState());		
 	}
 	
 	public void testSuspendConcreteTaskDescriptor() {		
 		assistantService.suspendConcreteTaskDescriptor(ct.getId());	
+		ct = cts.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(ct.getId());
 		assertEquals(Constantes.State.SUSPENDED, ct.getState());		
 	}
 	
 	public void testFinishConcreteTaskDescriptor() {		
 		assistantService.finishConcreteTaskDescriptor(ct.getId());	
+		ct = cts.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(ct.getId());
 		assertEquals(Constantes.State.FINISHED, ct.getState());		
 	}
 	
 	public void testResumeConcreteTaskDescriptor() {		
 		assistantService.resumeConcreteTaskDescriptor(ct.getId());	
-		assertEquals(Constantes.State.FINISHED, ct.getState());		
+		ct = cts.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(ct.getId());
+		assertEquals(Constantes.State.STARTED, ct.getState());		
 	}
 }
