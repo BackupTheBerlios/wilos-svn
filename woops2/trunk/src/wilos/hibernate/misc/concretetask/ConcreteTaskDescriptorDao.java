@@ -14,15 +14,15 @@ import wilos.utils.ExceptionManager;
 /**
  * ConcreteTaskDescriptorDao manage requests from the system to store
  * ConcreteTaskDescriptorDao to the database
- * 
+ *
  * @author mat,seb
- * 
+ *
  */
 public class ConcreteTaskDescriptorDao extends HibernateDaoSupport {
 
 	/**
 	 * Save or update a ConcreteTaskDescriptorDao
-	 * 
+	 *
 	 * @param _concreteTaskdescriptor
 	 */
 	public void saveOrUpdateConcreteTaskDescriptor(
@@ -43,7 +43,7 @@ public class ConcreteTaskDescriptorDao extends HibernateDaoSupport {
 
 	/**
 	 * Return a set of ConcreteTaskDescriptor
-	 * 
+	 *
 	 * @return set <ConcreteTaskDescriptor>
 	 */
 	@SuppressWarnings("unchecked")
@@ -62,7 +62,7 @@ public class ConcreteTaskDescriptorDao extends HibernateDaoSupport {
 
 	/**
 	 * Return the ConcreteTaskDescriptor which have the id _id
-	 * 
+	 *
 	 * @param _id
 	 * @return ConcreteTaskDescriptor
 	 */
@@ -73,7 +73,7 @@ public class ConcreteTaskDescriptorDao extends HibernateDaoSupport {
 
 	/**
 	 * Delete the ConcreteTaskDescriptor
-	 * 
+	 *
 	 * @param _concreteTaskdescriptor
 	 */
 	public void deleteConcreteTaskDescriptor(
@@ -85,16 +85,5 @@ public class ConcreteTaskDescriptorDao extends HibernateDaoSupport {
 					this.getClass().getName(), "deleteConcreteTaskDescriptor",
 					_e);
 		}
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<ConcreteTaskDescriptor> getConcreteTaskDescriptorFromProject(
-			String _projectId) {
-		List ctds = this
-				.getHibernateTemplate()
-				.find(
-						"from ConcreteTaskDescriptor ctd where ctd.projectid=?",
-						_projectId);
-		return ctds;
 	}
 }
