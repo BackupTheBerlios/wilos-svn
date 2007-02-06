@@ -24,9 +24,9 @@ import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
 import wilos.presentation.web.template.MenuBean;
-import wilos.presentation.web.viewer.ActivityViewerBean;
+import wilos.presentation.web.viewer.ConcreteActivityViewerBean;
 import wilos.presentation.web.viewer.ConcreteTaskViewerBean;
-import wilos.presentation.web.viewer.IterationViewerBean;
+import wilos.presentation.web.viewer.ConcreteIterationViewerBean;
 import wilos.presentation.web.viewer.PhaseViewerBean;
 import wilos.presentation.web.viewer.ProjectViewerBean;
 
@@ -190,7 +190,7 @@ public class TreeBean {
 				.resolveVariable(context, "menu");
 		if (_objectId != null && _pageId != null) {
 			if (_pageId.equals(WilosObjectNode.ACTIVITYNODE)) {
-				ActivityViewerBean av = (ActivityViewerBean) context
+				ConcreteActivityViewerBean av = (ConcreteActivityViewerBean) context
 						.getApplication().getVariableResolver()
 						.resolveVariable(context, "ActivityViewerBean");
 				av.setActivityId(_objectId);
@@ -206,7 +206,7 @@ public class TreeBean {
 				ctv.buildConcreteTaskDescriptor();
 				mb.changePage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.ITERATIONNODE)) {
-				IterationViewerBean iv = (IterationViewerBean) context
+				ConcreteIterationViewerBean iv = (ConcreteIterationViewerBean) context
 						.getApplication().getVariableResolver()
 						.resolveVariable(context, "IterationViewerBean");
 				iv.setIterationId(_objectId);
