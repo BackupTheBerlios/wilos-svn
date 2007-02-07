@@ -127,7 +127,7 @@ public class ProcessService {
 
 	/**
 	 * 
-	 * TODO Method description
+	 * Method for saving a Process
 	 * 
 	 * @param _process
 	 */
@@ -196,7 +196,7 @@ public class ProcessService {
 
 	/**
 	 * 
-	 * TODO Method description
+	 * Method to parse a Phase
 	 * 
 	 * @param _ph
 	 */
@@ -258,7 +258,7 @@ public class ProcessService {
 
 	/**
 	 * 
-	 * TODO Method description
+	 * Method to parse an Iteration
 	 * 
 	 * @param _it
 	 */
@@ -312,7 +312,7 @@ public class ProcessService {
 
 	/**
 	 * 
-	 * TODO Method description
+	 * Method to parse an Activity
 	 * 
 	 * @param _act
 	 */
@@ -366,7 +366,7 @@ public class ProcessService {
 
 	/**
 	 * 
-	 * TODO Method description
+	 * Method to parse a RoleDescriptor
 	 * 
 	 * @param _rd
 	 */
@@ -406,7 +406,7 @@ public class ProcessService {
 
 	/**
 	 * 
-	 * TODO Method description
+	 * Method to parse a RoleDefinition
 	 * 
 	 * @param _rdef
 	 */
@@ -437,7 +437,7 @@ public class ProcessService {
 
 	/**
 	 * 
-	 * TODO Method description
+	 * Method to parse a TaskDescriptor
 	 * 
 	 * @param _td
 	 */
@@ -522,7 +522,7 @@ public class ProcessService {
 
 	/**
 	 * 
-	 * TODO Method description
+	 * Method to parse a Step
 	 * 
 	 * @param _step
 	 */
@@ -546,7 +546,7 @@ public class ProcessService {
 
 	/**
 	 * 
-	 * TODO Method description
+	 * Method to parse a Guidance
 	 * 
 	 * @param _step
 	 */
@@ -944,20 +944,5 @@ public class ProcessService {
 
 	public void setGuidanceDao(GuidanceDao guidanceDao) {
 		this.guidanceDao = guidanceDao;
-	}
-
-	/**
-	 * @return the roleDescriptorService
-	 */
-	public RoleDescriptorService getRoleDescriptorService() {
-		return this.roleDescriptorService;
-	}
-
-	/**
-	 * @param _roleDescriptorService the roleDescriptorService to set
-	 */
-	public void setRoleDescriptorService(
-			RoleDescriptorService _roleDescriptorService) {
-		this.roleDescriptorService = _roleDescriptorService;
 	}
 }
