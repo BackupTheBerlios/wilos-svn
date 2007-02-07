@@ -30,8 +30,8 @@ public class ConcreteActivityViewerBean {
 		return concreteActivityId;
 	}
 
-	public void setActivityId(String _activityId) {
-		this.concreteActivityId = _activityId;
+	public void setConcreteActivityId(String _concreteActivityId) {
+		this.concreteActivityId = _concreteActivityId;
 	}
 
 	public ConcreteActivityService getConcreteActivityService() {
