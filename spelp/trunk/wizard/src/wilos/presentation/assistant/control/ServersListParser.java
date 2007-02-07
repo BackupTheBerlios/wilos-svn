@@ -116,13 +116,14 @@ public class ServersListParser {
 			else serversList = new ArrayList<WizardServer>();
 		}
 		
-		// copy the serversList
+		// copies serversList
 		ArrayList<WizardServer> list = new ArrayList<WizardServer>();
 		for (WizardServer ws : serversList)
 		{
 			list.add(new WizardServer(ws.getAlias(),ws.getAddress(),ws.getId()));
 		}
 		
+		// returns the last made copy
 		return list;
 	}
 	
@@ -152,7 +153,7 @@ public class ServersListParser {
 		{
 			ws = (WizardServer) it.next();
 			
-			// 
+			// for each WizardServer creates an element for the xml file
 			serversList.add(new WizardServer(ws.getAlias(),ws.getAddress(),id));
 			
 			server = new Element("Server");
@@ -172,7 +173,7 @@ public class ServersListParser {
 			
 			data.addContent(server);
 		}
-
+		
 		XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
 		try {
 			
@@ -193,12 +194,18 @@ public class ServersListParser {
 	 */
 	public void lastUsedServer (int no) {
 		int i;
+		
+		// gets out of the for when there is no more server or when the good id is found
 		for (i = 0 ; i < serversList.size() && serversList.get(i).getId() != no ; i++) { }
 		
+		// saves and removes the element from the arraylist
 		WizardServer elem = serversList.get(i);
 		serversList.remove(i);
 		
+		// orders the rest of the list
 		trierAlias();
+		
+		// puts back the saved element 
 		serversList.add(0, elem);
 		
 		// copy for the saving method
@@ -208,10 +215,11 @@ public class ServersListParser {
 			list.add(ws);
 		}
 		
+		// saves copied list and creates an xml file from it
 		saveServersList(list);
 	}
 	
-	// order, by alphabetic order on the alias, the server list
+	// orders, by alphabetic order on the alias, the server list
 	private void trierAlias ()
 	{
 		int nb = serversList.size();
