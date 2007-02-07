@@ -193,7 +193,7 @@ public class TreeBean {
 				ConcreteActivityViewerBean av = (ConcreteActivityViewerBean) context
 						.getApplication().getVariableResolver()
 						.resolveVariable(context, "ActivityViewerBean");
-				av.setActivityId(_objectId);
+				av.setConcreteActivityId(_objectId);
 				// model building
 				av.buildConcreteActivity();
 				mb.changePage(_pageId);
