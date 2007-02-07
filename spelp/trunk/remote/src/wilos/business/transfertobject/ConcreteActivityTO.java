@@ -15,8 +15,7 @@ public class ConcreteActivityTO extends ConcreteActivity implements Serializable
     }    
   
     public ConcreteActivityTO(ConcreteActivity _myConcreteActivity) {
-    	// TODO
-    	// this.setId(myConcreteRoleDescriptor.getId());
+    	this.setId(_myConcreteActivity.getId());
     	this.setConcreteName(_myConcreteActivity.getConcreteName());
     	this.setActivity(new ActivityTO(_myConcreteActivity.getActivity()));
     }

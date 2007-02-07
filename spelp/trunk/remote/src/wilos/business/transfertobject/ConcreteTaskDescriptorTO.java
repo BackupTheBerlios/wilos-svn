@@ -11,8 +11,7 @@ public class ConcreteTaskDescriptorTO extends ConcreteTaskDescriptor implements 
     }    
   
     public ConcreteTaskDescriptorTO(ConcreteTaskDescriptor myConcreteTaskDescriptor) {
-    	// TODO
-    	//this.setId(myConcreteTaskDescriptor.getId());
+    	this.setId(myConcreteTaskDescriptor.getId());
     	this.setConcreteName(myConcreteTaskDescriptor.getConcreteName());
     	this.setAccomplishedTime(myConcreteTaskDescriptor.getAccomplishedTime());
     	this.setPlannedFinishingDate(myConcreteTaskDescriptor.getPlannedFinishingDate());
