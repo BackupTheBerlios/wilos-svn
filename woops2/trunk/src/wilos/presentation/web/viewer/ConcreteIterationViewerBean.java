@@ -14,7 +14,6 @@ public class ConcreteIterationViewerBean {
 	public void buildConcreteIteration() {
 		this.concreteIteration = new ConcreteIteration();
 		if (!(this.concreteIterationId.equals("")) || this.concreteIterationId != null) {
-			//FIXME maj d'IterationService => getConcreteIterationDao
 			this.concreteIteration = this.concreteIterationService.getConcreteIteration(this.concreteIterationId);
 		}
 	}
@@ -27,7 +26,7 @@ public class ConcreteIterationViewerBean {
 		this.concreteIteration = _concreteIteration;
 	}
 
-	public String getIterationId() {
+	public String getConcreteIterationId() {
 		return concreteIterationId;
 	}
 
