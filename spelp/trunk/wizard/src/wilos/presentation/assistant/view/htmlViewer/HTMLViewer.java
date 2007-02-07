@@ -236,6 +236,7 @@ public class HTMLViewer extends JFrame {
 		else if (o instanceof Element){
 			Element e = (Element)o;
 			displayElement(e);
+			this.southPanel.setExpanded(false);
 			ok = true ;
 		}
 		// if ok = true then object is an element
