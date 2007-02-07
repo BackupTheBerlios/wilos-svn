@@ -26,9 +26,11 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 
 	private Boolean isEvenDriven;
 
-	private Set<WorkBreakdownElement> predecessors;
-
-	private Set<WorkBreakdownElement> successors;
+	//private Set<WorkBreakdownElement> predecessors;	
+	private Set<WorkOrder> predecessors;
+	
+	//private Set<WorkBreakdownElement> successors;
+	private Set<WorkOrder> successors;
 
 	private Set<ConcreteWorkBreakdownElement> concreteWorkBreakdownElements;
 
@@ -37,8 +39,8 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 		this.isEvenDriven = false;
 		this.isOngoing = false;
 		this.isRepeatable = false;
-		this.predecessors = new HashSet<WorkBreakdownElement>();
-		this.successors = new HashSet<WorkBreakdownElement>();
+		this.predecessors = new HashSet<WorkOrder>();
+		this.successors = new HashSet<WorkOrder>();
 		this.concreteWorkBreakdownElements = new HashSet<ConcreteWorkBreakdownElement>() ;
 	}
 
@@ -103,95 +105,129 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 		this.setSuccessors(_workBreakdownElement.getSuccessors());
 		
 	}
-
-	/**
-	 * Adds a successor to the successors collection of a wbde.
+	
+	/*
+	 * relation between WorkBreakdownElement and WorkOrder.
 	 *
-	 * @param _workBreakdownElements
-	 *            The successor to add.
 	 */
-	public void addSuccessor(WorkBreakdownElement _workBreakdownElement) {
-		this.successors.add(_workBreakdownElement);
-		_workBreakdownElement.predecessors.add(this);
-	}
-
+	
 	/**
-	 * Removes from a wbde one of the successor of this wbde.
+	 * Add a succesor to the successors collection of a workOrder
+	 * 
+	 * @param _workOrder
+	 */
+	public void addSuccessor(WorkOrder _workOrder) {
+		this.successors.add(_workOrder);
+		_workOrder.setPredecessor(this);
+	}
+	
+	/**
+	 * Remove from a wbde one of these successor.
 	 *
-	 * @param _workBreakdownElements
+	 * @param _workOrder
 	 *            The successor to remove.
 	 */
-	public void removeSuccessor(WorkBreakdownElement _workBreakdownElement) {
-		_workBreakdownElement.predecessors.remove(this);
-		this.successors.remove(_workBreakdownElement);
+	public void removeSuccessor(WorkOrder _workOrder) {
+		_workOrder.setPredecessor(null);
+		this.successors.remove(_workOrder);
 	}
-
+	
 	/**
-	 * Adds a successor collection to the successors collection of a wbde.
+	 * Add a successors collection into the WorkOrder successors collection.
 	 *
-	 * @param _workBreakdownElements
+	 * @param _workOrder
 	 *            The set of successors to add.
-	 */
-	public void addAllSuccessors(
-			Set<WorkBreakdownElement> _workBreakdownElements) {
-		for (WorkBreakdownElement wbde : _workBreakdownElements) {
-			wbde.addPredecessor(this);
+	 */	
+	public void addAllSuccessors(Set<WorkOrder> _workOrder) {
+		for (WorkOrder wo : _workOrder) {
+			this.addSuccessor(wo);
 		}
 	}
 
 	/**
-	 * Removes all the successors from a wbde.
+	 * Remove from an wbde all its WorkOrder successors.
 	 *
-	 */
+	 */	
 	public void removeAllSuccessors() {
-		for (WorkBreakdownElement wbde : this.getSuccessors())
-			wbde.getPredecessors().remove(this);
-		this.getSuccessors().clear();
+		for (WorkOrder wo : this.getSuccessors())
+			// FIXME a vérifier
+			wo.setPredecessor(null);
+			this.getSuccessors().clear();
 	}
-
+	
 	/**
-	 * Adds a predecessor to the predecessors collection of a wbde.
+	 * Add a predecessor into the WorkOrder predecessors collection.
 	 *
-	 * @param _workBreakdownElements
+	 * @param _workOrder
 	 *            The predecessor to add.
 	 */
-	public void addPredecessor(WorkBreakdownElement _workBreakdownElement) {
-		this.predecessors.add(_workBreakdownElement);
-		_workBreakdownElement.successors.add(this);
+	public void addPredecessor(WorkOrder _workOrder) {
+		this.predecessors.add(_workOrder);
+		_workOrder.setSuccessor(this);
 	}
-
+	
 	/**
-	 * Removes from a wbde one of its predecessor
+	 * Remove from a wbde one of these predecessor.
 	 *
-	 * @param _workBreakdownElements
+	 * @param _workOrder
 	 *            The predecessor to remove.
 	 */
-	public void removePredecessor(WorkBreakdownElement _workBreakdownElement) {
-		_workBreakdownElement.successors.remove(this);
-		this.predecessors.remove(_workBreakdownElement);
+	public void removePredecessor(WorkOrder _workOrder) {
+		_workOrder.setSuccessor(null);
+		this.predecessors.remove(_workOrder);
 	}
 
 	/**
-	 * Adds a predecessor collection to the predecessors collection of a wbde.
+	 * Add a predecessor collection into the WorkOrder predecessors collection.
 	 *
-	 * @param _workBreakdownElements
+	 * @param _workOrder
 	 *            The set of predecessors to add.
 	 */
-	public void addAllPredecessors(
-			Set<WorkBreakdownElement> _workBreakdownElements) {
-		for (WorkBreakdownElement wbde : _workBreakdownElements) {
-			wbde.addSuccessor(this);
+	public void addAllPredecessors(Set<WorkOrder> _workOrder) {
+		for (WorkOrder wo : _workOrder) {
+			this.addPredecessor(wo);
 		}
 	}
 
 	/**
-	 * Removes all the predecessors from a wbde.
+	 * Remove from an wbde all its WorkOrder successors.
 	 *
 	 */
 	public void removeAllPredecessors() {
-		for (WorkBreakdownElement wbde : this.getPredecessors())
-			wbde.getSuccessors().remove(this);
-		this.getPredecessors().clear();
+		for (WorkOrder wo : this.getPredecessors())
+			// FIXME a vérifier
+			wo.setSuccessor(null);
+			this.getPredecessors().clear();
+	}
+	
+	/*
+	 * relation between WorkBreakdownElement and ConcreteWorkBreakdownElement.
+	 *
+	 */
+
+	public void addConcreteWorkBreakdownElement(
+			ConcreteWorkBreakdownElement _concreteWorkBreakdownElement) {
+		this.concreteWorkBreakdownElements.add(_concreteWorkBreakdownElement);
+		_concreteWorkBreakdownElement.addWorkBreakdownElement(this);
+	}
+
+	public void removeConcreteWorkBreakdownElement(
+			ConcreteWorkBreakdownElement _concreteWorkBreakdownElement) {
+		_concreteWorkBreakdownElement.removeWorkBreakdownElement(this);
+		this.concreteWorkBreakdownElements.remove(_concreteWorkBreakdownElement);
+	}
+
+	public void addAllConcreteWorkBreakdownElements(
+			Set<ConcreteWorkBreakdownElement> _concreteWorkBreakdownElements) {
+		for (ConcreteWorkBreakdownElement cwbde : _concreteWorkBreakdownElements) {
+			cwbde.addWorkBreakdownElement(this);
+		}
+	}
+
+	public void removeAllConcreteWorkBreakdownElements() {
+		for (ConcreteWorkBreakdownElement cwbde : this.getConcreteWorkBreakdownElements())
+			cwbde.setWorkBreakdownElement(null);
+		this.getConcreteWorkBreakdownElements().clear();
 	}
 
 	/**
@@ -249,108 +285,42 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	 */
 	public void setIsRepeatable(Boolean _isRepeatable) {
 		this.isRepeatable = _isRepeatable;
-	}
+	}	
 
 	/**
-	 * Getter of the predecessors
-	 *  
-	 * @return Set of predecessors
+	 * @return the predecessors
 	 */
-	public Set<WorkBreakdownElement> getPredecessors() {
+	public Set<WorkOrder> getPredecessors() {
 		return predecessors;
 	}
-	
+
 	/**
-	 * Setter of the Set of predecessors
-	 * 
-	 * @param predecessors Set of predecessors.
+	 * @param predecessors the predecessors to set
 	 */
-	public void setPredecessors(Set<WorkBreakdownElement> predecessors) {
-		this.predecessors = predecessors;
+	public void setPredecessors(Set<WorkOrder> _predecessors) {
+		this.predecessors = _predecessors;
 	}
 
 	/**
-	 * Getter of the successors
-	 * 
-	 * @return Set of successors
+	 * @return the successors
 	 */
-	public Set<WorkBreakdownElement> getSuccessors() {
+	public Set<WorkOrder> getSuccessors() {
 		return successors;
 	}
 
 	/**
-	 * Setter of the Set of successors
-	 * 
-	 * @param successors Set of successors
+	 * @param successors the successors to set
 	 */
-	public void setSuccessors(Set<WorkBreakdownElement> successors) {
-		this.successors = successors;
+	public void setSuccessors(Set<WorkOrder> _successors) {
+		this.successors = _successors;
 	}
 
-	/**
-	 * Getter of the Set of concreteWorkBreakdownElements
-	 * 
-	 * @return Set of concreteWorkBreakdownElements
-	 */
 	public Set<ConcreteWorkBreakdownElement> getConcreteWorkBreakdownElements() {
 		return this.concreteWorkBreakdownElements;
 	}
 
-	/**
-	 * Setter of the Set of concreteWorkBreakdownElements
-	 * 
-	 * @param _concreteWorkBreakdownElements Set of concreteWorkBreakdownElements
-	 */
 	public void setConcreteWorkBreakdownElements(
 			Set<ConcreteWorkBreakdownElement> _concreteWorkBreakdownElements) {
 		this.concreteWorkBreakdownElements = _concreteWorkBreakdownElements;
-	}
-	
-	/*
-	 * relation between WorkBreakdownElement and ConcreteWorkBreakdownElement.
-	 *
-	 */
-
-	/**
-	 * Adds a concreteWorkBreakdownElements to the Set of _concreteWorkBreakdownElement
-	 * 
-	 * @param _concreteWorkBreakdownElement Element to add
-	 */
-	public void addConcreteWorkBreakdownElement(
-			ConcreteWorkBreakdownElement _concreteWorkBreakdownElement) {
-		this.concreteWorkBreakdownElements.add(_concreteWorkBreakdownElement);
-		_concreteWorkBreakdownElement.addWorkBreakdownElement(this);
-	}
-
-	/**
-	 * Removes a ConcreteWorkBreakdownElement from the Set
-	 * 
-	 * @param _concreteWorkBreakdownElement Element to remove
-	 */
-	public void removeConcreteWorkBreakdownElement(
-			ConcreteWorkBreakdownElement _concreteWorkBreakdownElement) {
-		_concreteWorkBreakdownElement.removeWorkBreakdownElement(this);
-		this.concreteWorkBreakdownElements.remove(_concreteWorkBreakdownElement);
-	}
-
-	/**
-	 * Adds a Set of ConcreteWorkBreakdownElement
-	 * 
-	 * @param _concreteWorkBreakdownElements Set of elements to add
-	 */
-	public void addAllConcreteWorkBreakdownElements(
-			Set<ConcreteWorkBreakdownElement> _concreteWorkBreakdownElements) {
-		for (ConcreteWorkBreakdownElement cwbde : _concreteWorkBreakdownElements) {
-			cwbde.addWorkBreakdownElement(this);
-		}
-	}
-
-	/**
-	 * Removes all the ConcreteWorkBreakdownElement
-	 */
-	public void removeAllConcreteWorkBreakdownElements() {
-		for (ConcreteWorkBreakdownElement cwbde : this.getConcreteWorkBreakdownElements())
-			cwbde.setWorkBreakdownElement(null);
-		this.getConcreteWorkBreakdownElements().clear();
 	}
 }
