@@ -52,7 +52,15 @@ public class XMLParser {
 	private static final String xpath_iteration = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Iteration']";
 	private static final String xpath_phase = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Phase']";
 	private static final String xpath_activity = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Activity']";
-	private static final String xpath_guideline = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Guideline']";
+	private static final String xpath_guidance = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Guideline' or " +
+			"@*[namespace-uri() and local-name()='type']='uma:Checklist' or " +
+			"@*[namespace-uri() and local-name()='type']='uma:Concept' or " +
+			"@*[namespace-uri() and local-name()='type']='uma:SupportingMaterial' or " +
+			"@*[namespace-uri() and local-name()='type']='uma:Roadmap' or " +
+			"@*[namespace-uri() and local-name()='type']='uma:TermDefinition' or " +
+			"@*[namespace-uri() and local-name()='type']='uma:ToolMentor' or " +
+			"@*[namespace-uri() and local-name()='type']='uma:Report' " +
+			"]";
 	
 	// Sections
 	private static final String task = "Task";
@@ -62,9 +70,18 @@ public class XMLParser {
 	private static final String step = "Section";
 	private static final String presentation = "Presentation";
 	private static final String breakdownElement = "BreakdownElement";
-	private static final String guideline = "Guideline"; 
 	private static final String predecessor = "Predecessor"; 
 	
+	private static final String guideline = "Guideline"; 
+	private static final String checklist = "Checklist"; 
+	private static final String concept = "Concept"; 
+	private static final String supportingMaterial = "SupportingMaterial"; 
+	private static final String roadmap = "Roadmap"; 
+	private static final String termDefinition = "TermDefinition"; 
+	private static final String toolMentor = "ToolMentor"; 
+	private static final String report = "Report"; 
+	private static Set<String> guidancesTypes = new LinkedHashSet<String>();
+
 	
 	// Types
 	private static final String process = "uma:DeliveryProcess";
@@ -100,6 +117,8 @@ public class XMLParser {
 	 */
 	private static void start() {
 		try {
+			initGuidancesTypesList();
+			
 			RoleDefinitionsList = fillRoleDefinitionsList();
 			GuidesList = fillGuidesList();
 			TaskDefinitionsList = fillTaskDefinitionsList();
@@ -119,6 +138,19 @@ public class XMLParser {
 		}
 	}
 	
+	/**
+	 * make a set with the name of each type of guidance
+	 */
+	private static void initGuidancesTypesList() {
+		guidancesTypes.add(guideline);
+		guidancesTypes.add(checklist);
+		guidancesTypes.add(concept);
+		guidancesTypes.add(supportingMaterial);
+		guidancesTypes.add(roadmap);
+		guidancesTypes.add(termDefinition);
+		guidancesTypes.add(toolMentor);
+		guidancesTypes.add(report);
+	}
 
 	/**
 	 * fillGuidesList
@@ -132,7 +164,7 @@ public class XMLParser {
 		theGuidanceList.clear();
 		
 		// gets all the nodes containing guideline
-		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_guideline,XPathConstants.NODESET);
+		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_guidance,XPathConstants.NODESET);
 		if (nodeReturned.getLength() != 0) {
 			// For each node...
 			Node aNode;
@@ -301,7 +333,6 @@ public class XMLParser {
 	/**
 	 * getProcess
 	 * Return a Process from a file
-	 * Deprecated, use getAllProcesses instead
 	 * @param f a XML file
 	 * @return the process
 	 * @throws Exception 
@@ -517,7 +548,8 @@ public class XMLParser {
 		
 		// search the nodes of the guide
 		for (int i = 0 ; i < listOfTdNodes.getLength() ; i ++){
-			if (listOfTdNodes.item(i).getNodeName().equals(guideline)){				
+//			if (listOfTdNodes.item(i).getNodeName().equals(guideline)){				
+			if(guidancesTypes.contains(listOfTdNodes.item(i).getNodeName())) {
 				// recuperation des differents id des guidelines
 				idGuide = listOfTdNodes.item(i).getTextContent();				
 				
@@ -533,7 +565,7 @@ public class XMLParser {
 		
 
 	}
-	
+
 	/**
 	 * setAddiotionalRoleByTaskDescriptor
 	 * @param _t
