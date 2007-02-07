@@ -28,6 +28,8 @@ import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 
+import org.jdesktop.swingx.JXTaskPane;
+
 import wilos.business.services.guide.GuidanceService;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
@@ -54,7 +56,7 @@ public class HTMLViewer extends JFrame {
 	private Stack<Element> historyStack;
 	private int cursorStack=0;
 	
-	private JPanel southPanel;
+	private JXTaskPane southPanel;
 	private JScrollPane guidesScrollPane;
 	
 	private Border getCommonBorder(String msg) {
@@ -68,9 +70,10 @@ public class HTMLViewer extends JFrame {
 		this.setSize(Toolkit.getDefaultToolkit().getScreenSize().width / 2, Toolkit.getDefaultToolkit().getScreenSize().height / 2);
 		if (p!=null) this.setLocation(p);
 		
+		/* ----- NORTH PANEL -----*/
+		
 		JPanel elementPanel = new JPanel();
-		//elementPanel.setBorder(getCommonBorder(Bundle.getText("htmlViewer.element")));
-		elementPanel.setBorder(getCommonBorder(""));
+		elementPanel.setOpaque(false);
 		this.myElementLabel = new JLabel() ;
 		elementPanel.add(this.myElementLabel);
 		
@@ -101,21 +104,27 @@ public class HTMLViewer extends JFrame {
 		//northPanel.add(buttonPanel, BorderLayout.EAST);
 		northPanel.setFloatable(false);
 		
+		/* ----- CENTER PANEL -----*/
+		
 		this.myEditorPane = new JEditorPane();
 		this.myEditorPane.setVisible(true);
 		this.myEditorPane.setEditable(false);
-		this.myEditorPane.setOpaque(false);
+		//this.myEditorPane.setOpaque(false);
 		this.myEditorPane.setContentType("text/html");
 		this.myEditorPane.setFocusable(false);
 		
 		this.myScrollPane = new JScrollPane(this.myEditorPane);
-		this.myScrollPane.setBorder(getCommonBorder(Bundle.getText("htmlViewer.description")));
+		//this.myScrollPane.setBorder(getCommonBorder(Bundle.getText("htmlViewer.description")));
 		
-		this.southPanel = new JPanel() ;
-		this.southPanel.setLayout(new GridLayout());
-		this.southPanel.setVisible(true);
+		/* ----- SOUTH PANEL -----*/
+		
+		this.southPanel = new JXTaskPane() ;
+		this.southPanel.setTitle(Bundle.getText("htmlViewer.guidelines"));
+		this.southPanel.setExpanded(false);
+		//this.southPanel.setLayout(new GridLayout());
+		//this.southPanel.setVisible(true);
 		//this.southPanel.add(new JLabel(Bundle.getText("htmlViewer.guidelines")));
-		this.southPanel.setBorder(getCommonBorder(Bundle.getText("htmlViewer.guidelines")));
+		//this.southPanel.setBorder(getCommonBorder(Bundle.getText("htmlViewer.guidelines")));
 		
 		guidesList = new JList();
 
@@ -278,6 +287,10 @@ public class HTMLViewer extends JFrame {
 		
 		if (guides.size() != 0){
 			guidesList.setVisible(true);
+			this.southPanel.setExpanded(true);
+		}
+		else {
+			this.southPanel.setExpanded(false);
 		}
 		
 		return td ;
