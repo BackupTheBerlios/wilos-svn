@@ -4,6 +4,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import wilos.hibernate.misc.concreterole.ConcreteRoleDescriptorDao;
+import wilos.hibernate.spem2.role.RoleDescriptorDao;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.role.RoleDescriptor;
@@ -18,6 +19,22 @@ import wilos.model.spem2.role.RoleDescriptor;
 public class RoleDescriptorService {
 
 	private ConcreteRoleDescriptorDao concreteRoleDescriptorDao;
+	
+	private RoleDescriptorDao roleDescriptorDao;
+
+	/**
+	 * @return the roleDescriptorDao
+	 */
+	public RoleDescriptorDao getRoleDescriptorDao() {
+		return roleDescriptorDao;
+	}
+
+	/**
+	 * @param roleDescriptorDao the roleDescriptorDao to set
+	 */
+	public void setRoleDescriptorDao(RoleDescriptorDao roleDescriptorDao) {
+		this.roleDescriptorDao = roleDescriptorDao;
+	}
 
 	/**
 	 *
@@ -38,6 +55,13 @@ public class RoleDescriptorService {
 		this.concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(crd);
 	}
 
+	public RoleDescriptor getRoleDescriptorById(String _id)
+	{
+		RoleDescriptor roleDescriptor;
+		roleDescriptor = this.roleDescriptorDao.getRoleDescriptor(_id);
+		return roleDescriptor;
+	}
+	
 	public ConcreteRoleDescriptorDao getConcreteRoleDescriptorDao() {
 		return concreteRoleDescriptorDao;
 	}

@@ -400,11 +400,13 @@
 	<bean id="RoleDescriptorService"
 		class="wilos.business.services.spem2.role.RoleDescriptorService">
 		<property name="concreteRoleDescriptorDao" ref="ConcreteRoleDescriptorDao" />
+		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
 	</bean>
 
 	<bean id="TaskDescriptorService"
 		class="wilos.business.services.spem2.task.TaskDescriptorService">
 		<property name="concreteTaskDescriptorDao" ref="ConcreteTaskDescriptorDao" />
+		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
 	</bean>
 
 	<bean id="PhaseService"
@@ -421,6 +423,8 @@
 		class="wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService">
 		<property name="concreteTaskDescriptorDao"
 			ref="ConcreteTaskDescriptorDao" />
+		<property name="taskDescriptorService" ref="TaskDescriptorService" />
+		<property name="roleDescriptorService" ref="RoleDescriptorService" />
 	</bean>
 
 	<bean id="ConcreteRoleDescriptorService"

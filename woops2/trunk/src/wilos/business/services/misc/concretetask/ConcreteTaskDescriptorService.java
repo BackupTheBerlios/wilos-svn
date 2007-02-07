@@ -3,13 +3,19 @@ package wilos.business.services.misc.concretetask;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import wilos.business.services.spem2.role.RoleDescriptorService;
+import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.hibernate.misc.concretetask.ConcreteTaskDescriptorDao;
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.wilosuser.Participant;
+import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.task.TaskDescriptor;
 import wilos.utils.Constantes;
 import wilos.utils.Constantes.State;
 
@@ -22,6 +28,10 @@ import wilos.utils.Constantes.State;
 public class ConcreteTaskDescriptorService {
 
 	private ConcreteTaskDescriptorDao concreteTaskDescriptorDao;
+	
+	private TaskDescriptorService taskDescriptorService;
+	
+	private RoleDescriptorService roleDescriptorService;
 
 	/**
 	 * Return concreteTaskDescriptor for a project list
@@ -69,16 +79,28 @@ public class ConcreteTaskDescriptorService {
 
 	public void affectedConcreteTaskDescriptor(
 			ConcreteTaskDescriptor _concreteTaskDescriptor, Participant _user) {
+ConcreteRoleDescriptor concreteRoleDescriptor = null;
+		
+		TaskDescriptor tmp = this.taskDescriptorService.getTaskDescriptorById(_concreteTaskDescriptor.getTaskDescriptor().getId());
+		RoleDescriptor tmpRoleDescriptor = this.roleDescriptorService.getRoleDescriptorById(tmp.getMainRole().getId());
 
-		/*
-		 * FIXME TaskDescriptor td =
-		 * _concreteTaskDescriptor.getTaskDescriptor(); TaskDescriptor tmp =
-		 * this.taskDescriptorService.getTaskDescriptorDao()
-		 * .getTaskDescriptor(td.getId()); RoleDescriptor roleDescriptor =
-		 * tmp.getMainRole(); roleDescriptor.addParticipant(_user); // save
-		 * changings.
-		 * this.roleDescriptorDao.saveOrUpdateRoleDescriptor(roleDescriptor);
-		 */
+		//recuperation des deux listes.
+		Set<ConcreteRoleDescriptor> listeRd = tmpRoleDescriptor.getConcreteRoleDescriptors();
+		Set<ConcreteRoleDescriptor> p = _user.getConcreteRoleDescriptors();
+		
+		for(ConcreteRoleDescriptor tmpListeRd : listeRd)
+		{
+			for(ConcreteRoleDescriptor tmpListeP : p)
+			{
+				if(tmpListeP.equals(tmpListeRd))
+				{
+					concreteRoleDescriptor = tmpListeRd;
+				}
+			}
+		}
+		
+		_concreteTaskDescriptor.addConcreteRoleDescriptor(concreteRoleDescriptor);
+	
 	}
 
 	/**
@@ -189,5 +211,21 @@ public class ConcreteTaskDescriptorService {
 	public void setConcreteTaskDescriptorDao(
 			ConcreteTaskDescriptorDao _concreteTaskDescriptorDao) {
 		this.concreteTaskDescriptorDao = _concreteTaskDescriptorDao;
+	}
+
+	public RoleDescriptorService getRoleDescriptorService() {
+		return roleDescriptorService;
+	}
+
+	public void setRoleDescriptorService(RoleDescriptorService roleDescriptorService) {
+		this.roleDescriptorService = roleDescriptorService;
+	}
+
+	public TaskDescriptorService getTaskDescriptorService() {
+		return taskDescriptorService;
+	}
+
+	public void setTaskDescriptorService(TaskDescriptorService taskDescriptorService) {
+		this.taskDescriptorService = taskDescriptorService;
 	}
 }
