@@ -135,7 +135,15 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 		}
 		
 		private ConcreteActivity getActivity (Set<ConcreteActivity> s){
-			return s.iterator().next();
+			ConcreteActivity ca = null ;
+			try {
+				ca = s.iterator().next();
+			}
+			catch(Exception e){
+				
+			}
+			
+			return ca ;
 		}
 		
 		private void initTree() {
@@ -148,22 +156,33 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 			
 			// browse all the concrete roles
 			for (ConcreteRoleDescriptor crd : roles) {
+				DefaultMutableTreeNode precedent = null;
 				WizardMutableTreeNode rdWmt = new WizardMutableTreeNode(crd);
 
 				ConcreteActivity ca = getActivity(crd.getSuperConcreteActivities());
 				WizardMutableTreeNode nodeAct = null ;
-				
-				if (!mapActivity.containsKey(ca)){
-					nodeAct = new WizardMutableTreeNode(ca);
-					((DefaultMutableTreeNode) this.root).add(nodeAct);
-					mapActivity.put(ca, nodeAct);
-				}
-				else {
-					nodeAct = mapActivity.get(ca);
-				}
-				nodeAct.add(rdWmt);
-				
-				
+				while (ca != null){
+					
+					// search if the activity is already treated as a node
+					if (!mapActivity.containsKey(ca)){
+						nodeAct = new WizardMutableTreeNode(ca);
+						mapActivity.put(ca, nodeAct);
+					}
+					else {
+						nodeAct = mapActivity.get(ca);
+					}
+					if (precedent == null){
+						nodeAct.add(rdWmt);
+					}
+					else {
+						nodeAct.add(precedent);
+					}
+					ca = getActivity(ca.getSuperConcreteActivities());
+					if (ca == null && this.root.getChildCount() == 0){
+						((DefaultMutableTreeNode)this.root).add(nodeAct);
+					}
+					precedent = nodeAct ;
+				}				
 				
 				// brows all the concrete tasks
 				for(ConcreteTaskDescriptor ctd : crd.getConcreteTaskDescriptors()) {
@@ -236,6 +255,9 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 				if (object instanceof ConcreteRoleDescriptor) {
 					ConcreteRoleDescriptor crd = (ConcreteRoleDescriptor)object ;
 					this.setIcon(ImagesService.getImageIcon("images.iconRole"));
+				}
+				else if(object instanceof ConcreteIteration){
+					this.setIcon(ImagesService.getImageIcon("images.iconIteration"));
 				}
 				else if(object instanceof ConcretePhase){
 					this.setIcon(ImagesService.getImageIcon("images.iconPhase"));

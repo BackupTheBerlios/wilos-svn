@@ -25,6 +25,9 @@ import javax.swing.event.ListSelectionListener;
 import org.jdesktop.swingx.JXTaskPane;
 
 import wilos.business.services.guide.GuidanceService;
+import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.concreteiteration.ConcreteIteration;
+import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
@@ -192,6 +195,21 @@ public class HTMLViewer extends JFrame {
 			o = getConcreteTaskDescriptorAndDisplay(t);
 			Element tmp = (Element)o;
 			displayElement(tmp);
+			ok = true ;
+		}
+		else if (o instanceof ConcreteIteration){
+			ConcreteIteration r = (ConcreteIteration)o;
+			displayElement(r.getIteration());
+			ok = true ;
+		}
+		else if (o instanceof ConcretePhase){
+			ConcretePhase r = (ConcretePhase)o;
+			displayElement(r.getPhase());
+			ok = true ;
+		}
+		else if (o instanceof ConcreteActivity){
+			ConcreteActivity r = (ConcreteActivity)o;
+			displayElement(r.getActivity());
 			ok = true ;
 		}
 		else if (o instanceof ConcreteRoleDescriptor){

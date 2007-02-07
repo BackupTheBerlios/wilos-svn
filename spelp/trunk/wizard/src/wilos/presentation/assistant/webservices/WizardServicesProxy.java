@@ -10,12 +10,14 @@ import javax.xml.namespace.QName;
 import wilos.business.webservices.WizardServices;
 import wilos.business.webservices.WizardServicesService;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.guide.Guidance;
+import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.Step;
@@ -138,11 +140,25 @@ public class WizardServicesProxy {
             
             //  ajout d'activity
             
+            ConcreteIteration aConcreteIteration = new ConcreteIteration () ;
+            Iteration anIteration = new Iteration () ;
+            
+            anIteration.setPresentationName("LE PROJET");
+            anIteration.setDescription("Le projet test");
+            aConcreteIteration.setConcreteName(anIteration.getPresentationName());
+            aConcreteIteration.setIteration(anIteration);
+            
             ConcreteActivity aConcreteActivity = new ConcreteActivity();
             Activity anActivity = new Activity () ;
             
             ConcretePhase aConcretePhase = new ConcretePhase();
             Phase aPhase = new Phase();
+            
+            anActivity.addSuperActivity(anIteration);
+            aPhase.addSuperActivity(anIteration);
+            
+            aConcreteActivity.addSuperConcreteActivity(aConcreteIteration);
+            aConcretePhase.addSuperConcreteActivity(aConcreteIteration);
             
             anActivity.setPresentationName("Activite de developpement");
             anActivity.setDescription("Tout le processus de developpement");
