@@ -143,10 +143,27 @@ public class WizardServicesProxy {
             ConcreteIteration aConcreteIteration = new ConcreteIteration () ;
             Iteration anIteration = new Iteration () ;
             
-            anIteration.setPresentationName("LE PROJET");
+            anIteration.setPresentationName("Iteration 1");
             anIteration.setDescription("Le projet test");
             aConcreteIteration.setConcreteName(anIteration.getPresentationName());
             aConcreteIteration.setIteration(anIteration);
+            
+            ConcreteIteration aConcreteIteration2 = new ConcreteIteration () ;
+            Iteration anIteration2 = new Iteration () ;
+            
+            anIteration2.setPresentationName("Iteraton 2");
+            anIteration2.setDescription("Une iteration temporaire");
+            aConcreteIteration2.setConcreteName(anIteration2.getPresentationName());
+            aConcreteIteration2.setIteration(anIteration2);
+            
+            ConcreteRoleDescriptor crd2 = new ConcreteRoleDescriptor  () ;
+            RoleDescriptor rd2 = new RoleDescriptor () ;
+            rd2.setPresentationName("Visiteur");
+            rd2.setDescription("Le gars qui visite lors de l'it 2");
+            crd2.setConcreteName(rd2.getPresentationName());
+            crd2.setRoleDescriptor(rd2);
+            crd2.addSuperConcreteActivity(aConcreteIteration2);
+            p.addConcreteRoleDescriptor(crd2);
             
             ConcreteActivity aConcreteActivity = new ConcreteActivity();
             Activity anActivity = new Activity () ;

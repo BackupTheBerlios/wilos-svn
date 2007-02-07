@@ -178,7 +178,7 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 						nodeAct.add(precedent);
 					}
 					ca = getActivity(ca.getSuperConcreteActivities());
-					if (ca == null && this.root.getChildCount() == 0){
+					if (ca == null ){
 						((DefaultMutableTreeNode)this.root).add(nodeAct);
 					}
 					precedent = nodeAct ;
