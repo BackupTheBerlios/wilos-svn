@@ -90,7 +90,8 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	}
 	
 	/**
-	 * Copy the _workBreakdownElement into this.
+	 * Copies the _workBreakdownElement into this.
+	 * @param _workBreakdownElement the WorkBreakdownElement to copy
 	 */
 	protected void copy(final WorkBreakdownElement _workBreakdownElement) {
 		super.copy(_workBreakdownElement);
@@ -104,7 +105,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	}
 
 	/**
-	 * Add a successor to the successors collection of a wbde.
+	 * Adds a successor to the successors collection of a wbde.
 	 *
 	 * @param _workBreakdownElements
 	 *            The successor to add.
@@ -115,7 +116,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	}
 
 	/**
-	 * Remove from a wbde one of these successor.
+	 * Removes from a wbde one of the successor of this wbde.
 	 *
 	 * @param _workBreakdownElements
 	 *            The successor to remove.
@@ -126,7 +127,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	}
 
 	/**
-	 * Add a successor collection to the successors collection of a wbde.
+	 * Adds a successor collection to the successors collection of a wbde.
 	 *
 	 * @param _workBreakdownElements
 	 *            The set of successors to add.
@@ -139,7 +140,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	}
 
 	/**
-	 * Remove from an wbde all its successors.
+	 * Removes all the successors from a wbde.
 	 *
 	 */
 	public void removeAllSuccessors() {
@@ -149,7 +150,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	}
 
 	/**
-	 * Add a predecessor to the predecessors collection of a wbde.
+	 * Adds a predecessor to the predecessors collection of a wbde.
 	 *
 	 * @param _workBreakdownElements
 	 *            The predecessor to add.
@@ -160,7 +161,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	}
 
 	/**
-	 * Remove from a wbde one of these predecessor
+	 * Removes from a wbde one of its predecessor
 	 *
 	 * @param _workBreakdownElements
 	 *            The predecessor to remove.
@@ -171,7 +172,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	}
 
 	/**
-	 * Add a predecessor collection to the predecessors collection of a wbde.
+	 * Adds a predecessor collection to the predecessors collection of a wbde.
 	 *
 	 * @param _workBreakdownElements
 	 *            The set of predecessors to add.
@@ -184,7 +185,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	}
 
 	/**
-	 * Remove from an wbde all its predecessors.
+	 * Removes all the predecessors from a wbde.
 	 *
 	 */
 	public void removeAllPredecessors() {
@@ -250,26 +251,56 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 		this.isRepeatable = _isRepeatable;
 	}
 
+	/**
+	 * Getter of the predecessors
+	 *  
+	 * @return Set of predecessors
+	 */
 	public Set<WorkBreakdownElement> getPredecessors() {
 		return predecessors;
 	}
-
+	
+	/**
+	 * Setter of the Set of predecessors
+	 * 
+	 * @param predecessors Set of predecessors.
+	 */
 	public void setPredecessors(Set<WorkBreakdownElement> predecessors) {
 		this.predecessors = predecessors;
 	}
 
+	/**
+	 * Getter of the successors
+	 * 
+	 * @return Set of successors
+	 */
 	public Set<WorkBreakdownElement> getSuccessors() {
 		return successors;
 	}
 
+	/**
+	 * Setter of the Set of successors
+	 * 
+	 * @param successors Set of successors
+	 */
 	public void setSuccessors(Set<WorkBreakdownElement> successors) {
 		this.successors = successors;
 	}
 
+	/**
+	 * Getter of the Set of concreteWorkBreakdownElements
+	 * 
+	 * @return Set of concreteWorkBreakdownElements
+	 */
 	public Set<ConcreteWorkBreakdownElement> getConcreteWorkBreakdownElements() {
 		return this.concreteWorkBreakdownElements;
 	}
 
+	/**
+	 * Setter of the Set of concreteWorkBreakdownElements
+	 * 
+	 * @param _concreteWorkBreakdownElements Set of concreteWorkBreakdownElements
+	 */
 	public void setConcreteWorkBreakdownElements(
 			Set<ConcreteWorkBreakdownElement> _concreteWorkBreakdownElements) {
 		this.concreteWorkBreakdownElements = _concreteWorkBreakdownElements;
@@ -280,18 +311,33 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	 *
 	 */
 
+	/**
+	 * Adds a concreteWorkBreakdownElements to the Set of _concreteWorkBreakdownElement
+	 * 
+	 * @param _concreteWorkBreakdownElement Element to add
+	 */
 	public void addConcreteWorkBreakdownElement(
 			ConcreteWorkBreakdownElement _concreteWorkBreakdownElement) {
 		this.concreteWorkBreakdownElements.add(_concreteWorkBreakdownElement);
 		_concreteWorkBreakdownElement.addWorkBreakdownElement(this);
 	}
 
+	/**
+	 * Removes a ConcreteWorkBreakdownElement from the Set
+	 * 
+	 * @param _concreteWorkBreakdownElement Element to remove
+	 */
 	public void removeConcreteWorkBreakdownElement(
 			ConcreteWorkBreakdownElement _concreteWorkBreakdownElement) {
 		_concreteWorkBreakdownElement.removeWorkBreakdownElement(this);
 		this.concreteWorkBreakdownElements.remove(_concreteWorkBreakdownElement);
 	}
 
+	/**
+	 * Adds a Set of ConcreteWorkBreakdownElement
+	 * 
+	 * @param _concreteWorkBreakdownElements Set of elements to add
+	 */
 	public void addAllConcreteWorkBreakdownElements(
 			Set<ConcreteWorkBreakdownElement> _concreteWorkBreakdownElements) {
 		for (ConcreteWorkBreakdownElement cwbde : _concreteWorkBreakdownElements) {
@@ -299,6 +345,9 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 		}
 	}
 
+	/**
+	 * Removes all the ConcreteWorkBreakdownElement
+	 */
 	public void removeAllConcreteWorkBreakdownElements() {
 		for (ConcreteWorkBreakdownElement cwbde : this.getConcreteWorkBreakdownElements())
 			cwbde.setWorkBreakdownElement(null);
