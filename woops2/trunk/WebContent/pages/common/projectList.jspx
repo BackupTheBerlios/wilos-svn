@@ -1,0 +1,37 @@
+<ice:form id="projects_form">
+	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
+		<ice:panelTabSet id="panelTabSet_projects" styleClass="componentPanelTabSetLayout">
+			<ice:panelTab id="panelTab_projects" label="Liste des projets" imageDir="images">
+				<ice:panelGroup id="projectsPanelGroup" styleClass="contentIncludePanelGroup">
+					<ice:dataTable value="#{ProjectBean.projectListWithoutProcess}" border="1" var="project">
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="Nom"/>
+						    </f:facet>
+						    <ice:outputText value="#{project.name}" />
+						</ice:column>	
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="Description"/>
+						    </f:facet>
+						    <ice:outputText value="#{project.description}" />
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="Creation Date"/>
+						    </f:facet>
+						    <ice:outputText value="#{project.creationDate}" />
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="Launching Date"/>
+						    </f:facet>
+						    <ice:outputText value="#{project.launchingDate}" />
+						</ice:column>			
+					</ice:dataTable>
+					<!--  <ice:commandButton value="saveRoles" action="#{RoleBean.saveParticipantRoles}"/>-->
+				</ice:panelGroup>
+			</ice:panelTab>
+		</ice:panelTabSet>
+	</ice:panelGrid>
+</ice:form>

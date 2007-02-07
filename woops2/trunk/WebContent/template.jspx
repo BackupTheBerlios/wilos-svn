@@ -14,17 +14,16 @@
         <title><ice:outputText value="" /></title>
 
         <link href="css/ice.css" rel="stylesheet" type="text/css" />
-    	<link href="css/wilos.css" rel="stylesheet" type="text/css" />
+        <link href="css/wilos.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
-    
+
     <ice:panelBorder layout="hide east" border="0" cellpadding="0"
         cellspacing="0" styleClass="mainBorderLayout" >
 
         <f:facet name="north">
-            <ice:panelGroup>
+            <ice:panelGroup>  
 					<img src="images/logo_wilos.png"/>
-
             <div id="roles_actions">
             	<jsp:directive.include file="./pages/template/rolesActions.jspx" />
             </div>
@@ -49,7 +48,7 @@
                     <!-- Connection Status -->
                     <ice:outputConnectionStatus style="iceOutConStat"/>
                 </ice:panelGrid>
-				
+                
 				<ice:messages styleClass="pageHeader"/>
                     <ice:panelStack id="panelStack"
                         styleClass="componentContentPanelStack"
@@ -60,7 +59,7 @@
                             <jsp:directive.include file="./pages/common/wilos.jspx" />
                         </f:subview>
                     </ice:panelGroup>
-					
+                    
                     <ice:panelGroup id="participant_main" styleClass="contentIncludePanelGroup" >
                         <f:subview id="welcome_view">
                             <jsp:directive.include file="./pages/participant/participantMain.jspx" />
@@ -72,32 +71,32 @@
                             <jsp:directive.include file="./pages/common/participantSubscribe.jspx" />
                         </f:subview>
                     </ice:panelGroup>
-
+                    
                     <ice:panelGroup id="admin_main" styleClass="contentIncludePanelGroup" >
                         <f:subview id="admin_view">
                             <jsp:directive.include file="./pages/admin/adminMain.jspx" />
                         </f:subview>
                     </ice:panelGroup>
-
-                    <ice:panelGroup id="welcomeProjectDirector" styleClass="contentIncludePanelGroup" >
+                    
+                    <ice:panelGroup id="project_director_main" styleClass="contentIncludePanelGroup" >
                         <f:subview id="projectDirector_view">
-                            <jsp:directive.include file="./pages/projectDirector/welcomeProjectDirector.jspx" />
+                            <jsp:directive.include file="./pages/projectDirector/projectDirectorMain.jspx" />
                         </f:subview>
                     </ice:panelGroup>
-
-                    <ice:panelGroup id="welcomeProcessManager" styleClass="contentIncludePanelGroup" >
+                    
+                    <ice:panelGroup id="process_manager_main" styleClass="contentIncludePanelGroup" >
                         <f:subview id="processManager_view">
-                            <jsp:directive.include file="./pages/processManager/welcomeProcessManager.jspx" />
+                            <jsp:directive.include file="./pages/processManager/processManagerMain.jspx" />
                         </f:subview>
                     </ice:panelGroup>
-
+                    
                       <ice:panelGroup id="ConcreteTaskViewer"
 						styleClass="contentIncludePanelGroup">
 						<f:subview id="ConcreteTaskViewer_view">
 							<jsp:directive.include file="./pages/common/ConcreteTaskViewer.jspx" />
 						</f:subview>
 					</ice:panelGroup>
-
+					
 					 <ice:panelGroup id="ConcretePhaseViewer"
 						styleClass="contentIncludePanelGroup">
 						<f:subview id="ConcretePhaseViewer_view">
@@ -131,7 +130,7 @@
             </ice:panelGroup>
         </f:facet>
     </ice:panelBorder>
-	
+    
 	<script language="JavaScript">
     <![CDATA[
     var preloaded = new Array();
@@ -147,11 +146,11 @@
             'images/connect_disconnected.gif',
             'images/connect_idle.gif'
     );
-
+    
     function submitOnEnter(evt){
 			if( evt.keyCode == 13 ){
-				var inputs = document.getElementsByTagName('input');
-				var submit;
+				var inputs = document.getElementsByTagName('input');	
+				var submit;			
 				for( var i=0;i<=inputs.length;i+=1){
 					if( inputs[i].id.indexOf('submit') > -1 ){
 						submit = inputs[i];
@@ -164,7 +163,7 @@
 				return true;
 		};
     ]]>
-
+    
 </script>
     </body>
     </html>
