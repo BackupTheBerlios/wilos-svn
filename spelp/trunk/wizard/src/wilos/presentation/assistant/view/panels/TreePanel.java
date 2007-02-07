@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.Vector;
 
@@ -126,16 +127,24 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 			initTree();
 		}
 		
+		private ConcreteActivity getActivity (Set<ConcreteActivity> s){
+			return s.iterator().next();
+		}
+		
 		private void initTree() {
 			TreePanel.this.tree.removeAll();
+			HashMap<ConcreteActivity, WizardMutableTreeNode> mapActivity = new HashMap<ConcreteActivity, WizardMutableTreeNode>();
 			
 			this.root = new DefaultMutableTreeNode(participant.getName());
-
+			
 			Set<ConcreteRoleDescriptor> roles = participant.getConcreteRoleDescriptors();
 			
 			// browse all the concrete roles
 			for (ConcreteRoleDescriptor crd : roles) {
 				WizardMutableTreeNode rdWmt = new WizardMutableTreeNode(crd);
+				
+				ConcreteActivity ca = getActivity(crd.getSuperConcreteActivities());
+				
 				
 				
 				((DefaultMutableTreeNode) this.root).add(rdWmt);
