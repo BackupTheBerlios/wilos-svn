@@ -525,7 +525,7 @@ public class XMLParser {
 				// if the guideline doesn't exist
 				if (GuideTobereturn != null){
 					 //set the guideline in the taskDefinition
-					// TODO:_taskDefinition.addGuidance(GuideTobereturn);
+					_taskDefinition.addGuidance(GuideTobereturn);
 				}
 				
 			}
