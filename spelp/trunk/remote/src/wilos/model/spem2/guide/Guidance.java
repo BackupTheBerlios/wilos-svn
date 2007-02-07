@@ -167,6 +167,7 @@ public class Guidance extends Element {
 	 */
 	protected void copy(final Guidance _guidance) {
 		super.copy(_guidance) ;
+		this.setGuideType(_guidance.getGuideType());
 		this.setTaskdefinition(_guidance.getTaskdefinition()) ;
 		this.setActivity(_guidance.getActivity());
 		this.setRoledefinition(_guidance.getRoledefinition());
@@ -187,7 +188,7 @@ public class Guidance extends Element {
 
 		Guidance guidance = (Guidance) obj ;
 		return new EqualsBuilder().appendSuper(super.equals(guidance)).append(this.taskdefinition, guidance.taskdefinition).append(this.roledefinition,
-				guidance.roledefinition).append(this.activity, guidance.activity).isEquals() ;
+				guidance.roledefinition).append(this.activity, guidance.activity).append(this.guideType, guidance.guideType).isEquals() ;
 	}
 
 	/*
@@ -196,7 +197,7 @@ public class Guidance extends Element {
 	 * @see woops2.model.breakdownelement.BreakdownElement#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.taskdefinition).append(this.roledefinition).append(this.activity).toHashCode();
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.taskdefinition).append(this.roledefinition).append(this.activity).append(this.guideType).toHashCode();
 	}
 
 	/**
