@@ -364,7 +364,6 @@
 	<bean id="ProcessService"
 		class="wilos.business.services.spem2.process.ProcessService">
 		<property name="processDao" ref="ProcessDao" />
-		
 		<property name="activityDao" ref="ActivityDao" />
 		<property name="activityService" ref="ActivityService" />
 		<property name="breakdownElementDao" ref="BreakdownElementDao" />
@@ -380,12 +379,11 @@
 		<property name="taskDefinitionDao" ref="TaskDefinitionDao" />
 		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
 		<property name="taskDescriptorService" ref="TaskDescriptorService" />
-		
 		<property name="elementDao" ref="ElementDao" />
 		<property name="projectDao" ref="ProjectDao" />
 		<property name="stepDao" ref="StepDao" />
 		<property name="guidanceDao" ref="GuidanceDao" />
-		
+
 	</bean>
 
 	<bean id="BreakdownElementService"
