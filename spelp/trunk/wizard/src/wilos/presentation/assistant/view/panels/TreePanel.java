@@ -134,6 +134,7 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 			initTree();
 		}
 		
+		// TODO : actuellement prise en compte d'une super activity a voir pour plusieurs
 		private ConcreteActivity getActivity (Set<ConcreteActivity> s){
 			ConcreteActivity ca = null ;
 			try {
