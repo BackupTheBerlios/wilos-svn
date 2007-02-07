@@ -21,6 +21,7 @@ import javax.swing.tree.TreePath;
 import org.jdesktop.swingx.JXTree;
 
 import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
@@ -108,6 +109,12 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 		public String toString() {
 			if (userObject instanceof ConcreteRoleDescriptor)
 				return ((ConcreteRoleDescriptor) userObject).getRoleDescriptor().getPresentationName();
+			else if (userObject instanceof ConcreteIteration)
+				return ((ConcreteIteration) userObject).getIteration().getPresentationName();
+			else if (userObject instanceof ConcretePhase)
+				return ((ConcretePhase) userObject).getPhase().getPresentationName();
+			else if (userObject instanceof ConcreteActivity)
+				return ((ConcreteActivity) userObject).getActivity().getPresentationName();
 			else if (userObject instanceof ConcreteTaskDescriptor) 
 				return ((ConcreteTaskDescriptor) userObject).getTaskDescriptor().getPresentationName();
 			else if (userObject instanceof Element)
@@ -142,12 +149,21 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 			// browse all the concrete roles
 			for (ConcreteRoleDescriptor crd : roles) {
 				WizardMutableTreeNode rdWmt = new WizardMutableTreeNode(crd);
-				
+
 				ConcreteActivity ca = getActivity(crd.getSuperConcreteActivities());
+				WizardMutableTreeNode nodeAct = null ;
+				
+				if (!mapActivity.containsKey(ca)){
+					nodeAct = new WizardMutableTreeNode(ca);
+					((DefaultMutableTreeNode) this.root).add(nodeAct);
+					mapActivity.put(ca, nodeAct);
+				}
+				else {
+					nodeAct = mapActivity.get(ca);
+				}
+				nodeAct.add(rdWmt);
 				
 				
-				
-				((DefaultMutableTreeNode) this.root).add(rdWmt);
 				
 				// brows all the concrete tasks
 				for(ConcreteTaskDescriptor ctd : crd.getConcreteTaskDescriptors()) {
