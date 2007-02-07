@@ -7,7 +7,11 @@ import wilos.hibernate.misc.concreteiteration.ConcreteIterationDao;
 import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.iteration.Iteration;
-
+/**
+ * IterationManager is a transactional class, that manages operations about Iteration
+ * 
+ *
+ */
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class IterationService {
 
@@ -28,6 +32,8 @@ public class IterationService {
 	}
 
 	/**
+	 * Getter of concreteIterationDao
+	 * 
 	 * @return the concreteIterationDao
 	 */
 	public ConcreteIterationDao getConcreteIterationDao() {
@@ -35,6 +41,8 @@ public class IterationService {
 	}
 
 	/**
+	 * Setter of concreteIterationDao
+	 * 
 	 * @param concreteIterationDao the concreteIterationDao to set
 	 */
 	public void setConcreteIterationDao(ConcreteIterationDao concreteIterationDao) {
