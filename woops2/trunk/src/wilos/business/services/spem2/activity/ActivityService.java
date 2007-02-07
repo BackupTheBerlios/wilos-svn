@@ -25,7 +25,12 @@ public class ActivityService {
 	private ActivityDao activityDao ;
 
 	private ConcreteActivityDao concreteActivityDao;
-
+	
+	/**
+	 * Instanciates an acticity for a project
+	 * @param _project project for which the activity shall be instanciated
+	 * @param _phase activity to instanciates
+	 */
 	public void activityInstanciation (Project _project, Activity _activity) {
 
 		ConcreteActivity cact = new ConcreteActivity();
