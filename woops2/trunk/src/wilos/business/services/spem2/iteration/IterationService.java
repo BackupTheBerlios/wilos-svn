@@ -17,6 +17,11 @@ public class IterationService {
 
 	private ConcreteIterationDao concreteIterationDao;
 
+	/**
+	 * Instanciates an iteration for a project
+	 * @param _project project for which the iteration shall be instanciated
+	 * @param _phase iteration to instanciates
+	 */
 	public void iterationInstanciation (Project _project, Iteration _iteration) {
 
 		ConcreteIteration ci = new ConcreteIteration();
