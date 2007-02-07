@@ -91,7 +91,7 @@ public class ConcreteTaskDescriptorDao extends HibernateDaoSupport {
 	public List<ConcreteTaskDescriptor> getAllConcreteTaskDescriptorsForProject(
 			String _projectId) {
 		List ctds = this.getHibernateTemplate().find(
-				"from ConcreteTaskDescriptor ctd where ctd.project_id=?",
+				"from ConcreteTaskDescriptor ctd where ctd.project.id=?",
 				_projectId);
 		return ctds;
 	}

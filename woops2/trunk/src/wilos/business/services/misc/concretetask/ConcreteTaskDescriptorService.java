@@ -28,9 +28,9 @@ import wilos.utils.Constantes.State;
 public class ConcreteTaskDescriptorService {
 
 	private ConcreteTaskDescriptorDao concreteTaskDescriptorDao;
-	
+
 	private TaskDescriptorService taskDescriptorService;
-	
+
 	private RoleDescriptorService roleDescriptorService;
 
 	/**
@@ -41,11 +41,14 @@ public class ConcreteTaskDescriptorService {
 	@Transactional(readOnly = true)
 	public List<ConcreteTaskDescriptor> getAllConcreteTaskDescriptorsForProject(
 			String _projectId) {
-		return this.getConcreteTaskDescriptorDao().getAllConcreteTaskDescriptorsForProject(_projectId);
+		return this.getConcreteTaskDescriptorDao()
+				.getAllConcreteTaskDescriptorsForProject(_projectId);
 	}
 
-	public ConcreteTaskDescriptor getConcreteTaskDescriptor(String _concreteTaskDescriptorId) {
-		return this.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(_concreteTaskDescriptorId);
+	public ConcreteTaskDescriptor getConcreteTaskDescriptor(
+			String _concreteTaskDescriptorId) {
+		return this.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(
+				_concreteTaskDescriptorId);
 	}
 
 	/**
@@ -79,28 +82,30 @@ public class ConcreteTaskDescriptorService {
 
 	public void affectedConcreteTaskDescriptor(
 			ConcreteTaskDescriptor _concreteTaskDescriptor, Participant _user) {
-ConcreteRoleDescriptor concreteRoleDescriptor = null;
-		
-		TaskDescriptor tmp = this.taskDescriptorService.getTaskDescriptorById(_concreteTaskDescriptor.getTaskDescriptor().getId());
-		RoleDescriptor tmpRoleDescriptor = this.roleDescriptorService.getRoleDescriptorById(tmp.getMainRole().getId());
+		ConcreteRoleDescriptor concreteRoleDescriptor = null;
 
-		//recuperation des deux listes.
-		Set<ConcreteRoleDescriptor> listeRd = tmpRoleDescriptor.getConcreteRoleDescriptors();
+		TaskDescriptor tmp = this.taskDescriptorService
+				.getTaskDescriptorById(_concreteTaskDescriptor
+						.getTaskDescriptor().getId());
+		RoleDescriptor tmpRoleDescriptor = this.roleDescriptorService
+				.getRoleDescriptorById(tmp.getMainRole().getId());
+
+		// recuperation des deux listes.
+		Set<ConcreteRoleDescriptor> listeRd = tmpRoleDescriptor
+				.getConcreteRoleDescriptors();
 		Set<ConcreteRoleDescriptor> p = _user.getConcreteRoleDescriptors();
-		
-		for(ConcreteRoleDescriptor tmpListeRd : listeRd)
-		{
-			for(ConcreteRoleDescriptor tmpListeP : p)
-			{
-				if(tmpListeP.equals(tmpListeRd))
-				{
+
+		for (ConcreteRoleDescriptor tmpListeRd : listeRd) {
+			for (ConcreteRoleDescriptor tmpListeP : p) {
+				if (tmpListeP.equals(tmpListeRd)) {
 					concreteRoleDescriptor = tmpListeRd;
 				}
 			}
 		}
-		
-		_concreteTaskDescriptor.addConcreteRoleDescriptor(concreteRoleDescriptor);
-	
+
+		_concreteTaskDescriptor
+				.addConcreteRoleDescriptor(concreteRoleDescriptor);
+
 	}
 
 	/**
@@ -131,13 +136,12 @@ ConcreteRoleDescriptor concreteRoleDescriptor = null;
 			ConcreteTaskDescriptor _concreteTaskDescriptor) {
 		// update changings.
 		_concreteTaskDescriptor.setState(State.FINISHED);
-		/*
-		 * try {
-		 * _concreteTaskDescriptor.setRealFinishingDate(Constantes.DATE_FORMAT
-		 * .parse(Calendar.getInstance().getTime().toString())); } catch
-		 * (ParseException e) {
-		 * e.printStackTrace(); }
-		 */
+		try {
+			_concreteTaskDescriptor.setRealFinishingDate(Constantes.DATE_FORMAT
+					.parse(Calendar.getInstance().getTime().toString()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		// save changings.
 		this.concreteTaskDescriptorDao
 				.saveOrUpdateConcreteTaskDescriptor(_concreteTaskDescriptor);
@@ -217,7 +221,8 @@ ConcreteRoleDescriptor concreteRoleDescriptor = null;
 		return roleDescriptorService;
 	}
 
-	public void setRoleDescriptorService(RoleDescriptorService roleDescriptorService) {
+	public void setRoleDescriptorService(
+			RoleDescriptorService roleDescriptorService) {
 		this.roleDescriptorService = roleDescriptorService;
 	}
 
@@ -225,7 +230,8 @@ ConcreteRoleDescriptor concreteRoleDescriptor = null;
 		return taskDescriptorService;
 	}
 
-	public void setTaskDescriptorService(TaskDescriptorService taskDescriptorService) {
+	public void setTaskDescriptorService(
+			TaskDescriptorService taskDescriptorService) {
 		this.taskDescriptorService = taskDescriptorService;
 	}
 }
