@@ -10,7 +10,7 @@ import wilos.model.misc.project.Project;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 
 /**
- *
+ * BreakdownElement is a transactional class that manages operations about breakdownelement, 
  * @author Soosuske
  *
  */
@@ -18,6 +18,12 @@ import wilos.model.spem2.breakdownelement.BreakdownElement;
 public class BreakdownElementService {
 
 	private ConcreteBreakdownElementDao concreteBreakdownElementDao ;
+	
+	/**
+	 * Instanciates a BreakdownElement
+	 * @param _project project for which the BreakdownElement shall be instanciated
+	 * @param _bde BreakdownElement to instanciate
+	 */
 
 	public void breakdownElementInstanciation (Project _project, BreakdownElement _bde) {
 
@@ -34,6 +40,8 @@ public class BreakdownElementService {
 	}
 
 	/**
+	 * Getter of concreteBreakdownElementDao
+	 * 
 	 * @return the concreteBreakdownElementDao
 	 */
 	public ConcreteBreakdownElementDao getConcreteBreakdownElementDao() {
@@ -41,6 +49,8 @@ public class BreakdownElementService {
 	}
 
 	/**
+	 * Setter of concreteBreakdownElementDao 
+	 * 
 	 * @param concreteBreakdownElementDao the concreteBreakdownElementDao to set
 	 */
 	public void setConcreteBreakdownElementDao(
