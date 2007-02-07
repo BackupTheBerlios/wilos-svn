@@ -18,6 +18,10 @@ public class ConcreteActivityTO extends ConcreteActivity implements Serializable
     	this.setId(_myConcreteActivity.getId());
     	this.setConcreteName(_myConcreteActivity.getConcreteName());
     	this.setActivity(new ActivityTO(_myConcreteActivity.getActivity()));
+    	
+        for (ConcreteActivity cta : _myConcreteActivity.getSuperConcreteActivities()) {
+        	this.addSuperConcreteActivity(new ConcreteActivityTO(cta));
+        }
     }
 
 }
