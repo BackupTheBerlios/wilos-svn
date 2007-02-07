@@ -71,22 +71,15 @@ public class HTMLViewer extends JFrame {
 		if (p!=null) this.setLocation(p);
 		
 		JPanel elementPanel = new JPanel();
-		//northPanel.add(new JLabel(Bundle.getText("htmlViewer.element")));
-		elementPanel.setBorder(getCommonBorder(Bundle.getText("htmlViewer.element")));
+		//elementPanel.setBorder(getCommonBorder(Bundle.getText("htmlViewer.element")));
+		elementPanel.setBorder(getCommonBorder(""));
 		this.myElementLabel = new JLabel() ;
 		elementPanel.add(this.myElementLabel);
 		
-		//************************************************************
-		elementPanel.setPreferredSize(new Dimension(400,40));
-		
 		this.historyStack = new Stack<Element>() ;
 		
-		//this.prevButton = new JButton("<");
-		//this.nextButton = new JButton(">");
-		this.prevButton = new JButton();
-		this.nextButton = new JButton();
-		this.prevButton.setIcon(ImagesService.getImageIcon("images.iconLeft"));
-		this.nextButton.setIcon(ImagesService.getImageIcon("images.iconRight"));
+		this.prevButton = new JButton(ImagesService.getImageIcon("images.iconLeft"));
+		this.nextButton = new JButton(ImagesService.getImageIcon("images.iconRight"));
 		this.prevButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				setPrevElement();
@@ -98,22 +91,16 @@ public class HTMLViewer extends JFrame {
 			}
 		});
 		
-		/*JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new BorderLayout (5,100));
-		buttonPanel.setLayout(new BorderLayout ());
-		buttonPanel.add(this.prevButton,BorderLayout.WEST);
-		buttonPanel.add(this.nextButton,BorderLayout.EAST);*/
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new FlowLayout ());
+		buttonPanel.add(this.prevButton);
+		buttonPanel.add(this.nextButton);
 		
 		//JPanel northPanel = new JPanel() ;
 		JToolBar northPanel = new JToolBar();
-		//northPanel.setLayout(new BorderLayout());
-		northPanel.setLayout(new FlowLayout());
-		//northPanel.setPreferredSize(new Dimension(50,50));
-		//northPanel.add(elementPanel, BorderLayout.CENTER);
+		northPanel.setLayout(new BorderLayout());
+		northPanel.add(elementPanel, BorderLayout.CENTER);
 		//northPanel.add(buttonPanel, BorderLayout.EAST);
-		northPanel.add(elementPanel);
-		northPanel.add(this.prevButton);
-		northPanel.add(this.nextButton);
 		northPanel.setFloatable(false);
 		
 		this.myEditorPane = new JEditorPane();
