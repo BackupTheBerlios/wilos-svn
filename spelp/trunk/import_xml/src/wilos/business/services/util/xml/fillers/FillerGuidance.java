@@ -11,7 +11,20 @@ public class FillerGuidance extends FillerElement{
 		String type = _aNode.getAttributes().getNamedItem("xsi:type").getTextContent();
 		type = type.substring(4,type.length());		
 		_e.setGuideType(type);
-		System.out.println(_e.getGuideType());
+		fill(type);
 	}
 
+	private void fill(String type) {
+		Guidance aGuidance = new Guidance();
+		try {
+			aGuidance = (Guidance)myElement.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+
+		aGuidance.setGuideType(type);
+		myElement = aGuidance;
+		
+	}
+	
 }

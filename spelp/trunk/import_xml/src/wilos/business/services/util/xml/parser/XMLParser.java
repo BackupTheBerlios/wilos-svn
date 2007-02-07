@@ -548,7 +548,6 @@ public class XMLParser {
 		
 		// search the nodes of the guide
 		for (int i = 0 ; i < listOfTdNodes.getLength() ; i ++){
-//			if (listOfTdNodes.item(i).getNodeName().equals(guideline)){				
 			if(guidancesTypes.contains(listOfTdNodes.item(i).getNodeName())) {
 				// recuperation des differents id des guidelines
 				idGuide = listOfTdNodes.item(i).getTextContent();				

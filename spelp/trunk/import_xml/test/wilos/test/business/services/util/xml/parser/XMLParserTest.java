@@ -691,7 +691,7 @@ public class XMLParserTest extends TestCase {
 																		
 									while (itGuide.hasNext()) {										
 										nbGuidances++;
-										System.out.println("nom du guide : "+itGuide.next().getGuideType());
+										itGuide.next();
 									}
 									assertTrue(nbGuidances == 13);
 								}
