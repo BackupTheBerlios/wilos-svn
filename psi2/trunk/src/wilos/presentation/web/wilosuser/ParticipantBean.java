@@ -66,6 +66,8 @@ public class ParticipantBean {
 	
 	private SimpleDateFormat formatter ; 
 	
+	private String participantView;
+	
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
 	/**
@@ -643,5 +645,34 @@ public class ParticipantBean {
 	public void setSelectAffectedProjectView(String _selectAffectedProjectView) {
 		this.selectAffectedProjectView = _selectAffectedProjectView ;
 	}
+	
+	
+	/**
+	 * Getter of selectAffectedProjectView.
+	 *
+	 * @return the selectAffectedProjectView.
+	 */
+	public String getParticipantView() {
+		if (this.getParticipantsList().size()==0 )
+		{
+			this.participantView  = "participantView_null";
+		}
+		else
+		{
+			this.participantView ="participantView_not_null";
+		}
+		return this.participantView;
+	}
+
+	/**
+	 * Setter of selectAffectedProjectView.
+	 *
+	 * @param _ParticipantView The selectAffectedProjectView to set.
+	 */
+	public void setParticipantView(String _participantView) {
+		this.participantView = _participantView ;
+	}
+	
+	
 
 }

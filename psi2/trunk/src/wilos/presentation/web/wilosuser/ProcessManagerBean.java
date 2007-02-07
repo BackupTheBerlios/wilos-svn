@@ -33,6 +33,8 @@ public class ProcessManagerBean {
 	
 	private List<ProcessManager> processManagerList;
 	
+	private String processManagerView;
+	
 
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
@@ -242,4 +244,32 @@ public class ProcessManagerBean {
 	public void setProcessManagerList(List<ProcessManager> _processManagerList) {
 		this.processManagerList = _processManagerList ;
 	}
+	
+	/**
+	 * Getter of processManagerView.
+	 *
+	 * @return the processManagerView.
+	 */
+	public String getProcessManagerView() {
+		if (this.getProcessManagerList().size()==0 )
+		{
+			this.processManagerView  = "processManagerView_null";
+		}
+		else
+		{
+			this.processManagerView ="processManagerView_not_null";
+		}
+		return this.processManagerView;
+	}
+
+	/**
+	 * Setter of processManagerView.
+	 *
+	 * @param _processManagerView The processManagerView to set.
+	 */
+	public void setProcessManagerView(String _processManagerView) {
+		this.processManagerView = _processManagerView ;
+	}
+	
+	
 }

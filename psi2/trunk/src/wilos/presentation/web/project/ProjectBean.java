@@ -52,6 +52,8 @@ public class ProjectBean {
 	private String selectProcessAffectation ;
 	
 	private String processName;
+	
+	private String projectListView;
 
 	/**
 	 * Constructor.
@@ -205,8 +207,8 @@ public class ProjectBean {
 	 */
 	public void setProjectList(List<Project> _projectList) {
 		this.projectList = _projectList ;
-	}
-
+	}	
+	
 	public List<Project> getProjectListWithoutProcess() {
 		this.projectListWithoutProcess = new ArrayList<Project>();
 		this.projectListWithoutProcess.addAll(this.projectService.getAllProjectsWithNoProcess());
@@ -363,4 +365,34 @@ public class ProjectBean {
 		this.processName = processName;
 	}
 
+	
+	
+	/**
+	 * Getter of projectListView
+	 *
+	 * @return the projectListView.
+	 */
+	public String getprojectListView() {
+		if (this.getProjectList().size()==0 )
+		{
+			this.projectListView  = "projectsListPanelGroup_null";
+		}
+		else
+		{
+			this.projectListView ="projectsListPanelGroup_not_null";
+		}
+		return this.projectListView;
+	}
+
+	/**
+	 * Setter of projectListView.
+	 *
+	 * @param _projectListView The projectListView to set.
+	 */
+	public void setSelectAffectedProjectView(String _projectListView) {
+		this.projectListView = _projectListView ;
+	}
+
+	
+	
 }

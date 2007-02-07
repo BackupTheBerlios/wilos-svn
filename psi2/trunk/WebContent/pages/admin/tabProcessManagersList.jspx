@@ -1,5 +1,9 @@
 <ice:panelTab id="panelTab_process_managers_list" label="Liste des process managers" imageDir="images">
-				<ice:panelGroup id="processManagerPanelGroup" styleClass="contentIncludePanelGroup">
+				
+					<ice:panelStack id="processManagerList" selectedPanel="#{ProcessManagerBean.processManagerView}">
+				
+				
+				<ice:panelGroup id="processManagerView_not_null" styleClass="contentIncludePanelGroup">
 					<ice:dataTable value="#{ProcessManagerBean.processManagerList}" columnWidths="100px,100px,100px" border="1" var="processManager">
 						<ice:column>
 							<f:facet name="header">
@@ -21,4 +25,12 @@
 						</ice:column>
 					</ice:dataTable>
 				</ice:panelGroup>
+				
+				
+				<ice:panelGroup id="processManagerView_null">
+							<h4><ice:outputText value="Admin : Pas de processManagers"/></h4>
+						</ice:panelGroup>
+				</ice:panelStack>
+				
+				
 			</ice:panelTab>	

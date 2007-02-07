@@ -33,6 +33,8 @@ public class ProjectDirectorBean {
 
 	private List<ProjectDirector> projectDirectorList;
 	
+	private String projectDirectorView;
+	
 	protected final Log logger = LogFactory.getLog(this.getClass());
 	
 
@@ -238,6 +240,34 @@ public class ProjectDirectorBean {
 	public void setProjectDirectorList(List<ProjectDirector> _projectDirectorList) {
 		this.projectDirectorList = _projectDirectorList ;
 	}	
+	
+	
+	/**
+	 * Getter of projectDirectorView.
+	 *
+	 * @return the projectDirectorView.
+	 */
+	public String getProjectDirectorView() {
+		if (this.getProjectDirectorList().size()==0 )
+		{
+			this.projectDirectorView  = "projectDirectorView_null";
+		}
+		else
+		{
+			this.projectDirectorView ="projectDirectorView_not_null";
+		}
+		return this.projectDirectorView;
+	}
+
+	/**
+	 * Setter of projectDirectorView.
+	 *
+	 * @param _projectDirectorView The projectDirectorView to set.
+	 */
+	public void setProcessManagerView(String _projectDirectorView) {
+		this.projectDirectorView = _projectDirectorView ;
+	}
+	
 	
 	
 }
