@@ -257,7 +257,7 @@ public class ProcessService {
 		_ph.addAllPredecessors(clone.getPredecessors());
 		_ph.addAllSuccessors(clone.getSuccessors());
 		_ph.addAllSuperActivities(clone.getSuperActivities());
-		_ph.addAllGuidances(guidances);
+		_ph.addAllGuidances(clone.getGuidances());
 
 		// Parse for guidances
 		this.phaseDao.saveOrUpdatePhase(_ph);
@@ -318,7 +318,7 @@ public class ProcessService {
 		_it.addAllPredecessors(clone.getPredecessors());
 		_it.addAllSuccessors(clone.getSuccessors());
 		_it.addAllSuperActivities(clone.getSuperActivities());
-		_it.addAllGuidances(guidances);
+		_it.addAllGuidances(clone.getGuidances());
 
 		this.iterationDao.saveOrUpdateIteration(_it);
 		System.out.println("###Iteration sauve");
@@ -378,7 +378,7 @@ public class ProcessService {
 		_act.addAllPredecessors(clone.getPredecessors());
 		_act.addAllSuccessors(clone.getSuccessors());
 		_act.addAllSuperActivities(clone.getSuperActivities());
-		_act.addAllGuidances(guidances);
+		_act.addAllGuidances(clone.getGuidances());
 
 		this.activityDao.saveOrUpdateActivity(_act);
 		System.out.println("###Activity sauve");
@@ -456,7 +456,7 @@ public class ProcessService {
 		}
 
 		_rdef.addAllRoleDescriptors(clone.getRoleDescriptors());
-		_rdef.addAllGuidances(guidances);
+		_rdef.addAllGuidances(clone.getGuidances());
 
 		this.roleDefinitionDao.saveOrUpdateRoleDefinition(_rdef);
 		System.out.println("###RoleDefinition sauve");
@@ -548,7 +548,7 @@ public class ProcessService {
 
 		_tdef.addAllSteps(clone.getSteps());
 		_tdef.addAllTaskDesciptors(clone.getTaskDescriptors());
-		_tdef.addAllGuidances(guidances);
+		_tdef.addAllGuidances(clone.getGuidances());
 
 		this.taskDefinitionDao.saveOrUpdateTaskDefinition(_tdef);
 		System.out.println("###TaskDefinition sauve");
@@ -562,19 +562,6 @@ public class ProcessService {
 	 */
 	private void parseStep(Step _step) {
 
-		/*Step clone = null;
-
-		try {
-			clone = _step.clone();
-		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
-		}
-
-		_step.setTaskDefinition(null);
-		this.stepDao.saveOrUpdateStep(_step);
-		System.out.println("###Step vide sauve");
-
-		_step.setTaskDefinition(clone.getTaskDefinition());*/
 		this.stepDao.saveOrUpdateStep(_step);
 		System.out.println("###Step sauve");
 	}
@@ -600,13 +587,14 @@ public class ProcessService {
 		_guidance.setRoledefinition(null);
 
 		this.guidanceDao.saveOrUpdateGuidance(_guidance);
-		System.out.println("###Guidance sauve");
+		System.out.println("###Guidance vide sauve");
 
 		/*_guidance.setActivity(clone.getActivity());
 		_guidance.setTaskdefinition(clone.getTaskdefinition());
 		_guidance.setRoledefinition(clone.getRoledefinition());
 
-		this.guidanceDao.saveOrUpdateGuidance(_guidance);*/
+		this.guidanceDao.saveOrUpdateGuidance(_guidance);
+		System.out.println("###Guidance sauve");*/
 	}
 
 	/**
