@@ -272,14 +272,17 @@ public class WizardServicesProxy {
             Guidance g1 = new Guidance();
             g1.setName("guide 1");
             g1.setDescription("description du guide 1");
+            g1.setGuideType(Guidance.checklist);
             
             Guidance g2 = new Guidance();
             g2.setName("guide 2");
             g2.setDescription("description du guide 2");
+            g2.setGuideType(Guidance.concept);
             
             Guidance g3 = new Guidance();
             g3.setName("guide 3");
             g3.setDescription("description du guide 3");
+            g3.setGuideType(Guidance.guideline);
             
             Set<Guidance> sgl = new HashSet<Guidance>();
             sgl.add(g1);

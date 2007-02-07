@@ -274,5 +274,4 @@ public class WizardMainFrame extends JFrame {
 	public void setParticipant(Participant participant) {
 		jTree.setParticipant(participant);
 	}
-
 }  //  @jve:decl-index=0:visual-constraint="10,10"

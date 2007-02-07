@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
@@ -295,6 +297,7 @@ public class HTMLViewer extends JFrame {
 		manageArrows();
 	}
 	
+
 	/**
 	 * 
 	 * @return l'instance HTMLViewer
@@ -304,7 +307,10 @@ public class HTMLViewer extends JFrame {
 			HTMLViewer.instance = new HTMLViewer(p);
 		}
 		else if (p != null) {
-			HTMLViewer.instance.setLocation(p);
+			Point pH = HTMLViewer.instance.getLocation();
+			if(pH.distance(p) < 75) {
+				HTMLViewer.instance.setLocation(p);
+			}
 		}
 		
 		return HTMLViewer.instance;
