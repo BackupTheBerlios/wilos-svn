@@ -146,11 +146,7 @@ public class WizardServicesProxy {
             aTmpStep = new Step();
             aTmpConcrete = new ConcreteTaskDescriptor();
             
-            
-            
-            
-            
-            // concreteTask
+             // concreteTask
             
             aTmpConcrete.setConcreteName("Coder le programme Partie I");
             aTmpConcrete.setAccomplishedTime(42);
@@ -187,7 +183,7 @@ public class WizardServicesProxy {
 
             // Concrete Role
             
-            aTmpConcreteRole.setConcreteName(aTmpRole.getName());
+            aTmpConcreteRole.setConcreteName(aTmpRole.getPresentationName());
             aTmpConcreteRole.setRoleDescriptor(aTmpRole);
             
             aTmpTaskDef.addStep(aTmpStep);
@@ -372,22 +368,69 @@ public class WizardServicesProxy {
             aTmpRole = new RoleDescriptor();
             aTmpConcreteRole = new ConcreteRoleDescriptor () ;
             aTmpConcreteRole.addRoleDescriptor(aTmpRole);
-            p.addConcreteRoleDescriptor(aTmpConcreteRole);
+            
             aTmpTask = new TaskDescriptor();
+            aTmpConcrete = new ConcreteTaskDescriptor();
+            aTmpConcrete.setState(Constantes.State.READY);
             aTmpRole.setPresentationName("Conceptualisateur");
+            aTmpConcreteRole.setConcreteName(aTmpRole.getPresentationName());
+            
             aTmpTask = new TaskDescriptor();
+            aTmpConcrete = new ConcreteTaskDescriptor();
+            aTmpConcrete.setState(Constantes.State.READY);
             aTmpTask.setPresentationName("Conceptualiser les concepts du programme");
             aTmpRole.addPrimaryTask(aTmpTask);
-            aTmpTask.addConcreteTaskDescriptor(aTmpConcrete);
+            aTmpConcrete.setTaskDescriptor(aTmpTask);
+            aTmpConcreteRole.addConcreteTaskDescriptor(aTmpConcrete);
+            
             aTmpTask = new TaskDescriptor();
+            aTmpConcrete = new ConcreteTaskDescriptor();
+            aTmpConcrete.setState(Constantes.State.READY);
             aTmpTask.setPresentationName("Rever du programme");
             aTmpRole.addPrimaryTask(aTmpTask);
-            aTmpTask.addConcreteTaskDescriptor(aTmpConcrete);
+            aTmpConcrete.setTaskDescriptor(aTmpTask);
+            aTmpConcreteRole.addConcreteTaskDescriptor(aTmpConcrete);
+            
             aTmpTask = new TaskDescriptor();
+            aTmpConcrete = new ConcreteTaskDescriptor();
+            aTmpConcrete.setState(Constantes.State.READY);
             aTmpTask.setPresentationName("Faire le cafe concept");
             aTmpRole.addPrimaryTask(aTmpTask);
-            aTmpTask.addConcreteTaskDescriptor(aTmpConcrete);
-                        
+            aTmpConcrete.setTaskDescriptor(aTmpTask);
+            aTmpConcreteRole.addConcreteTaskDescriptor(aTmpConcrete);
+            p.addConcreteRoleDescriptor(aTmpConcreteRole);
+            // ---------- nouveau
+            
+            aTmpConcrete = new ConcreteTaskDescriptor() ;
+            aTmpConcrete.setState(Constantes.State.READY);
+            aTmpTask = new TaskDescriptor() ;
+            aTmpTaskDef = new TaskDefinition();
+            aTmpRole = new RoleDescriptor () ;
+            aTmpConcreteRole = new ConcreteRoleDescriptor() ;
+            
+            aTmpRole.setPresentationName("Developper");
+            aTmpRole.setDescription("Un gars qui developpe");
+            
+            aTmpConcreteRole.setConcreteName(aTmpRole.getPresentationName());
+            aTmpConcreteRole.setRoleDescriptor(aTmpRole);
+            
+           
+            
+            aTmpTaskDef.setName("sortir avec l equipe");
+            aTmpTaskDef.setDescription("Apres l effort le reconfort");
+            
+            
+            aTmpTask.setPresentationName(aTmpTaskDef.getName());
+            aTmpTask.setDescription(aTmpTaskDef.getDescription());
+            aTmpRole.addPrimaryTask(aTmpTask);
+            
+            aTmpConcrete.setTaskDescriptor(aTmpTask);
+            aTmpConcreteRole.addConcreteTaskDescriptor(aTmpConcrete);
+            
+            
+            p.addConcreteRoleDescriptor(aTmpConcreteRole);
+            
+            
             return p;
         }
 }
