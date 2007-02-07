@@ -2,20 +2,13 @@ package wilos.presentation.assistant.view.htmlViewer;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 import java.util.Vector;
 
-import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
@@ -26,7 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
-import javax.swing.border.Border;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.jdesktop.swingx.JXTaskPane;
 
@@ -59,10 +53,6 @@ public class HTMLViewer extends JFrame {
 	private JXTaskPane southPanel;
 	private JScrollPane guidesScrollPane;
 	
-	private Border getCommonBorder(String msg) {
-		return (BorderFactory.createTitledBorder(msg));
-	}
-	
 	private HTMLViewer(Point p) {
 		super(Bundle.getText("htmlViewer.title"));
 		this.setLayout(new BorderLayout());
@@ -77,8 +67,8 @@ public class HTMLViewer extends JFrame {
 		this.myElementLabel = new JLabel() ;
 		elementPanel.add(this.myElementLabel);
 		
-		this.historyStack = new Stack<Element>() ;
-		
+		/* Gestion des boutons d'historique */
+		/*this.historyStack = new Stack<Element>() ;
 		this.prevButton = new JButton(ImagesService.getImageIcon("images.iconLeft"));
 		this.nextButton = new JButton(ImagesService.getImageIcon("images.iconRight"));
 		this.prevButton.addActionListener(new ActionListener() {
@@ -90,18 +80,12 @@ public class HTMLViewer extends JFrame {
 			public void actionPerformed(ActionEvent evt) {
 				setNextElement();
 			}
-		});
+		});*/
 		
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new FlowLayout ());
-		buttonPanel.add(this.prevButton);
-		buttonPanel.add(this.nextButton);
-		
-		//JPanel northPanel = new JPanel() ;
 		JToolBar northPanel = new JToolBar();
-		northPanel.setLayout(new BorderLayout());
-		northPanel.add(elementPanel, BorderLayout.CENTER);
-		//northPanel.add(buttonPanel, BorderLayout.EAST);
+		northPanel.add(elementPanel);
+		//northPanel.add(this.prevButton);
+		//northPanel.add(this.nextButton);
 		northPanel.setFloatable(false);
 		
 		/* ----- CENTER PANEL -----*/
@@ -109,44 +93,25 @@ public class HTMLViewer extends JFrame {
 		this.myEditorPane = new JEditorPane();
 		this.myEditorPane.setVisible(true);
 		this.myEditorPane.setEditable(false);
-		//this.myEditorPane.setOpaque(false);
 		this.myEditorPane.setContentType("text/html");
 		this.myEditorPane.setFocusable(false);
 		
 		this.myScrollPane = new JScrollPane(this.myEditorPane);
-		//this.myScrollPane.setBorder(getCommonBorder(Bundle.getText("htmlViewer.description")));
 		
 		/* ----- SOUTH PANEL -----*/
 		
 		this.southPanel = new JXTaskPane() ;
 		this.southPanel.setTitle(Bundle.getText("htmlViewer.guidelines"));
 		this.southPanel.setExpanded(false);
-		//this.southPanel.setLayout(new GridLayout());
-		//this.southPanel.setVisible(true);
-		//this.southPanel.add(new JLabel(Bundle.getText("htmlViewer.guidelines")));
-		//this.southPanel.setBorder(getCommonBorder(Bundle.getText("htmlViewer.guidelines")));
 		
 		guidesList = new JList();
 
 		// add a listener
-		guidesList.addMouseListener(new MouseListener() {
-			public void mouseClicked(MouseEvent e) {
+		guidesList.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
 				JList list = (JList)e.getSource();
 				Object value = list.getSelectedValue();
-				viewObject((Element)value);
-				
-			}
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-			}
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-			}
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-			}
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
+				viewObject((Element)value);				
 			}
 		});
 		
