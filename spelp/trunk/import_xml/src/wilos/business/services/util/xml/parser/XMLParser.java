@@ -323,6 +323,7 @@ public class XMLParser {
 			RoleDefinition  aRoleDefinition = new RoleDefinition();
 			FillerRole aFiller = new FillerRole(aRoleDefinition,aNode);	
 			aRoleDefinition = (RoleDefinition)aFiller.getFilledElement();
+			setGuideByRoleDefinition(aRoleDefinition, aNode);
 			
 			theRoleDefinitionsList.add(aRoleDefinition);
 		}	
@@ -561,8 +562,34 @@ public class XMLParser {
 				
 			}
 		}	
-		
+	}
 
+	/**
+	 * setGuideByTaskDefinition
+	 * @param _taskDefinition
+	 * @param _node
+	 */
+	private static void setGuideByRoleDefinition(RoleDefinition _roleDefinition, Node _node) {
+		NodeList listOfTdNodes = _node.getChildNodes() ;
+		Guidance GuideTobereturn = null;
+
+		String idGuide = "";
+		
+		// search the nodes of the guide
+		for (int i = 0 ; i < listOfTdNodes.getLength() ; i ++){
+			if(guidancesTypes.contains(listOfTdNodes.item(i).getNodeName())) {
+				// recuperation des differents id des guidelines
+				idGuide = listOfTdNodes.item(i).getTextContent();				
+				
+				GuideTobereturn = getGuidanceById(idGuide);
+				// if the guideline doesn't exist
+				if (GuideTobereturn != null){
+					 //set the guideline in the taskDefinition
+					_roleDefinition.addGuidance(GuideTobereturn);
+				}
+				
+			}
+		}	
 	}
 
 	/**
