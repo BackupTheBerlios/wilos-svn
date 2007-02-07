@@ -2,8 +2,7 @@ package wilos.business.services.misc.concretetask;
 
 import java.text.ParseException;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,10 +29,9 @@ public class ConcreteTaskDescriptorService {
 	 * @return
 	 */
 	@Transactional(readOnly = true)
-	public Set<ConcreteTaskDescriptor> getConcreteTaskDescriptorsForProject(
+	public List<ConcreteTaskDescriptor> getAllConcreteTaskDescriptorsForProject(
 			String _projectId) {
-		//FIXME !!! retrieve all ctds of this project.
-		return new HashSet<ConcreteTaskDescriptor>();
+		return this.getConcreteTaskDescriptorDao().getAllConcreteTaskDescriptorsForProject(_projectId);
 	}
 
 	public ConcreteTaskDescriptor getConcreteTaskDescriptor(String _concreteTaskDescriptorId) {
@@ -115,7 +113,7 @@ public class ConcreteTaskDescriptorService {
 		 * try {
 		 * _concreteTaskDescriptor.setRealFinishingDate(Constantes.DATE_FORMAT
 		 * .parse(Calendar.getInstance().getTime().toString())); } catch
-		 * (ParseException e) { 
+		 * (ParseException e) {
 		 * e.printStackTrace(); }
 		 */
 		// save changings.
