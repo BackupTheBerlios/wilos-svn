@@ -205,15 +205,15 @@ public class Guidance extends Element {
 	 * @return the String guideType 
 	 */
 	public String getGuideType() {
-		return guideType;
+		return this.guideType;
 	}
 
 	/**
 	 * setGuideType
 	 * @param guideType
 	 */
-	public void setGuideType(String guideType) {
-		this.guideType = guideType;
+	public void setGuideType(String _guideType) {
+		this.guideType = _guideType;
 	}
 	
 }
