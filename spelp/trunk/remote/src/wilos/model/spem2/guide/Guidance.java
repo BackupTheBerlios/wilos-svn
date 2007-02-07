@@ -18,7 +18,9 @@ public class Guidance extends Element {
 	private RoleDefinition roledefinition;
 	private Activity activity;
 	
-	private String guideType = "";
+	private String type = "";
+	
+	private String presentationName = "";
 	
 	/* Type guide constant */
 	public static final String guideline = "Guideline";
@@ -167,7 +169,7 @@ public class Guidance extends Element {
 	 */
 	protected void copy(final Guidance _guidance) {
 		super.copy(_guidance) ;
-		this.setGuideType(_guidance.getGuideType());
+		this.setType(_guidance.getType());
 		this.setTaskdefinition(_guidance.getTaskdefinition()) ;
 		this.setActivity(_guidance.getActivity());
 		this.setRoledefinition(_guidance.getRoledefinition());
@@ -188,7 +190,7 @@ public class Guidance extends Element {
 
 		Guidance guidance = (Guidance) obj ;
 		return new EqualsBuilder().appendSuper(super.equals(guidance)).append(this.taskdefinition, guidance.taskdefinition).append(this.roledefinition,
-				guidance.roledefinition).append(this.activity, guidance.activity).append(this.guideType, guidance.guideType).isEquals() ;
+				guidance.roledefinition).append(this.activity, guidance.activity).append(this.type, guidance.type).isEquals() ;
 	}
 
 	/*
@@ -197,23 +199,33 @@ public class Guidance extends Element {
 	 * @see woops2.model.breakdownelement.BreakdownElement#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.taskdefinition).append(this.roledefinition).append(this.activity).append(this.guideType).toHashCode();
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.taskdefinition).append(this.roledefinition).append(this.activity).append(this.type).toHashCode();
 	}
 
 	/**
 	 * getGuideType
 	 * @return the String guideType 
 	 */
-	public String getGuideType() {
-		return this.guideType;
+	public String getType() {
+		return this.type;
 	}
 
 	/**
 	 * setGuideType
 	 * @param guideType
 	 */
-	public void setGuideType(String _guideType) {
-		this.guideType = _guideType;
+	public void setType(String _type) {
+		this.type = _type;
+	}
+
+
+	public String getPresentationName() {
+		return presentationName;
+	}
+
+
+	public void setPresentationName(String presentationName) {
+		this.presentationName = presentationName;
 	}
 	
 }

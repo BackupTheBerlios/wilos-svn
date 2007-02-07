@@ -10,6 +10,12 @@
 		extends="wilos.model.spem2.element.Element"
 		table="guidance" lazy="true">
 		<key column="guidance_id"></key>
+		
+		<property name="type" type="java.lang.String" column="type"
+			length="256" />
+			
+		<property name="presentationName" type="java.lang.String" column="presentationname"
+			length="256" />
 
 		<!-- Associations -->
 		<many-to-one name="taskdefinition" class="wilos.model.spem2.task.TaskDefinition"
