@@ -1,5 +1,5 @@
 <ice:form id="form">
-	<h1><ice:outputText value="#{msgs['component.forminscription.title']}" style="h1" /></h1>
+	<h2><ice:outputText value="#{msgs['component.forminscription.title']}" style="h1" /></h2>
 	<ice:panelGrid columns="2">
 		<ice:outputText value="#{msgs['component.forminscription.lastname']}" />
 		<ice:inputText id="nom" title="Nom" value="#{ParticipantBean.participant.name}" required="false"/>
@@ -9,27 +9,22 @@
 		
 		<ice:outputText value="#{msgs['component.forminscription.email']}"/>
 		<ice:inputText id="email" size="30" value="#{ParticipantBean.participant.emailAddress}" 
-		validator="#{ParticipantBean.emailValidation}"
-		required="false">
-			<!--<f:validator validatorId="emailValidator"/>-->
+				validator="#{ParticipantBean.emailValidation}"
+				required="false">
 		</ice:inputText>
 
 		<ice:outputText value="#{msgs['component.forminscription.login']}"/>
 		<ice:inputText id="login" value="#{ParticipantBean.participant.login}" required="false"/>
 
 		<ice:outputText value="#{msgs['component.forminscription.password']}"/>
-		<ice:inputSecret id="equal1"  value="#{ParticipantBean.participant.password}" required="false">	
-			<!--<f:validateLength minimum="6" />-->
-		</ice:inputSecret>
+		<ice:inputSecret id="equal1"  value="#{ParticipantBean.participant.password}" required="false"/>	
 		
 		<ice:outputText value="#{msgs['component.forminscription.confirmpassword']}"/>
 		<ice:inputSecret id="equal2" value="#{ParticipantBean.passwordConfirmation}" 
 				validator="#{ParticipantBean.passwordEqualValidation}"
 				required="false">
-			<f:param name="forPassword" value="#{ParticipantBean.participant.password}" />
-			<!--<f:validateLength minimum="6" />-->
+				<f:param name="forPassword" value="#{ParticipantBean.participant.password}" />
 		</ice:inputSecret>
-		
 	</ice:panelGrid>
 	<ice:panelGrid columns="2">
 		<ice:commandButton value="#{msgs['component.forminscription.register']}" action="#{ParticipantBean.saveParticipantAction}"/>
