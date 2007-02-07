@@ -13,7 +13,7 @@ import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
 
 /**
- * ActivityManager is a transactional class, that manage operations about activity, requested by web pages (activity.jsp &
+ * ActivityManager is a transactional class, that manages operations about activity, requested by web pages (activity.jsp &
  * activityform.jsp)
  *
  * @author garwind
@@ -41,9 +41,9 @@ public class ActivityService {
 	}
 
 	/**
-	 * Return activities list
+	 * Returns activities list
 	 *
-	 * @return
+	 * @return List of activities
 	 */
 	@Transactional(readOnly = true)
 	public List<Activity> getActivitiesList() {
@@ -51,9 +51,9 @@ public class ActivityService {
 	}
 
 	/**
-	 * Save activity
+	 * Saves activity
 	 *
-	 * @param _activity
+	 * @param _activity the activity to save
 	 */
 	public void saveActivity(Activity _activity) {
 		activityDao.saveOrUpdateActivity(_activity) ;
@@ -79,6 +79,8 @@ public class ActivityService {
 	}
 
 	/**
+	 * Getter of concreteActivityDao
+	 * 
 	 * @return the concreteActivityDao
 	 */
 	public ConcreteActivityDao getConcreteActivityDao() {
@@ -86,6 +88,8 @@ public class ActivityService {
 	}
 
 	/**
+	 * Setter of concreteActivityDao
+	 * 
 	 * @param concreteActivityDao the concreteActivityDao to set
 	 */
 	public void setConcreteActivityDao(ConcreteActivityDao concreteActivityDao) {
