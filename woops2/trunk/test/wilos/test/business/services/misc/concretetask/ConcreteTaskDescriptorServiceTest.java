@@ -1,6 +1,5 @@
 package wilos.test.business.services.misc.concretetask;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -19,11 +18,9 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 
 	ConcreteTaskDescriptor concreteTaskDescriptor;
 
-	ConcreteTaskDescriptorDao concreteTaskDescriptorDao = (ConcreteTaskDescriptorDao)TestConfiguration.getInstance()
-			.getApplicationContext().getBean("ConcreteTaskDescriptorDao");
+	ConcreteTaskDescriptorDao concreteTaskDescriptorDao = null;
 
-	ProjectDao projectDao = (ProjectDao) TestConfiguration.getInstance()
-			.getApplicationContext().getBean("ProjectDao");
+	ProjectDao projectDao = null;
 
 	TaskDescriptor taskDescriptor;
 
@@ -35,7 +32,11 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 		this.concreteTaskDescriptorService = (ConcreteTaskDescriptorService) TestConfiguration
 				.getInstance().getApplicationContext().getBean(
 						"ConcreteTaskDescriptorService");
-		this.concreteTaskDescriptor = new ConcreteTaskDescriptor();
+		this.concreteTaskDescriptorDao = (ConcreteTaskDescriptorDao) TestConfiguration
+				.getInstance().getApplicationContext().getBean(
+						"ConcreteTaskDescriptorDao");
+		this.projectDao = (ProjectDao) TestConfiguration.getInstance()
+				.getApplicationContext().getBean("ProjectDao");
 	}
 
 	/*
@@ -45,6 +46,9 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 	 */
 	protected void setUp() throws Exception {
 		super.setUp();
+
+		this.concreteTaskDescriptor = new ConcreteTaskDescriptor();
+
 		this.concreteTaskDescriptorService
 				.getConcreteTaskDescriptorDao()
 				.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
@@ -66,19 +70,29 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 
 		Project project = new Project();
 		project.setConcreteName("project");
-
 		this.projectDao.saveOrUpdateProject(project);
+
+		Project project2 = new Project();
+		project2.setConcreteName("project");
+		this.projectDao.saveOrUpdateProject(project2);
+
+		this.concreteTaskDescriptor.setProject(project);
+
+		ConcreteTaskDescriptor ctdTmp = new ConcreteTaskDescriptor();
+		ctdTmp.setConcreteName("pouet");
+		ctdTmp.setProject(project2);
 
 		this.concreteTaskDescriptorService
 				.getConcreteTaskDescriptorDao()
 				.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
-		List<ConcreteTaskDescriptor> list = new ArrayList<ConcreteTaskDescriptor>();
-		list.addAll(this.concreteTaskDescriptorService
-				.getAllConcreteTaskDescriptorsForProject(project.getId()));
+		this.concreteTaskDescriptorService.getConcreteTaskDescriptorDao()
+				.saveOrUpdateConcreteTaskDescriptor(ctdTmp);
+
+		List<ConcreteTaskDescriptor> list = this.concreteTaskDescriptorService
+				.getAllConcreteTaskDescriptorsForProject(project.getId());
 
 		assertNotNull(list);
-		assertTrue(list.size() >= 1);
-		assertTrue(list.contains(this.concreteTaskDescriptor));
+		assertTrue(list.size() == 1);
 
 		// Rk: the tearDown method is called here.
 	}
@@ -90,11 +104,13 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 		this.concreteTaskDescriptorService
 				.startConcreteTaskDescriptor(this.concreteTaskDescriptor);
 
-		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
+		this.concreteTaskDescriptorDao
+				.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
 		String id = this.concreteTaskDescriptor.getId();
 
 		// Get this concreteTaskDescriptor.
-		ConcreteTaskDescriptor tmpConcreteTaskDescriptor = this.concreteTaskDescriptorService.getConcreteTaskDescriptor(id);
+		ConcreteTaskDescriptor tmpConcreteTaskDescriptor = this.concreteTaskDescriptorService
+				.getConcreteTaskDescriptor(id);
 
 		assertNotNull(tmpConcreteTaskDescriptor);
 		assertEquals(tmpConcreteTaskDescriptor.getState(), State.STARTED);
@@ -105,15 +121,17 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 	public void testSuspendConcreteTaskDescriptor() {
 		// Rk: the setUp method is called here.
 
-//		 Change the state of the concretetaskdescriptor.
+		// Change the state of the concretetaskdescriptor.
 		this.concreteTaskDescriptorService
 				.suspendConcreteTaskDescriptor(this.concreteTaskDescriptor);
 
-		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
+		this.concreteTaskDescriptorDao
+				.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
 		String id = this.concreteTaskDescriptor.getId();
 
 		// Get this concreteTaskDescriptor.
-		ConcreteTaskDescriptor tmpConcreteTaskDescriptor = this.concreteTaskDescriptorService.getConcreteTaskDescriptor(id);
+		ConcreteTaskDescriptor tmpConcreteTaskDescriptor = this.concreteTaskDescriptorService
+				.getConcreteTaskDescriptor(id);
 
 		assertNotNull(tmpConcreteTaskDescriptor);
 		assertEquals(tmpConcreteTaskDescriptor.getState(), State.SUSPENDED);
@@ -124,15 +142,17 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 	public void testFinishConcreteTaskDescriptor() {
 		// Rk: the setUp method is called here.
 
-//		 Change the state of the concretetaskdescriptor.
+		// Change the state of the concretetaskdescriptor.
 		this.concreteTaskDescriptorService
 				.finishConcreteTaskDescriptor(this.concreteTaskDescriptor);
 
-		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
+		this.concreteTaskDescriptorDao
+				.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
 		String id = this.concreteTaskDescriptor.getId();
 
 		// Get this concreteTaskDescriptor.
-		ConcreteTaskDescriptor tmpConcreteTaskDescriptor = this.concreteTaskDescriptorService.getConcreteTaskDescriptor(id);
+		ConcreteTaskDescriptor tmpConcreteTaskDescriptor = this.concreteTaskDescriptorService
+				.getConcreteTaskDescriptor(id);
 
 		assertNotNull(tmpConcreteTaskDescriptor);
 		assertEquals(tmpConcreteTaskDescriptor.getState(), State.FINISHED);

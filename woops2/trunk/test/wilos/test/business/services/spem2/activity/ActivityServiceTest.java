@@ -9,7 +9,7 @@ import wilos.test.TestConfiguration;
 
 /**
  * @author deder
- * 
+ *
  */
 public class ActivityServiceTest extends TestCase {
 
@@ -27,23 +27,24 @@ public class ActivityServiceTest extends TestCase {
 				.getInstance().getApplicationContext().getBean(
 						"ActivityService");
 
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see junit.framework.TestCase#setUp()
+	 */
+	@Override
+	protected void setUp() throws Exception {
+		super.setUp();
+
 		// Create empty Activity
 		this.activity = new Activity();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see junit.framework.TestCase#tearDown()
 	 */
 	@Override
@@ -57,7 +58,7 @@ public class ActivityServiceTest extends TestCase {
 	/*
 	 * (non-Javadoc) Test method for
 	 * {@link woops2.business.activity.ActivityManager#getActivitiesList()}.
-	 * 
+	 *
 	 */
 	public void testGetActivitiesList() {
 		// Rk: the setUp method is called here.
@@ -77,7 +78,7 @@ public class ActivityServiceTest extends TestCase {
 	/*
 	 * (non-Javadoc) Test method for
 	 * {@link woops2.business.activity.ActivityManager#saveActivity(woops2.model.activity.Activity)}.
-	 * 
+	 *
 	 */
 	public void testSaveActivity() {
 		// Rk: the setUp method is called here.

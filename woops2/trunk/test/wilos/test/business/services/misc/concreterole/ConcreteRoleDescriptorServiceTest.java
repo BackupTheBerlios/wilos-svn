@@ -20,13 +20,13 @@ import wilos.test.TestConfiguration;
  */
 public class ConcreteRoleDescriptorServiceTest extends TestCase {
 
-	ConcreteRoleDescriptor concreteRoleDescriptor;
+	private ConcreteRoleDescriptor concreteRoleDescriptor;
 
-	ConcreteRoleDescriptorService concreteRoleDescriptorService = (ConcreteRoleDescriptorService) TestConfiguration.getInstance().getApplicationContext().getBean("ConcreteRoleDescriptorService");
+	private ConcreteRoleDescriptorService concreteRoleDescriptorService = null;
 
-	ProjectDao projectDao = (ProjectDao) TestConfiguration.getInstance().getApplicationContext().getBean("ProjectDao");
-	RoleDescriptorDao roledescriptorDao = (RoleDescriptorDao) TestConfiguration.getInstance().getApplicationContext().getBean("RoleDescriptorDao");
-	ParticipantDao participantDao = (ParticipantDao) TestConfiguration.getInstance().getApplicationContext().getBean("ParticipantDao");
+	private ProjectDao projectDao = null;
+	private RoleDescriptorDao roledescriptorDao = null;
+	private ParticipantDao participantDao = null;
 
 	public static final String NAME = "name" ;
 
@@ -34,8 +34,9 @@ public class ConcreteRoleDescriptorServiceTest extends TestCase {
 		this.concreteRoleDescriptorService = (ConcreteRoleDescriptorService) TestConfiguration
 				.getInstance().getApplicationContext().getBean(
 						"ConcreteRoleDescriptorService");
-		this.concreteRoleDescriptor = new ConcreteRoleDescriptor();
-		this.concreteRoleDescriptor.setConcreteName(NAME);
+		this.participantDao = (ParticipantDao) TestConfiguration.getInstance().getApplicationContext().getBean("ParticipantDao");
+		this.roledescriptorDao = (RoleDescriptorDao) TestConfiguration.getInstance().getApplicationContext().getBean("RoleDescriptorDao");
+		this.projectDao = (ProjectDao) TestConfiguration.getInstance().getApplicationContext().getBean("ProjectDao");
 	}
 
 	/*
@@ -45,6 +46,10 @@ public class ConcreteRoleDescriptorServiceTest extends TestCase {
 	 */
 	protected void setUp() throws Exception {
 		super.setUp();
+
+		this.concreteRoleDescriptor = new ConcreteRoleDescriptor();
+		this.concreteRoleDescriptor.setConcreteName(NAME);
+
 		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao()
 				.saveOrUpdateConcreteRoleDescriptor(this.concreteRoleDescriptor);
 	}
@@ -89,7 +94,8 @@ public class ConcreteRoleDescriptorServiceTest extends TestCase {
 		assertNotNull("notNull",list);
 		assertTrue("list.size",list.size() >= 1);
 		assertTrue(list.contains(this.concreteRoleDescriptor));
-		//assertEquals("Equals",((ConcreteRoleDescriptor) list.get(0)).getConcreteName());
+		// assertEquals("Equals",((ConcreteRoleDescriptor)
+		// list.get(0)).getConcreteName());
 
 		// Rk: the tearDown method is called here.
 	}
