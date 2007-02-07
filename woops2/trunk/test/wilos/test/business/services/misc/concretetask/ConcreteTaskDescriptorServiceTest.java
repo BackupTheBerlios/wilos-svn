@@ -73,26 +73,32 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 		this.projectDao.saveOrUpdateProject(project);
 
 		Project project2 = new Project();
-		project2.setConcreteName("project");
+		project2.setConcreteName("project2");
 		this.projectDao.saveOrUpdateProject(project2);
 
 		this.concreteTaskDescriptor.setProject(project);
 
 		ConcreteTaskDescriptor ctdTmp = new ConcreteTaskDescriptor();
 		ctdTmp.setConcreteName("pouet");
-		ctdTmp.setProject(project2);
+		ctdTmp.setProject(project);
+
+		ConcreteTaskDescriptor ctdTmp2 = new ConcreteTaskDescriptor();
+		ctdTmp2.setConcreteName("pouet2");
+		ctdTmp2.setProject(project2);
 
 		this.concreteTaskDescriptorService
 				.getConcreteTaskDescriptorDao()
 				.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
 		this.concreteTaskDescriptorService.getConcreteTaskDescriptorDao()
-				.saveOrUpdateConcreteTaskDescriptor(ctdTmp);
+		.saveOrUpdateConcreteTaskDescriptor(ctdTmp);
+		this.concreteTaskDescriptorService.getConcreteTaskDescriptorDao()
+				.saveOrUpdateConcreteTaskDescriptor(ctdTmp2);
 
 		List<ConcreteTaskDescriptor> list = this.concreteTaskDescriptorService
 				.getAllConcreteTaskDescriptorsForProject(project.getId());
 
 		assertNotNull(list);
-		assertTrue(list.size() == 1);
+		assertTrue(list.size() == 2);
 
 		// Rk: the tearDown method is called here.
 	}
