@@ -37,6 +37,7 @@ import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
@@ -233,10 +234,15 @@ public class HTMLViewer extends JFrame {
 			displayElement(tmp);		
 			ok = true ;
 		}
+		else if (o instanceof Step){
+			Step e = (Step)o;
+			displayElement(e);
+			this.southPanel.setExpanded(false);
+			ok = true ;
+		}
 		else if (o instanceof Element){
 			Element e = (Element)o;
 			displayElement(e);
-			this.southPanel.setExpanded(false);
 			ok = true ;
 		}
 		// if ok = true then object is an element
