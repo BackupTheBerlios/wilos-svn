@@ -132,7 +132,7 @@ public class ConcreteBreakdownElement implements Cloneable {
 	}
 
 	@ SuppressWarnings ("unused")
-	private void setId(String _id) {
+	protected void setId(String _id) {
 		this.id = _id;
 	}
 
