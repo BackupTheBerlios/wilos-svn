@@ -343,7 +343,7 @@ public class XMLParser {
 	 */
 	public static Process getProcess(File XMLFilePath) {		
 		Process theProcess = null;
-		if (XMLFilePath.exists()) {
+		if (XMLFilePath.exists() && XMLFilePath.length() > 5) {
 			XMLUtils.setDocument(XMLFilePath);
 			start(); // initializes the elements sets
 			
