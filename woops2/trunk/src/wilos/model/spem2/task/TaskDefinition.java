@@ -97,6 +97,7 @@ public class TaskDefinition extends Element implements Cloneable {
 		super.copy(_taskDefinition);
 		this.setSteps(_taskDefinition.getSteps());
 		this.setTaskDescriptors(_taskDefinition.getTaskDescriptors());
+		this.setGuidances(_taskDefinition.getGuidances());
 	}
 
 	/**

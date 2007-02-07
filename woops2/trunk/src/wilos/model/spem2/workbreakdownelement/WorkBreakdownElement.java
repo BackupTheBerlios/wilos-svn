@@ -88,37 +88,7 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 		workBreakdownElement.copy(this);
 		return workBreakdownElement;
 	}
-
-	/*
-	 * relation between WorkBreakdownElement and ConcreteWorkBreakdownElement.
-	 *
-	 */
-
-	public void addConcreteWorkBreakdownElement(
-			ConcreteWorkBreakdownElement _concreteWorkBreakdownElement) {
-		this.concreteWorkBreakdownElements.add(_concreteWorkBreakdownElement);
-		_concreteWorkBreakdownElement.addWorkBreakdownElement(this);
-	}
-
-	public void removeConcreteWorkBreakdownElement(
-			ConcreteWorkBreakdownElement _concreteWorkBreakdownElement) {
-		_concreteWorkBreakdownElement.removeWorkBreakdownElement(this);
-		this.concreteWorkBreakdownElements.remove(_concreteWorkBreakdownElement);
-	}
-
-	public void addAllConcreteWorkBreakdownElements(
-			Set<ConcreteWorkBreakdownElement> _concreteWorkBreakdownElements) {
-		for (ConcreteWorkBreakdownElement cwbde : _concreteWorkBreakdownElements) {
-			cwbde.addWorkBreakdownElement(this);
-		}
-	}
-
-	public void removeAllConcreteWorkBreakdownElements() {
-		for (ConcreteWorkBreakdownElement cwbde : this.getConcreteWorkBreakdownElements())
-			cwbde.setWorkBreakdownElement(null);
-		this.getConcreteWorkBreakdownElements().clear();
-	}
-
+	
 	/**
 	 * Copy the _workBreakdownElement into this.
 	 */
@@ -128,7 +98,9 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 		this.setIsOngoing(_workBreakdownElement.getIsOngoing());
 		this.setIsRepeatable(_workBreakdownElement.getIsRepeatable());
 		this.setConcreteWorkBreakdownElements(_workBreakdownElement.getConcreteWorkBreakdownElements());
-		//todo
+		this.setPredecessors(_workBreakdownElement.getPredecessors());
+		this.setSuccessors(_workBreakdownElement.getSuccessors());
+		
 	}
 
 	/**
@@ -301,5 +273,35 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	public void setConcreteWorkBreakdownElements(
 			Set<ConcreteWorkBreakdownElement> _concreteWorkBreakdownElements) {
 		this.concreteWorkBreakdownElements = _concreteWorkBreakdownElements;
+	}
+	
+	/*
+	 * relation between WorkBreakdownElement and ConcreteWorkBreakdownElement.
+	 *
+	 */
+
+	public void addConcreteWorkBreakdownElement(
+			ConcreteWorkBreakdownElement _concreteWorkBreakdownElement) {
+		this.concreteWorkBreakdownElements.add(_concreteWorkBreakdownElement);
+		_concreteWorkBreakdownElement.addWorkBreakdownElement(this);
+	}
+
+	public void removeConcreteWorkBreakdownElement(
+			ConcreteWorkBreakdownElement _concreteWorkBreakdownElement) {
+		_concreteWorkBreakdownElement.removeWorkBreakdownElement(this);
+		this.concreteWorkBreakdownElements.remove(_concreteWorkBreakdownElement);
+	}
+
+	public void addAllConcreteWorkBreakdownElements(
+			Set<ConcreteWorkBreakdownElement> _concreteWorkBreakdownElements) {
+		for (ConcreteWorkBreakdownElement cwbde : _concreteWorkBreakdownElements) {
+			cwbde.addWorkBreakdownElement(this);
+		}
+	}
+
+	public void removeAllConcreteWorkBreakdownElements() {
+		for (ConcreteWorkBreakdownElement cwbde : this.getConcreteWorkBreakdownElements())
+			cwbde.setWorkBreakdownElement(null);
+		this.getConcreteWorkBreakdownElements().clear();
 	}
 }
