@@ -4,14 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 import java.util.Vector;
 
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
@@ -40,6 +39,7 @@ import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.ressources.Bundle;
+import wilos.presentation.assistant.ressources.ImagesService;
 
 public class HTMLViewer extends JFrame {
 	private static HTMLViewer instance = null;
@@ -377,9 +377,60 @@ public class HTMLViewer extends JFrame {
 		return td ;
 	}
 	
+	private ImageIcon getGuideTypeIcon(String type) {
+		ImageIcon icon = null;
+		if(type.equals(Guidance.guideline)) {
+			icon = ImagesService.getImageIcon("images.iconGuideline");
+		}
+		else if(type.equals(Guidance.checklist)) {
+			icon = ImagesService.getImageIcon("images.iconChecklist");
+		}
+		else if(type.equals(Guidance.concept)) {
+			icon = ImagesService.getImageIcon("images.iconConcept");
+		}
+		else if(type.equals(Guidance.estimationConsiderations)) {
+			icon = ImagesService.getImageIcon("images.iconEstimationConsiderations");
+		}
+		else if(type.equals(Guidance.example)) {
+			icon = ImagesService.getImageIcon("images.iconExample");
+		}
+		else if(type.equals(Guidance.practice)) {
+			icon = ImagesService.getImageIcon("images.iconPractice");
+		}
+		else if(type.equals(Guidance.report)) {
+			icon = ImagesService.getImageIcon("images.iconReport");
+		}
+		else if(type.equals(Guidance.reusableAsset)) {
+			icon = ImagesService.getImageIcon("images.iconReusableAsset");
+		}
+		else if(type.equals(Guidance.roadMap)) {
+			icon = ImagesService.getImageIcon("images.iconRoadMap");
+		}
+		else if(type.equals(Guidance.supportingMaterial)) {
+			icon = ImagesService.getImageIcon("images.iconSupportingMaterial");
+		}
+		else if(type.equals(Guidance.template)) {
+			icon = ImagesService.getImageIcon("images.iconTemplate");
+		}
+		else if(type.equals(Guidance.termDefinition)) {
+			icon = ImagesService.getImageIcon("images.iconTermDefinition");
+		}
+		else if(type.equals(Guidance.toolMentor)) {
+			icon = ImagesService.getImageIcon("images.iconToolMentor");
+		}
+		else if(type.equals(Guidance.whitepaper)) {
+			icon = ImagesService.getImageIcon("images.iconWhitepaper");
+		}
+		return icon;
+	}
+	
 	private class GuidesRenderer extends DefaultListCellRenderer {
 		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-			return super.getListCellRendererComponent(list, ((Element)value).getName(), index, isSelected, cellHasFocus);
+			Guidance g = (Guidance)value;
+			String guideValue = g.getName() + " [" + g.getType() + "]";
+			super.getListCellRendererComponent(list, guideValue, index, isSelected, cellHasFocus);
+			this.setIcon(getGuideTypeIcon(g.getType()));
+			return this;
 		}
 	}
 	
