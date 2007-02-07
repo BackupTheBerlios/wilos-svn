@@ -2,7 +2,6 @@ package wilos.presentation.assistant.view.htmlViewer;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Point;
@@ -28,14 +27,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
+import wilos.business.services.guide.GuidanceService;
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.element.Element;
-import wilos.model.spem2.guide.Guideline;
-import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
@@ -176,7 +174,7 @@ public class HTMLViewer extends JFrame {
 	}
 	
 	private void displayElement(Element e) {
-		guidesList.setVisible(e instanceof Guideline || e instanceof TaskDescriptor);
+		guidesList.setVisible(e instanceof Guidance || e instanceof TaskDescriptor);
 			
 		/* Affichage du nom */
 		if (e instanceof BreakdownElement) {
@@ -222,9 +220,9 @@ public class HTMLViewer extends JFrame {
 			displayElement(tmp);
 			ok = true ;
 		}
-		else if (o instanceof RoleDescriptor){
-			RoleDescriptor r = (RoleDescriptor)o;
-			displayElement(r);
+		else if (o instanceof ConcreteRoleDescriptor){
+			ConcreteRoleDescriptor r = (ConcreteRoleDescriptor)o;
+			displayElement(r.getRoleDescriptor());
 			ok = true ;
 		}
 		else if (o instanceof Element){
@@ -266,12 +264,12 @@ public class HTMLViewer extends JFrame {
 		TaskDescriptor td = ctd.getTaskDescriptor();
 		
 		/* Affichage des guides */
-		Set<Guideline> guides = new HashSet<Guideline>(); 
+		Set<Guidance> guides = new HashSet<Guidance>(); 
 		if (td.getTaskDefinition() != null) {
-			guides = td.getTaskDefinition().getGuidelines();
+			guides = td.getTaskDefinition().getGuidances();
 		}
 		
-		Vector<Guideline> vectGuides = new Vector<Guideline>();
+		Vector<Guidance> vectGuides = new Vector<Guidance>();
 		vectGuides.addAll(guides);
 		
 		guidesList.setListData(vectGuides);

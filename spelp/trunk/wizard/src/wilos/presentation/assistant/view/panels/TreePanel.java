@@ -2,6 +2,7 @@ package wilos.presentation.assistant.view.panels;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -20,6 +21,7 @@ import javax.swing.tree.TreePath;
 
 import org.jdesktop.swingx.JXTree;
 
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.element.Element;
@@ -49,7 +51,6 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 		tree.addMouseListener(new MouseListener(){
 
 			public void mouseClicked(MouseEvent arg0) {
-				
 				
 			}
 
@@ -106,11 +107,13 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 		}
 		
 		public String toString() {
-			if (userObject instanceof Element)
-				return ((Element) userObject).getName();
+			if (userObject instanceof ConcreteRoleDescriptor)
+				return ((ConcreteRoleDescriptor) userObject).getRoleDescriptor().getPresentationName();
 			else if (userObject instanceof ConcreteTaskDescriptor) 
-				return ((ConcreteTaskDescriptor) userObject).getConcreteName();
-			else
+				return ((ConcreteTaskDescriptor) userObject).getTaskDescriptor().getPresentationName();
+			else if (userObject instanceof Element)
+				return ((Element)userObject).getName();
+				else
 				return "";
 		}
 	}
@@ -130,23 +133,23 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 
 			this.root = new DefaultMutableTreeNode(participant.getName());
 
-			Set<RoleDescriptor> roles = participant.getRolesListForAProject();
+			Set<ConcreteRoleDescriptor> roles = participant.getConcreteRoleDescriptors();
 			
-			for (RoleDescriptor rd : roles) {
-				WizardMutableTreeNode rdWmt = new WizardMutableTreeNode(rd);
+			// browse all the concrete roles
+			for (ConcreteRoleDescriptor crd : roles) {
+				WizardMutableTreeNode rdWmt = new WizardMutableTreeNode(crd);
 				((DefaultMutableTreeNode) this.root).add(rdWmt);
 				
-				for(TaskDescriptor td : rd.getPrimaryTasks()) {
+				// brows all the concrete tasks
+				for(ConcreteTaskDescriptor ctd : crd.getConcreteTaskDescriptors()) {
 					
-					for (ConcreteTaskDescriptor ctd : td.getConcreteTaskDescriptors()) {
-						WizardMutableTreeNode ctdWmt = new WizardMutableTreeNode(ctd);
-						rdWmt.add(ctdWmt);
-						
-						if (td.getTaskDefinition() != null) {
-							for (Step s : td.getTaskDefinition().getSteps()) {
-								WizardMutableTreeNode sWmt = new WizardMutableTreeNode(s);
-								ctdWmt.add(sWmt);
-							}
+					WizardMutableTreeNode ctdWmt = new WizardMutableTreeNode(ctd);
+					rdWmt.add(ctdWmt);
+					// browse all the steps of the task def in task descriptors of concretetaskdescriptor
+					if (ctd.getTaskDescriptor().getTaskDefinition() != null) {
+						for (Step s : ctd.getTaskDescriptor().getTaskDefinition().getSteps()) {
+							WizardMutableTreeNode sWmt = new WizardMutableTreeNode(s);
+							ctdWmt.add(sWmt);
 						}
 					}
 				}
@@ -205,13 +208,14 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 			}
 			else {
 				Object object = ((WizardMutableTreeNode) value).getUserObject();
-				if (object instanceof RoleDescriptor) {
+				if (object instanceof ConcreteRoleDescriptor) {
+					ConcreteRoleDescriptor crd = (ConcreteRoleDescriptor)object ;
 					this.setIcon(ImagesService.getImageIcon("images.iconRole"));
 				}
 				else if (object instanceof ConcreteTaskDescriptor) {
+					ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor)object ;
 					this.setIcon(ImagesService.getImageIcon("images.iconTaskDescriptor"));
 
-					ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) object;
 					if (ctd.getState() == Constantes.State.STARTED) {
 						this.setForeground(Color.green);
 					}
@@ -222,9 +226,7 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 						this.setForeground(Color.pink);
 					}
 					else if (ctd.getState() == Constantes.State.FINISHED) {
-						this.setForeground(Color.cyan);
-						
-						
+						this.setForeground(Color.cyan);						
 					}
 					else if (ctd.getState() == Constantes.State.CREATED) {
 						this.setForeground(Color.black);
