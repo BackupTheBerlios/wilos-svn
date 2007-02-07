@@ -155,7 +155,7 @@ public class HTMLViewer extends JFrame {
 	}
 	
 	private void displayElement(Element e) {
-		guidesList.setVisible(e instanceof Guidance || e instanceof TaskDescriptor);
+		//guidesList.setVisible(e instanceof Guidance || e instanceof TaskDescriptor);
 			
 		/* Affichage du nom */
 		if (e instanceof BreakdownElement) {
@@ -283,7 +283,7 @@ public class HTMLViewer extends JFrame {
 	}
 	
 	public void trtGuides (Set<Guidance>guides){
-		guidesList.removeAll();
+		
 		Vector <Guidance> vectGuides = new Vector<Guidance>();
 		vectGuides.addAll(guides);
 		
@@ -372,21 +372,7 @@ public class HTMLViewer extends JFrame {
 			guides = td.getRoleDefinition().getGuidances();
 		}
 		
-		
-		Vector<Guidance> vectGuides = new Vector<Guidance>();
-		vectGuides.addAll(guides);
-		
-		guidesList.setListData(vectGuides);
-		guidesList.setCellRenderer(new GuidesRenderer());
-		
-		
-		if (guides.size() != 0){
-			guidesList.setVisible(true);
-			this.southPanel.setExpanded(true);
-		}
-		else {
-			this.southPanel.setExpanded(false);
-		}
+		trtGuides(guides);
 		
 		return td ;
 	}

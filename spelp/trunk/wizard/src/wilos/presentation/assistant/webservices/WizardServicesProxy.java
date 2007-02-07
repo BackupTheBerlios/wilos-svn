@@ -163,6 +163,8 @@ public class WizardServicesProxy {
             rd2.setPresentationName("Visiteur");
             rd2.setDescription("Le gars qui visite lors de l'it 2");
             rd2.setRoleDefinition(rde2);
+            rde2.setName(rd2.getPresentationName());
+            rde2.setDescription(rd2.getDescription());
             crd2.setConcreteName(rd2.getPresentationName());
             crd2.setRoleDescriptor(rd2);
             crd2.addSuperConcreteActivity(aConcreteIteration2);
@@ -295,6 +297,7 @@ public class WizardServicesProxy {
     			
             // on ajoute ces guides pour test au role visiteur
             rde2.setGuidances(sgl);
+            aConcretePhase.getPhase().setGuidances(sgl);
             
             // task def
             
