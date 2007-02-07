@@ -25,6 +25,15 @@ public class ConcreteBreakdownElementDaoTest extends TestCase {
 
 	public Set<Activity> superActivities = new HashSet<Activity>();
 
+	public ConcreteBreakdownElementDaoTest() {
+		// Gets the ConcreteBreakdownElementDao Singleton for managing
+		// ConcreteBreakdownElement
+		// data
+		this.concreteBreakdownElementDao = (ConcreteBreakdownElementDao) TestConfiguration
+				.getInstance().getApplicationContext().getBean(
+						"ConcreteBreakdownElementDao");
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -33,10 +42,6 @@ public class ConcreteBreakdownElementDaoTest extends TestCase {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-
-		// Gets the ConcreteBreakdownElementDao Singleton for managing ConcreteBreakdownElement
-		// data
-		this.concreteBreakdownElementDao = (ConcreteBreakdownElementDao) TestConfiguration.getInstance().getApplicationContext().getBean("ConcreteBreakdownElementDao");
 
 		// Creates empty BreakdownElement
 		this.concreteBreakdownElement = new ConcreteBreakdownElement();
@@ -50,8 +55,9 @@ public class ConcreteBreakdownElementDaoTest extends TestCase {
 	@Override
 	protected void tearDown() throws Exception {
 		super.tearDown();
-		
-		this.concreteBreakdownElementDao.deleteConcreteBreakdownElement(this.concreteBreakdownElement);
+
+		this.concreteBreakdownElementDao
+				.deleteConcreteBreakdownElement(this.concreteBreakdownElement);
 	}
 
 	/**
@@ -69,7 +75,8 @@ public class ConcreteBreakdownElementDaoTest extends TestCase {
 		// Checks the saving.
 		String id = this.concreteBreakdownElement.getId();
 		ConcreteBreakdownElement cbdeTmp = (ConcreteBreakdownElement) this.concreteBreakdownElementDao
-				.getHibernateTemplate().load(ConcreteBreakdownElement.class, id);
+				.getHibernateTemplate()
+				.load(ConcreteBreakdownElement.class, id);
 		assertNotNull(cbdeTmp);
 
 		// Rk: the tearDown method is called here.
@@ -109,8 +116,8 @@ public class ConcreteBreakdownElementDaoTest extends TestCase {
 		this.concreteBreakdownElement.setConcreteName(CONCRETE_NAME);
 
 		// Saves the concreteBreakdownElement into the database.
-		this.concreteBreakdownElementDao.saveOrUpdateConcreteBreakdownElement(
-				this.concreteBreakdownElement);
+		this.concreteBreakdownElementDao
+				.saveOrUpdateConcreteBreakdownElement(this.concreteBreakdownElement);
 		String id = this.concreteBreakdownElement.getId();
 
 		// Tests the method getBreakdownElement with an existing
@@ -124,7 +131,8 @@ public class ConcreteBreakdownElementDaoTest extends TestCase {
 		// concreteBreakdownElement.
 		this.concreteBreakdownElementDao.getHibernateTemplate().delete(
 				this.concreteBreakdownElement);
-		cbdeTmp = this.concreteBreakdownElementDao.getConcreteBreakdownElement(id);
+		cbdeTmp = this.concreteBreakdownElementDao
+				.getConcreteBreakdownElement(id);
 		assertNull(cbdeTmp);
 
 		// Rk: the tearDown method is called here.
@@ -143,9 +151,11 @@ public class ConcreteBreakdownElementDaoTest extends TestCase {
 				this.concreteBreakdownElement);
 		String id = this.concreteBreakdownElement.getId();
 
-		// Tests the method deleteConcreteBreakdownElement with an ConcreteBreakdownElement
+		// Tests the method deleteConcreteBreakdownElement with an
+		// ConcreteBreakdownElement
 		// existing into the db.
-		this.concreteBreakdownElementDao.deleteConcreteBreakdownElement(this.concreteBreakdownElement);
+		this.concreteBreakdownElementDao
+				.deleteConcreteBreakdownElement(this.concreteBreakdownElement);
 
 		// Looks if this.concreteBreakdownElement is now absent in the db.
 		ConcreteBreakdownElement cbdeTmp = (ConcreteBreakdownElement) this.concreteBreakdownElementDao
@@ -154,7 +164,8 @@ public class ConcreteBreakdownElementDaoTest extends TestCase {
 
 		// Tests the method deleteConcreteBreakdownElement with a nonexistent
 		// ConcreteBreakdownElement into the db.
-		this.concreteBreakdownElementDao.deleteConcreteBreakdownElement(this.concreteBreakdownElement);
+		this.concreteBreakdownElementDao
+				.deleteConcreteBreakdownElement(this.concreteBreakdownElement);
 
 		// Rk: the tearDown method is called here.
 	}

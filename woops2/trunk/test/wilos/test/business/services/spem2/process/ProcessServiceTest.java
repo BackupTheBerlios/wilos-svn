@@ -21,6 +21,15 @@ public class ProcessServiceTest extends TestCase {
 		// Get the ActivityDao Singleton for managing Activity data
 		this.processService = (ProcessService) TestConfiguration.getInstance()
 				.getApplicationContext().getBean("ProcessService");
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see junit.framework.TestCase#setUp()
+	 */
+	protected void setUp() throws Exception {
+		super.setUp();
 
 		// Create empty Activity
 		this.process = new Process();
@@ -28,16 +37,7 @@ public class ProcessServiceTest extends TestCase {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see junit.framework.TestCase#tearDown()
 	 */
 	protected void tearDown() throws Exception {
@@ -76,7 +76,7 @@ public class ProcessServiceTest extends TestCase {
 		// Save the activity.
 		this.processService.saveProcess(this.process);
 
-		//TODO !!!
+		// TODO !!!
 
 		// Rk: the tearDown method is called here.
 	}
