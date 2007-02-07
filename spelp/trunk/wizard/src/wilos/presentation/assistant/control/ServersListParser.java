@@ -23,16 +23,17 @@ import wilos.presentation.assistant.model.WizardServer;
  * This class allow the user to save a server list in a XML file, to
  * get this list, and to re-order this list.
  * @author Guillaume
+ * @author Ramy
  */
 public class ServersListParser {
 	
-	private static final String fic = "src/wilos/presentation/assistant/ressources/servers.xml";
+	private static final String fic = "src/wilos/presentation/assistant/ressources/servers.xml";	//default file where the servers are stored
 	private File XML_File;
 	private ArrayList<WizardServer> serversList = null;
 	private static final String xpath_server ="//Server";
 	
 	/**
-	 * Constructor: make a new list server associated with the file f (create it if
+	 * Constructor: makes a new list server associated with the file f (create it if
 	 * it doesen't exists).
 	 * @param f path of of the file
 	 */
@@ -48,7 +49,7 @@ public class ServersListParser {
 	
 	/**
 	 * Constructor: make a new list server associated with the default file (create it if
-	 * it doesen't exists).
+	 * it doesen't exists). Without parameters it creates it with the default location.
 	 */
 	public ServersListParser() {
 		XML_File = new File (ServersListParser.fic);
@@ -61,8 +62,8 @@ public class ServersListParser {
 	}
 
 	/**
-	 * Get the ordered server list.
-	 * @return ordererd server list
+	 * Get the servers list.
+	 * @return servers list
 	 */
 	public ArrayList<WizardServer> getServersList() {
 		if (serversList == null) {
@@ -79,13 +80,19 @@ public class ServersListParser {
 					String add;
 					int id;
 					
+					// for each server analyzes it s structure  
 					for(int i = 0; i < nodeReturned.getLength(); i++) {
 						aNode = nodeReturned.item(i);
+						
+						// default values
 						al = "";
 						add = "";
 						id = -1;
 						
 						NodeList attributesNode = aNode.getChildNodes();
+						
+						// for each block of the server if it matches alias, address or id
+						// it affects the good value
 						for (int j = 0 ; j < attributesNode.getLength() ; j++) {
 							if (attributesNode.item(j).getNodeName().equals("Alias")) {
 								al = attributesNode.item(j).getTextContent();
@@ -98,7 +105,7 @@ public class ServersListParser {
 							}
 						}
 						
-						// Don't add the server if it's not valid
+						// Don't add the server if one of the blocks is not valid
 						if (!al.equals("") && !add.equals("") && id != -1) {
 							WizardServer ws = new WizardServer (al, add,id);
 							serversList.add(ws);
@@ -108,23 +115,29 @@ public class ServersListParser {
 			}
 			else serversList = new ArrayList<WizardServer>();
 		}
-		return serversList;
+		
+		// copy the serversList
+		ArrayList<WizardServer> list = new ArrayList<WizardServer>();
+		for (WizardServer ws : serversList)
+		{
+			list.add(new WizardServer(ws.getAlias(),ws.getAddress(),ws.getId()));
+		}
+		
+		return list;
 	}
 	
 	/**
-	 * Save the given server list (and order it by alphabetic alias on the alias).
-	 * @param wsl new list of servers
+	 * Saves the given servers list. And creates or replaces the xml file
+	 * @param wsl list of servers
 	 */
 	public void saveServersList(ArrayList<WizardServer> wsl) {
 		Element data = new Element("Servers");
 		Element tmp;
 		Element server;
 		Document myDocument = new  Document(data);
+		WizardServer ws;
 		int id = 1;
 		
-		WizardServer ws;
-		
-
 		if (serversList == null)
 		{
 			serversList = new ArrayList<WizardServer>();
@@ -139,6 +152,7 @@ public class ServersListParser {
 		{
 			ws = (WizardServer) it.next();
 			
+			// 
 			serversList.add(new WizardServer(ws.getAlias(),ws.getAddress(),id));
 			
 			server = new Element("Server");
@@ -173,9 +187,9 @@ public class ServersListParser {
 	}
 	
 	/**
-	 * Put the given last server used at the top of the list, order this list, and
-	 * save it on the file.
-	 * @param no
+	 * Put the given last server used at the top of the list, orders the rest of the list on the alias,
+	 * and saves it on the file.
+	 * @param no (id of the given server)
 	 */
 	public void lastUsedServer (int no) {
 		int i;
