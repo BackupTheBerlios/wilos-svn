@@ -26,10 +26,8 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 
 	private Boolean isEvenDriven;
 
-	//private Set<WorkBreakdownElement> predecessors;	
 	private Set<WorkOrder> predecessors;
 	
-	//private Set<WorkBreakdownElement> successors;
 	private Set<WorkOrder> successors;
 
 	private Set<ConcreteWorkBreakdownElement> concreteWorkBreakdownElements;
@@ -150,7 +148,6 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	 */	
 	public void removeAllSuccessors() {
 		for (WorkOrder wo : this.getSuccessors())
-			// FIXME a vérifier
 			wo.setPredecessor(null);
 			this.getSuccessors().clear();
 	}
@@ -195,7 +192,6 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	 */
 	public void removeAllPredecessors() {
 		for (WorkOrder wo : this.getPredecessors())
-			// FIXME a vérifier
 			wo.setSuccessor(null);
 			this.getPredecessors().clear();
 	}
