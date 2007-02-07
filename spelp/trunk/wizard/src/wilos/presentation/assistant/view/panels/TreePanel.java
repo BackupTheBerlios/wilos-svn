@@ -6,7 +6,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Set;
-import java.util.Vector;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
@@ -119,7 +118,7 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 				return ((ConcreteTaskDescriptor) userObject).getTaskDescriptor().getPresentationName();
 			else if (userObject instanceof Element)
 				return ((Element)userObject).getName();
-				else
+			else
 				return "";
 		}
 	}
