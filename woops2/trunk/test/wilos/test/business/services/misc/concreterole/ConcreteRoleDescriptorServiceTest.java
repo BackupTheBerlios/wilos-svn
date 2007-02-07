@@ -5,12 +5,8 @@ import java.util.List;
 import junit.framework.TestCase;
 import wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService;
 import wilos.hibernate.misc.project.ProjectDao;
-import wilos.hibernate.misc.wilosuser.ParticipantDao;
-import wilos.hibernate.spem2.role.RoleDescriptorDao;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.project.Project;
-import wilos.model.misc.wilosuser.Participant;
-import wilos.model.spem2.role.RoleDescriptor;
 import wilos.test.TestConfiguration;
 
 /**
@@ -25,18 +21,15 @@ public class ConcreteRoleDescriptorServiceTest extends TestCase {
 	private ConcreteRoleDescriptorService concreteRoleDescriptorService = null;
 
 	private ProjectDao projectDao = null;
-	private RoleDescriptorDao roledescriptorDao = null;
-	private ParticipantDao participantDao = null;
 
-	public static final String NAME = "name" ;
+	public static final String NAME = "name";
 
 	public ConcreteRoleDescriptorServiceTest() {
 		this.concreteRoleDescriptorService = (ConcreteRoleDescriptorService) TestConfiguration
 				.getInstance().getApplicationContext().getBean(
 						"ConcreteRoleDescriptorService");
-		this.participantDao = (ParticipantDao) TestConfiguration.getInstance().getApplicationContext().getBean("ParticipantDao");
-		this.roledescriptorDao = (RoleDescriptorDao) TestConfiguration.getInstance().getApplicationContext().getBean("RoleDescriptorDao");
-		this.projectDao = (ProjectDao) TestConfiguration.getInstance().getApplicationContext().getBean("ProjectDao");
+		this.projectDao = (ProjectDao) TestConfiguration.getInstance()
+				.getApplicationContext().getBean("ProjectDao");
 	}
 
 	/*
@@ -49,9 +42,6 @@ public class ConcreteRoleDescriptorServiceTest extends TestCase {
 
 		this.concreteRoleDescriptor = new ConcreteRoleDescriptor();
 		this.concreteRoleDescriptor.setConcreteName(NAME);
-
-		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao()
-				.saveOrUpdateConcreteRoleDescriptor(this.concreteRoleDescriptor);
 	}
 
 	/*
@@ -61,41 +51,42 @@ public class ConcreteRoleDescriptorServiceTest extends TestCase {
 	 */
 	protected void tearDown() throws Exception {
 		super.tearDown();
-		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao()
-				.deleteConcreteRoleDescriptor(this.concreteRoleDescriptor);
 	}
 
-	public void testGetConcreteRoleDescriptorsForProject() {
+	public void testGetAllConcreteRoleDescriptorsForProject() {
 		// Rk: the setUp method is called here.
 
-		// add a project
 		Project project = new Project();
-		project.setConcreteName("projectName");
+		project.setConcreteName("project");
 		this.projectDao.saveOrUpdateProject(project);
 
-		// add a roledescriptor
-		RoleDescriptor roledescriptor = new RoleDescriptor();
-		roledescriptor.setName("RDName");
-		this.roledescriptorDao.saveOrUpdateRoleDescriptor(roledescriptor);
+		Project project2 = new Project();
+		project2.setConcreteName("project");
+		this.projectDao.saveOrUpdateProject(project2);
 
-		// add a participant
-		Participant participant = new Participant();
-		participant.setName("PartName");
-		participant.addConcreteRoleDescriptor(this.concreteRoleDescriptor);
-		participant.addToProject(project);
-		this.participantDao.saveOrUpdateParticipant(participant);
+		this.concreteRoleDescriptor.setProject(project);
 
-		this.concreteRoleDescriptor.addRoleDescriptor(roledescriptor);
-		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao().saveOrUpdateConcreteRoleDescriptor(this.concreteRoleDescriptor);
+		ConcreteRoleDescriptor ctdTmp = new ConcreteRoleDescriptor();
+		ctdTmp.setConcreteName("pouet");
+		ctdTmp.setProject(project2);
+
+		this.concreteRoleDescriptorService
+				.getConcreteRoleDescriptorDao()
+				.saveOrUpdateConcreteRoleDescriptor(this.concreteRoleDescriptor);
+		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao()
+				.saveOrUpdateConcreteRoleDescriptor(ctdTmp);
 
 		List<ConcreteRoleDescriptor> list = this.concreteRoleDescriptorService
-		.getAllConcreteRoleDescriptorsForProject(project.getId());
+				.getAllConcreteRoleDescriptorsForProject(project.getId());
 
-		assertNotNull("notNull",list);
-		assertTrue("list.size",list.size() >= 1);
-		assertTrue(list.contains(this.concreteRoleDescriptor));
-		// assertEquals("Equals",((ConcreteRoleDescriptor)
-		// list.get(0)).getConcreteName());
+		assertNotNull(list);
+		assertTrue(list.size() == 1);
+
+		//clean.
+		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao()
+		.deleteConcreteRoleDescriptor(this.concreteRoleDescriptor);
+		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao()
+		.deleteConcreteRoleDescriptor(ctdTmp);
 
 		// Rk: the tearDown method is called here.
 	}
