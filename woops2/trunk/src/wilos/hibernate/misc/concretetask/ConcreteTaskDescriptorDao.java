@@ -86,4 +86,13 @@ public class ConcreteTaskDescriptorDao extends HibernateDaoSupport {
 					_e);
 		}
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<ConcreteTaskDescriptor> getAllConcreteTaskDescriptorsForProject(
+			String _projectId) {
+		List ctds = this.getHibernateTemplate().find(
+				"from ConcreteTaskDescriptor ctd where ctd.project_id=?",
+				_projectId);
+		return ctds;
+	}
 }

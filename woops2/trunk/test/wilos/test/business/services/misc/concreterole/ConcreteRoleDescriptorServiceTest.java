@@ -84,7 +84,7 @@ public class ConcreteRoleDescriptorServiceTest extends TestCase {
 		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao().saveOrUpdateConcreteRoleDescriptor(this.concreteRoleDescriptor);
 
 		List<ConcreteRoleDescriptor> list = this.concreteRoleDescriptorService
-		.getConcreteRoleDescriptorsForProject(project.getId());
+		.getAllConcreteRoleDescriptorsForProject(project.getId());
 
 		assertNotNull("notNull",list);
 		assertTrue("list.size",list.size() >= 1);

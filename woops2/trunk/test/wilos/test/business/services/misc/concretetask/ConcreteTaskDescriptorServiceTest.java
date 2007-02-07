@@ -18,7 +18,7 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 	ConcreteTaskDescriptorService concreteTaskDescriptorService;
 
 	ConcreteTaskDescriptor concreteTaskDescriptor;
-	
+
 	ConcreteTaskDescriptorDao concreteTaskDescriptorDao = (ConcreteTaskDescriptorDao)TestConfiguration.getInstance()
 			.getApplicationContext().getBean("ConcreteTaskDescriptorDao");
 
@@ -74,7 +74,7 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 				.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
 		List<ConcreteTaskDescriptor> list = new ArrayList<ConcreteTaskDescriptor>();
 		list.addAll(this.concreteTaskDescriptorService
-				.getConcreteTaskDescriptorsForProject(project.getId()));
+				.getAllConcreteTaskDescriptorsForProject(project.getId()));
 
 		assertNotNull(list);
 		assertTrue(list.size() >= 1);
@@ -89,10 +89,10 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 		// Change the state of the concretetaskdescriptor.
 		this.concreteTaskDescriptorService
 				.startConcreteTaskDescriptor(this.concreteTaskDescriptor);
-		
+
 		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
 		String id = this.concreteTaskDescriptor.getId();
-		
+
 		// Get this concreteTaskDescriptor.
 		ConcreteTaskDescriptor tmpConcreteTaskDescriptor = this.concreteTaskDescriptorService.getConcreteTaskDescriptor(id);
 
@@ -108,13 +108,13 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 //		 Change the state of the concretetaskdescriptor.
 		this.concreteTaskDescriptorService
 				.suspendConcreteTaskDescriptor(this.concreteTaskDescriptor);
-		
+
 		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
 		String id = this.concreteTaskDescriptor.getId();
-		
+
 		// Get this concreteTaskDescriptor.
 		ConcreteTaskDescriptor tmpConcreteTaskDescriptor = this.concreteTaskDescriptorService.getConcreteTaskDescriptor(id);
-		
+
 		assertNotNull(tmpConcreteTaskDescriptor);
 		assertEquals(tmpConcreteTaskDescriptor.getState(), State.SUSPENDED);
 
@@ -127,10 +127,10 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 //		 Change the state of the concretetaskdescriptor.
 		this.concreteTaskDescriptorService
 				.finishConcreteTaskDescriptor(this.concreteTaskDescriptor);
-		
+
 		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
 		String id = this.concreteTaskDescriptor.getId();
-		
+
 		// Get this concreteTaskDescriptor.
 		ConcreteTaskDescriptor tmpConcreteTaskDescriptor = this.concreteTaskDescriptorService.getConcreteTaskDescriptor(id);
 
