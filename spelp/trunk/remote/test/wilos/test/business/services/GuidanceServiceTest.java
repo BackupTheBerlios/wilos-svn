@@ -31,7 +31,7 @@ public class GuidanceServiceTest extends TestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown();
 
-		// Delete the tmp guideline from the database.
+		// Delete the tmp guidance from the database.
 		this.guidanceService.getGuidanceDao().deleteGuidance(this.guidance) ;
 	}
 

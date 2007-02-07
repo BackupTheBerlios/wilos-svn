@@ -33,6 +33,8 @@ public class GuidanceDaoTest extends TestCase {
 		// Create empty Activity.
 		this.guidance = new Guidance() ;
 		this.guidance.setTaskdefinition(null);
+		this.guidance.setActivity(null);
+		this.guidance.setRoledefinition(null);
 	}
 
 	/*

@@ -1,9 +1,11 @@
 package wilos.business.transfertobject;
 
+import java.io.Serializable;
+
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 
-public class ConcreteRoleDescriptorTO extends ConcreteRoleDescriptor {
+public class ConcreteRoleDescriptorTO extends ConcreteRoleDescriptor implements Serializable {
 	
 	/** Creates a new instance of ParticipantTO */
     public ConcreteRoleDescriptorTO() {
