@@ -18,6 +18,8 @@ public class ConcreteRoleDescriptorTO extends ConcreteRoleDescriptor implements 
     	this.setConcreteName(myConcreteRoleDescriptor.getConcreteName());
     	this.setRoleDescriptor(new RoleDescriptorTO(myConcreteRoleDescriptor.getRoleDescriptor()));
     	
+    	// TODO this.setSuperConcreteActivities(arg0);
+    	
         for (ConcreteTaskDescriptor ctd : myConcreteRoleDescriptor.getConcreteTaskDescriptors()) {
         	this.addConcreteTaskDescriptor(new ConcreteTaskDescriptorTO(ctd));
         }
