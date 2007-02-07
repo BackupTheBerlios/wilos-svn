@@ -17,7 +17,11 @@ public class PhaseService {
 
 		ConcretePhase cp = new ConcretePhase();
 
-		cp.setConcreteName(_phase.getPresentationName());
+		if (_phase.getPresentationName() == null)
+			cp.setConcreteName(_phase.getName()) ;
+		else
+			cp.setConcreteName(_phase.getPresentationName());
+		
 		cp.addPhase(_phase);
 
 		this.concretePhaseDao.saveOrUpdateConcretePhase(cp);

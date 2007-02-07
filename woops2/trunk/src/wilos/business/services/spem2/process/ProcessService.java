@@ -14,6 +14,7 @@ import wilos.business.services.spem2.activity.ActivityService;
 import wilos.business.services.spem2.breakdownelement.BreakdownElementService;
 import wilos.business.services.spem2.iteration.IterationService;
 import wilos.business.services.spem2.phase.PhaseService;
+import wilos.business.services.spem2.role.RoleDescriptorService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.business.services.util.xml.parser.XMLServices;
 import wilos.hibernate.misc.project.ProjectDao;
@@ -64,6 +65,8 @@ public class ProcessService {
 	private ActivityService activityService;
 
 	private TaskDescriptorService taskDescriptorService;
+	
+	private RoleDescriptorService roleDescriptorService;
 
 	private ActivityDao activityDao;
 
@@ -612,22 +615,19 @@ public class ProcessService {
 		for (BreakdownElement bde : forSaving) {
 			if (bde instanceof Phase) {
 				Phase ph = (Phase) bde;
-				// this.phaseService.phaseInstanciation(_project, ph);
+				this.phaseService.phaseInstanciation(_project, ph);
 			} else {
 				if (bde instanceof Iteration) {
 					Iteration it = (Iteration) bde;
-					// this.iterationService.iterationInstanciation(_project,
-					// it);
+					this.iterationService.iterationInstanciation(_project, it);
 				} else {
 					if (bde instanceof Activity) {
 						Activity act = (Activity) bde;
-						// this.activityService.activityInstanciation(_project,
-						// act);
+						this.activityService.activityInstanciation(_project, act);
 					} else {
 						if (bde instanceof RoleDescriptor) {
 							RoleDescriptor rd = (RoleDescriptor) bde;
-							// this.roleDescriptorService.roleDescriptorInstanciation(_project,
-							// rd);
+							this.roleDescriptorService.roleDescriptorInstanciation(_project, rd);
 						} else {
 							TaskDescriptor td = (TaskDescriptor) bde;
 							this.taskDescriptorService
@@ -944,5 +944,20 @@ public class ProcessService {
 
 	public void setGuidanceDao(GuidanceDao guidanceDao) {
 		this.guidanceDao = guidanceDao;
+	}
+
+	/**
+	 * @return the roleDescriptorService
+	 */
+	public RoleDescriptorService getRoleDescriptorService() {
+		return this.roleDescriptorService;
+	}
+
+	/**
+	 * @param _roleDescriptorService the roleDescriptorService to set
+	 */
+	public void setRoleDescriptorService(
+			RoleDescriptorService _roleDescriptorService) {
+		this.roleDescriptorService = _roleDescriptorService;
 	}
 }

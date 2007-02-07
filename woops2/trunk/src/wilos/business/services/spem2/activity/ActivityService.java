@@ -30,7 +30,11 @@ public class ActivityService {
 
 		ConcreteActivity cact = new ConcreteActivity();
 
-		cact.setConcreteName(_activity.getPresentationName());
+		if (_activity.getPresentationName() == null)
+			cact.setConcreteName(_activity.getName()) ;
+		else
+			cact.setConcreteName(_activity.getPresentationName());
+		
 		cact.addActivity(_activity);
 
 		this.concreteActivityDao.saveOrUpdateConcreteActivity(cact);

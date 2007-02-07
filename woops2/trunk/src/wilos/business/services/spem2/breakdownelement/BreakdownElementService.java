@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import wilos.hibernate.misc.concretebreakdownelement.ConcreteBreakdownElementDao;
-import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
+import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 
@@ -21,12 +21,16 @@ public class BreakdownElementService {
 
 	public void breakdownElementInstanciation (Project _project, BreakdownElement _bde) {
 
-		ConcreteRoleDescriptor crd = new ConcreteRoleDescriptor();
+		ConcreteBreakdownElement cbe = new ConcreteBreakdownElement();
 
-		crd.setConcreteName(_bde.getPresentationName());
-		crd.addBreakdownElement(_bde);
+		if (_bde.getPresentationName() == null)
+			cbe.setConcreteName(_bde.getName()) ;
+		else
+			cbe.setConcreteName(_bde.getPresentationName());
+		
+		cbe.addBreakdownElement(_bde);
 
-		this.concreteBreakdownElementDao.saveOrUpdateConcreteBreakdownElement(crd);
+		this.concreteBreakdownElementDao.saveOrUpdateConcreteBreakdownElement(cbe);
 	}
 
 	/**

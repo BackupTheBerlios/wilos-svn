@@ -28,7 +28,11 @@ public class RoleDescriptorService {
 
 		ConcreteRoleDescriptor crd = new ConcreteRoleDescriptor();
 
-		crd.setConcreteName(_rd.getPresentationName());
+		if (_rd.getPresentationName() == null)
+			crd.setConcreteName(_rd.getName()) ;
+		else
+			crd.setConcreteName(_rd.getPresentationName());
+		
 		crd.addRoleDescriptor(_rd);
 
 		this.concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(crd);

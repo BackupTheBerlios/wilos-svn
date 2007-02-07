@@ -22,7 +22,11 @@ public class TaskDescriptorService {
 
 		ConcreteTaskDescriptor ctd = new ConcreteTaskDescriptor();
 
-		ctd.setConcreteName(td.getPresentationName());
+		if (td.getPresentationName() == null)
+			ctd.setConcreteName(td.getName()) ;
+		else
+			ctd.setConcreteName(td.getPresentationName());
+		
 		ctd.addTaskDescriptor(td);
 
 		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(ctd);

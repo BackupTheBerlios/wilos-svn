@@ -17,7 +17,11 @@ public class IterationService {
 
 		ConcreteIteration ci = new ConcreteIteration();
 
-		ci.setConcreteName(_iteration.getPresentationName());
+		if (_iteration.getPresentationName() == null)
+			ci.setConcreteName(_iteration.getName()) ;
+		else
+			ci.setConcreteName(_iteration.getPresentationName());
+		
 		ci.addIteration(_iteration);
 
 		this.concreteIterationDao.saveOrUpdateConcreteIteration(ci);
