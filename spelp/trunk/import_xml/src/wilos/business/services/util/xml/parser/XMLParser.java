@@ -95,6 +95,7 @@ public class XMLParser {
 	private static final String id = "id";
 	private static final String attr_name_xsitype = "xsi:type";
 	private static final String attr_name_variabilityBasedOnElement = "variabilityBasedOnElement" ;
+	private static final String attr_name_linkType = "linkType";
 	
 	/* Variables recording elements */
 	// Filled by fillTaskDefinitionsList and fillRoleDefinitionsList
@@ -244,11 +245,13 @@ public class XMLParser {
 		Activity ActivityTobereturn = null;
 		// getting the id of the task
 		String idAct_pred = "" ;
+		String linkType = "";
 		NodeList listOfTdNodes = _node.getChildNodes() ;
 		
 		for (int i = 0 ; i < listOfTdNodes.getLength() ; i ++){
 			if (listOfTdNodes.item(i).getNodeName().equals(predecessor)){
 				idAct_pred = listOfTdNodes.item(i).getTextContent();
+				linkType = (listOfTdNodes.item(i).getAttributes().getNamedItem(attr_name_linkType).getNodeValue());
 			}
 			
 			// process if there is a task for this task desriptor			
@@ -430,11 +433,13 @@ public class XMLParser {
 		TaskDescriptor taskTobereturn = null;
 		// getting the id of the task
 		String idTask_pred = "" ;
+		String linkType = "";
 		NodeList listOfTdNodes = _node.getChildNodes() ;
 		
 		for (int i = 0 ; i < listOfTdNodes.getLength() ; i ++){
 			if (listOfTdNodes.item(i).getNodeName().equals(predecessor)){				
-				idTask_pred = listOfTdNodes.item(i).getTextContent();
+				idTask_pred = listOfTdNodes.item(i).getTextContent();				
+				linkType = (listOfTdNodes.item(i).getAttributes().getNamedItem(attr_name_linkType).getNodeValue());
 			}
 			
 			// process if there is a task for this task desriptor			
@@ -442,8 +447,9 @@ public class XMLParser {
 			// if the task doesn't exist
 			if (taskTobereturn != null){
 				//add the predecessor to the TaskDescriptor
-				_t.addPredecessor(taskTobereturn);				
+				_t.addPredecessor(taskTobereturn);
 			}
+			
 		}
 	}
 	
