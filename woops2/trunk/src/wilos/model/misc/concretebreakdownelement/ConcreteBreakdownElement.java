@@ -7,11 +7,14 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.project.Project;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 
 public class ConcreteBreakdownElement implements Cloneable {
 
 	private String id;
+
+	private Project project;
 
 	private String concreteName;
 
@@ -40,9 +43,11 @@ public class ConcreteBreakdownElement implements Cloneable {
 	 */
 	protected void copy(final ConcreteBreakdownElement _concreteBreakdownElement) {
 		this.setConcreteName(_concreteBreakdownElement.getConcreteName());
-		this.setBreakdownElement(_concreteBreakdownElement.getBreakdownElement());
+		this.setBreakdownElement(_concreteBreakdownElement
+				.getBreakdownElement());
 		this.setSuperConcreteActivities(_concreteBreakdownElement
 				.getSuperConcreteActivities());
+		this.setProject(_concreteBreakdownElement.getProject());
 	}
 
 	/*
@@ -58,10 +63,12 @@ public class ConcreteBreakdownElement implements Cloneable {
 		}
 		ConcreteBreakdownElement concreteBreakdownElement = (ConcreteBreakdownElement) obj;
 		return new EqualsBuilder().append(this.concreteName,
-				concreteBreakdownElement.concreteName).append(this.breakdownElement,
-						concreteBreakdownElement.breakdownElement).append(
+				concreteBreakdownElement.concreteName).append(
+				this.breakdownElement,
+				concreteBreakdownElement.breakdownElement).append(
 				this.superConcreteActivities,
-				concreteBreakdownElement.superConcreteActivities).isEquals();
+				concreteBreakdownElement.superConcreteActivities).append(
+				this.project, concreteBreakdownElement.project).isEquals();
 	}
 
 	/*
@@ -69,7 +76,8 @@ public class ConcreteBreakdownElement implements Cloneable {
 	 *
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(this.concreteName).append(this.breakdownElement).toHashCode();
+		return new HashCodeBuilder(17, 37).append(this.concreteName).append(
+				this.breakdownElement).append(this.project).toHashCode();
 	}
 
 	/*
@@ -93,25 +101,28 @@ public class ConcreteBreakdownElement implements Cloneable {
 	 */
 
 	public void addSuperConcreteActivity(ConcreteActivity _superConcreteActivity) {
-		this.getSuperConcreteActivities().add(_superConcreteActivity) ;
-		_superConcreteActivity.getConcreteBreakdownElements().add(this) ;
+		this.getSuperConcreteActivities().add(_superConcreteActivity);
+		_superConcreteActivity.getConcreteBreakdownElements().add(this);
 	}
 
-	public void addAllSuperActivities(Set<ConcreteActivity> _superConcreteActivities) {
-		for(ConcreteActivity concreteActivity : _superConcreteActivities){
-			concreteActivity.addConcreteBreakdownElement(this) ;
+	public void addAllSuperActivities(
+			Set<ConcreteActivity> _superConcreteActivities) {
+		for (ConcreteActivity concreteActivity : _superConcreteActivities) {
+			concreteActivity.addConcreteBreakdownElement(this);
 		}
 	}
 
-	public void removeSuperConcreteActivity(ConcreteActivity _superConcreteActivity) {
-		_superConcreteActivity.getConcreteBreakdownElements().remove(this) ;
-		this.getSuperConcreteActivities().remove(_superConcreteActivity) ;
+	public void removeSuperConcreteActivity(
+			ConcreteActivity _superConcreteActivity) {
+		_superConcreteActivity.getConcreteBreakdownElements().remove(this);
+		this.getSuperConcreteActivities().remove(_superConcreteActivity);
 	}
 
 	public void removeAllSuperConcreteActivities() {
-		for(ConcreteActivity concreteActivity : this.getSuperConcreteActivities())
-			concreteActivity.getConcreteBreakdownElements().remove(this) ;
-		this.getSuperConcreteActivities().clear() ;
+		for (ConcreteActivity concreteActivity : this
+				.getSuperConcreteActivities())
+			concreteActivity.getConcreteBreakdownElements().remove(this);
+		this.getSuperConcreteActivities().clear();
 	}
 
 	/*
@@ -128,10 +139,10 @@ public class ConcreteBreakdownElement implements Cloneable {
 	}
 
 	public String getId() {
-		return this.id ;
+		return this.id;
 	}
 
-	@ SuppressWarnings ("unused")
+	@SuppressWarnings("unused")
 	protected void setId(String _id) {
 		this.id = _id;
 	}
@@ -151,6 +162,21 @@ public class ConcreteBreakdownElement implements Cloneable {
 
 	public void setBreakdownElement(BreakdownElement breakdownElement) {
 		this.breakdownElement = breakdownElement;
+	}
+
+	/**
+	 * @return the project
+	 */
+	public Project getProject() {
+		return project;
+	}
+
+	/**
+	 * @param project
+	 *            the project to set
+	 */
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 }
