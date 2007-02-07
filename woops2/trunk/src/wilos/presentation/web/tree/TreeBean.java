@@ -155,6 +155,9 @@ public class TreeBean {
 		this.loadCheckBox = true;
 		this.loadTree = false;
 		this.buildModel(true);
+		
+		//TODO changeTreeActionListener not verify
+		this.selectNodeToShow(this.projectId, WilosObjectNode.PROJECTNODE);
 	}
 
 	public void filterTreeActionListener(ValueChangeEvent evt) {
@@ -170,6 +173,7 @@ public class TreeBean {
 		logger.debug("### TreeBean ### selectNodeActionListener - nodeId ="
 				+ nodeId);
 		String pageId = (String) map.get("pageId");
+		
 		logger.debug("### TreeBean ### selectNodeActionListener - pageId ="
 				+ pageId);
 		//
