@@ -9,10 +9,14 @@ import javax.xml.namespace.QName;
 
 import wilos.business.webservices.WizardServices;
 import wilos.business.webservices.WizardServicesService;
+import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.wilosuser.Participant;
+import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.guide.Guidance;
+import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;
@@ -132,7 +136,25 @@ public class WizardServicesProxy {
         	Participant p = new Participant();
             p.setName("testSansBD");
             
-            ConcreteRoleDescriptor aTmpConcreteRole ;;
+            //  ajout d'activity
+            
+            ConcreteActivity aConcreteActivity = new ConcreteActivity();
+            Activity anActivity = new Activity () ;
+            
+            ConcretePhase aConcretePhase = new ConcretePhase();
+            Phase aPhase = new Phase();
+            
+            anActivity.setPresentationName("Activite de developpement");
+            anActivity.setDescription("Tout le processus de developpement");
+            aConcreteActivity.setConcreteName(anActivity.getPresentationName());
+            aConcreteActivity.setActivity(anActivity);
+            
+            aPhase.setPresentationName("Phase de fin de projet");
+            aPhase.setDescription("Tout ce qu'on fait apres le projet");
+            aConcretePhase.setConcreteName(aPhase.getPresentationName());
+            aConcretePhase.setPhase(aPhase);
+            
+            ConcreteRoleDescriptor aTmpConcreteRole ;
             RoleDescriptor aTmpRole;
             TaskDescriptor aTmpTask;
             Step aTmpStep;
@@ -276,7 +298,10 @@ public class WizardServicesProxy {
             aTmpRole.addPrimaryTask(aTmpTask);
             aTmpConcreteRole.addConcreteTaskDescriptor(aTmpConcrete);
             aTmpTask.addConcreteTaskDescriptor(aTmpConcrete);
-
+            
+            // affectation du role dans l activty
+            aTmpConcreteRole.addSuperConcreteActivity(aConcreteActivity);
+            aTmpRole.addSuperActivity(anActivity);
             
             // ----- nouveau
             
@@ -362,6 +387,9 @@ public class WizardServicesProxy {
             aTmpRole.addPrimaryTask(aTmpTask);
             aTmpTask.addConcreteTaskDescriptor(aTmpConcrete);
 
+            // affectation du role dans l activty
+            aTmpConcreteRole.addSuperConcreteActivity(aConcreteActivity);
+            aTmpRole.addSuperActivity(anActivity);
             
             // ------------ nouveau
             
@@ -399,6 +427,10 @@ public class WizardServicesProxy {
             aTmpConcrete.setTaskDescriptor(aTmpTask);
             aTmpConcreteRole.addConcreteTaskDescriptor(aTmpConcrete);
             p.addConcreteRoleDescriptor(aTmpConcreteRole);
+            
+            // affectation du role dans l activty
+            aTmpConcreteRole.addSuperConcreteActivity(aConcreteActivity);
+            aTmpRole.addSuperActivity(anActivity);
             // ---------- nouveau
             
             aTmpConcrete = new ConcreteTaskDescriptor() ;
@@ -430,7 +462,10 @@ public class WizardServicesProxy {
             
             p.addConcreteRoleDescriptor(aTmpConcreteRole);
             
-            
+            // affectation du role dans l activty
+            aTmpConcreteRole.addSuperConcreteActivity(aConcretePhase);
+            aTmpRole.addSuperActivity(aPhase);
+           
             return p;
         }
 }

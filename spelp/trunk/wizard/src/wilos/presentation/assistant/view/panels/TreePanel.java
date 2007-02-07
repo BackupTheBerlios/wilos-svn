@@ -2,12 +2,10 @@ package wilos.presentation.assistant.view.panels;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Set;
+import java.util.Vector;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
@@ -21,13 +19,13 @@ import javax.swing.tree.TreePath;
 
 import org.jdesktop.swingx.JXTree;
 
+import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.element.Element;
-import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.Step;
-import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.ImagesService;
 import wilos.utils.Constantes;
@@ -130,7 +128,7 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 		
 		private void initTree() {
 			TreePanel.this.tree.removeAll();
-
+			
 			this.root = new DefaultMutableTreeNode(participant.getName());
 
 			Set<ConcreteRoleDescriptor> roles = participant.getConcreteRoleDescriptors();
@@ -138,6 +136,8 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 			// browse all the concrete roles
 			for (ConcreteRoleDescriptor crd : roles) {
 				WizardMutableTreeNode rdWmt = new WizardMutableTreeNode(crd);
+				
+				
 				((DefaultMutableTreeNode) this.root).add(rdWmt);
 				
 				// brows all the concrete tasks
@@ -212,10 +212,15 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 					ConcreteRoleDescriptor crd = (ConcreteRoleDescriptor)object ;
 					this.setIcon(ImagesService.getImageIcon("images.iconRole"));
 				}
+				else if(object instanceof ConcretePhase){
+					this.setIcon(ImagesService.getImageIcon("images.iconPhase"));
+				}
+				else if(object instanceof ConcreteActivity){
+					this.setIcon(ImagesService.getImageIcon("images.iconActivity"));
+				}
 				else if (object instanceof ConcreteTaskDescriptor) {
 					ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor)object ;
 					this.setIcon(ImagesService.getImageIcon("images.iconTaskDescriptor"));
-
 					if (ctd.getState() == Constantes.State.STARTED) {
 						this.setForeground(Color.green);
 					}
