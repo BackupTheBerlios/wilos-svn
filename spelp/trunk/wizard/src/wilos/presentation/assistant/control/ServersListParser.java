@@ -6,7 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.xml.xpath.XPathConstants;
 
@@ -20,6 +19,11 @@ import org.w3c.dom.NodeList;
 
 import wilos.presentation.assistant.model.WizardServer;
 
+/**
+ * This class allow the user to save a server list in a XML file, to
+ * get this list, and to re-order this list.
+ * @author Guillaume
+ */
 public class ServersListParser {
 	
 	private static final String fic = "src/wilos/presentation/assistant/ressources/servers.xml";
@@ -27,6 +31,11 @@ public class ServersListParser {
 	private ArrayList<WizardServer> serversList = null;
 	private static final String xpath_server ="//Server";
 	
+	/**
+	 * Constructor: make a new list server associated with the file f (create it if
+	 * it doesen't exists).
+	 * @param f path of of the file
+	 */
 	public ServersListParser(String f) {
 		XML_File = new File (f);
 		XMLUtils.setDocument(XML_File);
@@ -37,6 +46,10 @@ public class ServersListParser {
 		}
 	}
 	
+	/**
+	 * Constructor: make a new list server associated with the default file (create it if
+	 * it doesen't exists).
+	 */
 	public ServersListParser() {
 		XML_File = new File (ServersListParser.fic);
 		XMLUtils.setDocument(XML_File);
@@ -47,6 +60,10 @@ public class ServersListParser {
 		}
 	}
 
+	/**
+	 * Get the ordered server list.
+	 * @return ordererd server list
+	 */
 	public ArrayList<WizardServer> getServersList() {
 		if (serversList == null) {
 			
@@ -94,6 +111,10 @@ public class ServersListParser {
 		return serversList;
 	}
 	
+	/**
+	 * Save the given server list (and order it by alphabetic alias on the alias).
+	 * @param wsl new list of servers
+	 */
 	public void saveServersList(ArrayList<WizardServer> wsl) {
 		Element data = new Element("Servers");
 		Element tmp;
@@ -102,12 +123,24 @@ public class ServersListParser {
 		int id = 1;
 		
 		WizardServer ws;
-				
+		
+
+		if (serversList == null)
+		{
+			serversList = new ArrayList<WizardServer>();
+		}
+		else
+		{
+			serversList.clear();
+		}
+		
 		Iterator it = wsl.iterator();
 		while(it.hasNext())
 		{
 			ws = (WizardServer) it.next();
-		
+			
+			serversList.add(new WizardServer(ws.getAlias(),ws.getAddress(),id));
+			
 			server = new Element("Server");
 			
 			tmp = new Element("Alias");
@@ -139,6 +172,11 @@ public class ServersListParser {
 		}
 	}
 	
+	/**
+	 * Put the given last server used at the top of the list, order this list, and
+	 * save it on the file.
+	 * @param no
+	 */
 	public void lastUsedServer (int no) {
 		int i;
 		for (i = 0 ; i < serversList.size() && serversList.get(i).getId() != no ; i++) { }
@@ -148,18 +186,28 @@ public class ServersListParser {
 		
 		trierAlias();
 		serversList.add(0, elem);
-		saveServersList(serversList);
+		
+		// copy for the saving method
+		ArrayList<WizardServer> list = new ArrayList<WizardServer>();
+		for (WizardServer ws : serversList)
+		{
+			list.add(ws);
+		}
+		
+		saveServersList(list);
 	}
 	
+	// order, by alphabetic order on the alias, the server list
 	private void trierAlias ()
 	{
-		for (int i = 1 ; i < serversList.size() ; i++)
+		int nb = serversList.size();
+		for (int i = 1 ; i < nb ; i++)
 		{
 			WizardServer elem = serversList.get(i);
 			serversList.remove(i);
 			
 			int j;
-			for (j = 0 ; (j < i+1) && (elem.getAlias().compareTo(serversList.get(j).getAlias()) > 0); j++) { }
+			for (j = 0 ; (j < i) && (elem.getAlias().compareTo(serversList.get(j).getAlias()) > 0); j++) { }
 			
 			serversList.add(j, elem);
 		}
