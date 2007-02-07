@@ -125,7 +125,7 @@ public class ProjectBean {
 		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
 		HttpSession sess = req.getSession() ;
 		String tmpProjId = (String)sess.getAttribute("projectId");
-		tmpProjId = "2c90a1b2104ad70601104ad906f90001";//debug
+		//tmpProjId = "2c90a1b2104ad70601104ad906f90001";//debug
 		if(tmpProjId!=null){		
 			Project projTmp = projectService.getProject(tmpProjId);
 			if(projTmp!=null){
