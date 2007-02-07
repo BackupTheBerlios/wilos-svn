@@ -231,27 +231,27 @@ public class HTMLViewer extends JFrame {
 			ok = true ;
 		}
 		// if ok = true then object is an element
-		if (ok) {
-				Element e = (Element)o;
-				
-				if(!this.historyStack.empty()) {
-					while(this.cursorStack != this.historyStack.size()-1) {
-						this.historyStack.pop();
-					}
-				}
-				
-				this.historyStack.push(e);
-				
-				if(this.historyStack.size() > 6){
-					this.historyStack.remove(0);
-				}
-				else {
-					this.cursorStack = this.historyStack.size()-1;
-				}
-					
-				manageArrows();
-				
-		}
+//		if (ok) {
+//				Element e = (Element)o;
+//				
+//				if(!this.historyStack.empty()) {
+//					while(this.cursorStack != this.historyStack.size()-1) {
+//						this.historyStack.pop();
+//					}
+//				}
+//				
+//				this.historyStack.push(e);
+//				
+//				if(this.historyStack.size() > 6){
+//					this.historyStack.remove(0);
+//				}
+//				else {
+//					this.cursorStack = this.historyStack.size()-1;
+//				}
+//					
+//				manageArrows();
+//				
+//		}
 		
 	}
 
