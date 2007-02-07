@@ -83,7 +83,7 @@ public class ParticipantService {
 	@Transactional(readOnly = true)
 	public Set<ConcreteRoleDescriptor> getConcreteRoleDescriptorsForAParticipantAndForAProject(String _projectId, String _login) {
 		// TODO: getRolesListForAParticipant à deplacer dans le RoleService
-		this.concreteRoleDescriptorService.getConcreteRoleDescriptorsForProject(_projectId);
+		this.concreteRoleDescriptorService.getAllConcreteRoleDescriptorsForProject(_projectId);
 		
 		return this.participantDao.getAllConcreteRolesForAParticipant(_login);
 	}

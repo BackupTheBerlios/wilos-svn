@@ -20,8 +20,6 @@ import wilos.model.misc.wilosuser.ProcessManager;
 public class ProcessManagerService {
 
 	private ProcessManagerDao processManagerDao;
-	
-	
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -31,8 +29,7 @@ public class ProcessManagerService {
 	 * @param _processmanager
 	 */
 	public void saveProcessManager(ProcessManager _processManager) {
-		_processManager.setPassword(Security.encode(_processManager
-				.getPassword()));
+		_processManager.setPassword(Security.encode(_processManager.getPassword()));
 		this.processManagerDao.saveOrUpdateProcessManager(_processManager);
 	}
 
@@ -54,7 +51,7 @@ public class ProcessManagerService {
 	public ProcessManagerDao getProcessManagerDao() {
 		return this.processManagerDao;
 	}
-	
+
 	/**
 	 * Return Process Mannager list
 	 * 
@@ -63,5 +60,15 @@ public class ProcessManagerService {
 	@Transactional(readOnly = true)
 	public Set<ProcessManager> getProcessManagers() {
 		return this.processManagerDao.getAllProcessManagers();
+	}
+
+	/**
+	 * delete a Process Manager gived in parameter
+	 * @param processManager
+	 * 				the process manager which have to be deleted
+	 */
+	@Transactional(readOnly = false)
+	public void deleteProcessManager(ProcessManager processManager) {
+		this.processManagerDao.deleteProcessManager(processManager);
 	}
 }

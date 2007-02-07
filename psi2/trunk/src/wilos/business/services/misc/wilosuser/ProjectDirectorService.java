@@ -28,10 +28,9 @@ public class ProjectDirectorService {
 	 * 
 	 * @param _projectdirector
 	 */
-	public void saveProjectDirector(ProjectDirector _processmanager) {
-		_processmanager.setPassword(Security.encode(_processmanager
-				.getPassword()));
-		this.projectDirectorDao.saveOrUpdateProjectDirector(_processmanager);
+	public void saveProjectDirector(ProjectDirector _projectDirector) {
+		_projectDirector.setPassword(Security.encode(_projectDirector.getPassword()));
+		this.projectDirectorDao.saveOrUpdateProjectDirector(_projectDirector);
 	}
 
 	/**
@@ -62,4 +61,14 @@ public class ProjectDirectorService {
 	public Set<ProjectDirector> getProjectDirectors() {
 		return this.projectDirectorDao.getAllProjectDirectors();
 	}	
+	
+	/**
+	 * delete a Project Director gived in parameter
+	 * @param projectDirector
+	 * 				the project director which have to be deleted
+	 */
+	@Transactional(readOnly = false)
+	public void deleteProjectDirector(ProjectDirector projectDirector) {
+		this.projectDirectorDao.deleteProjectDirector(projectDirector);
+	}
 }

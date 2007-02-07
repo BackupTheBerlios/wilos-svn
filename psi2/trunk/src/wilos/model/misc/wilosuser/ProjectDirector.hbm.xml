@@ -8,7 +8,7 @@
 		extends="wilos.model.misc.wilosuser.WilosUser" table="projectdirector">
 		<key column="projectdirector_id"></key>
 
-		<set name="projectMonitored" lazy="true">
+		<set name="projectMonitored" lazy="false">
 			<key column="projectdirector_id"></key>
 			<one-to-many class="wilos.model.misc.project.Project"></one-to-many>
 		</set>
