@@ -4,8 +4,10 @@ import java.util.List;
 
 import junit.framework.TestCase;
 import wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService;
+import wilos.hibernate.misc.concretetask.ConcreteTaskDescriptorDao;
 import wilos.hibernate.misc.project.ProjectDao;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
+import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.test.TestConfiguration;
 
@@ -20,6 +22,8 @@ public class ConcreteRoleDescriptorServiceTest extends TestCase {
 
 	private ConcreteRoleDescriptorService concreteRoleDescriptorService = null;
 
+	private ConcreteTaskDescriptorDao concreteTaskDescriptorDao;
+
 	private ProjectDao projectDao = null;
 
 	public static final String NAME = "name";
@@ -30,6 +34,9 @@ public class ConcreteRoleDescriptorServiceTest extends TestCase {
 						"ConcreteRoleDescriptorService");
 		this.projectDao = (ProjectDao) TestConfiguration.getInstance()
 				.getApplicationContext().getBean("ProjectDao");
+		this.concreteTaskDescriptorDao = (ConcreteTaskDescriptorDao) TestConfiguration
+				.getInstance().getApplicationContext().getBean(
+						"ConcreteTaskDescriptorDao");
 	}
 
 	/*
@@ -78,7 +85,7 @@ public class ConcreteRoleDescriptorServiceTest extends TestCase {
 				.getConcreteRoleDescriptorDao()
 				.saveOrUpdateConcreteRoleDescriptor(this.concreteRoleDescriptor);
 		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao()
-		.saveOrUpdateConcreteRoleDescriptor(ctdTmp);
+				.saveOrUpdateConcreteRoleDescriptor(ctdTmp);
 		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao()
 				.saveOrUpdateConcreteRoleDescriptor(ctdTmp2);
 
@@ -88,11 +95,49 @@ public class ConcreteRoleDescriptorServiceTest extends TestCase {
 		assertNotNull(list);
 		assertTrue(list.size() == 2);
 
-		//clean.
+		// clean.
 		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao()
-		.deleteConcreteRoleDescriptor(this.concreteRoleDescriptor);
+				.deleteConcreteRoleDescriptor(this.concreteRoleDescriptor);
 		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao()
-		.deleteConcreteRoleDescriptor(ctdTmp2);
+				.deleteConcreteRoleDescriptor(ctdTmp2);
+
+		// Rk: the tearDown method is called here.
+	}
+
+	public void testGetAllConcreteTaskDescriptorsForConcreteRoleDescriptor() {
+		// Rk: the setUp method is called here.
+
+		ConcreteTaskDescriptor ctdTmp = new ConcreteTaskDescriptor();
+		ctdTmp.setConcreteName("pouet");
+		this.concreteTaskDescriptorDao
+				.saveOrUpdateConcreteTaskDescriptor(ctdTmp);
+
+		ConcreteTaskDescriptor ctdTmp2 = new ConcreteTaskDescriptor();
+		ctdTmp2.setConcreteName("pouet2");
+		this.concreteTaskDescriptorDao
+				.saveOrUpdateConcreteTaskDescriptor(ctdTmp2);
+
+		ConcreteTaskDescriptor ctdTmp3 = new ConcreteTaskDescriptor();
+		ctdTmp3.setConcreteName("pouet3");
+		this.concreteTaskDescriptorDao
+				.saveOrUpdateConcreteTaskDescriptor(ctdTmp3);
+
+		this.concreteRoleDescriptor.addConcreteTaskDescriptor(ctdTmp);
+		this.concreteRoleDescriptor.addConcreteTaskDescriptor(ctdTmp2);
+
+		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao().saveOrUpdateConcreteRoleDescriptor(this.concreteRoleDescriptor);
+
+		List<ConcreteTaskDescriptor> list = this.concreteRoleDescriptorService.getAllConcreteTaskDescriptorsForConcreteRoleDescriptor(this.concreteRoleDescriptor);
+
+		assertNotNull(list);
+		assertTrue(list.size() == 2);
+
+		// clean.
+		this.concreteTaskDescriptorDao.deleteConcreteTaskDescriptor(ctdTmp);
+		this.concreteTaskDescriptorDao.deleteConcreteTaskDescriptor(ctdTmp2);
+		this.concreteTaskDescriptorDao.deleteConcreteTaskDescriptor(ctdTmp3);
+		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao()
+				.deleteConcreteRoleDescriptor(this.concreteRoleDescriptor);
 
 		// Rk: the tearDown method is called here.
 	}

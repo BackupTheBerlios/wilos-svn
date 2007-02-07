@@ -9,6 +9,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
+import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.utils.ExceptionManager;
 
 /**
@@ -93,6 +94,14 @@ public class ConcreteRoleDescriptorDao extends HibernateDaoSupport {
 		List crds = this.getHibernateTemplate().find(
 				"from ConcreteRoleDescriptor ctd where ctd.project.id=?",
 				_projectId);
+		return crds;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<ConcreteTaskDescriptor> getAllConcreteTaskDescriptorsForConcreteRoleDescriptor(String _concreteRoleDescriptorId) {
+		List crds = this.getHibernateTemplate().find(
+				"from ConcreteTaskDescriptor ctd where ctd.concreteRoleDescriptor.id=?",
+				_concreteRoleDescriptorId);
 		return crds;
 	}
 }
