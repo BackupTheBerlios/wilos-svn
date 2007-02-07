@@ -6,6 +6,7 @@ import java.util.Set;
 import junit.framework.TestCase;
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
+import wilos.model.spem2.workbreakdownelement.WorkOrder;
 
 /**
  * @author deder
@@ -14,6 +15,8 @@ import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 public class WorkBreakdownElementTest extends TestCase {
 
 	private WorkBreakdownElement workBreakdownElement;
+	
+	private String LINK_TYPE = "link type";
 
 	public WorkBreakdownElementTest(){
 		this.workBreakdownElement = new WorkBreakdownElement() ;
@@ -185,11 +188,11 @@ public class WorkBreakdownElementTest extends TestCase {
 	public final void testAddSuccessor() {
 		// Rk: the setUp method is called here.
 
-		WorkBreakdownElement tmp = new WorkBreakdownElement();
+		WorkOrder tmp = new WorkOrder();
 		this.workBreakdownElement.addSuccessor(tmp);
 
 		assertTrue(this.workBreakdownElement.getSuccessors().contains(tmp));
-		assertTrue(tmp.getPredecessors().contains(this.workBreakdownElement));
+		assertTrue(tmp.getPredecessor().equals(this.workBreakdownElement));
 
 		// Rk: the tearDown method is called here.
 	}
@@ -197,11 +200,11 @@ public class WorkBreakdownElementTest extends TestCase {
 	public final void testAddPredecessor() {
 		// Rk: the setUp method is called here.
 
-		WorkBreakdownElement tmp = new WorkBreakdownElement();
+		WorkOrder tmp = new WorkOrder();
 		this.workBreakdownElement.addPredecessor(tmp);
 
 		assertTrue(this.workBreakdownElement.getPredecessors().contains(tmp));
-		assertTrue(tmp.getSuccessors().contains(this.workBreakdownElement));
+		assertTrue(tmp.getSuccessor().equals(this.workBreakdownElement));
 
 		// Rk: the tearDown method is called here.
 	}
@@ -209,12 +212,12 @@ public class WorkBreakdownElementTest extends TestCase {
 	public final void testRemoveSuccessor() {
 		// Rk: the setUp method is called here.
 
-		WorkBreakdownElement tmp = new WorkBreakdownElement();
+		WorkOrder tmp = new WorkOrder();
 		this.workBreakdownElement.addSuccessor(tmp);
 		this.workBreakdownElement.removeSuccessor(tmp);
 
 		assertFalse(this.workBreakdownElement.getSuccessors().contains(tmp));
-		assertFalse(tmp.getPredecessors().contains(this.workBreakdownElement));
+		assertFalse(this.workBreakdownElement.equals(tmp.getPredecessor()));
 
 		// Rk: the tearDown method is called here.
 	}
@@ -222,46 +225,24 @@ public class WorkBreakdownElementTest extends TestCase {
 	public final void testRemovePredecessor() {
 		// Rk: the setUp method is called here.
 
-		WorkBreakdownElement tmp = new WorkBreakdownElement();
+		WorkOrder tmp = new WorkOrder();
 		this.workBreakdownElement.addPredecessor(tmp);
 		this.workBreakdownElement.removePredecessor(tmp);
 
 		assertFalse(this.workBreakdownElement.getPredecessors().contains(tmp));
-		assertFalse(tmp.getSuccessors().contains(this.workBreakdownElement));
+		assertFalse(this.workBreakdownElement.equals(tmp.getSuccessor()));
 
 		// Rk: the tearDown method is called here.
 	}
-
-	public final void testAddAllPredecessors() {
-		// Rk: the setUp method is called here.
-
-		WorkBreakdownElement tmp1 = new WorkBreakdownElement();
-		tmp1.setName("tmp1");
-		WorkBreakdownElement tmp2 = new WorkBreakdownElement();
-		tmp2.setName("tmp2");
-		Set<WorkBreakdownElement> list = new HashSet<WorkBreakdownElement>();
-		list.add(tmp1);
-		list.add(tmp2);
-
-		this.workBreakdownElement.addAllPredecessors(list);
-
-		assertTrue(this.workBreakdownElement.getPredecessors().size() == 2);
-		assertTrue(this.workBreakdownElement.getPredecessors().contains(tmp1));
-		assertTrue(this.workBreakdownElement.getPredecessors().contains(tmp2));
-		assertTrue(tmp1.getSuccessors().contains(this.workBreakdownElement));
-		assertTrue(tmp2.getSuccessors().contains(this.workBreakdownElement));
-
-		// Rk: the tearDown method is called here.
-	}
-
+	
 	public final void testAddAllSuccessors() {
 		// Rk: the setUp method is called here.
 
-		WorkBreakdownElement tmp1 = new WorkBreakdownElement();
-		tmp1.setName("tmp1");
-		WorkBreakdownElement tmp2 = new WorkBreakdownElement();
-		tmp2.setName("tmp2");
-		Set<WorkBreakdownElement> list = new HashSet<WorkBreakdownElement>();
+		WorkOrder tmp1 = new WorkOrder();
+		tmp1.setLinkType(LINK_TYPE);
+		WorkOrder tmp2 = new WorkOrder();
+		tmp2.setLinkType("other link type");
+		Set<WorkOrder> list = new HashSet<WorkOrder>();
 		list.add(tmp1);
 		list.add(tmp2);
 
@@ -270,20 +251,42 @@ public class WorkBreakdownElementTest extends TestCase {
 		assertTrue(this.workBreakdownElement.getSuccessors().size() == 2);
 		assertTrue(this.workBreakdownElement.getSuccessors().contains(tmp1));
 		assertTrue(this.workBreakdownElement.getSuccessors().contains(tmp2));
-		assertTrue(tmp1.getPredecessors().contains(this.workBreakdownElement));
-		assertTrue(tmp2.getPredecessors().contains(this.workBreakdownElement));
+		assertTrue(this.workBreakdownElement.equals(tmp1.getPredecessor()));
+		assertTrue(this.workBreakdownElement.equals(tmp2.getPredecessor()));
 
+		// Rk: the tearDown method is called here.
+	}
+
+	public final void testAddAllPredecessors() {
+		// Rk: the setUp method is called here.
+
+		WorkOrder tmp1 = new WorkOrder();
+		tmp1.setLinkType(LINK_TYPE);
+		WorkOrder tmp2 = new WorkOrder();
+		tmp2.setLinkType("other link type");
+		Set<WorkOrder> list = new HashSet<WorkOrder>();
+		list.add(tmp1);
+		list.add(tmp2);
+
+		this.workBreakdownElement.addAllPredecessors(list);
+
+		assertTrue(this.workBreakdownElement.getPredecessors().size() == 2);
+		assertTrue(this.workBreakdownElement.getPredecessors().contains(tmp1));
+		assertTrue(this.workBreakdownElement.getPredecessors().contains(tmp2));
+		assertTrue(this.workBreakdownElement.equals(tmp1.getSuccessor()));
+		assertTrue(this.workBreakdownElement.equals(tmp2.getSuccessor()));
+		
 		// Rk: the tearDown method is called here.
 	}
 
 	public final void testRemoveAllSuccessors() {
 		// Rk: the setUp method is called here.
 
-		WorkBreakdownElement tmp1 = new WorkBreakdownElement();
-		tmp1.setName("tmp1");
-		WorkBreakdownElement tmp2 = new WorkBreakdownElement();
-		tmp2.setName("tmp2");
-		Set<WorkBreakdownElement> list = new HashSet<WorkBreakdownElement>();
+		WorkOrder tmp1 = new WorkOrder();
+		tmp1.setLinkType(LINK_TYPE);
+		WorkOrder tmp2 = new WorkOrder();
+		tmp2.setLinkType("other link type");
+		Set<WorkOrder> list = new HashSet<WorkOrder>();
 		list.add(tmp1);
 		list.add(tmp2);
 
@@ -293,8 +296,8 @@ public class WorkBreakdownElementTest extends TestCase {
 		assertTrue(this.workBreakdownElement.getSuccessors().size() == 0);
 		assertFalse(this.workBreakdownElement.getSuccessors().contains(tmp1));
 		assertFalse(this.workBreakdownElement.getSuccessors().contains(tmp2));
-		assertFalse(tmp1.getPredecessors().contains(this.workBreakdownElement));
-		assertFalse(tmp2.getPredecessors().contains(this.workBreakdownElement));
+		assertFalse(this.workBreakdownElement.equals(tmp1.getPredecessor()));
+		assertFalse(this.workBreakdownElement.equals(tmp2.getPredecessor()));
 
 		// Rk: the tearDown method is called here.
 	}
@@ -302,11 +305,11 @@ public class WorkBreakdownElementTest extends TestCase {
 	public final void testRemoveAllPredecessors() {
 		// Rk: the setUp method is called here.
 
-		WorkBreakdownElement tmp1 = new WorkBreakdownElement();
-		tmp1.setName("tmp1");
-		WorkBreakdownElement tmp2 = new WorkBreakdownElement();
-		tmp2.setName("tmp2");
-		Set<WorkBreakdownElement> list = new HashSet<WorkBreakdownElement>();
+		WorkOrder tmp1 = new WorkOrder();
+		tmp1.setLinkType(LINK_TYPE);
+		WorkOrder tmp2 = new WorkOrder();
+		tmp2.setLinkType("other link type");
+		Set<WorkOrder> list = new HashSet<WorkOrder>();
 		list.add(tmp1);
 		list.add(tmp2);
 
@@ -316,8 +319,8 @@ public class WorkBreakdownElementTest extends TestCase {
 		assertTrue(this.workBreakdownElement.getPredecessors().size() == 0);
 		assertFalse(this.workBreakdownElement.getPredecessors().contains(tmp1));
 		assertFalse(this.workBreakdownElement.getPredecessors().contains(tmp2));
-		assertFalse(tmp1.getSuccessors().contains(this.workBreakdownElement));
-		assertFalse(tmp2.getSuccessors().contains(this.workBreakdownElement));
+		assertFalse(this.workBreakdownElement.equals(tmp1.getSuccessor()));
+		assertFalse(this.workBreakdownElement.equals(tmp2.getSuccessor()));
 
 		// Rk: the tearDown method is called here.
 	}
