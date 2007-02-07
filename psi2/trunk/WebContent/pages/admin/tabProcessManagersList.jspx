@@ -1,6 +1,6 @@
 <ice:panelTab id="panelTab_process_managers_list" label="Liste des process managers" imageDir="images">
 				
-					<ice:panelStack id="processManagerList" selectedPanel="#{ProcessManagerBean.processManagerView}">
+				<ice:panelStack id="processManagerList" selectedPanel="#{ProcessManagerBean.processManagerView}">
 				
 				
 				<ice:panelGroup id="processManagerView_not_null" styleClass="contentIncludePanelGroup">

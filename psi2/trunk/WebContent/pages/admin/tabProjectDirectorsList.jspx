@@ -1,6 +1,6 @@
 <ice:panelTab id="panelTab_project_directors_list" label="Liste des project directors" imageDir="images">
 
-<ice:panelStack id="panelStack_projectDirectorList" selectedPanel="#{ProjectDirectorBean.projectDirectorView}">
+			<ice:panelStack id="panelStack_projectDirectorList" selectedPanel="#{ProjectDirectorBean.projectDirectorView}">
 
 				<ice:panelGroup id="projectDirectorView_not_null" styleClass="contentIncludePanelGroup">
 					<ice:dataTable value="#{ProjectDirectorBean.projectDirectorList}" columnWidths="100px,100px,100px" border="1" var="projectDirector">
@@ -26,7 +26,7 @@
 				</ice:panelGroup>
 				
 				
-					<ice:panelGroup id="projectDirectorView_null">
+				<ice:panelGroup id="projectDirectorView_null">
 							<h4><ice:outputText value="Admin : Pas de projectDirector"/></h4>
 						</ice:panelGroup>
 				</ice:panelStack>
