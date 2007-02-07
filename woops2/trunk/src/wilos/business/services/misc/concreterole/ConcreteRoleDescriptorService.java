@@ -1,6 +1,5 @@
 package wilos.business.services.misc.concreterole;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Propagation;
@@ -25,9 +24,8 @@ public class ConcreteRoleDescriptorService {
 		 * @return
 		 */
 		@Transactional(readOnly = true)
-		public List<ConcreteRoleDescriptor> getConcreteRoleDescriptorsForProject(String _projectId) {
-			//FIXME !!! retrieve all the crds of this project.
-			return new ArrayList<ConcreteRoleDescriptor>();
+		public List<ConcreteRoleDescriptor> getAllConcreteRoleDescriptorsForProject(String _projectId) {
+			return this.getConcreteRoleDescriptorDao().getAllConcreteRoleDescriptorsForProject(_projectId);
 		}
 
 		public ConcreteRoleDescriptorDao getConcreteRoleDescriptorDao() {
