@@ -299,10 +299,10 @@
 
 	<!-- ========================= Business Layer ========================= -->
 	<!-- Spelp
-		<bean id="AssistantService"
+	<bean id="AssistantService"
 		class="wilos.business.services.assistant.AssistantService">
 		<property name="participantDao" ref="ParticipantDao" />
-		</bean> -->
+	</bean> -->
 
 	<!-- =============================================================== -->
 	<!-- ======================= SPELP Service ========================= -->
@@ -351,11 +351,11 @@
 		<property name="processService" ref="ProcessService" />
 	</bean>
 
-	<bean id="RoleService"
+	<!--<bean id="RoleService"
 		class="wilos.business.services.misc.role.RoleService">
 		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
 		<property name="participantDao" ref="ParticipantDao" />
-	</bean>
+	</bean>-->
 
 
 	<!-- =============================================================== -->
@@ -389,6 +389,7 @@
 	<bean id="BreakdownElementService"
 		class="wilos.business.services.spem2.breakdownelement.BreakdownElementService">
 		<property name="concreteBreakdownElementDao" ref="ConcreteBreakdownElementDao" />
+		<property name="activityService" ref="ActivityService" />
 	</bean>
 
 	<bean id="ActivityService"

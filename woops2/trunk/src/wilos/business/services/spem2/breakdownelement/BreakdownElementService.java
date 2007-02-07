@@ -12,7 +12,7 @@ import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 
 /**
- * BreakdownElement is a transactional class that manages operations about breakdownelement, 
+ * BreakdownElement is a transactional class that manages operations about breakdownelement,
  * @author Soosuske
  *
  */
@@ -20,8 +20,8 @@ import wilos.model.spem2.breakdownelement.BreakdownElement;
 public class BreakdownElementService {
 
 	private ConcreteBreakdownElementDao concreteBreakdownElementDao ;
-	
-	private ActivityService activityService = new ActivityService() ;
+
+	private ActivityService activityService;
 
 	/**
 	 * Instanciates a BreakdownElement
@@ -36,9 +36,9 @@ public class BreakdownElementService {
 			cbe.setConcreteName(_bde.getName()) ;
 		else
 			cbe.setConcreteName(_bde.getPresentationName());
-		
+
 		cbe.addBreakdownElement(_bde);
-		
+
 		/* TODO verifier code par un M1 :) */
 		/* instanciating and adding all the ConcreteActivities included in the breakdownelement */
 		for (Activity act : _bde.getSuperActivities()) {
@@ -53,7 +53,7 @@ public class BreakdownElementService {
 
 	/**
 	 * Getter of concreteBreakdownElementDao
-	 * 
+	 *
 	 * @return the concreteBreakdownElementDao
 	 */
 	public ConcreteBreakdownElementDao getConcreteBreakdownElementDao() {
@@ -61,13 +61,27 @@ public class BreakdownElementService {
 	}
 
 	/**
-	 * Setter of concreteBreakdownElementDao 
-	 * 
+	 * Setter of concreteBreakdownElementDao
+	 *
 	 * @param concreteBreakdownElementDao the concreteBreakdownElementDao to set
 	 */
 	public void setConcreteBreakdownElementDao(
 			ConcreteBreakdownElementDao concreteBreakdownElementDao) {
 		this.concreteBreakdownElementDao = concreteBreakdownElementDao;
+	}
+
+	/**
+	 * @return the activityService
+	 */
+	public ActivityService getActivityService() {
+		return activityService;
+	}
+
+	/**
+	 * @param activityService the activityService to set
+	 */
+	public void setActivityService(ActivityService activityService) {
+		this.activityService = activityService;
 	}
 
 }
