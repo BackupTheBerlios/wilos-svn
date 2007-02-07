@@ -7,6 +7,7 @@ import junit.framework.TestCase ;
 import wilos.hibernate.spem2.workbreakdownelement.WorkBreakdownElementDao ;
 import wilos.model.spem2.breakdownelement.BreakdownElement ;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement ;
+import wilos.model.spem2.workbreakdownelement.WorkOrder;
 import wilos.test.TestConfiguration ;
 
 /**
@@ -75,15 +76,35 @@ public class WorkBreakdownElementDaoTest extends TestCase {
 	 */
 	public void testSaveOrUpdateWorkBreakdownElement() {
 		// Rk: the setUp method is called here.
+		
+		WorkOrder workOrder = new WorkOrder();
+		workOrder.setLinkType("link type");		
+		this.workBreakdownElement.addPredecessor(workOrder);
+		
+		WorkBreakdownElement wbde = new WorkBreakdownElement();
+		wbde.setName(NAME);		
+		wbde.addSuccessor(workOrder);
 
 		// Save the workbreakdownElement with the method to test.
 		this.workBreakdownElementDao.saveOrUpdateWorkBreakdownElement(this.workBreakdownElement) ;
-
+		this.workBreakdownElementDao.saveOrUpdateWorkBreakdownElement(wbde);
+		
 		// Check the saving.
 		String id = this.workBreakdownElement.getId() ;
+		String id2 = wbde.getId();
+		
 		WorkBreakdownElement wbdeTmp = (WorkBreakdownElement) this.workBreakdownElementDao.getHibernateTemplate().load(WorkBreakdownElement.class, id) ;
+		WorkBreakdownElement wbdeTmp2 = (WorkBreakdownElement) this.workBreakdownElementDao.getHibernateTemplate().load(WorkBreakdownElement.class, id2) ;
+		
 		assertNotNull(wbdeTmp) ;
-
+		assertNotNull(wbdeTmp2);
+		
+		assertTrue(this.workBreakdownElement.getPredecessors().size() == 1);
+		assertTrue(wbde.getSuccessors().size() == 1);
+		assertTrue(this.workBreakdownElement.getPredecessors().contains(workOrder));
+		assertTrue(wbde.getSuccessors().contains(workOrder));
+		
+		
 		// Rk: the tearDown method is called here.
 	}
 
