@@ -134,11 +134,13 @@ public class XMLParser {
 			
 			allActivities = getAllActivities();
 			setAllDependencyActivity(allActivities);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
+
 	/**
 	 * make a set with the name of each type of guidance
 	 */
@@ -203,13 +205,40 @@ public class XMLParser {
 			/* Filler for the iteration and the item (node)*/
 			FillerActivity itFiller = new FillerActivity(anActivity, aNode);	
 			Activity returnedActivityFilled = (Activity) itFiller.getFilledElement();
+			
+			setGuideByActivity(returnedActivityFilled, aNode);
+			
 			/* Add the filled object in the result List */
 			activitiesList.add(returnedActivityFilled) ;
+			
 		}			
 
 		return activitiesList;
 	}
 	
+	private static void setGuideByActivity(Activity anActivity, Node node) {
+		NodeList listOfTdNodes = node.getChildNodes() ;
+		Guidance GuideTobereturn = null;
+
+		String idGuide = "";
+		
+		// search the nodes of the guide
+		for (int i = 0 ; i < listOfTdNodes.getLength() ; i ++){
+			if(guidancesTypes.contains(listOfTdNodes.item(i).getNodeName())) {
+				// recuperation des differents id des guidelines
+				idGuide = listOfTdNodes.item(i).getTextContent();				
+				
+				GuideTobereturn = getGuidanceById(idGuide);
+				// if the guideline doesn't exist
+				if (GuideTobereturn != null){
+					 //set the guideline in the taskDefinition
+					anActivity.addGuidance(GuideTobereturn);
+				}
+			}
+		}	
+	}
+
+
 	/**
 	 * setAllDependencyActivity
 	 * @param aSet
@@ -219,7 +248,6 @@ public class XMLParser {
 		// evaluate the XPAth request and return the nodeList
 		NodeList activities = (NodeList)XMLUtils.evaluate(xpath_activity,XPathConstants.NODESET);
 		
-
 		// For each node 
 		Node aNode;
 		for(int i = 0 ; i < activities.getLength(); i++){
@@ -229,10 +257,9 @@ public class XMLParser {
 			// Filler for the iteration and the item (node)
 			FillerActivity itFiller = new FillerActivity(anActivity, aNode);	
 			Activity returnedActivityFilled = (Activity) itFiller.getFilledElement();
-			
+	
 			setDependencyByActivity(returnedActivityFilled, aNode);			
 		}
-		
 	}
 
 	/**
@@ -735,6 +762,9 @@ public class XMLParser {
 				/* Filler for the iteration and the item (node)*/
 				FillerIteration itFiller = new FillerIteration(aIteration, aNode);	
 				Iteration returnedIterationFilled = (Iteration) itFiller.getFilledElement();
+				
+				setGuideByActivity(returnedIterationFilled, aNode);
+				
 				/* Add the filled object in the result List */
 				iterationList.add(returnedIterationFilled) ;
 			}			
@@ -763,6 +793,9 @@ public class XMLParser {
 				/* Filler for the phase and the item (node)*/
 				FillerPhase phFiller = new FillerPhase(aPhase, aNode);	
 				Phase returnedPhaseFilled = (Phase) phFiller.getFilledElement();
+				
+				setGuideByActivity(returnedPhaseFilled, aNode);
+				
 				/* Add the filled object in the result List */
 				phaseList.add(returnedPhaseFilled) ;
 			}			
