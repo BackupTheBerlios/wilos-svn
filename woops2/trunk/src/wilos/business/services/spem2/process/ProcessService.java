@@ -2,6 +2,7 @@ package wilos.business.services.spem2.process;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -145,6 +146,17 @@ public class ProcessService {
 		// elements of collection getting
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 		bdes.addAll(_process.getBreakdownElements());
+		
+		//	 dependencies erasing
+		_process.getBreakdownElements().clear();
+		_process.getPredecessors().clear();
+		_process.getProjects().clear();
+		_process.getSuccessors().clear();
+		_process.getSuperActivities().clear();
+
+		// save of the project
+		this.processDao.saveOrUpdateProcess(_process);
+		System.out.println("###Process vide sauve");
 
 		// in function of element type
 		for (BreakdownElement bde : bdes) {
@@ -172,17 +184,6 @@ public class ProcessService {
 			}
 		}
 
-		// dependencies erasing
-		_process.getBreakdownElements().clear();
-		_process.getPredecessors().clear();
-		_process.getProjects().clear();
-		_process.getSuccessors().clear();
-		_process.getSuperActivities().clear();
-
-		// save of the project
-		this.processDao.saveOrUpdateProcess(_process);
-		System.out.println("###Process sauve");
-
 		// clone dependencies getting
 		_process.addAllBreakdownElements(clone.getBreakdownElements());
 		_process.addAllPredecessors(clone.getPredecessors());
@@ -192,6 +193,7 @@ public class ProcessService {
 
 		// update of the project
 		this.processDao.saveOrUpdateProcess(_process);
+		System.out.println("###Process sauve");
 	}
 
 	/**
@@ -214,9 +216,23 @@ public class ProcessService {
 		bdes.addAll(_ph.getBreakdownElements());
 
 		// Guides
-		Set<Guidance> guidances = _ph.getGuidances();
-		this.saveGuidances(guidances);
+		Set<Guidance> guidances = new HashSet<Guidance>();
+		guidances.addAll(_ph.getGuidances());
+		//this.saveGuidances(guidances);
+		
+		//	 clean of dependancies of _ph
+		_ph.getBreakdownElements().clear();
+		_ph.getPredecessors().clear();
+		_ph.getSuccessors().clear();
+		_ph.getSuperActivities().clear();
+		_ph.getGuidances().clear();
+		this.phaseDao.saveOrUpdatePhase(_ph);
+		System.out.println("###Phase vide sauve");
 
+		for (Guidance guidance : guidances) {
+			this.parseGuidance(guidance);
+		}
+		
 		for (BreakdownElement bde : bdes) {
 			if (bde instanceof Iteration) {
 				Iteration it = (Iteration) bde;
@@ -237,15 +253,6 @@ public class ProcessService {
 			}
 		}
 
-		// clean of dependancies of _ph
-		_ph.getBreakdownElements().clear();
-		_ph.getPredecessors().clear();
-		_ph.getSuccessors().clear();
-		_ph.getSuperActivities().clear();
-		_ph.getGuidances().clear();
-		this.phaseDao.saveOrUpdatePhase(_ph);
-		System.out.println("###Phase sauve");
-
 		_ph.addAllBreakdownElements(clone.getBreakdownElements());
 		_ph.addAllPredecessors(clone.getPredecessors());
 		_ph.addAllSuccessors(clone.getSuccessors());
@@ -254,6 +261,7 @@ public class ProcessService {
 
 		// Parse for guidances
 		this.phaseDao.saveOrUpdatePhase(_ph);
+		System.out.println("###Phase sauve");
 	}
 
 	/**
@@ -275,9 +283,22 @@ public class ProcessService {
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 		bdes.addAll(_it.getBreakdownElements());
 
-		Set<Guidance> guidances = _it.getGuidances();
-		this.saveGuidances(guidances);
+		Set<Guidance> guidances = new HashSet<Guidance>();
+		guidances.addAll(_it.getGuidances());
+		//this.saveGuidances(guidances);
+		
+		_it.getBreakdownElements().clear();
+		_it.getPredecessors().clear();
+		_it.getSuccessors().clear();
+		_it.getSuperActivities().clear();
+		_it.getGuidances().clear();
+		this.iterationDao.saveOrUpdateIteration(_it);
+		System.out.println("###Iteration vide sauve");
 
+		for (Guidance guidance : guidances) {
+			this.parseGuidance(guidance);
+		}
+		
 		for (BreakdownElement bde : bdes) {
 			if (bde instanceof Activity) {
 				Activity act = (Activity) bde;
@@ -293,14 +314,6 @@ public class ProcessService {
 			}
 		}
 
-		_it.getBreakdownElements().clear();
-		_it.getPredecessors().clear();
-		_it.getSuccessors().clear();
-		_it.getSuperActivities().clear();
-		_it.getGuidances().clear();
-		this.iterationDao.saveOrUpdateIteration(_it);
-		System.out.println("###Iteration sauve");
-
 		_it.addAllBreakdownElements(clone.getBreakdownElements());
 		_it.addAllPredecessors(clone.getPredecessors());
 		_it.addAllSuccessors(clone.getSuccessors());
@@ -308,6 +321,7 @@ public class ProcessService {
 		_it.addAllGuidances(guidances);
 
 		this.iterationDao.saveOrUpdateIteration(_it);
+		System.out.println("###Iteration sauve");
 	}
 
 	/**
@@ -329,9 +343,22 @@ public class ProcessService {
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 		bdes.addAll(_act.getBreakdownElements());
 
-		Set<Guidance> guidances = _act.getGuidances();
-		this.saveGuidances(guidances);
+		Set<Guidance> guidances = new HashSet<Guidance>();
+		guidances.addAll(_act.getGuidances());
+		//this.saveGuidances(guidances);
+		
+		_act.getBreakdownElements().clear();
+		_act.getPredecessors().clear();
+		_act.getSuccessors().clear();
+		_act.getSuperActivities().clear();
+		_act.getGuidances().clear();
+		this.activityDao.saveOrUpdateActivity(_act);
+		System.out.println("###Activity vide sauve");
 
+		for (Guidance guidance : guidances) {
+			this.parseGuidance(guidance);
+		}
+		
 		for (BreakdownElement bde : bdes) {
 			if (bde instanceof Activity) {
 				Activity act = (Activity) bde;
@@ -347,14 +374,6 @@ public class ProcessService {
 			}
 		}
 
-		_act.getBreakdownElements().clear();
-		_act.getPredecessors().clear();
-		_act.getSuccessors().clear();
-		_act.getSuperActivities().clear();
-		_act.getGuidances().clear();
-		this.activityDao.saveOrUpdateActivity(_act);
-		System.out.println("###Activity sauve");
-
 		_act.addAllBreakdownElements(clone.getBreakdownElements());
 		_act.addAllPredecessors(clone.getPredecessors());
 		_act.addAllSuccessors(clone.getSuccessors());
@@ -362,6 +381,7 @@ public class ProcessService {
 		_act.addAllGuidances(guidances);
 
 		this.activityDao.saveOrUpdateActivity(_act);
+		System.out.println("###Activity sauve");
 	}
 
 	/**
@@ -381,11 +401,7 @@ public class ProcessService {
 		}
 
 		RoleDefinition rdef = _rd.getRoleDefinition();
-
-		if (rdef != null) {
-			this.parseRoleDefinition(rdef);
-		}
-
+		
 		_rd.getAdditionalTasks().clear();
 		_rd.getConcreteRoleDescriptors().clear();
 		_rd.getPrimaryTasks().clear();
@@ -393,7 +409,11 @@ public class ProcessService {
 		_rd.setRoleDefinition(null);
 
 		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(_rd);
-		System.out.println("###RoleDescriptor sauve");
+		System.out.println("###RoleDescriptor vide sauve");
+		
+		if (rdef != null) {
+			this.parseRoleDefinition(rdef);
+		}
 
 		_rd.addAllAdditionalTasks(clone.getAdditionalTasks());
 		_rd.addAllConcreteRoleDescriptors(clone.getConcreteRoleDescriptors());
@@ -402,6 +422,7 @@ public class ProcessService {
 		_rd.setRoleDefinition(clone.getRoleDefinition());
 
 		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(_rd);
+		System.out.println("###RoleDescriptor sauve");
 	}
 
 	/**
@@ -420,19 +441,25 @@ public class ProcessService {
 			e.printStackTrace();
 		}
 
-		Set<Guidance> guidances = _rdef.getGuidances();
-		this.saveGuidances(guidances);
+		Set<Guidance> guidances = new HashSet<Guidance>();
+		guidances.addAll(_rdef.getGuidances());
+		//this.saveGuidances(guidances);
 
 		_rdef.getRoleDescriptors().clear();
 		_rdef.getGuidances().clear();
 
 		this.roleDefinitionDao.saveOrUpdateRoleDefinition(_rdef);
-		System.out.println("###RoleDefinition sauve");
+		System.out.println("###RoleDefinition vide sauve");
+		
+		for (Guidance guidance : guidances) {
+			this.parseGuidance(guidance);
+		}
 
 		_rdef.addAllRoleDescriptors(clone.getRoleDescriptors());
 		_rdef.addAllGuidances(guidances);
 
 		this.roleDefinitionDao.saveOrUpdateRoleDefinition(_rdef);
+		System.out.println("###RoleDefinition sauve");
 	}
 
 	/**
@@ -452,11 +479,7 @@ public class ProcessService {
 		}
 
 		TaskDefinition tdef = _td.getTaskDefinition();
-
-		if (tdef != null) {
-			this.parseTaskDefinition(tdef);
-		}
-
+		
 		_td.getAdditionalRoles().clear();
 		_td.getConcreteTaskDescriptors().clear();
 		_td.getPredecessors().clear();
@@ -466,8 +489,12 @@ public class ProcessService {
 		_td.setTaskDefinition(null);
 
 		this.taskDescriptorDao.saveOrUpdateTaskDescriptor(_td);
-		System.out.println("###TaskDescriptor sauve");
+		System.out.println("###TaskDescriptor vide sauve");
 
+		if (tdef != null) {
+			this.parseTaskDefinition(tdef);
+		}
+		
 		_td.addAllAdditionalRoles(clone.getAdditionalRoles());
 		_td.addAllConcreteTaskDescriptors(clone.getConcreteTaskDescriptors());
 		_td.addAllPredecessors(clone.getPredecessors());
@@ -477,6 +504,7 @@ public class ProcessService {
 		_td.setTaskDefinition(clone.getTaskDefinition());
 
 		this.taskDescriptorDao.saveOrUpdateTaskDescriptor(_td);
+		System.out.println("###TaskDescriptor sauve");
 	}
 
 	/**
@@ -495,29 +523,35 @@ public class ProcessService {
 			e.printStackTrace();
 		}
 
-		Set<Guidance> guidances = _tdef.getGuidances();
-		this.saveGuidances(guidances);
+		Set<Guidance> guidances = new HashSet<Guidance>();
+		guidances.addAll(_tdef.getGuidances());
+		//this.saveGuidances(guidances);
 
 		List<Step> steps = new ArrayList<Step>();
 		// recuperation des breakdownelements du processus
 		steps.addAll(_tdef.getSteps());
-
-		for (Step step : steps) {
-			this.parseStep(step);
-		}
-
+		
 		_tdef.getSteps().clear();
 		_tdef.getTaskDescriptors().clear();
 		_tdef.getGuidances().clear();
 
 		this.taskDefinitionDao.saveOrUpdateTaskDefinition(_tdef);
-		System.out.println("###TaskDefinition sauve");
+		System.out.println("###TaskDefinition vide sauve");
+
+		for (Guidance guidance : guidances) {
+			this.parseGuidance(guidance);
+		}
+		
+		for (Step step : steps) {
+			this.parseStep(step);
+		}
 
 		_tdef.addAllSteps(clone.getSteps());
 		_tdef.addAllTaskDesciptors(clone.getTaskDescriptors());
 		_tdef.addAllGuidances(guidances);
 
 		this.taskDefinitionDao.saveOrUpdateTaskDefinition(_tdef);
+		System.out.println("###TaskDefinition sauve");
 	}
 
 	/**
@@ -528,7 +562,7 @@ public class ProcessService {
 	 */
 	private void parseStep(Step _step) {
 
-		Step clone = null;
+		/*Step clone = null;
 
 		try {
 			clone = _step.clone();
@@ -538,10 +572,11 @@ public class ProcessService {
 
 		_step.setTaskDefinition(null);
 		this.stepDao.saveOrUpdateStep(_step);
-		System.out.println("###Step sauve");
+		System.out.println("###Step vide sauve");
 
-		_step.setTaskDefinition(clone.getTaskDefinition());
+		_step.setTaskDefinition(clone.getTaskDefinition());*/
 		this.stepDao.saveOrUpdateStep(_step);
+		System.out.println("###Step sauve");
 	}
 
 	/**
@@ -567,24 +602,11 @@ public class ProcessService {
 		this.guidanceDao.saveOrUpdateGuidance(_guidance);
 		System.out.println("###Guidance sauve");
 
-		_guidance.setActivity(clone.getActivity());
+		/*_guidance.setActivity(clone.getActivity());
 		_guidance.setTaskdefinition(clone.getTaskdefinition());
 		_guidance.setRoledefinition(clone.getRoledefinition());
 
-		this.guidanceDao.saveOrUpdateGuidance(_guidance);
-	}
-
-	/**
-	 * Method for saving all guidances in the submitted set
-	 *
-	 * @param _guidances
-	 */
-	private void saveGuidances(Set<Guidance> _guidances) {
-		if ((_guidances != null) && (_guidances.size() > 0)) {
-			for (Guidance g : _guidances) {
-				this.parseGuidance(g);
-			}
-		}
+		this.guidanceDao.saveOrUpdateGuidance(_guidance);*/
 	}
 
 	/**
@@ -630,8 +652,7 @@ public class ProcessService {
 							this.roleDescriptorService.roleDescriptorInstanciation(_project, rd);
 						} else {
 							TaskDescriptor td = (TaskDescriptor) bde;
-							this.taskDescriptorService
-									.taskDescriptorInstanciation(_project, td);
+							this.taskDescriptorService.taskDescriptorInstanciation(_project, td);
 						}
 					}
 				}
