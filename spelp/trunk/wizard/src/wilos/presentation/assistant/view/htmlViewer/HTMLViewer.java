@@ -26,18 +26,20 @@ import javax.swing.event.ListSelectionListener;
 
 import org.jdesktop.swingx.JXTaskPane;
 
-import wilos.business.services.guide.GuidanceService;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.element.Element;
 import wilos.model.spem2.guide.Guidance;
+import wilos.model.spem2.iteration.Iteration;
+import wilos.model.spem2.phase.Phase;
+import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.ressources.Bundle;
-import wilos.presentation.assistant.ressources.ImagesService;
 
 public class HTMLViewer extends JFrame {
 	private static HTMLViewer instance = null;
@@ -202,21 +204,33 @@ public class HTMLViewer extends JFrame {
 		else if (o instanceof ConcreteIteration){
 			ConcreteIteration r = (ConcreteIteration)o;
 			displayElement(r.getIteration());
+			o = getConcreteIterationAndDisplay(r);
+			Element tmp = (Element)o;
+			displayElement(tmp);		
 			ok = true ;
 		}
 		else if (o instanceof ConcretePhase){
 			ConcretePhase r = (ConcretePhase)o;
 			displayElement(r.getPhase());
+			o = getConcretePhaseAndDisplay(r);
+			Element tmp = (Element)o;
+			displayElement(tmp);		
 			ok = true ;
 		}
 		else if (o instanceof ConcreteActivity){
 			ConcreteActivity r = (ConcreteActivity)o;
 			displayElement(r.getActivity());
+			o = getConcreteActivityAndDisplay(r);
+			Element tmp = (Element)o;
+			displayElement(tmp);		
 			ok = true ;
 		}
 		else if (o instanceof ConcreteRoleDescriptor){
 			ConcreteRoleDescriptor r = (ConcreteRoleDescriptor)o;
 			displayElement(r.getRoleDescriptor());
+			o = getConcreteRoleAndDisplay(r);
+			Element tmp = (Element)o;
+			displayElement(tmp);		
 			ok = true ;
 		}
 		else if (o instanceof Element){
@@ -262,6 +276,102 @@ public class HTMLViewer extends JFrame {
 		if (td.getTaskDefinition() != null) {
 			guides = td.getTaskDefinition().getGuidances();
 		}
+		
+		trtGuides(guides);
+		
+		return td ;
+	}
+	
+	public void trtGuides (Set<Guidance>guides){
+		guidesList.removeAll();
+		Vector <Guidance> vectGuides = new Vector<Guidance>();
+		vectGuides.addAll(guides);
+		
+		guidesList.setListData(vectGuides);
+		guidesList.setCellRenderer(new GuidesRenderer());
+		
+		
+		if (guides.size() != 0){
+			guidesList.setVisible(true);
+			this.southPanel.setExpanded(true);
+		}
+		else {
+			this.southPanel.setExpanded(false);
+		}
+	}
+	
+	/**
+	 * Affiche les informations de l'element
+	 * et recupere les guides
+	 * @param ConcreteTaskDescriptor ctd
+	 */
+	public Activity getConcreteActivityAndDisplay(ConcreteActivity ctd) {
+		Activity td = ctd.getActivity();
+		
+		/* Affichage des guides */
+		Set<Guidance> guides = new HashSet<Guidance>(); 
+		
+		if (td.getGuidances() != null){
+			guides = td.getGuidances();
+		}
+		trtGuides(guides);
+		
+		return td ;
+	}
+	
+	/**
+	 * Affiche les informations de l'element
+	 * et recupere les guides
+	 * @param ConcreteTaskDescriptor ctd
+	 */
+	public Iteration getConcreteIterationAndDisplay(ConcreteIteration ctd) {
+		Iteration td = ctd.getIteration();
+		
+		/* Affichage des guides */
+		Set<Guidance> guides = new HashSet<Guidance>(); 
+		
+		if (td.getGuidances() != null){
+			guides = td.getGuidances();
+		}
+		trtGuides(guides);
+		
+		return td ;
+	}
+	
+	/**
+	 * Affiche les informations de l'element
+	 * et recupere les guides
+	 * @param ConcreteTaskDescriptor ctd
+	 */
+	public Phase getConcretePhaseAndDisplay(ConcretePhase ctd) {
+		Phase td = ctd.getPhase();
+		
+		/* Affichage des guides */
+		Set<Guidance> guides = new HashSet<Guidance>(); 
+		
+		if (td.getGuidances() != null){
+			guides = td.getGuidances();
+		}
+		trtGuides(guides);
+		
+		return td ;
+	}
+	
+	/**
+	 * Affiche les informations de l'element
+	 * et recupere les guides
+	 * @param ConcreteTaskDescriptor ctd
+	 */
+	public RoleDescriptor getConcreteRoleAndDisplay(ConcreteRoleDescriptor ctd) {
+		RoleDescriptor td = ctd.getRoleDescriptor();
+		
+		/* Affichage des guides */
+		Set<Guidance> guides = new HashSet<Guidance>(); 
+		
+		if (td.getRoleDefinition() != null){
+			guides = td.getRoleDefinition().getGuidances();
+		}
+		
 		
 		Vector<Guidance> vectGuides = new Vector<Guidance>();
 		vectGuides.addAll(guides);

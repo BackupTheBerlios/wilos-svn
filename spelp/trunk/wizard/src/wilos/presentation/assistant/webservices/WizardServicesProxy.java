@@ -19,6 +19,7 @@ import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
+import wilos.model.spem2.role.RoleDefinition;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;
@@ -158,11 +159,14 @@ public class WizardServicesProxy {
             
             ConcreteRoleDescriptor crd2 = new ConcreteRoleDescriptor  () ;
             RoleDescriptor rd2 = new RoleDescriptor () ;
+            RoleDefinition rde2 = new RoleDefinition () ;
             rd2.setPresentationName("Visiteur");
             rd2.setDescription("Le gars qui visite lors de l'it 2");
+            rd2.setRoleDefinition(rde2);
             crd2.setConcreteName(rd2.getPresentationName());
             crd2.setRoleDescriptor(rd2);
             crd2.addSuperConcreteActivity(aConcreteIteration2);
+            
             p.addConcreteRoleDescriptor(crd2);
             
             ConcreteActivity aConcreteActivity = new ConcreteActivity();
@@ -289,6 +293,9 @@ public class WizardServicesProxy {
             sgl.add(g2);
             sgl.add(g3);
     			
+            // on ajoute ces guides pour test au role visiteur
+            rde2.setGuidances(sgl);
+            
             // task def
             
             aTmpTaskDef = new TaskDefinition();
