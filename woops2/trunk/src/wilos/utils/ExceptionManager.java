@@ -10,7 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 /**
  * @author Sebastien
  * 
- * This class represents ... TODO
+ * Cette classe permet de gérer les exceptions
  * 
  */
 public class ExceptionManager {

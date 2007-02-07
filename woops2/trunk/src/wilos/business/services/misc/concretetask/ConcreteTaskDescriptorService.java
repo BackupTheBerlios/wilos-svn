@@ -55,7 +55,6 @@ public class ConcreteTaskDescriptorService {
 			_concreteTaskDescriptor.setRealStartingDate(Constantes.DATE_FORMAT
 					.parse(Calendar.getInstance().getTime().toString()));
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -116,7 +115,7 @@ public class ConcreteTaskDescriptorService {
 		 * try {
 		 * _concreteTaskDescriptor.setRealFinishingDate(Constantes.DATE_FORMAT
 		 * .parse(Calendar.getInstance().getTime().toString())); } catch
-		 * (ParseException e) { // TODO Auto-generated catch block
+		 * (ParseException e) { 
 		 * e.printStackTrace(); }
 		 */
 		// save changings.

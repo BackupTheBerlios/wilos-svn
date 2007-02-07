@@ -19,7 +19,6 @@ import wilos.utils.Constantes;
  * 
  * @author Sebastien
  *
- * This class represents ... TODO
  *
  */
 public class ConcreteTaskDescriptorDaoTest extends TestCase {

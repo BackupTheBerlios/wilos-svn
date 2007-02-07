@@ -55,10 +55,6 @@ public class ConcreteTaskDescriptorTest extends TestCase {
 		super.tearDown() ;
 	}
 
-	/**
-	 * TODO
-	 *
-	 */
 	public void testClone () {
 		try{
 			assertEquals(this.concreteTaskDescriptor, this.concreteTaskDescriptor.clone()) ;
@@ -68,10 +64,6 @@ public class ConcreteTaskDescriptorTest extends TestCase {
 		}
 	}
 
-	/**
-	 * TODO
-	 *
-	 */
 	public void testHashCode() {
 		ConcreteTaskDescriptor ctd = new ConcreteTaskDescriptor();
 		ctd.setConcreteName(CONCRETE_NAME);
@@ -84,10 +76,6 @@ public class ConcreteTaskDescriptorTest extends TestCase {
 		assertEquals(this.concreteTaskDescriptor.hashCode(),ctd.hashCode());
 	}
 
-	/**
-	 * TODO
-	 *
-	 */
 	public void testAddTaskDescriptor() {
 		TaskDescriptor taskDescriptor = new TaskDescriptor();
 		this.concreteTaskDescriptor.addTaskDescriptor(taskDescriptor);
@@ -100,10 +88,6 @@ public class ConcreteTaskDescriptorTest extends TestCase {
 		System.out.println(this.concreteTaskDescriptor.getPlannedFinishingDate());
 	}
 
-	/**
-	 * TODO
-	 *
-	 */
 	public void testRemoveTaskDescriptor() {
 		TaskDescriptor taskDescriptor = new TaskDescriptor();
 

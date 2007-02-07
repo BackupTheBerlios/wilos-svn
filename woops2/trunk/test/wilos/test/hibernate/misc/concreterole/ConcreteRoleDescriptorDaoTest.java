@@ -13,8 +13,6 @@ import wilos.test.TestConfiguration;
  *
  * @author Almiriad
  *
- * This class represents ... TODO
- *
  */
 public class ConcreteRoleDescriptorDaoTest extends TestCase {
 
