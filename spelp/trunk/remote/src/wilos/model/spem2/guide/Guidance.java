@@ -3,12 +3,9 @@ package wilos.model.spem2.guide;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.management.relation.Role;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.element.Element;
 import wilos.model.spem2.role.RoleDefinition;
@@ -161,7 +158,11 @@ public class Guidance extends Element {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.type).append(this.presentationName).toHashCode();
 	}
 
-	
+
+	/**
+	 * addAllTaskDefinitions
+	 * @param _taskDefinitions
+	 */
 	public void addAllTaskDefinitions(
 			Set<TaskDefinition> _taskDefinitions) {
 		for (TaskDefinition td : _taskDefinitions) {
@@ -169,12 +170,20 @@ public class Guidance extends Element {
 		}
 	}
 
+	/**
+	 * removeAllTaskDefinitions
+	 *
+	 */
 	public void removeAllTaskDefinitions() {
 		for (TaskDefinition td : this.getTaskDefinitions())
 			td.removeGuidance(this);
 		this.getTaskDefinitions().clear();
 	}
 	
+	/**
+	 * addAllRoleDefinitions
+	 * @param _roleDefinitions
+	 */
 	public void addAllRoleDefinitions(
 			Set<RoleDefinition> _roleDefinitions) {
 		for (RoleDefinition rd : _roleDefinitions) {
@@ -182,12 +191,20 @@ public class Guidance extends Element {
 		}
 	}
 
+	/**
+	 * removeAllRoleDefinitions
+	 *
+	 */
 	public void removeAllRoleDefinitions() {
 		for (RoleDefinition rd : this.getRoleDefinitions())
 			rd.removeGuidance(this);
 		this.getRoleDefinitions().clear();
 	}
 	
+	/**
+	 * addAllActivities
+	 * @param _activities
+	 */
 	public void addAllActivities(
 			Set<Activity> _activities) {
 		for (Activity act : _activities) {
@@ -195,6 +212,9 @@ public class Guidance extends Element {
 		}
 	}
 
+	/**
+	 * removeAllActivities
+	 */
 	public void removeAllActivities() {
 		for (Activity act : this.getActivities())
 			act.removeGuidance(this);
@@ -219,6 +239,10 @@ public class Guidance extends Element {
 	}
 
 
+	/**
+	 * getPresentationName
+	 * @return
+	 */
 	public String getPresentationName() {
 		return presentationName;
 	}
