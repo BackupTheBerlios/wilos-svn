@@ -17,6 +17,7 @@ import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.process.Process;
+import wilos.model.spem2.task.TaskDescriptor;
 
 public class InitAppliTest {
 	public static void main(String[] args) {
@@ -71,14 +72,20 @@ public class InitAppliTest {
 	    pa.setFirstname("test");
 	    ps.getParticipantDao().saveOrUpdateParticipant(pa);
 	    
-	    // affectation
+	    // affectation du particpant aux concreteRoles
 	    
 	    ConcreteRoleDescriptorDao cs = (ConcreteRoleDescriptorDao) ctx.getBean("ConcreteRoleDescriptorDao");
-	 	    for (ConcreteRoleDescriptor crd : cs.getAllConcreteRoleDescriptors()) {
-	    	System.out.println(crd.getConcreteName());
+	 	for (ConcreteRoleDescriptor crd : cs.getAllConcreteRoleDescriptors()) {
 	    	pa.addConcreteRoleDescriptor(crd);
 	    }	   
 	   
 	    ps.getParticipantDao().saveOrUpdateParticipant(pa);
+	    
+	    // affectation des concreteRoles aux concreteTask
+	    for (ConcreteRoleDescriptor crd : cs.getAllConcreteRoleDescriptors()) {
+	    	for (TaskDescriptor td : crd.getRoleDescriptor().getPrimaryTasks()) {
+	    		crd.addAllConcreteTaskDescriptors(td.getConcreteTaskDescriptors());
+	    	}
+	    }
 	}
 }
