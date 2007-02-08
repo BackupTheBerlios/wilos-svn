@@ -3,6 +3,7 @@ package wilos.test.business.services.util.xml.parser;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import junit.framework.TestCase;
@@ -754,7 +755,7 @@ public class XMLParserTest extends TestCase {
 								assertTrue(nbSuccessor == 1);
 								assertTrue(tmpWBde.getPresentationName().equals("Design the Solution"));
 								// TODO refaire le test correctement ...
-								assertTrue(((WorkBreakdownElement)tmpWBde).getPredecessors().iterator().next().getPredecessor().getPresentationName().equals("Refine the Architecture"));
+								assertTrue(tmpWBde.getPredecessors().iterator().next().getPredecessor().getPresentationName().equals("Refine the Architecture"));								
 							}
 														
 						}
@@ -772,7 +773,6 @@ public class XMLParserTest extends TestCase {
 		Activity topLevelActivity,secondLevelActivity;
 		boolean rentreDansInitiateProject = false;
 		int nbSuccessor = 0;
-
 		
 		WorkBreakdownElement tmpWBde = null;
 		Set<WorkBreakdownElement> listSuccessor = null;
@@ -800,11 +800,13 @@ public class XMLParserTest extends TestCase {
 			while (itSecondLevelAct.hasNext()) {
 				secondLevelActivity = (Activity) itSecondLevelAct.next();
 				if (secondLevelActivity.getPresentationName().equals("Initiate Project")) {
+					// we are in the Activity : Initiate Project
 					rentreDansInitiateProject = true;
 					
 					assertTrue(((WorkBreakdownElement)secondLevelActivity).getSuccessors().size() == 2);
-					
+
 					listSuccessor = new HashSet<WorkBreakdownElement>();
+					// For each successor of the Initiate Project 
 					for (WorkOrder wo: ((WorkBreakdownElement)secondLevelActivity).getSuccessors()) {
 						listSuccessor.add(wo.getSuccessor());
 						assertTrue(wo.getLinkType().equals("finishToFinish"));
@@ -813,12 +815,11 @@ public class XMLParserTest extends TestCase {
 					itSuccessor = listSuccessor.iterator();
 					while (itSuccessor.hasNext()) {
 						nbSuccessor++;
-						tmpWBde = itSuccessor.next();					
+						tmpWBde = itSuccessor.next();
+						// there are two successors of the "Initiate Project" Activity in the Inception Iteration [1..n]
+						assertTrue(tmpWBde.getPredecessors().iterator().next().getPredecessor().getPresentationName().equals("Initiate Project"));
 					}
-					assertTrue(nbSuccessor == 2);
-					
-					// TODO: refaire le test 
-					assertTrue(tmpWBde.getPredecessors().iterator().next().getPredecessor().getPresentationName().equals("Initiate Project"));
+					assertTrue(nbSuccessor == 2);					
 				}
 			}
 			assertTrue(rentreDansInitiateProject);

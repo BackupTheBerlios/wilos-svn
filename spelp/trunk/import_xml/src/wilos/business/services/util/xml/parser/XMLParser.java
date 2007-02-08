@@ -255,8 +255,10 @@ public class XMLParser {
 			FillerActivity itFiller = new FillerActivity(anActivity, aNode);	
 			Activity returnedActivityFilled = (Activity) itFiller.getFilledElement();
 	
-			setDependencyByActivity(returnedActivityFilled, aNode);			
+			setDependencyByActivity(returnedActivityFilled, aNode);
 		}
+		
+
 	}
 
 	/**
@@ -288,7 +290,8 @@ public class XMLParser {
 					ActivityTobereturn.addSuccessor(wo);
 					_act.addPredecessor(wo);
 				}
-			}			
+			}	
+			
 		}
 	}
 
@@ -478,7 +481,7 @@ public class XMLParser {
 				idTask_pred = listOfTdNodes.item(i).getTextContent();				
 				linkType = (listOfTdNodes.item(i).getAttributes().getNamedItem(attr_name_linkType).getNodeValue());
 				
-//				 process if there is a task for this task desriptor			
+				// process if there is a task for this task desriptor			
 				taskTobereturn = getTaskDescriptorById(allTaskDescriptors, idTask_pred);
 				// if the task doesn't exist
 				if (taskTobereturn != null){
@@ -507,8 +510,9 @@ public class XMLParser {
 			FillerTaskDescriptor aFiller = new FillerTaskDescriptor(aTaskDescriptor,aNode);	
 			TaskDescriptor taskDescriptorfilled = (TaskDescriptor)aFiller.getFilledElement();
 			
-			setDependencyByTaskDescriptor(taskDescriptorfilled, aNode);
+			setDependencyByTaskDescriptor(taskDescriptorfilled, aNode);			
 		}
+		
 	}
 		
 
