@@ -8,12 +8,6 @@ import javax.servlet.http.HttpSession ;
 public class WebSessionService {
 
 	/**
-	 * The session attribute WilosUser.
-	 */
-	@Deprecated
-	public static final String WILOS_USER = "wilosUser" ;
-
-	/**
 	 * The session attribute WilosUser Id.
 	 */
 	public static final String WILOS_USER_ID = "wilosUserId" ;
@@ -22,6 +16,11 @@ public class WebSessionService {
 	 * The session attribute Project Id.
 	 */
 	public static final String PROJECT_ID = "projectId" ;
+
+	/**
+	 * The session attribute Role Id.
+	 */
+	public static final String ROLE_ID = "roleId" ;
 
 	/**
 	 * Get the value of the _attributeName
