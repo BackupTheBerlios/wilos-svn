@@ -1,19 +1,23 @@
 package wilos.presentation.web.viewer;
 
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService;
+import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.wilosuser.Participant;
 
 public class ConcreteTaskViewerBean {
 
-	private ConcreteTaskDescriptor concreteTaskDescriptor;
+	/* Services */
+
+	private WebSessionService webSessionService;
 
 	private ConcreteTaskDescriptorService concreteTaskDescriptorService;
+
+	/* Simple fields */
+
+	private ConcreteTaskDescriptor concreteTaskDescriptor;
 
 	private String concreteTaskDescriptorId = "";
 
@@ -25,31 +29,100 @@ public class ConcreteTaskViewerBean {
 		this.concreteTaskDescriptor = new ConcreteTaskDescriptor();
 		if (!(this.concreteTaskDescriptorId.equals(""))
 				|| this.concreteTaskDescriptorId != null) {
-			this.concreteTaskDescriptor = this.concreteTaskDescriptorService.getConcreteTaskDescriptor(
-							this.concreteTaskDescriptorId);
+			this.concreteTaskDescriptor = this.concreteTaskDescriptorService
+					.getConcreteTaskDescriptor(this.concreteTaskDescriptorId);
 		}
 	}
 
 	/**
-	 * soosuske
-	 * methodes for the buton affected
+	 * soosuske methodes for the buton affected
 	 */
 	public void affectedActionListener(ActionEvent event) {
-		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
-		HttpSession sess = req.getSession() ;
-		Participant user = (Participant) sess.getAttribute("wilosUser") ;
+		Participant user = (Participant) this.webSessionService.getAttribute(WebSessionService.WILOS_USER);
 
-		this.concreteTaskDescriptorService.affectedConcreteTaskDescriptor(this.concreteTaskDescriptor, user);
+		this.concreteTaskDescriptorService.affectedConcreteTaskDescriptor(
+				this.concreteTaskDescriptor, user);
 	}
 
 	public boolean isVisibleAffected() {
-		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
-		HttpSession sess = req.getSession() ;
-		Participant user = (Participant) sess.getAttribute("wilosUser") ;
+		Participant user = (Participant) this.webSessionService.getAttribute(WebSessionService.WILOS_USER);
 
-		boolean vis = this.concreteTaskDescriptorService.affectedVisible(this.concreteTaskDescriptor, user);
+		boolean vis = this.affectedVisible(
+				this.concreteTaskDescriptor, user);
 
 		return vis;
+	}
+
+	/**
+	 * action for button start
+	 *
+	 * @param event
+	 */
+	public void startActionListener(ActionEvent event) {
+		this.concreteTaskDescriptorService
+				.startConcreteTaskDescriptor(this.concreteTaskDescriptor);
+	}
+
+	public boolean isVisibleStart() {
+		Participant user = (Participant) this.webSessionService.getAttribute(WebSessionService.WILOS_USER);
+
+		boolean vis = this.startVisible(
+				this.concreteTaskDescriptor, user);
+		if (vis) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	/**
+	 * Visible ob affected buton
+	 */
+	private boolean affectedVisible(
+			ConcreteTaskDescriptor _concreteTaskDescriptor, Participant _user) {
+
+		boolean visi = true;
+
+		/*
+		 * FIXME TaskDescriptor td =
+		 * _concreteTaskDescriptor.getTaskDescriptor(); TaskDescriptor tmp =
+		 * this.taskDescriptorService.getTaskDescriptorDao().getTaskDescriptor(td.getId());
+		 * RoleDescriptor roleDescriptor = tmp.getMainRole(); RoleDescriptor
+		 * tmpRd =
+		 * this.roleDescriptorService.getRoleDescriptorDao().getRoleDescriptor(roleDescriptor.getId());
+		 * Set<Participant> part = tmpRd.getParticipants();
+		 *
+		 * for (Participant parti : part) {
+		 * if(parti.getWilosuser_id().equals(_user.getWilosuser_id())) { visi=
+		 * false; } }
+		 */
+
+		return visi;
+	}
+
+	/**
+	 * Visible ob affected buton
+	 */
+	private boolean startVisible(ConcreteTaskDescriptor _concreteTaskDescriptor,
+			Participant _user) {
+
+		boolean visi = true;
+
+		/*
+		 * FIXME TaskDescriptor td =
+		 * _concreteTaskDescriptor.getTaskDescriptor(); TaskDescriptor tmp =
+		 * this.taskDescriptorService.getTaskDescriptorDao().getTaskDescriptor(td.getId());
+		 * RoleDescriptor roleDescriptor = tmp.getMainRole(); RoleDescriptor
+		 * tmpRd =
+		 * this.roleDescriptorService.getRoleDescriptorDao().getRoleDescriptor(roleDescriptor.getId());
+		 * Set<Participant> part = tmpRd.getParticipants();
+		 * if(!_concreteTaskDescriptor.getState().equals("Started")) { for
+		 * (Participant parti : part) {
+		 * if(parti.getWilosuser_id().equals(_user.getWilosuser_id())) { visi=
+		 * false; } } }
+		 */
+		return visi;
+
 	}
 
 	public ConcreteTaskDescriptor getConcreteTaskDescriptor() {
@@ -78,7 +151,7 @@ public class ConcreteTaskViewerBean {
 		this.concreteTaskDescriptorId = concreteTaskDescriptorId;
 	}
 
-	public boolean getVisibleAffected(){
+	public boolean getVisibleAffected() {
 		return this.visibleAffected;
 	}
 
@@ -86,36 +159,27 @@ public class ConcreteTaskViewerBean {
 		this.visibleAffected = visibleAffected;
 	}
 
-	/**
-	 * action for button start
-	 * @param event
-	 */
-	public void startActionListener(ActionEvent event) {
-		this.concreteTaskDescriptorService.startConcreteTaskDescriptor(this.concreteTaskDescriptor);
-	}
-
-	public boolean isVisibleStart() {
-		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
-		HttpSession sess = req.getSession() ;
-		Participant user = (Participant) sess.getAttribute("wilosUser") ;
-
-		boolean vis = this.concreteTaskDescriptorService.startVisible(this.concreteTaskDescriptor, user);
-		if(vis)
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-
-	}
-
-	public boolean getVisibleStart(){
+	public boolean getVisibleStart() {
 		return this.visibleStart;
 	}
 
 	public void setVisibleStart(boolean visibleStart) {
 		this.visibleStart = visibleStart;
+	}
+
+	/**
+	 * @return the webSessionService
+	 */
+	public WebSessionService getWebSessionService() {
+		return webSessionService ;
+	}
+
+	/**
+	 * Setter of webSessionService.
+	 *
+	 * @param webSessionService The webSessionService to set.
+	 */
+	public void setWebSessionService(WebSessionService webSessionService) {
+		this.webSessionService = webSessionService ;
 	}
 }

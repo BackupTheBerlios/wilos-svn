@@ -5,9 +5,9 @@ import java.text.SimpleDateFormat;
 public class Constantes {
 
 	public static final String DATE_PATTERN = "dd/MM/yyyy hh:mm" ;
-	
+
 	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(DATE_PATTERN) ;
-	
+
 	public static class State {
 
 		public static final String CREATED = "Created";
@@ -20,7 +20,7 @@ public class Constantes {
 
 		public static final String FINISHED = "Finished";
 	}
-	
+
 	public static class WorkOrderType {
 
 		public static final String START_TO_START = "start-to-start";
