@@ -48,9 +48,11 @@ public class GuidanceServiceTest extends TestCase {
 		this.guidance.setGuid(guid);
 		this.guidance.setName(name);
 		this.guidance.setDescription(description);
-		this.guidance.setTaskdefinition(null);
+		
+		// TODO modifier pour la nouvelle conception de guidance
+		/* this.guidance.setTaskdefinition(null);
 		this.guidance.setRoledefinition(null);
-		this.guidance.setActivity(null);
+		this.guidance.setActivity(null);*/
 		
 		
 

@@ -1,8 +1,14 @@
 package wilos.model.spem2.guide;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.management.relation.Role;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
+import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.element.Element;
 import wilos.model.spem2.role.RoleDefinition;
@@ -14,9 +20,9 @@ import wilos.model.spem2.task.TaskDefinition;
  * 
  */
 public class Guidance extends Element {
-	private TaskDefinition taskdefinition;
-	private RoleDefinition roledefinition;
-	private Activity activity;
+	private Set<TaskDefinition> taskDefinitions;
+	private Set<RoleDefinition> roleDefinitions;
+	private Set<Activity> activities;
 	
 	private String type = "";
 	
@@ -41,9 +47,9 @@ public class Guidance extends Element {
 	
 	/* constructor */
 	public Guidance() {
-		this.taskdefinition = new TaskDefinition();
-		this.roledefinition = new RoleDefinition();
-		this.activity = new Activity();
+		this.taskDefinitions = new HashSet<TaskDefinition>();
+		this.roleDefinitions = new HashSet<RoleDefinition>();
+		this.activities = new HashSet<Activity>();
 	}
 	
 	
@@ -52,8 +58,8 @@ public class Guidance extends Element {
 	 *            the taskdefinition to be linked to
 	 */
 	public void addTaskDefinition(TaskDefinition _taskdefinition) {
-		this.taskdefinition = _taskdefinition ;		
-		(_taskdefinition.getGuidances()).add(this);
+		this.getTaskDefinitions().add(_taskdefinition);
+		_taskdefinition.getGuidances().add(this);
 	}
 
 	/**
@@ -61,8 +67,8 @@ public class Guidance extends Element {
 	 * @param _roleDefinition
 	 */
 	public void addRoleDefinition(RoleDefinition _roleDefinition) {
-		this.roledefinition = _roleDefinition;
-		(_roleDefinition.getGuidances()).add(this);
+		this.getRoleDefinitions().add(_roleDefinition);
+		_roleDefinition.getGuidances().add(this);
 	}
 
 	/**
@@ -70,85 +76,38 @@ public class Guidance extends Element {
 	 * @param _activity
 	 */
 	public void addActivity(Activity _activity) {
-		this.activity = _activity;
-		(_activity.getGuidances()).add(this);
+		this.getActivities().add(_activity);
+		_activity.getGuidances().add(this);
 	}
 
 	/**
 	 * @param _process
 	 *            the process to be unlinked to
 	 */
-	public void removeFromTaskDefinition(TaskDefinition _taskdefinition) {
-		this.taskdefinition = null ;
+	public void removeTaskDefinition(TaskDefinition _taskdefinition) {
 		_taskdefinition.getGuidances().remove(this);
+		this.getTaskDefinitions().remove(_taskdefinition);
 	}
 	
 	/**
 	 * removeFromRoleDefinition
 	 * @param _roleDefinition
 	 */
-	public void removeFromRoleDefinition(RoleDefinition _roleDefinition) {
-		this.roledefinition = null;
+	public void removeRoleDefinition(RoleDefinition _roleDefinition) {
 		_roleDefinition.getGuidances().remove(this);
+		this.getRoleDefinitions().remove(_roleDefinition);
 	}
 	
 	/**
 	 * removeFromActivity
 	 * @param _activity
 	 */
-	public void removeFromActivity(Activity _activity) {
-		this.activity = null;
+	public void removeActivity(Activity _activity) {
 		_activity.getGuidances().remove(this);
+		this.getActivities().remove(_activity);		
 	}
 
-	/**
-	 * getTaskdefinition
-	 * @return the taskDefinition
-	 */
-	public TaskDefinition getTaskdefinition() {
-		return taskdefinition;
-	}
-
-	/**
-	 * setTaskdefinition
-	 * @param _taskdefinition
-	 */
-	public void setTaskdefinition(TaskDefinition _taskdefinition) {
-		this.taskdefinition = _taskdefinition;
-	}
-	
-	/**
-	 * getActivity
-	 * @return the activity
-	 */
-	public Activity getActivity() {
-		return activity;
-	}
-
-	/**
-	 * setActivity
-	 * @param _activity
-	 */
-	public void setActivity(Activity _activity) {
-		this.activity = _activity;
-	}
-
-	/**
-	 * getRoledefinition
-	 * @return the roleDefinition
-	 */
-	public RoleDefinition getRoledefinition() {
-		return roledefinition;
-	}
-
-	/**
-	 * setRoledefinition
-	 * @param _roleDefinition
-	 */
-	public void setRoledefinition(RoleDefinition _roleDefinition) {
-		this.roledefinition = _roleDefinition;
-	}
-	
+		
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -170,9 +129,9 @@ public class Guidance extends Element {
 	protected void copy(final Guidance _guidance) {
 		super.copy(_guidance) ;
 		this.setType(_guidance.getType());
-		this.setTaskdefinition(_guidance.getTaskdefinition()) ;
-		this.setActivity(_guidance.getActivity());
-		this.setRoledefinition(_guidance.getRoledefinition());
+		this.getTaskDefinitions().addAll(_guidance.getTaskDefinitions());
+		this.getActivities().addAll(_guidance.getActivities());
+		this.getRoleDefinitions().addAll(_guidance.getRoleDefinitions());		
 	}
 	
 	/*
@@ -189,8 +148,8 @@ public class Guidance extends Element {
 		}
 
 		Guidance guidance = (Guidance) obj ;
-		return new EqualsBuilder().appendSuper(super.equals(guidance)).append(this.taskdefinition, guidance.taskdefinition).append(this.roledefinition,
-				guidance.roledefinition).append(this.activity, guidance.activity).append(this.type, guidance.type).isEquals() ;
+		return new EqualsBuilder().appendSuper(super.equals(guidance)).append(this.getTaskDefinitions(), guidance.getTaskDefinitions()).append(this.getRoleDefinitions(),
+				guidance.getRoleDefinitions()).append(this.getActivities(), guidance.getActivities()).append(this.type, guidance.type).append(this.presentationName,guidance.getPresentationName()).isEquals() ;
 	}
 
 	/*
@@ -199,9 +158,50 @@ public class Guidance extends Element {
 	 * @see woops2.model.breakdownelement.BreakdownElement#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.taskdefinition).append(this.roledefinition).append(this.activity).append(this.type).toHashCode();
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.type).append(this.presentationName).toHashCode();
 	}
 
+	
+	public void addAllTaskDefinitions(
+			Set<TaskDefinition> _taskDefinitions) {
+		for (TaskDefinition td : _taskDefinitions) {
+			td.addGuidance(this);
+		}
+	}
+
+	public void removeAllTaskDefinitions() {
+		for (TaskDefinition td : this.getTaskDefinitions())
+			td.removeGuidance(this);
+		this.getTaskDefinitions().clear();
+	}
+	
+	public void addAllRoleDefinitions(
+			Set<RoleDefinition> _roleDefinitions) {
+		for (RoleDefinition rd : _roleDefinitions) {
+			rd.addGuidance(this);
+		}
+	}
+
+	public void removeAllRoleDefinitions() {
+		for (RoleDefinition rd : this.getRoleDefinitions())
+			rd.removeGuidance(this);
+		this.getRoleDefinitions().clear();
+	}
+	
+	public void addAllActivities(
+			Set<Activity> _activities) {
+		for (Activity act : _activities) {
+			act.addGuidance(this);
+		}
+	}
+
+	public void removeAllActivities() {
+		for (Activity act : this.getActivities())
+			act.removeGuidance(this);
+		this.getActivities().clear();
+	}
+	
+	
 	/**
 	 * getGuideType
 	 * @return the String guideType 
@@ -226,6 +226,54 @@ public class Guidance extends Element {
 
 	public void setPresentationName(String presentationName) {
 		this.presentationName = presentationName;
+	}
+
+
+	/**
+	 * @return the activities
+	 */
+	public Set<Activity> getActivities() {
+		return activities;
+	}
+
+
+	/**
+	 * @param activities the activities to set
+	 */
+	public void setActivities(Set<Activity> activities) {
+		this.activities = activities;
+	}
+
+
+	/**
+	 * @return the roleDefinitions
+	 */
+	public Set<RoleDefinition> getRoleDefinitions() {
+		return roleDefinitions;
+	}
+
+
+	/**
+	 * @param roleDefinitions the roleDefinitions to set
+	 */
+	public void setRoleDefinitions(Set<RoleDefinition> roleDefinitions) {
+		this.roleDefinitions = roleDefinitions;
+	}
+
+
+	/**
+	 * @return the taskDefinitions
+	 */
+	public Set<TaskDefinition> getTaskDefinitions() {
+		return taskDefinitions;
+	}
+
+
+	/**
+	 * @param taskDefinitions the taskDefinitions to set
+	 */
+	public void setTaskDefinitions(Set<TaskDefinition> taskDefinitions) {
+		this.taskDefinitions = taskDefinitions;
 	}
 	
 }

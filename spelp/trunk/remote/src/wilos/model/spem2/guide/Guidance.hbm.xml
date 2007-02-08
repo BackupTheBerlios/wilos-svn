@@ -18,17 +18,27 @@
 			length="256" />
 
 		<!-- Associations -->
-		<many-to-one name="taskdefinition" class="wilos.model.spem2.task.TaskDefinition"
-			column="taskdefinition_id" lazy="false">
-		</many-to-one>
 		
-		<many-to-one name="roledefinition" class="wilos.model.spem2.role.RoleDefinition"
-			column="roledefinition_id" lazy="false">
-		</many-to-one>
-
-		<many-to-one name="activity" class="wilos.model.spem2.activity.Activity"
-			column="activity_id" lazy="false">
-		</many-to-one>
+		<set name="taskDefinitions" table="guidancetaskdefinition" lazy="true">
+			<key column="guidance_id"></key>
+			<many-to-many class="wilos.model.spem2.task.TaskDefinition"
+				column="taskdefinition_id">
+			</many-to-many>
+		</set>
+		
+		<set name="roleDefinitions" table="guidanceroledefinition" lazy="true">
+			<key column="guidance_id"></key>
+			<many-to-many class="wilos.model.spem2.role.RoleDefinition"
+				column="roledefinition_id">
+			</many-to-many>
+		</set>
+		
+		<set name="activities" table="guidanceactivity" lazy="true">
+			<key column="guidance_id"></key>
+			<many-to-many class="wilos.model.spem2.activity.Activity"
+				column="activity_id">
+			</many-to-many>
+		</set>
 
 		
 		
