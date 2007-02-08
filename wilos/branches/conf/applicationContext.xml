@@ -349,6 +349,11 @@
 	<!-- =============================================================== -->
 	<!-- ====================== WOOPS2 Service ========================= -->
 	<!-- =============================================================== -->
+
+	<bean id="WebSessionService"
+		class="wilos.business.services.presentation.web.WebSessionService">
+	</bean>
+
 	<bean id="ProcessService"
 		class="wilos.business.services.spem2.process.ProcessService">
 		<property name="processDao" ref="ProcessDao" />
