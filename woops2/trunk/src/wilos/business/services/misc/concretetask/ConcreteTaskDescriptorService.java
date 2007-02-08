@@ -84,17 +84,17 @@ public class ConcreteTaskDescriptorService {
 			ConcreteTaskDescriptor _concreteTaskDescriptor, Participant _user) {
 		ConcreteRoleDescriptor concreteRoleDescriptor = null;
 
-		TaskDescriptor tmp = this.taskDescriptorService
-				.getTaskDescriptorById(_concreteTaskDescriptor
-						.getTaskDescriptor().getId());
-		RoleDescriptor tmpRoleDescriptor = this.roleDescriptorService
-				.getRoleDescriptorById(tmp.getMainRole().getId());
+		TaskDescriptor tmp = _concreteTaskDescriptor.getTaskDescriptor();
+		RoleDescriptor tmpRoleDescriptor = tmp.getMainRole();
 
 		// recuperation des deux listes.
 		Set<ConcreteRoleDescriptor> listeRd = tmpRoleDescriptor
 				.getConcreteRoleDescriptors();
 		Set<ConcreteRoleDescriptor> p = _user.getConcreteRoleDescriptors();
 
+		int taille = listeRd.size();
+		int taille1 = p.size();
+		
 		for (ConcreteRoleDescriptor tmpListeRd : listeRd) {
 			for (ConcreteRoleDescriptor tmpListeP : p) {
 				if (tmpListeP.equals(tmpListeRd)) {
