@@ -147,9 +147,12 @@ public class XMLParserTest extends TestCase {
 		}
 	}
 	
+	/**
+	 * Checks that the phase called "Phase de préparation" From Scrum contains roleDescriptors
+	 *
+	 */
 	public void testPhase1FromScrumContainsRoleDescriptors() {
 		Iterator<BreakdownElement> itAct;
-		HashSet<BreakdownElement> bdeSet;
 		Iterator<BreakdownElement> itBde;
 		boolean isThereARoleDesc;
 		
@@ -166,26 +169,27 @@ public class XMLParserTest extends TestCase {
 			tmpAct = (Activity) itAct.next();
 		}
 		
-		if (tmpAct instanceof Phase) {
-			bdeSet = (HashSet<BreakdownElement>) tmpAct.getBreakdownElements();
-			itBde = bdeSet.iterator();
-			
-			//assertTrue(itBde.hasNext());
-			isThereARoleDesc = false;
-			while (itBde.hasNext()) {
-				if (itBde.next() instanceof RoleDescriptor)
-					isThereARoleDesc = true;
-			}
-			assertTrue(isThereARoleDesc);
+		assertTrue(tmpAct instanceof Phase);
+		
+		itBde = tmpAct.getBreakdownElements().iterator();
+		//assertTrue(itBde.hasNext());
+		isThereARoleDesc = false;
+		// For each Bde in the phase
+		while (itBde.hasNext()) {
+			if (itBde.next() instanceof RoleDescriptor)
+				isThereARoleDesc = true;
 		}
-		else {
-			fail();
-		}
+		// The main test of this function
+		assertTrue(isThereARoleDesc);
+
 	}
 	
+	/**
+	 * Checks that the phase called "Phase de préparation" From Scrum contains taskDescriptors
+	 *
+	 */
 	public void testPhase1FromScrumContainsTaskDescriptors() {
 		Iterator<BreakdownElement> itAct;
-		HashSet<BreakdownElement> bdeSet;
 		Iterator<BreakdownElement> itBde;
 		boolean isThereATaskDesc;
 		
@@ -197,30 +201,32 @@ public class XMLParserTest extends TestCase {
 		// Only the first Phase has role Descriptors !!!
 		assertTrue(itAct.hasNext());
 		Activity tmpAct = (Activity) itAct.next();
+		// We want to get the right Phase (only two Phases in this process)
 		if (! tmpAct.getPresentationName().equals("Phase de préparation")) {
 			assertTrue(itAct.hasNext());
 			tmpAct = (Activity) itAct.next();
 		}
 	
-		if (tmpAct instanceof Phase) {
-			bdeSet = (HashSet<BreakdownElement>) tmpAct.getBreakdownElements();
-			itBde = bdeSet.iterator();
-			
-			//assertTrue(itBde.hasNext());
-			isThereATaskDesc = false;
-			while (itBde.hasNext()) {
-				if (itBde.next() instanceof TaskDescriptor)
-					isThereATaskDesc = true;
-			}
-			assertTrue(isThereATaskDesc);
+		assertTrue(tmpAct instanceof Phase);
+		
+		// We'll work on each Bde of the Phase
+		itBde = tmpAct.getBreakdownElements().iterator();
+		isThereATaskDesc = false;
+		while (itBde.hasNext()) {
+			if (itBde.next() instanceof TaskDescriptor)
+				isThereATaskDesc = true;
 		}
+		// The main test of this function
+		assertTrue(isThereATaskDesc);
 	}
 	
+	/**
+	 * Checks that the phase called "Phase des sprints" From Scrum contains 1 Iteration
+	 *
+	 */
 	public void testPhase2FromScrumContains1Iteration() {
 		Iterator<BreakdownElement> itAct;
-		HashSet<BreakdownElement> actSet;
 		Iterator<BreakdownElement> itAct2;
-		
 		Process scrumProcess;
 		
 		scrumProcess = XMLParser.getProcess(pathScrum);
@@ -231,28 +237,31 @@ public class XMLParserTest extends TestCase {
 		// We work on the second Phase
 		assertTrue(itAct.hasNext());
 		Activity tmpAct = (Activity) itAct.next();
-		if (tmpAct.getPresentationName().equals("Phase de préparation")) {
+		// We want to get the right Phase (only two Phases in this process)
+		if (! tmpAct.getPresentationName().equals("Phase des sprints")) {
 			assertTrue(itAct.hasNext());
 			tmpAct = (Activity) itAct.next();
 		}
 		
 		Phase secondPhase = (Phase) tmpAct;
-		// We get the set of activities of the second Phase
-		actSet = (HashSet<BreakdownElement>) secondPhase.getBreakdownElements();
-		// And an iterator on it
-		itAct2 = actSet.iterator();
+		// We work on each activity of the second Phase
+		itAct2 = secondPhase.getBreakdownElements().iterator();
 		
-		// There is only one Iteration in the second Phase
+		// There must be only one Iteration in the second Phase
 		assertTrue(itAct2.hasNext());
 		assertTrue(itAct2.next() instanceof Iteration);
 		assertTrue(! itAct2.hasNext());
 	}
 	
+	/**
+	 * Checks that the iteration of the phase called "Phase des sprints" From Scrum 
+	 * contains all Expected Elements
+	 */
 	public void testPhase2IterationFromScrumContainsAllExpected() {
 		Iterator<BreakdownElement> itAct;
-		HashSet<BreakdownElement> secondPhaseActivities;
 		Iterator<BreakdownElement> secondPhaseActivitiesIterator;
 		
+		// Here are the Names of all the expected Elements of the Iteration
 		HashSet<String> expectedResults = new HashSet<String>();
 		expectedResults.add("Retrospective");
 		expectedResults.add("Product Owner");
@@ -266,10 +275,10 @@ public class XMLParserTest extends TestCase {
 		expectedResults.add("Daily work");
 		expectedResults.add("Plan sprint"); 
 		
+		// The number of expected elements
 		int expectedNumber = expectedResults.size();
 		
 		Process scrumProcess;
-		
 		scrumProcess = XMLParser.getProcess(pathScrum);
 
 		// Iterator on the set of the two Phases of Scrum
@@ -278,34 +287,36 @@ public class XMLParserTest extends TestCase {
 		// We work on the second Phase
 		assertTrue(itAct.hasNext());
 		Activity tmpAct = (Activity) itAct.next();
-		if (tmpAct.getPresentationName().equals("Phase de préparation")) {
+		if (! tmpAct.getPresentationName().equals("Phase des sprints")) {
 			assertTrue(itAct.hasNext());
 			tmpAct = (Activity) itAct.next();
 		}
 		
 		Phase secondPhase = (Phase) tmpAct;
-		// We get the set of activities of the second Phase
-		secondPhaseActivities = (HashSet<BreakdownElement>) secondPhase.getBreakdownElements();
-		// And an iterator on it
-		secondPhaseActivitiesIterator = secondPhaseActivities.iterator();
-		
+		// We 'll get the Iteration : the only BDE of the second phase
+		secondPhaseActivitiesIterator = secondPhase.getBreakdownElements().iterator();
+
 		assertTrue(secondPhaseActivitiesIterator.hasNext());
 		
 		Iteration secondPhaseIteration = (Iteration) secondPhaseActivitiesIterator.next();
 		
-		Iterator<BreakdownElement> it;
+		// Now we get the iterator on the BDEs of the Iteration
+		Iterator<BreakdownElement> itBde = secondPhaseIteration.getBreakdownElements().iterator();
 		
-		it = secondPhaseIteration.getBreakdownElements().iterator();
-		
+		// Now we check that we have all that we want
 		int i = 0;
-		while (it.hasNext()) {
-			String tmpString = ((BreakdownElement) it.next()).getName() ;
+		while (itBde.hasNext()) {
+			String tmpString = ((BreakdownElement) itBde.next()).getName() ;
 			assertTrue(expectedResults.contains( tmpString ));
 			i += 1;
 		}
 		assertTrue(i == expectedNumber);
 	}
 	
+	/**
+	 * Checks that OpenUp contains 4 Top-level activities
+	 *
+	 */
 	public void testOpenUPContains4Activities() {
 		Iterator<BreakdownElement> itAct;
 		BreakdownElement bde;
@@ -339,9 +350,14 @@ public class XMLParserTest extends TestCase {
 		assertFalse(itAct.hasNext());		
 	}
 	
+	/**
+	 * Checks that each Top-level Activity from Scrum contains Activities
+	 *
+	 */
 	public void testOpenUPTopLevelActivitiesContainActivities() {
 		Iterator<BreakdownElement> itTopLevelAct;
 		Activity topLevelActivity;
+		// Each Top-Level Activity From Scrum Contains between 4 and 6 activities
 		final int nbMiniSndLevelActivities = 4;
 		final int nbMaxiSndLevelActivities = 6;
 		
