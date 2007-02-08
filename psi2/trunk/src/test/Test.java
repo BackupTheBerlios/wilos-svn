@@ -112,7 +112,7 @@ public class Test{
     }
 
     /**
-     * Toggles the expanded state of this SalesGroup Record.
+     * Toggles the expanded state of this ConcreteBreakDownElement.
      *
      * @param event
      */

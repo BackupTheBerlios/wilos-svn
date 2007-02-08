@@ -1,4 +1,20 @@
-<div class="wilos">
-   <ice:form id="test">
-   </ice:form>
-</div>
+<ice:form id="test">
+	<ice:panelTabSet id="panelTabSet_project" styleClass="componentPanelTabSetLayout">
+		<ice:panelTab id="panelTab_projectAdvancement" label="#{msgs['component.project.projectadvancement']}">
+			<ice:dataTable
+				value="#{ProjectBean.displayContent}"
+				var="phase" cellpadding="0"
+				width="550px">
+				<ice:column>
+				    <f:facet name="header">
+				        <ice:outputText value="Description"/>
+				    </f:facet>
+				    <ice:commandLink value="#{phase.concreteName}"
+							actionListener="#{ProjectBean.toggleSubGroupAction}">
+							<f:param name="elementId" value="#{phase.concreteName}" />
+				    </ice:commandLink>
+				</ice:column>
+			</ice:dataTable>
+		</ice:panelTab>
+	</ice:panelTabSet>
+</ice:form>

@@ -3,12 +3,16 @@ package wilos.presentation.web.project ;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,6 +22,8 @@ import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.spem2.process.ProcessService;
+import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.WilosUser;
 import wilos.model.spem2.process.Process;
@@ -54,6 +60,12 @@ public class ProjectBean {
 	private String processName;
 	
 	private String projectListView;
+	
+	/***************************************/
+	private ArrayList<Object> projectContent  = new ArrayList<Object>();;
+	private ArrayList<Object> displayContent;
+	protected HashMap<String,Boolean> isExpanded = new HashMap<String,Boolean>();
+	/***************************************/
 
 	/**
 	 * Constructor.
@@ -64,8 +76,109 @@ public class ProjectBean {
 		this.selectedProcessGuid="";
 		this.processNamesList = new ArrayList<SelectItem>();
 		this.formatter = new SimpleDateFormat("dd/MM/yyyy");
+		this.projectContent = new ArrayList<Object>();
+		this.displayContent = new ArrayList<Object>();
+		
+		ConcreteActivity ca = new ConcreteActivity();
+		ca.setConcreteName("activityMere");
+		Project p1 = new Project();
+		p1.setConcreteName("proj1");
+		Project p2 = new Project();
+		p2.setConcreteName("proj2");
+		ca.addConcreteBreakdownElement(p1);
+		ca.addConcreteBreakdownElement(p2);
+
+		ConcreteActivity ca2 = new ConcreteActivity();
+		ca2.setConcreteName("activity2");
+		Project p3 = new Project();
+		p3.setConcreteName("proj3");
+		ca2.addConcreteBreakdownElement(p3);
+
+		this.projectContent.add(ca);
+		this.projectContent.add(ca2);
+		for(Iterator iter = this.projectContent.iterator(); iter.hasNext();){
+			Object mescouilles = (Object) iter.next() ;
+				this.isExpanded.put(((ConcreteBreakdownElement)mescouilles).getConcreteName(), false);
+				this.displayContent.add(mescouilles);	
+		}
 	}
 
+	/***************************************/
+	/**
+     * Toggles the expanded state of this ConcreteBreakDownElement.
+     *
+     * @param event
+     */
+    public void toggleSubGroupAction(ActionEvent event) {
+    	FacesContext context = FacesContext.getCurrentInstance();
+		Map map = context.getExternalContext().getRequestParameterMap();
+		String elementId = (String) map.get("elementId");
+    	
+    	// toggle expanded state
+        Boolean b = isExpanded.get(elementId);
+		b = !b;
+		isExpanded.put(elementId,b);
+
+        // add sub elements to list
+        if (b) {
+            expandNodeAction();
+        }
+        // remove items from list
+        else {
+            contractNodeAction();
+        }
+    }
+    
+    /**
+     * Utility method to add all child nodes to the parent dataTable list.
+     */
+    private void expandNodeAction() {
+    	FacesContext context = FacesContext.getCurrentInstance();
+		Map map = context.getExternalContext().getRequestParameterMap();
+		String elementId = (String) map.get("elementId");
+
+    	for(Iterator iter = this.projectContent.iterator(); iter.hasNext();){
+			Object element = (Object) iter.next() ;
+			if(element instanceof ConcreteActivity)
+			{
+				if(elementId.equals(((ConcreteActivity)element).getConcreteName())){
+					int index = this.displayContent.indexOf(element);
+					ConcreteActivity ca = (ConcreteActivity)element;
+					this.logger.debug("###"+ca.getConcreteBreakdownElements().size()+"###");
+					for(Iterator iterator = ca.getConcreteBreakdownElements().iterator(); iterator.hasNext();){
+						Project element2 = (Project) iterator.next() ;
+						this.displayContent.add(index + 1,element2);
+					}
+				}
+				
+			}
+		}
+    	
+    	//this.displayContent.addAll(tmp);
+    }
+
+    /**
+     * Utility method to remove all child nodes from the parent dataTable list.
+     */
+    private void contractNodeAction() {
+    	ArrayList<Object> tmp = new ArrayList<Object>();
+    	for(Iterator iter = this.displayContent.iterator(); iter.hasNext();){
+			Object element = (Object) iter.next() ;
+			if(element instanceof ConcreteActivity)
+			{
+				ConcreteActivity ca = (ConcreteActivity)element;
+				for(Iterator iterator = ca.getConcreteBreakdownElements().iterator(); iterator.hasNext();){
+					Project element2 = (Project) iterator.next() ;
+					tmp.add(element2);
+				}
+			}
+		}
+    	this.displayContent.removeAll(tmp);
+    }
+    
+    /***************************************/
+	
+	
 	/**
 	 * Method for saving project data from form
 	 * 
@@ -393,6 +506,41 @@ public class ProjectBean {
 		this.projectListView = _projectListView ;
 	}
 
-	
+	/**
+	 * Getter of projectContent.
+	 *
+	 * @return the projectContent.
+	 */
+	public ArrayList<Object> getProjectContent() {
+		return this.projectContent ;
+	}
+
+	/**
+	 * Setter of projectContent.
+	 *
+	 * @param _projectContent The projectContent to set.
+	 */
+	public void setProjectContent(ArrayList<Object> _projectContent) {
+		this.projectContent = _projectContent ;
+	}
+
+	/**
+	 * Getter of displayContent.
+	 *
+	 * @return the displayContent.
+	 */
+	public ArrayList<Object> getDisplayContent() {
+		
+		return this.displayContent;
+	}
+
+	/**
+	 * Setter of displayContent.
+	 *
+	 * @param _displayContent The displayContent to set.
+	 */
+	public void setDisplayContent(ArrayList<Object> _displayContent) {
+		this.displayContent = _displayContent ;
+	}
 	
 }
