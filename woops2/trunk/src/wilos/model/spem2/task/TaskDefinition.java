@@ -228,27 +228,27 @@ public class TaskDefinition extends Element implements Cloneable {
 	 * connection to guidances
 	 */
 	public void removeGuidance(Guidance _guidance) {
-		_guidance.setTaskdefinition(null);
+		_guidance.getTaskDefinitions().remove(this);
 		this.guidances.remove(_guidance);
 	}
 
 	
 	public void addGuidance(Guidance _guidance) {
 		this.guidances.add(_guidance);
-		_guidance.setTaskdefinition(this);
+		_guidance.getTaskDefinitions().add(this);
 	}
 
 	
 	public void removeAllGuidances() {
 		for (Guidance guidance : this.guidances) {
-			guidance.setTaskdefinition(null);
+			guidance.getTaskDefinitions().remove(this);
 		}
 		this.guidances.clear();
 	}
 	
 	public void addAllGuidances(Set<Guidance> _guidances) {
 		for (Guidance _guid1 : _guidances) {
-			 _guid1.addTaskDefinition(this);
+			 this.addGuidance(_guid1);
 		}
 	}
 

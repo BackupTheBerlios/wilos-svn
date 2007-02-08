@@ -26,9 +26,11 @@
 		</set>
 		
 		<!-- Guidances -->
-		<set name="guidances" lazy="true">
-			<key column="activity_id" />
-			<one-to-many class="wilos.model.spem2.guide.Guidance" ></one-to-many>
+		<set name="guidances" table="guidanceactivity" lazy="true" inverse="true">
+			<key column="activity_id"></key>
+			<many-to-many class="wilos.model.spem2.guide.Guidance"
+				column="guidance_id">
+			</many-to-many>
 		</set>
 		
 	</joined-subclass>

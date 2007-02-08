@@ -582,9 +582,9 @@ public class ProcessService {
 			e.printStackTrace();
 		}
 
-		_guidance.setActivity(null);
-		_guidance.setTaskdefinition(null);
-		_guidance.setRoledefinition(null);
+		_guidance.getActivities().clear();
+		_guidance.getTaskDefinitions().clear();
+		_guidance.getRoleDefinitions().clear();
 
 		this.guidanceDao.saveOrUpdateGuidance(_guidance);
 		System.out.println("###Guidance vide sauve");

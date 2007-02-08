@@ -12,10 +12,12 @@
 			<key column="roledefinition_id" />
 			<one-to-many class="wilos.model.spem2.role.RoleDescriptor" ></one-to-many>
 		</set>
-		
-		<set name="guidances" lazy="true">
-			<key column="roledefinition_id" />
-			<one-to-many class="wilos.model.spem2.guide.Guidance" ></one-to-many>
+		<!-- Guidances -->
+		<set name="guidances" table="guidanceroledefinition" lazy="true" inverse="true">
+			<key column="roledefinition_id"></key>
+			<many-to-many class="wilos.model.spem2.guide.Guidance"
+				column="guidance_id">
+			</many-to-many>
 		</set>
 	</joined-subclass>
 </hibernate-mapping>
