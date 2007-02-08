@@ -333,8 +333,8 @@ public class ActivityTest extends TestCase {
 		assertFalse(this.activity.getGuidances().isEmpty()) ;
 		assertEquals(2, this.activity.getGuidances().size()) ;
 //		 derniere maj relation avec guidance
-		assertEquals(1, g1.getActivities().contains(this.activity)) ;
-		assertEquals(1, g2.getActivities().contains(this.activity)) ;
+		assertTrue(g1.getActivities().contains(this.activity)) ;
+		assertTrue(g2.getActivities().contains(this.activity)) ;
 	}
 
 	public void testRemoveGuidance() {
