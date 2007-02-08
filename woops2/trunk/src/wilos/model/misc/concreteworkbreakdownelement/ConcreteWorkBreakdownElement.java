@@ -28,12 +28,14 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 
 	private WorkBreakdownElement workBreakdownElement;
 
-	private Set<ConcreteWorkBreakdownElement> concretePredecessors = new HashSet<ConcreteWorkBreakdownElement>();
-
-	private Set<ConcreteWorkBreakdownElement> concreteSuccessors = new HashSet<ConcreteWorkBreakdownElement>();
-
+	private Set<ConcreteWorkOrder> concretePredecessors;
+	
+	private Set<ConcreteWorkOrder> concreteSuccessors;
+	
 	public ConcreteWorkBreakdownElement() {
 		super();
+		this.concretePredecessors = new HashSet<ConcreteWorkOrder>();
+		this.concreteSuccessors = new HashSet<ConcreteWorkOrder>();
 	}
 
 	/*
@@ -50,14 +52,13 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 		}
 		ConcreteWorkBreakdownElement concreteworkBreakdownElement = (ConcreteWorkBreakdownElement) obj;
 		return new EqualsBuilder().appendSuper(
-				super.equals(concreteworkBreakdownElement)).append(
-				this.plannedFinishingDate,
-				concreteworkBreakdownElement.plannedFinishingDate).append(
-				this.plannedStartingDate,
-				concreteworkBreakdownElement.plannedStartingDate).append(
-				this.plannedTime, concreteworkBreakdownElement.plannedTime)
-				.append(this.workBreakdownElement,
-						concreteworkBreakdownElement.workBreakdownElement)
+				super.equals(concreteworkBreakdownElement)).
+				append(this.plannedFinishingDate, concreteworkBreakdownElement.plannedFinishingDate).
+				append(this.plannedStartingDate, concreteworkBreakdownElement.plannedStartingDate).
+				append(this.plannedTime, concreteworkBreakdownElement.plannedTime).
+				append(this.concretePredecessors, concreteworkBreakdownElement.concretePredecessors).
+				append(this.concreteSuccessors,concreteworkBreakdownElement.concreteSuccessors).
+				append(this.workBreakdownElement, concreteworkBreakdownElement.workBreakdownElement)
 				.isEquals();
 	}
 
@@ -100,6 +101,8 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 		this.setPlannedStartingDate(_concreteWorkBreakdownElement
 				.getPlannedStartingDate());
 		this.setPlannedTime(_concreteWorkBreakdownElement.getPlannedTime());
+		this.setConcretePredecessors(_concreteWorkBreakdownElement.getConcretePredecessors());
+		this.setConcreteSuccessors(_concreteWorkBreakdownElement.getConcreteSuccessors());
 	}
 
 	/*
@@ -118,97 +121,99 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 		_workbreakdownElement.getConcreteWorkBreakdownElements().remove(this);
 		this.workBreakdownElement = null;
 	}
+	
+	/*
+	 * Relation between ConcreteWorkBreakdownElement and ConcreteWorkOrder.
+	 *
+	 */
 		
 	/**
-	 * Add a concrete successor to the successors collection of a cwbde.
-	 *
-	 * @param _concreteWorkBreakdownElements
-	 *            The concrete successor to add.
+	 * Add a concreteSuccesor to the concreteSuccessors collection of a concreteWorkOrder
+	 * 
+	 * @param _concreteWorkOrder
 	 */
-	public void addConcreteSuccessor(ConcreteWorkBreakdownElement _concreteWorkBreakdownElement) {
-		this.concreteSuccessors.add(_concreteWorkBreakdownElement);
-		_concreteWorkBreakdownElement.concretePredecessors.add(this);
+	public void addConcreteSuccessor(ConcreteWorkOrder _concreteWorkOrder) {
+		this.concreteSuccessors.add(_concreteWorkOrder);
+		_concreteWorkOrder.setConcretePredecessor(this);
 	}
-
+	
 	/**
-	 * Remove from a cwbde one of these concrete successor.
+	 * Remove from a ConcreteWbde one of these concreteSuccessor.
 	 *
-	 * @param _concreteWorkBreakdownElements
-	 *            The concrete successor to remove.
+	 * @param _concreteWorkOrder
+	 *            The concreteSuccessor to remove.
 	 */
-	public void removeConcreteSuccessor(ConcreteWorkBreakdownElement _concreteWorkBreakdownElement) {
-		_concreteWorkBreakdownElement.concretePredecessors.remove(this);
-		this.concreteSuccessors.remove(_concreteWorkBreakdownElement);
+	public void removeConcreteSuccessor(ConcreteWorkOrder _concreteWorkOrder) {
+		_concreteWorkOrder.setConcretePredecessor(null);
+		this.concreteSuccessors.remove(_concreteWorkOrder);
 	}
-
+	
 	/**
-	 * Add a concrete successor collection to the successors collection of a cwbde.
+	 * Add a concreteSuccessors collection into the ConcreteWorkOrder successors collection.
 	 *
-	 * @param _concreteWorkBreakdownElements
-	 *            The set of concrete successors to add.
-	 */
-	public void addAllConcreteSuccessors(
-			Set<ConcreteWorkBreakdownElement> _concreteWorkBreakdownElements) {
-		for (ConcreteWorkBreakdownElement cwbde : _concreteWorkBreakdownElements) {
-			cwbde.addConcretePredecessor(this);
+	 * @param _concreteWorkOrder
+	 *            The set of concreteSuccessors to add.
+	 */	
+	public void addAllConcreteSuccessors(Set<ConcreteWorkOrder> _concreteWorkOrder) {
+		for (ConcreteWorkOrder cwo : _concreteWorkOrder) {
+			this.addConcreteSuccessor(cwo);
 		}
 	}
 
 	/**
-	 * Remove from an cwbde all its concrete successors.
+	 * Remove from a ConcreteWbde all its ConcreteWorkOrder successors.
 	 *
-	 */
+	 */	
 	public void removeAllConcreteSuccessors() {
-		for (ConcreteWorkBreakdownElement cwbde : this.getConcreteSuccessors())
-			cwbde.getConcretePredecessors().remove(this);
-		this.getConcreteSuccessors().clear();
+		for (ConcreteWorkOrder cwo : this.getConcreteSuccessors())
+			cwo.setConcretePredecessor(null);
+			this.getConcreteSuccessors().clear();
+	}
+	
+	/**
+	 * Add a concretePredecessor into the ConcreteWorkOrder predecessors collection.
+	 *
+	 * @param _concreteWorkOrder
+	 *            The concretePredecessor to add.
+	 */
+	public void addConcretePredecessor(ConcreteWorkOrder _concreteWorkOrder) {
+		this.concretePredecessors.add(_concreteWorkOrder);
+		_concreteWorkOrder.setConcreteSuccessor(this);
+	}
+	
+	/**
+	 * Remove from a ConcreteWbde one of these concretePredecessor.
+	 *
+	 * @param _concreteWorkOrder
+	 *            The concretePredecessor to remove.
+	 */
+	public void removeConcretePredecessor(ConcreteWorkOrder _concreteWorkOrder) {
+		_concreteWorkOrder.setConcreteSuccessor(null);
+		this.concretePredecessors.remove(_concreteWorkOrder);
 	}
 
 	/**
-	 * Add a concrete predecessor to the predecessors collection of a cwbde.
+	 * Add a concretePredecessor collection into the ConcreteWorkOrder predecessors collection.
 	 *
-	 * @param _concreteWorkBreakdownElements
-	 *            The concrete predecessor to add.
+	 * @param _concreteWorkOrder
+	 *            The set of concretePredecessors to add.
 	 */
-	public void addConcretePredecessor(ConcreteWorkBreakdownElement _concreteWorkBreakdownElement) {
-		this.concretePredecessors.add(_concreteWorkBreakdownElement);
-		_concreteWorkBreakdownElement.concreteSuccessors.add(this);
-	}
-
-	/**
-	 * Remove from a cwbde one of these concrete predecessor
-	 *
-	 * @param _concreteWorkBreakdownElements
-	 *            The concrete predecessor to remove.
-	 */
-	public void removeConcretePredecessor(ConcreteWorkBreakdownElement _concreteWorkBreakdownElement) {
-		_concreteWorkBreakdownElement.concreteSuccessors.remove(this);
-		this.concretePredecessors.remove(_concreteWorkBreakdownElement);
-	}
-
-	/**
-	 * Add a concrete predecessor collection to the predecessors collection of a cwbde.
-	 *
-	 * @param _concreteWorkBreakdownElements
-	 *            The set of concrete predecessors to add.
-	 */
-	public void addAllConcretePredecessors(
-			Set<ConcreteWorkBreakdownElement> _concreteWorkBreakdownElements) {
-		for (ConcreteWorkBreakdownElement cwbde : _concreteWorkBreakdownElements) {
-			cwbde.addConcreteSuccessor(this);
+	public void addAllConcretePredecessors(Set<ConcreteWorkOrder> _concreteWorkOrder) {
+		for (ConcreteWorkOrder cwo : _concreteWorkOrder) {
+			this.addConcretePredecessor(cwo);
 		}
 	}
 
 	/**
-	 * Remove from an cwbde all its concrete predecessors.
+	 * Remove from an ConcreteWbde all its ConcreteWorkOrder successors.
 	 *
 	 */
 	public void removeAllConcretePredecessors() {
-		for (ConcreteWorkBreakdownElement cwbde : this.getConcretePredecessors())
-			cwbde.getConcreteSuccessors().remove(this);
-		this.getConcretePredecessors().clear();
+		for (ConcreteWorkOrder cwo : this.getConcretePredecessors())
+			cwo.setConcreteSuccessor(null);
+			this.getConcretePredecessors().clear();
 	}
-
+	
 	public WorkBreakdownElement getWorkBreakdownElement() {
 		return workBreakdownElement;
 	}
@@ -242,21 +247,31 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 		this.plannedTime = plannedTime;
 	}
 
-	public Set<ConcreteWorkBreakdownElement> getConcretePredecessors() {
+	/**
+	 * @return the concretePredecessors
+	 */
+	public Set<ConcreteWorkOrder> getConcretePredecessors() {
 		return concretePredecessors;
 	}
 
-	public void setConcretePredecessors(
-			Set<ConcreteWorkBreakdownElement> concretePredecessors) {
-		this.concretePredecessors = concretePredecessors;
+	/**
+	 * @param concretePredecessors the concretePredecessors to set
+	 */
+	public void setConcretePredecessors(Set<ConcreteWorkOrder> _concretePredecessors) {
+		this.concretePredecessors = _concretePredecessors;
 	}
 
-	public Set<ConcreteWorkBreakdownElement> getConcreteSuccessors() {
+	/**
+	 * @return the concreteSuccessors
+	 */
+	public Set<ConcreteWorkOrder> getConcreteSuccessors() {
 		return concreteSuccessors;
 	}
 
-	public void setConcreteSuccessors(
-			Set<ConcreteWorkBreakdownElement> concreteSuccessors) {
-		this.concreteSuccessors = concreteSuccessors;
+	/**
+	 * @param concreteSuccessors the concreteSuccessors to set
+	 */
+	public void setConcreteSuccessors(Set<ConcreteWorkOrder> _concreteSuccessors) {
+		this.concreteSuccessors = _concreteSuccessors;
 	}
 }
