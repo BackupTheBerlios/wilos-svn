@@ -47,7 +47,7 @@ public class MainFrame extends JFrame{
         ));
 		
         myLoginPanel.setVisible(true);                
-        
+        this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
    
