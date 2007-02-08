@@ -275,7 +275,7 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 						this.setForeground(Color.green);
 					}
 					else if (ctd.getState() == Constantes.State.READY) {
-						this.setForeground(Color.yellow);
+						this.setForeground(Color.orange);
 					}
 					else if (ctd.getState() == Constantes.State.SUSPENDED) {
 						this.setForeground(Color.pink);
