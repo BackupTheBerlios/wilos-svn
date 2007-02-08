@@ -5,6 +5,7 @@ import java.util.Observable;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
+import wilos.presentation.assistant.view.main.WizardMainFrame;
 import wilos.utils.Constantes;
 
 public class WizardStateMachine extends Observable{

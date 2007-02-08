@@ -66,7 +66,9 @@ public class HTMLViewer extends JFrame {
 		this.setLayout(new BorderLayout());
 		
 		this.setSize(Toolkit.getDefaultToolkit().getScreenSize().width / 2, Toolkit.getDefaultToolkit().getScreenSize().height / 2);
-		if (p!=null) this.setLocation(p);
+		if (p!=null) {
+			this.setLocation(p);
+		}
 		
 		/* ----- NORTH PANEL -----*/
 		
@@ -441,15 +443,15 @@ public class HTMLViewer extends JFrame {
 		}
 	}
 	
-	private void setPrevElement() {
-		this.displayElement(this.historyStack.get(--this.cursorStack));
-		manageArrows();
-	}
-	
-	private void setNextElement() {
-		this.displayElement(this.historyStack.get(++this.cursorStack)) ;
-		manageArrows();
-	}
+//	private void setPrevElement() {
+//		this.displayElement(this.historyStack.get(--this.cursorStack));
+//		manageArrows();
+//	}
+//	
+//	private void setNextElement() {
+//		this.displayElement(this.historyStack.get(++this.cursorStack)) ;
+//		manageArrows();
+//	}
 	
 
 	/**
@@ -460,7 +462,7 @@ public class HTMLViewer extends JFrame {
 		if (HTMLViewer.instance == null){
 			HTMLViewer.instance = new HTMLViewer(p);
 		}
-		else if (p != null) {
+		if (p != null) {
 			Point pH = HTMLViewer.instance.getLocation();
 			if(pH.distance(p) < 75) {
 				HTMLViewer.instance.setLocation(p);

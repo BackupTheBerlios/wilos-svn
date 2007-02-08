@@ -50,23 +50,6 @@ public class MainFrame extends JFrame{
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-   
-        
-		// ajout listener deplacement
-	   	this.addComponentListener(new ComponentListener(){
-	   		public void componentHidden(ComponentEvent e) {
-			// TODO Auto-generated method stub	
-			}
-			public void componentMoved(ComponentEvent e) {
-				moveHTML();
-			}
-			public void componentResized(ComponentEvent e) {
-				moveHTML() ;		
-			}
-			public void componentShown(ComponentEvent e) {
-				// TODO Auto-generated method stub	
-			}
-		 });
 	}
 	
 	private InfoPanel getSouthPanel() {
