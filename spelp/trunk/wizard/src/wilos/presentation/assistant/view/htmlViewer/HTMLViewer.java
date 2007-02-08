@@ -102,7 +102,7 @@ public class HTMLViewer extends JFrame {
 		this.myEditorPane.setVisible(true);
 		this.myEditorPane.setEditable(false);
 		this.myEditorPane.setContentType("text/html");
-		this.myEditorPane.setFocusable(false);
+		this.myEditorPane.setFocusable(true);
 		
 		this.myScrollPane = new JScrollPane(this.myEditorPane);
 		
