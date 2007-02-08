@@ -284,9 +284,7 @@ public class XMLParser {
 					//Add the predecessor to the activity
 					WorkOrder wo = new WorkOrder();
 					wo.setLinkType(linkType);
-					wo.setPredecessor(ActivityTobereturn);
-					wo.setSuccessor(_act);			
-					
+
 					ActivityTobereturn.addSuccessor(wo);
 					_act.addPredecessor(wo);
 				}
@@ -486,9 +484,7 @@ public class XMLParser {
 				if (taskTobereturn != null){
 					WorkOrder wo = new WorkOrder();
 					wo.setLinkType(linkType);
-					wo.setPredecessor(taskTobereturn);
-					wo.setSuccessor(_t);
-					
+
 					taskTobereturn.addSuccessor(wo);
 					_t.addPredecessor(wo);
 				}
