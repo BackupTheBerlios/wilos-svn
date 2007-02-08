@@ -20,9 +20,10 @@ import wilos.utils.Constantes;
 import wilos.utils.Constantes.State;
 
 /**
- *
+ * 
+ * @author Soosuske
  * @author deder
- *
+ * 
  */
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class ConcreteTaskDescriptorService {
@@ -35,7 +36,7 @@ public class ConcreteTaskDescriptorService {
 
 	/**
 	 * Return concreteTaskDescriptor for a project list
-	 *
+	 * 
 	 * @return
 	 */
 	@Transactional(readOnly = true)
@@ -54,7 +55,7 @@ public class ConcreteTaskDescriptorService {
 	/**
 	 * Start the ConcreteTaskDescriptor and save into the data base changings
 	 * (i.e. State, realStartingDate).
-	 *
+	 * 
 	 * @param _concreteTaskDescriptor
 	 *            The ConcreteTaskDescriptor to start.
 	 */
@@ -76,7 +77,7 @@ public class ConcreteTaskDescriptorService {
 
 	/**
 	 * When the user click on the button affected.
-	 *
+	 * 
 	 * @param _concreteTaskDescriptor
 	 */
 
@@ -91,7 +92,9 @@ public class ConcreteTaskDescriptorService {
 		Set<ConcreteRoleDescriptor> listeRd = tmpRoleDescriptor
 				.getConcreteRoleDescriptors();
 		Set<ConcreteRoleDescriptor> p = _user.getConcreteRoleDescriptors();
-		
+
+		// on parcours les deux liste afin de trouver le bon
+		// concreteRoledescriptor
 		for (ConcreteRoleDescriptor tmpListeRd : listeRd) {
 			for (ConcreteRoleDescriptor tmpListeP : p) {
 				if (tmpListeP.equals(tmpListeRd)) {
@@ -99,7 +102,8 @@ public class ConcreteTaskDescriptorService {
 				}
 			}
 		}
-
+		// on met en place la relation entre concretetaskDescriptor et
+		// concreteroleDescriptor
 		_concreteTaskDescriptor
 				.addConcreteRoleDescriptor(concreteRoleDescriptor);
 
@@ -108,7 +112,7 @@ public class ConcreteTaskDescriptorService {
 	/**
 	 * Suspend the ConcreteTaskDescriptor and save into the data base changings
 	 * (i.e. State).
-	 *
+	 * 
 	 * @param _concreteTaskDescriptor
 	 *            The ConcreteTaskDescriptor to start.
 	 */
@@ -125,7 +129,7 @@ public class ConcreteTaskDescriptorService {
 	/**
 	 * Finish the ConcreteTaskDescriptor and save into the data base changings
 	 * (i.e. State, realFinishingDate).
-	 *
+	 * 
 	 * @param _concreteTaskDescriptor
 	 *            The ConcreteTaskDescriptor to start.
 	 */
@@ -146,7 +150,7 @@ public class ConcreteTaskDescriptorService {
 
 	/**
 	 * Getter of taskDescriptorDao.
-	 *
+	 * 
 	 * @return the taskDescriptorDao.
 	 */
 	public ConcreteTaskDescriptorDao getConcreteTaskDescriptorDao() {
@@ -155,7 +159,7 @@ public class ConcreteTaskDescriptorService {
 
 	/**
 	 * Setter of taskDescriptorDao.
-	 *
+	 * 
 	 * @param _taskDescriptorDao
 	 *            The taskDescriptorDao to set.
 	 */
