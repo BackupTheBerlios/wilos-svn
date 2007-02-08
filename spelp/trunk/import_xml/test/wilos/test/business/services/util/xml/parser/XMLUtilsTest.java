@@ -9,11 +9,9 @@ import javax.xml.xpath.XPathConstants;
 
 import junit.framework.TestCase;
 
-
 import org.w3c.dom.NodeList;
 
 import wilos.business.services.util.xml.parser.XMLUtils;
-import wilos.model.spem2.process.Process;
 
 public class XMLUtilsTest extends TestCase{
 	public static String path = "test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator +"scrum.xml";

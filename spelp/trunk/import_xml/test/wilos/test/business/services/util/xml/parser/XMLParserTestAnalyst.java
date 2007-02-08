@@ -34,13 +34,11 @@ public class XMLParserTestAnalyst extends TestCase {
 		expectedResults.add("Tester");
 		expectedResults.add("Architect");
 		
-		processes = (HashSet<Process>) XMLParser.getAllProcesses(pathOPenUP);
-		itProc = processes.iterator();
+		Process openUPProcess = XMLParser.getProcess(pathOPenUP);
 		
 		System.out.println("==> Procedure de test des task de analyst by SPELP\n");
-		while (itProc.hasNext()) {
 			// Iterator on the set of the four Phases of OpenUP
-			itTopLevelAct = itProc.next().getBreakdownElements().iterator();
+			itTopLevelAct = openUPProcess.getBreakdownElements().iterator();
 			
 			// We want the third Phase : Construction Iteration
 			while (itTopLevelAct.hasNext()) {
@@ -75,7 +73,6 @@ public class XMLParserTestAnalyst extends TestCase {
 					}
 				}
 				
-			}
 		}		
 	}
 }

@@ -35,6 +35,7 @@ import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
+import wilos.model.spem2.workbreakdownelement.WorkOrder;
 
 /**
  * Class XMLParser
@@ -72,14 +73,6 @@ public class XMLParser {
 	private static final String breakdownElement = "BreakdownElement";
 	private static final String predecessor = "Predecessor"; 
 	
-	private static final String guideline = "Guideline"; 
-	private static final String checklist = "Checklist"; 
-	private static final String concept = "Concept"; 
-	private static final String supportingMaterial = "SupportingMaterial"; 
-	private static final String roadmap = "Roadmap"; 
-	private static final String termDefinition = "TermDefinition"; 
-	private static final String toolMentor = "ToolMentor"; 
-	private static final String report = "Report"; 
 	private static Set<String> guidancesTypes = new LinkedHashSet<String>();
 
 	
@@ -113,10 +106,10 @@ public class XMLParser {
 
 	
 	/**
-	 * initializes the Lists in memory
-	 * to launch before everything by the parsing method
+	 * Fills the Lists in memory
+	 * To launch before everything by the parsing method
 	 */
-	private static void start() {
+	private static void fillAllElementsList() {
 		try {
 			initGuidancesTypesList();
 			
@@ -145,14 +138,18 @@ public class XMLParser {
 	 * make a set with the name of each type of guidance
 	 */
 	private static void initGuidancesTypesList() {
-		guidancesTypes.add(guideline);
-		guidancesTypes.add(checklist);
-		guidancesTypes.add(concept);
-		guidancesTypes.add(supportingMaterial);
-		guidancesTypes.add(roadmap);
-		guidancesTypes.add(termDefinition);
-		guidancesTypes.add(toolMentor);
-		guidancesTypes.add(report);
+		guidancesTypes.add(Guidance.checklist);
+		guidancesTypes.add(Guidance.concept);
+		guidancesTypes.add(Guidance.estimationConsiderations);
+		guidancesTypes.add(Guidance.guideline);
+		guidancesTypes.add(Guidance.practice);
+		guidancesTypes.add(Guidance.report);
+		guidancesTypes.add(Guidance.reusableAsset);
+		guidancesTypes.add(Guidance.roadMap);
+		guidancesTypes.add(Guidance.supportingMaterial);
+		guidancesTypes.add(Guidance.termDefinition);
+		guidancesTypes.add(Guidance.toolMentor);
+		guidancesTypes.add(Guidance.whitepaper);		
 	}
 
 	/**
@@ -180,7 +177,7 @@ public class XMLParser {
 				aGuidance = (Guidance)aFiller.getFilledElement();
 				// add the guideline in the list
 				theGuidanceList.add(aGuidance);
-			}			
+			}	
 		}
 		return theGuidanceList;
 	}
@@ -279,14 +276,20 @@ public class XMLParser {
 			if (listOfTdNodes.item(i).getNodeName().equals(predecessor)){
 				idAct_pred = listOfTdNodes.item(i).getTextContent();
 				linkType = (listOfTdNodes.item(i).getAttributes().getNamedItem(attr_name_linkType).getNodeValue());
-			}
-			
-			// process if there is a task for this task desriptor			
-			ActivityTobereturn = getActivityById(allActivities, idAct_pred);
-			// if the task doesn't exist
-			if (ActivityTobereturn != null){
-				//Add the predecessor to the activity
-				_act.addPredecessor(ActivityTobereturn);
+				
+				// process if there is a task for this task desriptor			
+				ActivityTobereturn = getActivityById(allActivities, idAct_pred);
+				// if the task doesn't exist
+				if (ActivityTobereturn != null){
+					//Add the predecessor to the activity
+					WorkOrder wo = new WorkOrder();
+					wo.setLinkType(linkType);
+					wo.setPredecessor(ActivityTobereturn);
+					wo.setSuccessor(_act);			
+					
+					ActivityTobereturn.addSuccessor(wo);
+					_act.addPredecessor(wo);
+				}
 			}			
 		}
 	}
@@ -369,20 +372,29 @@ public class XMLParser {
 	 * @throws Exception 
 	 */
 	public static Process getProcess(File XMLFilePath) {		
+		// The process that will be returned by the function
 		Process theProcess = null;
+		
+		// If the file exists and is not empty
 		if (XMLFilePath.exists() && XMLFilePath.length() > 5) {
+			// XMLUtils contains the low-level parsing functions and needs the file Path
 			XMLUtils.setDocument(XMLFilePath);
-			start(); // initializes the elements sets
 			
-			// The List of all the nodes containing Processes
-			NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_deliveryProcess,XPathConstants.NODESET);
+			// fills the elements sets
+			fillAllElementsList(); 
 			
-			Node aNode;			
-			if ( nodeReturned.getLength()!= 0) {
+			// We get the List of all the nodes containing Processes
+			NodeList processesNodeList = (NodeList)XMLUtils.evaluate(xpath_deliveryProcess,XPathConstants.NODESET);
+			
+			Node aNode;
+			// If the file contains a process
+			if ( processesNodeList.getLength() != 0 ) {
 				theProcess = new Process();
-				aNode = nodeReturned.item(0);
+				// We get the Node corresponding to the process
+				aNode = processesNodeList.item(0);
 				
 				if (aNode != null) {
+					// We get the process from this recursive function
 					theProcess = (Process) getBreakDownElementsFromNode(aNode);
 				}				
 			}
@@ -467,16 +479,20 @@ public class XMLParser {
 			if (listOfTdNodes.item(i).getNodeName().equals(predecessor)){				
 				idTask_pred = listOfTdNodes.item(i).getTextContent();				
 				linkType = (listOfTdNodes.item(i).getAttributes().getNamedItem(attr_name_linkType).getNodeValue());
-			}
-			
-			// process if there is a task for this task desriptor			
-			taskTobereturn = getTaskDescriptorById(allTaskDescriptors, idTask_pred);
-			// if the task doesn't exist
-			if (taskTobereturn != null){
-				//add the predecessor to the TaskDescriptor
-				_t.addPredecessor(taskTobereturn);
-			}
-			
+				
+//				 process if there is a task for this task desriptor			
+				taskTobereturn = getTaskDescriptorById(allTaskDescriptors, idTask_pred);
+				// if the task doesn't exist
+				if (taskTobereturn != null){
+					WorkOrder wo = new WorkOrder();
+					wo.setLinkType(linkType);
+					wo.setPredecessor(taskTobereturn);
+					wo.setSuccessor(_t);
+					
+					taskTobereturn.addSuccessor(wo);
+					_t.addPredecessor(wo);
+				}
+			}			
 		}
 	}
 	
@@ -489,7 +505,7 @@ public class XMLParser {
 		NodeList taskDescriptors = (NodeList)XMLUtils.evaluate(xpath_taskDescriptor,XPathConstants.NODESET);
 		
 		Node aNode;
-		for(int i=0;i<taskDescriptors.getLength();i++){
+		for(int i=0; i<taskDescriptors.getLength();i++){
 			aNode = taskDescriptors.item(i);
 			TaskDescriptor aTaskDescriptor = new TaskDescriptor();
 			FillerTaskDescriptor aFiller = new FillerTaskDescriptor(aTaskDescriptor,aNode);	
@@ -502,6 +518,7 @@ public class XMLParser {
 
 	/**
 	 * setTaskByTaskDescriptor
+	 * 
 	 * @param t
 	 * @return a task 
 	 */
@@ -1004,38 +1021,6 @@ public class XMLParser {
 			}
 		}
 		return null ;
-	}
-
-	/**
-	 * getAllProcesses
-	 * Returns a Set of the processes contained in the XML File
-	 * @deprecated
-	 * @param XMLFilePath Path of the XML File
-	 * @return Set of the processes
-	 * @throws Exception
-	 */
-	public static Set<Process> getAllProcesses(File XMLFilePath) {
-		Set<Process> processesReturned = new HashSet<Process>() ;
-		if (XMLFilePath.exists()) {
-			XMLUtils.setDocument(XMLFilePath);
-			start(); // initializes the elements sets
-			
-			// The List of all the nodes containing Processes
-			NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_deliveryProcess,XPathConstants.NODESET);
-			
-			Node aNode;			
-			for(int i = 0; i < nodeReturned.getLength(); i++) {
-				Process tmpProcess = new Process();
-				aNode = nodeReturned.item(i);
-				
-				if (aNode != null) {
-					tmpProcess = (Process) getBreakDownElementsFromNode(aNode);
-					processesReturned.add(tmpProcess);
-				}				
-			}
-		}
-		return processesReturned;
-	}
-	
+	}	
 }
 

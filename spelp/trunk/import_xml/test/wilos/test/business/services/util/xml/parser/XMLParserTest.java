@@ -17,6 +17,7 @@ import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
+import wilos.model.spem2.workbreakdownelement.WorkOrder;
 
 public class XMLParserTest extends TestCase {
 	public static File pathScrum = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "scrum.xml"); 
@@ -736,15 +737,24 @@ public class XMLParserTest extends TestCase {
 								// on est dans la taskDescriptor qui est le predecesseur d'un autre tache
 								// on va verifie que le succeseur de cette TD est
 								// la taskDescriptor Design the solution
-								listSuccessor = ((WorkBreakdownElement)tmpBde).getSuccessors();
+								
+								assertTrue(((WorkBreakdownElement)tmpBde).getSuccessors().size() == 1);
+								listSuccessor = new HashSet<WorkBreakdownElement>();
+								for (WorkOrder wo: ((WorkBreakdownElement)tmpBde).getSuccessors()) {
+									listSuccessor.add(wo.getSuccessor());
+									assertTrue(wo.getLinkType().equals("finishToFinish"));
+								}
+								
+				
 								itSuccessor = listSuccessor.iterator();
 								while (itSuccessor.hasNext()) {
 									nbSuccessor++;
 									tmpWBde = itSuccessor.next();
 								}
 								assertTrue(nbSuccessor == 1);
-								assertTrue(tmpWBde.getPresentationName().equals("Design the Solution"));								
-								assertTrue(((WorkBreakdownElement)tmpWBde).getPredecessors().iterator().next().getPresentationName().equals("Refine the Architecture"));
+								assertTrue(tmpWBde.getPresentationName().equals("Design the Solution"));
+								// TODO refaire le test correctement ...
+								assertTrue(((WorkBreakdownElement)tmpWBde).getPredecessors().iterator().next().getPredecessor().getPresentationName().equals("Refine the Architecture"));
 							}
 														
 						}
@@ -792,14 +802,23 @@ public class XMLParserTest extends TestCase {
 				if (secondLevelActivity.getPresentationName().equals("Initiate Project")) {
 					rentreDansInitiateProject = true;
 					
-					listSuccessor = ((WorkBreakdownElement)secondLevelActivity).getSuccessors();
+					assertTrue(((WorkBreakdownElement)secondLevelActivity).getSuccessors().size() == 2);
+					
+					listSuccessor = new HashSet<WorkBreakdownElement>();
+					for (WorkOrder wo: ((WorkBreakdownElement)secondLevelActivity).getSuccessors()) {
+						listSuccessor.add(wo.getSuccessor());
+						assertTrue(wo.getLinkType().equals("finishToFinish"));
+					}
+					
 					itSuccessor = listSuccessor.iterator();
 					while (itSuccessor.hasNext()) {
 						nbSuccessor++;
 						tmpWBde = itSuccessor.next();					
 					}
 					assertTrue(nbSuccessor == 2);
-					assertTrue(tmpWBde.getPredecessors().iterator().next().getPresentationName().equals("Initiate Project"));
+					
+					// TODO: refaire le test 
+					assertTrue(tmpWBde.getPredecessors().iterator().next().getPredecessor().getPresentationName().equals("Initiate Project"));
 				}
 			}
 			assertTrue(rentreDansInitiateProject);
