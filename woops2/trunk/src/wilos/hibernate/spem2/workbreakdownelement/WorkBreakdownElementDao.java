@@ -1,15 +1,16 @@
 
 package wilos.hibernate.spem2.workbreakdownelement ;
 
-import java.util.ArrayList ;
-import java.util.List ;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.hibernate.exception.ConstraintViolationException ;
-import org.springframework.dao.DataAccessException ;
-import org.springframework.dao.DataIntegrityViolationException ;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport ;
+import org.hibernate.StaleObjectStateException;
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement ;
+import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 import wilos.utils.ExceptionManager;
 
 /**
@@ -30,6 +31,9 @@ public class WorkBreakdownElementDao extends HibernateDaoSupport {
 			this.getHibernateTemplate().saveOrUpdate(_workBreakdownElement) ;
 			// this.getHibernateTemplate().flush() ;
 
+		}
+		catch(StaleObjectStateException _ex) {
+			ExceptionManager.getInstance().manageStaleObjectStateException(this.getClass().getName(), "saveOrUpdateWorkBreakdownElement", _ex);
 		}
 		catch(DataIntegrityViolationException _e){
 			ExceptionManager.getInstance().manageDataIntegrityViolationException(this.getClass().getName(), "saveOrUpdateWorkBreakdownElement", _e);
@@ -74,6 +78,9 @@ public class WorkBreakdownElementDao extends HibernateDaoSupport {
 	public void deleteWorkBreakdownElement(WorkBreakdownElement _workBreakdownElement) {
 		try{
 			this.getHibernateTemplate().delete(_workBreakdownElement) ;
+		}
+		catch(StaleObjectStateException _ex) {
+			ExceptionManager.getInstance().manageStaleObjectStateException(this.getClass().getName(), "deleteWorkBreakdownElement", _ex);
 		}
 		catch(DataAccessException _e){
 			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "deleteWorkBreakdownElement", _e);

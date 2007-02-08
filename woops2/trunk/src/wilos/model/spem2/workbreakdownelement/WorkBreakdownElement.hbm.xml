@@ -28,8 +28,6 @@
 			<key column="predecessor_id" />
 			<composite-element
 				class="wilos.model.spem2.workbreakdownelement.WorkOrder">
-				<property name="linkType" type="java.lang.String"
-					column="linktype" />
 				<many-to-one name="successor" class="wilos.model.spem2.workbreakdownelement.WorkBreakdownElement"
 					column="successor_id">
 				</many-to-one>

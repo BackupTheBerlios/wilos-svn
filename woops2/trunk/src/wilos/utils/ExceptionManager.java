@@ -3,6 +3,7 @@ package wilos.utils ;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.StaleObjectStateException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -49,6 +50,18 @@ public class ExceptionManager {
 	public void manageDataIntegrityViolationException(String _s, String _fonction, DataIntegrityViolationException _e) {
 		logger.error("### ExceptionManager -> "+ _s +" raises DataIntegrityViolationException in "+ _fonction +" ###");
 		_e.printStackTrace();
+	}
+	
+	/**
+	 * 
+	 * Manage the DataIntegrityViolationException type
+	 *
+	 * @param _s Name of the class which raise the exception
+	 * @param _e Exception
+	 */
+	public void manageStaleObjectStateException(String _s, String _fonction, StaleObjectStateException _e) {
+		logger.error("### ExceptionManager -> "+ _s +" raises StaleObjectStateException in "+ _fonction +" ###");
+		//_e.printStackTrace();
 	}
 	
 	/**
