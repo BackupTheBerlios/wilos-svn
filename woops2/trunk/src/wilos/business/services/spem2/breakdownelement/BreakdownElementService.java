@@ -4,6 +4,7 @@ package wilos.business.services.spem2.breakdownelement ;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import wilos.business.services.spem2.activity.ActivityService;
 import wilos.hibernate.misc.concretebreakdownelement.ConcreteBreakdownElementDao;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.project.Project;
@@ -19,7 +20,7 @@ public class BreakdownElementService {
 
 	private ConcreteBreakdownElementDao concreteBreakdownElementDao ;
 
-	//private ActivityService activityService;
+	private ActivityService activityService;
 
 	/**
 	 * Instanciates a BreakdownElement
@@ -76,15 +77,15 @@ public class BreakdownElementService {
 	/**
 	 * @return the activityService
 	 */
-	/*public ActivityService getActivityService() {
+	public ActivityService getActivityService() {
 		return activityService;
-	}*/
+	}
 
 	/**
 	 * @param activityService the activityService to set
 	 */
-	/*public void setActivityService(ActivityService activityService) {
+	public void setActivityService(ActivityService activityService) {
 		this.activityService = activityService;
-	}*/
+	}
 
 }
