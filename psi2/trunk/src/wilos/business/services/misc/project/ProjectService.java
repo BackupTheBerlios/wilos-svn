@@ -242,7 +242,6 @@ public class ProjectService {
 	 */
 	@Transactional(readOnly = false)
 	public void saveProcessProjectAffectation(wilos.model.spem2.process.Process _process, Project _project) {
-		//TODO: A tester
 		Project loadedProject = this.getProject(_project.getId()) ;
 		Process loadedProcess = this.processService.getProcessDao().getProcessFromGuid(_process.getGuid()) ;
 		loadedProject.addProcess(loadedProcess) ;

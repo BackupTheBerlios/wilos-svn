@@ -21,10 +21,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.misc.project.ProjectService;
+import wilos.business.services.misc.wilosuser.ParticipantService;
+import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.project.Project;
+import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
 import wilos.model.spem2.process.Process;
 
@@ -38,6 +41,10 @@ public class ProjectBean {
 	private ProjectService projectService ;
 
 	private ProcessService processService ;
+	
+	private WebSessionService webSessionService;
+	
+	private ParticipantService participantService;
 	
 	private Project project ;
 	
@@ -236,11 +243,7 @@ public class ProjectBean {
 	 * @return nothing
 	 */
 	public String saveProjectProcessAffectation(){
-		//TODO: A tester.
-		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
-		HttpSession sess = req.getSession() ;
-		String tmpProjId = (String)sess.getAttribute("projectId");
-		//tmpProjId = "2c90a1b2104ad70601104ad906f90001";//debug
+		String tmpProjId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
 		if(tmpProjId!=null){		
 			Project projTmp = projectService.getProject(tmpProjId);
 			if(projTmp!=null){
@@ -391,11 +394,8 @@ public class ProjectBean {
 	 * @return the selectedProcessGuid.
 	 */
 	public String getSelectedProcessGuid() {
-		//TODO: A tester
 		//Getting the current projet id from cession
-		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
-		HttpSession sess = req.getSession() ;
-		String tmpProjId = (String)sess.getAttribute("projectId");
+		String tmpProjId = (String)webSessionService.getAttribute(WebSessionService.PROJECT_ID);
 		if(tmpProjId!=null){
 			Project projTmp = projectService.getProject(tmpProjId) ;
 			if(projTmp!=null){
@@ -421,21 +421,16 @@ public class ProjectBean {
 	 * @return the selectProcessAffectation
 	 */
 	public String getSelectProcessAffectation() {
-		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
-		HttpSession sess = req.getSession() ;
-		
-		String tmpProjId = (String)sess.getAttribute("projectId");
+		String tmpProjId = (String)this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
 		Project currentProject = this.projectService.getProject(tmpProjId);
 		
-		
-		
-		WilosUser tmpWilosUser = (WilosUser)sess.getAttribute("wilosUser");
-				
+		String participantId = (String)this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID);
+		Participant participant = this.participantService.getParticipant(participantId);
 		if (currentProject.getProcess() == null)
 		{
 			if (currentProject.getProjectManager() != null)
 			{
-				if (currentProject.getProjectManager().getLogin().equals(tmpWilosUser.getLogin())  )
+				if (currentProject.getProjectManager().getLogin().equals(participant.getLogin())  )
 				{
 					this.selectProcessAffectation = "process_affectation_view" ;
 				}
@@ -541,6 +536,22 @@ public class ProjectBean {
 	 */
 	public void setDisplayContent(ArrayList<Object> _displayContent) {
 		this.displayContent = _displayContent ;
+	}
+
+	public WebSessionService getWebSessionService() {
+		return this.webSessionService ;
+	}
+
+	public void setWebSessionService(WebSessionService _webSessionService) {
+		this.webSessionService = _webSessionService ;
+	}
+
+	public ParticipantService getParticipantService() {
+		return this.participantService ;
+	}
+
+	public void setParticipantService(ParticipantService _participantService) {
+		this.participantService = _participantService ;
 	}
 	
 }

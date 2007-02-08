@@ -35,6 +35,10 @@
 			<property-name>loginService</property-name>
 			<value>#{LoginService}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -50,6 +54,10 @@
 		<managed-property>
 			<property-name>loginService</property-name>
 			<value>#{LoginService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
 		</managed-property>
 	</managed-bean>
 
@@ -99,10 +107,16 @@
 			<property-name>processService</property-name>
 			<value>#{ProcessService}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>participantService</property-name>
+			<value>#{ParticipantService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
 	</managed-bean>
-	
-	
-	
+
 	<managed-bean>
 		<managed-bean-name>salesRecordsManager</managed-bean-name>
 		<managed-bean-class>
@@ -110,7 +124,7 @@
 		</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>salesRecords</managed-bean-name>
 		<managed-bean-class>
@@ -118,7 +132,7 @@
 		</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>ActionBean</managed-bean-name>
 		<managed-bean-class>
@@ -126,10 +140,6 @@
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
-	
-	
-	
-	
 
 	<!-- <managed-bean>
 		<managed-bean-name>RoleBean</managed-bean-name>
@@ -173,7 +183,7 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
-	
+
 	<!-- =============================================================== -->
 	<!-- ======================== WOOPS2 Beans ========================= -->
 	<!-- =============================================================== -->
@@ -211,6 +221,10 @@
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+		<managed-property>
 			<property-name>projectService</property-name>
 			<value>#{ProjectService}</value>
 		</managed-property>
@@ -223,13 +237,17 @@
 			<value>#{ParticipantService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>ConcreteTaskViewerBean</managed-bean-name>
 		<managed-bean-class>
 			wilos.presentation.web.viewer.ConcreteTaskViewerBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
 		<managed-property>
 			<property-name>concreteTaskDescriptorService</property-name>
 			<value>#{ConcreteTaskDescriptorService}</value>

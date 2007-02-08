@@ -24,6 +24,7 @@ import org.apache.commons.logging.LogFactory ;
 import wilos.business.services.misc.project.ProjectService ;
 import wilos.business.services.misc.wilosuser.LoginService ;
 import wilos.business.services.misc.wilosuser.ParticipantService ;
+import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor ;
 import wilos.model.misc.project.Project ;
 import wilos.model.misc.wilosuser.Participant ;
@@ -67,6 +68,8 @@ public class ParticipantBean {
 	private SimpleDateFormat formatter ; 
 	
 	private String participantView;
+	
+	private WebSessionService webSessionService;
 	
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
@@ -538,9 +541,8 @@ public class ParticipantBean {
 	 * @return the participant stored into the session 
 	 */
 	private Participant getParticipantFromSession() {
-		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
-		HttpSession sess = req.getSession() ;
-		Participant user = (Participant) sess.getAttribute("wilosUser") ;
+		String userId = (String)this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID);
+		Participant user = this.participantService.getParticipant(userId);
 		return user ;
 	}
 
@@ -671,6 +673,22 @@ public class ParticipantBean {
 	 */
 	public void setParticipantView(String _participantView) {
 		this.participantView = _participantView ;
+	}
+
+	/**
+	 * @return the webSessionService
+	 */
+	public WebSessionService getWebSessionService() {
+		return this.webSessionService ;
+	}
+
+	/**
+	 * Setter of webSessionService.
+	 *
+	 * @param _webSessionService The webSessionService to set.
+	 */
+	public void setWebSessionService(WebSessionService _webSessionService) {
+		this.webSessionService = _webSessionService ;
 	}
 	
 	

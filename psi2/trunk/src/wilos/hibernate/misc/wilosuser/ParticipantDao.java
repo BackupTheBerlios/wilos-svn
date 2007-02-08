@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 
@@ -79,6 +80,16 @@ public class ParticipantDao extends HibernateDaoSupport {
 		return loadAll;
 	}
 
+	
+	/**
+	 * Return the Participant which have the id _id.
+	 * 
+	 * @param _id
+	 * @return
+	 */
+	public Participant getParticipantById(String _id) {
+		return (Participant) this.getHibernateTemplate().get(Participant.class, _id);
+	}
 	
 	/**
 	 * return a participant by giving his login

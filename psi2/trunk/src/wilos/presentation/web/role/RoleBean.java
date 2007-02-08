@@ -152,12 +152,14 @@ public class RoleBean {
 	 * 
 	 */
 	public void saveParticipantRoles(){
-		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
+		/*HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
 		HttpSession sess = req.getSession() ;
-		WilosUser user = (WilosUser) sess.getAttribute("wilosUser") ;
-		String user_login = user.getLogin();
+		String userid = (String) sess.getAttribute("wilosUser") ;*/
+		//WilosUser user = this.
+		//String user_login = user.getLogin();
+		//TODO Attentio nrecuperation de l'id en session et non plus de l'objet WilosUser
 		//TODO ROLES : ATTENTION ENREGISTRER L ID AU LIEU DU LOGIN !!! 
-		this.roleService.saveParticipantRoles(this.getRolesParticipant(),user_login);
+		//this.roleService.saveParticipantRoles(this.getRolesParticipant(),user_login);
 	}
 	
 	/**
@@ -176,10 +178,10 @@ public class RoleBean {
 	 */
 	public HashMap<String, Boolean> getRolesParticipant() {
 		ConcreteRoleDescriptor rd = null;
-		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
+		/*HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
 		HttpSession sess = req.getSession() ;
 		WilosUser user = (WilosUser) sess.getAttribute("wilosUser") ;
-		String user_login = user.getLogin();
+		String user_login = user.getLogin();*/
 		
 		/*HashMap<ConcreteRoleDescriptor, Boolean> hashTemp = this.roleService
 				.getRolesForAParticipant(user_login);*/

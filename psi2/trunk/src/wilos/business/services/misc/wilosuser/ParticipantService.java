@@ -38,6 +38,14 @@ public class ParticipantService {
 
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
+	public ConcreteRoleDescriptorService getConcreteRoleDescriptorService() {
+		return this.concreteRoleDescriptorService ;
+	}
+
+	public void setConcreteRoleDescriptorService(ConcreteRoleDescriptorService _concreteRoleDescriptorService) {
+		this.concreteRoleDescriptorService = _concreteRoleDescriptorService ;
+	}
+
 	/**
 	 * Getter of ParticipantDao.
 	 * 
@@ -96,6 +104,16 @@ public class ParticipantService {
 	@Transactional(readOnly = true)
 	public Set<Participant> getParticipants() {
 		return this.participantDao.getAllParticipants() ;
+	}
+	
+	/**
+	 * Return the Participant which have the id _id.
+	 * 
+	 * @return the participant which have the id gived in parameter
+	 */
+	@Transactional(readOnly = true)
+	public Participant getParticipant(String _id) {
+		return this.participantDao.getParticipantById(_id) ;
 	}
 
 	/**
