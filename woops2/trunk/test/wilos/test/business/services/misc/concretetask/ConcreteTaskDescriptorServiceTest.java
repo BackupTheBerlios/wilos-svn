@@ -213,5 +213,6 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 		
 		ConcreteRoleDescriptor res = concreteTaskDescriptor.getConcreteRoleDescriptor();
 		assertTrue(res.equals(concreteRoleDescriptor));
+		assertTrue(concreteTaskDescriptor.getState().equals("Ready"));
 	}
 }
