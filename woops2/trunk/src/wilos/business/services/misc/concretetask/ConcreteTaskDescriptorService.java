@@ -148,56 +148,6 @@ public class ConcreteTaskDescriptorService {
 	}
 
 	/**
-	 * Visible ob affected buton
-	 */
-	public boolean affectedVisible(
-			ConcreteTaskDescriptor _concreteTaskDescriptor, Participant _user) {
-
-		boolean visi = true;
-
-		/*
-		 * FIXME TaskDescriptor td =
-		 * _concreteTaskDescriptor.getTaskDescriptor(); TaskDescriptor tmp =
-		 * this.taskDescriptorService.getTaskDescriptorDao().getTaskDescriptor(td.getId());
-		 * RoleDescriptor roleDescriptor = tmp.getMainRole(); RoleDescriptor
-		 * tmpRd =
-		 * this.roleDescriptorService.getRoleDescriptorDao().getRoleDescriptor(roleDescriptor.getId());
-		 * Set<Participant> part = tmpRd.getParticipants();
-		 *
-		 * for (Participant parti : part) {
-		 * if(parti.getWilosuser_id().equals(_user.getWilosuser_id())) { visi=
-		 * false; } }
-		 */
-
-		return visi;
-	}
-
-	/**
-	 * Visible ob affected buton
-	 */
-	public boolean startVisible(ConcreteTaskDescriptor _concreteTaskDescriptor,
-			Participant _user) {
-
-		boolean visi = true;
-
-		/*
-		 * FIXME TaskDescriptor td =
-		 * _concreteTaskDescriptor.getTaskDescriptor(); TaskDescriptor tmp =
-		 * this.taskDescriptorService.getTaskDescriptorDao().getTaskDescriptor(td.getId());
-		 * RoleDescriptor roleDescriptor = tmp.getMainRole(); RoleDescriptor
-		 * tmpRd =
-		 * this.roleDescriptorService.getRoleDescriptorDao().getRoleDescriptor(roleDescriptor.getId());
-		 * Set<Participant> part = tmpRd.getParticipants();
-		 * if(!_concreteTaskDescriptor.getState().equals("Started")) { for
-		 * (Participant parti : part) {
-		 * if(parti.getWilosuser_id().equals(_user.getWilosuser_id())) { visi=
-		 * false; } } }
-		 */
-		return visi;
-
-	}
-
-	/**
 	 * Getter of taskDescriptorDao.
 	 *
 	 * @return the taskDescriptorDao.
