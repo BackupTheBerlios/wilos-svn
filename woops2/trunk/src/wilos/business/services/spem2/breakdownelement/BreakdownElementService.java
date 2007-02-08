@@ -4,9 +4,7 @@ package wilos.business.services.spem2.breakdownelement ;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import wilos.business.services.spem2.activity.ActivityService;
 import wilos.hibernate.misc.concretebreakdownelement.ConcreteBreakdownElementDao;
-import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
@@ -21,14 +19,14 @@ public class BreakdownElementService {
 
 	private ConcreteBreakdownElementDao concreteBreakdownElementDao ;
 
-	private ActivityService activityService;
+	//private ActivityService activityService;
 
 	/**
 	 * Instanciates a BreakdownElement
 	 * @param _project project for which the BreakdownElement shall be instanciated
 	 * @param _bde BreakdownElement to instanciate
 	 */
-	public ConcreteBreakdownElement breakdownElementInstanciation (Project _project, BreakdownElement _bde, ConcreteActivity _superActivity) {
+	public ConcreteBreakdownElement breakdownElementInstanciation (Project _project, BreakdownElement _bde/*, ConcreteActivity _superActivity*/) {
 
 		ConcreteBreakdownElement cbe = new ConcreteBreakdownElement();
 
@@ -78,15 +76,15 @@ public class BreakdownElementService {
 	/**
 	 * @return the activityService
 	 */
-	public ActivityService getActivityService() {
+	/*public ActivityService getActivityService() {
 		return activityService;
-	}
+	}*/
 
 	/**
 	 * @param activityService the activityService to set
 	 */
-	public void setActivityService(ActivityService activityService) {
+	/*public void setActivityService(ActivityService activityService) {
 		this.activityService = activityService;
-	}
+	}*/
 
 }

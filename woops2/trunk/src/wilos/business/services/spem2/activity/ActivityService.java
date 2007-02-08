@@ -57,7 +57,7 @@ public class ActivityService {
 			if (bde.getConcreteBreakdownElements().size() == 0) {
 				// instanciation of a relative ConcreteBreakdownElement for bde which have for superConcreteActivity _act 
 				cbdes.add(this.breakdownElementService.breakdownElementInstanciation(
-						_project, bde, cact));
+						_project, bde/*, cact*/));
 			}/* else {
 				// if the ConcreteBreakdownElement collection of bde isn't empty
 				boolean find = false;
