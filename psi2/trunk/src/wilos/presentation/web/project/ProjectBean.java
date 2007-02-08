@@ -14,8 +14,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,7 +26,6 @@ import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
-import wilos.model.misc.wilosuser.WilosUser;
 import wilos.model.spem2.process.Process;
 
 /**
@@ -88,17 +85,22 @@ public class ProjectBean {
 		
 		ConcreteActivity ca = new ConcreteActivity();
 		ca.setConcreteName("activityMere");
+		ca.setPlannedTime(10);
 		Project p1 = new Project();
 		p1.setConcreteName("proj1");
+		p1.setPlannedTime(3);
 		Project p2 = new Project();
 		p2.setConcreteName("proj2");
+		p2.setPlannedTime(7);
 		ca.addConcreteBreakdownElement(p1);
 		ca.addConcreteBreakdownElement(p2);
 
 		ConcreteActivity ca2 = new ConcreteActivity();
 		ca2.setConcreteName("activity2");
+		ca2.setPlannedTime(5);
 		Project p3 = new Project();
 		p3.setConcreteName("proj3");
+		p3.setPlannedTime(5);
 		ca2.addConcreteBreakdownElement(p3);
 
 		this.projectContent.add(ca);
@@ -160,8 +162,6 @@ public class ProjectBean {
 				
 			}
 		}
-    	
-    	//this.displayContent.addAll(tmp);
     }
 
     /**
