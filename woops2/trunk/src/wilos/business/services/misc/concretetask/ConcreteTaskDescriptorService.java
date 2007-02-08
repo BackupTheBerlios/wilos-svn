@@ -91,9 +91,6 @@ public class ConcreteTaskDescriptorService {
 		Set<ConcreteRoleDescriptor> listeRd = tmpRoleDescriptor
 				.getConcreteRoleDescriptors();
 		Set<ConcreteRoleDescriptor> p = _user.getConcreteRoleDescriptors();
-
-		int taille = listeRd.size();
-		int taille1 = p.size();
 		
 		for (ConcreteRoleDescriptor tmpListeRd : listeRd) {
 			for (ConcreteRoleDescriptor tmpListeP : p) {
