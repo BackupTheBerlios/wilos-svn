@@ -38,17 +38,23 @@ public class ConcreteTaskViewerBean {
 	 * soosuske methodes for the buton affected
 	 */
 	public void affectedActionListener(ActionEvent event) {
-		Participant user = (Participant) this.webSessionService.getAttribute(WebSessionService.WILOS_USER);
+		String wilosUserId = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID) ;
+
+		Participant participant = null;
+		//FIXME (demande a PSI2) : participant = this.participantService.getParticipant(wilosUserId);
 
 		this.concreteTaskDescriptorService.affectedConcreteTaskDescriptor(
-				this.concreteTaskDescriptor, user);
+				this.concreteTaskDescriptor, participant);
 	}
 
 	public boolean isVisibleAffected() {
-		Participant user = (Participant) this.webSessionService.getAttribute(WebSessionService.WILOS_USER);
+		String wilosUserId = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID) ;
+
+		Participant participant = null;
+		//FIXME (demande a PSI2) : participant = this.participantService.getParticipant(wilosUserId);
 
 		boolean vis = this.affectedVisible(
-				this.concreteTaskDescriptor, user);
+				this.concreteTaskDescriptor, participant);
 
 		return vis;
 	}
@@ -64,10 +70,13 @@ public class ConcreteTaskViewerBean {
 	}
 
 	public boolean isVisibleStart() {
-		Participant user = (Participant) this.webSessionService.getAttribute(WebSessionService.WILOS_USER);
+		String wilosUserId = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID) ;
+
+		Participant participant = null;
+		//FIXME (demande a PSI2) : participant = this.participantService.getParticipant(wilosUserId);
 
 		boolean vis = this.startVisible(
-				this.concreteTaskDescriptor, user);
+				this.concreteTaskDescriptor, participant);
 		if (vis) {
 			return false;
 		} else {

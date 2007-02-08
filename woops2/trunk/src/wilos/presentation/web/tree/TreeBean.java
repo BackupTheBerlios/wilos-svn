@@ -24,7 +24,6 @@ import wilos.business.services.misc.wilosuser.ParticipantService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
-import wilos.model.misc.wilosuser.WilosUser;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.presentation.web.template.MenuBean;
 import wilos.presentation.web.viewer.ConcreteActivityViewerBean;
@@ -103,7 +102,10 @@ public class TreeBean {
 
 			if(this.affectedTaskFilter){
 				// participant into session
-				Participant participant = (Participant) this.webSessionService.getAttribute(WebSessionService.WILOS_USER) ;
+				String wilosUserId = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID) ;
+
+				Participant participant = null;
+				//FIXME (demande a PSI2) : participant = this.participantService.getParticipant(wilosUserId);
 
 				if(participant != null){
 					Set<RoleDescriptor> roleDescriptorsList = new HashSet<RoleDescriptor>() ;
@@ -131,10 +133,13 @@ public class TreeBean {
 	public List<SelectItem> getProjects() {
 		List<SelectItem> projectsList = new ArrayList<SelectItem>() ;
 
-		WilosUser wilosUser = (WilosUser) this.getWebSessionService().getAttribute(WebSessionService.WILOS_USER) ;
+		String wilosUserId = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID) ;
 
-		if(this.loginService.isParticipant(wilosUser)){
-			HashMap<Project, Boolean> projects = this.participantService.getProjectsForAParticipant((Participant) wilosUser) ;
+		Participant participant = null;
+		//FIXME (demande a PSI2) : participant = this.participantService.getParticipant(wilosUserId);
+
+		if(participant != null){
+			HashMap<Project, Boolean> projects = this.participantService.getProjectsForAParticipant(participant) ;
 			for(Project project : projects.keySet()){
 				if(projects.get(project)){
 					projectsList.add(new SelectItem(project.getId(), project.getConcreteName())) ;

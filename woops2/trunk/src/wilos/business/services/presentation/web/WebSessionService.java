@@ -8,9 +8,15 @@ import javax.servlet.http.HttpSession ;
 public class WebSessionService {
 
 	/**
-	 * The session attribute Project Id.
+	 * The session attribute WilosUser.
 	 */
+	@Deprecated
 	public static final String WILOS_USER = "wilosUser" ;
+
+	/**
+	 * The session attribute WilosUser Id.
+	 */
+	public static final String WILOS_USER_ID = "wilosUserId" ;
 
 	/**
 	 * The session attribute Project Id.
