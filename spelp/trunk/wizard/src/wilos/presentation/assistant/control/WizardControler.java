@@ -105,12 +105,12 @@ public class WizardControler {
 				
 				if(dmt != null) {
 					ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
-					if(selectedTask.getId() != null) {
+					// if(selectedTask.getId() != null) {
 						WizardControler.getInstance().changeHTMLViewerBehavior(true);
 						WizardControler.getInstance().startConcreteTaskDescriptor(selectedTask);
 						treePanel.getTree().treeDidChange();
 						//WizardControler.getInstance().refreshParticipant();
-					}
+					//}
 				}
 				
 			}
@@ -121,12 +121,12 @@ public class WizardControler {
 				
 				if(dmt != null) {
 					ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
-					if(selectedTask.getId() != null) {
+					//if(selectedTask.getId() != null) {
 						WizardControler.getInstance().changeHTMLViewerBehavior(true);
 						WizardControler.getInstance().pauseConcreteTaskDescriptor(selectedTask);
 						treePanel.getTree().treeDidChange();
 						//WizardControler.getInstance().refreshParticipant();
-					}
+					//}
 				}
 				
 			}
@@ -136,12 +136,12 @@ public class WizardControler {
 				DefaultMutableTreeNode dmt =  (DefaultMutableTreeNode)WizardControler.getInstance().getTreePanel().getTree().getLastSelectedPathComponent();
 				if(dmt != null) {
 					ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
-					if(selectedTask.getId() != null) {
+					//if(selectedTask.getId() != null) {
 						WizardControler.getInstance().changeHTMLViewerBehavior(true);
 						WizardControler.getInstance().finishConcreteTaskDescriptor(selectedTask);
 						treePanel.getTree().treeDidChange();
 						//WizardControler.getInstance().refreshParticipant();
-					}
+					//}
 				}
 				
 			}
