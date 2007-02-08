@@ -1,6 +1,7 @@
 package wilos.application.console;
 
 import java.io.File;
+import java.util.List;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -17,13 +18,11 @@ import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.process.Process;
-import wilos.model.spem2.task.TaskDescriptor;
 
 public class InitAppliTest {
 	public static void main(String[] args) {
 		// Getback the application context from the spring configuration file
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-		
 		
 		// import des processus
 		ProcessService am = (ProcessService) ctx.getBean("ProcessService");
@@ -80,12 +79,20 @@ public class InitAppliTest {
 	    }	   
 	   
 	    ps.getParticipantDao().saveOrUpdateParticipant(pa);
+		
+			
+		// affectation des concreteRoles aux concreteTask
+	   
+	   /* pa =  ps.getParticipantDao().getParticipant(pa.getLogin());
+	    if (pa != null) {
+		    ConcreteTaskDescriptorService ts = (ConcreteTaskDescriptorService) ctx.getBean("ConcreteTaskDescriptorService");
+			
+			List<ConcreteTaskDescriptor> lctds =  ts.getConcreteTaskDescriptorDao().getAllConcreteTaskDescriptors();
+				 
+		    for (ConcreteTaskDescriptor ctd : lctds) {	    
+		    	ts.affectedConcreteTaskDescriptor(ctd, pa);
+		    }
+	    }*/
 	    
-	    // affectation des concreteRoles aux concreteTask
-	    for (ConcreteRoleDescriptor crd : cs.getAllConcreteRoleDescriptors()) {
-	    	for (TaskDescriptor td : crd.getRoleDescriptor().getPrimaryTasks()) {
-	    		crd.addAllConcreteTaskDescriptors(td.getConcreteTaskDescriptors());
-	    	}
-	    }
 	}
 }
