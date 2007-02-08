@@ -49,7 +49,7 @@ public class ConcretePhase extends ConcreteActivity implements Cloneable{
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see woops2.model.activity.Activity#equals(java.lang.Object)
+	 * @see woops2.model.misc.concretephase.ConcretePhase#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
 		if(obj instanceof ConcretePhase == false){
@@ -65,7 +65,7 @@ public class ConcretePhase extends ConcreteActivity implements Cloneable{
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see wilos.model.misc.concretePhase.Concrete#hashCode()
+	 * @see wilos.model.misc.concretePhase.ConcretePhase#hashCode()
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.phase).toHashCode() ;
@@ -90,13 +90,21 @@ public class ConcretePhase extends ConcreteActivity implements Cloneable{
 
 		}
 
+	/**
+	 * @return the phase
+	 */
 	public Phase getPhase() {
 		return phase;
 	}
 
-	public void setPhase(Phase _phase) {
-		this.phase = _phase;
+	/**
+	 * @param phase the phase to set
+	 */
+	public void setPhase(Phase phase) {
+		this.phase = phase;
 	}
+
+
 
 }
 
