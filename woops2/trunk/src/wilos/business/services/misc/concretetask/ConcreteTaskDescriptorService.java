@@ -106,6 +106,9 @@ public class ConcreteTaskDescriptorService {
 		// concreteroleDescriptor
 		_concreteTaskDescriptor
 				.addConcreteRoleDescriptor(concreteRoleDescriptor);
+		
+		//mise à jour de l'état
+		_concreteTaskDescriptor.setState(State.READY);
 
 	}
 
