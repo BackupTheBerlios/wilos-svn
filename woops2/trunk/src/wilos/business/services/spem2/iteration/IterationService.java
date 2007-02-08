@@ -9,7 +9,7 @@ import wilos.model.misc.project.Project;
 import wilos.model.spem2.iteration.Iteration;
 /**
  * IterationManager is a transactional class, that manages operations about Iteration
- * 
+ *
  *
  */
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
@@ -30,15 +30,16 @@ public class IterationService {
 			ci.setConcreteName(_iteration.getName()) ;
 		else
 			ci.setConcreteName(_iteration.getPresentationName());
-		
+
 		ci.addIteration(_iteration);
+		ci.setProject(_project);
 
 		this.concreteIterationDao.saveOrUpdateConcreteIteration(ci);
 	}
 
 	/**
 	 * Getter of concreteIterationDao
-	 * 
+	 *
 	 * @return the concreteIterationDao
 	 */
 	public ConcreteIterationDao getConcreteIterationDao() {
@@ -47,7 +48,7 @@ public class IterationService {
 
 	/**
 	 * Setter of concreteIterationDao
-	 * 
+	 *
 	 * @param concreteIterationDao the concreteIterationDao to set
 	 */
 	public void setConcreteIterationDao(ConcreteIterationDao concreteIterationDao) {

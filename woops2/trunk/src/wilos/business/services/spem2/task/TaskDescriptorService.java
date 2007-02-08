@@ -18,7 +18,7 @@ import wilos.model.spem2.task.TaskDescriptor;
 public class TaskDescriptorService {
 
 	private ConcreteTaskDescriptorDao concreteTaskDescriptorDao ;
-	
+
 	private TaskDescriptorDao taskDescriptorDao;
 
 	public void taskDescriptorInstanciation (Project _project, TaskDescriptor td) {
@@ -29,12 +29,13 @@ public class TaskDescriptorService {
 			ctd.setConcreteName(td.getName()) ;
 		else
 			ctd.setConcreteName(td.getPresentationName());
-		
+
 		ctd.addTaskDescriptor(td);
+		ctd.setProject(_project);
 
 		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(ctd);
 	}
-	
+
 	public TaskDescriptor getTaskDescriptorById(String _id)
 	{
 		TaskDescriptor taskDescriptor;

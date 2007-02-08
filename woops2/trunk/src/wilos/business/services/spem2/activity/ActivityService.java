@@ -44,6 +44,7 @@ public class ActivityService {
 			cact.setConcreteName(_activity.getPresentationName());
 
 		cact.addActivity(_activity);
+		cact.setProject(_project);
 
 		/* TODO verifier code par un M1 :) */
 		/* instanciating and adding all the ConcreteBreakdownElements included in the activity */
@@ -60,7 +61,7 @@ public class ActivityService {
 
 	/**
 	 * Return activities list
-	 * 
+	 *
 	 * @return List of activities
 	 */
 	@Transactional(readOnly = true)
@@ -70,7 +71,7 @@ public class ActivityService {
 
 	/**
 	 * Save activity
-	 * 
+	 *
 	 * @param _activity the activity to save
 	 */
 	public void saveActivity(Activity _activity) {
@@ -79,7 +80,7 @@ public class ActivityService {
 
 	/**
 	 * Getter of activityDao.
-	 * 
+	 *
 	 * @return the activityDao.
 	 */
 	public ActivityDao getActivityDao() {
@@ -88,7 +89,7 @@ public class ActivityService {
 
 	/**
 	 * Setter of activityDao.
-	 * 
+	 *
 	 * @param _activityDao
 	 *            The activityDao to set.
 	 */
@@ -98,7 +99,7 @@ public class ActivityService {
 
 	/**
 	 * Getter of concreteActivityDao
-	 * 
+	 *
 	 * @return the concreteActivityDao
 	 */
 	public ConcreteActivityDao getConcreteActivityDao() {
@@ -107,7 +108,7 @@ public class ActivityService {
 
 	/**
 	 * Setter of concreteActivityDao
-	 * 
+	 *
 	 * @param concreteActivityDao
 	 *            the concreteActivityDao to set
 	 */

@@ -29,15 +29,16 @@ public class PhaseService {
 			cp.setConcreteName(_phase.getName()) ;
 		else
 			cp.setConcreteName(_phase.getPresentationName());
-		
+
 		cp.addPhase(_phase);
+		cp.setProject(_project);
 
 		this.concretePhaseDao.saveOrUpdateConcretePhase(cp);
 	}
 
 	/**
 	 * Getter of concretePhaseDao
-	 * 
+	 *
 	 * @return the concretePhaseDao
 	 */
 	public ConcretePhaseDao getConcretePhaseDao() {
@@ -46,7 +47,7 @@ public class PhaseService {
 
 	/**
 	 * Setter of concretePhaseDao
-	 * 
+	 *
 	 * @param concretePhaseDao the concretePhaseDao to set
 	 */
 	public void setConcretePhaseDao(ConcretePhaseDao concretePhaseDao) {

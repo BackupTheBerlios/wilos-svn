@@ -38,6 +38,7 @@ public class BreakdownElementService {
 			cbe.setConcreteName(_bde.getPresentationName());
 
 		cbe.addBreakdownElement(_bde);
+		cbe.setProject(_project);
 
 		/* TODO verifier code par un M1 :) */
 		/* instanciating and adding all the ConcreteActivities included in the breakdownelement */

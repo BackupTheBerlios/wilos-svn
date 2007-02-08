@@ -19,7 +19,7 @@ import wilos.model.spem2.role.RoleDescriptor;
 public class RoleDescriptorService {
 
 	private ConcreteRoleDescriptorDao concreteRoleDescriptorDao;
-	
+
 	private RoleDescriptorDao roleDescriptorDao;
 
 	/**
@@ -49,8 +49,9 @@ public class RoleDescriptorService {
 			crd.setConcreteName(_rd.getName()) ;
 		else
 			crd.setConcreteName(_rd.getPresentationName());
-		
+
 		crd.addRoleDescriptor(_rd);
+		crd.setProject(_project);
 
 		this.concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(crd);
 	}
@@ -61,7 +62,7 @@ public class RoleDescriptorService {
 		roleDescriptor = this.roleDescriptorDao.getRoleDescriptor(_id);
 		return roleDescriptor;
 	}
-	
+
 	public ConcreteRoleDescriptorDao getConcreteRoleDescriptorDao() {
 		return concreteRoleDescriptorDao;
 	}

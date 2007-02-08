@@ -27,8 +27,9 @@ public class WorkBreakdownElementService {
 			cwbe.setConcreteName(_wbde.getName()) ;
 		else
 			cwbe.setConcreteName(_wbde.getPresentationName());
-		
+
 		cwbe.addBreakdownElement(_wbde);
+		cwbe.setProject(_project);
 
 		this.concreteWorkBreakdownElementDao.saveOrUpdateConcreteWorkBreakdownElement(cwbe);
 	}
