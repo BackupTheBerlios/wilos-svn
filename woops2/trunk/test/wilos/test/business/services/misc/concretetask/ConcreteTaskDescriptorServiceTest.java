@@ -4,10 +4,17 @@ import java.util.List;
 
 import junit.framework.TestCase;
 import wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService;
+import wilos.hibernate.misc.concreterole.ConcreteRoleDescriptorDao;
 import wilos.hibernate.misc.concretetask.ConcreteTaskDescriptorDao;
 import wilos.hibernate.misc.project.ProjectDao;
+import wilos.hibernate.misc.wilosuser.ParticipantDao;
+import wilos.hibernate.spem2.role.RoleDescriptorDao;
+import wilos.hibernate.spem2.task.TaskDescriptorDao;
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
+import wilos.model.misc.wilosuser.Participant;
+import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.test.TestConfiguration;
 import wilos.utils.Constantes.State;
@@ -21,6 +28,14 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 	ConcreteTaskDescriptorDao concreteTaskDescriptorDao = null;
 
 	ProjectDao projectDao = null;
+	
+	ParticipantDao participantdao = null;
+	
+	TaskDescriptorDao taskDescriptordao = null;
+	
+	RoleDescriptorDao roleDescriptordao = null;
+	
+	ConcreteRoleDescriptorDao concreteRoleDescriptorDao = null;
 
 	TaskDescriptor taskDescriptor;
 
@@ -37,6 +52,11 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 						"ConcreteTaskDescriptorDao");
 		this.projectDao = (ProjectDao) TestConfiguration.getInstance()
 				.getApplicationContext().getBean("ProjectDao");
+		this.participantdao = (ParticipantDao) TestConfiguration.getInstance().getApplicationContext().getBean("ParticipantDao");
+		this.taskDescriptordao = (TaskDescriptorDao) TestConfiguration.getInstance().getApplicationContext().getBean("TaskDescriptorDao");
+		this.roleDescriptordao = (RoleDescriptorDao) TestConfiguration.getInstance().getApplicationContext().getBean("RoleDescriptorDao");
+		this.concreteRoleDescriptorDao = (ConcreteRoleDescriptorDao) TestConfiguration.getInstance().getApplicationContext().getBean("ConcreteRoleDescriptorDao");
+
 	}
 
 	/*
@@ -164,5 +184,34 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 		assertEquals(tmpConcreteTaskDescriptor.getState(), State.FINISHED);
 
 		// Rk: the tearDown method is called here.
+	}
+	
+	
+	public void testAffectedConcreteTaskDescriptor()
+	{
+		Participant monpar = new Participant();
+		this.participantdao.saveOrUpdateParticipant(monpar);
+		
+		this.taskDescriptor = new TaskDescriptor();
+		this.taskDescriptordao.saveOrUpdateTaskDescriptor(this.taskDescriptor);
+		
+		RoleDescriptor roleDescriptor = new RoleDescriptor();
+		this.roleDescriptordao.saveOrUpdateRoleDescriptor(roleDescriptor);
+		
+		ConcreteRoleDescriptor concreteRoleDescriptor = new ConcreteRoleDescriptor();
+		this.concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(concreteRoleDescriptor);
+		
+		
+		
+		concreteRoleDescriptor.addParticipant(monpar);
+		concreteRoleDescriptor.addRoleDescriptor(roleDescriptor);
+
+		this.taskDescriptor.addMainRole(roleDescriptor);
+		this.concreteTaskDescriptor.addTaskDescriptor(this.taskDescriptor);
+		
+		this.concreteTaskDescriptorService.affectedConcreteTaskDescriptor(concreteTaskDescriptor, monpar);
+		
+		ConcreteRoleDescriptor res = concreteTaskDescriptor.getConcreteRoleDescriptor();
+		assertTrue(res.equals(concreteRoleDescriptor));
 	}
 }
