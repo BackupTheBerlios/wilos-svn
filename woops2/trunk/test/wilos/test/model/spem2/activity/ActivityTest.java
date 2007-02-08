@@ -312,7 +312,9 @@ public class ActivityTest extends TestCase {
 		this.activity.addGuidance(guidance) ;
 
 		assertTrue(this.activity.getGuidances().size() == 1) ;
-		assertNotNull(guidance.getActivity()) ;
+		assertNotNull(guidance.getActivities()) ;
+		// derniere maj relation avec guidance
+		assertTrue(guidance.getActivities().contains(this.activity)) ;
 	}
 
 	public void testaddAllGuidances() {
@@ -330,8 +332,9 @@ public class ActivityTest extends TestCase {
 
 		assertFalse(this.activity.getGuidances().isEmpty()) ;
 		assertEquals(2, this.activity.getGuidances().size()) ;
-		assertNotNull(g1.getActivity()) ;
-		assertNotNull(g2.getActivity()) ;
+//		 derniere maj relation avec guidance
+		assertEquals(1, g1.getActivities().contains(this.activity)) ;
+		assertEquals(1, g2.getActivities().contains(this.activity)) ;
 	}
 
 	public void testRemoveGuidance() {
@@ -341,7 +344,8 @@ public class ActivityTest extends TestCase {
 		this.activity.removeGuidance(guidance) ;
 
 		assertTrue(this.activity.getGuidances().isEmpty()) ;
-		assertNull(guidance.getActivity()) ;
+		// Derniere maj relation guidance
+		assertFalse(guidance.getActivities().contains(this.activity)) ;
 	}
 
 	public void testRemoveAllGuidances() {
@@ -357,12 +361,12 @@ public class ActivityTest extends TestCase {
 
 		this.activity.addAllGuidances(set) ;
 		assertTrue(this.activity.getGuidances().size() == 2) ;
-		assertNotNull(g1.getActivity()) ;
-		assertNotNull(g2.getActivity()) ;
+		assertTrue(g1.getActivities().contains(this.activity));
+		assertTrue(g2.getActivities().contains(this.activity));
 
 		this.activity.removeAllGuidances() ;
 		assertTrue(this.activity.getGuidances().isEmpty()) ;
-		assertNull(g1.getActivity()) ;
-		assertNull(g2.getActivity()) ;
+		assertFalse(g1.getActivities().contains(this.activity));
+		assertFalse(g2.getActivities().contains(this.activity));
 	}
 }
