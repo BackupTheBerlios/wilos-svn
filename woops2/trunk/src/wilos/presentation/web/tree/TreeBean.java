@@ -9,8 +9,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -20,6 +18,7 @@ import org.apache.commons.logging.LogFactory;
 import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.misc.wilosuser.LoginService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
+import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
@@ -43,11 +42,17 @@ import wilos.presentation.web.viewer.ProjectViewerBean;
  */
 public class TreeBean {
 
+	/* Services */
+
+	private WebSessionService webSessionService;
+
 	private ProjectService projectService;
 
 	private LoginService loginService;
 
 	private ParticipantService participantService;
+
+	/* Simple fields */
 
 	private Project project;
 
@@ -85,10 +90,7 @@ public class TreeBean {
 		if (this.projectId != null && !this.projectId.equals("default")) {
 			if (_mustBuildProject) {
 				// Put into the session the current project used.
-				HttpServletRequest req = (HttpServletRequest) FacesContext
-						.getCurrentInstance().getExternalContext().getRequest();
-				HttpSession sess = req.getSession();
-				sess.setAttribute("projectId", this.projectId);
+				this.webSessionService.setAttribute(WebSessionService.PROJECT_ID, this.projectId);
 
 				// Retrieve the entire project.
 				this.project = this.projectService.getProject(this.projectId);
@@ -97,11 +99,8 @@ public class TreeBean {
 
 			if (this.affectedTaskFilter) {
 				// participant into session
-				HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext
-						.getCurrentInstance().getExternalContext().getRequest();
-				HttpSession httpSession = httpServletRequest.getSession();
-				Participant participant = (Participant) httpSession
-						.getAttribute("wilosUser");
+				Participant participant = (Participant) this.webSessionService.getAttribute(WebSessionService.WILOS_USER);
+
 				//TODO sur le roleservice
 				if (participant != null) {
 				/*	Set<RoleDescriptor> roleDescriptorsList = new HashSet<RoleDescriptor>();
@@ -131,10 +130,8 @@ public class TreeBean {
 
 	public List<SelectItem> getProjects() {
 		List<SelectItem> projectsList = new ArrayList<SelectItem>();
-		HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext
-				.getCurrentInstance().getExternalContext().getRequest();
-		HttpSession httpSession = httpServletRequest.getSession();
-		WilosUser wilosUser = (WilosUser) httpSession.getAttribute("wilosUser");
+
+		WilosUser wilosUser = (WilosUser) this.getWebSessionService().getAttribute(WebSessionService.WILOS_USER);
 
 		if (this.loginService.isParticipant(wilosUser)) {
 			HashMap<Project, Boolean> projects = this.participantService
@@ -155,7 +152,7 @@ public class TreeBean {
 		this.loadCheckBox = true;
 		this.loadTree = false;
 		this.buildModel(true);
-		
+
 		//TODO changeTreeActionListener not verify
 		this.selectNodeToShow(this.projectId, WilosObjectNode.PROJECTNODE);
 	}
@@ -173,7 +170,7 @@ public class TreeBean {
 		logger.debug("### TreeBean ### selectNodeActionListener - nodeId ="
 				+ nodeId);
 		String pageId = (String) map.get("pageId");
-		
+
 		logger.debug("### TreeBean ### selectNodeActionListener - pageId ="
 				+ pageId);
 		//
@@ -303,5 +300,21 @@ public class TreeBean {
 
 	public void setParticipantService(ParticipantService participantService) {
 		this.participantService = participantService;
+	}
+
+	/**
+	 * @return the webSessionService
+	 */
+	public WebSessionService getWebSessionService() {
+		return webSessionService ;
+	}
+
+	/**
+	 * Setter of webSessionService.
+	 *
+	 * @param webSessionService The webSessionService to set.
+	 */
+	public void setWebSessionService(WebSessionService webSessionService) {
+		this.webSessionService = webSessionService ;
 	}
 }

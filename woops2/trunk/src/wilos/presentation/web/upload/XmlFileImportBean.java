@@ -13,7 +13,6 @@ import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.spem2.process.Process;
-import wilos.presentation.web.tree.TreeBean;
 
 import com.icesoft.faces.component.inputfile.InputFile;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
@@ -28,8 +27,6 @@ public class XmlFileImportBean {
 	private File file = null;
 
 	private ProcessService processService;
-
-	private TreeBean treeBean;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -175,13 +172,5 @@ public class XmlFileImportBean {
 
 	public void setProcessService(ProcessService processService) {
 		this.processService = processService;
-	}
-
-	public TreeBean getTreeBean() {
-		return treeBean;
-	}
-
-	public void setTreeBean(TreeBean treeBean) {
-		this.treeBean = treeBean;
 	}
 }
