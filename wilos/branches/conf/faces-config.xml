@@ -141,18 +141,6 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
-	<!-- <managed-bean>
-		<managed-bean-name>RoleBean</managed-bean-name>
-		<managed-bean-class>
-			wilos.presentation.web.role.RoleBean
-		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-		<managed-property>
-			<property-name>roleService</property-name>
-			<value>#{RoleService}</value>
-		</managed-property>
-	</managed-bean>-->
-
 	<!-- =============================================================== -->
 	<!-- ========================= PSI2 Bean =========================== -->
 	<!-- ======================== Navigation =========================== -->
@@ -251,6 +239,10 @@
 		<managed-property>
 			<property-name>concreteTaskDescriptorService</property-name>
 			<value>#{ConcreteTaskDescriptorService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>participantService</property-name>
+			<value>#{ParticipantService}</value>
 		</managed-property>
 	</managed-bean>
 
