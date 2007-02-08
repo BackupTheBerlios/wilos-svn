@@ -190,7 +190,7 @@ public class RoleDefinitionTest extends TestCase {
 		this.roleDefinition.addGuidance(guidance) ;
 
 		assertTrue(this.roleDefinition.getGuidances().size() == 1) ;
-		assertNotNull(guidance.getRoledefinition()) ;
+		assertTrue(guidance.getRoleDefinitions().contains(this.roleDefinition));
 	}
 	
 	public void testaddAllGuidances() {
@@ -208,8 +208,8 @@ public class RoleDefinitionTest extends TestCase {
 
 		assertFalse(this.roleDefinition.getGuidances().isEmpty()) ;
 		assertEquals(2, this.roleDefinition.getGuidances().size()) ;
-		assertNotNull(g1.getRoledefinition()) ;
-		assertNotNull(g2.getRoledefinition()) ;
+		assertTrue(g1.getRoleDefinitions().contains(this.roleDefinition));
+		assertTrue(g2.getRoleDefinitions().contains(this.roleDefinition));
 	}
 	
 	public void testRemoveGuidance() {
@@ -219,7 +219,7 @@ public class RoleDefinitionTest extends TestCase {
 		this.roleDefinition.removeGuidance(guidance) ;
 
 		assertTrue(this.roleDefinition.getGuidances().isEmpty()) ;
-		assertNull(guidance.getRoledefinition()) ;
+		assertFalse(guidance.getRoleDefinitions().contains(this.roleDefinition));
 	}
 	
 	public void testRemoveAllGuidances() {
@@ -235,12 +235,12 @@ public class RoleDefinitionTest extends TestCase {
 
 		this.roleDefinition.addAllGuidances(set) ;
 		assertTrue(this.roleDefinition.getGuidances().size() == 2) ;
-		assertNotNull(g1.getRoledefinition()) ;
-		assertNotNull(g2.getRoledefinition()) ;
+		assertTrue(g1.getRoleDefinitions().contains(this.roleDefinition));
+		assertTrue(g2.getRoleDefinitions().contains(this.roleDefinition));
 
 		this.roleDefinition.removeAllGuidances() ;
 		assertTrue(this.roleDefinition.getGuidances().isEmpty()) ;
-		assertNull(g1.getRoledefinition()) ;
-		assertNull(g2.getRoledefinition()) ;
+		assertFalse(g1.getRoleDefinitions().contains(this.roleDefinition));
+		assertFalse(g2.getRoleDefinitions().contains(this.roleDefinition));
 	}
 }

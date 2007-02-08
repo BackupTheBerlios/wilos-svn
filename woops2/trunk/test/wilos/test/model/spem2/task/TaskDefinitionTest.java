@@ -253,7 +253,7 @@ public class TaskDefinitionTest extends TestCase {
 		this.taskDefinition.addGuidance(guidance) ;
 
 		assertTrue(this.taskDefinition.getGuidances().size() == 1) ;
-		assertNotNull(guidance.getTaskdefinition()) ;
+		assertTrue(guidance.getTaskDefinitions().contains(this.taskDefinition));
 	}
 	
 	public void testaddAllGuidances() {
@@ -271,8 +271,8 @@ public class TaskDefinitionTest extends TestCase {
 
 		assertFalse(this.taskDefinition.getGuidances().isEmpty()) ;
 		assertEquals(2, this.taskDefinition.getGuidances().size()) ;
-		assertNotNull(g1.getTaskdefinition()) ;
-		assertNotNull(g2.getTaskdefinition()) ;
+		assertTrue(g1.getTaskDefinitions().contains(this.taskDefinition));
+		assertTrue(g2.getTaskDefinitions().contains(this.taskDefinition));
 	}
 	
 	public void testRemoveGuidance() {
@@ -282,7 +282,7 @@ public class TaskDefinitionTest extends TestCase {
 		this.taskDefinition.removeGuidance(guidance) ;
 
 		assertTrue(this.taskDefinition.getGuidances().isEmpty()) ;
-		assertNull(guidance.getTaskdefinition()) ;
+		assertFalse(guidance.getTaskDefinitions().contains(this.taskDefinition));
 	}
 	
 	public void testRemoveAllGuidances() {
@@ -298,13 +298,13 @@ public class TaskDefinitionTest extends TestCase {
 
 		this.taskDefinition.addAllGuidances(set) ;
 		assertTrue(this.taskDefinition.getGuidances().size() == 2) ;
-		assertNotNull(g1.getTaskdefinition()) ;
-		assertNotNull(g2.getTaskdefinition()) ;
+		assertTrue(g1.getTaskDefinitions().contains(this.taskDefinition));
+		assertTrue(g2.getTaskDefinitions().contains(this.taskDefinition));
 
 		this.taskDefinition.removeAllGuidances() ;
 		assertTrue(this.taskDefinition.getGuidances().isEmpty()) ;
-		assertNull(g1.getTaskdefinition()) ;
-		assertNull(g2.getTaskdefinition()) ;
+		assertFalse(g1.getTaskDefinitions().contains(this.taskDefinition));
+		assertFalse(g2.getTaskDefinitions().contains(this.taskDefinition));
 	}
 	
 }
