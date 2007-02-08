@@ -160,30 +160,33 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 				WizardMutableTreeNode rdWmt = new WizardMutableTreeNode(crd);
 
 				ConcreteActivity ca = getActivity(crd.getSuperConcreteActivities());
-				WizardMutableTreeNode nodeAct = null ;
-				while (ca != null){
-					
-					// search if the activity is already treated as a node
-					if (!mapActivity.containsKey(ca)){
-						nodeAct = new WizardMutableTreeNode(ca);
-						mapActivity.put(ca, nodeAct);
-					}
-					else {
-						nodeAct = mapActivity.get(ca);
-					}
-					if (precedent == null){
-						nodeAct.add(rdWmt);
-					}
-					else {
-						nodeAct.add(precedent);
-					}
-					ca = getActivity(ca.getSuperConcreteActivities());
-					if (ca == null ){
-						((DefaultMutableTreeNode)this.root).add(nodeAct);
-					}
-					precedent = nodeAct ;
-				}				
-				
+				WizardMutableTreeNode nodeAct = null  ;
+				if (ca == null){
+					((DefaultMutableTreeNode)this.root).add(rdWmt);
+				}
+				else {
+					while (ca != null){
+						// search if the activity is already treated as a node
+						if (!mapActivity.containsKey(ca)){
+							nodeAct = new WizardMutableTreeNode(ca);
+							mapActivity.put(ca, nodeAct);
+						}
+						else {
+							nodeAct = mapActivity.get(ca);
+						}
+						if (precedent == null){
+							nodeAct.add(rdWmt);
+						}
+						else {
+							nodeAct.add(precedent);
+						}
+						ca = getActivity(ca.getSuperConcreteActivities());
+						if (ca == null ){
+							((DefaultMutableTreeNode)this.root).add(nodeAct);
+						}
+						precedent = nodeAct ;
+					}				
+				}
 				// brows all the concrete tasks
 				for(ConcreteTaskDescriptor ctd : crd.getConcreteTaskDescriptors()) {
 					
