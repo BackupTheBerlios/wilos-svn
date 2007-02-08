@@ -228,7 +228,6 @@ public class ProcessService {
 		// Guides
 		Set<Guidance> guidances = new HashSet<Guidance>();
 		guidances.addAll(_ph.getGuidances());
-		//this.saveGuidances(guidances);
 		
 		//	 clean of dependancies of _ph
 		_ph.getBreakdownElements().clear();
@@ -302,7 +301,6 @@ public class ProcessService {
 
 		Set<Guidance> guidances = new HashSet<Guidance>();
 		guidances.addAll(_it.getGuidances());
-		//this.saveGuidances(guidances);
 		
 		_it.getBreakdownElements().clear();
 		_it.getPredecessors().clear();
@@ -369,7 +367,6 @@ public class ProcessService {
 
 		Set<Guidance> guidances = new HashSet<Guidance>();
 		guidances.addAll(_act.getGuidances());
-		//this.saveGuidances(guidances);
 		
 		_act.getBreakdownElements().clear();
 		_act.getPredecessors().clear();
@@ -479,7 +476,6 @@ public class ProcessService {
 
 		Set<Guidance> guidances = new HashSet<Guidance>();
 		guidances.addAll(_rdef.getGuidances());
-		//this.saveGuidances(guidances);
 
 		_rdef.getRoleDescriptors().clear();
 		_rdef.getGuidances().clear();
@@ -573,7 +569,6 @@ public class ProcessService {
 
 		Set<Guidance> guidances = new HashSet<Guidance>();
 		guidances.addAll(_tdef.getGuidances());
-		//this.saveGuidances(guidances);
 
 		List<Step> steps = new ArrayList<Step>();
 		// recuperation des breakdownelements du processus
@@ -625,25 +620,6 @@ public class ProcessService {
 	 * @param _step
 	 */
 	private void parseGuidance(Guidance _guidance) {
-
-		/*Guidance clone = null;
-
-		try {
-			clone = _guidance.clone();
-		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
-		}
-
-		_guidance.getActivities().clear();
-		_guidance.getTaskDefinitions().clear();
-		_guidance.getRoleDefinitions().clear();
-
-		this.guidanceDao.saveOrUpdateGuidance(_guidance);
-		System.out.println("###Guidance vide sauve");
-
-		_guidance.addAllActivities(clone.getActivities());
-		_guidance.addAllTaskDefinitions(clone.getTaskDefinitions());
-		_guidance.addAllRoleDefinitions(clone.getRoleDefinitions());*/
 
 		this.guidanceDao.saveOrUpdateGuidance(_guidance);
 		System.out.println("###Guidance sauve");
