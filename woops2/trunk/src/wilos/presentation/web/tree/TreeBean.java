@@ -103,9 +103,7 @@ public class TreeBean {
 			if(this.affectedTaskFilter){
 				// participant into session
 				String wilosUserId = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID) ;
-
-				Participant participant = null;
-				//FIXME (demande a PSI2) : participant = this.participantService.getParticipant(wilosUserId);
+				Participant participant = this.participantService.getParticipant(wilosUserId);
 
 				if(participant != null){
 					Set<RoleDescriptor> roleDescriptorsList = new HashSet<RoleDescriptor>() ;
@@ -134,9 +132,7 @@ public class TreeBean {
 		List<SelectItem> projectsList = new ArrayList<SelectItem>() ;
 
 		String wilosUserId = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID) ;
-
-		Participant participant = null;
-		//FIXME (demande a PSI2) : participant = this.participantService.getParticipant(wilosUserId);
+		Participant participant = this.participantService.getParticipant(wilosUserId);
 
 		if(participant != null){
 			HashMap<Project, Boolean> projects = this.participantService.getProjectsForAParticipant(participant) ;

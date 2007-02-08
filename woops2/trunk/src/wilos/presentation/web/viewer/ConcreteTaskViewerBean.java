@@ -3,6 +3,7 @@ package wilos.presentation.web.viewer;
 import javax.faces.event.ActionEvent;
 
 import wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService;
+import wilos.business.services.misc.wilosuser.ParticipantService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.wilosuser.Participant;
@@ -14,6 +15,8 @@ public class ConcreteTaskViewerBean {
 	private WebSessionService webSessionService;
 
 	private ConcreteTaskDescriptorService concreteTaskDescriptorService;
+
+	private ParticipantService participantService;
 
 	/* Simple fields */
 
@@ -39,9 +42,7 @@ public class ConcreteTaskViewerBean {
 	 */
 	public void affectedActionListener(ActionEvent event) {
 		String wilosUserId = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID) ;
-
-		Participant participant = null;
-		//FIXME (demande a PSI2) : participant = this.participantService.getParticipant(wilosUserId);
+		Participant participant = this.participantService.getParticipant(wilosUserId);
 
 		this.concreteTaskDescriptorService.affectedConcreteTaskDescriptor(
 				this.concreteTaskDescriptor, participant);
@@ -49,9 +50,7 @@ public class ConcreteTaskViewerBean {
 
 	public boolean isVisibleAffected() {
 		String wilosUserId = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID) ;
-
-		Participant participant = null;
-		//FIXME (demande a PSI2) : participant = this.participantService.getParticipant(wilosUserId);
+		Participant participant = this.participantService.getParticipant(wilosUserId);
 
 		boolean vis = this.affectedVisible(
 				this.concreteTaskDescriptor, participant);
@@ -71,9 +70,7 @@ public class ConcreteTaskViewerBean {
 
 	public boolean isVisibleStart() {
 		String wilosUserId = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID) ;
-
-		Participant participant = null;
-		//FIXME (demande a PSI2) : participant = this.participantService.getParticipant(wilosUserId);
+		Participant participant = this.participantService.getParticipant(wilosUserId);
 
 		boolean vis = this.startVisible(
 				this.concreteTaskDescriptor, participant);
@@ -190,5 +187,21 @@ public class ConcreteTaskViewerBean {
 	 */
 	public void setWebSessionService(WebSessionService webSessionService) {
 		this.webSessionService = webSessionService ;
+	}
+
+	/**
+	 * @return the participantService
+	 */
+	public ParticipantService getParticipantService() {
+		return participantService ;
+	}
+
+	/**
+	 * Setter of participantService.
+	 *
+	 * @param participantService The participantService to set.
+	 */
+	public void setParticipantService(ParticipantService participantService) {
+		this.participantService = participantService ;
 	}
 }
