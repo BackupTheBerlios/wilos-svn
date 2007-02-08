@@ -35,6 +35,10 @@
 			<property-name>loginService</property-name>
 			<value>#{LoginService}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -50,6 +54,10 @@
 		<managed-property>
 			<property-name>loginService</property-name>
 			<value>#{LoginService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
 		</managed-property>
 	</managed-bean>
 
@@ -98,6 +106,14 @@
 		<managed-property>
 			<property-name>processService</property-name>
 			<value>#{ProcessService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>participantService</property-name>
+			<value>#{ParticipantService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
 		</managed-property>
 	</managed-bean>
 
