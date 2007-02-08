@@ -99,8 +99,6 @@ public class ProcessService {
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
-	// private GuidelineDao guidelineDao;
-
 	public Process spelpParsingXML(File _file) {
 		Process spelpProcess = null;
 		try {
@@ -187,6 +185,7 @@ public class ProcessService {
 			}
 		}
 		
+		// saving of the attached guidances to the process
 		for (Guidance g : guid) {
 			this.parseGuidance(g);
 		}
@@ -687,6 +686,7 @@ public class ProcessService {
 		Set<BreakdownElement> bdes = _act.getBreakdownElements();
 
 		List<BreakdownElement> tmp = new ArrayList<BreakdownElement>();
+		tmp.add(_act);
 
 		// in function of element type
 		for (BreakdownElement bde : bdes) {

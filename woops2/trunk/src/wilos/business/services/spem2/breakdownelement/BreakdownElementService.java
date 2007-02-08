@@ -6,9 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import wilos.business.services.spem2.activity.ActivityService;
 import wilos.hibernate.misc.concretebreakdownelement.ConcreteBreakdownElementDao;
+import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.project.Project;
-import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 
 /**
@@ -28,7 +28,7 @@ public class BreakdownElementService {
 	 * @param _project project for which the BreakdownElement shall be instanciated
 	 * @param _bde BreakdownElement to instanciate
 	 */
-	public void breakdownElementInstanciation (Project _project, BreakdownElement _bde) {
+	public ConcreteBreakdownElement breakdownElementInstanciation (Project _project, BreakdownElement _bde, ConcreteActivity _superActivity) {
 
 		ConcreteBreakdownElement cbe = new ConcreteBreakdownElement();
 
@@ -36,20 +36,24 @@ public class BreakdownElementService {
 			cbe.setConcreteName(_bde.getName()) ;
 		else
 			cbe.setConcreteName(_bde.getPresentationName());
+		
+		this.concreteBreakdownElementDao.saveOrUpdateConcreteBreakdownElement(cbe);
 
 		cbe.addBreakdownElement(_bde);
 		cbe.setProject(_project);
 
 		/* TODO verifier code par un M1 :) */
 		/* instanciating and adding all the ConcreteActivities included in the breakdownelement */
-		for (Activity act : _bde.getSuperActivities()) {
+		/*for (Activity act : _bde.getSuperActivities()) {
 			if (act.getBreakdownElements().size() == 0) {
 				this.activityService.activityInstanciation(_project, act);
 			}
 			_bde.addAllConcreteBreakdownElements(act.getConcreteBreakdownElements());
-		}
+		}*/
+		//cbe.addSuperConcreteActivity(_superActivity);
 
-		this.concreteBreakdownElementDao.saveOrUpdateConcreteBreakdownElement(cbe);
+		//this.concreteBreakdownElementDao.saveOrUpdateConcreteBreakdownElement(cbe);
+		return cbe;
 	}
 
 	/**

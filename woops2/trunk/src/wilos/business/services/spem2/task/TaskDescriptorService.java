@@ -34,6 +34,7 @@ public class TaskDescriptorService {
 		ctd.setProject(_project);
 
 		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(ctd);
+		System.out.println("### ConcreteTaskDescriptor sauve");
 	}
 
 	public TaskDescriptor getTaskDescriptorById(String _id)

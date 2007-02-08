@@ -9,7 +9,7 @@ import wilos.hibernate.spem2.process.ProcessDao;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.process.Process;
 
-public class ConcreteTaskDescriptorsInstanciationTest {
+public class ProjectInstanciationTest {
 	public static void main(String[] args) {
 		// Getback the application context from the spring configuration file
 		ApplicationContext ctx = new ClassPathXmlApplicationContext(
@@ -19,7 +19,7 @@ public class ConcreteTaskDescriptorsInstanciationTest {
 		ProcessDao p = (ProcessDao) ctx.getBean("ProcessDao");
 		ProcessService am = (ProcessService) ctx.getBean("ProcessService");
 
-		String s = am.getProcessDao().getProcessFromGuid("_9llsAQAvEdubGMceRDupFQ").getId();
+		/*String s = am.getProcessDao().getProcessFromGuid("_9llsAQAvEdubGMceRDupFQ").getId();
 		Process scrum = p.getProcess(s);
 
 		Project project = new Project();
@@ -27,7 +27,7 @@ public class ConcreteTaskDescriptorsInstanciationTest {
 		project.setProcess(scrum);
 		pm.saveOrUpdateProject(project);
 
-		am.projectInstanciation(project);
+		am.projectInstanciation(project);*/
 
 		String s2 = am.getProcessDao().getProcessFromGuid("_0uyGoMlgEdmt3adZL5Dmdw").getId();
 		Process openup = p.getProcess(s2);

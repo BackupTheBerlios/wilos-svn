@@ -1,6 +1,8 @@
 package wilos.business.services.spem2.activity;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +11,7 @@ import wilos.business.services.spem2.breakdownelement.BreakdownElementService;
 import wilos.hibernate.misc.concreteactivity.ConcreteActivityDao;
 import wilos.hibernate.spem2.activity.ActivityDao;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
@@ -37,6 +40,8 @@ public class ActivityService {
 	public void activityInstanciation(Project _project, Activity _activity) {
 
 		ConcreteActivity cact = new ConcreteActivity();
+		
+		Set<ConcreteBreakdownElement> cbdes = new HashSet<ConcreteBreakdownElement>();
 
 		if (_activity.getPresentationName() == null)
 			cact.setConcreteName(_activity.getName());
@@ -46,17 +51,34 @@ public class ActivityService {
 		cact.addActivity(_activity);
 		cact.setProject(_project);
 
-		/* TODO verifier code par un M1 :) */
-		/* instanciating and adding all the ConcreteBreakdownElements included in the activity */
+		// instanciation of all contained BreakdownElements in the activity if correspondant ConcreteBreakdownElement doesn't already exist for each ones
 		for (BreakdownElement bde : _activity.getBreakdownElements()) {
+			// if the ConcreteBreakdownElement collection of bde is empty
 			if (bde.getConcreteBreakdownElements().size() == 0) {
-				this.breakdownElementService.breakdownElementInstanciation(
-						_project, bde);
-			}
-			cact.addAllConcreteBreakdownElements(bde.getConcreteBreakdownElements());
+				// instanciation of a relative ConcreteBreakdownElement for bde which have for superConcreteActivity _act 
+				cbdes.add(this.breakdownElementService.breakdownElementInstanciation(
+						_project, bde, cact));
+			}/* else {
+				// if the ConcreteBreakdownElement collection of bde isn't empty
+				boolean find = false;
+				for (ConcreteBreakdownElement cbde : bde.getConcreteBreakdownElements()) {
+					// if a relative ConcreteBreakdownElement already exists for the project _project
+					if (cbde.getProject().getId() == _project.getId()) {
+						find = true;
+						break;
+					}
+				}
+				if (!find) {
+					this.breakdownElementService.breakdownElementInstanciation(
+							_project, bde, cact);
+				}
+			}*/
 		}
+		
+		cact.addAllConcreteBreakdownElements(cbdes);
 
 		this.concreteActivityDao.saveOrUpdateConcreteActivity(cact);
+		System.out.println("### ConcreteActivity sauve");
 	}
 
 	/**
