@@ -73,7 +73,6 @@ public class WizardMainFrame extends JFrame {
 		WizardControler.getInstance().initUIElements(actionToolBar,jTree,menu);
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		WizardControler.getInstance().addHTMLViewer(new HTMLViewer(getHTMLLocation()));
 		this.moveHTML();
 		this.addComponentListener(new ComponentListener(){
 	   		public void componentHidden(ComponentEvent e) {

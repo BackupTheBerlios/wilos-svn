@@ -56,7 +56,7 @@ public class HTMLViewer extends JFrame {
 	private JEditorPane myEditorPane;
 	
 	private JLabel myElementLabel ;
-	
+	private JToolBar northPanel ;
 	private JButton prevButton;
 	private JButton nextButton;
 	private Stack<Element> historyStack;
@@ -67,6 +67,10 @@ public class HTMLViewer extends JFrame {
 	
 	public JList getJList (){
 		return guidesList ;
+	}
+	
+	public int getHeightToolbar (){
+		return northPanel.getSize().height ;
 	}
 	
 	public HTMLViewer(Point p) {
@@ -100,7 +104,7 @@ public class HTMLViewer extends JFrame {
 			}
 		});*/
 		
-		JToolBar northPanel = new JToolBar();
+		northPanel = new JToolBar();
 		northPanel.add(elementPanel);
 		//northPanel.add(this.prevButton);
 		//northPanel.add(this.nextButton);
@@ -156,6 +160,7 @@ public class HTMLViewer extends JFrame {
 			}
 
 			public void mouseReleased(MouseEvent e) {
+				// if right click then show contextual menu
 				if (e.getButton() == MouseEvent.BUTTON3){
 					WizardControler.getInstance().showContextualMenu(e);					
 				}
@@ -194,6 +199,10 @@ public class HTMLViewer extends JFrame {
 		this.setVisible(true);
 	}
 	
+	/**
+	 * displayElement : display in the html area the description of an element
+	 * @param e
+	 */
 	private void displayElement(Element e) {
 		//guidesList.setVisible(e instanceof Guidance || e instanceof TaskDescriptor);
 			
@@ -212,8 +221,9 @@ public class HTMLViewer extends JFrame {
 		
 		this.myEditorPane.setText(this.HTMLCode);
 		
-		if(description.length() != 0)
+		if(description.length() != 0){
 			this.myEditorPane.setCaretPosition(1); // revient au debut du texte
+		}
 			
 		this.setVisible(true);
 		
@@ -232,6 +242,10 @@ public class HTMLViewer extends JFrame {
 			this.nextButton.setEnabled(false);
 	}
 
+	/**
+	 * viewObject check what type is the object and delegate the 
+	 * @param o
+	 */
 	public void viewObject (Object o) {
 		boolean ok = false ;
 		if(o instanceof ConcreteTaskDescriptor){

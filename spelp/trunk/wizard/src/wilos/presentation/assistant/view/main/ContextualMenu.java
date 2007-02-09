@@ -1,7 +1,7 @@
 package wilos.presentation.assistant.view.main;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -27,18 +27,22 @@ public class ContextualMenu extends JPopupMenu implements Observer
 
 	public ContextualMenu(){
 		super(Bundle.getText("mainFrame.option"));  
-		 
+		Font f = new Font(Font.DIALOG, Font.BOLD, 11);
 		jButtonPlayTask = new JMenuItem(ImagesService.getImageIcon("images.iconPlayS"));
 		jButtonPlayTask.setText(Bundle.getText("action.run"));
+		jButtonPlayTask.setFont(f);
 		this.add(jButtonPlayTask);
 		jButtonPauseTask = new JMenuItem(ImagesService.getImageIcon("images.iconPauseS"));
 		jButtonPauseTask.setText(Bundle.getText("action.pause"));
+		jButtonPauseTask.setFont(f);
 		this.add(jButtonPauseTask);
 		jButtonFinished = new JMenuItem(ImagesService.getImageIcon("images.iconFinishedS"));
 		jButtonFinished.setText(Bundle.getText("action.finish"));
+		jButtonFinished.setFont(f);
 		this.add(jButtonFinished);
 		jButtonNewHTML = new JMenuItem (Bundle.getText("htmlViewer.newWindow")) ;
 		jButtonNewHTML.addActionListener(WizardControler.getInstance().getNewHTMLAction());
+		jButtonNewHTML.setFont(f);
 		this.addSeparator();
 		this.add(jButtonNewHTML);
 		WizardStateMachine.getInstance().addObserver(this);

@@ -46,6 +46,11 @@ public class WizardControler {
 		if (listHTML.size() != 0){
 			h = listHTML.get(0).get(p);
 		}
+		else {
+			h = new HTMLViewer(p);
+			listHTML.add(h);
+			listHTML.get(0).get(p);
+		}
 		return h;
 	}
 	
@@ -56,15 +61,18 @@ public class WizardControler {
 	public ActionListener getNewHTMLAction (){
 		ActionListener al = new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
+				Point p = getDefaultHTML(null).getLocation();
+				p.y += getDefaultHTML(null).getHeightToolbar() * 2 ;
+				p.x += getDefaultHTML(null).getHeightToolbar() ;
 				if (src instanceof JList){
-					HTMLViewer newHTMLViewer = new HTMLViewer(new Point(0,0)) ;
+					HTMLViewer newHTMLViewer = new HTMLViewer(p) ;
 					WizardControler.getInstance().addHTMLViewer(newHTMLViewer);
 					WizardStateMachine.getInstance().setFocusedObject(getDefaultHTML(null).getJList().getSelectedValue(),newHTMLViewer);
 					newHTMLViewer.trtGuides(null);
 				}
 				else if (src instanceof JXTree) {
 					DefaultMutableTreeNode dmt =  (DefaultMutableTreeNode)WizardControler.getInstance().getTreePanel().getTree().getLastSelectedPathComponent();
-					HTMLViewer newHTMLViewer = new HTMLViewer(new Point(0,0)) ;
+					HTMLViewer newHTMLViewer = new HTMLViewer(p) ;
 					WizardControler.getInstance().addHTMLViewer(newHTMLViewer);
 					if(dmt != null) {
 						WizardStateMachine.getInstance().setFocusedObject(dmt.getUserObject(),newHTMLViewer);		

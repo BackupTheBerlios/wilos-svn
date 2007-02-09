@@ -33,7 +33,7 @@ import wilos.presentation.assistant.ressources.ImagesService;
 import wilos.utils.Constantes;
 
 public class TreePanel extends JScrollPane implements TreeSelectionListener {
-	
+		
 	private JXTree tree = null ;
 	
 	public TreePanel(){
@@ -285,19 +285,19 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 					ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor)object ;
 					this.setIcon(ImagesService.getImageIcon("images.iconTaskDescriptor"));
 					if (ctd.getState() == Constantes.State.STARTED) {
-						this.setForeground(Color.decode("#008800"));
+						this.setForeground(WizardStateMachine.COLOR_STARTED);
 					}
 					else if (ctd.getState().equals(Constantes.State.READY)) {
-						this.setForeground(Color.decode("#FF9900"));
+						this.setForeground(WizardStateMachine.COLOR_READY);
 					}
 					else if (ctd.getState().equals(Constantes.State.SUSPENDED)) {
-						this.setForeground(Color.pink);
+						this.setForeground(WizardStateMachine.COLOR_SUSPENDED);
 					}
 					else if (ctd.getState().equals(Constantes.State.FINISHED)) {
-						this.setForeground(Color.decode("#0066FF"));						
+						this.setForeground(WizardStateMachine.COLOR_FINISHED);		
 					}
 					else if (ctd.getState().equals(Constantes.State.CREATED)) {
-						this.setForeground(Color.black);
+						this.setForeground(WizardStateMachine.COLOR_CREATED);
 					}
 				}
 				else if (object instanceof Step) {

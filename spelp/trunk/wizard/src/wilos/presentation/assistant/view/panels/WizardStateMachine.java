@@ -1,5 +1,6 @@
 package wilos.presentation.assistant.view.panels;
 
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.Observable;
 
@@ -7,7 +8,6 @@ import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.task.Step;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
-import wilos.presentation.assistant.view.main.WizardMainFrame;
 import wilos.utils.Constantes;
 
 public class WizardStateMachine extends Observable{
@@ -22,6 +22,13 @@ public class WizardStateMachine extends Observable{
 	public static final int STATE_STEP_CREATED = 7;
 	public static final int STATE_STEP_READY = 8;
 	public static final int STATE_STEP_FINISHED = 9;
+	
+	// colors depending on the state
+	public static final Color COLOR_STARTED = Color.decode("#008800");
+	public static final Color COLOR_READY = Color.decode("#FF9900") ;
+	public static final Color COLOR_SUSPENDED = Color.pink;
+	public static final Color COLOR_FINISHED = Color.decode("#0066FF") ;
+	public static final Color COLOR_CREATED = Color.black ;
 	
 	private int currentState = 0;
 	
