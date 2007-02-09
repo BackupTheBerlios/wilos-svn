@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping>
+	
+	<joined-subclass
+		name="wilos.model.misc.concreteiteration.ConcreteIteration"
+		extends="wilos.model.misc.concreteactivity.ConcreteActivity"
+		table="concreteiteration" lazy="true">
+		<key column="concreteiteration_id"></key>
+		
+		<many-to-one name="iteration"
+			class="wilos.model.spem2.iteration.Iteration"
+			column="iteration_id">
+		</many-to-one>
+
+	</joined-subclass>
+	
+</hibernate-mapping>
