@@ -13,7 +13,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.task.Step;
@@ -36,14 +35,14 @@ public class TaskDefinitionTO extends TaskDefinition implements Serializable {
         this.setGuid(myTD.getGuid());
         this.setDescription(myTD.getDescription());                
         
-        SortedSet<Step> stepTos= new TreeSet<Step>();
+       /* SortedSet<Step> stepTos= new HashSet<Step>();
         for (Step s : myTD.getSteps()) {
             stepTos.add(new StepTO(s));
         }
-        this.addAllSteps(stepTos);
+        this.addAllSteps(stepTos);*/
        
         
-        Set<Guidance> guidances = new TreeSet<Guidance>();
+        Set<Guidance> guidances = new HashSet<Guidance>();
         for (Guidance g : myTD.getGuidances()) {
         	 guidances.add(new GuidanceTO(g));
         }
