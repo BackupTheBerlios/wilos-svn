@@ -47,6 +47,16 @@ public class TreeBean {
 
 	/* Services */
 
+	private static final String ACTIVITY_VIEWER_BEAN = "ConcreteActivityViewerBean";
+
+	private static final String PROJECT_VIEWER_BEAN = "ProjectViewerBean";
+
+	private static final String PHASE_VIEWER_BEAN = "ConcretePhaseViewerBean";
+
+	private static final String ITERATION_VIEWER_BEAN = "ConcreteIterationViewerBean";
+
+	private static final String CONCRETE_TASK_VIEWER_BEAN = "ConcreteTaskViewerBean";
+
 	private WebSessionService webSessionService ;
 
 	private ProjectService projectService ;
@@ -101,7 +111,7 @@ public class TreeBean {
 				this.project = this.projectService.getProject(this.projectId) ;
 				//this.project = this.processService.getEntireProject(this.projectId) ;
 			}
-			ProjectNode projectNode = null ;
+			ProjectNode projectNode = null ; Project p = new Project();
 
 			if(this.affectedTaskFilter){
 				// participant into session
@@ -161,7 +171,8 @@ public class TreeBean {
 		this.buildModel(true) ;
 
 		// TODO changeTreeActionListener not verify
-		this.selectNodeToShow(this.projectId, WilosObjectNode.PROJECTNODE) ;
+		if (this.projectId.length() > 0) this.selectNodeToShow(this.projectId, WilosObjectNode.PROJECTNODE) ;
+		logger.debug("### TreeBean ### changeTreeActionListener projectId="+this.projectId) ;
 	}
 
 	public void filterTreeActionListener(ValueChangeEvent evt) {
@@ -195,7 +206,7 @@ public class TreeBean {
 		if(_objectId != null && _pageId != null){
 			if(_pageId.equals(WilosObjectNode.ACTIVITYNODE)){
 				ConcreteActivityViewerBean av = (ConcreteActivityViewerBean) context.getApplication().getVariableResolver().resolveVariable(context,
-						"ActivityViewerBean") ;
+						ACTIVITY_VIEWER_BEAN) ;
 				av.setConcreteActivityId(_objectId) ;
 				// model building
 				av.buildConcreteActivity() ;
@@ -203,7 +214,7 @@ public class TreeBean {
 			}
 			else if(_pageId.equals(WilosObjectNode.CONCRETETASKNODE)){
 				ConcreteTaskViewerBean ctv = (ConcreteTaskViewerBean) context.getApplication().getVariableResolver().resolveVariable(context,
-						"ConcreteTaskViewerBean") ;
+						CONCRETE_TASK_VIEWER_BEAN) ;
 				ctv.setConcreteTaskDescriptorId(_objectId) ;
 				// model building
 				ctv.buildConcreteTaskDescriptor() ;
@@ -211,7 +222,7 @@ public class TreeBean {
 			}
 			else if(_pageId.equals(WilosObjectNode.ITERATIONNODE)){
 				ConcreteIterationViewerBean iv = (ConcreteIterationViewerBean) context.getApplication().getVariableResolver().resolveVariable(context,
-						"IterationViewerBean") ;
+						ITERATION_VIEWER_BEAN) ;
 				iv.setConcreteIterationId(_objectId) ;
 				// model building
 				iv.buildConcreteIteration() ;
@@ -219,14 +230,14 @@ public class TreeBean {
 			}
 			else if(_pageId.equals(WilosObjectNode.PHASENODE)){
 				ConcretePhaseViewerBean pb = (ConcretePhaseViewerBean) context.getApplication().getVariableResolver().resolveVariable(context,
-						"PhaseViewerBean") ;
+						PHASE_VIEWER_BEAN) ;
 				pb.setConcretePhaseId(_objectId) ;
 				// model building
 				pb.buildConcretePhaseModel() ;
 				mb.changePage(_pageId) ;
 			}
 			else if(_pageId.equals(WilosObjectNode.PROJECTNODE)){
-				ProjectViewerBean p = (ProjectViewerBean) context.getApplication().getVariableResolver().resolveVariable(context, "ProjectViewerBean") ;
+				ProjectViewerBean p = (ProjectViewerBean) context.getApplication().getVariableResolver().resolveVariable(context, PROJECT_VIEWER_BEAN) ;
 				p.setProjectId(_objectId) ;
 				// model building
 				p.buildProjectModel() ;

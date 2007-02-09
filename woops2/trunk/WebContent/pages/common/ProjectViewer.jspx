@@ -10,7 +10,7 @@
 				<br />
 				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2" border="0">
 					<ice:outputText value="name " />
-					<ice:outputText	value="#{ProjectViewerBean.project.name}" />
+					<ice:outputText	value="#{ProjectViewerBean.project.concreteName}" />
 					<ice:outputText value="description " />
 					<ice:outputText	value="#{ProjectViewerBean.project.description}" />
 					<ice:outputText value="creationDate " />

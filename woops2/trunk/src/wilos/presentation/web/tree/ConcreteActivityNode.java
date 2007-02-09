@@ -38,8 +38,8 @@ public class ConcreteActivityNode extends DefaultMutableTreeNode {
 						(ConcreteActivity) concreteBreakdownElement, _roleDescriptors));
 			}
 			else if (concreteBreakdownElement instanceof ConcreteTaskDescriptor) {
-				//this.add(new ConcreteTaskDescriptorNode((ConcreteTaskDescriptor) concreteBreakdownElement,
-								//_roleDescriptors));
+				this.add(new ConcreteTaskDescriptorNode((ConcreteTaskDescriptor) concreteBreakdownElement,
+								_roleDescriptors));
 			}
 		}
 	}

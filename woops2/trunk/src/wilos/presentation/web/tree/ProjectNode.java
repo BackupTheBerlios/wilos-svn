@@ -41,17 +41,17 @@ public class ProjectNode extends DefaultMutableTreeNode {
 			//Nested nodes.
 			for (ConcreteBreakdownElement concreteBreakdownElement : this.project.getConcreteBreakdownElements()) {
 				if (concreteBreakdownElement instanceof ConcretePhase) {
-					//this.add(new ConcretePhaseNode((ConcretePhase) concreteBreakdownElement,
-							//_roleDescriptors));
+					this.add(new ConcretePhaseNode((ConcretePhase) concreteBreakdownElement,
+							_roleDescriptors));
 				} else if (concreteBreakdownElement instanceof ConcreteIteration) {
-					//this.add(new ConcreteIterationNode((ConcreteIteration) concreteBreakdownElement,
-							//_roleDescriptors));
+					this.add(new ConcreteIterationNode((ConcreteIteration) concreteBreakdownElement,
+							_roleDescriptors));
 				} else if (concreteBreakdownElement instanceof ConcreteActivity) {
 					this.add(new ConcreteActivityNode((ConcreteActivity) concreteBreakdownElement,
 							_roleDescriptors));
 				} else if (concreteBreakdownElement instanceof ConcreteTaskDescriptor) {
-					//this.add(new ConcreteTaskDescriptorNode((ConcreteTaskDescriptor) concreteBreakdownElement,
-									//_roleDescriptors));
+					this.add(new ConcreteTaskDescriptorNode((ConcreteTaskDescriptor) concreteBreakdownElement,
+								_roleDescriptors));
 				}
 			}
 		}
