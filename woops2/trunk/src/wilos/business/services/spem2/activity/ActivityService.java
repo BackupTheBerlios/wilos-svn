@@ -1,7 +1,9 @@
 package wilos.business.services.spem2.activity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,9 +13,12 @@ import wilos.business.services.spem2.phase.PhaseService;
 import wilos.hibernate.misc.concreteactivity.ConcreteActivityDao;
 import wilos.hibernate.spem2.activity.ActivityDao;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.iteration.Iteration;
+import wilos.model.spem2.phase.Phase;
 
 /**
  * ActivityManager is a transactional class, that manages operations about activity, requested by web pages (activity.jsp &
@@ -44,6 +49,8 @@ public class ActivityService {
 		
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 		bdes.addAll(_activity.getBreakdownElements());
+		
+		Set<ConcreteBreakdownElement> tmp = new HashSet<ConcreteBreakdownElement>();
 
 		if (_activity.getPresentationName() == null)
 			cact.setConcreteName(_activity.getName());
@@ -56,32 +63,36 @@ public class ActivityService {
 		this.concreteActivityDao.saveOrUpdateConcreteActivity(cact);
 		System.out.println("### ConcreteActivity vide sauve");
 		
-		return cact;
-		
-		/*for (BreakdownElement bde : bdes ) {
+		for (BreakdownElement bde : bdes ) {
 			if (bde instanceof Phase) {
 				Phase ph = (Phase) bde;
-				this.phaseService.phaseInstanciation(_project, ph);
+				tmp.add(this.phaseService.phaseInstanciation(_project, ph));
 			} else {
 				if (bde instanceof Iteration) {
 					Iteration it = (Iteration) bde;
-					this.iterationService.iterationInstanciation(_project, it);
+					tmp.add(this.iterationService.iterationInstanciation(_project, it));
 				} else {
 					if (bde instanceof Activity) {
 						Activity act = (Activity) bde;
-						this.activityInstanciation(_project, act);
-					} else {
+						tmp.add(this.activityInstanciation(_project, act));
+					}/* else {
 						if (bde instanceof RoleDescriptor) {
 							RoleDescriptor rd = (RoleDescriptor) bde;
 							this.roleDescriptorService.roleDescriptorInstanciation(_project, rd);
 						} else {
 							TaskDescriptor td = (TaskDescriptor) bde;
 							this.taskDescriptorService.taskDescriptorInstanciation(_project, td);
-						}
+						}*/
 					}
 				}
 			}
-		}*/
+			cact.addAllConcreteBreakdownElements(tmp);
+		
+			this.concreteActivityDao.saveOrUpdateConcreteActivity(cact);
+			System.out.println("### Activity update");
+			
+			return cact;
+		//}
 		
 		
 
