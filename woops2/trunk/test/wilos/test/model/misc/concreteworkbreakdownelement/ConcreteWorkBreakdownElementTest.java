@@ -7,8 +7,8 @@ import java.util.Set;
 
 import junit.framework.TestCase;
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
+import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkOrder;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
-import wilos.model.spem2.workbreakdownelement.WorkOrder;
 import wilos.utils.Constantes;
 
 public class ConcreteWorkBreakdownElementTest extends TestCase {
@@ -16,6 +16,8 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 	private ConcreteWorkBreakdownElement concreteWorkBreakdownElement ;
 
 	private static final String CONCRETE_NAME = "Work Concrete name" ;
+	
+	private static final String CONCRETE_LINK_TYPE = "concrete link type";
 
 	private Date date;
 
@@ -136,144 +138,144 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 	/*
 	 * a modifier pour prendre en compte des concreteWorkOrder
 	 * 
-	public final void testAddSuccessor() {
+	 */
+	public final void testAddConcreteSuccessor() {
 		// Rk: the setUp method is called here.
 
-		WorkOrder tmp = new WorkOrder();
-		this.workBreakdownElement.addSuccessor(tmp);
+		ConcreteWorkOrder tmp = new ConcreteWorkOrder();
+		this.concreteWorkBreakdownElement.addConcreteSuccessor(tmp);
 
-		assertTrue(this.workBreakdownElement.getSuccessors().contains(tmp));
-		assertTrue(tmp.getPredecessor().equals(this.workBreakdownElement));
+		assertTrue(this.concreteWorkBreakdownElement.getConcreteSuccessors().contains(tmp));
+		assertTrue(tmp.getConcretePredecessor().equals(this.concreteWorkBreakdownElement));
 
 		// Rk: the tearDown method is called here.
 	}
 
-	public final void testAddPredecessor() {
+	public final void testAddConcretePredecessor() {
 		// Rk: the setUp method is called here.
 
-		WorkOrder tmp = new WorkOrder();
-		this.workBreakdownElement.addPredecessor(tmp);
+		ConcreteWorkOrder tmp = new ConcreteWorkOrder();
+		this.concreteWorkBreakdownElement.addConcretePredecessor(tmp);
 
-		assertTrue(this.workBreakdownElement.getPredecessors().contains(tmp));
-		assertTrue(tmp.getSuccessor().equals(this.workBreakdownElement));
+		assertTrue(this.concreteWorkBreakdownElement.getConcretePredecessors().contains(tmp));
+		assertTrue(tmp.getConcreteSuccessor().equals(this.concreteWorkBreakdownElement));
 
 		// Rk: the tearDown method is called here.
 	}
 
-	public final void testRemoveSuccessor() {
+	public final void testRemoveConcreteSuccessor() {
 		// Rk: the setUp method is called here.
 
-		WorkOrder tmp = new WorkOrder();
-		this.workBreakdownElement.addSuccessor(tmp);
-		this.workBreakdownElement.removeSuccessor(tmp);
+		ConcreteWorkOrder tmp = new ConcreteWorkOrder();
+		this.concreteWorkBreakdownElement.addConcreteSuccessor(tmp);
+		this.concreteWorkBreakdownElement.removeConcreteSuccessor(tmp);
 
-		assertFalse(this.workBreakdownElement.getSuccessors().contains(tmp));
-		assertFalse(this.workBreakdownElement.equals(tmp.getPredecessor()));
+		assertFalse(this.concreteWorkBreakdownElement.getConcreteSuccessors().contains(tmp));
+		assertFalse(this.concreteWorkBreakdownElement.equals(tmp.getConcretePredecessor()));
 
 		// Rk: the tearDown method is called here.
 	}
 
-	public final void testRemovePredecessor() {
+	public final void testRemoveConcretePredecessor() {
 		// Rk: the setUp method is called here.
 
-		WorkOrder tmp = new WorkOrder();
-		this.workBreakdownElement.addPredecessor(tmp);
-		this.workBreakdownElement.removePredecessor(tmp);
+		ConcreteWorkOrder tmp = new ConcreteWorkOrder();
+		this.concreteWorkBreakdownElement.addConcretePredecessor(tmp);
+		this.concreteWorkBreakdownElement.removeConcretePredecessor(tmp);
 
-		assertFalse(this.workBreakdownElement.getPredecessors().contains(tmp));
-		assertFalse(this.workBreakdownElement.equals(tmp.getSuccessor()));
+		assertFalse(this.concreteWorkBreakdownElement.getConcretePredecessors().contains(tmp));
+		assertFalse(this.concreteWorkBreakdownElement.equals(tmp.getConcreteSuccessor()));
 
 		// Rk: the tearDown method is called here.
 	}
 	
-	public final void testAddAllSuccessors() {
+	public final void testAddAllConcreteSuccessors() {
 		// Rk: the setUp method is called here.
 
-		WorkOrder tmp1 = new WorkOrder();
-		tmp1.setLinkType(LINK_TYPE);
-		WorkOrder tmp2 = new WorkOrder();
-		tmp2.setLinkType("other link type");
-		Set<WorkOrder> list = new HashSet<WorkOrder>();
+		ConcreteWorkOrder tmp1 = new ConcreteWorkOrder();
+		tmp1.setConcreteLinkType(CONCRETE_LINK_TYPE);
+		ConcreteWorkOrder tmp2 = new ConcreteWorkOrder();
+		tmp2.setConcreteLinkType("other concrete link type");
+		Set<ConcreteWorkOrder> list = new HashSet<ConcreteWorkOrder>();
 		list.add(tmp1);
 		list.add(tmp2);
 
-		this.workBreakdownElement.addAllSuccessors(list);
+		this.concreteWorkBreakdownElement.addAllConcreteSuccessors(list);
 
-		assertTrue(this.workBreakdownElement.getSuccessors().size() == 2);
-		assertTrue(this.workBreakdownElement.getSuccessors().contains(tmp1));
-		assertTrue(this.workBreakdownElement.getSuccessors().contains(tmp2));
-		assertTrue(this.workBreakdownElement.equals(tmp1.getPredecessor()));
-		assertTrue(this.workBreakdownElement.equals(tmp2.getPredecessor()));
+		assertTrue(this.concreteWorkBreakdownElement.getConcreteSuccessors().size() == 2);
+		assertTrue(this.concreteWorkBreakdownElement.getConcreteSuccessors().contains(tmp1));
+		assertTrue(this.concreteWorkBreakdownElement.getConcreteSuccessors().contains(tmp2));
+		assertTrue(this.concreteWorkBreakdownElement.equals(tmp1.getConcretePredecessor()));
+		assertTrue(this.concreteWorkBreakdownElement.equals(tmp2.getConcretePredecessor()));
 
 		// Rk: the tearDown method is called here.
 	}
 
-	public final void testAddAllPredecessors() {
+	public final void testAddAllConcretePredecessors() {
 		// Rk: the setUp method is called here.
 
-		WorkOrder tmp1 = new WorkOrder();
-		tmp1.setLinkType(LINK_TYPE);
-		WorkOrder tmp2 = new WorkOrder();
-		tmp2.setLinkType("other link type");
-		Set<WorkOrder> list = new HashSet<WorkOrder>();
+		ConcreteWorkOrder tmp1 = new ConcreteWorkOrder();
+		tmp1.setConcreteLinkType(CONCRETE_LINK_TYPE);
+		ConcreteWorkOrder tmp2 = new ConcreteWorkOrder();
+		tmp2.setConcreteLinkType("other concrete link type");
+		Set<ConcreteWorkOrder> list = new HashSet<ConcreteWorkOrder>();
 		list.add(tmp1);
 		list.add(tmp2);
 
-		this.workBreakdownElement.addAllPredecessors(list);
+		this.concreteWorkBreakdownElement.addAllConcretePredecessors(list);
 
-		assertTrue(this.workBreakdownElement.getPredecessors().size() == 2);
-		assertTrue(this.workBreakdownElement.getPredecessors().contains(tmp1));
-		assertTrue(this.workBreakdownElement.getPredecessors().contains(tmp2));
-		assertTrue(this.workBreakdownElement.equals(tmp1.getSuccessor()));
-		assertTrue(this.workBreakdownElement.equals(tmp2.getSuccessor()));
+		assertTrue(this.concreteWorkBreakdownElement.getConcretePredecessors().size() == 2);
+		assertTrue(this.concreteWorkBreakdownElement.getConcretePredecessors().contains(tmp1));
+		assertTrue(this.concreteWorkBreakdownElement.getConcretePredecessors().contains(tmp2));
+		assertTrue(this.concreteWorkBreakdownElement.equals(tmp1.getConcreteSuccessor()));
+		assertTrue(this.concreteWorkBreakdownElement.equals(tmp2.getConcreteSuccessor()));
 		
 		// Rk: the tearDown method is called here.
 	}
 
-	public final void testRemoveAllSuccessors() {
+	public final void testRemoveAllConcreteSuccessors() {
 		// Rk: the setUp method is called here.
 
-		WorkOrder tmp1 = new WorkOrder();
-		tmp1.setLinkType(LINK_TYPE);
-		WorkOrder tmp2 = new WorkOrder();
-		tmp2.setLinkType("other link type");
-		Set<WorkOrder> list = new HashSet<WorkOrder>();
+		ConcreteWorkOrder tmp1 = new ConcreteWorkOrder();
+		tmp1.setConcreteLinkType(CONCRETE_LINK_TYPE);
+		ConcreteWorkOrder tmp2 = new ConcreteWorkOrder();
+		tmp2.setConcreteLinkType("other concrete link type");
+		Set<ConcreteWorkOrder> list = new HashSet<ConcreteWorkOrder>();
 		list.add(tmp1);
 		list.add(tmp2);
 
-		this.workBreakdownElement.addAllSuccessors(list);
-		this.workBreakdownElement.removeAllSuccessors();
+		this.concreteWorkBreakdownElement.addAllConcreteSuccessors(list);
+		this.concreteWorkBreakdownElement.removeAllConcreteSuccessors();
 
-		assertTrue(this.workBreakdownElement.getSuccessors().size() == 0);
-		assertFalse(this.workBreakdownElement.getSuccessors().contains(tmp1));
-		assertFalse(this.workBreakdownElement.getSuccessors().contains(tmp2));
-		assertFalse(this.workBreakdownElement.equals(tmp1.getPredecessor()));
-		assertFalse(this.workBreakdownElement.equals(tmp2.getPredecessor()));
+		assertTrue(this.concreteWorkBreakdownElement.getConcreteSuccessors().size() == 0);
+		assertFalse(this.concreteWorkBreakdownElement.getConcreteSuccessors().contains(tmp1));
+		assertFalse(this.concreteWorkBreakdownElement.getConcreteSuccessors().contains(tmp2));
+		assertFalse(this.concreteWorkBreakdownElement.equals(tmp1.getConcretePredecessor()));
+		assertFalse(this.concreteWorkBreakdownElement.equals(tmp2.getConcretePredecessor()));
 
 		// Rk: the tearDown method is called here.
 	}
 
-	public final void testRemoveAllPredecessors() {
+	public final void testRemoveAllConcretePredecessors() {
 		// Rk: the setUp method is called here.
 
-		WorkOrder tmp1 = new WorkOrder();
-		tmp1.setLinkType(LINK_TYPE);
-		WorkOrder tmp2 = new WorkOrder();
-		tmp2.setLinkType("other link type");
-		Set<WorkOrder> list = new HashSet<WorkOrder>();
+		ConcreteWorkOrder tmp1 = new ConcreteWorkOrder();
+		tmp1.setConcreteLinkType(CONCRETE_LINK_TYPE);
+		ConcreteWorkOrder tmp2 = new ConcreteWorkOrder();
+		tmp2.setConcreteLinkType("other concrete link type");
+		Set<ConcreteWorkOrder> list = new HashSet<ConcreteWorkOrder>();
 		list.add(tmp1);
 		list.add(tmp2);
 
-		this.workBreakdownElement.addAllPredecessors(list);
-		this.workBreakdownElement.removeAllPredecessors();
+		this.concreteWorkBreakdownElement.addAllConcretePredecessors(list);
+		this.concreteWorkBreakdownElement.removeAllConcretePredecessors();
 
-		assertTrue(this.workBreakdownElement.getPredecessors().size() == 0);
-		assertFalse(this.workBreakdownElement.getPredecessors().contains(tmp1));
-		assertFalse(this.workBreakdownElement.getPredecessors().contains(tmp2));
-		assertFalse(this.workBreakdownElement.equals(tmp1.getSuccessor()));
-		assertFalse(this.workBreakdownElement.equals(tmp2.getSuccessor()));
+		assertTrue(this.concreteWorkBreakdownElement.getConcretePredecessors().size() == 0);
+		assertFalse(this.concreteWorkBreakdownElement.getConcretePredecessors().contains(tmp1));
+		assertFalse(this.concreteWorkBreakdownElement.getConcretePredecessors().contains(tmp2));
+		assertFalse(this.concreteWorkBreakdownElement.equals(tmp1.getConcreteSuccessor()));
+		assertFalse(this.concreteWorkBreakdownElement.equals(tmp2.getConcreteSuccessor()));
 
 		// Rk: the tearDown method is called here.
 	}
-	*/
 }
