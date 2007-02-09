@@ -107,25 +107,15 @@ public class ProcessService {
 			logger.debug("### ProcessService ### spelpParsingXML "
 					+ _file.getAbsolutePath() + " abs path = "
 					+ _file.getPath());
-			spelpProcess = XMLServices.getProcess(_file.getAbsolutePath(), this
-					.getPathFromFile(_file.getAbsolutePath()));
+			String path = _file.getAbsolutePath().substring(0, _file.getAbsolutePath().lastIndexOf("/"));
+			logger.debug("### ProcessService ### spelpParsingXML PATH == "+path);
+			spelpProcess = XMLServices.getProcess(_file.getAbsolutePath(), path );
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return spelpProcess;
 	}
-
-	private String getPathFromFile(String _path) {
-		logger.debug("### ProcessService ### getPathFromFile " + _path);
-		String[] pathTab = _path.split("/");
-		String path = "";
-		for (String s : pathTab) {
-			path += "/";
-			path += s;
-		}
-		return path;
-	}
-
+	
 	/**
 	 *
 	 * Method for saving a Process
