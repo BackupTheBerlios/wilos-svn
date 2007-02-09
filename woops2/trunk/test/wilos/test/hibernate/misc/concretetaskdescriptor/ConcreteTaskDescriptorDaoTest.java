@@ -199,6 +199,7 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 				.getConcreteTaskDescriptor(id);
 		assertNull(concreteTaskDescriptorTmp);
 
+		taskDescriptorDao.deleteTaskDescriptor(taskDescriptorTmp);
 		// Rk: the tearDown method is called here.
 	}
 
