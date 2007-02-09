@@ -80,36 +80,70 @@ public class ProjectBean {
 		this.selectedProcessGuid="";
 		this.processNamesList = new ArrayList<SelectItem>();
 		this.formatter = new SimpleDateFormat("dd/MM/yyyy");
+		
+		/*********************************************/
 		this.projectContent = new ArrayList<Object>();
 		this.displayContent = new ArrayList<Object>();
 		
 		ConcreteActivity ca = new ConcreteActivity();
 		ca.setConcreteName("activityMere");
 		ca.setPlannedTime(10);
+		this.isExpanded.put(ca.getConcreteName(), false);
 		Project p1 = new Project();
 		p1.setConcreteName("proj1");
 		p1.setPlannedTime(3);
+		this.isExpanded.put(p1.getConcreteName(), false);
 		Project p2 = new Project();
 		p2.setConcreteName("proj2");
 		p2.setPlannedTime(7);
+		this.isExpanded.put(p2.getConcreteName(), false);
 		ca.addConcreteBreakdownElement(p1);
 		ca.addConcreteBreakdownElement(p2);
 
 		ConcreteActivity ca2 = new ConcreteActivity();
 		ca2.setConcreteName("activity2");
 		ca2.setPlannedTime(5);
+		this.isExpanded.put(ca2.getConcreteName(), false);
 		Project p3 = new Project();
 		p3.setConcreteName("proj3");
 		p3.setPlannedTime(5);
+		this.isExpanded.put(p3.getConcreteName(), false);
 		ca2.addConcreteBreakdownElement(p3);
+		
+		ConcreteActivity ca3 = new ConcreteActivity();
+		ca3.setConcreteName("activity3");
+		ca3.setPlannedTime(9);
+		this.isExpanded.put(ca3.getConcreteName(), false);
+		ConcreteActivity subCA3 = new ConcreteActivity();
+		subCA3.setConcreteName("subActivity3");
+		subCA3.setPlannedTime(9);
+		this.isExpanded.put(subCA3.getConcreteName(), false);
+		Project p4 = new Project();
+		p4.setConcreteName("proj4");
+		p4.setPlannedTime(3);
+		this.isExpanded.put(p4.getConcreteName(), false);
+		Project p5 = new Project();
+		p5.setConcreteName("proj5");
+		p5.setPlannedTime(6);
+		this.isExpanded.put(p5.getConcreteName(), false);
+		subCA3.addConcreteBreakdownElement(p4);
+		subCA3.addConcreteBreakdownElement(p5);
+		ca3.addConcreteBreakdownElement(subCA3);
 
 		this.projectContent.add(ca);
 		this.projectContent.add(ca2);
+		this.projectContent.add(ca3);
+		
+		/*Method to call to be rid of tests set above*/
+		
+		//this.projectContent.addAll(this.project.getProcess().getConcreteWorkBreakdownElements());
+		
 		for(Iterator iter = this.projectContent.iterator(); iter.hasNext();){
 			Object mescouilles = (Object) iter.next() ;
 				this.isExpanded.put(((ConcreteBreakdownElement)mescouilles).getConcreteName(), false);
 				this.displayContent.add(mescouilles);	
 		}
+		/*********************************************/
 	}
 
 	/***************************************/
@@ -145,17 +179,17 @@ public class ProjectBean {
     	FacesContext context = FacesContext.getCurrentInstance();
 		Map map = context.getExternalContext().getRequestParameterMap();
 		String elementId = (String) map.get("elementId");
-
-    	for(Iterator iter = this.projectContent.iterator(); iter.hasNext();){
+		ArrayList<Object> tmp = new ArrayList<Object>();
+		tmp.addAll(this.displayContent);
+		for(Iterator iter = tmp.iterator(); iter.hasNext();){
 			Object element = (Object) iter.next() ;
 			if(element instanceof ConcreteActivity)
 			{
 				if(elementId.equals(((ConcreteActivity)element).getConcreteName())){
 					int index = this.displayContent.indexOf(element);
 					ConcreteActivity ca = (ConcreteActivity)element;
-					this.logger.debug("###"+ca.getConcreteBreakdownElements().size()+"###");
 					for(Iterator iterator = ca.getConcreteBreakdownElements().iterator(); iterator.hasNext();){
-						Project element2 = (Project) iterator.next() ;
+						ConcreteBreakdownElement element2 = (ConcreteBreakdownElement)iterator.next();
 						this.displayContent.add(index + 1,element2);
 					}
 				}
@@ -168,19 +202,47 @@ public class ProjectBean {
      * Utility method to remove all child nodes from the parent dataTable list.
      */
     private void contractNodeAction() {
-    	ArrayList<Object> tmp = new ArrayList<Object>();
+    	ArrayList<Object> currentLevelElementsList = new ArrayList<Object>();
+    	ArrayList<Object> firstSubLevelElementsList = new ArrayList<Object>();
+    	ArrayList<Object> subLevelElementsList = new ArrayList<Object>();
+    	int i=0;
+    	FacesContext context = FacesContext.getCurrentInstance();
+		Map map = context.getExternalContext().getRequestParameterMap();
+		String elementId = (String) map.get("elementId");
+		
     	for(Iterator iter = this.displayContent.iterator(); iter.hasNext();){
 			Object element = (Object) iter.next() ;
 			if(element instanceof ConcreteActivity)
 			{
-				ConcreteActivity ca = (ConcreteActivity)element;
-				for(Iterator iterator = ca.getConcreteBreakdownElements().iterator(); iterator.hasNext();){
-					Project element2 = (Project) iterator.next() ;
-					tmp.add(element2);
+				if(elementId.equals(((ConcreteActivity)element).getConcreteName())){
+					ConcreteActivity ca = (ConcreteActivity)element;
+					firstSubLevelElementsList.addAll(ca.getConcreteBreakdownElements());
+					while(i<firstSubLevelElementsList.size()){
+						currentLevelElementsList.addAll(this.parseSubConcreteBreakdownElement(subLevelElementsList,(ConcreteActivity)firstSubLevelElementsList.get(i)));
+						currentLevelElementsList.add(firstSubLevelElementsList.get(i));
+						i++;
+					}
+					
 				}
 			}
 		}
-    	this.displayContent.removeAll(tmp);
+    	this.displayContent.removeAll(currentLevelElementsList);
+    }
+    
+    public List<Object> parseSubConcreteBreakdownElement(List<Object> result, ConcreteActivity ca){
+    	int i = 0;
+    	List<ConcreteBreakdownElement> list = new ArrayList<ConcreteBreakdownElement>();
+    	if(ca.getConcreteBreakdownElements()!=null)
+    	{
+    		result.add(ca);
+    		this.isExpanded.put(ca.getConcreteName(), false);
+    		list.addAll(ca.getConcreteBreakdownElements());
+    		while(i<list.size() && list.get(i)!=null){
+    			result.addAll(parseSubConcreteBreakdownElement(result,(ConcreteActivity)list.get(i)));
+    			i++;
+    		}    				
+    	}
+    	return result;
     }
     
     /***************************************/
