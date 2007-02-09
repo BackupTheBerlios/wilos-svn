@@ -109,7 +109,10 @@ public class ProcessService {
 			logger.debug("### ProcessService ### spelpParsingXML "
 					+ _file.getAbsolutePath() + " abs path = "
 					+ _file.getPath());
-			String path = _file.getAbsolutePath().substring(0, _file.getAbsolutePath().lastIndexOf("/"));
+			String slash = System.getProperty("file.separator");
+			    
+			String path = _file.getAbsolutePath().substring(0,_file.getAbsolutePath().lastIndexOf(slash));
+		   
 			logger.debug("### ProcessService ### spelpParsingXML PATH == "+path);
 			spelpProcess = XMLServices.getProcess(_file.getAbsolutePath(), path );
 		} catch (Exception e) {
