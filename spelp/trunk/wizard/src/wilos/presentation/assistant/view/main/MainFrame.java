@@ -8,9 +8,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.EventListener;
 
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
@@ -34,9 +41,10 @@ public class MainFrame extends JFrame{
 	 * This method initializes this
 	 * 
 	 */
-	
-	private void initialize() {
+	private void initialize() 
+	{
 	    myLoginPanel = new LoginPanel(this);
+	    
         this.setContentPane(myLoginPanel);
         this.pack();
         
@@ -49,10 +57,12 @@ public class MainFrame extends JFrame{
         myLoginPanel.setVisible(true);                
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
 		
 	}
 	
-	private InfoPanel getSouthPanel() {
+	private InfoPanel getSouthPanel() 
+	{
 		if (southpanel == null){
 			southpanel =  new InfoPanel();
 				
@@ -60,7 +70,8 @@ public class MainFrame extends JFrame{
 		return  southpanel;
 	}
 	
-	private JMenuItem getExitItem(){
+	private JMenuItem getExitItem()
+	{
 		if (itemExit == null){
 			itemExit = new JMenuItem(Bundle.getText("mainFrame.exit"));
 			itemExit.addActionListener(new ActionListener(){
@@ -76,30 +87,48 @@ public class MainFrame extends JFrame{
 	/**
 	 * @param args ne sont pas utilises
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		MainFrame f = new MainFrame();
 	}
 	
-	public MainFrame () {
+	public MainFrame () 
+	{
 		super(Bundle.getText("mainFrame.connectionTitle"));
 		this.setLayout(new BorderLayout());
 		this.setSize(Toolkit.getDefaultToolkit().getScreenSize().width/4, Toolkit.getDefaultToolkit().getScreenSize().height/3);
 		this.setLocation(0,0);
 		initialize();
+		this.addWindowFocusListener(new WindowFocusListener()
+		{
+			public void windowGainedFocus(WindowEvent arg0) 
+			{
+				MainFrame.this.myLoginPanel.refreshlist();
+			}
+
+			public void windowLostFocus(WindowEvent arg0) 
+			{
+				// TODO Auto-generated method stub
+			}
+		});
 		this.setVisible(true);
 	}
 
-	public Dimension getDimFrame() {
+	public Dimension getDimFrame() 
+	{
 		return dimFrame;
 	}
 	
-	public Point getHTMLLocation(){
+	public Point getHTMLLocation()
+	{
 		return new Point(this.getLocation().x+this.getWidth(),this.getLocation().y);
 	}
 	
-	public void moveHTML(){
+	public void moveHTML()
+	{
 		Point p = getHTMLLocation();
 		HTMLViewer.getInstance(p);
 	}
+	
 }  
 
