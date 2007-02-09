@@ -28,6 +28,18 @@
 					<ice:outputText value="plannedFinishingDate " />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.plannedFinishingDate}" />
+						
+					<ice:outputText value="#{msgs['concretetaskviewer.accomplishedtime']}" />
+					<ice:inputText value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.accomplishedTime}"
+						disabled="#{ConcreteTaskViewerBean.visibleModifiable}" >
+						<f:convertNumber pattern="#*0(.0)#" />
+					</ice:inputText>
+					
+					<ice:outputText value="#{msgs['concretetaskviewer.remainingtime']}" />
+					<ice:inputText value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.remainingTime}"
+						disabled="#{ConcreteTaskViewerBean.visibleModifiable}" >
+						<f:convertNumber pattern="#*0(.0)#" />
+					</ice:inputText>
 					<table>
 					<tr>
 					<td>
@@ -37,6 +49,9 @@
 					<ice:commandButton value="start" 
 					actionListener="#{ConcreteTaskViewerBean.startActionListener}"
 					visible="#{ConcreteTaskViewerBean.visibleStart}"/>
+					<ice:commandButton value="#{msgs['concretetaskviewer.saveButton']}" 
+					actionListener="#{ConcreteTaskViewerBean.updateActionListener}"
+					visible="#{ConcreteTaskViewerBean.visibleModifiable}"/>
 					</td>
 					</tr>
 					</table>
