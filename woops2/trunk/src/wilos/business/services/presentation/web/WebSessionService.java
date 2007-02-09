@@ -18,9 +18,9 @@ public class WebSessionService {
 	public static final String PROJECT_ID = "projectId" ;
 
 	/**
-	 * The session attribute Role Name.
+	 * The session attribute Role Type.
 	 */
-	public static final String ROLE_NAME = "roleName" ;
+	public static final String ROLE_TYPE = "roleType" ;
 
 	/**
 	 * Get the value of the _attributeName
