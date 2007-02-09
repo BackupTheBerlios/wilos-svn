@@ -1,16 +1,19 @@
 package wilos.presentation.assistant.view.panels;
-
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -19,10 +22,13 @@ import wilos.business.util.Security;
 
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.role.RoleDescriptor;
+import wilos.presentation.assistant.control.ServersListParser;
+import wilos.presentation.assistant.model.WizardServer;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ProfileReader;
 import wilos.presentation.assistant.view.dialogs.ErrorDialog;
 import wilos.presentation.assistant.view.main.MainFrame;
+import wilos.presentation.assistant.view.main.ServersFrame;
 import wilos.presentation.assistant.view.main.WizardMainFrame;
 import wilos.presentation.assistant.webservices.WizardServicesProxy;
 
@@ -50,21 +56,24 @@ public class LoginPanel extends JPanel {
 
 	private JLabel adressLabel = null;
 
-	private JTextField adressTextField = null;
+	public JComboBox adressTextField = null;
         
     private MainFrame mframe = null;
         
     private MainPanel mTaskPanel = null;
         
     private ImagePanel iconPanel = null;
+    
+    public static ServersListParser list_serv = null;
 
 	/**
 	 * @param owner
 	 */
-	public LoginPanel(MainFrame mf) {
+	public LoginPanel(MainFrame mf) 
+	{
                 this.mframe = mf;               
                 initialize();
-                loadINI(path_file);		
+                //loadXML();		
 	}
 
 	/**
@@ -72,16 +81,21 @@ public class LoginPanel extends JPanel {
 	 * 
 	 * @return void
 	 */
-	private void initialize() {
+	public JComboBox getComboBox()
+	{
+		return this.adressTextField;
+	}
+	private void initialize() 
+	{
+		
 		introLabel = new JLabel();
 		introLabel.setText(Bundle.getText("loginPanel.labelLoginPasswd"));
-                this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		this.setLayout(new BorderLayout());
-		//this.add(introLabel, BorderLayout.NORTH);
         this.add(getImagePanel(),BorderLayout.NORTH);
 		this.add(getButtonsPanel(), BorderLayout.SOUTH);
 		this.add(getFieldsPanel(), BorderLayout.CENTER);
-                 
+		list_serv = new ServersListParser();
 	}
 
 	/**
@@ -89,8 +103,10 @@ public class LoginPanel extends JPanel {
 	 * 	
 	 * @return javax.swing.JPanel	
 	 */
-	private JPanel getButtonsPanel() {
-		if (buttonsPanel == null) {
+	private JPanel getButtonsPanel() 
+	{
+		if (buttonsPanel == null) 
+		{
 			buttonsPanel = new JPanel();
 			buttonsPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		    buttonsPanel.setLayout(new GridBagLayout());
@@ -102,7 +118,8 @@ public class LoginPanel extends JPanel {
         /**
          *
          */
-        private ImagePanel getImagePanel() {
+        private ImagePanel getImagePanel() 
+        {
             if (iconPanel == null)
             {
                 iconPanel = new ImagePanel("images.wilos");     
@@ -114,20 +131,43 @@ public class LoginPanel extends JPanel {
         /**
          *
          */
-        private void loadINI(String file) 
+        private void loadXML() 
         {
-            ProfileReader pr = new ProfileReader();
+            /*ProfileReader pr = new ProfileReader();
             InputStream i;
                //i = new FileInputStream(file);
                 i = ClassLoader.getSystemResourceAsStream(file);
                 try {
-                    pr.load(i);                    
+                	
+                	pr.load(i);                    
                     String addr = pr.getProperty("remote","address");
                     adressTextField.setText(addr);
                     
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                }
+                }*/
+       
+        	if (this.adressTextField.getItemCount()!=0)this.adressTextField.removeAllItems();
+        	
+        	ArrayList<WizardServer> list = list_serv.getServersList();
+        	        	        	 
+        	for (int i=0;i<list.size();i++)
+        	{
+        		this.adressTextField.addItem(list.get(i).getAddress());
+        	}
+        	this.adressTextField.addItem(Bundle.getText("loginPanel.ajouter"));
+        	
+        	this.adressTextField.addActionListener(new ActionListener() 
+        	{
+    			public void actionPerformed(ActionEvent e) 
+    			{
+    				if (adressTextField.getItemCount()!=0&&adressTextField.getSelectedItem().equals(Bundle.getText("loginPanel.ajouter")))
+    				{
+    					new ServersFrame();
+    				}
+    			}
+    		});
+
         }
 
 	/**
@@ -196,24 +236,34 @@ public class LoginPanel extends JPanel {
 	 * This methods makes the connexion, gets the Participant and calls WizardMainFrame
 	 *
 	 */
-	private void startConnection() {
-		String passcript =  Security.encode(new String(passwordPasswordField.getPassword()));
-		WizardServicesProxy.setIdentificationParamaters(loginTextField.getText(),passcript, adressTextField.getText());
-		Participant participant = WizardServicesProxy.getParticipant();                          
+	private void startConnection() 
+	{
+		/*check if there is a server selected and not "Ajouter"*/
+		if (!String.valueOf(adressTextField.getSelectedItem()).equals(new String("Ajouter")))
+		{
+			String passcript =  Security.encode(new String(passwordPasswordField.getPassword()));
+			WizardServicesProxy.setIdentificationParamaters(loginTextField.getText(),passcript, String.valueOf(adressTextField.getSelectedItem()));
+			Participant participant = WizardServicesProxy.getParticipant();                          
         
-        if (participant == null)
-        {
-            setVisible(true);
-            new ErrorDialog("L'utilisateur n'existe pas");
-        }  
-        else
-        {
-        	WizardMainFrame wmf = new WizardMainFrame();
-        	wmf.setParticipant(participant);
-        	wmf.setVisible(true);
+			if (participant == null)
+			{
+				setVisible(true);
+				new ErrorDialog("L'utilisateur n'existe pas");
+			}  
+			else
+			{
+				/*Save the last server used*/
+				System.out.println(adressTextField.getSelectedIndex());
+				list_serv.lastUsedServer(adressTextField.getSelectedIndex()+1);
+				//System.out.println(adressTextField.getSelectedIndex());
+				
+				WizardMainFrame wmf = new WizardMainFrame();
+				wmf.setParticipant(participant);
+				wmf.setVisible(true);
         	
-        	mframe.setVisible(false);
-        }
+				mframe.setVisible(false);
+			}
+		}
 	}
 	
 
@@ -235,9 +285,9 @@ public class LoginPanel extends JPanel {
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
-	private JTextField getAdressTextField() {
+	public JComboBox getAdressTextField() {
 		if (adressTextField == null) {
-			adressTextField = new JTextField();			
+			adressTextField = new JComboBox();			
 		}
 		return adressTextField;
 	}
@@ -256,6 +306,12 @@ public class LoginPanel extends JPanel {
 		public void keyTyped(KeyEvent e) {
 			// Nothing to do here			
 		}
+		
+	}
+	
+	public void refreshlist() 
+	{
+		loadXML();	
 		
 	}
 
