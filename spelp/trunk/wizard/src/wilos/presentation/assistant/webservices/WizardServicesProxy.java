@@ -269,7 +269,7 @@ public class WizardServicesProxy {
             aTmpConcrete.setConcreteName(aTmpTask.getPresentationName());
             aTmpConcrete.setAccomplishedTime(42);
             aTmpConcrete.setPlannedFinishingDate(new Date());
-            aTmpConcrete.setState(Constantes.State.READY);
+            aTmpConcrete.setState(Constantes.State.FINISHED);
             aTmpConcrete.setPlannedStartingDate(new Date());
             aTmpConcrete.setPlannedTime(24);
             

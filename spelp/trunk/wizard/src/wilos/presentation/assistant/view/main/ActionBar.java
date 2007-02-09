@@ -212,6 +212,15 @@ public class ActionBar extends JToolBar implements Observer{
 		case WizardStateMachine.STATE_TASK_FINISHED :	
 			setButtons(DISABLED, DISABLED, DISABLED);
 			break;
+		case WizardStateMachine.STATE_STEP_FINISHED :	
+			setButtons(DISABLED, DISABLED, DISABLED);
+			break;
+		case WizardStateMachine.STATE_STEP_CREATED:	
+			setButtons(DISABLED, DISABLED, DISABLED);
+			break;
+		case WizardStateMachine.STATE_STEP_READY:	
+			setButtons(DISABLED, DISABLED, ENABLED);
+			break;
 		}
 	}
 }

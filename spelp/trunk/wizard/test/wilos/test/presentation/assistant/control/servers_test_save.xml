@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Servers>
   <Server>
-    <Alias>lala</Alias>
-    <Address>http://marine.edu.ups-tlse.fr:9014/wi</Address>
+    <Alias>mon_serveur</Alias>
+    <Address>http://blablabla.fr</Address>
     <Id>1</Id>
   </Server>
   <Server>
@@ -11,9 +11,14 @@
     <Id>2</Id>
   </Server>
   <Server>
-    <Alias>mon_serveur</Alias>
-    <Address>http://blablabla.fr</Address>
+    <Alias>lala</Alias>
+    <Address>http://marine.edu.ups-tlse.fr:9014/wi</Address>
     <Id>3</Id>
+  </Server>
+  <Server>
+    <Alias>le_ptit_dernier</Alias>
+    <Address>http://hohoho.fr</Address>
+    <Id>4</Id>
   </Server>
 </Servers>
 

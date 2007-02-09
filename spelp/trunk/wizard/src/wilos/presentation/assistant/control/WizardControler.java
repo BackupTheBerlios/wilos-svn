@@ -1,6 +1,5 @@
 package wilos.presentation.assistant.control;
 
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -8,6 +7,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.model.spem2.task.Step;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 import wilos.presentation.assistant.view.main.ActionBar;
 import wilos.presentation.assistant.view.main.ContextualMenu;
@@ -84,6 +84,9 @@ public class WizardControler {
 	public void finishConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
 		if (ctd.getState() == Constantes.State.STARTED) {
 			WizardServicesProxy.stopConcreteTaskDescriptor(ctd.getId());
+			for (Step s : ctd.getTaskDescriptor().getTaskDefinition().getSteps()) {
+				WizardStateMachine.getInstance().changeStepState(s, WizardStateMachine.STATE_STEP_FINISHED);
+			}
 			ctd.setState(Constantes.State.FINISHED);
 			WizardStateMachine.getInstance().setFocusedObject(ctd);
 		}
@@ -104,13 +107,14 @@ public class WizardControler {
 				DefaultMutableTreeNode dmt =  (DefaultMutableTreeNode)WizardControler.getInstance().getTreePanel().getTree().getLastSelectedPathComponent();
 				
 				if(dmt != null) {
+					
 					ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
 					// if(selectedTask.getId() != null) {
-						WizardControler.getInstance().changeHTMLViewerBehavior(true);
-						WizardControler.getInstance().startConcreteTaskDescriptor(selectedTask);
-						treePanel.getTree().treeDidChange();
-						//WizardControler.getInstance().refreshParticipant();
-					//}
+					WizardControler.getInstance().changeHTMLViewerBehavior(true);
+					WizardControler.getInstance().startConcreteTaskDescriptor(selectedTask);
+					treePanel.getTree().treeDidChange();
+					//WizardControler.getInstance().refreshParticipant();
+					//}					
 				}
 				
 			}
@@ -135,13 +139,26 @@ public class WizardControler {
 			public void actionPerformed(ActionEvent e) {
 				DefaultMutableTreeNode dmt =  (DefaultMutableTreeNode)WizardControler.getInstance().getTreePanel().getTree().getLastSelectedPathComponent();
 				if(dmt != null) {
-					ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
-					//if(selectedTask.getId() != null) {
+					if (dmt.getUserObject() instanceof ConcreteTaskDescriptor){
+						ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
+						//if(selectedTask.getId() != null) {
+							WizardControler.getInstance().changeHTMLViewerBehavior(true);
+							WizardControler.getInstance().finishConcreteTaskDescriptor(selectedTask);
+							treePanel.getTree().treeDidChange();
+							
+							
+							//WizardControler.getInstance().refreshParticipant();
+						//}
+					}
+					else if (dmt.getUserObject() instanceof Step){
+						Step selectedStep = (Step)dmt.getUserObject();
+						// if(selectedTask.getId() != null) {
 						WizardControler.getInstance().changeHTMLViewerBehavior(true);
-						WizardControler.getInstance().finishConcreteTaskDescriptor(selectedTask);
+						WizardStateMachine.getInstance().changeStepState(selectedStep, WizardStateMachine.STATE_STEP_FINISHED);
 						treePanel.getTree().treeDidChange();
 						//WizardControler.getInstance().refreshParticipant();
-					//}
+						//}
+					}
 				}
 				
 			}
@@ -156,7 +173,8 @@ public class WizardControler {
 	}
 
 	public void refreshParticipant() {
-		treePanel.setParticipant(WizardServicesProxy.getParticipant());		
+		treePanel.setParticipant(WizardServicesProxy.getParticipant());	
+		WizardStateMachine.getInstance().deleteAllStep();
 	}
 
 	public static WizardControler getWc() {

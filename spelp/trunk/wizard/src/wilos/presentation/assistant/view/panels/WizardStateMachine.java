@@ -1,8 +1,10 @@
 package wilos.presentation.assistant.view.panels;
 
+import java.util.HashMap;
 import java.util.Observable;
 
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.model.spem2.task.Step;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 import wilos.presentation.assistant.view.main.WizardMainFrame;
@@ -16,9 +18,14 @@ public class WizardStateMachine extends Observable{
 	public static final int STATE_TASK_CREATED = 4;
 	public static final int STATE_TASK_SUSPENDED = 5;
 	public static final int STATE_TASK_FINISHED = 6;
-		
+
+	public static final int STATE_STEP_CREATED = 7;
+	public static final int STATE_STEP_READY = 8;
+	public static final int STATE_STEP_FINISHED = 9;
+	
 	private int currentState = 0;
 	
+	private HashMap<Step,Integer> stepState = new HashMap<Step,Integer> ();
 	
 	private static WizardStateMachine wsm = null;
 			
@@ -26,7 +33,50 @@ public class WizardStateMachine extends Observable{
 		
 	}
 	
+	/**
+	 * Add a Step and its state.
+	 * @param s step to add
+	 * @param state state of the Step
+	 */
+	public void addStep (Step s, int state) {
+		if (!stepState.containsKey(s)){
+			this.stepState.put(s, new Integer(state));
+		}
+		
+	}
 	
+	/**
+	 * Change the state of the given Step.
+	 * @param s step to change
+	 * @param state new state of the step
+	 */
+	public void changeStepState (Step s, int state) {
+		if (this.stepState.containsKey(s))
+		{
+			this.stepState.put(s, new Integer(state));
+			this.currentState = state ;
+			this.setChanged();
+			this.notifyObservers();
+		}
+	}
+	
+	/**
+	 * Check the current state of the given Step.
+	 * @param s Step to check
+	 * @return state of the Step
+	 */
+	public int getStepState (Step s)
+	{
+		return this.stepState.get(s).intValue();
+	}
+	
+	/**
+	 * Delete all the Step of the Step state list.
+	 */
+	public void deleteAllStep ()
+	{
+		this.stepState.clear();
+	}
 	
 	public static WizardStateMachine getInstance() {
 		if (wsm == null) {
@@ -80,6 +130,23 @@ public class WizardStateMachine extends Observable{
 			if (WizardControler.getInstance().isShowInfo()){
 				HTMLViewer.getInstance(null).viewObject(ctd);
 			}
+		}
+		else if (object instanceof Step)
+		{
+			Step s = (Step)object ;
+			switch (getStepState(s)){
+				case  STATE_STEP_CREATED : 
+					updateState(STATE_STEP_CREATED);
+					break ;
+				case STATE_STEP_FINISHED :
+					updateState(STATE_STEP_FINISHED);
+					break ;
+				case STATE_STEP_READY :
+					updateState(STATE_STEP_READY);
+					break ;
+			}
+			HTMLViewer.getInstance(null).viewObject(object);
+			
 		}
 		else {
 			if (WizardControler.getInstance().isShowInfo()){

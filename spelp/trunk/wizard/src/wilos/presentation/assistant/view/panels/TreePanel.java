@@ -27,6 +27,7 @@ import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.element.Element;
 import wilos.model.spem2.task.Step;
+import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.ImagesService;
 import wilos.utils.Constantes;
@@ -148,6 +149,7 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 		
 		private void initTree() {
 			TreePanel.this.tree.removeAll();
+			WizardStateMachine.getInstance().deleteAllStep() ;
 			HashMap<ConcreteActivity, WizardMutableTreeNode> mapActivity = new HashMap<ConcreteActivity, WizardMutableTreeNode>();
 			
 			this.root = new DefaultMutableTreeNode(participant.getName());
@@ -197,6 +199,17 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 						for (Step s : ctd.getTaskDescriptor().getTaskDefinition().getSteps()) {
 							WizardMutableTreeNode sWmt = new WizardMutableTreeNode(s);
 							ctdWmt.add(sWmt);
+							// managing the steps
+							if (ctd.getState().equals(Constantes.State.STARTED) || ctd.getState().equals(Constantes.State.SUSPENDED)){
+								WizardStateMachine.getInstance().addStep(s,WizardStateMachine.STATE_STEP_READY ) ;
+							}
+							else if (ctd.getState().equals(Constantes.State.FINISHED)){
+								WizardStateMachine.getInstance().addStep(s,WizardStateMachine.STATE_STEP_FINISHED ) ;
+							}
+							else {
+								WizardStateMachine.getInstance().addStep(s,WizardStateMachine.STATE_STEP_CREATED ) ;
+							}
+								
 						}
 					}
 				}
@@ -274,21 +287,29 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 					if (ctd.getState() == Constantes.State.STARTED) {
 						this.setForeground(Color.decode("#008800"));
 					}
-					else if (ctd.getState() == Constantes.State.READY) {
+					else if (ctd.getState().equals(Constantes.State.READY)) {
 						this.setForeground(Color.decode("#FF9900"));
 					}
-					else if (ctd.getState() == Constantes.State.SUSPENDED) {
+					else if (ctd.getState().equals(Constantes.State.SUSPENDED)) {
 						this.setForeground(Color.pink);
 					}
-					else if (ctd.getState() == Constantes.State.FINISHED) {
+					else if (ctd.getState().equals(Constantes.State.FINISHED)) {
 						this.setForeground(Color.decode("#0066FF"));						
 					}
-					else if (ctd.getState() == Constantes.State.CREATED) {
+					else if (ctd.getState().equals(Constantes.State.CREATED)) {
 						this.setForeground(Color.black);
-					}					
+					}
 				}
 				else if (object instanceof Step) {
+					Step s = (Step) object ;
 					this.setIcon(ImagesService.getImageIcon("images.iconStep"));
+					if (WizardStateMachine.getInstance().getStepState(s) == WizardStateMachine.STATE_STEP_CREATED || WizardStateMachine.getInstance().getStepState(s) == WizardStateMachine.STATE_STEP_READY){
+						this.setText(s.getName());
+					}	
+					else {
+						this.setText("<HTML><STRIKE>"  + s.getName() + "</STRIKE></HTML>");
+					}
+					//WizardStateMachine.getInstance().addStep(s.getTaskDefinition()., WizardStateMachine.)
 				}
 			}
 			
