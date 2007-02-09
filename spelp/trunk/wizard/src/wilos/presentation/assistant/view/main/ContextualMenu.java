@@ -1,11 +1,14 @@
 package wilos.presentation.assistant.view.main;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
 import wilos.presentation.assistant.view.panels.WizardStateMachine;
@@ -20,6 +23,7 @@ public class ContextualMenu extends JPopupMenu implements Observer
 	private JMenuItem jButtonPauseTask;
 	private JMenuItem jButtonFinished;
 	private JMenuItem jButtonPlayTask;
+	private JMenuItem jButtonNewHTML ;
 
 	public ContextualMenu(){
 		super(Bundle.getText("mainFrame.option"));  
@@ -33,10 +37,14 @@ public class ContextualMenu extends JPopupMenu implements Observer
 		jButtonFinished = new JMenuItem(ImagesService.getImageIcon("images.iconFinishedS"));
 		jButtonFinished.setText(Bundle.getText("action.finish"));
 		this.add(jButtonFinished);
+		jButtonNewHTML = new JMenuItem (Bundle.getText("htmlViewer.newWindow")) ;
+		jButtonNewHTML.addActionListener(WizardControler.getInstance().getNewHTMLAction());
+		this.addSeparator();
+		this.add(jButtonNewHTML);
 		WizardStateMachine.getInstance().addObserver(this);
 	}
 	
-	public void setButtons(int buttonPlayTaskState, int buttonPauseTaskState, int buttonFinishedState) {
+	public void setButtons(int buttonPlayTaskState, int buttonPauseTaskState, int buttonFinishedState,int buttonOpen) {
 		switch (buttonPlayTaskState) {
 		case INVISIBLE :
 			jButtonPlayTask.setVisible(false);
@@ -75,6 +83,18 @@ public class ContextualMenu extends JPopupMenu implements Observer
 			jButtonFinished.setVisible(true);
 			jButtonFinished.setEnabled(false);
 		}
+		switch (buttonOpen) {
+		case INVISIBLE :
+			jButtonNewHTML.setVisible(false);
+			break;
+		case ENABLED :
+			jButtonNewHTML.setVisible(true);
+			jButtonNewHTML.setEnabled(true);
+			break;
+		case DISABLED :
+			jButtonNewHTML.setVisible(true);
+			jButtonNewHTML.setEnabled(false);
+		}
 	}
 	
 	
@@ -82,34 +102,34 @@ public class ContextualMenu extends JPopupMenu implements Observer
 	public void update(Observable o, Object arg) {
 		switch (WizardStateMachine.getInstance().getCurrentState()){
 		case WizardStateMachine.STATE_PARTICIPANT :
-			setButtons(INVISIBLE,INVISIBLE, INVISIBLE);
+			setButtons(INVISIBLE,INVISIBLE, INVISIBLE,ENABLED);
 			break;
 		case WizardStateMachine.STATE_NOTHING :
-			setButtons(INVISIBLE, INVISIBLE, INVISIBLE);
+			setButtons(INVISIBLE, INVISIBLE, INVISIBLE,ENABLED);
 			break;
 		case WizardStateMachine.STATE_TASK_CREATED :	
-			setButtons(DISABLED, DISABLED, DISABLED);
+			setButtons(DISABLED, DISABLED, DISABLED,ENABLED);
 			break;
 		case WizardStateMachine.STATE_TASK_READY :	
-			setButtons(ENABLED, DISABLED, DISABLED);
+			setButtons(ENABLED, DISABLED, DISABLED,ENABLED);
 			break;
 		case WizardStateMachine.STATE_TASK_STARTED :	
-			setButtons(DISABLED, ENABLED, ENABLED);
+			setButtons(DISABLED, ENABLED, ENABLED,ENABLED);
 			break;
 		case WizardStateMachine.STATE_TASK_SUSPENDED :	
-			setButtons(ENABLED, DISABLED, DISABLED);		
+			setButtons(ENABLED, DISABLED, DISABLED,ENABLED);		
 			break;
 		case WizardStateMachine.STATE_TASK_FINISHED :	
-			setButtons(DISABLED, DISABLED, DISABLED);
+			setButtons(DISABLED, DISABLED, DISABLED,ENABLED);
 			break;
 		case WizardStateMachine.STATE_STEP_FINISHED :	
-			setButtons(DISABLED, DISABLED, DISABLED);
+			setButtons(DISABLED, DISABLED, DISABLED,ENABLED);
 			break;
 		case WizardStateMachine.STATE_STEP_CREATED:	
-			setButtons(DISABLED, DISABLED, DISABLED);
+			setButtons(DISABLED, DISABLED, DISABLED,ENABLED);
 			break;
 		case WizardStateMachine.STATE_STEP_READY:	
-			setButtons(DISABLED, DISABLED, ENABLED);
+			setButtons(DISABLED, DISABLED, ENABLED,ENABLED);
 			break;
 		}
 	}

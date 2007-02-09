@@ -42,6 +42,7 @@ public class WizardStateMachine extends Observable{
 		this.stepState.put(s, new Integer(state));
 	}
 	
+	
 	/**
 	 * Change the state of the given Step.
 	 * @param s step to change
@@ -96,11 +97,14 @@ public class WizardStateMachine extends Observable{
 		en fonction des boutons
 	 */
 	
-	public void setFocusedObject(Object object) {
+	public void setFocusedObject(Object object,HTMLViewer h) {
 //		if (object.getClass().getSimpleName().equals("Participant")) {
 //			System.out.println("pouet");
 //			updateState(this.STATE_PARTICIPANT);
 //		}
+		if (h == null){
+			h = WizardControler.getInstance().getDefaultHTML(null);
+		}
 		if (object instanceof ConcreteTaskDescriptor) {
 			ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) object;
 			if (ctd.getState() == Constantes.State.STARTED) {
@@ -125,7 +129,7 @@ public class WizardStateMachine extends Observable{
 			WizardControler.getInstance().setLastCtd(ctd);
 			
 			if (WizardControler.getInstance().isShowInfo()){
-				HTMLViewer.getInstance(null).viewObject(ctd);
+				h.get(null).viewObject(ctd);
 			}
 		}
 		else if (object instanceof Step)
@@ -142,12 +146,12 @@ public class WizardStateMachine extends Observable{
 					updateState(STATE_STEP_READY);
 					break ;
 			}
-			HTMLViewer.getInstance(null).viewObject(object);
+			h.get(null).viewObject(object);
 			
 		}
 		else {
 			if (WizardControler.getInstance().isShowInfo()){
-				HTMLViewer.getInstance(null).viewObject(object);
+				h.get(null).viewObject(object);
 				updateState(STATE_NOTHING);
 			}
 		}

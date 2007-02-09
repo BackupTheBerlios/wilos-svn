@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
@@ -39,8 +41,10 @@ import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDescriptor;
+import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
+import wilos.presentation.assistant.view.panels.WizardStateMachine;
 
 public class HTMLViewer extends JFrame {
 	private static HTMLViewer instance = null;
@@ -61,7 +65,11 @@ public class HTMLViewer extends JFrame {
 	private JXTaskPane southPanel;
 	private JScrollPane guidesScrollPane;
 	
-	private HTMLViewer(Point p) {
+	public JList getJList (){
+		return guidesList ;
+	}
+	
+	public HTMLViewer(Point p) {
 		super(Bundle.getText("htmlViewer.title"));
 		this.setLayout(new BorderLayout());
 		
@@ -122,6 +130,35 @@ public class HTMLViewer extends JFrame {
 				JList list = (JList)e.getSource();
 				Object value = list.getSelectedValue();
 				viewObject((Element)value);				
+			}
+		});
+		
+		guidesList.addMouseListener(new MouseListener(){
+
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			public void mouseReleased(MouseEvent e) {
+				if (e.getButton() == MouseEvent.BUTTON3){
+					WizardControler.getInstance().showContextualMenu(e);					
+				}
 			}
 		});
 		
@@ -292,20 +329,25 @@ public class HTMLViewer extends JFrame {
 	}
 	
 	public void trtGuides (Set<Guidance>guides){
-		
-		Vector <Guidance> vectGuides = new Vector<Guidance>();
-		vectGuides.addAll(guides);
-		
-		guidesList.setListData(vectGuides);
-		guidesList.setCellRenderer(new GuidesRenderer());
-		
-		
-		if (guides.size() != 0){
-			guidesList.setVisible(true);
-			this.southPanel.setExpanded(true);
+		if (this == WizardControler.getInstance().getDefaultHTML(null)) 
+		{
+			Vector <Guidance> vectGuides = new Vector<Guidance>();
+			vectGuides.addAll(guides);
+			
+			guidesList.setListData(vectGuides);
+			guidesList.setCellRenderer(new GuidesRenderer());
+			
+			
+			if (guides.size() != 0){
+				guidesList.setVisible(true);
+				this.southPanel.setExpanded(true);
+			}
+			else {
+				this.southPanel.setExpanded(false);
+			}
 		}
 		else {
-			this.southPanel.setExpanded(false);
+			this.southPanel.setVisible(false);
 		}
 	}
 	
@@ -458,17 +500,13 @@ public class HTMLViewer extends JFrame {
 	 * 
 	 * @return l'instance HTMLViewer
 	 */
-	public static HTMLViewer getInstance(Point p) {
-		if (HTMLViewer.instance == null){
-			HTMLViewer.instance = new HTMLViewer(p);
-		}
+	public HTMLViewer get(Point p) {
 		if (p != null) {
-			Point pH = HTMLViewer.instance.getLocation();
+			Point pH = this.getLocation();
 			if(pH.distance(p) < 75) {
-				HTMLViewer.instance.setLocation(p);
+				this.setLocation(p);
 			}
 		}
-		
-		return HTMLViewer.instance;
+		return this;
 	}
 }

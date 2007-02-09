@@ -1,10 +1,17 @@
 package wilos.presentation.assistant.control;
 
+import java.awt.Component;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
+import javax.swing.Action;
+import javax.swing.JList;
 import javax.swing.tree.DefaultMutableTreeNode;
+
+import org.jdesktop.swingx.JXTree;
 
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.task.Step;
@@ -22,26 +29,77 @@ public class WizardControler {
 	private TreePanel treePanel = null ;
 	private ContextualMenu menuContextuel = null ;
 	private boolean showInfo = true ;
-	
+	private Component src = null ;
 	private ConcreteTaskDescriptor lastCtd;
+	private ArrayList<HTMLViewer> listHTML = new ArrayList<HTMLViewer>() ;
 	
 	private WizardControler() {
 		
 	}
 	
+	public Component getSrc () {
+		return src ;
+	}
+	
+	public HTMLViewer getDefaultHTML(Point p){
+		HTMLViewer h = null ;
+		if (listHTML.size() != 0){
+			h = listHTML.get(0).get(p);
+		}
+		return h;
+	}
+	
+	public void addHTMLViewer (HTMLViewer h){
+		listHTML.add(h);
+	}
+	
+	public ActionListener getNewHTMLAction (){
+		ActionListener al = new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				if (src instanceof JList){
+					HTMLViewer newHTMLViewer = new HTMLViewer(new Point(0,0)) ;
+					WizardControler.getInstance().addHTMLViewer(newHTMLViewer);
+					WizardStateMachine.getInstance().setFocusedObject(getDefaultHTML(null).getJList().getSelectedValue(),newHTMLViewer);
+					newHTMLViewer.trtGuides(null);
+				}
+				else if (src instanceof JXTree) {
+					DefaultMutableTreeNode dmt =  (DefaultMutableTreeNode)WizardControler.getInstance().getTreePanel().getTree().getLastSelectedPathComponent();
+					HTMLViewer newHTMLViewer = new HTMLViewer(new Point(0,0)) ;
+					WizardControler.getInstance().addHTMLViewer(newHTMLViewer);
+					if(dmt != null) {
+						WizardStateMachine.getInstance().setFocusedObject(dmt.getUserObject(),newHTMLViewer);		
+					}
+				}
+					
+							
+			}
+		};
+		return al ;
+	}
+	
 	public void showContextualMenu (MouseEvent arg0){
-		if (WizardStateMachine.getInstance().getCurrentState() != WizardStateMachine.STATE_NOTHING){
+		src = arg0.getComponent();
+		if (src instanceof JList){
+			JList list = (JList)src ;
+			if (list.getSelectedValue() != null){
+				int state = WizardStateMachine.getInstance().getCurrentState() ;
+				menuContextuel.setButtons(ContextualMenu.INVISIBLE, ContextualMenu.INVISIBLE, ContextualMenu.INVISIBLE, ContextualMenu.ENABLED);
+				menuContextuel.show(arg0.getComponent(),arg0.getX(),arg0.getY());
+				
+			}
+		}else {
 			menuContextuel.show(arg0.getComponent(),arg0.getX(),arg0.getY());
 		}
+		
 	}
 	
 	public void changeHTMLViewerBehavior(boolean newBehavior) {
 		showInfo = newBehavior;
 		if (showInfo){
-			HTMLViewer.getInstance(null).viewObject(lastCtd);
+			getDefaultHTML(null).viewObject(lastCtd);
 		}
 		else {
-			HTMLViewer.getInstance(null).setVisible(false);
+			getDefaultHTML(null).setVisible(false);
 		}
 		actionBar.setJCheckBoxShowViewerEnabled(newBehavior);
 	}
@@ -66,7 +124,7 @@ public class WizardControler {
 				}
 			}
 			ctd.setState(Constantes.State.STARTED);
-			WizardStateMachine.getInstance().setFocusedObject(ctd);
+			WizardStateMachine.getInstance().setFocusedObject(ctd,null);
 		}
 	}
 	
@@ -78,7 +136,7 @@ public class WizardControler {
 		if (ctd.getState() == Constantes.State.STARTED) {
 			WizardServicesProxy.suspendConcreteTaskDescriptor(ctd.getId());
 			ctd.setState(Constantes.State.SUSPENDED);
-			WizardStateMachine.getInstance().setFocusedObject(ctd);
+			WizardStateMachine.getInstance().setFocusedObject(ctd,null);
 		}
 	}
 	
@@ -95,7 +153,7 @@ public class WizardControler {
 				}
 			}
 			ctd.setState(Constantes.State.FINISHED);
-			WizardStateMachine.getInstance().setFocusedObject(ctd);
+			WizardStateMachine.getInstance().setFocusedObject(ctd,null);
 		}
 	}
 	
@@ -114,7 +172,6 @@ public class WizardControler {
 				DefaultMutableTreeNode dmt =  (DefaultMutableTreeNode)WizardControler.getInstance().getTreePanel().getTree().getLastSelectedPathComponent();
 				
 				if(dmt != null) {
-					
 					ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
 					// if(selectedTask.getId() != null) {
 					WizardControler.getInstance().changeHTMLViewerBehavior(true);

@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.EventListener;
 
+import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 import wilos.presentation.assistant.view.panels.InfoPanel;
@@ -127,7 +128,7 @@ public class MainFrame extends JFrame{
 	public void moveHTML()
 	{
 		Point p = getHTMLLocation();
-		HTMLViewer.getInstance(p);
+		WizardControler.getInstance().getDefaultHTML(p);
 	}
 	
 }  

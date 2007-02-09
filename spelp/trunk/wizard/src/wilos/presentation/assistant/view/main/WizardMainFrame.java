@@ -73,6 +73,7 @@ public class WizardMainFrame extends JFrame {
 		WizardControler.getInstance().initUIElements(actionToolBar,jTree,menu);
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		WizardControler.getInstance().addHTMLViewer(new HTMLViewer(getHTMLLocation()));
 		this.moveHTML();
 		this.addComponentListener(new ComponentListener(){
 	   		public void componentHidden(ComponentEvent e) {
@@ -97,7 +98,7 @@ public class WizardMainFrame extends JFrame {
 	
 	public void moveHTML(){
 		Point p = getHTMLLocation();
-		HTMLViewer.getInstance(p);
+		WizardControler.getInstance().getDefaultHTML(p);
 	}
 	
 	private JPanel getMainPanel(){
