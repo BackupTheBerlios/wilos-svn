@@ -860,7 +860,7 @@ public class XMLParser {
 		BreakdownElement returnedBde = null;
 		
 		// get the filled BreakDownElement Object 
-		returnedBde = getFillerBDE(_node, returnedBde);
+		returnedBde = getBdeFromItsList(_node);
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(activity)) {
 			if (_node.getAttributes().getNamedItem(attr_name_variabilityBasedOnElement) != null) {
@@ -903,42 +903,45 @@ public class XMLParser {
 	}
 
 	/**
-	 * getFillerBDE
+	 * getBdeFromItsList
 	 * @param _node
-	 * @param _returnedBde
-	 * @param bdeId
-	 * @return BreakdownElement
+	 * @param _nullBdeToReturn
+	 * @param bdeId	 
+	 * This methods gets the Bde From its List. The List and the id of the BDe are determined using the
+	 * Node given in parameter. This methods fills the BreakdownElement given in parameter.
 	 */
-	private static BreakdownElement getFillerBDE(Node _node, BreakdownElement _returnedBde) {
+	private static BreakdownElement getBdeFromItsList(Node _node) {
+		BreakdownElement _nullBdeToReturn = null;
 		FillerElement BdeFiller;		
 		String bdeId = _node.getAttributes().getNamedItem(id).getNodeValue();
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(phase)) {
-			_returnedBde = getPhaseById(phasesList, bdeId);
+			_nullBdeToReturn = getPhaseById(phasesList, bdeId);
 		}
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(process)) {
-			_returnedBde = new Process();
-			BdeFiller = new FillerProcess(_returnedBde, _node);	
-			_returnedBde = (Process) BdeFiller.getFilledElement();
+			_nullBdeToReturn = new Process();
+			BdeFiller = new FillerProcess(_nullBdeToReturn, _node);	
+			_nullBdeToReturn = (Process) BdeFiller.getFilledElement();
 		}
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(role_descriptor)) {			
-			_returnedBde = getRoleDescriptorById(roleDescriptorsList, bdeId);
+			_nullBdeToReturn = getRoleDescriptorById(roleDescriptorsList, bdeId);
 		}
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(task_descriptor)) {
-			_returnedBde = getTaskDescriptorById(taskDescriptorsList, bdeId);
+			_nullBdeToReturn = getTaskDescriptorById(taskDescriptorsList, bdeId);
 		}
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(iteration)) {
-			_returnedBde = getIterationById(iterationsList, bdeId);
+			_nullBdeToReturn = getIterationById(iterationsList, bdeId);
 		}
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(activity)) {
-			_returnedBde = getActivityById(activitiesList, bdeId);
-		}		
-		return _returnedBde;
+			_nullBdeToReturn = getActivityById(activitiesList, bdeId);
+		}
+		
+		return _nullBdeToReturn;	
 	}
 	
 	/**
