@@ -214,6 +214,11 @@ public class XMLParser {
 		return activitiesList;
 	}
 	
+	/**
+	 * setGuidanceByActivity
+	 * @param anActivity
+	 * @param node
+	 */
 	private static void setGuidanceByActivity(Activity anActivity, Node node) {
 		NodeList listOfTdNodes = node.getChildNodes() ;
 		Guidance GuideTobereturn = null;
@@ -236,7 +241,6 @@ public class XMLParser {
 		}	
 	}
 
-
 	/**
 	 * setAllDependencyActivity
 	 * @param aSet
@@ -258,8 +262,6 @@ public class XMLParser {
 			// affect the additional dependency to the current activity 
 			setDependencyByActivity(returnedActivityFilled, aNode);
 		}
-		
-
 	}
 
 	/**
@@ -294,8 +296,7 @@ public class XMLParser {
 					ActivityTobereturn.addSuccessor(wo);
 					_act.addPredecessor(wo);
 				}
-			}	
-			
+			}				
 		}
 	}
 
@@ -406,8 +407,7 @@ public class XMLParser {
 			}
 		}
 		return theProcess;
-	}
-	
+	}	
 	
 	/**
 	 * getAllTaskDescriptors 
@@ -498,10 +498,8 @@ public class XMLParser {
 			TaskDescriptor taskDescriptorfilled = (TaskDescriptor)aFiller.getFilledElement();
 			// affect the additional dependency to the current taskDescriptor 
 			setDependencyByTaskDescriptor(taskDescriptorfilled, aNode);			
-		}
-		
-	}
-		
+		}		
+	}		
 
 	/**
 	 * setTaskByTaskDescriptor	 * 
@@ -687,8 +685,7 @@ public class XMLParser {
 			// if the task doesn't exist
 			if (roleToBeset != null){
 				_t.addMainRole(roleToBeset);
-			}
-			
+			}			
 		}
 	}
 	/**
@@ -990,8 +987,7 @@ public class XMLParser {
 			}
 		}
 		return null ;
-	}
-	
+	}	
 	
 	/**
 	 * getGuidanceById
