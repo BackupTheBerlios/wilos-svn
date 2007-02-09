@@ -51,6 +51,15 @@ public class ConcreteTaskDescriptorService {
 		return this.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(
 				_concreteTaskDescriptorId);
 	}
+	
+	/**
+	 * Save the ConcreteTaskDescriptor modifications into database
+	 * @param _concreteTaskDescriptor
+	 */
+	public void updateConcreteTaskDescriptor(ConcreteTaskDescriptor _concreteTaskDescriptor)
+	{
+		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(_concreteTaskDescriptor);
+	}
 
 	/**
 	 * Start the ConcreteTaskDescriptor and save into the data base changings

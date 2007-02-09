@@ -27,6 +27,8 @@ public class ConcreteTaskViewerBean {
 	private boolean visibleAffected;
 
 	private boolean visibleStart;
+	
+	private boolean visibleModifiable;
 
 	public void buildConcreteTaskDescriptor() {
 		this.concreteTaskDescriptor = new ConcreteTaskDescriptor();
@@ -203,5 +205,40 @@ public class ConcreteTaskViewerBean {
 	 */
 	public void setParticipantService(ParticipantService participantService) {
 		this.participantService = participantService ;
+	}
+
+	/**
+	 * @return the visibleModifiable
+	 */
+	public boolean getVisibleModifiable() {
+		this.visibleModifiable = false;
+		if (this.visibleAffected && this.visibleStart)
+		{
+			String participantId = (String)this.getWebSessionService().getAttribute(this.webSessionService.WILOS_USER_ID);
+			Participant user = this.participantService.getParticipant(participantId);
+			//TODO PSI2 : verifier si la concretetask est bien affectée au participant via les roles
+			this.visibleModifiable = true;
+		}
+		else
+		{
+			this.visibleModifiable = false;
+		}
+		return this.visibleModifiable;
+	}
+
+	/**
+	 * @param visibleModifiable the visibleModifiable to set
+	 */
+	public void setVisibleModifiable(boolean _visibleModifiable) {
+		this.visibleModifiable = _visibleModifiable;
+	}
+	
+	/**
+	 * save the ConcreteTaskDescriptor
+	 * @param event
+	 */
+	public void updateActionListener(ActionEvent event)
+	{
+		this.concreteTaskDescriptorService.updateConcreteTaskDescriptor(this.concreteTaskDescriptor);
 	}
 }
