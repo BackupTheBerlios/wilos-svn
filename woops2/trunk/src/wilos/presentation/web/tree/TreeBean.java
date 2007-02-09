@@ -2,7 +2,6 @@
 package wilos.presentation.web.tree ;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +21,7 @@ import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.misc.wilosuser.LoginService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
 import wilos.business.services.presentation.web.WebSessionService;
+import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.role.RoleDescriptor;
@@ -54,6 +54,8 @@ public class TreeBean {
 	private LoginService loginService ;
 
 	private ParticipantService participantService ;
+
+	private ProcessService processService;
 
 	/* Simple fields */
 
@@ -97,6 +99,7 @@ public class TreeBean {
 
 				// Retrieve the entire project.
 				this.project = this.projectService.getProject(this.projectId) ;
+				//this.project = this.processService.getEntireProject(this.projectId) ;
 			}
 			ProjectNode projectNode = null ;
 
@@ -135,11 +138,15 @@ public class TreeBean {
 		Participant participant = this.participantService.getParticipant(wilosUserId);
 
 		if(participant != null){
-			HashMap<Project, Boolean> projects = this.participantService.getProjectsForAParticipant(participant) ;
+			/*HashMap<Project, Boolean> projects = this.participantService.getProjectsForAParticipant(participant) ;
 			for(Project project : projects.keySet()){
 				if(projects.get(project)){
 					projectsList.add(new SelectItem(project.getId(), project.getConcreteName())) ;
 				}
+			}*/
+
+			for(Project project : this.projectService.getAllProjects()){
+				projectsList.add(new SelectItem(project.getId(), project.getConcreteName())) ;
 			}
 		}
 
@@ -312,5 +319,21 @@ public class TreeBean {
 	 */
 	public void setWebSessionService(WebSessionService webSessionService) {
 		this.webSessionService = webSessionService ;
+	}
+
+	/**
+	 * @return the processService
+	 */
+	public ProcessService getProcessService() {
+		return processService ;
+	}
+
+	/**
+	 * Setter of processService.
+	 *
+	 * @param processService The processService to set.
+	 */
+	public void setProcessService(ProcessService processService) {
+		this.processService = processService ;
 	}
 }

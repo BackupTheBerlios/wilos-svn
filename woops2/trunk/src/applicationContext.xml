@@ -380,7 +380,8 @@
 		<property name="projectDao" ref="ProjectDao" />
 		<property name="stepDao" ref="StepDao" />
 		<property name="guidanceDao" ref="GuidanceDao" />
-
+		<property name="concreteBreakdownElementService"
+			ref="ConcreteBreakdownElementService" />
 	</bean>
 
 	<bean id="BreakdownElementService"
@@ -453,6 +454,11 @@
 	<bean id="ConcretePhaseService"
 		class="wilos.business.services.misc.concretephase.ConcretePhaseService">
 		<property name="concretePhaseDao" ref="ConcretePhaseDao" />
+	</bean>
+
+	<bean id="ConcreteBreakdownElementService"
+		class="wilos.business.services.misc.concretebreakdownelement.ConcreteBreakdownElementService">
+		<property name="concreteBreakdownElementDao" ref="ConcreteBreakdownElementDao" />
 	</bean>
 
 </beans>
