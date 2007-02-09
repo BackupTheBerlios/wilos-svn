@@ -39,10 +39,11 @@ public class ServersFrame {
 	private JButton delete = null;
 	private JButton valider = null;
 	private JTable servs = null;
-	private JLabel list_serv = null;
+	//private JLabel list_serv = null;
 	private JButton cancel = null;
 	private DefaultTableModel tables_serv;
 	private JScrollPane scrollServ = null;
+	private JButton save = null;
 	/**
 	 * This method initializes Fenetre1	
 	 * 	
@@ -52,7 +53,7 @@ public class ServersFrame {
 		if (Fenetre1 == null) {
 			Fenetre1 = new JDialog();
 			Fenetre1.setModal(true);
-			Fenetre1.setSize(new Dimension(680, 460));
+			Fenetre1.setSize(new Dimension(680, 380));
 			Fenetre1.setResizable(false);
 			Fenetre1.setContentPane(getFenetre());
 			Fenetre1.setTitle(Bundle.getText("serversFrame.titre"));
@@ -72,9 +73,9 @@ public class ServersFrame {
 			
 			//adr.setText(Bundle.getText("wilosServer.address"));
 			
-			list_serv = new JLabel();
-			list_serv.setBounds(new Rectangle(56, 12, 208, 17));
-			list_serv.setText(Bundle.getText("serversFrame.serveur"));
+			//list_serv = new JLabel();
+			//list_serv.setBounds(new Rectangle(56, 12, 208, 17));
+			//list_serv.setText(Bundle.getText("serversFrame.serveur"));
 			Fenetre = new JPanel();
 			Fenetre.setLayout(null);
 			Fenetre.add(getAdd(), null);
@@ -82,7 +83,8 @@ public class ServersFrame {
 			Fenetre.add(getValider(), null);
 			Fenetre.add(getCancel(), null);
 			Fenetre.add(getScrollServ(), null);
-			Fenetre.add(list_serv, null);
+			Fenetre.add(getSave(), null);
+			//Fenetre.add(list_serv, null);
 			
 		}
 		return Fenetre;
@@ -92,7 +94,7 @@ public class ServersFrame {
 		if (cancel ==null)
 		{
 			cancel = new JButton();
-			cancel.setBounds(new Rectangle(350,350,125,35));
+			cancel.setBounds(new Rectangle(350,270,125,35));
 			cancel.setText(Bundle.getText("serversFrame.cancel"));
 			cancel.addActionListener(new ActionListener()
 			{
@@ -104,7 +106,44 @@ public class ServersFrame {
 		}
 		return cancel;
 	}
-
+	private JButton getSave()
+	{
+		if (save ==null)
+		{
+			save = new JButton();
+			save.setBounds(new Rectangle(528,180,125,35));
+			save.setText(Bundle.getText("serversFrame.save"));
+			save.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e) 
+    			{
+					ArrayList<WizardServer> new_list_serv = new ArrayList<WizardServer>();
+					JOptionPane opt1 = new JOptionPane();
+					
+					boolean valide = true;
+					
+					for (int i=0;i<servs.getRowCount()&&valide;i++)
+					{
+						if ((String)servs.getValueAt(i,1)==null)
+						{
+							valide = false;
+							opt1.showMessageDialog(opt1,Bundle.getText("serversFrame.error"),"Error",JOptionPane.ERROR_MESSAGE);
+							opt1.setVisible(true);
+						}
+						else
+						{
+							new_list_serv.add(new WizardServer((String)servs.getValueAt(i,0),(String)servs.getValueAt(i,1),i));
+						}
+					}
+					if (valide)
+					{
+						LoginPanel.list_serv.saveServersList(new_list_serv);
+					}
+    			}				
+			});
+		}
+		return save;
+	}
 	/**
 	 * This method initializes add	
 	 * 	
@@ -158,7 +197,7 @@ public class ServersFrame {
 	private JButton getValider() {
 		if (valider == null) {
 			valider = new JButton();
-			valider.setBounds(new Rectangle(200, 350, 125, 35));
+			valider.setBounds(new Rectangle(200, 270, 125, 35));
 			valider.setText(Bundle.getText("serversFrame.ok"));
 			valider.addActionListener(new ActionListener()
 			{
