@@ -96,15 +96,15 @@ public class XMLParser {
 	// Filled by fillTaskDefinitionsList and fillRoleDefinitionsList
 	protected static Vector<TaskDefinition> TaskDefinitionsList = new Vector<TaskDefinition> ();
 	protected static Vector<RoleDefinition> RoleDefinitionsList = new Vector<RoleDefinition>() ;
-	protected static Vector<Guidance> GuidesList = new Vector<Guidance>() ;
+	protected static Vector<Guidance> GuidancesList = new Vector<Guidance>() ;
 	
 	
 	// this variables contain all the Elements that concern them
-	protected static Set<RoleDescriptor> allRoleDescriptors ;
-	protected static Set<TaskDescriptor> allTaskDescriptors ;
-	protected static Set<Phase> allPhases;
-	protected static Set<Iteration> allIterations;
-	protected static Set<Activity> allActivities;
+	protected static Set<RoleDescriptor> roleDescriptorsList ;
+	protected static Set<TaskDescriptor> taskDescriptorsList ;
+	protected static Set<Phase> phasesList;
+	protected static Set<Iteration> iterationsList;
+	protected static Set<Activity> activitiesList;
 
 	
 	/**
@@ -115,20 +115,19 @@ public class XMLParser {
 		try {
 			initGuidancesTypesList();
 			
-			GuidesList = fillGuidesList();
+			GuidancesList = fillGuidesList();
 			RoleDefinitionsList = fillRoleDefinitionsList();
 			TaskDefinitionsList = fillTaskDefinitionsList();
-
 			
-			allRoleDescriptors = getAllRoleDescriptors() ;
-			allTaskDescriptors = getAllTaskDescriptors(allRoleDescriptors);			
-			setAllDependencyTD(allTaskDescriptors);
+			roleDescriptorsList = fillRoleDescriptorsList() ;
+			taskDescriptorsList = fillTaskDescriptorsList(roleDescriptorsList);			
+			setAllTaskDescriptorsDependencies(taskDescriptorsList);
 			
-			allPhases = getAllPhases();
-			allIterations = getAllIterations();
+			phasesList = fillPhasesList();
+			iterationsList = fillIterationsList();
 			
-			allActivities = getAllActivities();
-			setAllDependencyActivity(allActivities);
+			activitiesList = fillActivitiesList();
+			setAllActivitiesDependencies(activitiesList);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -165,7 +164,7 @@ public class XMLParser {
 		theGuidanceList = new Vector<Guidance>();
 		theGuidanceList.clear();
 		
-		// gets all the nodes containing guideline
+		// gets all the nodes containing all guidances
 		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_guidance,XPathConstants.NODESET);
 		if (nodeReturned.getLength() != 0) {
 			// For each node...
@@ -173,11 +172,11 @@ public class XMLParser {
 			for(int i=0;i<nodeReturned.getLength();i++){
 				aNode = nodeReturned.item(i);
 				
-				// Fills the RoleDefinition from the node
+				// Fills the Guidance from the node
 				Guidance  aGuidance = new Guidance();
 				FillerGuidance aFiller = new FillerGuidance(aGuidance,aNode);	
 				aGuidance = (Guidance)aFiller.getFilledElement();
-				// add the guideline in the list
+				// add the guidance in the list
 				theGuidanceList.add(aGuidance);
 			}	
 		}
@@ -188,7 +187,7 @@ public class XMLParser {
 	 * getAllActivities
 	 * @return the Set of all activity
 	 */
-	private static Set<Activity> getAllActivities() {
+	private static Set<Activity> fillActivitiesList() {
 		Set<Activity> activitiesList = new LinkedHashSet<Activity>();
 		
 		/* evaluate the XPAth request and return the nodeList*/
@@ -205,7 +204,7 @@ public class XMLParser {
 			FillerActivity itFiller = new FillerActivity(anActivity, aNode);	
 			Activity returnedActivityFilled = (Activity) itFiller.getFilledElement();
 			
-			setGuideByActivity(returnedActivityFilled, aNode);
+			setGuidanceByActivity(returnedActivityFilled, aNode);
 			
 			/* Add the filled object in the result List */
 			activitiesList.add(returnedActivityFilled) ;
@@ -215,7 +214,7 @@ public class XMLParser {
 		return activitiesList;
 	}
 	
-	private static void setGuideByActivity(Activity anActivity, Node node) {
+	private static void setGuidanceByActivity(Activity anActivity, Node node) {
 		NodeList listOfTdNodes = node.getChildNodes() ;
 		Guidance GuideTobereturn = null;
 
@@ -242,7 +241,7 @@ public class XMLParser {
 	 * setAllDependencyActivity
 	 * @param aSet
 	 */
-	private static void setAllDependencyActivity(Set<Activity> aSet) {
+	private static void setAllActivitiesDependencies(Set<Activity> aSet) {
 		
 		// evaluate the XPAth request and return the nodeList
 		NodeList activities = (NodeList)XMLUtils.evaluate(xpath_activity,XPathConstants.NODESET);
@@ -256,7 +255,7 @@ public class XMLParser {
 			// Filler for the iteration and the item (node)
 			FillerActivity itFiller = new FillerActivity(anActivity, aNode);	
 			Activity returnedActivityFilled = (Activity) itFiller.getFilledElement();
-	
+			// affect the additional dependency to the current activity 
 			setDependencyByActivity(returnedActivityFilled, aNode);
 		}
 		
@@ -271,24 +270,27 @@ public class XMLParser {
 	private static void setDependencyByActivity(Activity _act, Node _node) {
 		// search the predecessor
 		Activity ActivityTobereturn = null;
-		// getting the id of the task
+		// To get the id of the task
 		String idAct_pred = "" ;
+		// To get the dependency type ("FinishToFinish" for example)
 		String linkType = "";
 		NodeList listOfTdNodes = _node.getChildNodes() ;
 		
+		// for each node
 		for (int i = 0 ; i < listOfTdNodes.getLength() ; i ++){
 			if (listOfTdNodes.item(i).getNodeName().equals(predecessor)){
+				// the node contains a tag: Predecessor from the XML file
 				idAct_pred = listOfTdNodes.item(i).getTextContent();
 				linkType = (listOfTdNodes.item(i).getAttributes().getNamedItem(attr_name_linkType).getNodeValue());
 				
 				// process if there is a task for this task desriptor			
-				ActivityTobereturn = getActivityById(allActivities, idAct_pred);
+				ActivityTobereturn = getActivityById(activitiesList, idAct_pred);
 				// if the task doesn't exist
 				if (ActivityTobereturn != null){
 					//Add the predecessor to the activity
 					WorkOrder wo = new WorkOrder();
 					wo.setLinkType(linkType);
-
+					// set all dependancy to the current activity
 					ActivityTobereturn.addSuccessor(wo);
 					_act.addPredecessor(wo);
 				}
@@ -324,13 +326,13 @@ public class XMLParser {
 			TaskDefinition aTaskDefinition = new TaskDefinition();
 			FillerTask aFiller = new FillerTask(aTaskDefinition, aNode);	
 			aTaskDefinition = (TaskDefinition)aFiller.getFilledElement();
+			// affect the additional steps to the current task 
 			setStepsByTaskDefinition(aTaskDefinition, aNode);
-			setGuideByTaskDefinition(aTaskDefinition, aNode);
-			
-			
+			// affect the additional guidances to the current task 			
+			setGuidanceByTaskDefinition(aTaskDefinition, aNode);
+			// add the current task to the list to be return			
 			theTaskDefinitionsList.add(aTaskDefinition);
-		}
-		
+		}		
 		return theTaskDefinitionsList;
 	}
 	
@@ -359,8 +361,9 @@ public class XMLParser {
 			RoleDefinition  aRoleDefinition = new RoleDefinition();
 			FillerRole aFiller = new FillerRole(aRoleDefinition,aNode);	
 			aRoleDefinition = (RoleDefinition)aFiller.getFilledElement();
-			setGuideByRoleDefinition(aRoleDefinition, aNode);
-			
+			// affect the additional guidance to the current role 
+			setGuidanceByRoleDefinition(aRoleDefinition, aNode);
+			// add the filled RoleDefinition in the list to be return
 			theRoleDefinitionsList.add(aRoleDefinition);
 		}	
 		return theRoleDefinitionsList;
@@ -405,47 +408,23 @@ public class XMLParser {
 		return theProcess;
 	}
 	
-	/**
-	 * getProcess
-	 * @deprecated
-	 * @return the process
-	 */
-	private static Process getProcess (){
-		Process p = new Process() ;
-		try{			
-			// get all the roles descriptor
-			Set<RoleDescriptor> ensRole = allRoleDescriptors ;
-			for (Iterator i = ensRole.iterator() ; i.hasNext() ;) {
-				p.addBreakdownElement((BreakdownElement) i.next());
-			}
-			// get all the tasks descriptor
-			Set<TaskDescriptor> allTasks = allTaskDescriptors;
-			for (Iterator i = allTasks.iterator() ; i.hasNext() ;) {
-				p.addBreakdownElement((BreakdownElement) i.next());
-			}
-		}
-		catch(Exception e)
-		{
-			
-		}
-		return p ;
-	}
-
 	
 	/**
 	 * getAllTaskDescriptors 
 	 * @return all the tasks descriptors
 	 * @throws Exception when no tasks descriptor are found
 	 */
-	private static Set<TaskDescriptor> getAllTaskDescriptors(Set<RoleDescriptor> allRoles) {
-		// gets all the roles in the file
+	private static Set<TaskDescriptor> fillTaskDescriptorsList(Set<RoleDescriptor> allRoles) {
+		// List of the taskDescriptor to be return
 		HashSet<TaskDescriptor> taskList = new HashSet<TaskDescriptor>();
-
+		// XPath Request to get all TaskDescriptor nodes  
 		NodeList taskDescriptors = (NodeList)XMLUtils.evaluate(xpath_taskDescriptor,XPathConstants.NODESET);
 		
 		Node aNode;
+		// for each node
 		for(int i=0;i<taskDescriptors.getLength();i++){
 			aNode = taskDescriptors.item(i);
+			// Fills the TaskDescriptor by the node
 			TaskDescriptor aTaskDescriptor = new TaskDescriptor();
 			FillerTaskDescriptor aFiller = new FillerTaskDescriptor(aTaskDescriptor,aNode);	
 			TaskDescriptor taskDescriptorfilled = (TaskDescriptor)aFiller.getFilledElement();
@@ -458,7 +437,7 @@ public class XMLParser {
 			
 			// affect the additional roles to the current task 
 			setAddiotionalRoleByTaskDescriptor(taskDescriptorfilled, aNode, allRoles);
-			
+			// add the filled taskDescriptor in the list to be return
 			taskList.add(taskDescriptorfilled);
 		}
 		return taskList;
@@ -473,23 +452,27 @@ public class XMLParser {
 	private static void setDependencyByTaskDescriptor(TaskDescriptor _t, Node _node) {
 		// search the predecessor
 		TaskDescriptor taskTobereturn = null;
-		// getting the id of the task
+		// to get the id of the task
 		String idTask_pred = "" ;
-		String linkType = "";
+		// to get the link for dependancy ("FinishToFinish for example")
+		String linkType = ""; 
 		NodeList listOfTdNodes = _node.getChildNodes() ;
 		
+		// for each node of listOfTdNodes
 		for (int i = 0 ; i < listOfTdNodes.getLength() ; i ++){
-			if (listOfTdNodes.item(i).getNodeName().equals(predecessor)){				
-				idTask_pred = listOfTdNodes.item(i).getTextContent();				
+			if (listOfTdNodes.item(i).getNodeName().equals(predecessor)){
+				// the node contains a tag : Predecessor in the XML file
+				idTask_pred = listOfTdNodes.item(i).getTextContent();
+				// get the link of the dependancy
 				linkType = (listOfTdNodes.item(i).getAttributes().getNamedItem(attr_name_linkType).getNodeValue());
 				
 				// process if there is a task for this task desriptor			
-				taskTobereturn = getTaskDescriptorById(allTaskDescriptors, idTask_pred);
+				taskTobereturn = getTaskDescriptorById(taskDescriptorsList, idTask_pred);
 				// if the task doesn't exist
 				if (taskTobereturn != null){
 					WorkOrder wo = new WorkOrder();
 					wo.setLinkType(linkType);
-
+					// set the dependency of the TaskDescriptors
 					taskTobereturn.addSuccessor(wo);
 					_t.addPredecessor(wo);
 				}
@@ -498,20 +481,22 @@ public class XMLParser {
 	}
 	
 	/**
-	 * setAllDependencyTD
+	 * setAllTaskDescriptorsDependencies
 	 * @param _allTaskD
 	 */
-	private static void setAllDependencyTD(Set<TaskDescriptor> _allTaskD) {
+	private static void setAllTaskDescriptorsDependencies(Set<TaskDescriptor> _allTaskD) {
 		// gets all the roles in the file
 		NodeList taskDescriptors = (NodeList)XMLUtils.evaluate(xpath_taskDescriptor,XPathConstants.NODESET);
 		
 		Node aNode;
+		// for each node
 		for(int i=0; i<taskDescriptors.getLength();i++){
 			aNode = taskDescriptors.item(i);
+			// Fills the current TaskDescriptor
 			TaskDescriptor aTaskDescriptor = new TaskDescriptor();
 			FillerTaskDescriptor aFiller = new FillerTaskDescriptor(aTaskDescriptor,aNode);	
 			TaskDescriptor taskDescriptorfilled = (TaskDescriptor)aFiller.getFilledElement();
-			
+			// affect the additional dependency to the current taskDescriptor 
 			setDependencyByTaskDescriptor(taskDescriptorfilled, aNode);			
 		}
 		
@@ -519,8 +504,7 @@ public class XMLParser {
 		
 
 	/**
-	 * setTaskByTaskDescriptor
-	 * 
+	 * setTaskByTaskDescriptor	 * 
 	 * @param t
 	 * @return a task 
 	 */
@@ -530,9 +514,12 @@ public class XMLParser {
 		String idTask = "" ;
 		NodeList listOfTdNodes = _node.getChildNodes() ;
 		boolean trouve = false ;
+		// search the nodes of the taskDescriptor
 		for (int i = 0 ; i < listOfTdNodes.getLength() && !trouve ; i ++){
 			if (listOfTdNodes.item(i).getNodeName().equals(task)){
+				// the current node contains a tag: Task in the XML file
 				trouve = true ;
+				// get the id of the current task
 				idTask = listOfTdNodes.item(i).getTextContent();
 			}
 		}
@@ -572,14 +559,20 @@ public class XMLParser {
 		NodeList listOfTdNodes = _n.getChildNodes() ;
 		boolean trouve = false ;
 		
-		// search the nodes of the step
+		// search the nodes of the task
 		for (int i = 0 ; i < listOfTdNodes.getLength() && !trouve ; i ++){
 			if (listOfTdNodes.item(i).getNodeName().equals(presentation)){
+				// the current node contains the tag: Presentation
+				
+				// search the nodes of the step
 				for (int j = 0 ; j < listOfTdNodes.item(i).getChildNodes().getLength() ; j ++){
 					if (listOfTdNodes.item(i).getChildNodes().item(j).getNodeName().equals(step)){
+						// the current node contains the tag: step in the XML file
 						Step aStep = new Step() ;
+						// fills the step
 						FillerStep fs = new FillerStep(aStep,listOfTdNodes.item(i).getChildNodes().item(j));
 						aStep = (Step) fs.getFilledElement();
+						// add the current step to the TaskDefinition
 						_taskd.addStep(aStep);
 					}
 				}
@@ -593,25 +586,25 @@ public class XMLParser {
 	 * @param _taskDefinition
 	 * @param _node
 	 */
-	private static void setGuideByTaskDefinition(TaskDefinition _taskDefinition, Node _node) {
+	private static void setGuidanceByTaskDefinition(TaskDefinition _taskDefinition, Node _node) {
+		// get the child node of the taskDefinition in the list 
 		NodeList listOfTdNodes = _node.getChildNodes() ;
 		Guidance GuideTobereturn = null;
 
 		String idGuide = "";
 		
-		// search the nodes of the guide
+		// search the nodes of the guidance
 		for (int i = 0 ; i < listOfTdNodes.getLength() ; i ++){
 			if(guidancesTypes.contains(listOfTdNodes.item(i).getNodeName())) {
 				// recuperation des differents id des guidelines
 				idGuide = listOfTdNodes.item(i).getTextContent();				
 				
 				GuideTobereturn = getGuidanceById(idGuide);
-				// if the guideline doesn't exist
+				// if the guidance doesn't exist
 				if (GuideTobereturn != null){
-					 //set the guideline in the taskDefinition
+					 //add the current guidance to the taskDefinition
 					_taskDefinition.addGuidance(GuideTobereturn);
-				}
-				
+				}				
 			}
 		}	
 	}
@@ -621,7 +614,7 @@ public class XMLParser {
 	 * @param _taskDefinition
 	 * @param _node
 	 */
-	private static void setGuideByRoleDefinition(RoleDefinition _roleDefinition, Node _node) {
+	private static void setGuidanceByRoleDefinition(RoleDefinition _roleDefinition, Node _node) {
 		NodeList listOfTdNodes = _node.getChildNodes() ;
 		Guidance GuideTobereturn = null;
 
@@ -630,16 +623,15 @@ public class XMLParser {
 		// search the nodes of the guide
 		for (int i = 0 ; i < listOfTdNodes.getLength() ; i ++){
 			if(guidancesTypes.contains(listOfTdNodes.item(i).getNodeName())) {
-				// recuperation des differents id des guidelines
+				// get the id of the current node
 				idGuide = listOfTdNodes.item(i).getTextContent();
-				
+				// get the guidance object by the id
 				GuideTobereturn = getGuidanceById(idGuide);
 				// if the guideline doesn't exist
 				if (GuideTobereturn != null){
 					 //set the guideline in the taskDefinition
 					_roleDefinition.addGuidance(GuideTobereturn);
-				}
-				
+				}				
 			}
 		}	
 	}
@@ -652,19 +644,18 @@ public class XMLParser {
 	 * @throws Exception
 	 */
 	private static void setAddiotionalRoleByTaskDescriptor(TaskDescriptor _t,Node _n,Set<RoleDescriptor> _s) {
-//		 getting the id of the role
 		String idRole = "" ;
 		NodeList listOfTdNodes = _n.getChildNodes() ;
+		
+		// search the additionalRole
 		for (int i = 0 ; i < listOfTdNodes.getLength() ; i ++){
 			if (listOfTdNodes.item(i).getNodeName().equals(additionallyPerformedBy)){
+				// the current node contains the flag: additionallyPerformedBy in the XML file
 				idRole = listOfTdNodes.item(i).getTextContent();
 				RoleDescriptor roleToBeset ;
-				roleToBeset = getRoleDescriptorById(_s, idRole);
-				// if the task doesn't exist
-//				if (roleToBeset == null){
-//					throw new Exception("role " + idRole + " doesn't exist");
-//				}
-				// set the role in the roledescriptor
+				// get the RoleDescriptor Object by the id
+				roleToBeset = getRoleDescriptorById(_s, idRole);				
+				// set the role to the roledescriptor
 				_t.addAdditionalRole(roleToBeset);
 			}
 		}
@@ -678,13 +669,15 @@ public class XMLParser {
 	 * @throws Exception
 	 */
 	private static void setMainRoleByTaskDescriptor(TaskDescriptor _t, Node _n, Set<RoleDescriptor> _s) {
-		// getting the id of the role
 		String idRole = "" ;
 		NodeList listOfTdNodes = _n.getChildNodes() ;
 		boolean trouve = false ;
+		// search the node of the performedPrimarilyBy
 		for (int i = 0 ; i < listOfTdNodes.getLength() && !trouve ; i ++){
+			// the current node contains the flag: performedPrimarilyBy in the XML file
 			if (listOfTdNodes.item(i).getNodeName().equals(performedPrimarilyBy)){
 				trouve = true ;
+				// get the id of current node
 				idRole = listOfTdNodes.item(i).getTextContent();
 			}
 		}
@@ -693,8 +686,6 @@ public class XMLParser {
 			roleToBeset = getRoleDescriptorById(_s,idRole);
 			// if the task doesn't exist
 			if (roleToBeset != null){
-//				throw new Exception("role " + idRole + " doesn't exist");
-//				 set the role in the roledescriptor
 				_t.addMainRole(roleToBeset);
 			}
 			
@@ -708,12 +699,14 @@ public class XMLParser {
 	 */
 	private static void setRoleByRoleDescriptor(RoleDescriptor _r,Node _n) {
 		RoleDefinition roleTobereturn = null;
-		// getting the id of the role
+		// To get the id of the role
 		String idRole = "" ;
 		NodeList listOfTdNodes = _n.getChildNodes() ;
 		boolean trouve = false ;
+		// search the node of the role
 		for (int i = 0 ; i < listOfTdNodes.getLength() && !trouve ; i ++){
 			if (listOfTdNodes.item(i).getNodeName().equals(role)){
+				// the current node contains the flag: Role in the XML file
 				trouve = true ;
 				idRole = listOfTdNodes.item(i).getTextContent();
 			}
@@ -730,15 +723,15 @@ public class XMLParser {
 	
 	/**
 	 * getRoleDescriptorById
-	 * @param aSet
-	 * @param id
+	 * @param _aSet
+	 * @param _id
 	 * @return RoleDescriptor
 	 */
-	private static RoleDescriptor getRoleDescriptorById(Set<RoleDescriptor> aSet, String id){
-		for (Iterator i = aSet.iterator() ; i.hasNext() ;){
-			RoleDescriptor tmp = (RoleDescriptor) i .next();
-			if (tmp.getGuid().equals(id)){
-				return  tmp;
+	private static RoleDescriptor getRoleDescriptorById(Set<RoleDescriptor> _aSet, String _id){
+		for (Iterator i = _aSet.iterator() ; i.hasNext() ;){
+			RoleDescriptor roleDescriptorTmp = (RoleDescriptor) i .next();
+			if (roleDescriptorTmp.getGuid().equals(_id)){
+				return roleDescriptorTmp;
 			}
 		}
 		return null ;
@@ -746,15 +739,15 @@ public class XMLParser {
 	
 	/**
 	 * getTaskDescriptorById
-	 * @param aSet
-	 * @param id
+	 * @param _aSet
+	 * @param _id
 	 * @return TaskDescriptor
 	 */
-	private static TaskDescriptor getTaskDescriptorById(Set<TaskDescriptor> aSet,String id){
-		for (Iterator i = aSet.iterator() ; i.hasNext() ;){
-			TaskDescriptor tmp = (TaskDescriptor) i .next();
-			if (tmp.getGuid().equals(id)){
-				return  tmp;
+	private static TaskDescriptor getTaskDescriptorById(Set<TaskDescriptor> _aSet,String _id){
+		for (Iterator i = _aSet.iterator() ; i.hasNext() ;){
+			TaskDescriptor taskDescriptorTmp = (TaskDescriptor) i .next();
+			if (taskDescriptorTmp.getGuid().equals(_id)){
+				return taskDescriptorTmp;
 			}
 		}
 		return null ;
@@ -764,27 +757,26 @@ public class XMLParser {
 	 * getAllIterations
 	 * @return Set
 	 */
-	private static Set<Iteration> getAllIterations() {
+	private static Set<Iteration> fillIterationsList() {
 		LinkedHashSet<Iteration> iterationList = new LinkedHashSet<Iteration>();
-		/* evaluate the XPAth request and return the nodeList*/
+		// evaluate the XPAth request and return the nodeList
 		NodeList iterations = (NodeList)XMLUtils.evaluate(xpath_iteration,XPathConstants.NODESET);
 		if (iterations == null){
 			System.out.println("Pas d'iterations");
 		}
 		else {
-		/* there is one or several iterations */
+		// there is one or several iterations 
 			Node aNode;
 			for(int i=0;i<iterations.getLength();i++){
-				/* for each list element , get the list item */
+				// for each list element , get the list item 
 				aNode = iterations.item(i);
 				Iteration aIteration = new Iteration();
-				/* Filler for the iteration and the item (node)*/
+				// Filler for the iteration and the item (node)
 				FillerIteration itFiller = new FillerIteration(aIteration, aNode);	
 				Iteration returnedIterationFilled = (Iteration) itFiller.getFilledElement();
-				
-				setGuideByActivity(returnedIterationFilled, aNode);
-				
-				/* Add the filled object in the result List */
+				// affect the additional Guidance to the current Activity				 
+				setGuidanceByActivity(returnedIterationFilled, aNode);				
+				// Add the filled object in the result List 
 				iterationList.add(returnedIterationFilled) ;
 			}			
 		}
@@ -795,15 +787,13 @@ public class XMLParser {
 	 * getAllPhases
 	 * @return Set
 	 */
-	private static Set<Phase> getAllPhases() {
+	private static Set<Phase> fillPhasesList() {
 		LinkedHashSet<Phase> phaseList = new LinkedHashSet<Phase>();
 		/* evaluate the XPAth request and return the nodeList*/
 		NodeList phases = (NodeList)XMLUtils.evaluate(xpath_phase,XPathConstants.NODESET);
-		if (phases == null){
-			System.out.println("Pas de phases");
-		}
-		else {
-		/* there is one or several phase */
+
+		if (phases != null) {
+			/* there is one or several phase */
 			Node aNode;
 			for(int i=0;i<phases.getLength();i++){
 				/* for each list element , get the list item */
@@ -813,12 +803,12 @@ public class XMLParser {
 				FillerPhase phFiller = new FillerPhase(aPhase, aNode);	
 				Phase returnedPhaseFilled = (Phase) phFiller.getFilledElement();
 				
-				setGuideByActivity(returnedPhaseFilled, aNode);
+				setGuidanceByActivity(returnedPhaseFilled, aNode);
 				
 				/* Add the filled object in the result List */
 				phaseList.add(returnedPhaseFilled) ;
-			}			
-		}
+			}
+		}		
 		return phaseList;
 	}
 	
@@ -827,24 +817,25 @@ public class XMLParser {
 	 * @return all the tasks descriptors
 	 * @throws Exception when no tasks descriptor are found
 	 */
-	private static Set<RoleDescriptor> getAllRoleDescriptors() {
-		LinkedHashSet<RoleDescriptor> roleList = new LinkedHashSet<RoleDescriptor>();
+	private static Set<RoleDescriptor> fillRoleDescriptorsList() {
+		LinkedHashSet<RoleDescriptor> roleList = new LinkedHashSet<RoleDescriptor>();		
 		
-		
+		// get list of nodes by the XPath expression
 		NodeList roleDescriptors = (NodeList)XMLUtils.evaluate(xpath_roleDescriptor,XPathConstants.NODESET);
 		
 		Node aNode;
+		// for each node
 		for(int i=0;i<roleDescriptors.getLength();i++) {
 			aNode = roleDescriptors.item(i);
+			// Fills the RoleDescriptor
 			RoleDescriptor aRoleDescriptor = new RoleDescriptor();
 			FillerRoleDescriptor aFiller = new FillerRoleDescriptor(aRoleDescriptor,aNode);	
 			RoleDescriptor roleDescriptorfilled = (RoleDescriptor)aFiller.getFilledElement();
-			
+			// affect the additionnal Role in the Descriptor
 			setRoleByRoleDescriptor(roleDescriptorfilled,aNode);
-							
+			// add the current RoleDescriptor Object in the list to be return				
 			roleList.add(roleDescriptorfilled) ;
-		}
-		
+		}		
 		return roleList;
 	}
 	
@@ -869,27 +860,21 @@ public class XMLParser {
 	 * @return the BreakdownELement filled
 	 */
 	private static BreakdownElement getBreakDownElementsFromNode (Node _node) {
-		//BreakdownElement returnedBde ; // the BreakdownElement Returned by the function
-		
-		 // Filler used to fill Elements;
-		// bdeId; // used when calling one of the getElementById functions (ex : getPhase by id);
-		
 		BreakdownElement returnedBde = null;
-		//FillerElement BdeFiller;
 		
-		
+		// get the filled BreakDownElement Object 
 		returnedBde = getFillerBDE(_node, returnedBde);
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(activity)) {
 			if (_node.getAttributes().getNamedItem(attr_name_variabilityBasedOnElement) != null) {
+				// the current node contains the attribute: variabilityBasedOnElement in the XML file				
 				String parentElementID = _node.getAttributes().getNamedItem(attr_name_variabilityBasedOnElement).getNodeValue();
-				/* Xpath request to get the activity list by the id: variabilityBasedOnElement*/
-				
+				// Xpath request to get the activity list by the id: variabilityBasedOnElement				
 				String xpath_parentElement = "//Process[@*[namespace-uri() and local-name()='type']='uma:CapabilityPattern' and @id='" + parentElementID + "']";
-				
+				// get the list of the nodes by the XPath Expression
 				NodeList parentElement = (NodeList)XMLUtils.evaluate(xpath_parentElement,XPathConstants.NODESET);
-				
 				if (parentElement.getLength() == 1) {
+					// the nodeList is not empty
 					_node = parentElement.item(0);
 				}
 			}
@@ -898,16 +883,16 @@ public class XMLParser {
 		// We're getting with the included elements
 		if ((returnedBde != null) && returnedBde instanceof Activity) {
 			BreakdownElement tmpBde; // used to receive the temp result of this function
-											// when called recursively
+									 // when called recursively
 			NodeList listNode = _node.getChildNodes();
-			
+			// search the node of the breakdownElement
 			for (int i = 0 ; i < listNode.getLength() ; i++) {
 				if (listNode.item(i).getNodeName().equals(breakdownElement)) {
+					// the current node contains a flag: breakdownElement in the XML file
 					tmpBde = getBreakDownElementsFromNode(listNode.item(i));
-					
+					// test if the BreakDownElement exist
 					if (tmpBde != null) {					
 						if (tmpBde instanceof Activity) {
-							//((Activity) returnedBde).addActivity((Activity) tmpBde);
 							((Activity) returnedBde).addBreakdownElement((Activity) tmpBde);
 						}
 						else {
@@ -916,62 +901,60 @@ public class XMLParser {
 					}
 				}
 			}
-		}
-		
+		}		
 		return returnedBde;
 	}
 
 	/**
 	 * getFillerBDE
 	 * @param _node
-	 * @param returnedBde
+	 * @param _returnedBde
 	 * @param bdeId
 	 * @return BreakdownElement
 	 */
-	private static BreakdownElement getFillerBDE(Node _node, BreakdownElement returnedBde) {
+	private static BreakdownElement getFillerBDE(Node _node, BreakdownElement _returnedBde) {
 		FillerElement BdeFiller;		
 		String bdeId = _node.getAttributes().getNamedItem(id).getNodeValue();
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(phase)) {
-			returnedBde = getPhaseById(allPhases, bdeId);
+			_returnedBde = getPhaseById(phasesList, bdeId);
 		}
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(process)) {
-			returnedBde = new Process();
-			BdeFiller = new FillerProcess(returnedBde, _node);	
-			returnedBde = (Process) BdeFiller.getFilledElement();
+			_returnedBde = new Process();
+			BdeFiller = new FillerProcess(_returnedBde, _node);	
+			_returnedBde = (Process) BdeFiller.getFilledElement();
 		}
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(role_descriptor)) {			
-			returnedBde = getRoleDescriptorById(allRoleDescriptors, bdeId);
+			_returnedBde = getRoleDescriptorById(roleDescriptorsList, bdeId);
 		}
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(task_descriptor)) {
-			returnedBde = getTaskDescriptorById(allTaskDescriptors, bdeId);
+			_returnedBde = getTaskDescriptorById(taskDescriptorsList, bdeId);
 		}
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(iteration)) {
-			returnedBde = getIterationById(allIterations, bdeId);
+			_returnedBde = getIterationById(iterationsList, bdeId);
 		}
 		
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(activity)) {
-			returnedBde = getActivityById(allActivities, bdeId);
-		}
-		
-		return returnedBde;
+			_returnedBde = getActivityById(activitiesList, bdeId);
+		}		
+		return _returnedBde;
 	}
 	
 	/**
 	 * getActivityById
-	 * @param aSetActivity
-	 * @param bdeId
+	 * @param _aSetActivity
+	 * @param _bdeId
 	 * @return a Activity
 	 */
-	private static Activity getActivityById(Set<Activity> aSetActivity, String bdeId) {
-		for (Iterator i = aSetActivity.iterator() ; i.hasNext() ;){
-			Activity tmp = (Activity) i .next();
-			if (tmp.getGuid().equals(bdeId)){
-				return  tmp;
+	private static Activity getActivityById(Set<Activity> _aSetActivity, String _bdeId) {
+		for (Iterator i = _aSetActivity.iterator() ; i.hasNext() ;){
+			Activity activityTmp = (Activity) i .next();
+			if (activityTmp.getGuid().equals(_bdeId)){
+				return  activityTmp;
 			}
 		}
 		return null ;
@@ -980,14 +963,14 @@ public class XMLParser {
 	/**
 	 * getIterationById
 	 * @param allIterations2
-	 * @param bdeId
+	 * @param _bdeId
 	 * @return
 	 */
-	private static Iteration getIterationById(Set<Iteration> aSetIteration, String bdeId) {
-		for (Iterator i = aSetIteration.iterator() ; i.hasNext() ;){
-			Iteration tmp = (Iteration) i .next();
-			if (tmp.getGuid().equals(bdeId)){
-				return  tmp;
+	private static Iteration getIterationById(Set<Iteration> _aSetIteration, String _bdeId) {
+		for (Iterator i = _aSetIteration.iterator() ; i.hasNext() ;){
+			Iteration iterationTmp = (Iteration) i .next();
+			if (iterationTmp.getGuid().equals(_bdeId)){
+				return  iterationTmp;
 			}
 		}
 		return null ;
@@ -995,15 +978,15 @@ public class XMLParser {
 
 	/**
 	 * getPhaseById
-	 * @param allPhases2
-	 * @param bdeId
+	 * @param _allPhases2
+	 * @param _bdeId
 	 * @return
 	 */
-	private static Phase getPhaseById(Set<Phase> allPhases2, String bdeId) {
-		for (Iterator i = allPhases2.iterator() ; i.hasNext() ;){
-			Phase tmp = (Phase) i .next();
-			if (tmp.getGuid().equals(bdeId)){
-				return tmp;
+	private static Phase getPhaseById(Set<Phase> _allPhases2, String _bdeId) {
+		for (Iterator i = _allPhases2.iterator() ; i.hasNext() ;){
+			Phase phaseTmp = (Phase) i .next();
+			if (phaseTmp.getGuid().equals(_bdeId)){
+				return phaseTmp;
 			}
 		}
 		return null ;
@@ -1012,14 +995,14 @@ public class XMLParser {
 	
 	/**
 	 * getGuidanceById
-	 * @param bdeId
+	 * @param _bdeId
 	 * @return a Guidance
 	 */
-	private static Guidance getGuidanceById(String bdeId) {
-		for (Iterator i = GuidesList.iterator() ; i.hasNext() ;){
-			Guidance tmp = (Guidance) i .next();
-			if (tmp.getGuid().equals(bdeId)){
-				return tmp;
+	private static Guidance getGuidanceById(String _bdeId) {
+		for (Iterator i = GuidancesList.iterator() ; i.hasNext() ;){
+			Guidance guidanceTmp = (Guidance) i .next();
+			if (guidanceTmp.getGuid().equals(_bdeId)){
+				return guidanceTmp;
 			}
 		}
 		return null ;
