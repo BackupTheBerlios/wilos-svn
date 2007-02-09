@@ -14,13 +14,12 @@ public class RoleDefinitionTO extends RoleDefinition implements Serializable{
     public RoleDefinitionTO(RoleDefinition myRoleDefinition) {
         this.setName(myRoleDefinition.getName());
         this.setGuid(myRoleDefinition.getGuid());
-        this.setDescription(myRoleDefinition.getDescription());
+        this.setDescription(myRoleDefinition.getDescription()); 
         
-        
-        Set<Guidance> guidances = new HashSet<Guidance>();
+      
         for (Guidance g : myRoleDefinition.getGuidances()) {
-        	 guidances.add(new GuidanceTO(g));
+        	this.addGuidance(new GuidanceTO(g));
         }
-        this.addAllGuidances(guidances);
+
     }
 }

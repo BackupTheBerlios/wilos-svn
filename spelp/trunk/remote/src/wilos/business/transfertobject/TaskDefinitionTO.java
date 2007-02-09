@@ -10,9 +10,6 @@
 package wilos.business.transfertobject;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.SortedSet;
 
 import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.task.Step;
@@ -33,20 +30,15 @@ public class TaskDefinitionTO extends TaskDefinition implements Serializable {
     public TaskDefinitionTO(TaskDefinition myTD) {
         this.setName(myTD.getName());
         this.setGuid(myTD.getGuid());
-        this.setDescription(myTD.getDescription());                
-        
-       /* SortedSet<Step> stepTos= new HashSet<Step>();
+        this.setDescription(myTD.getDescription());         
+              
         for (Step s : myTD.getSteps()) {
-            stepTos.add(new StepTO(s));
-        }
-        this.addAllSteps(stepTos);*/
-       
-        
-        Set<Guidance> guidances = new HashSet<Guidance>();
+        	this.addStep(new StepTO(s));
+        }      
+
         for (Guidance g : myTD.getGuidances()) {
-        	 guidances.add(new GuidanceTO(g));
+        	this.addGuidance(new GuidanceTO(g));        	
         }
-        this.addAllGuidances(guidances);
     }
 
     
