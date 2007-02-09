@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -124,7 +125,7 @@ public class ServersFrame {
 					
 					for (int i=0;i<servs.getRowCount()&&valide;i++)
 					{
-						if ((String)servs.getValueAt(i,1)==null)
+						if ((String)servs.getValueAt(i,1)==null||(String)servs.getValueAt(i,0)==null)
 						{
 							valide = false;
 							opt1.showMessageDialog(opt1,Bundle.getText("serversFrame.error"),"Error",JOptionPane.ERROR_MESSAGE);
@@ -144,6 +145,12 @@ public class ServersFrame {
 		}
 		return save;
 	}
+	private boolean isURLValide(String address) {
+		boolean retour = true ;
+		retour = retour && address.startsWith("http://");
+		retour = retour && address.contains(":");
+		return retour;
+	}
 	/**
 	 * This method initializes add	
 	 * 	
@@ -158,8 +165,11 @@ public class ServersFrame {
 			{
 				public void actionPerformed(ActionEvent e) 
     			{
+					if (servs.getValueAt(servs.getRowCount()-1,1)!=null)
+					{
 					tables_serv.addRow(new Vector());
 					servs.setEditingRow(tables_serv.getRowCount());
+					}
     			}				
 			});
 		}
