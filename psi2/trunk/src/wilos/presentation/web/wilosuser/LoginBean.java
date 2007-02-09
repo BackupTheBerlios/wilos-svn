@@ -107,22 +107,22 @@ public class LoginBean {
 
 			// if(user instanceof Participant){
 			if(this.loginService.isParticipant(user)){
-				this.webSessionService.setAttribute(WebSessionService.ROLE_NAME, "participant") ;
+				this.webSessionService.setAttribute(WebSessionService.ROLE_TYPE, "participant") ;
 				url = "participant_main" ;
 				applicationRole = "participant_role" ;
 			}
 			else if(this.loginService.isProcessManager(user)){
-				this.webSessionService.setAttribute(WebSessionService.ROLE_NAME, "processManager") ;
+				this.webSessionService.setAttribute(WebSessionService.ROLE_TYPE, "processManager") ;
 				url = "process_manager_main" ;
 				applicationRole = "processManager_role" ;
 			}
 			else if(this.loginService.isProjectDirector(user)){
-				this.webSessionService.setAttribute(WebSessionService.ROLE_NAME, "projectDirector") ;
+				this.webSessionService.setAttribute(WebSessionService.ROLE_TYPE, "projectDirector") ;
 				url = "project_director_main" ;
 				applicationRole = "projectDirector_role" ;
 			}
 			else if(this.loginService.isAdministrator(user)){
-				this.webSessionService.setAttribute(WebSessionService.ROLE_NAME, "admin") ;
+				this.webSessionService.setAttribute(WebSessionService.ROLE_TYPE, "admin") ;
 				url = "admin_main" ;
 				applicationRole = "admin_role" ;
 			}
