@@ -80,7 +80,7 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 		cwbe.setConcreteName(CONCRETE_NAME) ;
 		cwbe.setPlannedTime(PLANNED_TIME);
 		cwbe.setPlannedFinishingDate(this.date);
-
+ 
 		assertNotNull(this.concreteWorkBreakdownElement.hashCode()) ;
 		assertNotNull(cwbe.hashCode()) ;
 		assertEquals(this.concreteWorkBreakdownElement.hashCode(), cwbe.hashCode()) ;
