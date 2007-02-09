@@ -13,6 +13,7 @@ import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.process.Process;
+import wilos.model.spem2.role.RoleDefinition;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
@@ -26,7 +27,7 @@ public class XMLParserTest extends TestCase {
 	public static File pathFileError = new File("noFile");
 	public static File pathScrumWithArte = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "scrum_with_ArteF.xml"); 
 	public static File pathEmptyFile = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "emptyFile.xml"); 
-	public static File itilFile = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "itil.xml");
+	public static File itilFile2 = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "itil2.xml");
 	
 	/**
 	 * Checks that the ProcessReturned is null if the file doesnt exist
@@ -935,6 +936,37 @@ public class XMLParserTest extends TestCase {
 		assertTrue(nbGuidances == 1);
 	}
 	
+	public void testThatSupportN1RoleDefinitionFromItilContainsTheExpectedGuidances() {
+		Process itilProcess = XMLParser.getProcess(itilFile2);
+		RoleDefinition supportN1Roledefinition = null;
+		
+		HashSet<String> expectedGuidances = new HashSet<String>();
+		expectedGuidances.add("New CheckList");
+		expectedGuidances.add("New Concept");
+		expectedGuidances.add("New GuideLine");
+		expectedGuidances.add("New Supporting Material");
+		expectedGuidances.add("New WhitePaper");
+		
+		// The goal of this loops is to get the Support N1 RoleDefinition
+		for (BreakdownElement bde : itilProcess.getBreakdownElements()) {
+			assertTrue(bde instanceof Activity);
+			for (BreakdownElement bde2 : ((Activity) bde).getBreakdownElements()) {
+				if (bde2 instanceof RoleDescriptor) {
+					// Il will be done two times, but we don't care, the result will be the same
+					if (bde2.getName().equals("sn1")) {
+						System.out.println("ici");
+						supportN1Roledefinition = ((RoleDescriptor) bde2).getRoleDefinition();
+					}
+				}
+			}
+		}
+		
+		for (Guidance aGuidance : supportN1Roledefinition.getGuidances()) {
+			System.out.println(aGuidance.getPresentationName());
+			System.out.println("ici2");
+		}	
+		
+	}
 	
 	
 	/*
