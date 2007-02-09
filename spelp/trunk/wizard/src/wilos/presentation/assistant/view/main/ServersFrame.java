@@ -15,6 +15,7 @@ import java.util.Vector;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JTable;
@@ -41,6 +42,7 @@ public class ServersFrame {
 	private JLabel list_serv = null;
 	private JButton cancel = null;
 	private DefaultTableModel tables_serv;
+	private JScrollPane scrollServ = null;
 	/**
 	 * This method initializes Fenetre1	
 	 * 	
@@ -79,7 +81,7 @@ public class ServersFrame {
 			Fenetre.add(getDelete(), null);
 			Fenetre.add(getValider(), null);
 			Fenetre.add(getCancel(), null);
-			Fenetre.add(getServs(), null);
+			Fenetre.add(getScrollServ(), null);
 			Fenetre.add(list_serv, null);
 			
 		}
@@ -139,7 +141,8 @@ public class ServersFrame {
 			{
 				public void actionPerformed(ActionEvent e) 
     			{
-					tables_serv.removeRow((servs.getSelectedRow()));			
+					if (servs.getSelectedRow() != -1)
+						tables_serv.removeRow((servs.getSelectedRow()));			
     			}				
 			});
 			
@@ -220,11 +223,26 @@ public class ServersFrame {
 			}
 			this.tables_serv = new DefaultTableModel(data,rowName);
 			this.servs = new JTable(this.tables_serv);
-			this.servs.setBounds(new Rectangle(45, 45, 437, 188));
+		//	this.servs.setBounds(new Rectangle(45, 45, 437, 188));
 			this.servs.setGridColor(Color.black);
 			this.servs.setVisible(true);
 			
 		}
 		return servs;
+	}
+	
+	
+	
+	private JScrollPane getScrollServ() {
+		if (this.scrollServ == null) {
+			scrollServ = new JScrollPane();
+		//	scrollServ.add(getServs());
+			scrollServ.setBounds(new Rectangle(45, 45, 437, 188));
+			scrollServ.setViewportView(getServs());
+			scrollServ.setVisible(true);
+			
+			
+		}
+		return scrollServ;
 	}
 }

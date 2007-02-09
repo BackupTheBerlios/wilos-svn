@@ -163,6 +163,7 @@ public class LoginPanel extends JPanel {
     			{
     				if (adressTextField.getItemCount()!=0&&adressTextField.getSelectedItem().equals(Bundle.getText("loginPanel.ajouter")))
     				{
+    					adressTextField.setSelectedIndex(0);
     					new ServersFrame();
     				}
     			}
@@ -243,8 +244,12 @@ public class LoginPanel extends JPanel {
 		{
 			String passcript =  Security.encode(new String(passwordPasswordField.getPassword()));
 			WizardServicesProxy.setIdentificationParamaters(loginTextField.getText(),passcript, String.valueOf(adressTextField.getSelectedItem()));
+			System.out.print(String.valueOf(adressTextField.getSelectedItem()));
 			Participant participant = WizardServicesProxy.getParticipant();                          
-        
+			
+			/*Save the last server used*/
+			list_serv.lastUsedServer(adressTextField.getSelectedIndex()+1);
+			
 			if (participant == null)
 			{
 				setVisible(true);
@@ -252,10 +257,6 @@ public class LoginPanel extends JPanel {
 			}  
 			else
 			{
-				/*Save the last server used*/
-				System.out.println(adressTextField.getSelectedIndex());
-				list_serv.lastUsedServer(adressTextField.getSelectedIndex()+1);
-				//System.out.println(adressTextField.getSelectedIndex());
 				
 				WizardMainFrame wmf = new WizardMainFrame();
 				wmf.setParticipant(participant);

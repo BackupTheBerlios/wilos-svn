@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Servers>
   <Server>
-    <Alias>marine</Alias>
-    <Address>http://marine.ups-tlse.fr/wilos</Address>
+    <Alias>telline</Alias>
+    <Address>http://truc.fr</Address>
     <Id>1</Id>
   </Server>
   <Server>
-    <Alias>telline</Alias>
-    <Address>http://localhost.fr</Address>
+    <Alias>marine</Alias>
+    <Address>http://marine.ups-tlse.fr/wilos</Address>
     <Id>2</Id>
   </Server>
 </Servers>
