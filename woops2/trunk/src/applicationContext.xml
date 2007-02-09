@@ -7,7 +7,8 @@
 	xsi:schemaLocation="
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
-	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
+	default-lazy-init="true">
 
 	<!-- DataSource Definition -->
 	<bean id="dataSource"
@@ -17,13 +18,13 @@
 			<value>org.gjt.mm.mysql.Driver</value>
 		</property>
 		<property name="url">
-			<value>jdbc:mysql://127.0.0.1/wilos</value>
+			<value>jdbc:mysql://127.0.0.1/m1isb10</value>
 		</property>
 		<property name="username">
-			<value>root</value>
+			<value>m1isb10</value>
 		</property>
 		<property name="password">
-			<value></value>
+			<value>enisym</value>
 		</property>
 	</bean>
 
@@ -395,8 +396,10 @@
 		class="wilos.business.services.spem2.activity.ActivityService">
 		<property name="activityDao" ref="ActivityDao" />
 		<property name="concreteActivityDao" ref="ConcreteActivityDao" />
-		<property name="phaseService" ref="PhaseService" />
-		<property name="iterationService" ref="IterationService" />
+		<!-- <property name="phaseService" ref="PhaseService" />
+		<property name="iterationService" ref="IterationService" />-->
+		<property name="roleDescriptorService" ref="RoleDescriptorService" />
+		<property name="taskDescriptorService" ref="TaskDescriptorService" />
 	</bean>
 
 	<bean id="RoleDescriptorService"
@@ -416,12 +419,19 @@
 	<bean id="PhaseService"
 		class="wilos.business.services.spem2.phase.PhaseService">
 		<property name="concretePhaseDao" ref="ConcretePhaseDao" />
+		<property name="activityService" ref="ActivityService" />
+		<property name="iterationService" ref="IterationService" />
+		<property name="roleDescriptorService" ref="RoleDescriptorService" />
+		<property name="taskDescriptorService" ref="TaskDescriptorService" />
 	</bean>
 
 	<bean id="IterationService"
 		class="wilos.business.services.spem2.iteration.IterationService">
-		<property name="concreteIterationDao"
-			ref="ConcreteIterationDao" />
+		<property name="concreteIterationDao" ref="ConcreteIterationDao" />
+		<property name="activityService" ref="ActivityService" />
+		<!-- <property name="phaseService" ref="PhaseService" />-->
+		<property name="roleDescriptorService" ref="RoleDescriptorService" />
+		<property name="taskDescriptorService" ref="TaskDescriptorService" />
 	</bean>
 
 	<bean id="ConcreteTaskDescriptorService"

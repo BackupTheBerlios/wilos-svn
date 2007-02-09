@@ -19,7 +19,7 @@ public class ProjectInstanciationTest {
 		ProcessDao p = (ProcessDao) ctx.getBean("ProcessDao");
 		ProcessService am = (ProcessService) ctx.getBean("ProcessService");
 
-		/*String s = am.getProcessDao().getProcessFromGuid("_9llsAQAvEdubGMceRDupFQ").getId();
+		String s = am.getProcessDao().getProcessFromGuid("_9llsAQAvEdubGMceRDupFQ").getId();
 		Process scrum = p.getProcess(s);
 
 		Project project = new Project();
@@ -27,7 +27,7 @@ public class ProjectInstanciationTest {
 		project.setProcess(scrum);
 		pm.saveOrUpdateProject(project);
 
-		am.projectInstanciation(project);*/
+		am.projectInstanciation(project);
 
 		String s2 = am.getProcessDao().getProcessFromGuid("_0uyGoMlgEdmt3adZL5Dmdw").getId();
 		Process openup = p.getProcess(s2);

@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import wilos.business.services.spem2.iteration.IterationService;
 import wilos.business.services.spem2.phase.PhaseService;
+import wilos.business.services.spem2.role.RoleDescriptorService;
+import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.hibernate.misc.concreteactivity.ConcreteActivityDao;
 import wilos.hibernate.spem2.activity.ActivityDao;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
@@ -19,6 +21,8 @@ import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
+import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.task.TaskDescriptor;
 
 /**
  * ActivityManager is a transactional class, that manages operations about activity, requested by web pages (activity.jsp &
@@ -34,9 +38,13 @@ public class ActivityService {
 
 	private ConcreteActivityDao concreteActivityDao;
 
-	private PhaseService phaseService = new PhaseService();
+	/*private PhaseService phaseService;
 	
-	private IterationService iterationService = new IterationService();
+	private IterationService iterationService;*/
+	
+	private RoleDescriptorService roleDescriptorService;
+	
+	private TaskDescriptorService taskDescriptorService;
 
 	/**
 	 * Instanciates an activity for a project
@@ -64,7 +72,7 @@ public class ActivityService {
 		System.out.println("### ConcreteActivity vide sauve");
 		
 		for (BreakdownElement bde : bdes ) {
-			if (bde instanceof Phase) {
+			/*if (bde instanceof Phase) {
 				Phase ph = (Phase) bde;
 				tmp.add(this.phaseService.phaseInstanciation(_project, ph));
 			} else {
@@ -72,58 +80,27 @@ public class ActivityService {
 					Iteration it = (Iteration) bde;
 					tmp.add(this.iterationService.iterationInstanciation(_project, it));
 				} else {
-					if (bde instanceof Activity) {
+					*/if (bde instanceof Activity) {
 						Activity act = (Activity) bde;
 						tmp.add(this.activityInstanciation(_project, act));
-					}/* else {
+					} else {
 						if (bde instanceof RoleDescriptor) {
 							RoleDescriptor rd = (RoleDescriptor) bde;
-							this.roleDescriptorService.roleDescriptorInstanciation(_project, rd);
+							tmp.add(this.roleDescriptorService.roleDescriptorInstanciation(_project, rd));
 						} else {
 							TaskDescriptor td = (TaskDescriptor) bde;
-							this.taskDescriptorService.taskDescriptorInstanciation(_project, td);
-						}*/
-					}
-				}
-			}
-			cact.addAllConcreteBreakdownElements(tmp);
-		
-			this.concreteActivityDao.saveOrUpdateConcreteActivity(cact);
-			System.out.println("### Activity update");
-			
-			return cact;
-		//}
-		
-		
-
-		// instanciation of all contained BreakdownElements in the activity if correspondant ConcreteBreakdownElement doesn't already exist for each ones
-		/*for (BreakdownElement bde : _activity.getBreakdownElements()) {
-			// if the ConcreteBreakdownElement collection of bde is empty
-			if (bde.getConcreteBreakdownElements().size() == 0) {
-				// instanciation of a relative ConcreteBreakdownElement for bde which have for superConcreteActivity _act 
-				cbdes.add(this.breakdownElementService.breakdownElementInstanciation(
-						_project, bde/*, cact*//*));
-			} else {
-				// if the ConcreteBreakdownElement collection of bde isn't empty
-				boolean find = false;
-				for (ConcreteBreakdownElement cbde : bde.getConcreteBreakdownElements()) {
-					// if a relative ConcreteBreakdownElement already exists for the project _project
-					if (cbde.getProject().getId() == _project.getId()) {
-						find = true;
-						break;
-					}
-				}
-				if (!find) {
-					cbdes.add(this.breakdownElementService.breakdownElementInstanciation(
-							_project, bde/*, cact*//*));
-				}
+							tmp.add(this.taskDescriptorService.taskDescriptorInstanciation(_project, td));
+						}
+					//}
+				//}
 			}
 		}
+		cact.addAllConcreteBreakdownElements(tmp);
 		
-		cact.addAllConcreteBreakdownElements(cbdes);
-
 		this.concreteActivityDao.saveOrUpdateConcreteActivity(cact);
-		System.out.println("### ConcreteActivity sauve");*/
+		System.out.println("### Activity update");
+			
+		return cact;
 	}
 
 	/**
@@ -186,28 +163,56 @@ public class ActivityService {
 	/**
 	 * @return the iterationService
 	 */
-	public IterationService getIterationService() {
+	/*public IterationService getIterationService() {
 		return iterationService;
-	}
+	}*/
 
 	/**
 	 * @param iterationService the iterationService to set
 	 */
-	public void setIterationService(IterationService iterationService) {
+	/*public void setIterationService(IterationService iterationService) {
 		this.iterationService = iterationService;
-	}
+	}*/
 
 	/**
 	 * @return the phaseService
 	 */
-	public PhaseService getPhaseService() {
+	/*public PhaseService getPhaseService() {
 		return phaseService;
-	}
+	}*/
 
 	/**
 	 * @param phaseService the phaseService to set
 	 */
-	public void setPhaseService(PhaseService phaseService) {
+	/*public void setPhaseService(PhaseService phaseService) {
 		this.phaseService = phaseService;
+	}*/
+
+	/**
+	 * @return the roleDescriptorService
+	 */
+	public RoleDescriptorService getRoleDescriptorService() {
+		return roleDescriptorService;
+	}
+
+	/**
+	 * @param roleDescriptorService the roleDescriptorService to set
+	 */
+	public void setRoleDescriptorService(RoleDescriptorService roleDescriptorService) {
+		this.roleDescriptorService = roleDescriptorService;
+	}
+
+	/**
+	 * @return the taskDescriptorService
+	 */
+	public TaskDescriptorService getTaskDescriptorService() {
+		return taskDescriptorService;
+	}
+
+	/**
+	 * @param taskDescriptorService the taskDescriptorService to set
+	 */
+	public void setTaskDescriptorService(TaskDescriptorService taskDescriptorService) {
+		this.taskDescriptorService = taskDescriptorService;
 	}
 }

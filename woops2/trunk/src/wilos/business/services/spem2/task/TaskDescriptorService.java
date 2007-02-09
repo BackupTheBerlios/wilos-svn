@@ -1,14 +1,11 @@
 package wilos.business.services.spem2.task;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import wilos.hibernate.misc.concretetask.ConcreteTaskDescriptorDao;
 import wilos.hibernate.spem2.task.TaskDescriptorDao;
-import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.task.TaskDescriptor;
@@ -21,28 +18,26 @@ import wilos.model.spem2.task.TaskDescriptor;
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class TaskDescriptorService {
 
-	private ConcreteTaskDescriptorDao concreteTaskDescriptorDao ;
+	private ConcreteTaskDescriptorDao concreteTaskDescriptorDao;
 
 	private TaskDescriptorDao taskDescriptorDao;
 
-	public void taskDescriptorInstanciation (Project _project, TaskDescriptor td, ConcreteActivity _cact) {
+	public ConcreteBreakdownElement taskDescriptorInstanciation (Project _project, TaskDescriptor _td) {
 
 		ConcreteTaskDescriptor ctd = new ConcreteTaskDescriptor();
-		
-		Set<ConcreteActivity> tmp  = new HashSet<ConcreteActivity>();
-		tmp.add(_cact);
 
-		if (td.getPresentationName() == null)
-			ctd.setConcreteName(td.getName()) ;
+		if (_td.getPresentationName() == null)
+			ctd.setConcreteName(_td.getName()) ;
 		else
-			ctd.setConcreteName(td.getPresentationName());
+			ctd.setConcreteName(_td.getPresentationName());
 
-		ctd.addTaskDescriptor(td);
+		ctd.addTaskDescriptor(_td);
 		ctd.setProject(_project);
-		ctd.setSuperConcreteActivities(tmp);
 
 		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(ctd);
 		System.out.println("### ConcreteTaskDescriptor sauve");
+		
+		return ctd;
 	}
 
 	public TaskDescriptor getTaskDescriptorById(String _id)

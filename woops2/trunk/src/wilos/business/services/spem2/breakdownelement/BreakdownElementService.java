@@ -45,7 +45,7 @@ public class BreakdownElementService {
 	 * @param _project project for which the BreakdownElement shall be instanciated
 	 * @param _bde BreakdownElement to instanciate
 	 */
-	public ConcreteBreakdownElement breakdownElementInstanciation (Project _project, BreakdownElement _bde, ConcreteActivity _superActivity) {
+	/*public ConcreteBreakdownElement breakdownElementInstanciation (Project _project, BreakdownElement _bde, ConcreteActivity _superActivity) {
 
 		ConcreteBreakdownElement cbde = null;
 		
@@ -72,7 +72,7 @@ public class BreakdownElementService {
 			}
 		}
 		return cbde;
-	}
+	}*/
 
 	/**
 	 * Getter of concreteBreakdownElementDao
