@@ -121,13 +121,13 @@ public class XMLParser {
 			
 			roleDescriptorsList = fillRoleDescriptorsList() ;
 			taskDescriptorsList = fillTaskDescriptorsList(roleDescriptorsList);			
-			setAllTaskDescriptorsDependencies(taskDescriptorsList);
+			setAllTaskDescriptorsDependencies();
 			
 			phasesList = fillPhasesList();
 			iterationsList = fillIterationsList();
 			
 			activitiesList = fillActivitiesList();
-			setAllActivitiesDependencies(activitiesList);
+			setAllActivitiesDependencies();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -245,7 +245,7 @@ public class XMLParser {
 	 * setAllDependencyActivity
 	 * @param aSet
 	 */
-	private static void setAllActivitiesDependencies(Set<Activity> aSet) {
+	private static void setAllActivitiesDependencies() {
 		
 		// evaluate the XPAth request and return the nodeList
 		NodeList activities = (NodeList)XMLUtils.evaluate(xpath_activity,XPathConstants.NODESET);
@@ -484,7 +484,7 @@ public class XMLParser {
 	 * setAllTaskDescriptorsDependencies
 	 * @param _allTaskD
 	 */
-	private static void setAllTaskDescriptorsDependencies(Set<TaskDescriptor> _allTaskD) {
+	private static void setAllTaskDescriptorsDependencies() {
 		// gets all the roles in the file
 		NodeList taskDescriptors = (NodeList)XMLUtils.evaluate(xpath_taskDescriptor,XPathConstants.NODESET);
 		
