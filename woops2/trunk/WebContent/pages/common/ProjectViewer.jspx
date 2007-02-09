@@ -18,7 +18,7 @@
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</ice:outputText>
 					<ice:outputText value="#{msgs['projectviewer.launchingDate']}" />
-					<ice:outputText	value="#{ProjectViewerBean.project.launchingdate}" >
+					<ice:outputText	value="#{ProjectViewerBean.project.launchingDate}" >
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</ice:outputText>
 					<ice:outputText value="#{msgs['projectviewer.isFinished']}" />

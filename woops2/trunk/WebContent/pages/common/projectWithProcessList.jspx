@@ -1,5 +1,3 @@
-<f:loadBundle basename="wilos.resources.messages" var="msgs" />
-
 <ice:form id="projects_form">
 	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
 		<ice:panelTabSet id="panelTabSet_projects" styleClass="componentPanelTabSetLayout">
