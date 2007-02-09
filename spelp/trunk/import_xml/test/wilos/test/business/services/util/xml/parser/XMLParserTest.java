@@ -3,7 +3,6 @@ package wilos.test.business.services.util.xml.parser;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import junit.framework.TestCase;
@@ -27,6 +26,7 @@ public class XMLParserTest extends TestCase {
 	public static File pathFileError = new File("noFile");
 	public static File pathScrumWithArte = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "scrum_with_ArteF.xml"); 
 	public static File pathEmptyFile = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "emptyFile.xml"); 
+	public static File itilFile = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "itil.xml");
 	
 	/**
 	 * Checks that the ProcessReturned is null if the file doesnt exist
