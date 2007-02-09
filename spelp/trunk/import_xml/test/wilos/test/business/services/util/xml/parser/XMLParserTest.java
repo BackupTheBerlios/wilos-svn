@@ -28,7 +28,7 @@ public class XMLParserTest extends TestCase {
 	public static File pathFileError = new File("noFile");
 	public static File pathScrumWithArte = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "scrum_with_ArteF.xml"); 
 	public static File pathEmptyFile = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "emptyFile.xml"); 
-	public static File itilFile2 = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "itil2.xml");
+	public static File pathItil = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "itil2.xml");
 	
 	/**
 	 * Checks that the ProcessReturned is null if the file doesnt exist
@@ -61,6 +61,12 @@ public class XMLParserTest extends TestCase {
 		assertTrue(theProcess != null);
 		
 		theProcess = XMLParser.getProcess(pathOPenUP);
+		assertTrue(theProcess != null);
+		
+		theProcess = XMLParser.getProcess(pathScrumWithArte );
+		assertTrue(theProcess != null);
+		
+		theProcess = XMLParser.getProcess(pathItil);
 		assertTrue(theProcess != null);
 	}
 	
@@ -378,6 +384,10 @@ public class XMLParserTest extends TestCase {
 		}
 	}
 	
+	/**
+	 * Checks that the Initiate Project Activity from OpenUp Process contains ExpectedRoleDescriptors()
+	 *
+	 */
 	public void testOpenUPInitiateProjectContainsExpectedRoleDescriptors() {
 		Iterator<BreakdownElement> itTopLevelAct;
 		Iterator<BreakdownElement> itSecondLevelAct;
@@ -401,11 +411,11 @@ public class XMLParserTest extends TestCase {
 		// Iterator on the set of the four Phases of OpenUP
 		itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
 		
-		// Activity 1
+		// Used to avoid Exception if error
 		assertTrue(itTopLevelAct.hasNext());
 		
 		topLevelActivity = null;
-		// We want the third Phase : Construction Iteration
+		// We want the firts Phase : Inception Iteration
 		while (itTopLevelAct.hasNext()) {
 			topLevelActivity = (Activity) itTopLevelAct.next();
 			if (topLevelActivity.getPresentationName().equals("Inception Iteration [1..n]")) {
@@ -418,25 +428,33 @@ public class XMLParserTest extends TestCase {
 		rentreDansInitiateProject = false;
 		while (itSecondLevelAct.hasNext()) {
 			secondLevelActivity = (Activity) itSecondLevelAct.next();
+			// We go into Initiate Project
 			if (secondLevelActivity.getPresentationName().equals("Initiate Project")) {
 				rentreDansInitiateProject = true;
 				BdeIterator = secondLevelActivity.getBreakdownElements().iterator();
 				nbRoleDescriptors = 0;
+				// For each Bde of Initiate Project
 				while (BdeIterator.hasNext()) {
 					tmpBde = BdeIterator.next();
+					// If its a roleDesc
 					if (tmpBde instanceof RoleDescriptor) {
+						// Increase counter
 						nbRoleDescriptors++;
-						tmpBde = (RoleDescriptor) tmpBde;
+						// Our list must contains the presentationName of the roleDesc
 						assertTrue(expectedResults.contains( tmpBde.getPresentationName() ) );
-						//System.out.println(tmpBde.getPresentationName());
 					}
 				}
 				assertTrue(nbRoleDescriptors == 5);
 			}
 		}
+		// Did we find Initiate Project ?
 		assertTrue(rentreDansInitiateProject);	
 	}
 	
+	/**
+	 * Checks that the Activty Manage Requirements from OpenUp contains expected TaskDescriptors
+	 *
+	 */
 	public void testOpenUPManageRequirementsContainsExpectedTaskDescriptors() {
 		Iterator<BreakdownElement> itTopLevelAct;
 		Iterator<BreakdownElement> itSecondLevelAct;
@@ -446,6 +464,7 @@ public class XMLParserTest extends TestCase {
 		Iterator<BreakdownElement> BdeIterator;
 		BreakdownElement tmpBde;
 		
+		// The Presentation Name of the Expected Task Descriptors
 		HashSet<String> expectedResults = new HashSet<String>();
 		expectedResults.add("Find and Outline Requirements");
 		expectedResults.add("Detail Requirements");
@@ -471,90 +490,40 @@ public class XMLParserTest extends TestCase {
 		rentreDansManageRequirements = false;
 		while (itSecondLevelAct.hasNext()) {
 			secondLevelActivity = (Activity) itSecondLevelAct.next();
+			// We want to go into Manage Requirements
 			if (secondLevelActivity.getPresentationName().equals("Manage Requirements")) {
 				rentreDansManageRequirements = true;
 				BdeIterator = secondLevelActivity.getBreakdownElements().iterator();
 				nbTaskDescriptors = 0;
+				// For each BDE of Manage Requirements
 				while (BdeIterator.hasNext()) {
 					tmpBde = BdeIterator.next();
+					// If it is a TaskDesc
 					if (tmpBde instanceof TaskDescriptor) {
+						// increase counter
 						nbTaskDescriptors++;
-
-						tmpBde = (TaskDescriptor) tmpBde;
+						// Checks that the presentationName is in our list
 						assertTrue(expectedResults.contains( tmpBde.getPresentationName() ) );
 					}
 				}
+				// Did we find the right number of TaskDesc ?
 				assertTrue(nbTaskDescriptors == 3);
 			}
 		}
+		// Did we find Manage Requirements ?
 		assertTrue(rentreDansManageRequirements);	
-	}
-	
-	public void testOpenUPManageRequirementsContainsExpectedTaskDescriptors2() {
-		Process theTestedProcess;
-		Iterator<BreakdownElement> itTopLevelAct;
-		Iterator<BreakdownElement> itSecondLevelAct;
-		Activity topLevelActivity,secondLevelActivity;
-		boolean rentreDansManageRequirements;
-		int nbTaskDescriptors;
-		Iterator<BreakdownElement> BdeIterator;
-		BreakdownElement tmpBde;
-		
-		HashSet<String> expectedResults = new HashSet<String>();
-		expectedResults.add("Find and Outline Requirements");
-		expectedResults.add("Detail Requirements");
-		expectedResults.add("Create Test Cases");
-		
-		theTestedProcess = XMLParser.getProcess(pathOPenUP);
-		assertNotNull(theTestedProcess);
-		if (theTestedProcess != null) {
-			// Iterator on the set of the four Phases of OpenUP
-			itTopLevelAct = theTestedProcess.getBreakdownElements().iterator();
-			
-			topLevelActivity = null;
-			// We want the third Phase : Construction Iteration
-			while (itTopLevelAct.hasNext()) {
-				topLevelActivity = (Activity) itTopLevelAct.next();
-				if (topLevelActivity.getPresentationName().equals("Construction Iteration [1..n]")) {
-					break;
-				}
-			}
-			
-			itSecondLevelAct = topLevelActivity.getBreakdownElements().iterator();
-			
-			rentreDansManageRequirements = false;
-			while (itSecondLevelAct.hasNext()) {
-				secondLevelActivity = (Activity) itSecondLevelAct.next();
-				if (secondLevelActivity.getPresentationName().equals("Manage Requirements")) {
-					rentreDansManageRequirements = true;
-					BdeIterator = secondLevelActivity.getBreakdownElements().iterator();
-					nbTaskDescriptors = 0;
-					while (BdeIterator.hasNext()) {
-						tmpBde = BdeIterator.next();
-						if (tmpBde instanceof TaskDescriptor) {
-							nbTaskDescriptors++;
-							tmpBde = (TaskDescriptor) tmpBde;
-							assertTrue(expectedResults.contains( tmpBde.getPresentationName() ) );
-						}
-					}
-					assertTrue(nbTaskDescriptors == 3);
-				}
-			}
-			assertTrue(rentreDansManageRequirements);
-		}		
-	}
-	
-	public void testScrumWithArteWorks() {
-		Process p;
-		p = XMLParser.getProcess(pathScrumWithArte );
-		assertTrue(p != null);
 	}	
 	
+	/**
+	 * Checks that the Iteration from the second Phase From Scrum contains all expected
+	 *
+	 */
 	public void testPhase2IterationFromScrumWithArteContainsAllExpected() {
 		Iterator<BreakdownElement> itAct;
 		HashSet<BreakdownElement> secondPhaseActivities;
 		Iterator<BreakdownElement> secondPhaseActivitiesIterator;
 		
+		// The Names of the expectedElements
 		HashSet<String> expectedResults = new HashSet<String>();
 		expectedResults.add("Retrospective");
 		expectedResults.add("Product Owner");
@@ -567,7 +536,7 @@ public class XMLParserTest extends TestCase {
 		expectedResults.add("Scrum daily meeting");
 		expectedResults.add("Daily work");
 		expectedResults.add("Plan sprint");
-		
+		// Number of expected elements
 		int expectedNumber = 11;
 		
 		Process process = XMLParser.getProcess(pathScrumWithArte);
@@ -597,21 +566,23 @@ public class XMLParserTest extends TestCase {
 		}
 		
 		assertTrue(tmpBde instanceof Iteration);
-		Iteration secondPhaseIteration = (Iteration) tmpBde;
-		
-		Iterator<BreakdownElement> it;
-		
-		it = secondPhaseIteration.getBreakdownElements().iterator();
+		// Now we got the Iteration on which we'll work
+		Iteration secondPhaseIteration = (Iteration) tmpBde;		
 		
 		int i = 0;
-		while (it.hasNext()) {
-			assertTrue(expectedResults.contains( ((BreakdownElement) it.next()).getName() ) );
+		for (BreakdownElement Bde : secondPhaseIteration.getBreakdownElements()) {
+			// Is this name in our list ?
+			assertTrue(expectedResults.contains(Bde.getName()));
 			i += 1;
 		}
-		
+		// Did we get the right number of element ?
 		assertTrue(i == expectedNumber);
 	}
 	
+	/**
+	 * Checks that the taksDef Details Requirements from OpenUP contains the right number of guidances
+	 *
+	 */
 	public void testOpenUPContainsGuidances() {
 		Process theTestedProcess;
 		Iterator<BreakdownElement> itTopLevelAct;
@@ -685,7 +656,6 @@ public class XMLParserTest extends TestCase {
 			assertTrue(rentreDansManageRequirements);
 		}		
 	}
-	
 	
 	public void testOpenUPTaskDescriptorContainsDependency() {
 		Process theTestedProcess = null;
@@ -941,7 +911,7 @@ public class XMLParserTest extends TestCase {
 	 * Note : Example is not treated
 	 */
 	public void testThatSupportN1RoleDefinitionFromItil2ContainsTheExpectedGuidances() {
-		Process itilProcess = XMLParser.getProcess(itilFile2);
+		Process itilProcess = XMLParser.getProcess(pathItil);
 		RoleDefinition supportN1Roledefinition = null;
 		
 		HashMap<String, String> expectedGuidances = new HashMap<String, String>();
@@ -980,6 +950,56 @@ public class XMLParserTest extends TestCase {
 		assertTrue(nbGuidances == nbExpectedGuidances);
 	}
 	
+	/**
+	 * Checks that the RoleDefinition Analyst from OpenUp refers four RoleDescriptors
+	 *
+	 */
+	public void testThatTheRoleDefinionAnalystFromOpenUpRefersTheRightRoleDescriptors() {
+		Process theOpenUpProcess = XMLParser.getProcess(pathOPenUP);
+		
+		// We want to get a RoleDescriptor with Analyst as PresentationName
+		RoleDescriptor anAnalystRoleDescriptor = null;
+		// Trough TopLevelActivities
+		for (BreakdownElement topLevelAct : theOpenUpProcess.getBreakdownElements()) {
+			if (topLevelAct.getPresentationName().equals("Inception Iteration [1..n]")) {
+				assertTrue(topLevelAct instanceof Activity);
+				// Trough SndLevelActivities
+				for (BreakdownElement sndLevelAct : ((Activity)topLevelAct).getBreakdownElements()) {
+					if (sndLevelAct.getPresentationName().equals("Initiate Project")) {
+						// Now, it s one of the BreakdownElements of Initiate Project
+						for (BreakdownElement lowLevelBde : ((Activity)sndLevelAct).getBreakdownElements() ) {
+							if (lowLevelBde instanceof RoleDescriptor && 
+										lowLevelBde.getPresentationName().equals("Analyst")) {
+								anAnalystRoleDescriptor = ((RoleDescriptor) lowLevelBde);
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		// check that the Role Descriptor is not null
+		assertNotNull(anAnalystRoleDescriptor);
+		// check that the Role Descriptor refers the RoleDefinition
+		assertNotNull(anAnalystRoleDescriptor.getRoleDefinition());
+		
+		// Now we get the RoleDefinition
+		RoleDefinition theAnalystRoleDefinition = anAnalystRoleDescriptor.getRoleDefinition();
+		
+		// The Guids of the RoleDescriptors
+		HashSet<String> analystRoleDescriptorsGUIDs = new HashSet<String>();
+		analystRoleDescriptorsGUIDs.add("_eFeO0EbpEduLBN1xMBngqw");
+		analystRoleDescriptorsGUIDs.add("_VNpT0FY5EdqI9sTOt2pjHw");
+		analystRoleDescriptorsGUIDs.add("_DT8oADk-EduFTqg5hiiQIw");
+		analystRoleDescriptorsGUIDs.add("_wGSUwFY6EdqI9sTOt2pjHw");
+		
+		int nbAnalystRDs = 0;
+		for (RoleDescriptor anAnalystRD : theAnalystRoleDefinition.getRoleDescriptors()) {
+			assertTrue(analystRoleDescriptorsGUIDs.contains(anAnalystRD.getGuid()));
+			nbAnalystRDs += 1;
+		}
+		assertTrue(nbAnalystRDs == 4);
+	}	
 	
 	/*
 	public void testGetProcess(){
