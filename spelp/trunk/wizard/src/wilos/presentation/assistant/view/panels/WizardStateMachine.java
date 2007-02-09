@@ -39,10 +39,7 @@ public class WizardStateMachine extends Observable{
 	 * @param state state of the Step
 	 */
 	public void addStep (Step s, int state) {
-		if (!stepState.containsKey(s)){
-			this.stepState.put(s, new Integer(state));
-		}
-		
+		this.stepState.put(s, new Integer(state));
 	}
 	
 	/**

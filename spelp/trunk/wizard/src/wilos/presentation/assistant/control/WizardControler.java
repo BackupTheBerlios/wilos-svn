@@ -60,6 +60,11 @@ public class WizardControler {
 	public void startConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
 		if (ctd.getState() == Constantes.State.READY || ctd.getState() == Constantes.State.SUSPENDED ) {
 			WizardServicesProxy.startConcreteTaskDescriptor(ctd.getId());
+			if (ctd.getTaskDescriptor().getTaskDefinition() != null && ctd.getTaskDescriptor().getTaskDefinition() != null){
+				for (Step s : ctd.getTaskDescriptor().getTaskDefinition().getSteps()) {
+					WizardStateMachine.getInstance().changeStepState(s, WizardStateMachine.STATE_STEP_READY);
+				}
+			}
 			ctd.setState(Constantes.State.STARTED);
 			WizardStateMachine.getInstance().setFocusedObject(ctd);
 		}
@@ -84,8 +89,10 @@ public class WizardControler {
 	public void finishConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
 		if (ctd.getState() == Constantes.State.STARTED) {
 			WizardServicesProxy.stopConcreteTaskDescriptor(ctd.getId());
-			for (Step s : ctd.getTaskDescriptor().getTaskDefinition().getSteps()) {
-				WizardStateMachine.getInstance().changeStepState(s, WizardStateMachine.STATE_STEP_FINISHED);
+			if (ctd.getTaskDescriptor().getTaskDefinition() != null && ctd.getTaskDescriptor().getTaskDefinition() != null){
+				for (Step s : ctd.getTaskDescriptor().getTaskDefinition().getSteps()) {
+					WizardStateMachine.getInstance().changeStepState(s, WizardStateMachine.STATE_STEP_FINISHED);
+				}
 			}
 			ctd.setState(Constantes.State.FINISHED);
 			WizardStateMachine.getInstance().setFocusedObject(ctd);
@@ -174,7 +181,6 @@ public class WizardControler {
 
 	public void refreshParticipant() {
 		treePanel.setParticipant(WizardServicesProxy.getParticipant());	
-		WizardStateMachine.getInstance().deleteAllStep();
 	}
 
 	public static WizardControler getWc() {

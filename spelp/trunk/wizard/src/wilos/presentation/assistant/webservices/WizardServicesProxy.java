@@ -212,7 +212,7 @@ public class WizardServicesProxy {
             aTmpConcrete.setConcreteName("Coder le programme Partie I");
             aTmpConcrete.setAccomplishedTime(42);
             aTmpConcrete.setPlannedFinishingDate(new Date());
-            aTmpConcrete.setState(Constantes.State.CREATED);
+            aTmpConcrete.setState(Constantes.State.READY);
             aTmpConcrete.setPlannedStartingDate(new Date());
             aTmpConcrete.setPlannedTime(24);
     			
