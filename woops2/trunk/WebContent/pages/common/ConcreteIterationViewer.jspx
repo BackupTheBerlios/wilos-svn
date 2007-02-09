@@ -9,16 +9,16 @@
 				<br />
 				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2"
 					border="0">
-					<ice:outputText value="id " />
+					<ice:outputText value="#{msgs['taskviewer.id'] }" />
 					<ice:outputText
 						value="#{IterationViewerBean.iteration.id}" />
-					<ice:outputText value="presentationName " />
+					<ice:outputText value="#{msgs['iterationviewer.presentationName'] }" />
 					<ice:outputText
 						value="#{IterationViewerBean.iteration.presentationName}" />
-					<ice:outputText value="isPlanned " />
+					<ice:outputText value="#{msgs['iterationviewer.isplanned'] }" />
 					<ice:outputText
 						value="#{IterationViewerBean.iteration.isPlanned}" />
-					<ice:outputText value="description " />
+					<ice:outputText value="#{msgs['iterationviewer.description'] }" />
 					<ice:outputText
 						value="#{IterationViewerBean.iteration.description}" />
 				</ice:panelGrid>

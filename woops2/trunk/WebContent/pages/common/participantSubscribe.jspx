@@ -1,3 +1,5 @@
+<f:loadBundle basename="wilos.resources.messages" var="msgs" />
+
 <ice:form id="form">
 	<h2><ice:outputText value="#{msgs['component.forminscription.title']}" style="h1" /></h2>
 	<ice:panelGrid columns="2">

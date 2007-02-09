@@ -12,13 +12,13 @@
 					<ice:outputText value="id " />
 					<ice:outputText
 						value="#{PhaseViewerBean.phase.id}" />
-					<ice:outputText value="presentationName " />
+					<ice:outputText value="#{msgs['phaseviewer.presentationName'] }" />
 					<ice:outputText
 						value="#{PhaseViewerBean.phase.presentationName}" />
-					<ice:outputText value="isPlanned " />
+					<ice:outputText value="#{msgs['phaseviewer.isplanned'] }" />
 					<ice:outputText
 						value="#{PhaseViewerBean.phase.isPlanned}" />
-					<ice:outputText value="description " />
+					<ice:outputText value="#{msgs['phaseviewer.description'] }" />
 					<ice:outputText
 						value="#{PhaseViewerBean.phase.description}" />
 				</ice:panelGrid>

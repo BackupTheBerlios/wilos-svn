@@ -11,13 +11,13 @@
 					<ice:outputText value="id " />
 					<ice:outputText
 						value="#{ActivityViewerBean.activity.id}" />
-					<ice:outputText value="presentationName " />
+					<ice:outputText value="#{msgs['activityviewer.presentationName'] }" />
 					<ice:outputText
 						value="#{ActivityViewerBean.activity.presentationName}" />
-					<ice:outputText value="isPlanned " />
+					<ice:outputText value="#{msgs['activityviewer.isplanned'] }" />
 					<ice:outputText
 						value="#{ActivityViewerBean.activity.isPlanned}" />
-					<ice:outputText value="description " />
+					<ice:outputText value="#{msgs['activityviewer.description'] }" />
 					<ice:outputText
 						value="#{ActivityViewerBean.activity.description}" />
 				</ice:panelGrid>
