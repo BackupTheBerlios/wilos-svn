@@ -1,10 +1,14 @@
 package wilos.business.services.spem2.role;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import wilos.hibernate.misc.concreterole.ConcreteRoleDescriptorDao;
 import wilos.hibernate.spem2.role.RoleDescriptorDao;
+import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.role.RoleDescriptor;
@@ -41,9 +45,12 @@ public class RoleDescriptorService {
 	 * @param _project
 	 * @param _rd
 	 */
-	public void roleDescriptorInstanciation (Project _project, RoleDescriptor _rd) {
+	public void roleDescriptorInstanciation (Project _project, RoleDescriptor _rd, ConcreteActivity _cact) {
 
 		ConcreteRoleDescriptor crd = new ConcreteRoleDescriptor();
+		
+		Set<ConcreteActivity> tmp  = new HashSet<ConcreteActivity>();
+		tmp.add(_cact);
 
 		if (_rd.getPresentationName() == null)
 			crd.setConcreteName(_rd.getName()) ;
@@ -52,6 +59,7 @@ public class RoleDescriptorService {
 
 		crd.addRoleDescriptor(_rd);
 		crd.setProject(_project);
+		crd.setSuperConcreteActivities(tmp);
 
 		this.concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(crd);
 		System.out.println("### ConcreteRoleDescriptor sauve");

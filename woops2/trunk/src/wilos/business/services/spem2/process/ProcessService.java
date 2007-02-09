@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.spem2.activity.ActivityService;
 import wilos.business.services.spem2.breakdownelement.BreakdownElementService;
 import wilos.business.services.spem2.iteration.IterationService;
@@ -32,6 +33,7 @@ import wilos.hibernate.spem2.task.StepDao;
 import wilos.hibernate.spem2.task.TaskDefinitionDao;
 import wilos.hibernate.spem2.task.TaskDescriptorDao;
 import wilos.hibernate.spem2.workbreakdownelement.WorkBreakdownElementDao;
+import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
@@ -92,7 +94,7 @@ public class ProcessService {
 	private TaskDescriptorDao taskDescriptorDao;
 
 	private WorkBreakdownElementDao workBreakdownElementDao;
-
+	
 	private ProjectDao projectDao;
 
 	private GuidanceDao guidanceDao;
@@ -646,22 +648,25 @@ public class ProcessService {
 
 		Process p = this.processDao.getProcess(_project.getProcess().getId());
 
-		List<BreakdownElement> forSaving = this
-				.getInstanciableBreakdownElement(p);
+		// elements of collection getting
+		List<BreakdownElement> forInstanciation = new ArrayList<BreakdownElement>();
+		forInstanciation.addAll(p.getBreakdownElements());
+		
+		Set<ConcreteBreakdownElement> tmp = new HashSet<ConcreteBreakdownElement>();
 
-		for (BreakdownElement bde : forSaving) {
+		for (BreakdownElement bde : forInstanciation) {
 			if (bde instanceof Phase) {
 				Phase ph = (Phase) bde;
-				this.phaseService.phaseInstanciation(_project, ph);
+				tmp.add(this.phaseService.phaseInstanciation(_project, ph));
 			} else {
 				if (bde instanceof Iteration) {
 					Iteration it = (Iteration) bde;
-					this.iterationService.iterationInstanciation(_project, it);
+					tmp.add(this.iterationService.iterationInstanciation(_project, it));
 				} else {
 					if (bde instanceof Activity) {
 						Activity act = (Activity) bde;
-						this.activityService.activityInstanciation(_project, act);
-					} else {
+						tmp.add(this.activityService.activityInstanciation(_project, act));
+					}/* else {
 						if (bde instanceof RoleDescriptor) {
 							RoleDescriptor rd = (RoleDescriptor) bde;
 							this.roleDescriptorService.roleDescriptorInstanciation(_project, rd);
@@ -669,10 +674,15 @@ public class ProcessService {
 							TaskDescriptor td = (TaskDescriptor) bde;
 							this.taskDescriptorService.taskDescriptorInstanciation(_project, td);
 						}
-					}
+					}*/
 				}
 			}
 		}
+		
+		_project.addAllConcreteBreakdownElements(tmp);
+		
+		this.projectDao.saveOrUpdateProject(_project);
+		System.out.println("### Project update");
 	}
 
 	/**
@@ -680,7 +690,7 @@ public class ProcessService {
 	 * @param _act
 	 * @return
 	 */
-	private List<BreakdownElement> getInstanciableBreakdownElement(Activity _act) {
+	/*private List<BreakdownElement> getInstanciableBreakdownElement(Activity _act) {
 
 		// elements of collection getting
 		Set<BreakdownElement> bdes = _act.getBreakdownElements();
@@ -716,7 +726,7 @@ public class ProcessService {
 			}
 		}
 		return tmp;
-	}
+	}*/
 
 	/**
 	 * Getter of processDao.

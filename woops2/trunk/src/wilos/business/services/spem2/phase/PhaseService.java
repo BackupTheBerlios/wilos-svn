@@ -21,7 +21,7 @@ public class PhaseService {
 	 * @param _project project for which the Phase shall be instanciated
 	 * @param _phase phase to instanciates
 	 */
-	public void phaseInstanciation (Project _project, Phase _phase) {
+	public ConcretePhase phaseInstanciation (Project _project, Phase _phase) {
 
 		ConcretePhase cp = new ConcretePhase();
 
@@ -34,6 +34,9 @@ public class PhaseService {
 		cp.setProject(_project);
 
 		this.concretePhaseDao.saveOrUpdateConcretePhase(cp);
+		System.out.println("### ConcretePhase vide sauve");
+		
+		return cp;
 	}
 
 	/**

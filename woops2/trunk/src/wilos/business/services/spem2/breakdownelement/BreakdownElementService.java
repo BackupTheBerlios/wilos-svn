@@ -5,10 +5,20 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import wilos.business.services.spem2.activity.ActivityService;
+import wilos.business.services.spem2.iteration.IterationService;
+import wilos.business.services.spem2.phase.PhaseService;
+import wilos.business.services.spem2.role.RoleDescriptorService;
+import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.hibernate.misc.concretebreakdownelement.ConcreteBreakdownElementDao;
+import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.project.Project;
+import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.iteration.Iteration;
+import wilos.model.spem2.phase.Phase;
+import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.task.TaskDescriptor;
 
 /**
  * BreakdownElement is a transactional class that manages operations about breakdownelement,
@@ -20,39 +30,48 @@ public class BreakdownElementService {
 
 	private ConcreteBreakdownElementDao concreteBreakdownElementDao ;
 
+	private PhaseService phaseService;
+	
+	private IterationService iterationService;
+	
 	private ActivityService activityService;
+	
+	private RoleDescriptorService roleDescriptorService;
+	
+	private TaskDescriptorService taskDescriptorService;
 
 	/**
 	 * Instanciates a BreakdownElement
 	 * @param _project project for which the BreakdownElement shall be instanciated
 	 * @param _bde BreakdownElement to instanciate
 	 */
-	public ConcreteBreakdownElement breakdownElementInstanciation (Project _project, BreakdownElement _bde/*, ConcreteActivity _superActivity*/) {
+	public ConcreteBreakdownElement breakdownElementInstanciation (Project _project, BreakdownElement _bde, ConcreteActivity _superActivity) {
 
-		ConcreteBreakdownElement cbe = new ConcreteBreakdownElement();
-
-		if (_bde.getPresentationName() == null)
-			cbe.setConcreteName(_bde.getName()) ;
-		else
-			cbe.setConcreteName(_bde.getPresentationName());
+		ConcreteBreakdownElement cbde = null;
 		
-		this.concreteBreakdownElementDao.saveOrUpdateConcreteBreakdownElement(cbe);
-
-		cbe.addBreakdownElement(_bde);
-		cbe.setProject(_project);
-
-		/* TODO verifier code par un M1 :) */
-		/* instanciating and adding all the ConcreteActivities included in the breakdownelement */
-		/*for (Activity act : _bde.getSuperActivities()) {
-			if (act.getBreakdownElements().size() == 0) {
-				this.activityService.activityInstanciation(_project, act);
+		if (_bde instanceof Phase) {
+			Phase ph = (Phase) _bde;
+			this.phaseService.phaseInstanciation(_project, ph);
+		} else {
+			if (_bde instanceof Iteration) {
+				Iteration it = (Iteration) _bde;
+				this.iterationService.iterationInstanciation(_project, it);
+			} else {
+				if (_bde instanceof Activity) {
+					Activity act = (Activity) _bde;
+					this.activityService.activityInstanciation(_project, act);
+				} else {
+					if (_bde instanceof RoleDescriptor) {
+						RoleDescriptor rd = (RoleDescriptor) _bde;
+						this.roleDescriptorService.roleDescriptorInstanciation(_project, rd, _superActivity);
+					} else {
+						TaskDescriptor td = (TaskDescriptor) _bde;
+						this.taskDescriptorService.taskDescriptorInstanciation(_project, td, _superActivity);
+					}
+				}
 			}
-			_bde.addAllConcreteBreakdownElements(act.getConcreteBreakdownElements());
-		}*/
-		//cbe.addSuperConcreteActivity(_superActivity);
-
-		//this.concreteBreakdownElementDao.saveOrUpdateConcreteBreakdownElement(cbe);
-		return cbe;
+		}
+		return cbde;
 	}
 
 	/**
