@@ -755,10 +755,8 @@ public class XMLParserTest extends TestCase {
 								}
 								assertTrue(nbSuccessor == 1);
 								assertTrue(tmpWBde.getPresentationName().equals("Design the Solution"));
-								// TODO refaire le test correctement ...
 								assertTrue(tmpWBde.getPredecessors().iterator().next().getPredecessor().getPresentationName().equals("Refine the Architecture"));								
-							}
-														
+							}														
 						}
 					}					
 				}		
@@ -768,7 +766,7 @@ public class XMLParserTest extends TestCase {
 		}
 	}
 	
-	public void testOpenUPActivityContainsDependency() {
+	public void testOpenUPActivityInitiateProjectContainsTwoSuccessors() {
 		Process theTestedProcess = null;
 		Iterator<BreakdownElement> itTopLevelAct,itSecondLevelAct;
 		Activity topLevelActivity,secondLevelActivity;
