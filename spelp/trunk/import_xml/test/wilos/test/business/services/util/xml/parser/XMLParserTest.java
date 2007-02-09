@@ -960,7 +960,7 @@ public class XMLParserTest extends TestCase {
 				}
 			}
 		}
-		
+		System.out.println(supportN1Roledefinition.getGuid());
 		for (Guidance aGuidance : supportN1Roledefinition.getGuidances()) {
 			System.out.println(aGuidance.getPresentationName());
 			System.out.println("ici2");

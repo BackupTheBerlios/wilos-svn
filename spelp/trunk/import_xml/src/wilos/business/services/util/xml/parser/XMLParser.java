@@ -113,8 +113,8 @@ public class XMLParser {
 		try {
 			initGuidancesTypesList();
 			
-			RoleDefinitionsList = fillRoleDefinitionsList();
 			GuidesList = fillGuidesList();
+			RoleDefinitionsList = fillRoleDefinitionsList();
 			TaskDefinitionsList = fillTaskDefinitionsList();
 
 			
