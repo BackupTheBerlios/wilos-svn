@@ -105,7 +105,7 @@ public class ProcessManager extends WilosUser implements Cloneable {
 	
 	/**
 	 * 
-	 * Add a process to the process set
+	 * Add a managed process to the process set
 	 *
 	 * @param project
 	 */
@@ -116,7 +116,7 @@ public class ProcessManager extends WilosUser implements Cloneable {
 
 	/**
 	 * 
-	 * TODO Method description
+	 * Remove a managed process
 	 *
 	 * @param project
 	 */
@@ -127,7 +127,7 @@ public class ProcessManager extends WilosUser implements Cloneable {
 
 	/**
 	 * 
-	 * TODO Method description
+	 * Remove all managed processes
 	 *
 	 */
 	public void removeAllManagedProcess() {

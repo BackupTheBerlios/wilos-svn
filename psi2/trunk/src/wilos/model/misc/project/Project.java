@@ -277,7 +277,7 @@ public class Project extends ConcreteActivity implements Cloneable {
 	
 	/**
 	 * 
-	 * TODO Method description
+	 * TODO Method : A voir très bizarre (methode non utilise?)
 	 *
 	 * @param projectManager
 	 */
@@ -288,7 +288,7 @@ public class Project extends ConcreteActivity implements Cloneable {
 	
 	/**
 	 * 
-	 * TODO Method description
+	 * TODO Method : A voir très bizarre (methode non utilise?)
 	 *
 	 * @param projectManager
 	 */
@@ -317,7 +317,7 @@ public class Project extends ConcreteActivity implements Cloneable {
 	
 	/**
 	 * 
-	 * TODO Method description
+	 * Add a project director 
 	 *
 	 * @param project
 	 */
@@ -328,7 +328,7 @@ public class Project extends ConcreteActivity implements Cloneable {
 
 	/**
 	 * 
-	 * Remove a project director from a project
+	 * Remove a project director
 	 *
 	 * @param project
 	 */

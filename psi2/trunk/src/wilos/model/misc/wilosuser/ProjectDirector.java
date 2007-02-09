@@ -105,7 +105,7 @@ public class ProjectDirector extends WilosUser implements Cloneable {
 	
 	/**
 	 * 
-	 * Add a project in a set of project
+	 * Add a monitored project in a set of project
 	 *
 	 * @param project
 	 */
@@ -116,7 +116,7 @@ public class ProjectDirector extends WilosUser implements Cloneable {
 
 	/**
 	 * 
-	 * Remove a project
+	 * Remove a monitored project
 	 *
 	 * @param project
 	 */
@@ -128,7 +128,7 @@ public class ProjectDirector extends WilosUser implements Cloneable {
 
 	/**
 	 * 
-	 * TODO Method description
+	 * Remove all monitored projects
 	 *
 	 */
 	public void removeAllMonitoredProjects() {

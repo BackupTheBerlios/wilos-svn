@@ -29,7 +29,7 @@ public class MenuBean {
         
     
     /**
-     * TODO Method description
+     * TODO Method : methode inutilise?
      *
      * @return
      */
@@ -43,7 +43,7 @@ public class MenuBean {
     
     
     /**
-     * TODO Method description
+     * TODO Method : methode inutilise?
      *
      * @return
      */

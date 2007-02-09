@@ -187,7 +187,7 @@ public class Participant extends WilosUser implements Cloneable {
 
 	/**
 	 * 
-	 * TODO Method description
+	 * Add a managed project
 	 *
 	 * @param project
 	 */
@@ -198,7 +198,7 @@ public class Participant extends WilosUser implements Cloneable {
 
 	/**
 	 * 
-	 * TODO Method description
+	 * Remove a managed project
 	 *
 	 * @param project
 	 */
@@ -209,7 +209,7 @@ public class Participant extends WilosUser implements Cloneable {
 
 	/**
 	 * 
-	 * TODO Method description
+	 * Remove all managed projects
 	 *
 	 */
 	public void removeAllManagedProjects() {
