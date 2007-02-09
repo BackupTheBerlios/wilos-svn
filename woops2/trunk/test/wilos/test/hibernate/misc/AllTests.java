@@ -19,6 +19,7 @@ public class AllTests {
 		suite.addTest(wilos.test.hibernate.misc.concretephase.AllTests.suite()) ;
 		suite.addTest(wilos.test.hibernate.misc.concreteiteration.AllTests.suite()) ;
 		suite.addTest(wilos.test.hibernate.misc.concretetaskdescriptor.AllTests.suite()) ;
+		suite.addTest(wilos.test.hibernate.misc.concretebreakdownelement.AllTests.suite()) ;
 		// $JUnit-END$
 		return suite ;
 	}

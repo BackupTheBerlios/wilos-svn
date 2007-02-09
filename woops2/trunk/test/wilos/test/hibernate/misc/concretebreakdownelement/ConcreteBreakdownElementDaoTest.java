@@ -78,6 +78,9 @@ public class ConcreteBreakdownElementDaoTest extends TestCase {
 				.getHibernateTemplate()
 				.load(ConcreteBreakdownElement.class, id);
 		assertNotNull(cbdeTmp);
+		
+		// Delete the data stored in the database
+		this.concreteBreakdownElementDao.deleteConcreteBreakdownElement(this.concreteBreakdownElement);
 
 		// Rk: the tearDown method is called here.
 	}
@@ -91,8 +94,7 @@ public class ConcreteBreakdownElementDaoTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		// Saves the activity into the database.
-		this.concreteBreakdownElementDao.getHibernateTemplate().saveOrUpdate(
-				this.concreteBreakdownElement);
+		this.concreteBreakdownElementDao.saveOrUpdateConcreteBreakdownElement(this.concreteBreakdownElement);
 
 		// Looks if this bde is also into the database and looks if the size of
 		// the set is >= 1.
@@ -100,6 +102,9 @@ public class ConcreteBreakdownElementDaoTest extends TestCase {
 				.getAllConcreteBreakdownElements();
 		assertNotNull(cbdes);
 		assertTrue(cbdes.size() >= 1);
+		
+//		 Delete the data stored in the database
+		this.concreteBreakdownElementDao.deleteConcreteBreakdownElement(this.concreteBreakdownElement);
 
 		// Rk: the tearDown method is called here.
 	}
@@ -129,11 +134,14 @@ public class ConcreteBreakdownElementDaoTest extends TestCase {
 
 		// Tests the method getConcreteBreakdownElement with an unexisting
 		// concreteBreakdownElement.
-		this.concreteBreakdownElementDao.getHibernateTemplate().delete(
+		this.concreteBreakdownElementDao.deleteConcreteBreakdownElement(
 				this.concreteBreakdownElement);
 		cbdeTmp = this.concreteBreakdownElementDao
 				.getConcreteBreakdownElement(id);
 		assertNull(cbdeTmp);
+		
+		// Delete the data stored in the database
+		this.concreteBreakdownElementDao.deleteConcreteBreakdownElement(this.concreteBreakdownElement);
 
 		// Rk: the tearDown method is called here.
 	}
@@ -147,8 +155,7 @@ public class ConcreteBreakdownElementDaoTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		// Saves the ConcreteBreakdownElement into the database.
-		this.concreteBreakdownElementDao.getHibernateTemplate().saveOrUpdate(
-				this.concreteBreakdownElement);
+		this.concreteBreakdownElementDao.saveOrUpdateConcreteBreakdownElement(this.concreteBreakdownElement);
 		String id = this.concreteBreakdownElement.getId();
 
 		// Tests the method deleteConcreteBreakdownElement with an
@@ -159,7 +166,7 @@ public class ConcreteBreakdownElementDaoTest extends TestCase {
 
 		// Looks if this.concreteBreakdownElement is now absent in the db.
 		ConcreteBreakdownElement cbdeTmp = (ConcreteBreakdownElement) this.concreteBreakdownElementDao
-				.getHibernateTemplate().get(ConcreteBreakdownElement.class, id);
+				.getConcreteBreakdownElement(id);
 		assertNull(cbdeTmp);
 
 		// Tests the method deleteConcreteBreakdownElement with a nonexistent

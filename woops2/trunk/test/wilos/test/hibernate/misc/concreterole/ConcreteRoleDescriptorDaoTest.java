@@ -99,6 +99,8 @@ public class ConcreteRoleDescriptorDaoTest extends TestCase {
 		assertNotNull(roleDescriptorTmp);
 		assertEquals(roleDescriptorTmp.getConcreteName(), CONCRETE_NAME);
 
+		// Delete the data stored in the database
+		this.concreteRoleDescriptorDao.deleteConcreteRoleDescriptor(this.concreteRoleDescriptor);
 		// Rk: the tearDown method is called here.
 	}
 
@@ -116,6 +118,8 @@ public class ConcreteRoleDescriptorDaoTest extends TestCase {
 		assertNotNull(concreteRoleDescriptors);
 		assertTrue(concreteRoleDescriptors.size() >= 1);
 
+		// Delete the data stored in the database
+		this.concreteRoleDescriptorDao.deleteConcreteRoleDescriptor(this.concreteRoleDescriptor);
 		// Rk: the tearDown method is called here.
 	}
 
@@ -169,6 +173,8 @@ public class ConcreteRoleDescriptorDaoTest extends TestCase {
 		cbdeTmp = this.concreteRoleDescriptorDao.getConcreteRoleDescriptor(id);
 		assertNull(cbdeTmp);
 
+		// Delete the data stored in the database
+		this.concreteRoleDescriptorDao.deleteConcreteRoleDescriptor(this.concreteRoleDescriptor);
 		// Rk: the tearDown method is called here.
 	}
 }

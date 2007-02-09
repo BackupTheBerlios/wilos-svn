@@ -71,6 +71,8 @@ public class ConcretePhaseDaoTest extends TestCase {
 				.getConcretePhase(id);
 		assertNotNull(concretePhaseTmp);
 
+		// Delete the data stored in the database
+		this.concretePhaseDao.deleteConcretePhase(this.concretePhase);
 		// Rk: the tearDown method is called here.
 	}
 
@@ -91,6 +93,8 @@ public class ConcretePhaseDaoTest extends TestCase {
 		assertNotNull(concretePhases);
 		assertTrue(concretePhases.size() >= 1);
 
+		// Delete the data stored in the database
+		this.concretePhaseDao.deleteConcretePhase(this.concretePhase);
 		// Rk: the tearDown method is called here.
 	}
 

@@ -124,6 +124,8 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 				.getHibernateTemplate().load(ConcreteTaskDescriptor.class, id);
 		assertNotNull(taskDescriptorTmp);
 
+		// Delete the data stored in the database
+		this.concreteTaskDescriptorDao.deleteConcreteTaskDescriptor(this.concreteTaskDescriptor);
 		// Rk: the tearDown method is called here.
 	}
 
@@ -131,8 +133,7 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		// Save the taskDescriptor into the database.
-		this.concreteTaskDescriptorDao.getHibernateTemplate().saveOrUpdate(
-				this.concreteTaskDescriptor);
+		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
 
 		// Look if this taskDescriptor is also into the database and look if the
 		// size of the set is >= 1.
@@ -141,6 +142,8 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 		assertNotNull(concretetaskDescriptors);
 		assertTrue(concretetaskDescriptors.size() >= 1);
 
+		// Delete the data stored in the database
+		this.concreteTaskDescriptorDao.deleteConcreteTaskDescriptor(this.concreteTaskDescriptor);
 		// Rk: the tearDown method is called here.
 	}
 
@@ -176,8 +179,7 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 		this.concreteTaskDescriptor.setTaskDescriptor(taskDescriptorTmp);
 
 		// Save the taskDescriptor into the database.
-		this.concreteTaskDescriptorDao.getHibernateTemplate().saveOrUpdate(
-				this.concreteTaskDescriptor);
+		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
 		String id = this.concreteTaskDescriptor.getId();
 
 		// Test the method getTaskDescriptor with an existing taskDescriptor.
@@ -192,8 +194,7 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 				.getTaskDescriptor().getId(), id_taskDescriptor);
 
 		// Test the method getTaskDescriptor with an unexisting taskDescriptor.
-		this.concreteTaskDescriptorDao.getHibernateTemplate().delete(
-				concreteTaskDescriptor);
+		this.concreteTaskDescriptorDao.deleteConcreteTaskDescriptor(this.concreteTaskDescriptor);
 		concreteTaskDescriptorTmp = this.concreteTaskDescriptorDao
 				.getConcreteTaskDescriptor(id);
 		assertNull(concreteTaskDescriptorTmp);
@@ -205,8 +206,7 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		// Save the taskDescriptor into the database.
-		this.concreteTaskDescriptorDao.getHibernateTemplate().saveOrUpdate(
-				this.concreteTaskDescriptor);
+		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
 		String id = this.concreteTaskDescriptor.getId();
 
 		// Test the method deleteTaskDescriptor with an acitivity existing into
@@ -216,7 +216,7 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 
 		// See if this.taskDescriptor is now absent in the db.
 		ConcreteTaskDescriptor concreteTaskDescriptorTmp = (ConcreteTaskDescriptor) this.concreteTaskDescriptorDao
-				.getHibernateTemplate().get(ConcreteTaskDescriptor.class, id);
+				.getConcreteTaskDescriptor(id);
 		assertNull(concreteTaskDescriptorTmp);
 
 		// Test the method deleteTaskDescriptor with a taskDescriptor unexisting
@@ -243,7 +243,7 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 
 		// See if this.taskDescriptor is now absent in the db.
 		ConcreteTaskDescriptor concreteTaskDescriptorTmp = (ConcreteTaskDescriptor) this.concreteTaskDescriptorDao
-				.getHibernateTemplate().get(ConcreteTaskDescriptor.class, id);
+				.getConcreteTaskDescriptor(id);
 		assertNull(concreteTaskDescriptorTmp);
 
 		// Test the method deleteTaskDescriptor with a taskDescriptor unexisting
