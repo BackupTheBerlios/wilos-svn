@@ -119,7 +119,13 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 
 		assertNotNull(list);
 		assertTrue(list.size() == 2);
-
+		
+		// cleaning up used objects
+		this.projectDao.deleteProject(project);
+		this.projectDao.deleteProject(project2);
+		this.concreteTaskDescriptorService.getConcreteTaskDescriptorDao().deleteConcreteTaskDescriptor(ctdTmp);
+		this.concreteTaskDescriptorService.getConcreteTaskDescriptorDao().deleteConcreteTaskDescriptor(ctdTmp2);
+		
 		// Rk: the tearDown method is called here.
 	}
 
@@ -201,8 +207,6 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 		ConcreteRoleDescriptor concreteRoleDescriptor = new ConcreteRoleDescriptor();
 		this.concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(concreteRoleDescriptor);
 		
-		
-		
 		concreteRoleDescriptor.addParticipant(monpar);
 		concreteRoleDescriptor.addRoleDescriptor(roleDescriptor);
 
@@ -214,5 +218,12 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 		ConcreteRoleDescriptor res = concreteTaskDescriptor.getConcreteRoleDescriptor();
 		assertTrue(res.equals(concreteRoleDescriptor));
 		assertTrue(concreteTaskDescriptor.getState().equals("Ready"));
+		
+		// cleanup used objects
+		this.participantdao.deleteParticipant(monpar);
+		this.taskDescriptordao.deleteTaskDescriptor(this.taskDescriptor);
+		this.roleDescriptordao.deleteRoleDescriptor(roleDescriptor);
+		this.concreteRoleDescriptorDao.deleteConcreteRoleDescriptor(concreteRoleDescriptor);
+		
 	}
 }
