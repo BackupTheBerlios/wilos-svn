@@ -66,7 +66,7 @@ public class ConcreteRoleDescriptorServiceTest extends TestCase {
 		Project project = new Project();
 		project.setConcreteName("project");
 		this.projectDao.saveOrUpdateProject(project);
-
+		
 		Project project2 = new Project();
 		project2.setConcreteName("project2");
 		this.projectDao.saveOrUpdateProject(project2);
@@ -99,8 +99,12 @@ public class ConcreteRoleDescriptorServiceTest extends TestCase {
 		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao()
 				.deleteConcreteRoleDescriptor(this.concreteRoleDescriptor);
 		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao()
+				.deleteConcreteRoleDescriptor(ctdTmp);
+		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao()
 				.deleteConcreteRoleDescriptor(ctdTmp2);
-
+		
+		this.projectDao.deleteProject(project);
+		this.projectDao.deleteProject(project2);
 		// Rk: the tearDown method is called here.
 	}
 
@@ -138,7 +142,6 @@ public class ConcreteRoleDescriptorServiceTest extends TestCase {
 		this.concreteTaskDescriptorDao.deleteConcreteTaskDescriptor(ctdTmp3);
 		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao()
 				.deleteConcreteRoleDescriptor(this.concreteRoleDescriptor);
-
 		// Rk: the tearDown method is called here.
 	}
 }
