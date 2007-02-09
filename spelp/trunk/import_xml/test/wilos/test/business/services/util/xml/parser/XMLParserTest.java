@@ -1,6 +1,7 @@
 package wilos.test.business.services.util.xml.parser;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -934,36 +935,49 @@ public class XMLParserTest extends TestCase {
 		assertTrue(nbGuidances == 1);
 	}
 	
-	public void testThatSupportN1RoleDefinitionFromItilContainsTheExpectedGuidances() {
+	/**
+	 * Checks That the Support N1 Role From Itil2 Contains the expected Guidances
+	 * 
+	 * Note : Example is not treated
+	 */
+	public void testThatSupportN1RoleDefinitionFromItil2ContainsTheExpectedGuidances() {
 		Process itilProcess = XMLParser.getProcess(itilFile2);
 		RoleDefinition supportN1Roledefinition = null;
 		
-		HashSet<String> expectedGuidances = new HashSet<String>();
-		expectedGuidances.add("New CheckList");
-		expectedGuidances.add("New Concept");
-		expectedGuidances.add("New GuideLine");
-		expectedGuidances.add("New Supporting Material");
-		expectedGuidances.add("New WhitePaper");
+		HashMap<String, String> expectedGuidances = new HashMap<String, String>();
+		expectedGuidances.put("New Checklist", Guidance.checklist);
+		expectedGuidances.put("New Concept", Guidance.concept);
+		expectedGuidances.put("New Guideline", Guidance.guideline);
+		expectedGuidances.put("New Supporting Material", Guidance.supportingMaterial);
+		expectedGuidances.put("New Whitepaper", Guidance.whitepaper);
+		
+		int nbExpectedGuidances = expectedGuidances.size();
 		
 		// The goal of this loops is to get the Support N1 RoleDefinition
 		for (BreakdownElement bde : itilProcess.getBreakdownElements()) {
-			assertTrue(bde instanceof Activity);
-			for (BreakdownElement bde2 : ((Activity) bde).getBreakdownElements()) {
-				if (bde2 instanceof RoleDescriptor) {
-					// Il will be done two times, but we don't care, the result will be the same
-					if (bde2.getName().equals("sn1")) {
-						System.out.println("ici");
-						supportN1Roledefinition = ((RoleDescriptor) bde2).getRoleDefinition();
+			if (bde instanceof Activity) {
+				for (BreakdownElement bde2 : ((Activity) bde).getBreakdownElements()) {
+					if (bde2 instanceof RoleDescriptor) {
+						// Il will be done two times, but we don't care, the result will be the same
+						if (bde2.getName().equals("sn1")) {
+							supportN1Roledefinition = ((RoleDescriptor) bde2).getRoleDefinition();
+						}
 					}
 				}
 			}
 		}
-		System.out.println(supportN1Roledefinition.getGuid());
+
+		// Now we work on the guidances we have
+		int nbGuidances = 0;
 		for (Guidance aGuidance : supportN1Roledefinition.getGuidances()) {
-			System.out.println(aGuidance.getPresentationName());
-			System.out.println("ici2");
-		}	
-		
+			if ( expectedGuidances.get(aGuidance.getPresentationName()) != null) {
+				// The PresentationName and the type must match
+				assertTrue(expectedGuidances.get(aGuidance.getPresentationName()).equals(aGuidance.getType()));
+				nbGuidances++;
+			}
+		}
+		// We must have the right number of guidances
+		assertTrue(nbGuidances == nbExpectedGuidances);
 	}
 	
 	

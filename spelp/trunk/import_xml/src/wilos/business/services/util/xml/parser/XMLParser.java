@@ -60,6 +60,8 @@ public class XMLParser {
 			"@*[namespace-uri() and local-name()='type']='uma:Roadmap' or " +
 			"@*[namespace-uri() and local-name()='type']='uma:TermDefinition' or " +
 			"@*[namespace-uri() and local-name()='type']='uma:ToolMentor' or " +
+			"@*[namespace-uri() and local-name()='type']='uma:Whitepaper' or " +
+			"@*[namespace-uri() and local-name()='type']='uma:ReusableAsset' or " +
 			"@*[namespace-uri() and local-name()='type']='uma:Report' " +
 			"]";
 	
@@ -629,7 +631,7 @@ public class XMLParser {
 		for (int i = 0 ; i < listOfTdNodes.getLength() ; i ++){
 			if(guidancesTypes.contains(listOfTdNodes.item(i).getNodeName())) {
 				// recuperation des differents id des guidelines
-				idGuide = listOfTdNodes.item(i).getTextContent();				
+				idGuide = listOfTdNodes.item(i).getTextContent();
 				
 				GuideTobereturn = getGuidanceById(idGuide);
 				// if the guideline doesn't exist
