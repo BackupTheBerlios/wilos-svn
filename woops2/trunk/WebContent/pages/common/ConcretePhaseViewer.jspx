@@ -2,8 +2,7 @@
 <f:loadBundle basename="wilos.resources.messages" var="msgs" />
 
 <ice:form>
-	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1"
-		border="0" bgcolor="#BEB4CC">
+	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1">
 		<ice:panelTabSet bgcolor="#BEB4CC">
 			<br />
 			<ice:panelTab label="Phase Display">
