@@ -128,7 +128,7 @@ public class HTMLViewer extends JFrame {
 		guidesList.setVisible(false);
 		//guidesList.setAutoscrolls(true);
 		guidesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		guidesList.setVisibleRowCount(2);
+		guidesList.setVisibleRowCount(3);
 		//guidesList.setPreferredSize(new Dimension(25,25));
 		this.guidesScrollPane = new JScrollPane(guidesList);
 		this.southPanel.add(this.guidesScrollPane);

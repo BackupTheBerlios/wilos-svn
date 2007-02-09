@@ -272,10 +272,10 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 					ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor)object ;
 					this.setIcon(ImagesService.getImageIcon("images.iconTaskDescriptor"));
 					if (ctd.getState() == Constantes.State.STARTED) {
-						this.setForeground(Color.green);
+						this.setForeground(Color.decode("#008800"));
 					}
 					else if (ctd.getState() == Constantes.State.READY) {
-						this.setForeground(Color.orange);
+						this.setForeground(Color.decode("#FF9900"));
 					}
 					else if (ctd.getState() == Constantes.State.SUSPENDED) {
 						this.setForeground(Color.pink);
