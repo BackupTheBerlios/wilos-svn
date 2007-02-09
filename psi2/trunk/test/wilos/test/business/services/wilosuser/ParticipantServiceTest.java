@@ -3,6 +3,8 @@ package wilos.test.business.services.wilosuser ;
 
 import java.util.HashMap ;
 import java.util.HashSet ;
+import java.util.Iterator;
+import java.util.Set;
 
 import junit.framework.TestCase ;
 import wilos.business.services.misc.project.ProjectService ;
@@ -105,11 +107,11 @@ public class ParticipantServiceTest extends TestCase {
 	 * {@link woops2.business.wilosuser.ParticipantService#saveParticipant(woops2.model.wilosuser.Participant)}.
 	 */
 	public void testSaveParticipant() {
-		this.participant.setLogin(LOGIN);
+		/*this.participant.setLogin(LOGIN);
 		this.participant.setName(NAME);
 		this.participant.setPassword(PASS);
 		
-		this.participantService.saveParticipant(this.participant) ;
+		this.participantService.saveParticipant(this.participant) ;*/
 		Participant ParticipantTmp = (Participant) this.participantService.getParticipantDao().getParticipant(LOGIN) ;
 
 		assertNotNull(ParticipantTmp) ;
@@ -123,24 +125,39 @@ public class ParticipantServiceTest extends TestCase {
 	 * TODO a finir
 	 * 
 	 */
-	public void testGetProjectsForAParticipant() {
-		/*this.participant.addToProject(this.p1) ;
-		this.ps.saveParticipant(this.p) ;
+	public void testGetProjectsForAParticipant() 
+	{
+		this.participant.addToProject(this.p1);
+		participantService.saveParticipant(this.participant);
+		Participant participant2 = new Participant();
+		participant2.setLogin("test");
+		participant2.setName("test");
+		participant2.setPassword("test");
+		
+		participant2.addToProject(this.p2);
+		participantService.saveParticipant(participant2);
+		//this.projectService.saveProject(p1);
+		p1 = this.projectService.getProject(p1.getId());
+		//this.projectService.saveProject(p2);
+		
+		
 
-		Participant ParticipantTmp = (Participant) this.ps.getParticipantDao().getParticipant(LOGIN) ;
-		//HashMap<String, Boolean> premove
-		HashMap<Project, Boolean> plist = this.ps.getProjectsForAParticipant(ParticipantTmp) ;
-		for(Project p : plist.keySet()){
-			if(participant.getName().equals(this.p1.getName())){
-				assertTrue(plist.get(p) == true) ;
+		HashMap<Project, Boolean> temp = this.participantService.getProjectsForAParticipant(this.participant);
+		
+		for (Iterator iter = temp.keySet().iterator(); iter.hasNext();) {
+			Project p = (Project) iter.next();
+			if(p.getId().equals(p1.getId()))
+			{
+				assertTrue(temp.get(p));
 			}
-			else{
-				assertTrue(plist.get(p) == false) ;
+			else
+			{
+				assertFalse(temp.get(p));
 			}
+			
 		}
-		this.participant.removeAllProject();
-		this.participant.removeAllManagedProjects();
-		this.ps.saveParticipant(this.p) ;*/
+		this.participantService.getParticipantDao().deleteParticipant(participant2) ;
+		
 	}
 
 	/**
@@ -148,27 +165,43 @@ public class ParticipantServiceTest extends TestCase {
 	 * TODO a finir
 	 *
 	 */
-	public void testSaveProjectsForAParticipant() {
-		/*this.ps.saveParticipant(this.p) ;
-		HashMap<String, Boolean> affectedPjects = new HashMap<String, Boolean>();
-		affectedPjects.put(this.p1.getProject_id(), true);
-		affectedPjects.put(this.p2.getProject_id(), false);
-		
-		this.ps.saveProjectsForAParticipant(this.p, affectedPjects) ;
-
-		Participant ParticipantTmp = (Participant) this.ps.getParticipantDao().getParticipant(LOGIN) ;
-		HashMap<Project, Boolean> plist = this.ps.getProjectsForAParticipant(ParticipantTmp) ;
-		for(Project p : plist.keySet()){
-			if(participant.getName().equals(this.p1.getName())){
-				assertTrue(plist.get(p) == true) ;
+	public void testSaveProjectsForAParticipant() 
+	{
+		HashMap<String, Boolean> affectedProjects = new HashMap<String, Boolean>();
+		affectedProjects.put(this.p1.getId(), true);
+		affectedProjects.put(this.p2.getId(), true);
+		this.participantService.saveProjectsForAParticipant(this.participant, affectedProjects) ;
+		HashMap<Project, Boolean> temp = this.participantService.getProjectsForAParticipant(this.participant);
+		for (Iterator iter = temp.keySet().iterator(); iter.hasNext();) 
+		{
+			Project p = (Project) iter.next();
+			if(p.getId().equals(p1.getId()))
+			{
+				assertTrue(temp.get(p));
 			}
-			else{
-				assertTrue(plist.get(p) == false) ;
+			if(p.getId().equals(p2.getId()))
+			{
+				assertTrue(temp.get(p));
 			}
 		}
-		this.participant.removeAllProject();
-		this.participant.removeAllManagedProjects();
-		this.ps.saveParticipant(this.p) ;*/
+		HashMap<String, Boolean> affectedProjects2 = new HashMap<String, Boolean>();
+		affectedProjects2.put(this.p1.getId(), true);
+		affectedProjects2.put(this.p2.getId(), false);
+		this.participantService.saveProjectsForAParticipant(this.participant, affectedProjects2) ;
+		HashMap<Project, Boolean> temp2 = this.participantService.getProjectsForAParticipant(this.participant);
+		for (Iterator iter = temp2.keySet().iterator(); iter.hasNext();) 
+		{
+			Project p = (Project) iter.next();
+			if(p.getId().equals(p1.getId()))
+			{
+				assertTrue(temp2.get(p));
+			}
+			if(p.getId().equals(p2.getId()))
+			{
+				assertFalse(temp2.get(p));
+			}
+		}
+		//TODO a finir de tester pour la desaffectation du projectManager
 	}
 
 	/**
