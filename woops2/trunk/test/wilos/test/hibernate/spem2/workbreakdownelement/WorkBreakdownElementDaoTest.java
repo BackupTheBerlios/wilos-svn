@@ -104,6 +104,8 @@ public class WorkBreakdownElementDaoTest extends TestCase {
 		assertTrue(this.workBreakdownElement.getPredecessors().contains(workOrder));
 		assertTrue(wbde.getSuccessors().contains(workOrder));
 		
+		this.workBreakdownElementDao.deleteWorkBreakdownElement(wbde);
+		
 		
 		// Rk: the tearDown method is called here.
 	}
@@ -117,7 +119,7 @@ public class WorkBreakdownElementDaoTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		// Save the workBreakdownElement into the database.
-		this.workBreakdownElementDao.getHibernateTemplate().saveOrUpdate(this.workBreakdownElement) ;
+		this.workBreakdownElementDao.saveOrUpdateWorkBreakdownElement(this.workBreakdownElement) ;
 
 		// Look if this bde is also into the database and look if the size of
 		// the set is >= 1.
@@ -148,7 +150,7 @@ public class WorkBreakdownElementDaoTest extends TestCase {
 		this.workBreakdownElement.setIsEvenDriven(IS_EVEN_DRIVEN) ;
 
 		// Save the workBreakdownElement into the database.
-		this.workBreakdownElementDao.getHibernateTemplate().saveOrUpdate(this.workBreakdownElement) ;
+		this.workBreakdownElementDao.saveOrUpdateWorkBreakdownElement(this.workBreakdownElement) ;
 		String id = this.workBreakdownElement.getId() ;
 
 		// Test the method getWorkBreakdownElement with an existing
@@ -167,7 +169,7 @@ public class WorkBreakdownElementDaoTest extends TestCase {
 
 		// Test the method getWorkBreakdownElement with an unexisting
 		// workBreakdownElement.
-		this.workBreakdownElementDao.getHibernateTemplate().delete(this.workBreakdownElement) ;
+		this.workBreakdownElementDao.deleteWorkBreakdownElement(this.workBreakdownElement);
 		wbdeTmp = this.workBreakdownElementDao.getWorkBreakdownElement(id) ;
 		assertNull(wbdeTmp) ;
 
@@ -183,7 +185,7 @@ public class WorkBreakdownElementDaoTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		// Save the BreakdownElement into the database.
-		this.workBreakdownElementDao.getHibernateTemplate().saveOrUpdate(this.workBreakdownElement) ;
+		this.workBreakdownElementDao.saveOrUpdateWorkBreakdownElement(this.workBreakdownElement) ;
 		String id = this.workBreakdownElement.getId() ;
 
 		// Test the method deleteBreakdownElement with an BreakdownElement

@@ -116,7 +116,7 @@ public class TaskDescriptorDaoTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		// Save the taskDescriptor into the database.
-		this.taskDescriptorDao.getHibernateTemplate().saveOrUpdate(this.taskDescriptor) ;
+		this.taskDescriptorDao.saveOrUpdateTaskDescriptor(this.taskDescriptor);
 
 		// Look if this taskDescriptor is also into the database and look if the
 		// size of the set is >= 1.
@@ -155,7 +155,7 @@ public class TaskDescriptorDaoTest extends TestCase {
 		this.taskDescriptor.addConcreteTaskDescriptor(concreteTaskDescriptor);
 
 		// Save the taskDescriptor into the database.
-		this.taskDescriptorDao.getHibernateTemplate().saveOrUpdate(this.taskDescriptor) ;
+		this.taskDescriptorDao.saveOrUpdateTaskDescriptor(this.taskDescriptor);
 		String id = this.taskDescriptor.getId() ;
 
 		// Test the method getTaskDescriptor with an existing taskDescriptor.
@@ -173,9 +173,12 @@ public class TaskDescriptorDaoTest extends TestCase {
 		assertEquals("IsEvenDriven", taskDescriptorTmp.getIsEvenDriven(), IS_EVEN_DRIVEN) ;
 
 		// Test the method getTaskDescriptor with an unexisting taskDescriptor.
-		this.taskDescriptorDao.getHibernateTemplate().delete(taskDescriptor) ;
+		this.taskDescriptorDao.deleteTaskDescriptor(taskDescriptor);
 		taskDescriptorTmp = this.taskDescriptorDao.getTaskDescriptor(id) ;
 		assertNull(taskDescriptorTmp) ;
+		
+		// clean temporary data
+		this.concreteTaskDescriptorDao.deleteConcreteTaskDescriptor(concreteTaskDescriptor);
 
 		// Rk: the tearDown method is called here.
 	}
@@ -188,21 +191,16 @@ public class TaskDescriptorDaoTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		// Save the taskDescriptor into the database.
-		this.taskDescriptorDao.getHibernateTemplate().saveOrUpdate(this.taskDescriptor) ;
+		this.taskDescriptorDao.saveOrUpdateTaskDescriptor(this.taskDescriptor);
 		String id = this.taskDescriptor.getId() ;
 
-		// Test the method deleteTaskDescriptor with an acitivity existing into
+		// Test the method deleteTaskDescriptor with an activity existing into
 		// the db.
 		this.taskDescriptorDao.deleteTaskDescriptor(this.taskDescriptor) ;
 
 		// See if this.taskDescriptor is now absent in the db.
 		TaskDescriptor taskDescriptorTmp = (TaskDescriptor) this.taskDescriptorDao.getHibernateTemplate().get(TaskDescriptor.class, id) ;
 		assertNull(taskDescriptorTmp) ;
-
-		// Test the method deleteTaskDescriptor with a taskDescriptor unexisting
-		// into the db.
-		// Normally here there are no exception thrown.
-		this.taskDescriptorDao.deleteTaskDescriptor(this.taskDescriptor) ;
 
 		// Rk: the tearDown method is called here.
 	}

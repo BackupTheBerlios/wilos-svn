@@ -94,8 +94,7 @@ public class BreakdownElementDaoTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		// Save the activity into the database.
-		this.breakdownElementDao.getHibernateTemplate().saveOrUpdate(
-				this.breakdownElement);
+		this.breakdownElementDao.saveOrUpdateBreakdownElement(this.breakdownElement);
 
 		// Look if this bde is also into the database and look if the size of
 		// the set is >= 1.
@@ -125,8 +124,7 @@ public class BreakdownElementDaoTest extends TestCase {
 		this.breakdownElement.setIsPlanned(IS_PLANNED);
 		
 		// Save the breakdownElement into the database.
-		this.breakdownElementDao.getHibernateTemplate().saveOrUpdate(
-				this.breakdownElement);
+		this.breakdownElementDao.saveOrUpdateBreakdownElement(this.breakdownElement);
 		String id = this.breakdownElement.getId();
 
 		// Test the method getBreakdownElement with an existing
@@ -144,8 +142,7 @@ public class BreakdownElementDaoTest extends TestCase {
 		
 		// Test the method getBreakdownElement with an unexisting
 		// breakdownElement.
-		this.breakdownElementDao.getHibernateTemplate().delete(
-				this.breakdownElement);
+		this.breakdownElementDao.deleteBreakdownElement(this.breakdownElement);
 		bdeTmp = this.breakdownElementDao.getBreakdownElement(id);
 		assertNull(bdeTmp);
 
@@ -161,8 +158,7 @@ public class BreakdownElementDaoTest extends TestCase {
 		// Rk: the setUp method is called here.
 
 		// Save the BreakdownElement into the database.
-		this.breakdownElementDao.getHibernateTemplate().saveOrUpdate(
-				this.breakdownElement);
+		this.breakdownElementDao.saveOrUpdateBreakdownElement(this.breakdownElement);
 		String id = this.breakdownElement.getId();
 
 		// Test the method deleteBreakdownElement with an BreakdownElement
@@ -173,10 +169,6 @@ public class BreakdownElementDaoTest extends TestCase {
 		BreakdownElement bdeTmp = (BreakdownElement) this.breakdownElementDao
 				.getHibernateTemplate().get(BreakdownElement.class, id);
 		assertNull(bdeTmp);
-
-		// Test the method deleteBreakdownElement with an BreakdownElement
-		// unexisting into the db.
-		this.breakdownElementDao.deleteBreakdownElement(this.breakdownElement);
 
 		// Rk: the tearDown method is called here.
 	}
