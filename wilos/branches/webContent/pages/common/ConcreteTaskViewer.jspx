@@ -13,22 +13,22 @@
 					<ice:outputText value="id " />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.id}" />
-					<ice:outputText value="projectid " />
+					<ice:outputText value="#{msgs['taskviewer.projectid'] }" />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.projectId}" />
-					<ice:outputText value="state " />
+					<ice:outputText value="#{msgs['taskviewer.state']" />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.state}" />
-					<ice:outputText value="concreteName " />
+					<ice:outputText value="#{msgs['taskviewer.concreteName']" />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.concreteName}" />
-					<ice:outputText value="planned starting date " />
+					<ice:outputText value="#{msgs['taskviewer.plannedstartingdate']" />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.plannedStartingDate}" />
-					<ice:outputText value="plannedFinishingDate " />
+					<ice:outputText value="#{msgs['taskviewer.plannedFinishingDate']" />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.plannedFinishingDate}" />
-						
+					
 					<ice:outputText value="#{msgs['concretetaskviewer.accomplishedtime']}" />
 					<ice:inputText value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.accomplishedTime}"
 						disabled="#{ConcreteTaskViewerBean.visibleModifiable}" >
@@ -43,10 +43,10 @@
 					<table>
 					<tr>
 					<td>
-					<ice:commandButton value="affecter" 
+					<ice:commandButton value="#{msgs['taskviewer.affecter']" 
 					actionListener="#{ConcreteTaskViewerBean.affectedActionListener}"
 					visible="#{ConcreteTaskViewerBean.visibleAffected}"/>
-					<ice:commandButton value="start" 
+					<ice:commandButton value="#{msgs['taskviewer.start']"
 					actionListener="#{ConcreteTaskViewerBean.startActionListener}"
 					visible="#{ConcreteTaskViewerBean.visibleStart}"/>
 					<ice:commandButton value="#{msgs['concretetaskviewer.saveButton']}" 

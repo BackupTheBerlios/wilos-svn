@@ -217,6 +217,10 @@
 			<value>#{ProjectService}</value>
 		</managed-property>
 		<managed-property>
+			<property-name>processService</property-name>
+			<value>#{ProcessService}</value>
+		</managed-property>
+		<managed-property>
 			<property-name>loginService</property-name>
 			<value>#{LoginService}</value>
 		</managed-property>
