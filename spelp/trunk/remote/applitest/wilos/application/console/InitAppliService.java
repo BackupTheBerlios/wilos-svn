@@ -1,7 +1,10 @@
 package wilos.application.console;
 
 import java.io.File;
+import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +16,7 @@ import wilos.hibernate.misc.concreterole.ConcreteRoleDescriptorDao;
 import wilos.hibernate.misc.project.ProjectDao;
 import wilos.hibernate.spem2.process.ProcessDao;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
+import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.process.Process;
@@ -26,7 +30,12 @@ public class InitAppliService {
 	private ConcreteRoleDescriptorDao concreteRoleDescriptorDao;
 	private ConcreteTaskDescriptorService concreteTaskDescriptorService;
 	
+	protected final Log logger = LogFactory.getLog(this.getClass());
+	
+	@Transactional(readOnly = false)
 	public void initAppli() {
+		logger.debug("bababa");
+		
 		Process openup = processService.spelpParsingXML(new File("applitest/wilos/application/console/openUP.xml"));
 		processService.saveProcess(openup);
 		Process scrum = processService.spelpParsingXML(new File("applitest/wilos/application/console/scrum.xml"));
@@ -77,22 +86,28 @@ public class InitAppliService {
 	 	for (ConcreteRoleDescriptor crd : concreteRoleDescriptorDao.getAllConcreteRoleDescriptors()) {
 	    	pa.addConcreteRoleDescriptor(crd);
 	    }	   
-	   
+	 	logger.debug("bababa");
 	 	participantService.getParticipantDao().saveOrUpdateParticipant(pa);
-		
+	 	logger.debug("bababa");
 			
 		// affectation des concreteRoles aux concreteTask
-	   
-	   /* pa =  ps.getParticipantDao().getParticipant(pa.getLogin());
-	    if (pa != null) {
-		    ConcreteTaskDescriptorService ts = (ConcreteTaskDescriptorService) ctx.getBean("ConcreteTaskDescriptorService");
+	 	logger.debug("bababa");
+	    pa =  participantService.getParticipantDao().getParticipant(pa.getLogin());
+	  if (pa != null) {
+	    	logger.debug("bababa");
+
+			logger.debug("bababa");
+		    
 			
-			List<ConcreteTaskDescriptor> lctds =  ts.getConcreteTaskDescriptorDao().getAllConcreteTaskDescriptors();
-				 
-		    for (ConcreteTaskDescriptor ctd : lctds) {	    
-		    	ts.affectedConcreteTaskDescriptor(ctd, pa);
+			for (ConcreteTaskDescriptor ctd :  concreteTaskDescriptorService.getConcreteTaskDescriptorDao().getAllConcreteTaskDescriptors()) {
+		    	logger.debug("bababa");
+		    	ConcreteTaskDescriptor ctd2 =  concreteTaskDescriptorService.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(ctd.getId());
+		    	//concreteTaskDescriptorService.affectedConcreteTaskDescriptor(ctd2, pa);
+		    	for (ConcreteRoleDescriptor crd : pa.getConcreteRoleDescriptors()) {
+		    		crd.addConcreteTaskDescriptor(ctd2);
+		    	}
 		    }
-	    }*/
+	    }
 	    
 	}
 
