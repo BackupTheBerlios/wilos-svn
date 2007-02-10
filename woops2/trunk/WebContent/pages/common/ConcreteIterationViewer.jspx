@@ -11,19 +11,19 @@
 					border="0">
 					<ice:outputText value="#{msgs['taskviewer.id'] }" />
 					<ice:outputText
-						value="#{IterationViewerBean.iteration.id}" />
+						value="#{ConcreteIterationViewerBean.concreteIteration.iteration.guid}" />
 						
 					<ice:outputText value="Concrete Name" />
 					<ice:outputText
-						value="#{IterationViewerBean.iteration.concreteName}" />
+						value="#{ConcreteIterationViewerBean.concreteIteration.concreteName}" />
 						
 					<ice:outputText value="#{msgs['iterationviewer.isplanned'] }" />
 					<ice:outputText
-						value="#{IterationViewerBean.iteration.isPlanned}" />
+						value="#{ConcreteIterationViewerBean.concreteIteration.iteration.isPlanned}" />
 						
 					<ice:outputText value="#{msgs['iterationviewer.description'] }" />
 					<ice:outputText
-						value="#{IterationViewerBean.iteration.description}" />
+						value="#{ConcreteIterationViewerBean.concreteIteration.iteration.description}" />
 				</ice:panelGrid>
 			</ice:panelTab>
 		</ice:panelTabSet>

@@ -35,13 +35,13 @@
 					<ice:outputText value="#{msgs['concretetaskviewer.accomplishedtime']}" />
 					<ice:inputText value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.accomplishedTime}"
 						disabled="#{ConcreteTaskViewerBean.visibleModifiable}" >
-						<f:convertNumber pattern="#*0(.0)#" />
+						<!--  <f:convertNumber pattern="#*0(.0)#" /> -->
 					</ice:inputText>
 					
 					<ice:outputText value="#{msgs['concretetaskviewer.remainingtime']}" />
 					<ice:inputText value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.remainingTime}"
 						disabled="#{ConcreteTaskViewerBean.visibleModifiable}" >
-						<f:convertNumber pattern="#*0(.0)#" />
+						<!-- <f:convertNumber pattern="#*0(.0)#" /> -->
 					</ice:inputText>
 					
 					<table>

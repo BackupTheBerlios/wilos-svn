@@ -11,23 +11,23 @@
 					border="0">
 					<ice:outputText value="guid " />
 					<ice:outputText
-						value="#{PhaseViewerBean.phase.guid}" />
+						value="#{ConcretePhaseViewerBean.concretePhase.phase.guid}" />
 					
 					<ice:outputText value="Concrete Name" />
 					<ice:outputText
-						value="#{PhaseViewerBean.phase.concreteName}" />
+						value="#{ConcretePhaseViewerBean.concretePhase.concreteName}" />
 						
 					<ice:outputText value="Name" />
 					<ice:outputText
-						value="#{PhaseViewerBean.phase.name}" />
+						value="#{ConcretePhaseViewerBean.concretePhase.phase.name}" />
 						
 					<ice:outputText value="Description" />
 					<ice:outputText
-						value="#{PhaseViewerBean.phase.description}" />
+						value="#{ConcretePhaseViewerBean.concretePhase.phase.description}" />
 					
 					<ice:outputText value="#{msgs['phaseviewer.isplanned'] }" />
 					<ice:outputText
-						value="#{PhaseViewerBean.phase.isPlanned}" />
+						value="#{ConcretePhaseViewerBean.concretePhase.phase.isPlanned}" />
 						
 				</ice:panelGrid>
 			</ice:panelTab>
