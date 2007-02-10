@@ -13,9 +13,10 @@
 					<ice:outputText value="id " />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.id}" />
+					<!-- 
 					<ice:outputText value="#{msgs['taskviewer.projectid'] }" />
 					<ice:outputText
-						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.projectId}" />
+						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.project_id}" />  -->
 					<ice:outputText value="#{msgs['taskviewer.state']" />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.state}" />

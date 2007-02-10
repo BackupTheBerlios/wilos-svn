@@ -16,13 +16,13 @@ public class WilosObjectNode extends IceUserObject {
 	// Project Node
 	public final static String PROJECTNODE = "ProjectViewer";
 	// Phase Node
-	public final static String PHASENODE = "PhaseViewer";
+	public final static String PHASENODE = "ConcretePhaseViewer";
 	// Iteration Node
-	public final static String ITERATIONNODE = "IterationViewer";
+	public final static String ITERATIONNODE = "ConcreteIterationViewer";
 	// ConcreteTask Node
 	public final static String CONCRETETASKNODE = "ConcreteTaskViewer";
 	// ConcreteTask Node
-	public final static String ACTIVITYNODE = "ActivityViewer";
+	public final static String ACTIVITYNODE = "ConcreteActivityViewer";
 	
 	// properties
 	private String id = "";

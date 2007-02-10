@@ -35,7 +35,8 @@ import wilos.presentation.web.viewer.ProjectViewerBean;
 /**
  * @author deder
  * @author eperico
- * @author garwind <p/> A basic backing bean for a ice:tree component. The only instance variable
+ * @author garwind 
+ *  <p/> A basic backing bean for a ice:tree component. The only instance variable
  *         needed is a DefaultTreeModel Object which is bound to the icefaces tree component in the
  *         jspx code.
  *         </p>
