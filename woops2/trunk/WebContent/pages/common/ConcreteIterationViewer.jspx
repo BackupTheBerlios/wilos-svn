@@ -1,8 +1,5 @@
-
-<f:loadBundle basename="wilos.resources.messages" var="msgs" />
-
 <ice:form>
-	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1">
+	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0" bgcolor="#BEB4CC">
 		<ice:panelTabSet >
 			<br />
 			<ice:panelTab label="Iteration Display">
