@@ -1,6 +1,3 @@
-
-<f:loadBundle basename="wilos.resources.messages" var="msgs" />
-
 <ice:form>
 	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1"
 		border="0" bgcolor="#BEB4CC">
@@ -18,7 +15,7 @@
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</ice:outputText>
 					<ice:outputText value="#{msgs['projectviewer.launchingDate']}" />
-					<ice:outputText	value="#{ProjectViewerBean.project.launchingdate}" >
+					<ice:outputText	value="#{ProjectViewerBean.project.launchingDate}" >
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</ice:outputText>
 					<ice:outputText value="#{msgs['projectviewer.isFinished']}" />

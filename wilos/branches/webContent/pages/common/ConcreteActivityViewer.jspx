@@ -1,25 +1,30 @@
-
-<f:loadBundle basename="wilos.resources.messages" var="msgs" />
-
 <ice:form>
-	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1">
-		<ice:panelTabSet bgcolor="#BEB4CC">
+	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0" bgcolor="#BEB4CC">
+		<ice:panelTabSet>
 			<br />
 			<ice:panelTab label="Activity Display">
 				<br />
 				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2">
-					<ice:outputText value="id " />
+					
+					<ice:outputText value="guid " />
 					<ice:outputText
-						value="#{ActivityViewerBean.activity.id}" />
-					<ice:outputText value="#{msgs['activityviewer.presentationName'] }" />
+						value="#{ConcreteActivityViewerBean.concreteActivity.activity.guid}" />
+					
+					<ice:outputText value="Concrete Name" />
 					<ice:outputText
-						value="#{ActivityViewerBean.activity.presentationName}" />
-					<ice:outputText value="#{msgs['activityviewer.isplanned'] }" />
+						value="#{ConcreteActivityViewerBean.concreteActivity.concreteName}" />
+						
+					<ice:outputText value="Name" />
 					<ice:outputText
-						value="#{ActivityViewerBean.activity.isPlanned}" />
-					<ice:outputText value="#{msgs['activityviewer.description'] }" />
+						value="#{ConcreteActivityViewerBean.concreteActivity.activity.name}" />
+						
+					<ice:outputText value="Description" />
 					<ice:outputText
-						value="#{ActivityViewerBean.activity.description}" />
+						value="#{ConcreteActivityViewerBean.concreteActivity.activity.description}" />
+					
+					<ice:outputText value="#{msgs['phaseviewer.isplanned'] }" />
+					<ice:outputText
+						value="#{ConcreteActivityViewerBean.concreteActivity.activity.isPlanned}" />
 				</ice:panelGrid>
 			</ice:panelTab>
 		</ice:panelTabSet>
