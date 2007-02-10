@@ -122,7 +122,7 @@
 		<managed-bean-class>
 			wilos.presentation.web.project.ProjectAdvancementBean
 		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>projectService</property-name>
 			<value>#{ProjectService}</value>

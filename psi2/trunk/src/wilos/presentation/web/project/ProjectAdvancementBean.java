@@ -28,6 +28,12 @@ import wilos.model.misc.project.Project ;
  */
 public class ProjectAdvancementBean {
 
+	public static final String EXPAND_TABLE_ARROW = "images/expandableTable/expand.gif";
+	
+	public static final String CONTRACT_TABLE_ARROW = "images/expandableTable/contract.gif";
+	
+	public static final String TABLE_LEAF = "images/expandableTable/leaf.gif";
+	
 	private ProjectService projectService ;
 
 	private WebSessionService webSessionService ;
@@ -39,7 +45,11 @@ public class ProjectAdvancementBean {
 	private ArrayList<Object> projectContent = new ArrayList<Object>() ; ;
 
 	private ArrayList<Object> displayContent ;
-
+	
+	private HashMap<String, String> expandImages;
+	
+	private HashMap<String, String> indentationContent;
+	
 	protected HashMap<String, Boolean> isExpanded = new HashMap<String, Boolean>() ;
 
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
@@ -52,6 +62,8 @@ public class ProjectAdvancementBean {
 		this.project = new Project() ;
 		this.projectContent = new ArrayList<Object>() ;
 		this.displayContent = new ArrayList<Object>() ;
+		this.expandImages = new HashMap<String, String>();
+		this.indentationContent = new HashMap<String, String>();
 	}
 
 	/**
@@ -76,10 +88,12 @@ public class ProjectAdvancementBean {
 		// add sub elements to list
 		if(b){
 			expandNodeAction() ;
+			this.expandImages.put(elementId, EXPAND_TABLE_ARROW);
 		}
 		// remove items from list
 		else{
 			contractNodeAction() ;
+			this.expandImages.put(elementId, CONTRACT_TABLE_ARROW);
 		}
 	}
 
@@ -90,22 +104,29 @@ public class ProjectAdvancementBean {
 		FacesContext context = FacesContext.getCurrentInstance() ;
 		Map map = context.getExternalContext().getRequestParameterMap() ;
 		String elementId = (String) map.get("elementId") ;
+		
 		ArrayList<Object> tmp = new ArrayList<Object>() ;
 		tmp.addAll(this.displayContent) ;
+		
 		for(Iterator iter = tmp.iterator(); iter.hasNext();){
 			Object element = (Object) iter.next() ;
 			if(element instanceof ConcreteActivity){
-				if(elementId.equals( ((ConcreteActivity) element).getConcreteName())){
+				if(elementId.equals( ((ConcreteActivity) element).getId())){
 					this.logger.debug(this.displayContent.size()) ;
 					int index = this.displayContent.indexOf(element) ;
 					ConcreteActivity ca = (ConcreteActivity) element ;
 					for(Iterator iterator = ca.getConcreteBreakdownElements().iterator(); iterator.hasNext();){
 						ConcreteBreakdownElement element2 = (ConcreteBreakdownElement) iterator.next() ;
 						if(! (element2 instanceof ConcreteRoleDescriptor))
+						{
 							this.displayContent.add(index + 1, element2) ;
+							if(! (element2 instanceof ConcreteTaskDescriptor))
+								this.expandImages.put(element2.getId(), CONTRACT_TABLE_ARROW);
+							else
+								this.expandImages.put(element2.getId(), TABLE_LEAF);
+						}
 					}
 				}
-
 			}
 		}
 	}
@@ -125,7 +146,7 @@ public class ProjectAdvancementBean {
 		for(Iterator iter = this.displayContent.iterator(); iter.hasNext();){
 			Object element = (Object) iter.next() ;
 			if(element instanceof ConcreteActivity){
-				if(elementId.equals( ((ConcreteActivity) element).getConcreteName())){
+				if(elementId.equals( ((ConcreteActivity) element).getId())){
 					ConcreteActivity ca = (ConcreteActivity) element ;
 					firstSubLevelElementsList.addAll(ca.getConcreteBreakdownElements()) ;
 					while(i < firstSubLevelElementsList.size()){
@@ -142,6 +163,7 @@ public class ProjectAdvancementBean {
 			}
 		}
 		this.displayContent.removeAll(currentLevelElementsList) ;
+		this.expandImages.remove(currentLevelElementsList);
 	}
 
 	public List<Object> parseSubConcreteBreakdownElement(List<Object> result, ConcreteActivity ca) {
@@ -149,7 +171,8 @@ public class ProjectAdvancementBean {
 		List<ConcreteBreakdownElement> list = new ArrayList<ConcreteBreakdownElement>() ;
 		if(ca.getConcreteBreakdownElements() != null){
 			result.add(ca) ;
-			this.isExpanded.put(ca.getConcreteName(), false) ;
+			this.isExpanded.put(ca.getId(), false) ;
+			this.expandImages.put(ca.getId(), CONTRACT_TABLE_ARROW);
 			list.addAll(ca.getConcreteBreakdownElements()) ;
 			while(i < list.size() && list.get(i) != null){
 				if(! (list.get(i) instanceof ConcreteTaskDescriptor) && ! (list.get(i) instanceof ConcreteRoleDescriptor))
@@ -186,15 +209,19 @@ public class ProjectAdvancementBean {
 		for(ConcreteBreakdownElement concreteBreakdownElement : this.project.getConcreteBreakdownElements()){
 			if(concreteBreakdownElement instanceof ConcretePhase){
 				this.projectContent.add(concreteBreakdownElement) ;
+				this.expandImages.put(concreteBreakdownElement.getId(), CONTRACT_TABLE_ARROW);
 			}
 			else if(concreteBreakdownElement instanceof ConcreteIteration){
 				this.projectContent.add(concreteBreakdownElement) ;
+				this.expandImages.put(concreteBreakdownElement.getId(), CONTRACT_TABLE_ARROW);
 			}
 			else if(concreteBreakdownElement instanceof ConcreteActivity){
 				this.projectContent.add(concreteBreakdownElement) ;
+				this.expandImages.put(concreteBreakdownElement.getId(), CONTRACT_TABLE_ARROW);
 			}
 			else if(concreteBreakdownElement instanceof ConcreteTaskDescriptor){
 				this.projectContent.add((ConcreteTaskDescriptor) concreteBreakdownElement) ;
+				this.expandImages.put(concreteBreakdownElement.getId(), "");
 			}
 		}
 	}
@@ -312,4 +339,36 @@ public class ProjectAdvancementBean {
 		this.webSessionService = _webSessionService ;
 	}
 
+	/**
+	 * @return the expandImages
+	 */
+	public HashMap<String, String> getExpandImages() {
+		return this.expandImages ;
+	}
+
+	/**
+	 * Setter of expandImages.
+	 *
+	 * @param _expandImages The expandImages to set.
+	 */
+	public void setExpandImages(HashMap<String, String> _expandImages) {
+		this.expandImages = _expandImages ;
+	}
+
+	/**
+	 * @return the indentationContent
+	 */
+	public HashMap<String, String> getIndentationContent() {
+		return this.indentationContent ;
+	}
+
+	/**
+	 * Setter of indentationContent.
+	 *
+	 * @param _indentationContent The indentationContent to set.
+	 */
+	public void setIndentationContent(HashMap<String, String> _indentationContent) {
+		this.indentationContent = _indentationContent ;
+	}
 }
+
