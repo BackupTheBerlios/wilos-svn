@@ -40,4 +40,5 @@
 	width:210px;
 	height:300px;
 	border-right:2px solid #FFFFFF;
+	overflow:scroll;
 }

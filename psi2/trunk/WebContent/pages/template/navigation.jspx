@@ -17,7 +17,8 @@
 	<!-- Check box - Concrete task filter -->
 	<ice:outputText visible="#{TreeBean.loadCheckBox}" styleClass="propertyLabel"
 		value="#{msgs['navigation.checkbox.label']}" />
-	<ice:selectBooleanCheckbox visible="#{TreeBean.loadCheckBox}" 
+	<ice:selectBooleanCheckbox
+			rendered ="#{TreeBean.loadCheckBox}" 
 			partialSubmit="true"
 			value="#{TreeBean.affectedTaskFilter}"
 		 	valueChangeListener="#{TreeBean.filterTreeActionListener}"/>

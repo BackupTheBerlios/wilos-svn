@@ -9,19 +9,19 @@
 			<ice:panelTab id="panelTab_projectDisplay" label="Project Display" imageDir="images">
 				<br />
 				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2" border="0">
-					<ice:outputText value="name " />
-					<ice:outputText	value="#{ProjectViewerBean.project.name}" />
-					<ice:outputText value="description " />
+					<ice:outputText value="#{msgs['projectviewer.name']}" />
+					<ice:outputText	value="#{ProjectViewerBean.project.concreteName}" />
+					<ice:outputText value="#{msgs['projectviewer.description']}" />
 					<ice:outputText	value="#{ProjectViewerBean.project.description}" />
-					<ice:outputText value="creationDate " />
+					<ice:outputText value="#{msgs['projectviewer.creationdate']}" />
 					<ice:outputText	value="#{ProjectViewerBean.project.creationDate}" >
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</ice:outputText>
-					<ice:outputText value="launchingDate " />
+					<ice:outputText value="#{msgs['projectviewer.launchingdate']}" />
 					<ice:outputText	value="#{ProjectViewerBean.project.launchingDate}" >
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</ice:outputText>
-					<ice:outputText value="isFinished " />
+					<ice:outputText value="#{msgs['projectviewer.isFinished']}" />
 					<ice:outputText	value="#{ProjectViewerBean.project.isFinished}" />
 				</ice:panelGrid>
 
@@ -46,6 +46,28 @@
 					</f:subview>
 				</ice:panelStack>
 			</ice:panelTab>
+			<ice:panelTab id="panelTab_projectAdvancement" label="#{msgs['component.project.projectadvancement.title']}">
+			<ice:dataTable
+				value="#{ProjectBean.displayContent}"
+				var="phase" cellpadding="0"
+				width="550px">
+				<ice:column>
+				    <f:facet name="header">
+				        <ice:outputText value="#{msgs['component.project.projectadvancement.column1']}"/>
+				    </f:facet>
+				    <ice:commandLink value="#{phase.concreteName}"
+							actionListener="#{ProjectBean.toggleSubGroupAction}">
+							<f:param name="elementId" value="#{phase.concreteName}"/>
+				    </ice:commandLink>
+				</ice:column>
+				<ice:column>
+				    <f:facet name="header">
+				        <ice:outputText value="#{msgs['component.project.projectadvancement.column2']}"/>
+				    </f:facet>
+			        <ice:outputText value="#{phase.id}"/>
+				</ice:column>
+			</ice:dataTable>
+		</ice:panelTab>
 		</ice:panelTabSet>
 	</ice:panelGrid>
 </ice:form>
