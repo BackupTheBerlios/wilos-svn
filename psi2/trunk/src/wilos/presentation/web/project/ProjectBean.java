@@ -24,6 +24,10 @@ import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
+import wilos.model.misc.concreteiteration.ConcreteIteration;
+import wilos.model.misc.concretephase.ConcretePhase;
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
+import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.process.Process;
@@ -45,6 +49,8 @@ public class ProjectBean {
 	
 	private Project project ;
 	
+	private String projectViewedId;
+	
 	private String selectedProcessGuid ;
 	
 	private ArrayList<SelectItem> processNamesList ;
@@ -64,6 +70,7 @@ public class ProjectBean {
 	private String processName;
 	
 	private String projectListView;
+
 	
 	/***************************************/
 	private ArrayList<Object> projectContent  = new ArrayList<Object>();;
@@ -85,64 +92,6 @@ public class ProjectBean {
 		this.projectContent = new ArrayList<Object>();
 		this.displayContent = new ArrayList<Object>();
 		
-		ConcreteActivity ca = new ConcreteActivity();
-		ca.setConcreteName("activityMere");
-		ca.setPlannedTime(10);
-		this.isExpanded.put(ca.getConcreteName(), false);
-		Project p1 = new Project();
-		p1.setConcreteName("proj1");
-		p1.setPlannedTime(3);
-		this.isExpanded.put(p1.getConcreteName(), false);
-		Project p2 = new Project();
-		p2.setConcreteName("proj2");
-		p2.setPlannedTime(7);
-		this.isExpanded.put(p2.getConcreteName(), false);
-		ca.addConcreteBreakdownElement(p1);
-		ca.addConcreteBreakdownElement(p2);
-
-		ConcreteActivity ca2 = new ConcreteActivity();
-		ca2.setConcreteName("activity2");
-		ca2.setPlannedTime(5);
-		this.isExpanded.put(ca2.getConcreteName(), false);
-		Project p3 = new Project();
-		p3.setConcreteName("proj3");
-		p3.setPlannedTime(5);
-		this.isExpanded.put(p3.getConcreteName(), false);
-		ca2.addConcreteBreakdownElement(p3);
-		
-		ConcreteActivity ca3 = new ConcreteActivity();
-		ca3.setConcreteName("activity3");
-		ca3.setPlannedTime(9);
-		this.isExpanded.put(ca3.getConcreteName(), false);
-		ConcreteActivity subCA3 = new ConcreteActivity();
-		subCA3.setConcreteName("subActivity3");
-		subCA3.setPlannedTime(9);
-		this.isExpanded.put(subCA3.getConcreteName(), false);
-		Project p4 = new Project();
-		p4.setConcreteName("proj4");
-		p4.setPlannedTime(3);
-		this.isExpanded.put(p4.getConcreteName(), false);
-		Project p5 = new Project();
-		p5.setConcreteName("proj5");
-		p5.setPlannedTime(6);
-		this.isExpanded.put(p5.getConcreteName(), false);
-		subCA3.addConcreteBreakdownElement(p4);
-		subCA3.addConcreteBreakdownElement(p5);
-		ca3.addConcreteBreakdownElement(subCA3);
-
-		this.projectContent.add(ca);
-		this.projectContent.add(ca2);
-		this.projectContent.add(ca3);
-		
-		/*Method to call to be rid of tests set above*/
-		
-		//this.projectContent.addAll(this.project.getProcess().getConcreteWorkBreakdownElements());
-		
-		for(Iterator iter = this.projectContent.iterator(); iter.hasNext();){
-			Object mescouilles = (Object) iter.next() ;
-				this.isExpanded.put(((ConcreteBreakdownElement)mescouilles).getConcreteName(), false);
-				this.displayContent.add(mescouilles);	
-		}
 		/*********************************************/
 	}
 
@@ -159,6 +108,10 @@ public class ProjectBean {
     	
     	// toggle expanded state
         Boolean b = isExpanded.get(elementId);
+        if(b == null){
+        	isExpanded.put(elementId,false);
+        	b = isExpanded.get(elementId);
+        }
 		b = !b;
 		isExpanded.put(elementId,b);
 
@@ -186,11 +139,13 @@ public class ProjectBean {
 			if(element instanceof ConcreteActivity)
 			{
 				if(elementId.equals(((ConcreteActivity)element).getConcreteName())){
+					this.logger.debug(this.displayContent.size());
 					int index = this.displayContent.indexOf(element);
 					ConcreteActivity ca = (ConcreteActivity)element;
 					for(Iterator iterator = ca.getConcreteBreakdownElements().iterator(); iterator.hasNext();){
-						ConcreteBreakdownElement element2 = (ConcreteBreakdownElement)iterator.next();
-						this.displayContent.add(index + 1,element2);
+						ConcreteBreakdownElement element2 = (ConcreteBreakdownElement)iterator.next();						
+						if(!(element2 instanceof ConcreteRoleDescriptor))
+							this.displayContent.add(index + 1,element2);
 					}
 				}
 				
@@ -218,7 +173,9 @@ public class ProjectBean {
 					ConcreteActivity ca = (ConcreteActivity)element;
 					firstSubLevelElementsList.addAll(ca.getConcreteBreakdownElements());
 					while(i<firstSubLevelElementsList.size()){
-						currentLevelElementsList.addAll(this.parseSubConcreteBreakdownElement(subLevelElementsList,(ConcreteActivity)firstSubLevelElementsList.get(i)));
+						if(!(firstSubLevelElementsList.get(i) instanceof ConcreteTaskDescriptor) && !(firstSubLevelElementsList.get(i) instanceof ConcreteRoleDescriptor)){
+							currentLevelElementsList.addAll(this.parseSubConcreteBreakdownElement(subLevelElementsList,(ConcreteActivity)firstSubLevelElementsList.get(i)));
+						}
 						currentLevelElementsList.add(firstSubLevelElementsList.get(i));
 						i++;
 					}
@@ -238,7 +195,9 @@ public class ProjectBean {
     		this.isExpanded.put(ca.getConcreteName(), false);
     		list.addAll(ca.getConcreteBreakdownElements());
     		while(i<list.size() && list.get(i)!=null){
-    			result.addAll(parseSubConcreteBreakdownElement(result,(ConcreteActivity)list.get(i)));
+    			if(!(list.get(i) instanceof ConcreteTaskDescriptor) && !(list.get(i) instanceof ConcreteRoleDescriptor))
+    				result.addAll(parseSubConcreteBreakdownElement(result,(ConcreteActivity)list.get(i)));
+    			else result.add(list.get(i));
     			i++;
     		}    				
     	}
@@ -569,7 +528,37 @@ public class ProjectBean {
 	 * @return the projectContent.
 	 */
 	public ArrayList<Object> getProjectContent() {
+		this.projectContent.clear();
+		/*******************/
+		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
+		
+		this.project = this.projectService.getProject(projectId);
+		if (this.project.getProcess() != null) {
+			retrieveHierarchicalItems() ;
+		}
+		/*******************/
 		return this.projectContent ;
+	}
+
+	
+	/**
+	 * TODO Method description
+	 *
+	 */
+	
+	private void retrieveHierarchicalItems() {
+		List<Object> tmpList = new ArrayList<Object>();
+		for (ConcreteBreakdownElement concreteBreakdownElement : this.project.getConcreteBreakdownElements()) {
+		        if (concreteBreakdownElement instanceof ConcretePhase) {
+		            this.projectContent.add(concreteBreakdownElement);
+		        } else if (concreteBreakdownElement instanceof ConcreteIteration) {
+		        	this.projectContent.add(concreteBreakdownElement);
+		        } else if (concreteBreakdownElement instanceof ConcreteActivity) {
+		        	this.projectContent.add(concreteBreakdownElement);
+		        } else if (concreteBreakdownElement instanceof ConcreteTaskDescriptor) {
+		        	this.projectContent.add((ConcreteTaskDescriptor) concreteBreakdownElement);
+		        }
+		}		
 	}
 
 	/**
@@ -587,7 +576,14 @@ public class ProjectBean {
 	 * @return the displayContent.
 	 */
 	public ArrayList<Object> getDisplayContent() {
-		
+		/*******************/
+		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
+		if(this.projectViewedId==null || projectViewedId!=projectId){
+			projectViewedId = projectId;
+			this.displayContent.clear();
+			this.displayContent.addAll(this.getProjectContent());
+		}
+		/*******************/
 		return this.displayContent;
 	}
 
