@@ -43,6 +43,34 @@
 					</f:subview>
 				</ice:panelStack>
 			</ice:panelTab>
+			<ice:panelTab id="panelTab_projectAdvancement" label="#{msgs['component.project.projectadvancement.title']}">
+			<ice:dataTable
+				value="#{ProjectAdvancementBean.displayContent}"
+				var="phase" cellpadding="0"
+				columnWidths="30px,800px,100px">
+				<ice:column>
+				    <f:facet name="header">
+				        <ice:outputText value=""/>
+				    </f:facet>
+				    <ice:commandLink value="" actionListener="#{ProjectAdvancementBean.toggleSubGroupAction}">
+					    <f:param name="elementId" value="#{phase.id}"/>
+					    <ice:graphicImage  value="#{ProjectAdvancementBean.expandImages[phase.id]}" style="border: 0px solid;"/>
+				    </ice:commandLink>
+				</ice:column>
+				<ice:column>
+				    <f:facet name="header">
+				        <ice:outputText value="#{msgs['component.project.projectadvancement.column1']}"/>
+				    </f:facet>
+				    <ice:outputText value="#{phase.concreteName}"/>
+				</ice:column>
+				<ice:column>
+				    <f:facet name="header">
+				        <ice:outputText value="#{msgs['component.project.projectadvancement.column2']}"/>
+				    </f:facet>
+			        <ice:outputText value="#{ProjectAdvancementBean.advancementTimes[phase.id]} %"/>
+				</ice:column>
+			</ice:dataTable>
+		</ice:panelTab>
 		</ice:panelTabSet>
 	</ice:panelGrid>
 </ice:form>
