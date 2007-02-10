@@ -70,7 +70,7 @@
 				    <f:facet name="header">
 				        <ice:outputText value="#{msgs['component.project.projectadvancement.column2']}"/>
 				    </f:facet>
-			        <ice:outputText value="#{phase.plannedTime}"/>
+			        <ice:outputText value="#{ProjectAdvancementBean.advancementTimes[phase.id]} %"/>
 				</ice:column>
 			</ice:dataTable>
 		</ice:panelTab>

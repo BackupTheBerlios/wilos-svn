@@ -48,6 +48,8 @@ public class ProjectAdvancementBean {
 	
 	private HashMap<String, String> expandImages;
 	
+	private HashMap<String, Double> advancementTimes;
+	
 	private HashMap<String, String> indentationContent;
 	
 	protected HashMap<String, Boolean> isExpanded = new HashMap<String, Boolean>() ;
@@ -64,6 +66,7 @@ public class ProjectAdvancementBean {
 		this.displayContent = new ArrayList<Object>() ;
 		this.expandImages = new HashMap<String, String>();
 		this.indentationContent = new HashMap<String, String>();
+		this.advancementTimes = new HashMap<String, Double>();
 	}
 
 	/**
@@ -101,9 +104,11 @@ public class ProjectAdvancementBean {
 	 * Utility method to add all child nodes to the parent dataTable list.
 	 */
 	private void expandNodeAction() {
+		double advancedTime = 0.00;
 		FacesContext context = FacesContext.getCurrentInstance() ;
 		Map map = context.getExternalContext().getRequestParameterMap() ;
 		String elementId = (String) map.get("elementId") ;
+		ConcreteTaskDescriptor ctdtmp = new ConcreteTaskDescriptor();
 		
 		ArrayList<Object> tmp = new ArrayList<Object>() ;
 		tmp.addAll(this.displayContent) ;
@@ -120,15 +125,36 @@ public class ProjectAdvancementBean {
 						if(! (element2 instanceof ConcreteRoleDescriptor))
 						{
 							this.displayContent.add(index + 1, element2) ;
+							
 							if(! (element2 instanceof ConcreteTaskDescriptor))
+							{
 								this.expandImages.put(element2.getId(), CONTRACT_TABLE_ARROW);
+								this.advancementTimes.put(element2.getId(),	new Double(0.0));
+							}
 							else
+							{
 								this.expandImages.put(element2.getId(), TABLE_LEAF);
+								ctdtmp = (ConcreteTaskDescriptor)element2;
+								advancedTime = (double)Math.round(ProjectAdvancementBean.taskAdvancementCalculation(ctdtmp)*100);
+							}
 						}
+						this.advancementTimes.put(element2.getId(),advancedTime);
 					}
 				}
 			}
+			
 		}
+		
+	}
+	
+	public static double taskAdvancementCalculation(ConcreteTaskDescriptor ctd)
+	{
+		double result = 0;
+		if((ctd.getAccomplishedTime()+ctd.getRemainingTime()) != 0)
+		{
+			result = (ctd.getRemainingTime()/(ctd.getAccomplishedTime()+ctd.getRemainingTime()));
+		}
+		return result;
 	}
 
 	/**
@@ -370,5 +396,22 @@ public class ProjectAdvancementBean {
 	public void setIndentationContent(HashMap<String, String> _indentationContent) {
 		this.indentationContent = _indentationContent ;
 	}
+
+	/**
+	 * @return the advancementTimes
+	 */
+	public HashMap<String, Double> getAdvancementTimes() {
+		return this.advancementTimes ;
+	}
+
+	/**
+	 * Setter of advancementTimes.
+	 *
+	 * @param _advancementTimes The advancementTimes to set.
+	 */
+	public void setAdvancementTimes(HashMap<String, Double> _advancementTimes) {
+		this.advancementTimes = _advancementTimes ;
+	}
+
 }
 
