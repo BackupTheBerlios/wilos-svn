@@ -48,17 +48,23 @@
 			</ice:panelTab>
 			<ice:panelTab id="panelTab_projectAdvancement" label="#{msgs['component.project.projectadvancement.title']}">
 			<ice:dataTable
-				value="#{ProjectBean.displayContent}"
+				value="#{ProjectAdvancementBean.displayContent}"
 				var="phase" cellpadding="0"
 				width="550px">
 				<ice:column>
 				    <f:facet name="header">
+				        <ice:outputText value=""/>
+				    </f:facet>
+				    <ice:commandLink value="" actionListener="#{ProjectAdvancementBean.toggleSubGroupAction}">
+					    <f:param name="elementId" value="#{phase.concreteName}"/>
+					    <ice:graphicImage  value="./images/expandableTable/contract.gif" style="border: 0px solid;"/>
+				    </ice:commandLink>
+				</ice:column>
+				<ice:column>
+				    <f:facet name="header">
 				        <ice:outputText value="#{msgs['component.project.projectadvancement.column1']}"/>
 				    </f:facet>
-				    <ice:commandLink value="#{phase.concreteName}"
-							actionListener="#{ProjectBean.toggleSubGroupAction}">
-							<f:param name="elementId" value="#{phase.concreteName}"/>
-				    </ice:commandLink>
+				    <ice:outputText value="#{phase.concreteName}"/>
 				</ice:column>
 				<ice:column>
 				    <f:facet name="header">

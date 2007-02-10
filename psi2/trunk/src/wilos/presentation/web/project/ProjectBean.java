@@ -1,36 +1,26 @@
 
 package wilos.presentation.web.project ;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.text.SimpleDateFormat ;
+import java.util.ArrayList ;
+import java.util.List ;
+import java.util.ResourceBundle ;
+import java.util.Set ;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import javax.faces.model.SelectItem;
+import javax.faces.application.FacesMessage ;
+import javax.faces.context.FacesContext ;
+import javax.faces.model.SelectItem ;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.Log ;
+import org.apache.commons.logging.LogFactory ;
 
-import wilos.business.services.misc.project.ProjectService;
-import wilos.business.services.misc.wilosuser.ParticipantService;
-import wilos.business.services.presentation.web.WebSessionService;
-import wilos.business.services.spem2.process.ProcessService;
-import wilos.model.misc.concreteactivity.ConcreteActivity;
-import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
-import wilos.model.misc.concreteiteration.ConcreteIteration;
-import wilos.model.misc.concretephase.ConcretePhase;
-import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
-import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
-import wilos.model.misc.project.Project;
-import wilos.model.misc.wilosuser.Participant;
-import wilos.model.spem2.process.Process;
+import wilos.business.services.misc.project.ProjectService ;
+import wilos.business.services.misc.wilosuser.ParticipantService ;
+import wilos.business.services.presentation.web.WebSessionService ;
+import wilos.business.services.spem2.process.ProcessService ;
+import wilos.model.misc.project.Project ;
+import wilos.model.misc.wilosuser.Participant ;
+import wilos.model.spem2.process.Process ;
 
 /**
  * Managed-Bean link to project_create.jspx
@@ -42,41 +32,32 @@ public class ProjectBean {
 	private ProjectService projectService ;
 
 	private ProcessService processService ;
-	
-	private WebSessionService webSessionService;
-	
-	private ParticipantService participantService;
-	
-	private Project project ;
-	
-	private String projectViewedId;
-	
-	private String selectedProcessGuid ;
-	
-	private ArrayList<SelectItem> processNamesList ;
-	
-	private List<Project> projectList ;
-	
-	private List<Project> projectListWithoutProcess = new ArrayList<Project>();
 
-	private List<Project> projectListWithProcess = new ArrayList<Project>();
-	
+	private WebSessionService webSessionService ;
+
+	private ParticipantService participantService ;
+
+	private Project project ;
+
+	private String selectedProcessGuid ;
+
+	private ArrayList<SelectItem> processNamesList ;
+
+	private List<Project> projectList ;
+
+	private List<Project> projectListWithoutProcess = new ArrayList<Project>() ;
+
+	private List<Project> projectListWithProcess = new ArrayList<Project>() ;
+
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
-	private SimpleDateFormat formatter;
-	
-	private String selectProcessAffectation ;
-	
-	private String processName;
-	
-	private String projectListView;
+	private SimpleDateFormat formatter ;
 
-	
-	/***************************************/
-	private ArrayList<Object> projectContent  = new ArrayList<Object>();;
-	private ArrayList<Object> displayContent;
-	protected HashMap<String,Boolean> isExpanded = new HashMap<String,Boolean>();
-	/***************************************/
+	private String selectProcessAffectation ;
+
+	private String processName ;
+
+	private String projectListView ;
 
 	/**
 	 * Constructor.
@@ -84,199 +65,76 @@ public class ProjectBean {
 	 */
 	public ProjectBean() {
 		this.project = new Project() ;
-		this.selectedProcessGuid="";
-		this.processNamesList = new ArrayList<SelectItem>();
-		this.formatter = new SimpleDateFormat("dd/MM/yyyy");
-		
-		/*********************************************/
-		this.projectContent = new ArrayList<Object>();
-		this.displayContent = new ArrayList<Object>();
-		
-		/*********************************************/
+		this.selectedProcessGuid = "" ;
+		this.processNamesList = new ArrayList<SelectItem>() ;
+		this.formatter = new SimpleDateFormat("dd/MM/yyyy") ;
 	}
 
-	/***************************************/
-	/**
-     * Toggles the expanded state of this ConcreteBreakDownElement.
-     *
-     * @param event
-     */
-    public void toggleSubGroupAction(ActionEvent event) {
-    	FacesContext context = FacesContext.getCurrentInstance();
-		Map map = context.getExternalContext().getRequestParameterMap();
-		String elementId = (String) map.get("elementId");
-    	
-    	// toggle expanded state
-        Boolean b = isExpanded.get(elementId);
-        if(b == null){
-        	isExpanded.put(elementId,false);
-        	b = isExpanded.get(elementId);
-        }
-		b = !b;
-		isExpanded.put(elementId,b);
-
-        // add sub elements to list
-        if (b) {
-            expandNodeAction();
-        }
-        // remove items from list
-        else {
-            contractNodeAction();
-        }
-    }
-    
-    /**
-     * Utility method to add all child nodes to the parent dataTable list.
-     */
-    private void expandNodeAction() {
-    	FacesContext context = FacesContext.getCurrentInstance();
-		Map map = context.getExternalContext().getRequestParameterMap();
-		String elementId = (String) map.get("elementId");
-		ArrayList<Object> tmp = new ArrayList<Object>();
-		tmp.addAll(this.displayContent);
-		for(Iterator iter = tmp.iterator(); iter.hasNext();){
-			Object element = (Object) iter.next() ;
-			if(element instanceof ConcreteActivity)
-			{
-				if(elementId.equals(((ConcreteActivity)element).getConcreteName())){
-					this.logger.debug(this.displayContent.size());
-					int index = this.displayContent.indexOf(element);
-					ConcreteActivity ca = (ConcreteActivity)element;
-					for(Iterator iterator = ca.getConcreteBreakdownElements().iterator(); iterator.hasNext();){
-						ConcreteBreakdownElement element2 = (ConcreteBreakdownElement)iterator.next();						
-						if(!(element2 instanceof ConcreteRoleDescriptor))
-							this.displayContent.add(index + 1,element2);
-					}
-				}
-				
-			}
-		}
-    }
-
-    /**
-     * Utility method to remove all child nodes from the parent dataTable list.
-     */
-    private void contractNodeAction() {
-    	ArrayList<Object> currentLevelElementsList = new ArrayList<Object>();
-    	ArrayList<Object> firstSubLevelElementsList = new ArrayList<Object>();
-    	ArrayList<Object> subLevelElementsList = new ArrayList<Object>();
-    	int i=0;
-    	FacesContext context = FacesContext.getCurrentInstance();
-		Map map = context.getExternalContext().getRequestParameterMap();
-		String elementId = (String) map.get("elementId");
-		
-    	for(Iterator iter = this.displayContent.iterator(); iter.hasNext();){
-			Object element = (Object) iter.next() ;
-			if(element instanceof ConcreteActivity)
-			{
-				if(elementId.equals(((ConcreteActivity)element).getConcreteName())){
-					ConcreteActivity ca = (ConcreteActivity)element;
-					firstSubLevelElementsList.addAll(ca.getConcreteBreakdownElements());
-					while(i<firstSubLevelElementsList.size()){
-						if(!(firstSubLevelElementsList.get(i) instanceof ConcreteTaskDescriptor) && !(firstSubLevelElementsList.get(i) instanceof ConcreteRoleDescriptor)){
-							currentLevelElementsList.addAll(this.parseSubConcreteBreakdownElement(subLevelElementsList,(ConcreteActivity)firstSubLevelElementsList.get(i)));
-						}
-						currentLevelElementsList.add(firstSubLevelElementsList.get(i));
-						i++;
-					}
-					
-				}
-			}
-		}
-    	this.displayContent.removeAll(currentLevelElementsList);
-    }
-    
-    public List<Object> parseSubConcreteBreakdownElement(List<Object> result, ConcreteActivity ca){
-    	int i = 0;
-    	List<ConcreteBreakdownElement> list = new ArrayList<ConcreteBreakdownElement>();
-    	if(ca.getConcreteBreakdownElements()!=null)
-    	{
-    		result.add(ca);
-    		this.isExpanded.put(ca.getConcreteName(), false);
-    		list.addAll(ca.getConcreteBreakdownElements());
-    		while(i<list.size() && list.get(i)!=null){
-    			if(!(list.get(i) instanceof ConcreteTaskDescriptor) && !(list.get(i) instanceof ConcreteRoleDescriptor))
-    				result.addAll(parseSubConcreteBreakdownElement(result,(ConcreteActivity)list.get(i)));
-    			else result.add(list.get(i));
-    			i++;
-    		}    				
-    	}
-    	return result;
-    }
-    
-    /***************************************/
-	
-	
 	/**
 	 * Method for saving project data from form
 	 * 
 	 * @return
 	 */
 	public String saveProjectAction() {
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
+		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale()) ;
 		String url = "" ;
-		boolean error=false;
-		FacesMessage message = new FacesMessage();
+		boolean error = false ;
+		FacesMessage message = new FacesMessage() ;
 		FacesContext facesContext = FacesContext.getCurrentInstance() ;
 		// test if the fields are correctly completed
-		if (this.project.getConcreteName().trim().length()==0)
-		{
+		if(this.project.getConcreteName().trim().length() == 0){
 			FacesMessage errName = new FacesMessage() ;
-			errName.setSummary(bundle.getString("component.projectcreate.err.namerequired"));
+			errName.setSummary(bundle.getString("component.projectcreate.err.namerequired")) ;
 			errName.setSeverity(FacesMessage.SEVERITY_ERROR) ;
-			error=true;
+			error = true ;
 			facesContext.addMessage(null, errName) ;
 		}
-		
-		if (this.project.getLaunchingDate()==null)
-		{
+
+		if(this.project.getLaunchingDate() == null){
 			FacesMessage errDate = new FacesMessage() ;
-			errDate.setSummary(bundle.getString("component.projectcreate.err.launchingdaterequired"));
+			errDate.setSummary(bundle.getString("component.projectcreate.err.launchingdaterequired")) ;
 			errDate.setSeverity(FacesMessage.SEVERITY_ERROR) ;
-			error=true;
+			error = true ;
 			facesContext.addMessage(null, errDate) ;
 		}
-		if(!error)
-		{
+		if(!error){
 			if(this.projectService.projectExist(this.project.getConcreteName())){
-			
-				message.setSummary(bundle.getString("component.projectcreate.err.projectalreadyexists"));
+
+				message.setSummary(bundle.getString("component.projectcreate.err.projectalreadyexists")) ;
 				message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 			}
 			else{
 				this.projectService.saveProject(this.project) ;
-				message.setSummary(bundle.getString("component.projectcreate.success"));
-				message.setSeverity(FacesMessage.SEVERITY_ERROR);
+				message.setSummary(bundle.getString("component.projectcreate.success")) ;
+				message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 			}
-		
-		facesContext.addMessage(null, message) ;
+
+			facesContext.addMessage(null, message) ;
 		}
 		this.project = new Project() ;
-	
+
 		return url ;
 	}
 
-	
 	/**
 	 * Method for saving project/process association from radio buttons
-	 *
+	 * 
 	 * @return nothing
 	 */
-	public String saveProjectProcessAffectation(){
-		String tmpProjId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
-		if(tmpProjId!=null){		
-			Project projTmp = projectService.getProject(tmpProjId);
-			if(projTmp!=null){
-				Process procTmp = processService.getProcessDao().getProcessFromGuid(selectedProcessGuid);
-				if(procTmp!=null){
-					projectService.saveProcessProjectAffectation(procTmp, projTmp);
+	public String saveProjectProcessAffectation() {
+		String tmpProjId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID) ;
+		if(tmpProjId != null){
+			Project projTmp = projectService.getProject(tmpProjId) ;
+			if(projTmp != null){
+				Process procTmp = processService.getProcessDao().getProcessFromGuid(selectedProcessGuid) ;
+				if(procTmp != null){
+					projectService.saveProcessProjectAffectation(procTmp, projTmp) ;
 				}
 			}
 		}
-		return "";
-	}	
-		
+		return "" ;
+	}
+
 	/**
 	 * Getter of project.
 	 * 
@@ -314,15 +172,14 @@ public class ProjectBean {
 	public void setProjectService(ProjectService _projectService) {
 		this.projectService = _projectService ;
 	}
-	
 
 	/**
 	 * Return all the Projects
 	 * 
 	 * @return A set of Project
 	 */
-	public Set<Project> getAllProjects(){
-		return this.projectService.getAllProjects();
+	public Set<Project> getAllProjects() {
+		return this.projectService.getAllProjects() ;
 	}
 
 	/**
@@ -331,8 +188,8 @@ public class ProjectBean {
 	 * @return the projectList.
 	 */
 	public List<Project> getProjectList() {
-		this.projectList = new ArrayList<Project>();
-		projectList.addAll(this.projectService.getAllProjects());
+		this.projectList = new ArrayList<Project>() ;
+		projectList.addAll(this.projectService.getAllProjects()) ;
 		return this.projectList ;
 	}
 
@@ -344,56 +201,57 @@ public class ProjectBean {
 	 */
 	public void setProjectList(List<Project> _projectList) {
 		this.projectList = _projectList ;
-	}	
-	
+	}
+
 	public List<Project> getProjectListWithoutProcess() {
-		this.projectListWithoutProcess = new ArrayList<Project>();
-		this.projectListWithoutProcess.addAll(this.projectService.getAllProjectsWithNoProcess());
-		return projectListWithoutProcess;
+		this.projectListWithoutProcess = new ArrayList<Project>() ;
+		this.projectListWithoutProcess.addAll(this.projectService.getAllProjectsWithNoProcess()) ;
+		return projectListWithoutProcess ;
 	}
 
 	public void setProjectListWithoutProcess(List<Project> projectListWithoutProcess) {
-		this.projectListWithoutProcess = projectListWithoutProcess;
+		this.projectListWithoutProcess = projectListWithoutProcess ;
 	}
 
 	public List<Project> getProjectListWithProcess() {
-		this.projectListWithProcess = new ArrayList<Project>();
-		this.projectListWithProcess.addAll(this.projectService.getAllProjectsWithProcess());
-		return projectListWithProcess;
+		this.projectListWithProcess = new ArrayList<Project>() ;
+		this.projectListWithProcess.addAll(this.projectService.getAllProjectsWithProcess()) ;
+		return projectListWithProcess ;
 	}
 
 	public void setProjectListWithProcess(List<Project> projectListWithProcess) {
-		this.projectListWithProcess = projectListWithProcess;
+		this.projectListWithProcess = projectListWithProcess ;
 	}
 
 	/**
 	 * Getter of processNamesList.
-	 *
+	 * 
 	 * @return the processNamesList.
 	 */
 	public ArrayList<SelectItem> getProcessNamesList() {
-		ArrayList<SelectItem> tmpListNames = new ArrayList<SelectItem>();
-		ArrayList<wilos.model.spem2.process.Process> tmpListProcess= (ArrayList<wilos.model.spem2.process.Process>) this.processService.getProcessesList();
-		
+		ArrayList<SelectItem> tmpListNames = new ArrayList<SelectItem>() ;
+		ArrayList<wilos.model.spem2.process.Process> tmpListProcess = (ArrayList<wilos.model.spem2.process.Process>) this.processService.getProcessesList() ;
+
 		for(int i = 0; i < tmpListProcess.size(); i++ ){
-			tmpListNames.add(new SelectItem(tmpListProcess.get(i).getGuid(),tmpListProcess.get(i).getName()));
+			tmpListNames.add(new SelectItem(tmpListProcess.get(i).getGuid(), tmpListProcess.get(i).getName())) ;
 		}
-		processNamesList = tmpListNames;
+		processNamesList = tmpListNames ;
 		return this.processNamesList ;
 	}
 
 	/**
 	 * Setter of processNamesList.
-	 *
-	 * @param _processNamesList The processNamesList to set.
+	 * 
+	 * @param _processNamesList
+	 *            The processNamesList to set.
 	 */
 	public void setProcessNamesList(ArrayList<SelectItem> _processNamesList) {
 		this.processNamesList = _processNamesList ;
 	}
-	
+
 	/**
 	 * Getter of processService.
-	 *
+	 * 
 	 * @return the processService.
 	 */
 	public ProcessService getProcessService() {
@@ -402,8 +260,9 @@ public class ProjectBean {
 
 	/**
 	 * Setter of processService.
-	 *
-	 * @param _processService The processService to set.
+	 * 
+	 * @param _processService
+	 *            The processService to set.
 	 */
 	public void setProcessService(ProcessService _processService) {
 		this.processService = _processService ;
@@ -411,18 +270,18 @@ public class ProjectBean {
 
 	/**
 	 * Getter of selectedProcessGuid.
-	 *
+	 * 
 	 * @return the selectedProcessGuid.
 	 */
 	public String getSelectedProcessGuid() {
-		//Getting the current projet id from cession
-		String tmpProjId = (String)webSessionService.getAttribute(WebSessionService.PROJECT_ID);
-		if(tmpProjId!=null){
+		// Getting the current projet id from cession
+		String tmpProjId = (String) webSessionService.getAttribute(WebSessionService.PROJECT_ID) ;
+		if(tmpProjId != null){
 			Project projTmp = projectService.getProject(tmpProjId) ;
-			if(projTmp!=null){
-				Process procTmp = projTmp.getProcess();
-				if(procTmp!=null){
-					this.selectedProcessGuid = projTmp.getProcess().getGuid();
+			if(projTmp != null){
+				Process procTmp = projTmp.getProcess() ;
+				if(procTmp != null){
+					this.selectedProcessGuid = projTmp.getProcess().getGuid() ;
 				}
 			}
 		}
@@ -431,8 +290,9 @@ public class ProjectBean {
 
 	/**
 	 * Setter of selectedProcessGuid.
-	 *
-	 * @param _selectedProcessGuid The selectedProcessGuid to set.
+	 * 
+	 * @param _selectedProcessGuid
+	 *            The selectedProcessGuid to set.
 	 */
 	public void setSelectedProcessGuid(String _selectedProcessGuid) {
 		this.selectedProcessGuid = _selectedProcessGuid ;
@@ -442,174 +302,128 @@ public class ProjectBean {
 	 * @return the selectProcessAffectation
 	 */
 	public String getSelectProcessAffectation() {
-		String tmpProjId = (String)this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
-		Project currentProject = this.projectService.getProject(tmpProjId);
-		
-		String participantId = (String)this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID);
-		Participant participant = this.participantService.getParticipant(participantId);
-		if (currentProject.getProcess() == null)
-		{
-			if (currentProject.getProjectManager() != null)
-			{
-				if (currentProject.getProjectManager().getLogin().equals(participant.getLogin())  )
-				{
+		String tmpProjId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID) ;
+		Project currentProject = this.projectService.getProject(tmpProjId) ;
+
+		String participantId = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID) ;
+		Participant participant = this.participantService.getParticipant(participantId) ;
+		if(currentProject.getProcess() == null){
+			if(currentProject.getProjectManager() != null){
+				if(currentProject.getProjectManager().getLogin().equals(participant.getLogin())){
 					this.selectProcessAffectation = "process_affectation_view" ;
 				}
-				else
-				{
+				else{
 					this.selectProcessAffectation = "no_process_affectation_view" ;
 				}
 			}
-			else
-			{
+			else{
 				this.selectProcessAffectation = "no_process_affectation_view" ;
 			}
 		}
-		else
-		{
-			this.setProcessName(currentProject.getProcess().getName());
+		else{
+			this.setProcessName(currentProject.getProcess().getName()) ;
 			this.selectProcessAffectation = "selected_process_view" ;
 		}
-		return this.selectProcessAffectation;
+		return this.selectProcessAffectation ;
 	}
 
 	/**
-	 * @param selectProcessAffectation the selectProcessAffectation to set
+	 * @param selectProcessAffectation
+	 *            the selectProcessAffectation to set
 	 */
 	public void setSelectProcessAffectation(String selectProcessAffectation) {
-		this.selectProcessAffectation = selectProcessAffectation;
+		this.selectProcessAffectation = selectProcessAffectation ;
 	}
-	
+
 	/**
 	 * @return the processName
 	 */
 	public String getProcessName() {
-		return processName;
+		return processName ;
 	}
 
 	/**
-	 * @param processName the processName to set
+	 * @param processName
+	 *            the processName to set
 	 */
 	public void setProcessName(String processName) {
-		this.processName = processName;
+		this.processName = processName ;
 	}
 
-	
-	
 	/**
 	 * Getter of projectListView
-	 *
+	 * 
 	 * @return the projectListView.
 	 */
 	public String getprojectListView() {
-		if (this.getProjectList().size()==0 )
-		{
-			this.projectListView  = "projectsListPanelGroup_null";
+		if(this.getProjectList().size() == 0){
+			this.projectListView = "projectsListPanelGroup_null" ;
 		}
-		else
-		{
-			this.projectListView ="projectsListPanelGroup_not_null";
+		else{
+			this.projectListView = "projectsListPanelGroup_not_null" ;
 		}
-		return this.projectListView;
+		return this.projectListView ;
 	}
 
 	/**
 	 * Setter of projectListView.
-	 *
-	 * @param _projectListView The projectListView to set.
+	 * 
+	 * @param _projectListView
+	 *            The projectListView to set.
 	 */
 	public void setSelectAffectedProjectView(String _projectListView) {
 		this.projectListView = _projectListView ;
 	}
 
 	/**
-	 * Getter of projectContent.
-	 *
-	 * @return the projectContent.
+	 * @return the participantService
 	 */
-	public ArrayList<Object> getProjectContent() {
-		this.projectContent.clear();
-		/*******************/
-		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
-		
-		this.project = this.projectService.getProject(projectId);
-		if (this.project.getProcess() != null) {
-			retrieveHierarchicalItems() ;
-		}
-		/*******************/
-		return this.projectContent ;
-	}
-
-	
-	/**
-	 * TODO Method description
-	 *
-	 */
-	
-	private void retrieveHierarchicalItems() {
-		List<Object> tmpList = new ArrayList<Object>();
-		for (ConcreteBreakdownElement concreteBreakdownElement : this.project.getConcreteBreakdownElements()) {
-		        if (concreteBreakdownElement instanceof ConcretePhase) {
-		            this.projectContent.add(concreteBreakdownElement);
-		        } else if (concreteBreakdownElement instanceof ConcreteIteration) {
-		        	this.projectContent.add(concreteBreakdownElement);
-		        } else if (concreteBreakdownElement instanceof ConcreteActivity) {
-		        	this.projectContent.add(concreteBreakdownElement);
-		        } else if (concreteBreakdownElement instanceof ConcreteTaskDescriptor) {
-		        	this.projectContent.add((ConcreteTaskDescriptor) concreteBreakdownElement);
-		        }
-		}		
-	}
-
-	/**
-	 * Setter of projectContent.
-	 *
-	 * @param _projectContent The projectContent to set.
-	 */
-	public void setProjectContent(ArrayList<Object> _projectContent) {
-		this.projectContent = _projectContent ;
-	}
-
-	/**
-	 * Getter of displayContent.
-	 *
-	 * @return the displayContent.
-	 */
-	public ArrayList<Object> getDisplayContent() {
-		/*******************/
-		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
-		if(this.projectViewedId==null || projectViewedId!=projectId){
-			projectViewedId = projectId;
-			this.displayContent.clear();
-			this.displayContent.addAll(this.getProjectContent());
-		}
-		/*******************/
-		return this.displayContent;
-	}
-
-	/**
-	 * Setter of displayContent.
-	 *
-	 * @param _displayContent The displayContent to set.
-	 */
-	public void setDisplayContent(ArrayList<Object> _displayContent) {
-		this.displayContent = _displayContent ;
-	}
-
-	public WebSessionService getWebSessionService() {
-		return this.webSessionService ;
-	}
-
-	public void setWebSessionService(WebSessionService _webSessionService) {
-		this.webSessionService = _webSessionService ;
-	}
-
 	public ParticipantService getParticipantService() {
 		return this.participantService ;
 	}
 
+	/**
+	 * Setter of participantService.
+	 * 
+	 * @param _participantService
+	 *            The participantService to set.
+	 */
 	public void setParticipantService(ParticipantService _participantService) {
 		this.participantService = _participantService ;
 	}
-	
+
+	/**
+	 * @return the projectListView
+	 */
+	public String getProjectListView() {
+		return this.projectListView ;
+	}
+
+	/**
+	 * Setter of projectListView.
+	 * 
+	 * @param _projectListView
+	 *            The projectListView to set.
+	 */
+	public void setProjectListView(String _projectListView) {
+		this.projectListView = _projectListView ;
+	}
+
+	/**
+	 * @return the webSessionService
+	 */
+	public WebSessionService getWebSessionService() {
+		return this.webSessionService ;
+	}
+
+	/**
+	 * Setter of webSessionService.
+	 * 
+	 * @param _webSessionService
+	 *            The webSessionService to set.
+	 */
+	public void setWebSessionService(WebSessionService _webSessionService) {
+		this.webSessionService = _webSessionService ;
+	}
+
 }

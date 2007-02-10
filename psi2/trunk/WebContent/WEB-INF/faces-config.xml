@@ -116,6 +116,23 @@
 			<value>#{WebSessionService}</value>
 		</managed-property>
 	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>ProjectAdvancementBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.project.ProjectAdvancementBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+	</managed-bean>
+	
 
 	<managed-bean>
 		<managed-bean-name>salesRecordsManager</managed-bean-name>
