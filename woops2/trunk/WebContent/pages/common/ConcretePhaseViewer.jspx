@@ -9,18 +9,26 @@
 				<br />
 				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2"
 					border="0">
-					<ice:outputText value="id " />
+					<ice:outputText value="guid " />
 					<ice:outputText
-						value="#{PhaseViewerBean.phase.id}" />
-					<ice:outputText value="#{msgs['phaseviewer.presentationName'] }" />
+						value="#{PhaseViewerBean.phase.guid}" />
+					
+					<ice:outputText value="Concrete Name" />
 					<ice:outputText
-						value="#{PhaseViewerBean.phase.presentationName}" />
+						value="#{PhaseViewerBean.phase.concreteName}" />
+						
+					<ice:outputText value="Name" />
+					<ice:outputText
+						value="#{PhaseViewerBean.phase.name}" />
+						
+					<ice:outputText value="Description" />
+					<ice:outputText
+						value="#{PhaseViewerBean.phase.description}" />
+					
 					<ice:outputText value="#{msgs['phaseviewer.isplanned'] }" />
 					<ice:outputText
 						value="#{PhaseViewerBean.phase.isPlanned}" />
-					<ice:outputText value="#{msgs['phaseviewer.description'] }" />
-					<ice:outputText
-						value="#{PhaseViewerBean.phase.description}" />
+						
 				</ice:panelGrid>
 			</ice:panelTab>
 		</ice:panelTabSet>

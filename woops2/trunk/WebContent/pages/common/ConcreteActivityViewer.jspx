@@ -8,18 +8,26 @@
 			<ice:panelTab label="Activity Display">
 				<br />
 				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2">
-					<ice:outputText value="id " />
+					
+					<ice:outputText value="guid " />
 					<ice:outputText
-						value="#{ActivityViewerBean.activity.id}" />
-					<ice:outputText value="#{msgs['activityviewer.presentationName'] }" />
+						value="#{ActivityViewerBean.concreteActivity.activity.guid}" />
+					
+					<ice:outputText value="Concrete Name" />
 					<ice:outputText
-						value="#{ActivityViewerBean.activity.presentationName}" />
-					<ice:outputText value="#{msgs['activityviewer.isplanned'] }" />
+						value="#{ActivityViewerBean.concreteActivity.concreteName}" />
+						
+					<ice:outputText value="Name" />
 					<ice:outputText
-						value="#{ActivityViewerBean.activity.isPlanned}" />
-					<ice:outputText value="#{msgs['activityviewer.description'] }" />
+						value="#{ActivityViewerBean.concreteActivity.activity.name}" />
+						
+					<ice:outputText value="Description" />
 					<ice:outputText
-						value="#{ActivityViewerBean.activity.description}" />
+						value="#{ActivityViewerBean.concreteActivity.activity.description}" />
+					
+					<ice:outputText value="#{msgs['phaseviewer.isplanned'] }" />
+					<ice:outputText
+						value="#{ActivityViewerBean.concreteActivity.isPlanned}" />
 				</ice:panelGrid>
 			</ice:panelTab>
 		</ice:panelTabSet>

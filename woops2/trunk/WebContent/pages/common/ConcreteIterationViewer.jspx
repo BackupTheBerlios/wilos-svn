@@ -12,12 +12,15 @@
 					<ice:outputText value="#{msgs['taskviewer.id'] }" />
 					<ice:outputText
 						value="#{IterationViewerBean.iteration.id}" />
-					<ice:outputText value="#{msgs['iterationviewer.presentationName'] }" />
+						
+					<ice:outputText value="Concrete Name" />
 					<ice:outputText
-						value="#{IterationViewerBean.iteration.presentationName}" />
+						value="#{IterationViewerBean.iteration.concreteName}" />
+						
 					<ice:outputText value="#{msgs['iterationviewer.isplanned'] }" />
 					<ice:outputText
 						value="#{IterationViewerBean.iteration.isPlanned}" />
+						
 					<ice:outputText value="#{msgs['iterationviewer.description'] }" />
 					<ice:outputText
 						value="#{IterationViewerBean.iteration.description}" />
