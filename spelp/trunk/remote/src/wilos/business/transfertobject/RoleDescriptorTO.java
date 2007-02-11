@@ -27,8 +27,7 @@ public class RoleDescriptorTO extends RoleDescriptor implements Serializable{
     }
     
     public RoleDescriptorTO(RoleDescriptor myRoleDescriptor) {
-    	this.copy(myRoleDescriptor);
-        this.setName(myRoleDescriptor.getName());
+    	this.setName(myRoleDescriptor.getName());
         this.setPrefix(myRoleDescriptor.getPrefix());
         this.setPresentationName(myRoleDescriptor.getPresentationName());
         this.setGuid(myRoleDescriptor.getGuid());

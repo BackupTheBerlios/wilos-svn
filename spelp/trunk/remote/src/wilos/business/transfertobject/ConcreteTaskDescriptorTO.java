@@ -19,5 +19,6 @@ public class ConcreteTaskDescriptorTO extends ConcreteTaskDescriptor implements 
     	this.setPlannedTime(myConcreteTaskDescriptor.getPlannedTime());
     	// TODO ConcreteTask a completer
     	this.setState(myConcreteTaskDescriptor.getState());
+    	this.setTaskDescriptor(new TaskDescriptorTO(myConcreteTaskDescriptor.getTaskDescriptor()));
     }
 }
