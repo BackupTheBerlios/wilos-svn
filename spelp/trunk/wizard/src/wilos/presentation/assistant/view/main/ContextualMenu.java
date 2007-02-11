@@ -27,7 +27,7 @@ public class ContextualMenu extends JPopupMenu implements Observer
 
 	public ContextualMenu(){
 		super(Bundle.getText("mainFrame.option"));  
-		Font f = new Font(Font.DIALOG, Font.BOLD, 11);
+		Font f = new Font(null, Font.BOLD, 11);
 		jButtonPlayTask = new JMenuItem(ImagesService.getImageIcon("images.iconPlayS"));
 		jButtonPlayTask.setText(Bundle.getText("action.run"));
 		jButtonPlayTask.setFont(f);
