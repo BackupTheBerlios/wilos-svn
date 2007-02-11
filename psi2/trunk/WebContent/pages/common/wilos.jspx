@@ -1,2 +1,4 @@
-<ice:form id="test">
-</ice:form>
+<div class="wilos">
+   <ice:form id="test">
+   </ice:form>
+</div>

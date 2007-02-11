@@ -1,3 +1,4 @@
+
 package wilos.presentation.web.project ;
 
 import java.util.ArrayList ;
@@ -31,12 +32,12 @@ import wilos.model.misc.project.Project ;
  */
 public class ProjectAdvancementBean {
 
-	public static final String EXPAND_TABLE_ARROW = "images/expandableTable/expand.gif";
-	
-	public static final String CONTRACT_TABLE_ARROW = "images/expandableTable/contract.gif";
-	
-	public static final String TABLE_LEAF = "images/expandableTable/leaf.gif";
-	
+	public static final String EXPAND_TABLE_ARROW = "images/expandableTable/expand.gif" ;
+
+	public static final String CONTRACT_TABLE_ARROW = "images/expandableTable/contract.gif" ;
+
+	public static final String TABLE_LEAF = "images/expandableTable/leaf.gif" ;
+
 	private ProjectService projectService ;
 
 	private WebSessionService webSessionService ;
@@ -45,16 +46,16 @@ public class ProjectAdvancementBean {
 
 	private String projectViewedId ;
 
-	private List<Object> projectContent = new ArrayList<Object>() ; ;
+	private ArrayList<Object> projectContent = new ArrayList<Object>() ; ;
 
-	private List<Object> displayContent ;
-	
-	private HashMap<String, String> expandImages;
-	
-	private HashMap<String, Double> advancementTimes;
-	
-	private HashMap<String, String> indentationContent;
-	
+	private ArrayList<Object> displayContent ;
+
+	private HashMap<String, String> expandImages ;
+
+	private HashMap<String, Double> advancementTimes ;
+
+	private HashMap<String, String> indentationContent ;
+
 	protected HashMap<String, Boolean> isExpanded = new HashMap<String, Boolean>() ;
 	
 	private HashMap<Object,Boolean> itemsToShow = new HashMap<Object,Boolean>();
@@ -68,10 +69,10 @@ public class ProjectAdvancementBean {
 	public ProjectAdvancementBean() {
 		this.project = new Project() ;
 		this.projectContent = new ArrayList<Object>() ;
-		this.displayContent = new ArrayList<Object>();
-		this.expandImages = new HashMap<String, String>();
-		this.indentationContent = new HashMap<String, String>();
-		this.advancementTimes = new HashMap<String, Double>();
+		this.displayContent = new ArrayList<Object>() ;
+		this.expandImages = new HashMap<String, String>() ;
+		this.indentationContent = new HashMap<String, String>() ;
+		this.advancementTimes = new HashMap<String, Double>() ;
 	}
 
 	/**
@@ -96,12 +97,12 @@ public class ProjectAdvancementBean {
 		// add sub elements to list
 		if(b){
 			expandNodeAction() ;
-			this.expandImages.put(elementId, EXPAND_TABLE_ARROW);
+			this.expandImages.put(elementId, EXPAND_TABLE_ARROW) ;
 		}
 		// remove items from list
 		else{
 			contractNodeAction() ;
-			this.expandImages.put(elementId, CONTRACT_TABLE_ARROW);
+			this.expandImages.put(elementId, CONTRACT_TABLE_ARROW) ;
 		}
 	}
 
@@ -109,60 +110,57 @@ public class ProjectAdvancementBean {
 	 * Utility method to add all child nodes to the parent dataTable list.
 	 */
 	private void expandNodeAction() {
-		double advancedTime = 0.00;
+		double currentAdvancedTime = 0.00 ;
 		int i = 0;
 		FacesContext context = FacesContext.getCurrentInstance() ;
 		Map map = context.getExternalContext().getRequestParameterMap() ;
 		String elementId = (String) map.get("elementId") ;
-		ConcreteTaskDescriptor ctdtmp = new ConcreteTaskDescriptor();
-		
-		List<Object> tmp = new ArrayList<Object>() ;
+		ConcreteTaskDescriptor ctdtmp = new ConcreteTaskDescriptor() ;
+
+		ArrayList<Object> tmp = new ArrayList<Object>() ;
 		tmp.addAll(this.displayContent) ;
-		
-		for(Iterator iter = tmp.iterator(); iter.hasNext();){
-			Object element = (Object) iter.next() ;
-			if(element instanceof ConcreteActivity){
-				this.logger.debug("activity") ;
-				if(elementId.equals( ((ConcreteActivity) element).getId())){
-										
+
+		for(Iterator iter = tmp.iterator(); iter.hasNext();)
+		{
+			ConcreteBreakdownElement element = (ConcreteBreakdownElement) iter.next() ;
+			if(element instanceof ConcreteActivity)
+			{
+				if(elementId.equals( ((ConcreteActivity) element).getId()))
+				{
+					int index = this.displayContent.indexOf(element) ;
 					ConcreteActivity ca = (ConcreteActivity) element ;
-					//int index = this.displayContent.indexOf(element) ;
-					int index = i;
-					for(Iterator iterator = ca.getConcreteBreakdownElements().iterator(); iterator.hasNext();){
+					for(Iterator iterator = ca.getConcreteBreakdownElements().iterator(); iterator.hasNext();)
+					{
 						ConcreteBreakdownElement element2 = (ConcreteBreakdownElement) iterator.next() ;
+						this.indentationContent.put(element2.getId(), this.indentationContent.get(ca.getId().concat("CACA-")));
 						if(! (element2 instanceof ConcreteRoleDescriptor))
 						{
 							this.displayContent.add(index + 1, element2) ;
-							
 							if(! (element2 instanceof ConcreteTaskDescriptor))
 							{
-								this.expandImages.put(element2.getId(), CONTRACT_TABLE_ARROW);
-								this.advancementTimes.put(element2.getId(),	new Double(0.0));
+								this.expandImages.put(element2.getId(), CONTRACT_TABLE_ARROW) ;
 							}
 							else
 							{
-								this.expandImages.put(element2.getId(), TABLE_LEAF);
-								ctdtmp = (ConcreteTaskDescriptor)element2;
-								advancedTime = (double)Math.round(ProjectAdvancementBean.taskAdvancementCalculation(ctdtmp)*100);
+								this.expandImages.put(element2.getId(), TABLE_LEAF) ;
+								ctdtmp = (ConcreteTaskDescriptor) element2 ;
+								currentAdvancedTime = (double) Math.round(ProjectAdvancementBean.taskAdvancementCalculation(ctdtmp)*100) ;
+								this.advancementTimes.put(element2.getId(), currentAdvancedTime) ;
 							}
 						}
-						this.advancementTimes.put(element2.getId(),advancedTime);
 					}
+					return;
 				}
 			}
-			i++;
 		}
-		
 	}
-	
-	public static double taskAdvancementCalculation(ConcreteTaskDescriptor ctd)
-	{
-		double result = 0;
-		if((ctd.getAccomplishedTime()+ctd.getRemainingTime()) != 0)
-		{
-			result = (ctd.getRemainingTime()/(ctd.getAccomplishedTime()+ctd.getRemainingTime()));
+
+	public static double taskAdvancementCalculation(ConcreteTaskDescriptor ctd) {
+		double result = 0 ;
+		if( (ctd.getAccomplishedTime() + ctd.getRemainingTime()) != 0){
+			result = (ctd.getRemainingTime() / (ctd.getAccomplishedTime() + ctd.getRemainingTime())) ;
 		}
-		return result;
+		return result ;
 	}
 
 	/**
@@ -176,37 +174,28 @@ public class ProjectAdvancementBean {
 		FacesContext context = FacesContext.getCurrentInstance() ;
 		Map map = context.getExternalContext().getRequestParameterMap() ;
 		String elementId = (String) map.get("elementId") ;
-		
-		ArrayList<Object> tmp = new ArrayList<Object>() ;
-		tmp.addAll(this.displayContent) ;
 
-		//for(Iterator iter = this.displayContent.iterator(); iter.hasNext();){
-		for(Iterator iter = tmp.iterator(); iter.hasNext();){
+		for(Iterator iter = this.displayContent.iterator(); iter.hasNext();){
 			Object element = (Object) iter.next() ;
 			if(element instanceof ConcreteActivity){
 				if(elementId.equals( ((ConcreteActivity) element).getId())){
 					ConcreteActivity ca = (ConcreteActivity) element ;
 					firstSubLevelElementsList.addAll(ca.getConcreteBreakdownElements()) ;
 					while(i < firstSubLevelElementsList.size()){
-						if((firstSubLevelElementsList.get(i) instanceof ConcreteWorkBreakdownElement)){
-							if((firstSubLevelElementsList.get(i) instanceof ConcreteTaskDescriptor)){
-								//currentLevelElementsList.add(firstSubLevelElementsList.get(i)) ;
-								this.displayContent.remove(firstSubLevelElementsList.get(i)) ;
-							}
-							else{
+						if(! (firstSubLevelElementsList.get(i) instanceof ConcreteTaskDescriptor)
+								&& ! (firstSubLevelElementsList.get(i) instanceof ConcreteRoleDescriptor)){
 							currentLevelElementsList.addAll(this.parseSubConcreteBreakdownElement(subLevelElementsList,
 									(ConcreteActivity) firstSubLevelElementsList.get(i))) ;
-							}							
 						}
-						
+						currentLevelElementsList.add(firstSubLevelElementsList.get(i)) ;
 						i++ ;
 					}
 
 				}
 			}
 		}
-		//this.displayContent.removeAll(currentLevelElementsList) ;
-		this.expandImages.remove(currentLevelElementsList);
+		this.displayContent.removeAll(currentLevelElementsList) ;
+		this.expandImages.remove(currentLevelElementsList) ;
 	}
 
 	public List<Object> parseSubConcreteBreakdownElement(List<Object> result, ConcreteActivity ca) {
@@ -215,25 +204,24 @@ public class ProjectAdvancementBean {
 		if(ca.getConcreteBreakdownElements() != null){
 			result.add(ca) ;
 			this.isExpanded.put(ca.getId(), false) ;
-			this.expandImages.put(ca.getId(), CONTRACT_TABLE_ARROW);
+			this.expandImages.put(ca.getId(), CONTRACT_TABLE_ARROW) ;
 			list.addAll(ca.getConcreteBreakdownElements()) ;
 			while(i < list.size() && list.get(i) != null){
 				if((list.get(i) instanceof ConcreteWorkBreakdownElement)){
 					if((list.get(i) instanceof ConcreteTaskDescriptor)){
 						result.add(list.get(i)) ;
 						this.itemsToShow.put(((ConcreteTaskDescriptor)list.get(i)).getConcreteName(), new Boolean(false));
-						this.displayContent.remove(list.get(i)) ;
+						//this.displayContent.remove(list.get(i)) ;
 					}
 					else{
 						result.addAll(parseSubConcreteBreakdownElement(result, (ConcreteActivity) list.get(i))) ;
 						this.itemsToShow.put(((ConcreteActivity)list.get(i)).getConcreteName(),new Boolean(true));
-						this.displayContent.remove(list.get(i)) ;
+						//this.displayContent.remove(list.get(i)) ;
 					}					
 				}					
 				i++ ;
 			}
 		}
-		this.displayContent.remove(ca) ;
 		return result ;
 	}
 
@@ -242,7 +230,7 @@ public class ProjectAdvancementBean {
 	 *
 	 * @return the projectContent.
 	 */
-	public List<Object> getProjectContent() {
+	public ArrayList<Object> getProjectContent() {
 		this.projectContent.clear() ;
 		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID) ;
 
@@ -260,8 +248,6 @@ public class ProjectAdvancementBean {
 	private void retrieveHierarchicalItems() {
 		for(ConcreteBreakdownElement concreteBreakdownElement : this.project.getConcreteBreakdownElements()){
 			if(concreteBreakdownElement instanceof ConcretePhase){
-				HashMap<String, Object> hm = new HashMap<String, Object>();
-				hm.put(concreteBreakdownElement.getId(),concreteBreakdownElement.getConcreteName());
 				this.projectContent.add(concreteBreakdownElement) ;
 				this.expandImages.put(concreteBreakdownElement.getId(), CONTRACT_TABLE_ARROW);
 				if(!(concreteBreakdownElement instanceof ConcreteTaskDescriptor)){
@@ -273,15 +259,15 @@ public class ProjectAdvancementBean {
 			}
 			else if(concreteBreakdownElement instanceof ConcreteIteration){
 				this.projectContent.add(concreteBreakdownElement) ;
-				this.expandImages.put(concreteBreakdownElement.getId(), CONTRACT_TABLE_ARROW);
+				this.expandImages.put(concreteBreakdownElement.getId(), CONTRACT_TABLE_ARROW) ;
 			}
 			else if(concreteBreakdownElement instanceof ConcreteActivity){
 				this.projectContent.add(concreteBreakdownElement) ;
-				this.expandImages.put(concreteBreakdownElement.getId(), CONTRACT_TABLE_ARROW);
+				this.expandImages.put(concreteBreakdownElement.getId(), CONTRACT_TABLE_ARROW) ;
 			}
 			else if(concreteBreakdownElement instanceof ConcreteTaskDescriptor){
 				this.projectContent.add((ConcreteTaskDescriptor) concreteBreakdownElement) ;
-				this.expandImages.put(concreteBreakdownElement.getId(), "");
+				this.expandImages.put(concreteBreakdownElement.getId(), "") ;
 			}
 		}
 	}
@@ -291,8 +277,8 @@ public class ProjectAdvancementBean {
 	 *
 	 * @return the displayContent.
 	 */
-	public List<Object> getDisplayContent() {
-		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
+	public ArrayList<Object> getDisplayContent() {
+		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID) ;
 		if(this.projectViewedId == null || projectViewedId != projectId){
 			projectViewedId = projectId ;
 			this.displayContent.clear() ;
@@ -465,4 +451,3 @@ public class ProjectAdvancementBean {
 		this.itemsToShow = _itemsToShow ;
 	}
 }
-

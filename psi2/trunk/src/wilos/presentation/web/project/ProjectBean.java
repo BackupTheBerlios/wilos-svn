@@ -309,7 +309,7 @@ public class ProjectBean {
 		Participant participant = this.participantService.getParticipant(participantId) ;
 		if(currentProject.getProcess() == null){
 			if(currentProject.getProjectManager() != null){
-				if(currentProject.getProjectManager().getLogin().equals(participant.getLogin())){
+				if(currentProject.getProjectManager().getWilosuser_id().equals(participant.getWilosuser_id())){
 					this.selectProcessAffectation = "process_affectation_view" ;
 				}
 				else{
