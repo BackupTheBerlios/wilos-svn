@@ -13,7 +13,7 @@
 							progressListener="#{XmlFileImportBean.progressListener}"
 							actionListener="#{XmlFileImportBean.uploadFileActionListener}"
 							uniqueFolder="false" file="#{XmlFileImportBean.file}"
-							immediate="true" />
+							immediate="true"  styleClass="smallbutton"/>
 						<ice:outputProgress id="pro" value="#{XmlFileImportBean.percent}" />
 						<ice:outputText value="File Name: #{XmlFileImportBean.fileName}" />
 						<br />
