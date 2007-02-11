@@ -1,13 +1,29 @@
 /*petit test sur les boutons*/
 .button{
-	background-color:BEB4CC;
-	border: 2px outset  #CAC0D6;
+	background-color:#CAC0D6;
+	border: 2px outset  #FFFFFF;
 	/*outline:#8B82A2 solid thin;*/
-	color:#FFFFFF;
+	color:#9681B7;
 	padding: 0px 5px  0px 5px;
+	font:bold 7.5pt Verdana;
 }
 .button:hover{
-	background-color:rgb(231,222,243);
+	background-color:#9681B7;
+	color:#F7C748;
+}
+
+/*petit test sur les boutons*/
+.smallbutton{
+	background-color:#CAC0D6;
+	border: 2px outset  #FFFFFF;
+	/*outline:#8B82A2 solid thin;*/
+	color:#9681B7;
+	padding: 0px 5px  0px 5px;
+	font:bold 7pt Verdana;
+}
+.smallbutton:hover{
+	background-color:#9681B7;
+	color:#F7C748;
 }
 	
 #body{
@@ -20,7 +36,7 @@
 }
 
 #connection { 
-	width:210px;
+	width:250px;
 	border-right:2px solid #FFFFFF;
 	border-top:2px solid #FFFFFF;
 	border-bottom:2px solid #FFFFFF;
@@ -37,8 +53,20 @@
 }
 
 #menu { 
-	width:210px;
-	height:300px;
-	border-right:2px solid #FFFFFF;
-	overflow:scroll;
+	width:250px;
+	height:400px;
+	border-right: 2px solid #FFFFFF;  
+	overflow:auto;
+}
+
+#wilos_messages{
+	list-style-image: url("../images/arrow_messages.gif");
+}
+
+#ul{
+  list-style-image: url("../images/arrow_messages.gif");
+}
+
+#li{
+  list-style-image: url("../images/arrow_messages.gif");
 }

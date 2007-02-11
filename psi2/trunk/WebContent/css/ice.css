@@ -1,4 +1,42 @@
+/*
+------------- PanelLayout
+*/
 
+.pageHeader {
+    font:bold 9pt Verdana;
+    color:#766494;
+    border: 2px solid #FFFFFF;
+    height: 50px;
+    background-color: #CAC0D6;
+    width:100%;
+}
+
+.icePageStyle {
+    background-color: #FFFFFF;
+    border: 1px solid #ABABAB;
+    margin: 10px;
+    width: 97%;
+}
+
+/*.pageNavigation {
+    width: 20%;
+    background-color: #DEDEDE;
+    padding: 5px;
+    vertical-align: top;
+}*/
+
+/*.pageBody {
+    width: 80%;
+    background-color: #FFFFFF;
+    padding: 5px;
+    vertical-align: top;
+}*/
+
+.pageFooter {
+    border-top: 1px solid #ABABAB;
+    color: #666666;
+    padding: 4px;
+}
 
 /* Main border layout for template */
 .mainBorderLayout {
@@ -21,13 +59,15 @@
 	background-color:#CAC0D6;
     vertical-align: top;
     width: 10%;
+    font:bold 9pt Verdana;
+    color:#766494;
 }
 
 .icePageCenter {
 	background-color:#CAC0D6;
     vertical-align: top;
     margin: 50px 5px 5px 5px;
-    width: 80%;
+    width: 90%;
 }
 
 /*
@@ -166,15 +206,16 @@ em {
  Navigation
 */
 .navTree {
-    overflow: auto;
-    height: 250px;
+    /*overflow: scroll;
+    height: 250px;*/
 }
 
 .navThemeChange, .navTree {
     margin: 0px;
     /*padding: 5px;*/
     margin-top: 0;
-    width: 190px;
+    width: 250px;
+    font-size:8pt;
 }
 
 .navConnectionStatus {
@@ -403,8 +444,8 @@ body, table {
 }
 
 .iceOutputText {
-    font-family: Arial, Helvetica, sans-serif;
-    color: #000000;
+    font:bold Verdana;
+    color: #766491;
     padding-left: 0px;
     padding-right: 0px;
     padding-top: 2px;
@@ -449,7 +490,7 @@ body, table {
     display: block;
     text-decoration: none;
     background-color: transparent;
-    background-image: url( "../images/xpwilos/cal_off.gif" );
+    background-image: url( "../images/cal_off.gif" );
     background-repeat: no-repeat;
     text-align: center;
     border: none;
@@ -464,7 +505,7 @@ body, table {
     background-repeat: repeat-x;
     font-weight: normal;
     text-align: center;
-    color: #000000;
+    color: #766494;
     padding-left: 1px;
     padding-right: 1px;
     padding-top: 4px;
@@ -479,7 +520,7 @@ body, table {
     text-decoration: none;
     display: block;
     background-color: transparent;
-    background-image: url( "../images/xpwilos/cal_arrow_left.gif" );
+    background-image: url( "../images/cal_arrow_left.gif" );
     background-repeat: no-repeat;
     text-align: center;
     border: none;
@@ -491,7 +532,7 @@ body, table {
     text-decoration: none;
     display: block;
     background-color: transparent;
-    background-image: url( "../images/xpwilos/cal_arrow_right.gif" );
+    background-image: url( "../images/cal_arrow_right.gif" );
     background-repeat: no-repeat;
     text-align: center;
     border: none;
@@ -502,7 +543,7 @@ body, table {
 .iceCalWeek {
 /* the days of the week row */
     font-weight: normal;
-    color: #2A6CC2;
+    color: #766494;
     text-align: center;
     padding-left: 5px;
     padding-right: 5px;
@@ -1311,7 +1352,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 .icePageCenter {
     width: 70%;
     background-color: #CAC0D6;
-    padding: 5px;
+    padding: 0px;
     vertical-align: top;
 }
 
@@ -1321,48 +1362,6 @@ background-image:url("../images/xpwilos/tab-over.gif");
     padding: 4px;
 }
 
-
-
-
-
-/*
-------------- PanelLayout
-*/
-
-.pageHeader {
-    font-weight: bold;
-    height: 80px;
-    background-color: #FF0000;
-    padding: 5px;
-    text-align: center;
-}
-
-.icePageStyle {
-    background-color: #FFFFFF;
-    border: 1px solid #ABABAB;
-    margin: 10px;
-    width: 97%;
-}
-
-/*.pageNavigation {
-    width: 20%;
-    background-color: #DEDEDE;
-    padding: 5px;
-    vertical-align: top;
-}*/
-
-/*.pageBody {
-    width: 80%;
-    background-color: #FFFFFF;
-    padding: 5px;
-    vertical-align: top;
-}*/
-
-.pageFooter {
-    border-top: 1px solid #ABABAB;
-    color: #666666;
-    padding: 4px;
-}
 
 /*
 ------------ PanelNavigation
@@ -2267,46 +2266,46 @@ Disabled classes for the calendar controls
 ----------- message ----------
 */
 .iceMsg {
-
+list-style-image: url("../images/arrow_messages.gif");
 }
 
 .iceMsgFatal {
-
+list-style-image: url("../images/arrow_messages.gif");
 }
 
 .iceMsgError {
-
+list-style-image: url("../images/arrow_messages.gif");
 }
 
 .iceMsgWarn {
-
+list-style-image: url("../images/arrow_messages.gif");
 }
 
 .iceMsgInfo {
-
+list-style-image: url("../images/arrow_messages.gif");
 }
 
 /*
 ----------- messages ----------
 */
 .iceMsgs {
-
+list-style-image: url("../images/arrow_messages.gif");
 }
 
 .iceMsgsFatal {
-
+list-style-image: url("../images/arrow_messages.gif");
 }
 
 .iceMsgsError {
-
+list-style-image: url("../images/arrow_messages.gif");
 }
 
 .iceMsgsWarn {
-
+list-style-image: url("../images/arrow_messages.gif");
 }
 
 .iceMsgsInfo {
-
+list-style-image: url("../images/arrow_messages.gif");
 }
 
 /*

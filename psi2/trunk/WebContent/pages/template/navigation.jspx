@@ -1,12 +1,5 @@
-<ice:form xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ice="http://www.icesoft.com/icefaces/component"
-	id="navigationMenuForm">
-	<br />
-
-	<f:loadBundle basename="wilos.resources.messages" var="msgs" />
-
-	<!-- ComboBox -->
+<ice:form id="navigation">
+<!-- ComboBox -->
 	<!-- The projects combobox -->
 	<ice:selectOneMenu partialSubmit="true" value="#{TreeBean.projectId}" valueChangeListener="#{TreeBean.changeTreeActionListener}">
 		<f:selectItems value="#{TreeBean.projects}" />

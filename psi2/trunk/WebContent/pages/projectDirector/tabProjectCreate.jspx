@@ -20,7 +20,7 @@
 				<ice:panelGrid columns="2">
 					<ice:commandButton
 						value="#{msgs['component.projectcreate.register']}"
-						action="#{ProjectBean.saveProjectAction}" />
+						action="#{ProjectBean.saveProjectAction}"  styleClass="smallbutton"/>
 				</ice:panelGrid>
 			</ice:panelGroup>
 		</ice:panelTab>
