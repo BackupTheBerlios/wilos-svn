@@ -147,7 +147,16 @@
             'images/connect_caution.gif',
             'images/connect_disconnected.gif',
             'images/connect_idle.gif',
-            'images/arrow_messages.gif'
+            'images/arrow_messages.gif',
+            'images/cal_arrow_left.gif',
+            'images/cal_arrow_right.gif',
+            'images/cal_button.gif',
+            'images/cal_off.gif',
+            'images/expandableTable/contract.gif',
+            'images/expandableTable/expand.gif',
+            'images/expandableTable/leaf.GIF'
+            
+            
     );
     
     function submitOnEnter(evt){

@@ -18,7 +18,6 @@ public class ActionBean {
 	private String manageProcessManagers = "manageProcessManagers";
 	private String manageProjectDirectors = "manageProjectDirectors";
 	
-	private String affectRoles = "affectRoles";
 	private String affectProject = "affectProject";
 	private String affectProjectAsManager = "affectProjectAsManager";
 	
@@ -151,24 +150,6 @@ public class ActionBean {
 	 */
 	public void setAffectProjectAsManager(String _affectProjectAsManager) {
 		this.affectProjectAsManager = _affectProjectAsManager ;
-	}
-
-	/**
-	 * Getter of affectRoles.
-	 *
-	 * @return the affectRoles.
-	 */
-	public String getAffectRoles() {
-		return this.affectRoles ;
-	}
-
-	/**
-	 * Setter of affectRoles.
-	 *
-	 * @param _affectRoles The affectRoles to set.
-	 */
-	public void setAffectRoles(String _affectRoles) {
-		this.affectRoles = _affectRoles ;
 	}
 
 	/**

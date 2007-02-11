@@ -139,9 +139,11 @@ public class ProjectAdvancementBean {
 							if(! (element2 instanceof ConcreteTaskDescriptor))
 							{
 								this.expandImages.put(element2.getId(), CONTRACT_TABLE_ARROW) ;
+								this.itemsToShow.put(((ConcreteActivity)element2).getConcreteName(),new Boolean(true));
 							}
 							else
 							{
+								this.itemsToShow.put(((ConcreteTaskDescriptor)element2).getConcreteName(), new Boolean(false));
 								this.expandImages.put(element2.getId(), TABLE_LEAF) ;
 								ctdtmp = (ConcreteTaskDescriptor) element2 ;
 								currentAdvancedTime = (double) Math.round(ProjectAdvancementBean.taskAdvancementCalculation(ctdtmp)*100) ;
@@ -210,12 +212,12 @@ public class ProjectAdvancementBean {
 				if((list.get(i) instanceof ConcreteWorkBreakdownElement)){
 					if((list.get(i) instanceof ConcreteTaskDescriptor)){
 						result.add(list.get(i)) ;
-						this.itemsToShow.put(((ConcreteTaskDescriptor)list.get(i)).getConcreteName(), new Boolean(false));
+						//this.itemsToShow.put(((ConcreteTaskDescriptor)list.get(i)).getConcreteName(), new Boolean(false));
 						//this.displayContent.remove(list.get(i)) ;
 					}
 					else{
 						result.addAll(parseSubConcreteBreakdownElement(result, (ConcreteActivity) list.get(i))) ;
-						this.itemsToShow.put(((ConcreteActivity)list.get(i)).getConcreteName(),new Boolean(true));
+						//this.itemsToShow.put(((ConcreteActivity)list.get(i)).getConcreteName(),new Boolean(true));
 						//this.displayContent.remove(list.get(i)) ;
 					}					
 				}					

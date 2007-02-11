@@ -23,7 +23,7 @@
 	<!-- Tree - The process tree with its taskDescriptors -->
 	<ice:tree id="tree" value="#{TreeBean.model}" var="item"
 		hideRootNode="#{TreeBean.loadTree}" hideNavigation="false"
-		imageDir="./xmlhttp/css/xp/css-images/">
+		imageDir="images/tree/">
 		<ice:treeNode>
 			<f:facet name="icon">
 				<ice:panelGroup style="display: inline">
