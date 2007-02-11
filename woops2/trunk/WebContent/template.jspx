@@ -22,7 +22,7 @@
         cellspacing="0" styleClass="mainBorderLayout" >
 
         <f:facet name="north">
-            <ice:panelGroup>  
+            <ice:panelGroup styleClass="contentIncludePanelGroup" id="banner">  
 					<img src="images/logo_wilos.png"/>
             <div id="roles_actions">
             	<jsp:directive.include file="./pages/template/rolesActions.jspx" />
@@ -31,7 +31,7 @@
         </f:facet>
 
         <f:facet name="west">
-            <ice:panelGroup>
+            <ice:panelGroup styleClass="contentIncludePanelGroup" id="pnGleftmenu">
             <div id="connection">
 				<jsp:directive.include file="./pages/template/connect.jspx"/>
 			</div>
@@ -42,14 +42,16 @@
         </f:facet>
 
         <f:facet name="center">
-            <ice:panelGroup>
-				
+            
+            <ice:panelGroup id="navStatus">
+				<ice:panelGrid styleClass="pageHeader" cellpadding="">
+					<ice:messages id="wilos_messages"/><!--  styleClass="pageHeader"/>-->
+				</ice:panelGrid>
                 <ice:panelGrid styleClass="navConnectionStatus">
                     <!-- Connection Status -->
                     <ice:outputConnectionStatus style="iceOutConStat"/>
-                </ice:panelGrid>
-                
-				<ice:messages styleClass="pageHeader"/>
+                </ice:panelGrid>	
+                    
                     <ice:panelStack id="panelStack"
                         styleClass="componentContentPanelStack"
                         selectedPanel="#{menu.selectedPanel.templateName}">
@@ -144,7 +146,8 @@
             'images/connect_active.gif',
             'images/connect_caution.gif',
             'images/connect_disconnected.gif',
-            'images/connect_idle.gif'
+            'images/connect_idle.gif',
+            'images/arrow_messages.gif'
     );
     
     function submitOnEnter(evt){
