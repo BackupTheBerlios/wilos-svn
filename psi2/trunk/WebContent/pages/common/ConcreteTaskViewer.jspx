@@ -50,7 +50,7 @@
 						actionListener="#{ConcreteTaskViewerBean.startActionListener}"
 						visible="#{ConcreteTaskViewerBean.visibleStart}"/>
 					<ice:commandButton value="#{msgs['concretetaskviewer.saveButton']}" 
-						actionListener="#{ConcreteTaskViewerBean.updateActionListener}" 
+						actionListener="#{ConcreteTaskViewerBean.updateActionListener}"
 						visible="#{ConcreteTaskViewerBean.visibleModifiable}"/>
 					</td>
 					</tr>

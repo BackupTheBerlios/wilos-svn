@@ -8,7 +8,7 @@
     border: 2px solid #FFFFFF;
     height: 50px;
     background-color: #CAC0D6;
-    width:100%;
+    width:90%;
 }
 
 .icePageStyle {
@@ -478,7 +478,7 @@ body, table {
     display: block;
     text-decoration: none;
     background-color: transparent;
-    background-image: url( "../images/xpwilos/cal_button.gif" );
+    background-image: url( "../images/cal_button.gif" );
     background-repeat: no-repeat;
     text-align: center;
     border: none;

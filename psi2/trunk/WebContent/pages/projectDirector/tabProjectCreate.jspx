@@ -15,7 +15,7 @@
 					</ice:outputText>
 					<ice:selectInputDate id="launchingDate"
 						value="#{ProjectBean.project.launchingDate}"
-						popupDateFormat="dd/MM/yyyy" renderAsPopup="true" required="false" />
+						popupDateFormat="dd/MM/yyyy" renderAsPopup="true" required="false" imageDir="images/"/>
 				</ice:panelGrid>
 				<ice:panelGrid columns="2">
 					<ice:commandButton
