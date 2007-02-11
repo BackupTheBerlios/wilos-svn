@@ -174,7 +174,7 @@ public class ProjectAdvancementBean {
 			result = remainingTimes / (remainingTimes + accomplishedTimes) ;
 		}
 		if(accomplishedTimes > 0){
-			result = 100 - (result * 100) ;
+			result = (result * 100) ;
 		}
 		else{
 			result = 0.0 ;
