@@ -7,7 +7,8 @@
 	xsi:schemaLocation="
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
-	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
+	default-lazy-init="true">
 
 	<!-- DataSource Definition -->
 	<bean id="dataSource"
@@ -17,13 +18,13 @@
 			<value>org.gjt.mm.mysql.Driver</value>
 		</property>
 		<property name="url">
-			<value>jdbc:mysql://127.0.0.1/m1isb2</value>
+			<value>jdbc:mysql://127.0.0.1/wilos</value>
 		</property>
 		<property name="username">
-			<value>m1isb2</value>
+			<value>root</value>
 		</property>
 		<property name="password">
-			<value>5lmpcdtc</value>
+			<value></value>
 		</property>
 	</bean>
 
@@ -349,6 +350,11 @@
 	<!-- =============================================================== -->
 	<!-- ====================== WOOPS2 Service ========================= -->
 	<!-- =============================================================== -->
+
+	<bean id="WebSessionService"
+		class="wilos.business.services.presentation.web.WebSessionService">
+	</bean>
+
 	<bean id="ProcessService"
 		class="wilos.business.services.spem2.process.ProcessService">
 		<property name="processDao" ref="ProcessDao" />
@@ -375,7 +381,8 @@
 		<property name="projectDao" ref="ProjectDao" />
 		<property name="stepDao" ref="StepDao" />
 		<property name="guidanceDao" ref="GuidanceDao" />
-
+		<property name="concreteBreakdownElementService"
+			ref="ConcreteBreakdownElementService" />
 	</bean>
 
 	<bean id="BreakdownElementService"
@@ -389,6 +396,10 @@
 		class="wilos.business.services.spem2.activity.ActivityService">
 		<property name="activityDao" ref="ActivityDao" />
 		<property name="concreteActivityDao" ref="ConcreteActivityDao" />
+		<!-- <property name="phaseService" ref="PhaseService" />
+		<property name="iterationService" ref="IterationService" />-->
+		<property name="roleDescriptorService" ref="RoleDescriptorService" />
+		<property name="taskDescriptorService" ref="TaskDescriptorService" />
 	</bean>
 
 	<bean id="RoleDescriptorService"
@@ -408,12 +419,19 @@
 	<bean id="PhaseService"
 		class="wilos.business.services.spem2.phase.PhaseService">
 		<property name="concretePhaseDao" ref="ConcretePhaseDao" />
+		<property name="activityService" ref="ActivityService" />
+		<property name="iterationService" ref="IterationService" />
+		<property name="roleDescriptorService" ref="RoleDescriptorService" />
+		<property name="taskDescriptorService" ref="TaskDescriptorService" />
 	</bean>
 
 	<bean id="IterationService"
 		class="wilos.business.services.spem2.iteration.IterationService">
-		<property name="concreteIterationDao"
-			ref="ConcreteIterationDao" />
+		<property name="concreteIterationDao" ref="ConcreteIterationDao" />
+		<property name="activityService" ref="ActivityService" />
+		<!-- <property name="phaseService" ref="PhaseService" />-->
+		<property name="roleDescriptorService" ref="RoleDescriptorService" />
+		<property name="taskDescriptorService" ref="TaskDescriptorService" />
 	</bean>
 
 	<bean id="ConcreteTaskDescriptorService"
@@ -446,6 +464,11 @@
 	<bean id="ConcretePhaseService"
 		class="wilos.business.services.misc.concretephase.ConcretePhaseService">
 		<property name="concretePhaseDao" ref="ConcretePhaseDao" />
+	</bean>
+
+	<bean id="ConcreteBreakdownElementService"
+		class="wilos.business.services.misc.concretebreakdownelement.ConcreteBreakdownElementService">
+		<property name="concreteBreakdownElementDao" ref="ConcreteBreakdownElementDao" />
 	</bean>
 	
 	
