@@ -27,20 +27,22 @@ public class RoleDescriptorTO extends RoleDescriptor implements Serializable{
     }
     
     public RoleDescriptorTO(RoleDescriptor myRoleDescriptor) {
+    	this.copy(myRoleDescriptor);
         this.setName(myRoleDescriptor.getName());
         this.setPrefix(myRoleDescriptor.getPrefix());
         this.setPresentationName(myRoleDescriptor.getPresentationName());
         this.setGuid(myRoleDescriptor.getGuid());
         this.setDescription(myRoleDescriptor.getDescription());        
-     
-        for (TaskDescriptor td : myRoleDescriptor.getPrimaryTasks()) {
+        
+        
+        /*for (TaskDescriptor td : myRoleDescriptor.getPrimaryTasks()) {
         	 this.addPrimaryTask(new TaskDescriptorTO(td));
-        }
+        }*/
 
       
-        for (TaskDescriptor td : myRoleDescriptor.getAdditionalTasks()) {
+       /* for (TaskDescriptor td : myRoleDescriptor.getAdditionalTasks()) {
         	this.addAdditionalTask(new TaskDescriptorTO(td));
-        }
+        }*/
 
         if(myRoleDescriptor.getRoleDefinition() != null) this.setRoleDefinition(new RoleDefinitionTO(myRoleDescriptor.getRoleDefinition()));
         if(this.getRoleDefinition() != null && this.getDescription().length()==0)  this.setDescription(this.getRoleDefinition().getDescription());
