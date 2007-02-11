@@ -171,7 +171,6 @@ public class TreeBean {
 		this.loadTree = false ;
 		this.buildModel(true) ;
 
-		// TODO changeTreeActionListener not verify
 		if (this.projectId.length() > 0) this.selectNodeToShow(this.projectId, WilosObjectNode.PROJECTNODE) ;
 		logger.debug("### TreeBean ### changeTreeActionListener projectId="+this.projectId) ;
 	}
@@ -179,7 +178,7 @@ public class TreeBean {
 	public void filterTreeActionListener(ValueChangeEvent evt) {
 		this.buildModel(false) ;
 	}
-
+	//TODO ameliorer l'affichage d'un noeud en chargeant l'obejt a afficher direct dans le ViewerBean
 	public void selectNodeActionListener(ActionEvent evt) {
 		logger.debug("### TreeBean ### selectNodeActionListener") ;
 		FacesContext context = FacesContext.getCurrentInstance() ;
