@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Servers>
   <Server>
-    <Alias>telline</Alias>
-    <Address>http://truc.fr</Address>
+    <Alias>local remote</Alias>
+    <Address>http://localhost:8080/Spelp_remote</Address>
     <Id>1</Id>
   </Server>
   <Server>
     <Alias>marine</Alias>
     <Address>http://marine.ups-tlse.fr/wilos</Address>
     <Id>2</Id>
+  </Server>
+  <Server>
+    <Alias>telline</Alias>
+    <Address>http://truc.fr</Address>
+    <Id>3</Id>
   </Server>
 </Servers>
 
