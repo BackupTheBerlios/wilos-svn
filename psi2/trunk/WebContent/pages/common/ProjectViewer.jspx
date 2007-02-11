@@ -43,6 +43,7 @@
 					</f:subview>
 				</ice:panelStack>
 			</ice:panelTab>
+			<!-- PSI2 ONGLET DE L AVANCEMENT DU PROJET -->
 			<ice:panelTab id="panelTab_projectAdvancement" label="#{msgs['component.project.projectadvancement.title']}">
 			<ice:dataTable
 				value="#{ProjectAdvancementBean.displayContent}"
@@ -67,7 +68,7 @@
 				    <f:facet name="header">
 				        <ice:outputText value="#{msgs['component.project.projectadvancement.column2']}"/>
 				    </f:facet>
-			        <ice:outputText value="#{ProjectAdvancementBean.advancementTimes[cbde.id]}"/>
+			        <ice:outputText value="#{ProjectAdvancementBean.advancementTimes[cbde.id]} %"/>
 				</ice:column>
 			</ice:dataTable>
 		</ice:panelTab>

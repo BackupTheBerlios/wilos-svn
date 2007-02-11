@@ -3,7 +3,6 @@ package wilos.presentation.web.project ;
 
 import java.util.ArrayList ;
 import java.util.HashMap ;
-import java.util.Hashtable;
 import java.util.Iterator ;
 import java.util.List ;
 import java.util.Map ;
@@ -14,7 +13,6 @@ import javax.faces.event.ActionEvent ;
 import org.apache.commons.logging.Log ;
 import org.apache.commons.logging.LogFactory ;
 
-import wilos.business.services.misc.concretebreakdownelement.ConcreteBreakdownElementService;
 import wilos.business.services.misc.project.ProjectService ;
 import wilos.business.services.presentation.web.WebSessionService ;
 import wilos.model.misc.concreteactivity.ConcreteActivity ;
@@ -111,7 +109,7 @@ public class ProjectAdvancementBean {
 	 */
 	private void expandNodeAction() {
 		double currentAdvancedTime = 0.00 ;
-		int i = 0;
+		String indentationString = "";
 		FacesContext context = FacesContext.getCurrentInstance() ;
 		Map map = context.getExternalContext().getRequestParameterMap() ;
 		String elementId = (String) map.get("elementId") ;
@@ -132,7 +130,11 @@ public class ProjectAdvancementBean {
 					for(Iterator iterator = ca.getConcreteBreakdownElements().iterator(); iterator.hasNext();)
 					{
 						ConcreteBreakdownElement element2 = (ConcreteBreakdownElement) iterator.next() ;
-						this.indentationContent.put(element2.getId(), this.indentationContent.get(ca.getId().concat("CACA-")));
+						if (this.indentationContent.get(ca.getId()) != null){
+							indentationString = this.indentationContent.get(ca.getId());
+						}
+						this.indentationContent.put(element2.getId(),indentationString.concat("- - - "));
+									
 						if(! (element2 instanceof ConcreteRoleDescriptor))
 						{
 							this.displayContent.add(index + 1, element2) ;
@@ -145,11 +147,10 @@ public class ProjectAdvancementBean {
 							{
 								this.itemsToShow.put(((ConcreteTaskDescriptor)element2).getConcreteName(), new Boolean(false));
 								this.expandImages.put(element2.getId(), TABLE_LEAF) ;
-								ctdtmp = (ConcreteTaskDescriptor) element2 ;
-								currentAdvancedTime = (double) Math.round(ProjectAdvancementBean.taskAdvancementCalculation(ctdtmp)*100) ;
-								this.advancementTimes.put(element2.getId(), currentAdvancedTime) ;
 							}
 						}
+						currentAdvancedTime = (double) Math.round(ProjectAdvancementBean.activityAdvancementCalculation(element2)) ;
+						this.advancementTimes.put(element2.getId(), currentAdvancedTime) ;
 					}
 					return;
 				}
@@ -157,13 +158,77 @@ public class ProjectAdvancementBean {
 		}
 	}
 
+	/**
+	 * Return the advancement in percents of a Concrete breakdown element
+	 * @param cbe
+	 * @return
+	 */
+	public static double activityAdvancementCalculation(ConcreteBreakdownElement cbe) {
+		double result = 0.0 ;
+		double remainingTimes = 0.0 ;
+		double accomplishedTimes = 0.0 ;
+		HashMap<String, Double> couple = ProjectAdvancementBean.taskAdvancementCalculation(cbe) ;
+		remainingTimes = couple.get("remainingTime") ;
+		accomplishedTimes = couple.get("accomplishedTime") ;
+		if(remainingTimes + accomplishedTimes > 0){
+			result = remainingTimes / (remainingTimes + accomplishedTimes) ;
+		}
+		if(accomplishedTimes > 0){
+			result = 100 - (result * 100) ;
+		}
+		else{
+			result = 0.0 ;
+		}
+			
+		return result ;
+	}
+
+	/**
+	 * Sub recursive method used for the Concrete breakdown element advancement calculation
+	 * @param ctd
+	 * @return
+	 */
+	private static HashMap<String, Double> taskAdvancementCalculation(ConcreteBreakdownElement cbe)
+	{
+		HashMap<String, Double> coupletmp = new HashMap<String, Double>() ;
+		HashMap<String, Double> couple = new HashMap<String, Double>() ;
+		couple.put("remainingTime", 0.0) ;
+		couple.put("accomplishedTime", 0.0);
+		
+		//if the current element is an activity, parse the sub concrete breakdown elements
+		if(cbe instanceof ConcreteActivity){
+			ConcreteActivity ca = (ConcreteActivity) cbe ;
+			for(Iterator iter = ca.getConcreteBreakdownElements().iterator(); iter.hasNext();){
+				ConcreteBreakdownElement element = (ConcreteBreakdownElement) iter.next() ;
+				coupletmp = ProjectAdvancementBean.taskAdvancementCalculation(element) ;
+				couple.put("remainingTime", couple.get("remainingTime") + coupletmp.get("remainingTime")) ;
+				couple.put("accomplishedTime", couple.get("accomplishedTime") + coupletmp.get("accomplishedTime")) ;
+			}
+		}
+		//else if it's a concrete task get the values
+		else{
+			if(cbe instanceof ConcreteTaskDescriptor){
+				ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) cbe ;
+				couple.put("remainingTime", (double) ctd.getRemainingTime()) ;
+				couple.put("accomplishedTime", (double) ctd.getAccomplishedTime()) ;
+			}
+		}
+		return couple ;
+	}
+	
+	
+	/**
+	 * 
+	 * @param ctd
+	 * @return
+
 	public static double taskAdvancementCalculation(ConcreteTaskDescriptor ctd) {
 		double result = 0 ;
 		if( (ctd.getAccomplishedTime() + ctd.getRemainingTime()) != 0){
 			result = (ctd.getRemainingTime() / (ctd.getAccomplishedTime() + ctd.getRemainingTime())) ;
 		}
 		return result ;
-	}
+	}*/
 
 	/**
 	 * Utility method to remove all child nodes from the parent dataTable list.
@@ -248,6 +313,7 @@ public class ProjectAdvancementBean {
 	 *
 	 */
 	private void retrieveHierarchicalItems() {
+		double currentAdvancedTime = 0.0;
 		for(ConcreteBreakdownElement concreteBreakdownElement : this.project.getConcreteBreakdownElements()){
 			if(concreteBreakdownElement instanceof ConcretePhase){
 				this.projectContent.add(concreteBreakdownElement) ;
@@ -271,9 +337,11 @@ public class ProjectAdvancementBean {
 				this.projectContent.add((ConcreteTaskDescriptor) concreteBreakdownElement) ;
 				this.expandImages.put(concreteBreakdownElement.getId(), "") ;
 			}
+			currentAdvancedTime = (double) Math.round(ProjectAdvancementBean.activityAdvancementCalculation(concreteBreakdownElement)) ;
+			this.advancementTimes.put(concreteBreakdownElement.getId(), currentAdvancedTime) ;
 		}
 	}
-
+	
 	/**
 	 * Getter of displayContent.
 	 *
