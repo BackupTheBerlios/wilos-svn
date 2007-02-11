@@ -657,7 +657,7 @@ public class XMLParserTest extends TestCase {
 		}		
 	}
 	
-	public void testOpenUPTaskDescriptorContainsDependency() {
+	public void testOpenUPTaskDescriptorDesignSolutionContainsPredecessor() {
 		Process theTestedProcess = null;
 		Iterator<BreakdownElement> itTopLevelAct,itSecondLevelAct,BdeIterator;
 		Activity topLevelActivity,secondLevelActivity;
