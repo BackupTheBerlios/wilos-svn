@@ -121,13 +121,13 @@ public class XMLParser {
 			
 			roleDescriptorsList = fillRoleDescriptorsList() ;
 			taskDescriptorsList = fillTaskDescriptorsList(roleDescriptorsList);			
-			setAllTaskDescriptorsDependencies();
+			setAllTaskDescriptorsDependencies(taskDescriptorsList);
 			
 			phasesList = fillPhasesList();
 			iterationsList = fillIterationsList();
 			
 			activitiesList = fillActivitiesList();
-			setAllActivitiesDependencies();
+			setAllActivitiesDependencies(activitiesList);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -245,7 +245,7 @@ public class XMLParser {
 	 * setAllDependencyActivity
 	 * @param aSet
 	 */
-	private static void setAllActivitiesDependencies() {
+	private static void setAllActivitiesDependencies(Set<Activity> _aSet) {
 		
 		// evaluate the XPAth request and return the nodeList
 		NodeList activities = (NodeList)XMLUtils.evaluate(xpath_activity,XPathConstants.NODESET);
@@ -259,6 +259,12 @@ public class XMLParser {
 			// Filler for the iteration and the item (node)
 			FillerActivity itFiller = new FillerActivity(anActivity, aNode);	
 			Activity returnedActivityFilled = (Activity) itFiller.getFilledElement();
+			for (Activity act: _aSet) {
+				if (act.getGuid().equals(returnedActivityFilled.getGuid())) {
+					returnedActivityFilled = act;
+				}
+			}
+			
 			// affect the additional dependency to the current activity 
 			setDependencyByActivity(returnedActivityFilled, aNode);
 		}
@@ -471,7 +477,7 @@ public class XMLParser {
 				// if the task doesn't exist
 				if (taskTobereturn != null){
 					WorkOrder wo = new WorkOrder();
-					wo.setLinkType(linkType);
+					wo.setLinkType(linkType);					
 					// set the dependency of the TaskDescriptors
 					taskTobereturn.addSuccessor(wo);
 					_t.addPredecessor(wo);
@@ -484,7 +490,7 @@ public class XMLParser {
 	 * setAllTaskDescriptorsDependencies
 	 * @param _allTaskD
 	 */
-	private static void setAllTaskDescriptorsDependencies() {
+	private static void setAllTaskDescriptorsDependencies(Set<TaskDescriptor> _aSet) {
 		// gets all the roles in the file
 		NodeList taskDescriptors = (NodeList)XMLUtils.evaluate(xpath_taskDescriptor,XPathConstants.NODESET);
 		
@@ -496,6 +502,11 @@ public class XMLParser {
 			TaskDescriptor aTaskDescriptor = new TaskDescriptor();
 			FillerTaskDescriptor aFiller = new FillerTaskDescriptor(aTaskDescriptor,aNode);	
 			TaskDescriptor taskDescriptorfilled = (TaskDescriptor)aFiller.getFilledElement();
+			for (TaskDescriptor td: _aSet) {
+				if (td.getGuid().equals(taskDescriptorfilled.getGuid())) {
+					taskDescriptorfilled = td;
+				}
+			}
 			// affect the additional dependency to the current taskDescriptor 
 			setDependencyByTaskDescriptor(taskDescriptorfilled, aNode);			
 		}		
