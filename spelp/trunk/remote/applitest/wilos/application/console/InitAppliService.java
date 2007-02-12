@@ -1,7 +1,6 @@
 package wilos.application.console;
 
 import java.io.File;
-import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,22 +12,25 @@ import wilos.business.services.misc.wilosuser.ParticipantService;
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.business.util.Security;
 import wilos.hibernate.misc.concreterole.ConcreteRoleDescriptorDao;
+import wilos.hibernate.misc.concretetask.ConcreteTaskDescriptorDao;
 import wilos.hibernate.misc.project.ProjectDao;
+import wilos.hibernate.misc.wilosuser.ParticipantDao;
 import wilos.hibernate.spem2.process.ProcessDao;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.process.Process;
+import wilos.model.spem2.task.TaskDescriptor;
 
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class InitAppliService {
 	private ProcessService processService;
 	private ProjectDao projectDao;
 	private ProcessDao processDao;
-	private ParticipantService participantService;
+	private ParticipantDao participantDao;
 	private ConcreteRoleDescriptorDao concreteRoleDescriptorDao;
-	private ConcreteTaskDescriptorService concreteTaskDescriptorService;
+	private ConcreteTaskDescriptorDao concreteTaskDescriptorDao;
 	
 	protected final Log logger = LogFactory.getLog(this.getClass());
 	
@@ -42,9 +44,7 @@ public class InitAppliService {
 		processService.saveProcess(scrum);
 		
 		
-		// instanciation des projets
-	//	ProjectDao pm = (ProjectDao) factory.getBean("ProjectDao");
-		//ProcessDao p = (ProcessDao) factory.getBean("ProcessDao");
+		// instanciation des projets	
 
 		String s = processService.getProcessDao().getProcessFromGuid("_9llsAQAvEdubGMceRDupFQ").getId();
 		scrum = processDao.getProcess(s);
@@ -53,6 +53,7 @@ public class InitAppliService {
 		project.setConcreteName("Wilos");
 		project.setProcess(scrum);
 		projectDao.saveOrUpdateProject(project);
+		project= processService.getProjectDao().getProject(project.getId());
 
 		processService.projectInstanciation(project);
 
@@ -63,14 +64,14 @@ public class InitAppliService {
 		project2.setConcreteName("IceOpenUP");
 		project2.setProcess(openup);
 		projectDao.saveOrUpdateProject(project2);
+		project2 = processService.getProjectDao().getProject(project2.getId());
 
 		processService.projectInstanciation(project2);
 		
 		project2 = processService.getProjectDao().getProject(project2.getId());
 		project= processService.getProjectDao().getProject(project.getId());
 		
-		// creation du participant 
-		// ParticipantService ps = (ParticipantService) factory.getBean("ParticipantService");
+		// creation du participant 	
 		Participant pa = new Participant();
 		
 		pa.setLogin("test");
@@ -78,33 +79,43 @@ public class InitAppliService {
 	    pa.setName("test");
 	    pa.setEmailAddress("test@test.com");
 	    pa.setFirstname("test");
-	    participantService.getParticipantDao().saveOrUpdateParticipant(pa);
+	    participantDao.saveOrUpdateParticipant(pa);
+	    pa =  participantDao.getParticipant(pa.getLogin());
 	    
 	    // affectation du particpant aux concreteRoles
 	    
 	   // ConcreteRoleDescriptorDao cs = (ConcreteRoleDescriptorDao) factory.getBean("ConcreteRoleDescriptorDao");
 	 	for (ConcreteRoleDescriptor crd : concreteRoleDescriptorDao.getAllConcreteRoleDescriptors()) {
 	    	pa.addConcreteRoleDescriptor(crd);
+	    	concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(crd);
 	    }	   
 	 	logger.debug("bababa");
-	 	participantService.getParticipantDao().saveOrUpdateParticipant(pa);
+	 	participantDao.saveOrUpdateParticipant(pa);
 	 	logger.debug("bababa");
 			
 		// affectation des concreteRoles aux concreteTask
 	 	logger.debug("bababa");
-	    pa =  participantService.getParticipantDao().getParticipant(pa.getLogin());
+	    pa =  participantDao.getParticipant(pa.getLogin());
 	  if (pa != null) {
 	    	logger.debug("bababa");
 
 			logger.debug("bababa");
 		    
 			
-			for (ConcreteTaskDescriptor ctd :  concreteTaskDescriptorService.getConcreteTaskDescriptorDao().getAllConcreteTaskDescriptors()) {
+			for (ConcreteTaskDescriptor ctd :  concreteTaskDescriptorDao.getAllConcreteTaskDescriptors()) {
 		    	logger.debug("bababa");
-		    	ConcreteTaskDescriptor ctd2 =  concreteTaskDescriptorService.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(ctd.getId());
+		    	ConcreteTaskDescriptor ctd2 =  concreteTaskDescriptorDao.getConcreteTaskDescriptor(ctd.getId());
 		    	//concreteTaskDescriptorService.affectedConcreteTaskDescriptor(ctd2, pa);
 		    	for (ConcreteRoleDescriptor crd : pa.getConcreteRoleDescriptors()) {
+		    		/*for (TaskDescriptor td :  crd.getRoleDescriptor().getPrimaryTasks()) {
+		    			if (td.getGuid().equals(ctd2.getTaskDescriptor().getGuid())) {
+		    				crd.addConcreteTaskDescriptor(ctd2);
+		    			}
+		    		}*/
+		    		ctd2.setState("Ready");
 		    		crd.addConcreteTaskDescriptor(ctd2);
+		    		concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(crd);
+		    		concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(ctd2);
 		    	}
 		    }
 	    }
@@ -118,24 +129,7 @@ public class InitAppliService {
 	public void setConcreteRoleDescriptorDao(
 			ConcreteRoleDescriptorDao concreteRoleDescriptorDao) {
 		this.concreteRoleDescriptorDao = concreteRoleDescriptorDao;
-	}
-
-	public ConcreteTaskDescriptorService getConcreteTaskDescriptorService() {
-		return concreteTaskDescriptorService;
-	}
-
-	public void setConcreteTaskDescriptorService(
-			ConcreteTaskDescriptorService concreteTaskDescriptorService) {
-		this.concreteTaskDescriptorService = concreteTaskDescriptorService;
-	}
-
-	public ParticipantService getParticipantService() {
-		return participantService;
-	}
-
-	public void setParticipantService(ParticipantService participantService) {
-		this.participantService = participantService;
-	}
+	}	
 
 	public ProcessDao getProcessDao() {
 		return processDao;
@@ -159,6 +153,23 @@ public class InitAppliService {
 
 	public void setProjectDao(ProjectDao projectDao) {
 		this.projectDao = projectDao;
+	}
+
+	public ParticipantDao getParticipantDao() {
+		return participantDao;
+	}
+
+	public void setParticipantDao(ParticipantDao participantDao) {
+		this.participantDao = participantDao;
+	}
+
+	public ConcreteTaskDescriptorDao getConcreteTaskDescriptorDao() {
+		return concreteTaskDescriptorDao;
+	}
+
+	public void setConcreteTaskDescriptorDao(
+			ConcreteTaskDescriptorDao concreteTaskDescriptorDao) {
+		this.concreteTaskDescriptorDao = concreteTaskDescriptorDao;
 	}
 	
 }
