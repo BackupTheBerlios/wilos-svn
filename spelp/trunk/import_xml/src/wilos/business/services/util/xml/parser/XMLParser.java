@@ -66,14 +66,16 @@ public class XMLParser {
 			"]";
 	
 	// Sections
-	private static final String task = "Task";
-	private static final String role = "Role";
-	private static final String performedPrimarilyBy = "PerformedPrimarilyBy";
-	private static final String additionallyPerformedBy = "AdditionallyPerformedBy";
-	private static final String step = "Section";
-	private static final String presentation = "Presentation";
-	private static final String breakdownElement = "BreakdownElement";
-	private static final String predecessor = "Predecessor"; 
+	public static final String task = "Task";
+	public static final String role = "Role";
+	public static final String performedPrimarilyBy = "PerformedPrimarilyBy";
+	public static final String additionallyPerformedBy = "AdditionallyPerformedBy";
+	public static final String step = "Section";
+	public static final String presentation = "Presentation";
+	public static final String breakdownElement = "BreakdownElement";
+	public static final String predecessor = "Predecessor";
+	public static final String maindescription = "MainDescription";
+	
 	
 	private static Set<String> guidancesTypes = new LinkedHashSet<String>();
 
