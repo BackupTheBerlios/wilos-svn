@@ -25,9 +25,9 @@ public class WizardStateMachine extends Observable{
 	
 	// colors depending on the state
 	public static final Color COLOR_STARTED = Color.decode("#008800");
-	public static final Color COLOR_READY = Color.decode("#FF9900") ;
-	public static final Color COLOR_SUSPENDED = Color.pink;
-	public static final Color COLOR_FINISHED = Color.decode("#0066FF") ;
+	public static final Color COLOR_READY = Color.decode("#3333FF") ;
+	public static final Color COLOR_SUSPENDED = Color.decode("#FF6600") ;
+	public static final Color COLOR_FINISHED = Color.decode("#FF0000") ;
 	public static final Color COLOR_CREATED = Color.black ;
 	
 	private int currentState = 0;

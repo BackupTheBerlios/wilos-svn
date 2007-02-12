@@ -286,15 +286,18 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 					this.setIcon(ImagesService.getImageIcon("images.iconTaskDescriptor"));
 					if (ctd.getState() == Constantes.State.STARTED) {
 						this.setForeground(WizardStateMachine.COLOR_STARTED);
+						this.setIcon(ImagesService.getImageIcon("images.iconTaskDescriptorPlay"));
 					}
 					else if (ctd.getState().equals(Constantes.State.READY)) {
 						this.setForeground(WizardStateMachine.COLOR_READY);
 					}
 					else if (ctd.getState().equals(Constantes.State.SUSPENDED)) {
 						this.setForeground(WizardStateMachine.COLOR_SUSPENDED);
+						this.setIcon(ImagesService.getImageIcon("images.iconTaskDescriptorPause"));
 					}
 					else if (ctd.getState().equals(Constantes.State.FINISHED)) {
-						this.setForeground(WizardStateMachine.COLOR_FINISHED);		
+						this.setForeground(WizardStateMachine.COLOR_FINISHED);
+						this.setIcon(ImagesService.getImageIcon("images.iconTaskDescriptorOver"));
 					}
 					else if (ctd.getState().equals(Constantes.State.CREATED)) {
 						this.setForeground(WizardStateMachine.COLOR_CREATED);

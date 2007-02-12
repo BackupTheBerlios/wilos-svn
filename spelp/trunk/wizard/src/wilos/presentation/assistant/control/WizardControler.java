@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.Action;
 import javax.swing.JList;
 import javax.swing.tree.DefaultMutableTreeNode;
 
