@@ -1,7 +1,9 @@
 package wilos.business.services.util.xml.fillers;
 
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
+import wilos.business.services.util.xml.parser.XMLParser;
 import wilos.model.spem2.guide.Guidance;
 
 public class FillerGuidance extends FillerElement{
@@ -10,7 +12,22 @@ public class FillerGuidance extends FillerElement{
 	public FillerGuidance(Guidance _e, Node _aNode) {
 		super(_e, _aNode);
 		String type = _aNode.getAttributes().getNamedItem("xsi:type").getTextContent();
-		type = type.substring(4,type.length());		
+		type = type.substring(4,type.length());	
+		NodeList l = _aNode.getChildNodes();
+		String mainDescription = "";
+		
+		for (int i=0; i<l.getLength(); i++) {			
+			if (l.item(i).getNodeName().equals(XMLParser.presentation)) {
+				NodeList listDesc = l.item(i).getChildNodes();
+				for (int j = 0; j < listDesc.getLength();j++) {
+					if (listDesc.item(j).getNodeName().equals(XMLParser.maindescription)) {
+						mainDescription = listDesc.item(j).getTextContent() ;						
+					}
+				}
+			}			
+		}
+		
+		_e.setDescription(mainDescription);
 		_e.setType(type);
 		fill();
 	}
