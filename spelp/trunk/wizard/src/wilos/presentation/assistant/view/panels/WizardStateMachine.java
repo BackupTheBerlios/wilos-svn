@@ -152,6 +152,9 @@ public class WizardStateMachine extends Observable{
 					break ;
 			}		
 		}
+		else {
+			updateState(STATE_NOTHING);
+		}
 		if (WizardControler.getInstance().isShowInfo() || h != WizardControler.getInstance().getDefaultHTML(null)){
 			h.viewObject(object);
 		}
