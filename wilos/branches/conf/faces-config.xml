@@ -157,6 +157,20 @@
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>ConcreteRoleAffectationBean</managed-bean-name>
+		<managed-bean-class>wilos.presentation.web.role.ConcreteRoleAffectationBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>projectAdvancementBean</property-name>
+			<value>#{ProjectAdvancementBean}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>concreteRoleDescriptorService</property-name>
+			<value>#{ConcreteRoleDescriptorService}</value>
+		</managed-property>
+	</managed-bean>
 
 	<!-- <managed-bean>
 		<managed-bean-name>RoleBean</managed-bean-name>

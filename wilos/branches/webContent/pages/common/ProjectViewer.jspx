@@ -43,6 +43,7 @@
 					</f:subview>
 				</ice:panelStack>
 			</ice:panelTab>
+			<!-- PSI2 ONGLET DE L AVANCEMENT DU PROJET -->
 			<ice:panelTab id="panelTab_projectAdvancement" label="#{msgs['component.project.projectadvancement.title']}">
 			<ice:dataTable
 				value="#{ProjectAdvancementBean.displayContent}"
