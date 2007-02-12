@@ -147,6 +147,7 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 			return ca ;
 		}
 		
+		// init tree initialize all the nodes of the jtree
 		private void initTree() {
 			TreePanel.this.tree.removeAll();
 			WizardStateMachine.getInstance().deleteAllStep() ;
@@ -163,10 +164,14 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 
 				ConcreteActivity ca = getActivity(crd.getSuperConcreteActivities());
 				WizardMutableTreeNode nodeAct = null  ;
+				// getting all the superactivities from the roles
 				if (ca == null){
+					// if there is no super activity we add the role to the root
 					((DefaultMutableTreeNode)this.root).add(rdWmt);
 				}
 				else {
+					// if there is super activities 
+					// we have to add them to the root or to an other super activity
 					while (ca != null){
 						// search if the activity is already treated as a node
 						if (!mapActivity.containsKey(ca)){
@@ -177,6 +182,8 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 							nodeAct = mapActivity.get(ca);
 						}
 						if (precedent == null){
+							// if precedent == null we are at the first round 
+							// so we had to add the role descriptor
 							nodeAct.add(rdWmt);
 						}
 						else {
@@ -258,6 +265,7 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 //		}		
 	}
 	
+	// the renderer for the icon and label
 	private class WizardTreeRenderer extends DefaultTreeCellRenderer {
 		public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected,
 				boolean expanded, boolean leaf, int row, boolean hasFocus) {

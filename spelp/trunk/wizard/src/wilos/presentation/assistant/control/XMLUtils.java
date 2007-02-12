@@ -19,7 +19,7 @@ private static File document ;
 	public static File getDocument(){
 		return document ;
 	}
-	
+
 	public static void setDocument (File _file){
 		document = _file ;
 	}

@@ -109,6 +109,7 @@ public class WizardStateMachine extends Observable{
 //			System.out.println("pouet");
 //			updateState(this.STATE_PARTICIPANT);
 //		}
+		// if == null we must take the default HTMLViewer
 		if (h == null){
 			h = WizardControler.getInstance().getDefaultHTML(null);
 		}
@@ -156,6 +157,9 @@ public class WizardStateMachine extends Observable{
 		}
 	}
 	
+	/**
+	 * maj notify all the observers that there was an update
+	 */
 	public void maj (){
 		this.setChanged();
 		notifyObservers();
@@ -197,8 +201,6 @@ public class WizardStateMachine extends Observable{
 //		}
 	}
 	
-	
-
 	public int getCurrentState (){
 		return currentState ;
 	}
