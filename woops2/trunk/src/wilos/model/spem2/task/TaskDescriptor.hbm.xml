@@ -24,7 +24,7 @@
 			</many-to-many>
 		</set>
 		
-		<set name="concreteTaskDescriptors" lazy="true">
+		<set name="concreteTaskDescriptors" lazy="false">
 			<key column="taskdescriptor_id" />
 			<one-to-many class="wilos.model.misc.concretetask.ConcreteTaskDescriptor"></one-to-many>
 		</set>
