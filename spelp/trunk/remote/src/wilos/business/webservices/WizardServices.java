@@ -97,7 +97,7 @@ public class WizardServices {
 		System.out.println("APPEL DE METHODE : stopConcreteTaskDescriptor");
     	if (getAuthentifiedParticipant (login, password)!=null) {
     		System.out.println("le Participant est loggé");
-    		as.startConcreteTaskDescriptor(id);
+    		as.finishConcreteTaskDescriptor(id);
     	}
     }
     
