@@ -41,4 +41,11 @@ public class ConcreteRoleDescriptorService {
 				ConcreteRoleDescriptorDao _concreteRoleDescriptorDao) {
 			this.concreteRoleDescriptorDao = _concreteRoleDescriptorDao;
 		}
+		
+		public ConcreteRoleDescriptor getConcreteRoleDescriptorById(String _id)
+		{
+			ConcreteRoleDescriptor concreteRoleDescriptor;
+			concreteRoleDescriptor = this.concreteRoleDescriptorDao.getConcreteRoleDescriptor(_id);
+			return concreteRoleDescriptor;
+		}
 }

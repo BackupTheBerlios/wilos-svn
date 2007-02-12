@@ -5,9 +5,12 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService;
 import wilos.business.services.spem2.role.RoleDescriptorService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.hibernate.misc.concretetask.ConcreteTaskDescriptorDao;
@@ -33,6 +36,11 @@ public class ConcreteTaskDescriptorService {
 	private TaskDescriptorService taskDescriptorService;
 
 	private RoleDescriptorService roleDescriptorService;
+	
+	private ConcreteRoleDescriptorService concreteRoleDescriptorService;
+
+	
+	protected final Log logger = LogFactory.getLog(this.getClass());
 
 	/**
 	 * Return concreteTaskDescriptor for a project list
@@ -89,38 +97,42 @@ public class ConcreteTaskDescriptorService {
 	 * 
 	 * @param _concreteTaskDescriptor
 	 */
-
-	public void affectedConcreteTaskDescriptor(
+	@Transactional(readOnly = false)
+	public ConcreteTaskDescriptor affectedConcreteTaskDescriptor(
 			ConcreteTaskDescriptor _concreteTaskDescriptor, Participant _user) {
-		ConcreteRoleDescriptor concreteRoleDescriptor = null;
+		ConcreteRoleDescriptor concreteRoleDescriptor = new ConcreteRoleDescriptor();
 
 		TaskDescriptor tmp = _concreteTaskDescriptor.getTaskDescriptor();
 		RoleDescriptor tmpRoleDescriptor = tmp.getMainRole();
-
+		RoleDescriptor rd = this.roleDescriptorService.getRoleDescriptorById(tmpRoleDescriptor.getId());
 		// recuperation des deux listes.
-		Set<ConcreteRoleDescriptor> listeRd = tmpRoleDescriptor
-				.getConcreteRoleDescriptors();
-		Set<ConcreteRoleDescriptor> p = _user.getConcreteRoleDescriptors();
-
+		Set<ConcreteRoleDescriptor> listeRd = rd.getConcreteRoleDescriptors();
+		
 		// on parcours les deux liste afin de trouver le bon
 		// concreteRoledescriptor
 		for (ConcreteRoleDescriptor tmpListeRd : listeRd) {
-			for (ConcreteRoleDescriptor tmpListeP : p) {
-				if (tmpListeP.equals(tmpListeRd)) {
-					concreteRoleDescriptor = tmpListeRd;
-				}
+
+			ConcreteRoleDescriptor crd = this.concreteRoleDescriptorService.getConcreteRoleDescriptorById(tmpListeRd.getId());
+			logger.debug("idddddddd "+crd.getParticipant().getWilosuser_id());
+			if(crd.getParticipant().getWilosuser_id().equals(_user.getWilosuser_id()))
+			{
+				concreteRoleDescriptor = tmpListeRd;
 			}
+			
 		}
-		// on met en place la relation entre concretetaskDescriptor et
-		// concreteroleDescriptor
-		_concreteTaskDescriptor
-				.addConcreteRoleDescriptor(concreteRoleDescriptor);
 		
-		//mise à jour de l'état
-		_concreteTaskDescriptor.setState(State.READY);
-
+		_concreteTaskDescriptor.addConcreteRoleDescriptor(concreteRoleDescriptor);
+		
+		return _concreteTaskDescriptor;
 	}
-
+	
+	public void affectedState(ConcreteTaskDescriptor _concreteTaskDescriptor)
+	{
+		_concreteTaskDescriptor.setState(State.READY);
+	
+		this.updateConcreteTaskDescriptor(_concreteTaskDescriptor);
+	}
+	
 	/**
 	 * Suspend the ConcreteTaskDescriptor and save into the data base changings
 	 * (i.e. State).
@@ -169,6 +181,7 @@ public class ConcreteTaskDescriptorService {
 		return this.concreteTaskDescriptorDao;
 	}
 
+	
 	/**
 	 * Setter of taskDescriptorDao.
 	 * 
@@ -196,5 +209,20 @@ public class ConcreteTaskDescriptorService {
 	public void setTaskDescriptorService(
 			TaskDescriptorService taskDescriptorService) {
 		this.taskDescriptorService = taskDescriptorService;
+	}
+
+	/**
+	 * @return the concreteRoleDescriptorService
+	 */
+	public ConcreteRoleDescriptorService getConcreteRoleDescriptorService() {
+		return concreteRoleDescriptorService;
+	}
+
+	/**
+	 * @param concreteRoleDescriptorService the concreteRoleDescriptorService to set
+	 */
+	public void setConcreteRoleDescriptorService(
+			ConcreteRoleDescriptorService concreteRoleDescriptorService) {
+		this.concreteRoleDescriptorService = concreteRoleDescriptorService;
 	}
 }

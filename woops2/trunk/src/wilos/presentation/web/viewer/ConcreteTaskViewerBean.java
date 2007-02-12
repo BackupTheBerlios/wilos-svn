@@ -46,8 +46,9 @@ public class ConcreteTaskViewerBean {
 		String wilosUserId = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID) ;
 		Participant participant = this.participantService.getParticipant(wilosUserId);
 
-		this.concreteTaskDescriptorService.affectedConcreteTaskDescriptor(
+		this.concreteTaskDescriptor = this.concreteTaskDescriptorService.affectedConcreteTaskDescriptor(
 				this.concreteTaskDescriptor, participant);
+		this.concreteTaskDescriptorService.affectedState(this.concreteTaskDescriptor);
 	}
 
 	public boolean isVisibleAffected() {
