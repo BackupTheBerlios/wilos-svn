@@ -165,10 +165,13 @@ public class ServersFrame {
 			{
 				public void actionPerformed(ActionEvent e) 
     			{
-					if (servs.getValueAt(servs.getRowCount()-1,1)!=null)
+					String alias = (String)servs.getValueAt(servs.getRowCount()-1,0);
+					String url = (String)servs.getValueAt(servs.getRowCount()-1,1);
+					
+					if(       (alias != null) &&     ( !alias.equals("") )   &&   (url != null) &&     ( !url.equals("") ))
 					{
-					tables_serv.addRow(new Vector());
-					servs.setEditingRow(tables_serv.getRowCount());
+						tables_serv.addRow(new Vector());
+						servs.setEditingRow(tables_serv.getRowCount());
 					}
     			}				
 			});
@@ -272,7 +275,6 @@ public class ServersFrame {
 			}
 			this.tables_serv = new DefaultTableModel(data,rowName);
 			this.servs = new JTable(this.tables_serv);
-		//	this.servs.setBounds(new Rectangle(45, 45, 437, 188));
 			this.servs.setGridColor(Color.black);
 			this.servs.setVisible(true);
 			

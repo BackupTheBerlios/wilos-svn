@@ -147,13 +147,17 @@ public class LoginPanel extends JPanel {
                     ex.printStackTrace();
                 }*/
        
-        	if (this.adressTextField.getItemCount()!=0)this.adressTextField.removeAllItems();
+    		String aliasAdress = "";
+    			
+    		if (this.adressTextField.getItemCount()!=0)this.adressTextField.removeAllItems();
         	
         	ArrayList<WizardServer> list = list_serv.getServersList();
         	        	        	 
         	for (int i=0;i<list.size();i++)
         	{
-        		this.adressTextField.addItem(list.get(i).getAddress());
+        		aliasAdress = list.get(i).getAlias() + " => " + list.get(i).getAddress();
+//        		this.adressTextField.addItem(list.get(i).getAddress());
+        		this.adressTextField.addItem(aliasAdress);
         	}
         	this.adressTextField.addItem(Bundle.getText("loginPanel.ajouter"));
         	
@@ -239,11 +243,18 @@ public class LoginPanel extends JPanel {
 	 */
 	private void startConnection() 
 	{
+		// before : <alias> => <adress>
+		// after : <adress>
+		String serverAdress = (String)adressTextField.getSelectedItem();
+		int begin = serverAdress.indexOf(" => ",0) + 4;
+		serverAdress = serverAdress.substring(begin);
+		/* */
+
 		/*check if there is a server selected and not "Ajouter"*/
 		if (!String.valueOf(adressTextField.getSelectedItem()).equals(new String("Ajouter")))
 		{
 			String passcript =  Security.encode(new String(passwordPasswordField.getPassword()));
-			WizardServicesProxy.setIdentificationParamaters(loginTextField.getText(),passcript, String.valueOf(adressTextField.getSelectedItem()));
+			WizardServicesProxy.setIdentificationParamaters(loginTextField.getText(),passcript, serverAdress);
 			System.out.print(String.valueOf(adressTextField.getSelectedItem()));
 			Participant participant = WizardServicesProxy.getParticipant();                          
 			
