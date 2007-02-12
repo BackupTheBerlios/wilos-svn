@@ -11,11 +11,17 @@ public class FillerGuidance extends FillerElement{
 	
 	public FillerGuidance(Guidance _e, Node _aNode) {
 		super(_e, _aNode);
-		String type = _aNode.getAttributes().getNamedItem("xsi:type").getTextContent();
-		type = type.substring(4,type.length());	
-		NodeList l = _aNode.getChildNodes();
-		String mainDescription = "";
+		fill();
+	}
+	
+	private void fill() {
+		String type = myNode.getAttributes().getNamedItem("xsi:type").getTextContent();
+		type = type.substring(4,type.length());		
+		((Guidance) myElement).setType(type);
+		((Guidance) myElement).setPresentationName(myNode.getAttributes().getNamedItem(presentationName).getNodeValue());
 		
+		NodeList l = myNode.getChildNodes();
+		String mainDescription = "";
 		for (int i=0; i<l.getLength(); i++) {			
 			if (l.item(i).getNodeName().equals(XMLParser.presentation)) {
 				NodeList listDesc = l.item(i).getChildNodes();
@@ -27,16 +33,7 @@ public class FillerGuidance extends FillerElement{
 			}			
 		}
 		
-		_e.setDescription(mainDescription);
-		_e.setType(type);
-		fill();
-	}
-	
-	private void fill() {
-		String type = myNode.getAttributes().getNamedItem("xsi:type").getTextContent();
-		type = type.substring(4,type.length());		
-		((Guidance) myElement).setType(type);
-		((Guidance) myElement).setPresentationName(myNode.getAttributes().getNamedItem(presentationName).getNodeValue());
+		((Guidance) myElement).setDescription(mainDescription);
 	}
 	
 }
