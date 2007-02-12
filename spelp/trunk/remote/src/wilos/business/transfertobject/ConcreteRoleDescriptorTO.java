@@ -1,6 +1,8 @@
 package wilos.business.transfertobject;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
@@ -18,13 +20,17 @@ public class ConcreteRoleDescriptorTO extends ConcreteRoleDescriptor implements 
     	this.setConcreteName(myConcreteRoleDescriptor.getConcreteName());
     	this.setRoleDescriptor(new RoleDescriptorTO(myConcreteRoleDescriptor.getRoleDescriptor()));
     	
+    	Set<ConcreteActivity> concreteActivitys = new HashSet<ConcreteActivity>();
         for (ConcreteActivity cta : myConcreteRoleDescriptor.getSuperConcreteActivities()) {
-        	this.addSuperConcreteActivity(new ConcreteActivityTO(cta));
+        	concreteActivitys.add(new ConcreteActivityTO(cta));
         }
+        this.setSuperConcreteActivities(concreteActivitys);
     	
+        Set<ConcreteTaskDescriptor> concreteTaskDescriptors = new HashSet<ConcreteTaskDescriptor>();
         for (ConcreteTaskDescriptor ctd : myConcreteRoleDescriptor.getConcreteTaskDescriptors()) {
-        	this.addConcreteTaskDescriptor(new ConcreteTaskDescriptorTO(ctd));
+        	concreteTaskDescriptors.add(new ConcreteTaskDescriptorTO(ctd));
         }
+        this.setConcreteTaskDescriptors(concreteTaskDescriptors);
 
     }
 }

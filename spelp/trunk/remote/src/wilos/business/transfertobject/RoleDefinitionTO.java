@@ -17,9 +17,11 @@ public class RoleDefinitionTO extends RoleDefinition implements Serializable{
         this.setDescription(myRoleDefinition.getDescription()); 
         
       
+        Set<Guidance> guidances = new HashSet<Guidance>();
         for (Guidance g : myRoleDefinition.getGuidances()) {
-        	this.addGuidance(new GuidanceTO(g));
+        	guidances.add(new GuidanceTO(g));	        	
         }
+        this.setGuidances(guidances);
 
     }
 }

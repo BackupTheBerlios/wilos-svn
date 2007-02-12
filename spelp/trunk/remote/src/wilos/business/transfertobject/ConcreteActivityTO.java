@@ -1,11 +1,14 @@
 package wilos.business.transfertobject;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.activity.Activity;
+import wilos.model.spem2.guide.Guidance;
 
 public class ConcreteActivityTO extends ConcreteActivity implements Serializable{
 	
@@ -19,9 +22,11 @@ public class ConcreteActivityTO extends ConcreteActivity implements Serializable
     	this.setConcreteName(_myConcreteActivity.getConcreteName());
     	this.setActivity(new ActivityTO(_myConcreteActivity.getActivity()));
 
+    	Set<ConcreteActivity> concreteActivitys = new HashSet<ConcreteActivity>();
         for (ConcreteActivity cta : _myConcreteActivity.getSuperConcreteActivities()) {
-        	this.addSuperConcreteActivity(new ConcreteActivityTO(cta));
+        	concreteActivitys.add(new ConcreteActivityTO(cta));
         }
+        this.setSuperConcreteActivities(concreteActivitys);
     }
 
 }

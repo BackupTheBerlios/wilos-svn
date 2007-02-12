@@ -16,11 +16,13 @@ public class ActivityTO extends Activity implements Serializable {
 			this.setDescription(_activity.getDescription());
 			this.setName(_activity.getName());
 			this.setGuid(_activity.getGuid());
+			this.setPresentationName(_activity.getPresentationName());
 			
-
+			Set<Guidance> guidances = new HashSet<Guidance>();
 	        for (Guidance g : _activity.getGuidances()) {
-	        	 this.addGuidance(new GuidanceTO(g));
+	        	guidances.add(new GuidanceTO(g));	        	
 	        }
+	        this.setGuidances(guidances);
 		}
 		
 

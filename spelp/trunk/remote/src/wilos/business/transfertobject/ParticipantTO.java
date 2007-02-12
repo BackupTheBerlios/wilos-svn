@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
+import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.role.RoleDescriptor;
 
@@ -34,10 +35,13 @@ public class ParticipantTO extends Participant implements Serializable {
         this.setLogin(myParticipant.getLogin());
         this.setPassword(myParticipant.getPassword());
         this.setFirstname(myParticipant.getFirstname());
-        this.setEmailAddress(myParticipant.getEmailAddress());        
+        this.setEmailAddress(myParticipant.getEmailAddress());  
+        
+        Set<ConcreteRoleDescriptor> concreteRoleDescriptors = new HashSet<ConcreteRoleDescriptor>();
         for (ConcreteRoleDescriptor crd : myParticipant.getConcreteRoleDescriptors()) {
-        	 this.addConcreteRoleDescriptor(new ConcreteRoleDescriptorTO(crd));
+        	concreteRoleDescriptors.add(new ConcreteRoleDescriptorTO(crd));
         }
+        this.setConcreteRoleDescriptors(concreteRoleDescriptors);
     }
 
 }
