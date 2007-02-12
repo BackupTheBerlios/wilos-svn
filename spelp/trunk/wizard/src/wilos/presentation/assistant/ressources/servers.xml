@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Servers>
   <Server>
-    <Alias>local remote</Alias>
-    <Address>http://localhost:8080/Spelp_remote</Address>
+    <Alias>marine</Alias>
+    <Address>http://marine.edu.ups-tlse.fr:9014/remote</Address>
     <Id>1</Id>
   </Server>
   <Server>
-    <Alias>marine</Alias>
-    <Address>http://marine.ups-tlse.fr/wilos</Address>
+    <Alias>local remote</Alias>
+    <Address>http://localhost:8080/Spelp_remote</Address>
     <Id>2</Id>
   </Server>
   <Server>
