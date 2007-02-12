@@ -40,6 +40,12 @@ public class WizardControler {
 		return src ;
 	}
 	
+	/**
+	 * getDefaultHTML give the default HTMLviewer
+	 * if it isn't exist it is created
+	 * @param p position can be null
+	 * @return the htmlViewer created
+	 */
 	public HTMLViewer getDefaultHTML(Point p){
 		HTMLViewer h = null ;
 		if (listHTML.size() != 0){
@@ -53,19 +59,31 @@ public class WizardControler {
 		return h;
 	}
 	
+	/**
+	 * addHTMLViewer create a new HTMLViewer and display it
+	 * @param p the position where the htmlviewer will be display can be null
+	 * @return the HTMLViewer created
+	 */
 	public HTMLViewer addHTMLViewer (Point p){
 		HTMLViewer h = new HTMLViewer(p);
 		listHTML.add(h);
 		return (h) ;
 	}
 	
+	/**
+	 * getNewHTMLAction initialize the actions for the opening of HTMLViewer
+	 * @return the ActionListener created
+	 */
 	public ActionListener getNewHTMLAction (){
 		ActionListener al = new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
+				// get the position of the last htmlviewer
 				Point p = listHTML.get(listHTML.size()-1).getLocation();
 				p.y += listHTML.get(listHTML.size()-1).getHeightToolbar() * 2 ;
 				p.x += listHTML.get(listHTML.size()-1).getHeightToolbar() ;
 				HTMLViewer newHTMLViewer = WizardControler.getInstance().addHTMLViewer(p);
+				// 2 case if the action is from a JList we have to delete the panel with the jlist
+				// if it is from a node we have to take an element from a node
 				if (src instanceof JList){
 					WizardStateMachine.getInstance().setFocusedObject(getDefaultHTML(null).getJList().getSelectedValue(),newHTMLViewer);
 					newHTMLViewer.trtGuides(null);
@@ -83,22 +101,32 @@ public class WizardControler {
 		return al ;
 	}
 	
+	/**
+	 * showContextualMenu display the contextual menu with correct buttons
+	 * @param arg0 the mouse event to delegate (needed for the position of the mouse)
+	 */
 	public void showContextualMenu (MouseEvent arg0){
 		src = arg0.getComponent();
+		// if the srcis a jlist there is a special treatment not managed by the state machine
 		if (src instanceof JList){
 			JList list = (JList)src ;
 			if (list.getSelectedValue() != null){
 				int state = WizardStateMachine.getInstance().getCurrentState() ;
 				menuContextuel.setButtons(ContextualMenu.INVISIBLE, ContextualMenu.INVISIBLE, ContextualMenu.INVISIBLE, ContextualMenu.ENABLED);
 				menuContextuel.show(arg0.getComponent(),arg0.getX(),arg0.getY());
-				
 			}
-		}else {
+		}
+		// else the state machine can do its work
+		else {
 			menuContextuel.show(arg0.getComponent(),arg0.getX(),arg0.getY());
 		}
 		
 	}
 	
+	/**
+	 * changeHTMLViewerBehavior determine if the HTMLViewer is visible or not
+	 * @param newBehavior
+	 */
 	public void changeHTMLViewerBehavior(boolean newBehavior) {
 		showInfo = newBehavior;
 		if (showInfo){
@@ -110,6 +138,10 @@ public class WizardControler {
 		actionBar.setJCheckBoxShowViewerEnabled(newBehavior);
 	}
 	
+	/**
+	 * getInstance get the unique instance of the WizardControler
+	 * @return the WizardControler
+	 */
 	public static WizardControler getInstance() {
 		if (wc == null) {
 			wc = new WizardControler();
@@ -147,7 +179,7 @@ public class WizardControler {
 	}
 	
 	/**
-	 * Finish  a concrete task descriptor
+	 * Finish  a concrete task descriptor and finish all of its step if they exist
 	 * @param ctd
 	 */
 	public void finishConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
@@ -163,6 +195,12 @@ public class WizardControler {
 		}
 	}
 	
+	/**
+	 * initUIElements init the User Interface elements
+	 * @param theActionToolBar
+	 * @param theTreePanel
+	 * @param menu
+	 */
 	public void initUIElements(ActionBar theActionToolBar,TreePanel theTreePanel, ContextualMenu menu) {;
 		actionBar = theActionToolBar ;
 		treePanel = theTreePanel;
@@ -172,6 +210,9 @@ public class WizardControler {
 		
 	}
 	
+	/**
+	 * initActions init the actions for buttons play, pause, and finish
+	 */
 	private void initActions() {
 		ActionListener actionPlay = new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -242,6 +283,9 @@ public class WizardControler {
 		menuContextuel.getJButtonFinished().addActionListener(actionFinish);
 	}
 
+	/**
+	 * refreshParticipant reload from the server the data of the participant
+	 */
 	public void refreshParticipant() {
 		treePanel.setParticipant(WizardServicesProxy.getParticipant());	
 	}
