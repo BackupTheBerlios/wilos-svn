@@ -1,0 +1,13 @@
+<ice:panelStack id="panelStack_menu"
+                        styleClass=""
+                        selectedPanel="#{connect.selectedPanel.templateNameMenu}">
+	<ice:panelGroup id="no_tree_group">
+		<f:subview id="no_tree_subview">		
+		</f:subview>
+	</ice:panelGroup>
+	<ice:panelGroup id="tree_group">
+		<f:subview id="tree_subview">
+			<jsp:directive.include file="./pages/template/navigation.jspx"/>
+		</f:subview>
+	</ice:panelGroup>
+</ice:panelStack>

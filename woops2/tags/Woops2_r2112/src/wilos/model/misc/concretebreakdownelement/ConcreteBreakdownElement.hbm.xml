@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping>
+	<class name="wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement"
+		table="concretebreakdownelement" lazy="true">
+
+		<id name="id" type="string"
+			column="concretebreakdownelement_id">
+			<!--identifiant auto-incrementé -->
+			<generator class="uuid" />
+		</id>
+
+		<many-to-one name="project" class="wilos.model.misc.project.Project"
+			column="project_id" lazy="false">
+		</many-to-one>
+
+		<property name="concreteName" type="java.lang.String"
+			column="concretename" length="256" />
+
+		<many-to-one name="breakdownElement"
+			class="wilos.model.spem2.breakdownelement.BreakdownElement"
+			column="breakdownelement_id">
+		</many-to-one>
+
+		<!-- Associations -->
+		<set name="superConcreteActivities" table="concretenesting" lazy="true">
+			<key column="concretebreakdownelement_id"></key>
+			<many-to-many class="wilos.model.misc.concreteactivity.ConcreteActivity"
+				column="superconcreteactivity_id">
+			</many-to-many>
+		</set>
+
+	</class>
+</hibernate-mapping>
