@@ -258,7 +258,11 @@ public class WizardControler {
 						//if(selectedTask.getId() != null) {
 							WizardControler.getInstance().changeHTMLViewerBehavior(true);
 							WizardControler.getInstance().finishConcreteTaskDescriptor(selectedTask);
-
+							if (selectedTask.getTaskDescriptor().getTaskDefinition() != null){
+								for (Step s : selectedTask.getTaskDescriptor().getTaskDefinition().getSteps()){
+									WizardStateMachine.getInstance().changeStepState(s, WizardStateMachine.STATE_TASK_FINISHED);
+								}
+							}
 							selectedTask.setState(Constantes.State.FINISHED);
 							WizardStateMachine.getInstance().setFocusedObject(selectedTask,null);
 							treePanel.getTree().treeDidChange();//WizardControler.getInstance().refreshParticipant();
