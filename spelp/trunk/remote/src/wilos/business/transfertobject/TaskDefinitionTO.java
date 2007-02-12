@@ -41,6 +41,9 @@ public class TaskDefinitionTO extends TaskDefinition implements Serializable {
         	steps.add(new StepTO(s));
         }      
         this.addAllSteps(steps);
+        for (Step s : steps) {
+        	s.setTaskDefinition(null);
+        }
 
         Set<Guidance> guidances = new HashSet<Guidance>();
         for (Guidance g : myTD.getGuidances()) {
