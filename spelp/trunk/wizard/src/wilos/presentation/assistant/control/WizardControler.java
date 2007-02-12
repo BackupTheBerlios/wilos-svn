@@ -109,11 +109,10 @@ public class WizardControler {
 	 */
 	public void showContextualMenu (MouseEvent arg0){
 		src = arg0.getComponent();
-		// if the srcis a jlist there is a special treatment not managed by the state machine
+		// if the src is a jlist there is a special treatment not managed by the state machine
 		if (src instanceof JList){
 			JList list = (JList)src ;
 			if (list.getSelectedValue() != null){
-				int state = WizardStateMachine.getInstance().getCurrentState() ;
 				menuContextuel.setButtons(ContextualMenu.INVISIBLE, ContextualMenu.INVISIBLE, ContextualMenu.INVISIBLE, ContextualMenu.ENABLED);
 				menuContextuel.show(arg0.getComponent(),arg0.getX(),arg0.getY());
 			}
@@ -227,6 +226,11 @@ public class WizardControler {
 					// if(selectedTask.getId() != null) {
 					WizardControler.getInstance().changeHTMLViewerBehavior(true);
 					WizardControler.getInstance().startConcreteTaskDescriptor(selectedTask);
+					if (selectedTask.getTaskDescriptor().getTaskDefinition() != null){
+						for (Step s : selectedTask.getTaskDescriptor().getTaskDefinition().getSteps()){
+							WizardStateMachine.getInstance().changeStepState(s, WizardStateMachine.STATE_STEP_READY);
+						}
+					}
 					treePanel.getTree().treeDidChange();
 					//WizardControler.getInstance().refreshParticipant();
 					//}					
@@ -243,6 +247,12 @@ public class WizardControler {
 					//if(selectedTask.getId() != null) {
 						WizardControler.getInstance().changeHTMLViewerBehavior(true);
 						WizardControler.getInstance().pauseConcreteTaskDescriptor(selectedTask);
+						// if the task is suspended then the steps can't be finish so they are put in CREATED state
+						if (selectedTask.getTaskDescriptor().getTaskDefinition() != null){
+							for (Step s : selectedTask.getTaskDescriptor().getTaskDefinition().getSteps()){
+								WizardStateMachine.getInstance().changeStepState(s, WizardStateMachine.STATE_STEP_CREATED);
+							}
+						}
 						treePanel.getTree().treeDidChange();
 						//WizardControler.getInstance().refreshParticipant();
 					//}

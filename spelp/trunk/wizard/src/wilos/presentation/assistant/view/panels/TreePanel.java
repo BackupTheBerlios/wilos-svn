@@ -207,7 +207,7 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 							WizardMutableTreeNode sWmt = new WizardMutableTreeNode(s);
 							ctdWmt.add(sWmt);
 							// managing the steps
-							if (ctd.getState().equals(Constantes.State.STARTED) || ctd.getState().equals(Constantes.State.SUSPENDED)){
+							if (ctd.getState().equals(Constantes.State.STARTED)){
 								WizardStateMachine.getInstance().addStep(s,WizardStateMachine.STATE_STEP_READY ) ;
 							}
 							else if (ctd.getState().equals(Constantes.State.FINISHED)){
