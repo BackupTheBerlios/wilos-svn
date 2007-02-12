@@ -14,9 +14,6 @@ import org.apache.commons.logging.Log ;
 import org.apache.commons.logging.LogFactory ;
 
 import wilos.business.services.misc.concreteactivity.ConcreteActivityService;
-import wilos.business.services.misc.concreteiteration.ConcreteIterationService;
-import wilos.business.services.misc.concretephase.ConcretePhaseService;
-import wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService;
 import wilos.business.services.misc.project.ProjectService ;
 import wilos.business.services.presentation.web.WebSessionService ;
 import wilos.model.misc.concreteactivity.ConcreteActivity ;
@@ -47,8 +44,6 @@ public class ProjectAdvancementBean {
 
 	private String projectViewedId ;
 
-	private ArrayList<Object> projectContent = new ArrayList<Object>() ; ;
-
 	private ArrayList<HashMap<String,Object>> displayContent ;
 
 	private HashMap<String, Double> advancementTimes ;
@@ -60,6 +55,8 @@ public class ProjectAdvancementBean {
 	protected HashMap<String, Boolean> isExpanded = new HashMap<String, Boolean>() ;
 
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
+	
+	private boolean selected_projectAdvancement_view ;
 
 	/**
 	 * Constructor.
@@ -67,7 +64,6 @@ public class ProjectAdvancementBean {
 	 */
 	public ProjectAdvancementBean() {
 		this.project = new Project() ;
-		this.projectContent = new ArrayList<Object>() ;
 		this.displayContent = new ArrayList<HashMap<String,Object>>() ;
 		this.indentationContent = new HashMap<String, String>() ;
 		this.advancementTimes = new HashMap<String, Double>() ;
@@ -106,12 +102,9 @@ public class ProjectAdvancementBean {
 	 * Utility method to add all child nodes to the parent dataTable list.
 	 */
 	private void expandNodeAction() {
-		double currentAdvancedTime = 0.00 ;
-		String indentationString = "";
 		FacesContext context = FacesContext.getCurrentInstance() ;
 		Map map = context.getExternalContext().getRequestParameterMap() ;
 		String elementId = (String) map.get("elementId") ;
-		ConcreteTaskDescriptor ctdtmp = new ConcreteTaskDescriptor() ;
 
 		ArrayList<Object> tmp = new ArrayList<Object>() ;
 		tmp.addAll(this.displayContent) ;
@@ -131,8 +124,6 @@ public class ProjectAdvancementBean {
 				}
 			}
 		}
-//		currentAdvancedTime = (double) Math.round(ProjectAdvancementBean.activityAdvancementCalculation(element2)) ;
-//		this.advancementTimes.put(element2.getId(), currentAdvancedTime) ;
 	}
 
 	/**
@@ -150,14 +141,11 @@ public class ProjectAdvancementBean {
 		if(remainingTimes + accomplishedTimes > 0){
 			result = remainingTimes / (remainingTimes + accomplishedTimes) ;
 		}
-		if(accomplishedTimes > 0){
-			result = (result * 100) ;
+		if(remainingTimes == 0 && accomplishedTimes > 0){
+			result = 1;
 		}
-		else{
-			result = 0.0 ;
-		}
-			
-		return result ;
+
+		return result*100 ;
 	}
 
 	/**
@@ -238,21 +226,6 @@ public class ProjectAdvancementBean {
 		}
 	}
 
-	/**
-	 * Getter of projectContent.
-	 *
-	 * @return the projectContent.
-	 */
-	public ArrayList<Object> getProjectContent() {
-		this.projectContent.clear() ;
-		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID) ;
-
-		this.project = this.projectService.getProject(projectId) ;
-		if(this.project.getProcess() != null){
-			retrieveHierarchicalItems(this.project) ;
-		}
-		return this.projectContent ;
-	}
 
 	/**
 	 * TODO Method description
@@ -278,6 +251,8 @@ public class ProjectAdvancementBean {
 					hm.put("nodeType","node");
 					hm.put("expansionImage",CONTRACT_TABLE_ARROW);
 				}
+				currentAdvancedTime = (double) Math.round(ProjectAdvancementBean.activityAdvancementCalculation(concreteBreakdownElement)) ;
+				hm.put("advancementTime",currentAdvancedTime);
 				hm.put("id", concreteBreakdownElement.getId());
 				hm.put("concreteName",concreteBreakdownElement.getConcreteName());	
 				hm.put("parentId",_concreteActivity.getId());
@@ -311,15 +286,6 @@ public class ProjectAdvancementBean {
 			this.needIndentation = true;
 		}
 		return this.displayContent ;
-	}
-
-	/**
-	 * Setter of projectContent.
-	 *
-	 * @param _projectContent The projectContent to set.
-	 */
-	public void setProjectContent(ArrayList<Object> _projectContent) {
-		this.projectContent = _projectContent ;
 	}
 
 	/**
@@ -459,5 +425,31 @@ public class ProjectAdvancementBean {
 	 */
 	public void setConcreteActivityService(ConcreteActivityService _concreteActivityService) {
 		this.concreteActivityService = _concreteActivityService ;
+	}
+
+	/**
+	 * @return the selected_projectAdvancement_view
+	 */
+	public boolean getSelected_projectAdvancement_view() {
+		String user_id = (String)this.webSessionService.getAttribute(this.webSessionService.WILOS_USER_ID);
+		this.project = this.projectService.getProject((String)this.webSessionService.getAttribute(this.webSessionService.PROJECT_ID));
+		this.selected_projectAdvancement_view  = false;
+		if (this.project.getProjectManager() != null)
+		{
+			if (this.project.getProjectManager().getWilosuser_id().equals(user_id))
+			{
+				this.selected_projectAdvancement_view  = true;
+			}
+		}
+		return this.selected_projectAdvancement_view ;
+	}
+
+	/**
+	 * Setter of selected_projectAdvancement_view.
+	 *
+	 * @param _selected_projectAdvancement_view The selected_projectAdvancement_view to set.
+	 */
+	public void setSelected_projectAdvancement_view(boolean _selected_projectAdvancement_view) {
+		this.selected_projectAdvancement_view = _selected_projectAdvancement_view ;
 	}
 }

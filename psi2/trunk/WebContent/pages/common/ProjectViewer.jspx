@@ -42,37 +42,39 @@
 					</f:subview>
 				</ice:panelStack>
 			</ice:panelTab>
-			<!-- PSI2 ONGLET DE L AVANCEMENT DU PROJET -->
-			<ice:panelTab id="panelTab_projectAdvancement" label="#{msgs['component.project.projectadvancement.title']}">
-			<ice:dataTable
-				value="#{ProjectAdvancementBean.displayContent}"
-				var="cbde" cellpadding="0"
-				columnWidths="30px,800px,100px">
-				<ice:column>
-				    <f:facet name="header">
-				        <ice:outputText value=""/>
-				    </f:facet>
-				    <ice:commandLink value="" actionListener="#{ProjectAdvancementBean.toggleSubGroupAction}">
-					    <f:param name="elementId" value="#{cbde.id}"/>
-					    <ice:graphicImage  value="#{cbde.expansionImage}" style="border: 0px solid;"/>
-				    </ice:commandLink>
-				</ice:column>
-				<ice:column>
-				    <f:facet name="header">
-				        <ice:outputText value="#{msgs['component.project.projectadvancement.column1']}"/>
-				    </f:facet>
-				    <ice:outputText value="#{ProjectAdvancementBean.indentationContent[cbde.id]}#{cbde.concreteName}"/>
-				</ice:column>
-				<ice:column>
-				    <f:facet name="header">
-				        <ice:outputText value="#{msgs['component.project.projectadvancement.column2']}"/>
-				    </f:facet><!--
-			        <ice:outputText value="#{ProjectAdvancementBean.advancementTimes[cbde.id]} %"/>
-				--></ice:column>
-			</ice:dataTable>
-		</ice:panelTab>
-		<ice:panelTab id="panelTab_projectRoles" label="#{msgs['component.project.projectroles.title']}">
-				<!--  <ice:dataTable
+			<!-- ####################################################################################################
+			PSI2 ONGLET DE L AVANCEMENT DU PROJET 
+			#################################################################################################### -->
+			<ice:panelTab id="panelTab_projectAdvancement" label="#{msgs['component.project.projectadvancement.title']}" 
+							rendered= "#{ProjectAdvancementBean.selected_projectAdvancement_view}">
+						<ice:dataTable value="#{ProjectAdvancementBean.displayContent}"	var="cbde" cellpadding="0" columnWidths="30px,800px,100px">
+							<ice:column>
+							    <f:facet name="header">
+							        <ice:outputText value=""/>
+							    </f:facet>
+							    <ice:commandLink value="" actionListener="#{ProjectAdvancementBean.toggleSubGroupAction}">
+								    <f:param name="elementId" value="#{cbde.id}"/>
+								    <ice:graphicImage  value="#{cbde.expansionImage}" style="border: 0px solid;"/>
+							    </ice:commandLink>
+							</ice:column>
+							<ice:column>
+							    <f:facet name="header">
+							        <ice:outputText value="#{msgs['component.project.projectadvancement.column1']}"/>
+							    </f:facet>
+							    <ice:outputText value="#{ProjectAdvancementBean.indentationContent[cbde.id]}#{cbde.concreteName}"/>
+							</ice:column>
+							<ice:column>
+							    <f:facet name="header">
+							        <ice:outputText value="#{msgs['component.project.projectadvancement.column2']}"/>
+							    </f:facet>
+						        <ice:outputText value="#{cbde.advancementTime} %"/>
+							</ice:column>
+						</ice:dataTable>
+			</ice:panelTab>	
+			<!-- #################################################################################################### -->			
+
+			<!--<ice:panelTab id="panelTab_projectRoles" label="#{msgs['component.project.projectroles.title']}">
+				  <ice:dataTable
 					value="#{ConcreteRoleAffectationBean.itemsKeys}"
 					var="item" cellpadding="0"
 					width="550px">
@@ -97,7 +99,7 @@
 				        </ice:panelGroup>
 					</ice:columns>
 				</ice:dataTable>
-			</ice:panelTab>-->
+			</ice:panelTab>
 			<ice:dataTable
 					value="#{ConcreteRoleAffectationBean.itemsKeys}"
 					var="item" cellpadding="0"
@@ -127,7 +129,7 @@
 					</ice:columns>
 				</ice:dataTable>
 				<ice:commandButton value="saveRoles" action="" styleClass="smallbutton"/>
-			</ice:panelTab>
+			</ice:panelTab>-->
 		</ice:panelTabSet>
 	</ice:panelGrid>
 </ice:form>
