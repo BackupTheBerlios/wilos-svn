@@ -8,12 +8,14 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.jdesktop.swingx.JXTree;
 
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.task.Step;
+import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 import wilos.presentation.assistant.view.main.ActionBar;
 import wilos.presentation.assistant.view.main.ContextualMenu;
@@ -266,12 +268,32 @@ public class WizardControler {
 						// if(selectedTask.getId() != null) {
 						WizardControler.getInstance().changeHTMLViewerBehavior(true);
 						WizardStateMachine.getInstance().changeStepState(selectedStep, WizardStateMachine.STATE_STEP_FINISHED);
+						finishTaskIfNecessary((DefaultMutableTreeNode)dmt.getParent());
 						treePanel.getTree().treeDidChange();
 						//WizardControler.getInstance().refreshParticipant();
 						//}
 					}
 				}
 				
+			}
+			
+			private void finishTaskIfNecessary(DefaultMutableTreeNode n){
+				if (n.getUserObject() instanceof ConcreteTaskDescriptor){
+					ConcreteTaskDescriptor parent = (ConcreteTaskDescriptor)n.getUserObject();
+					if (parent.getTaskDescriptor().getTaskDefinition() != null){
+						boolean ok = true ;
+						for (Step s : parent.getTaskDescriptor().getTaskDefinition().getSteps()){
+							ok = ok && (WizardStateMachine.getInstance().getStepState(s) == WizardStateMachine.STATE_STEP_FINISHED);
+						}
+						if (ok) {
+							if (parent.getState().equals(Constantes.State.STARTED)){
+								if(JOptionPane.showOptionDialog(treePanel,Bundle.getText("endstep.title"), Bundle.getText("endstep.message"), JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,null) == JOptionPane.YES_OPTION){
+									finishConcreteTaskDescriptor(parent);
+								}
+							}
+						}
+					}
+				}
 			}
 		};
 		
