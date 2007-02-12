@@ -24,6 +24,7 @@ import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.element.Element;
 import wilos.model.spem2.task.Step;
@@ -279,6 +280,10 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 				if (object instanceof ConcreteRoleDescriptor) {
 					ConcreteRoleDescriptor crd = (ConcreteRoleDescriptor)object ;
 					this.setIcon(ImagesService.getImageIcon("images.iconRole"));
+				}
+				else if (object instanceof Project){
+					Project p = (Project)object ;
+					this.setText(p.getConcreteName());
 				}
 				else if(object instanceof ConcreteIteration){
 					this.setIcon(ImagesService.getImageIcon("images.iconIteration"));
