@@ -45,10 +45,8 @@ public class MainFrame extends JFrame{
 	private void initialize() 
 	{
 	    myLoginPanel = new LoginPanel(this);
-	    
-        this.setContentPane(myLoginPanel);
+        this.setContentPane(myLoginPanel);  
         this.pack();
-        
         int p1 = (int)(Toolkit.getDefaultToolkit().getScreenSize().width/2-this.getSize().width/2);
 		int p2 = (int)(Toolkit.getDefaultToolkit().getScreenSize().height/2-this.getSize().height/2) ; 
 		this.setLocation(new Point(
@@ -59,7 +57,7 @@ public class MainFrame extends JFrame{
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
-		
+       
 	}
 	
 	private InfoPanel getSouthPanel() 
@@ -97,8 +95,7 @@ public class MainFrame extends JFrame{
 	{
 		super(Bundle.getText("mainFrame.connectionTitle"));
 		this.setLayout(new BorderLayout());
-		this.setSize(Toolkit.getDefaultToolkit().getScreenSize().width/4, Toolkit.getDefaultToolkit().getScreenSize().height/3);
-		this.setLocation(0,0);
+		//this.setSize(Toolkit.getDefaultToolkit().getScreenSize().width/4, Toolkit.getDefaultToolkit().getScreenSize().height/3);
 		initialize();
 		this.addWindowFocusListener(new WindowFocusListener()
 		{
