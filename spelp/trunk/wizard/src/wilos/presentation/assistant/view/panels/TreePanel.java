@@ -110,6 +110,8 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 		public String toString() {
 			if (userObject instanceof ConcreteRoleDescriptor)
 				return ((ConcreteRoleDescriptor) userObject).getRoleDescriptor().getPresentationName();
+			else if (userObject instanceof Project)
+				return ((Project) userObject).getConcreteName();
 			else if (userObject instanceof ConcreteIteration)
 				return ((ConcreteIteration) userObject).getIteration().getPresentationName();
 			else if (userObject instanceof ConcretePhase)
@@ -280,10 +282,6 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 				if (object instanceof ConcreteRoleDescriptor) {
 					ConcreteRoleDescriptor crd = (ConcreteRoleDescriptor)object ;
 					this.setIcon(ImagesService.getImageIcon("images.iconRole"));
-				}
-				else if (object instanceof Project){
-					Project p = (Project)object ;
-					this.setText(p.getConcreteName());
 				}
 				else if(object instanceof ConcreteIteration){
 					this.setIcon(ImagesService.getImageIcon("images.iconIteration"));
