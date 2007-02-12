@@ -160,7 +160,9 @@ public class WizardControler {
 			WizardServicesProxy.startConcreteTaskDescriptor(ctd.getId());
 			if (ctd.getTaskDescriptor().getTaskDefinition() != null && ctd.getTaskDescriptor().getTaskDefinition() != null){
 				for (Step s : ctd.getTaskDescriptor().getTaskDefinition().getSteps()) {
-					WizardStateMachine.getInstance().changeStepState(s, WizardStateMachine.STATE_STEP_READY);
+					if(WizardStateMachine.getInstance().getStepState(s)!=WizardStateMachine.STATE_STEP_FINISHED){
+						WizardStateMachine.getInstance().changeStepState(s, WizardStateMachine.STATE_STEP_READY);
+					}
 				}
 			}
 			ctd.setState(Constantes.State.STARTED);
@@ -287,7 +289,7 @@ public class WizardControler {
 						}
 						if (ok) {
 							if (parent.getState().equals(Constantes.State.STARTED)){
-								if(JOptionPane.showOptionDialog(treePanel,Bundle.getText("endstep.title"), Bundle.getText("endstep.message"), JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,null) == JOptionPane.YES_OPTION){
+								if(JOptionPane.showOptionDialog(treePanel, Bundle.getText("endstep.message"), Bundle.getText("endstep.title"), JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,null) == JOptionPane.YES_OPTION){
 									finishConcreteTaskDescriptor(parent);
 								}
 							}
