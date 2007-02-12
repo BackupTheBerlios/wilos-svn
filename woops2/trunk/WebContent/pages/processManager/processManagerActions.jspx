@@ -1,0 +1,8 @@
+<ice:form id="process_manager_actions_form">
+	<ice:panelGrid columns="3">			
+		<ice:commandLink immediate="true" type="submit" value="#{msgs['action.link.importProcessFile']}" action="" styleClass="button" actionListener="#{ActionBean.selectNodeActionListener}">
+			<f:param name="mainPage" value="#{ActionBean.processManagerMain }" />
+			<f:param name="pageToShow" value="#{ActionBean.importProcessFile}" />
+		</ice:commandLink>
+	</ice:panelGrid>		
+</ice:form>

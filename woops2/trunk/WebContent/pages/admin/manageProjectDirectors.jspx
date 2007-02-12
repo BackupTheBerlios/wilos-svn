@@ -1,0 +1,8 @@
+<ice:form id="manageProjetDirectors_form">
+	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
+		<ice:panelTabSet id="panelTabSet_manageProjetDirectors" styleClass="componentPanelTabSetLayout">
+			<jsp:directive.include file="./pages/admin/tabProjectDirectorsList.jspx"/>
+			<jsp:directive.include file="./pages/admin/tabProjectDirectorCreate.jspx"/>
+		</ice:panelTabSet>
+	</ice:panelGrid>
+</ice:form>
