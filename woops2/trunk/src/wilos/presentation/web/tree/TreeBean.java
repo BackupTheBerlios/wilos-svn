@@ -35,7 +35,8 @@ import wilos.presentation.web.viewer.ProjectViewerBean;
 /**
  * @author deder
  * @author eperico
- * @author garwind <p/> A basic backing bean for a ice:tree component. The only instance variable
+ * @author garwind
+ *  <p/> A basic backing bean for a ice:tree component. The only instance variable
  *         needed is a DefaultTreeModel Object which is bound to the icefaces tree component in the
  *         jspx code.
  *         </p>
@@ -45,306 +46,305 @@ import wilos.presentation.web.viewer.ProjectViewerBean;
  */
 public class TreeBean {
 
-	/* Services */
+       /* Services */
 
-	private static final String ACTIVITY_VIEWER_BEAN = "ConcreteActivityViewerBean";
+       private static final String ACTIVITY_VIEWER_BEAN = "ConcreteActivityViewerBean";
 
-	private static final String PROJECT_VIEWER_BEAN = "ProjectViewerBean";
+       private static final String PROJECT_VIEWER_BEAN = "ProjectViewerBean";
 
-	private static final String PHASE_VIEWER_BEAN = "ConcretePhaseViewerBean";
+       private static final String PHASE_VIEWER_BEAN = "ConcretePhaseViewerBean";
 
-	private static final String ITERATION_VIEWER_BEAN = "ConcreteIterationViewerBean";
+       private static final String ITERATION_VIEWER_BEAN = "ConcreteIterationViewerBean";
 
-	private static final String CONCRETE_TASK_VIEWER_BEAN = "ConcreteTaskViewerBean";
+       private static final String CONCRETE_TASK_VIEWER_BEAN = "ConcreteTaskViewerBean";
 
-	private WebSessionService webSessionService ;
+       private WebSessionService webSessionService ;
 
-	private ProjectService projectService ;
+       private ProjectService projectService ;
 
-	private LoginService loginService ;
+       private LoginService loginService ;
 
-	private ParticipantService participantService ;
+       private ParticipantService participantService ;
 
-	private ProcessService processService;
+       private ProcessService processService;
 
-	/* Simple fields */
+       /* Simple fields */
 
-	private Project project ;
+       private Project project ;
 
-	private String projectId = "default" ;
+       private String projectId = "default" ;
 
-	private boolean affectedTaskFilter = false ;
+       private boolean affectedTaskFilter = false ;
 
-	private boolean loadTree = true ;
+       private boolean loadTree = true ;
 
-	private boolean loadCheckBox = false ;
+       private boolean loadCheckBox = false ;
 
-	// tree default model, used as a value for the tree component
-	private DefaultTreeModel model = null ;
+       // tree default model, used as a value for the tree component
+       private DefaultTreeModel model = null ;
 
-	protected final Log logger = LogFactory.getLog(this.getClass()) ;
+       protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
-	public TreeBean() {
-		this.model = new DefaultTreeModel(this.getDefaultTree()) ;
-	}
+       public TreeBean() {
+               this.model = new DefaultTreeModel(this.getDefaultTree()) ;
+       }
 
-	public DefaultMutableTreeNode getDefaultTree() {
-		DefaultMutableTreeNode defaultTree = new DefaultMutableTreeNode() ;
-		WilosObjectNode iceUserObject = new WilosObjectNode(defaultTree) ;
-		iceUserObject.setText("Choose a project ...") ;
-		defaultTree.setUserObject(iceUserObject) ;
-		return defaultTree ;
-	}
+       public DefaultMutableTreeNode getDefaultTree() {
+               DefaultMutableTreeNode defaultTree = new DefaultMutableTreeNode() ;
+               WilosObjectNode iceUserObject = new WilosObjectNode(defaultTree) ;
+               iceUserObject.setText("Choose a project ...") ;
+               defaultTree.setUserObject(iceUserObject) ;
+               return defaultTree ;
+       }
 
-	/**
-	 * Gets the tree's default model.
-	 *
-	 * @return tree model.
-	 */
-	private void buildModel(boolean _mustBuildProject) {
-		if(this.projectId != null && !this.projectId.equals("default")){
-			if(_mustBuildProject){
-				// Put into the session the current project used.
-				this.webSessionService.setAttribute(WebSessionService.PROJECT_ID, this.projectId) ;
+       /**
+        * Gets the tree's default model.
+        *
+        * @return tree model.
+        */
+       private void buildModel(boolean _mustBuildProject) {
+               if(this.projectId != null && !this.projectId.equals("default")){
+                       if(_mustBuildProject){
+                               // Put into the session the current project used.
+                               this.webSessionService.setAttribute(WebSessionService.PROJECT_ID, this.projectId) ;
 
-				// Retrieve the entire project.
-				this.project = this.projectService.getProject(this.projectId) ;
-				//this.project = this.processService.getEntireProject(this.projectId) ;
-			}
-			ProjectNode projectNode = null ; Project p = new Project();
+                               // Retrieve the entire project.
+                               this.project = this.projectService.getProject(this.projectId) ;
+                               //this.project = this.processService.getEntireProject(this.projectId) ;
+                       }
+                       ProjectNode projectNode = null ; Project p = new Project();
 
-			if(this.affectedTaskFilter){
-				// participant into session
-				String wilosUserId = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID) ;
-				Participant participant = this.participantService.getParticipant(wilosUserId);
+                       if(this.affectedTaskFilter){
+                               // participant into session
+                               String wilosUserId = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID) ;
+                               Participant participant = this.participantService.getParticipant(wilosUserId);
 
-				if(participant != null){
-					Set<RoleDescriptor> roleDescriptorsList = new HashSet<RoleDescriptor>() ;
-					projectNode = new ProjectNode(this.project, roleDescriptorsList) ;
-				}
-			}
-			else{
-				projectNode = new ProjectNode(this.project, null) ;
-			}
-			this.model = new DefaultTreeModel(projectNode) ;
-		}
-		else{
-			// Build the default tree.
-			this.model = new DefaultTreeModel(this.getDefaultTree()) ;
+                               if(participant != null){
+                                       Set<RoleDescriptor> roleDescriptorsList = new HashSet<RoleDescriptor>() ;
+                                       projectNode = new ProjectNode(this.project, roleDescriptorsList) ;
+                               }
+                       }
+                       else{
+                               projectNode = new ProjectNode(this.project, null) ;
+                       }
+                       this.model = new DefaultTreeModel(projectNode) ;
+               }
+               else{
+                       // Build the default tree.
+                       this.model = new DefaultTreeModel(this.getDefaultTree()) ;
 
-			// hide tree.
-			this.loadTree = true ;
-		}
-	}
+                       // hide tree.
+                       this.loadTree = true ;
+               }
+       }
 
-	public DefaultTreeModel getModel() {
-		return this.model ;
-	}
+       public DefaultTreeModel getModel() {
+               return this.model ;
+       }
 
-	public List<SelectItem> getProjects() {
-		List<SelectItem> projectsList = new ArrayList<SelectItem>() ;
+       public List<SelectItem> getProjects() {
+               List<SelectItem> projectsList = new ArrayList<SelectItem>() ;
 
-		String wilosUserId = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID) ;
-		Participant participant = this.participantService.getParticipant(wilosUserId);
+               String wilosUserId = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID) ;
+               Participant participant = this.participantService.getParticipant(wilosUserId);
 
-		if(participant != null){
-			/*HashMap<Project, Boolean> projects = this.participantService.getProjectsForAParticipant(participant) ;
-			for(Project project : projects.keySet()){
-				if(projects.get(project)){
-					projectsList.add(new SelectItem(project.getId(), project.getConcreteName())) ;
-				}
-			}*/
+               if(participant != null){
+                       /*HashMap<Project, Boolean> projects = this.participantService.getProjectsForAParticipant(participant) ;
+                       for(Project project : projects.keySet()){
+                               if(projects.get(project)){
+                                       projectsList.add(new SelectItem(project.getId(), project.getConcreteName())) ;
+                               }
+                       }*/
 
-			for(Project project : this.projectService.getAllProjects()){
-				projectsList.add(new SelectItem(project.getId(), project.getConcreteName())) ;
-			}
-		}
+                       for(Project project : this.projectService.getAllProjects()){
+                               projectsList.add(new SelectItem(project.getId(), project.getConcreteName())) ;
+                       }
+               }
 
-		projectsList.add(new SelectItem("default", "Choose a project ...")) ;
-		return projectsList ;
-	}
+               projectsList.add(new SelectItem("default", "Choose a project ...")) ;
+               return projectsList ;
+       }
 
-	public void changeTreeActionListener(ValueChangeEvent evt) {
-		this.projectId = (String) evt.getNewValue() ;
-		this.loadCheckBox = true ;
-		this.loadTree = false ;
-		this.buildModel(true) ;
+       public void changeTreeActionListener(ValueChangeEvent evt) {
+               this.projectId = (String) evt.getNewValue() ;
+               this.loadCheckBox = true ;
+               this.loadTree = false ;
+               this.buildModel(true) ;
 
-		// TODO changeTreeActionListener not verify
-		if (this.projectId.length() > 0) this.selectNodeToShow(this.projectId, WilosObjectNode.PROJECTNODE) ;
-		logger.debug("### TreeBean ### changeTreeActionListener projectId="+this.projectId) ;
-	}
+               if (this.projectId.length() > 0) this.selectNodeToShow(this.projectId, WilosObjectNode.PROJECTNODE) ;
+               logger.debug("### TreeBean ### changeTreeActionListener projectId="+this.projectId) ;
+       }
 
-	public void filterTreeActionListener(ValueChangeEvent evt) {
-		this.buildModel(false) ;
-	}
+       public void filterTreeActionListener(ValueChangeEvent evt) {
+               this.buildModel(false) ;
+       }
+       //TODO ameliorer l'affichage d'un noeud en chargeant l'obejt a afficher direct dans le ViewerBean
+       public void selectNodeActionListener(ActionEvent evt) {
+               logger.debug("### TreeBean ### selectNodeActionListener") ;
+               FacesContext context = FacesContext.getCurrentInstance() ;
+               Map map = context.getExternalContext().getRequestParameterMap() ;
 
-	public void selectNodeActionListener(ActionEvent evt) {
-		logger.debug("### TreeBean ### selectNodeActionListener") ;
-		FacesContext context = FacesContext.getCurrentInstance() ;
-		Map map = context.getExternalContext().getRequestParameterMap() ;
+               String nodeId = (String) map.get("nodeId") ;
+               logger.debug("### TreeBean ### selectNodeActionListener - nodeId =" + nodeId) ;
+               String pageId = (String) map.get("pageId") ;
 
-		String nodeId = (String) map.get("nodeId") ;
-		logger.debug("### TreeBean ### selectNodeActionListener - nodeId =" + nodeId) ;
-		String pageId = (String) map.get("pageId") ;
+               logger.debug("### TreeBean ### selectNodeActionListener - pageId =" + pageId) ;
+               //
+               this.selectNodeToShow(nodeId, pageId) ;
+       }
 
-		logger.debug("### TreeBean ### selectNodeActionListener - pageId =" + pageId) ;
-		//
-		this.selectNodeToShow(nodeId, pageId) ;
-	}
+       /**
+        *
+        * @param _objectId
+        * @param _pageId
+        *            node selection function
+        */
+       private void selectNodeToShow(String _objectId, String _pageId) {
+               logger.debug("### TreeBean ### selectNodeToShow id=" + _objectId + " page=" + _pageId) ;
+               FacesContext context = FacesContext.getCurrentInstance() ;
+               MenuBean mb = (MenuBean) context.getApplication().getVariableResolver().resolveVariable(context, "menu") ;
+               if(_objectId != null && _pageId != null){
+                       if(_pageId.equals(WilosObjectNode.ACTIVITYNODE)){
+                               ConcreteActivityViewerBean av = (ConcreteActivityViewerBean) context.getApplication().getVariableResolver().resolveVariable(context,
+                                               ACTIVITY_VIEWER_BEAN) ;
+                               av.setConcreteActivityId(_objectId) ;
+                               // model building
+                               av.buildConcreteActivity() ;
+                               mb.changePage(_pageId) ;
+                       }
+                       else if(_pageId.equals(WilosObjectNode.CONCRETETASKNODE)){
+                               ConcreteTaskViewerBean ctv = (ConcreteTaskViewerBean) context.getApplication().getVariableResolver().resolveVariable(context,
+                                               CONCRETE_TASK_VIEWER_BEAN) ;
+                               ctv.setConcreteTaskDescriptorId(_objectId) ;
+                               // model building
+                               ctv.buildConcreteTaskDescriptor() ;
+                               mb.changePage(_pageId) ;
+                       }
+                       else if(_pageId.equals(WilosObjectNode.ITERATIONNODE)){
+                               ConcreteIterationViewerBean iv = (ConcreteIterationViewerBean) context.getApplication().getVariableResolver().resolveVariable(context,
+                                               ITERATION_VIEWER_BEAN) ;
+                               iv.setConcreteIterationId(_objectId) ;
+                               // model building
+                               iv.buildConcreteIteration() ;
+                               mb.changePage(_pageId) ;
+                       }
+                       else if(_pageId.equals(WilosObjectNode.PHASENODE)){
+                               ConcretePhaseViewerBean pb = (ConcretePhaseViewerBean) context.getApplication().getVariableResolver().resolveVariable(context,
+                                               PHASE_VIEWER_BEAN) ;
+                               pb.setConcretePhaseId(_objectId) ;
+                               // model building
+                               pb.buildConcretePhaseModel() ;
+                               mb.changePage(_pageId) ;
+                       }
+                       else if(_pageId.equals(WilosObjectNode.PROJECTNODE)){
+                               ProjectViewerBean p = (ProjectViewerBean) context.getApplication().getVariableResolver().resolveVariable(context, PROJECT_VIEWER_BEAN) ;
+                               p.setProjectId(_objectId) ;
+                               // model building
+                               p.buildProjectModel() ;
+                               mb.changePage(_pageId) ;
+                       }
+                       else{
+                               // didnt found the node's class
+                               new ClassNotFoundException("coulnd't found the node class") ;
+                       }
+               }
+       }
 
-	/**
-	 *
-	 * @param _objectId
-	 * @param _pageId
-	 *            node selection function
-	 */
-	private void selectNodeToShow(String _objectId, String _pageId) {
-		logger.debug("### TreeBean ### selectNodeToShow id=" + _objectId + " page=" + _pageId) ;
-		FacesContext context = FacesContext.getCurrentInstance() ;
-		MenuBean mb = (MenuBean) context.getApplication().getVariableResolver().resolveVariable(context, "menu") ;
-		if(_objectId != null && _pageId != null){
-			if(_pageId.equals(WilosObjectNode.ACTIVITYNODE)){
-				ConcreteActivityViewerBean av = (ConcreteActivityViewerBean) context.getApplication().getVariableResolver().resolveVariable(context,
-						ACTIVITY_VIEWER_BEAN) ;
-				av.setConcreteActivityId(_objectId) ;
-				// model building
-				av.buildConcreteActivity() ;
-				mb.changePage(_pageId) ;
-			}
-			else if(_pageId.equals(WilosObjectNode.CONCRETETASKNODE)){
-				ConcreteTaskViewerBean ctv = (ConcreteTaskViewerBean) context.getApplication().getVariableResolver().resolveVariable(context,
-						CONCRETE_TASK_VIEWER_BEAN) ;
-				ctv.setConcreteTaskDescriptorId(_objectId) ;
-				// model building
-				ctv.buildConcreteTaskDescriptor() ;
-				mb.changePage(_pageId) ;
-			}
-			else if(_pageId.equals(WilosObjectNode.ITERATIONNODE)){
-				ConcreteIterationViewerBean iv = (ConcreteIterationViewerBean) context.getApplication().getVariableResolver().resolveVariable(context,
-						ITERATION_VIEWER_BEAN) ;
-				iv.setConcreteIterationId(_objectId) ;
-				// model building
-				iv.buildConcreteIteration() ;
-				mb.changePage(_pageId) ;
-			}
-			else if(_pageId.equals(WilosObjectNode.PHASENODE)){
-				ConcretePhaseViewerBean pb = (ConcretePhaseViewerBean) context.getApplication().getVariableResolver().resolveVariable(context,
-						PHASE_VIEWER_BEAN) ;
-				pb.setConcretePhaseId(_objectId) ;
-				// model building
-				pb.buildConcretePhaseModel() ;
-				mb.changePage(_pageId) ;
-			}
-			else if(_pageId.equals(WilosObjectNode.PROJECTNODE)){
-				ProjectViewerBean p = (ProjectViewerBean) context.getApplication().getVariableResolver().resolveVariable(context, PROJECT_VIEWER_BEAN) ;
-				p.setProjectId(_objectId) ;
-				// model building
-				p.buildProjectModel() ;
-				mb.changePage(_pageId) ;
-			}
-			else{
-				// didnt found the node's class
-				new ClassNotFoundException("coulnd't found the node class") ;
-			}
-		}
-	}
+       /**
+        * @return the processId
+        */
+       public String getProjectId() {
+               return this.projectId ;
+       }
 
-	/**
-	 * @return the processId
-	 */
-	public String getProjectId() {
-		return this.projectId ;
-	}
+       /**
+        * Setter of processId.
+        *
+        * @param _processId
+        *            The processId to set.
+        */
+       public void setProjectId(String _processId) {
+               this.projectId = _processId ;
+       }
 
-	/**
-	 * Setter of processId.
-	 *
-	 * @param _processId
-	 *            The processId to set.
-	 */
-	public void setProjectId(String _processId) {
-		this.projectId = _processId ;
-	}
+       public Boolean getAffectedTaskFilter() {
+               return affectedTaskFilter ;
+       }
 
-	public Boolean getAffectedTaskFilter() {
-		return affectedTaskFilter ;
-	}
+       public void setAffectedTaskFilter(Boolean _affectedTaskFilter) {
+               this.affectedTaskFilter = _affectedTaskFilter ;
+       }
 
-	public void setAffectedTaskFilter(Boolean _affectedTaskFilter) {
-		this.affectedTaskFilter = _affectedTaskFilter ;
-	}
+       public ProjectService getProjectService() {
+               return projectService ;
+       }
 
-	public ProjectService getProjectService() {
-		return projectService ;
-	}
+       public void setProjectService(ProjectService projectService) {
+               this.projectService = projectService ;
+       }
 
-	public void setProjectService(ProjectService projectService) {
-		this.projectService = projectService ;
-	}
+       public Boolean getLoadTree() {
+               return loadTree ;
+       }
 
-	public Boolean getLoadTree() {
-		return loadTree ;
-	}
+       public void setLoadTree(Boolean loadTree) {
+               this.loadTree = loadTree ;
+       }
 
-	public void setLoadTree(Boolean loadTree) {
-		this.loadTree = loadTree ;
-	}
+       public Boolean getLoadCheckBox() {
+               return loadCheckBox ;
+       }
 
-	public Boolean getLoadCheckBox() {
-		return loadCheckBox ;
-	}
+       public void setLoadCheckBox(Boolean loadCheckBox) {
+               this.loadCheckBox = loadCheckBox ;
+       }
 
-	public void setLoadCheckBox(Boolean loadCheckBox) {
-		this.loadCheckBox = loadCheckBox ;
-	}
+       public LoginService getLoginService() {
+               return loginService ;
+       }
 
-	public LoginService getLoginService() {
-		return loginService ;
-	}
+       public void setLoginService(LoginService loginService) {
+               this.loginService = loginService ;
+       }
 
-	public void setLoginService(LoginService loginService) {
-		this.loginService = loginService ;
-	}
+       public ParticipantService getParticipantService() {
+               return participantService ;
+       }
 
-	public ParticipantService getParticipantService() {
-		return participantService ;
-	}
+       public void setParticipantService(ParticipantService participantService) {
+               this.participantService = participantService ;
+       }
 
-	public void setParticipantService(ParticipantService participantService) {
-		this.participantService = participantService ;
-	}
+       /**
+        * @return the webSessionService
+        */
+       public WebSessionService getWebSessionService() {
+               return webSessionService ;
+       }
 
-	/**
-	 * @return the webSessionService
-	 */
-	public WebSessionService getWebSessionService() {
-		return webSessionService ;
-	}
+       /**
+        * Setter of webSessionService.
+        *
+        * @param webSessionService
+        *            The webSessionService to set.
+        */
+       public void setWebSessionService(WebSessionService webSessionService) {
+               this.webSessionService = webSessionService ;
+       }
 
-	/**
-	 * Setter of webSessionService.
-	 *
-	 * @param webSessionService
-	 *            The webSessionService to set.
-	 */
-	public void setWebSessionService(WebSessionService webSessionService) {
-		this.webSessionService = webSessionService ;
-	}
+       /**
+        * @return the processService
+        */
+       public ProcessService getProcessService() {
+               return processService ;
+       }
 
-	/**
-	 * @return the processService
-	 */
-	public ProcessService getProcessService() {
-		return processService ;
-	}
-
-	/**
-	 * Setter of processService.
-	 *
-	 * @param processService The processService to set.
-	 */
-	public void setProcessService(ProcessService processService) {
-		this.processService = processService ;
-	}
+       /**
+        * Setter of processService.
+        *
+        * @param processService The processService to set.
+        */
+       public void setProcessService(ProcessService processService) {
+               this.processService = processService ;
+       }
 }
