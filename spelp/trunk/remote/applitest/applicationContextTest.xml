@@ -478,9 +478,9 @@
 		<property name="processService" ref="ProcessService" />
 		<property name="projectDao" ref ="ProjectDao" />
 		<property name="processDao" ref ="ProcessDao" />
-		<property name="participantService" ref ="ParticipantService" />
+		<property name="participantDao" ref ="ParticipantDao" />
 		<property name="concreteRoleDescriptorDao" ref ="ConcreteRoleDescriptorDao" />
-		<property name="concreteTaskDescriptorService" ref ="ConcreteTaskDescriptorService" />
+		<property name="concreteTaskDescriptorDao" ref ="ConcreteTaskDescriptorDao" />
 	</bean>
 
 </beans>
