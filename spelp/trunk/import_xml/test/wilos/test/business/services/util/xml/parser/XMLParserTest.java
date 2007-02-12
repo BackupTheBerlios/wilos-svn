@@ -640,10 +640,11 @@ public class XMLParserTest extends TestCase {
 									Iterator<Guidance> itGuide = listGuides.iterator();
 																		
 									while (itGuide.hasNext()) {										
-										nbGuidances++;
-										itGuide.next();
+										nbGuidances++;										
+										assertTrue(itGuide.next().getDescription().length() > 0);
 									}
 									assertTrue(nbGuidances == 13);
+									
 								}
 							}
 							
@@ -655,6 +656,77 @@ public class XMLParserTest extends TestCase {
 			}
 			assertTrue(rentreDansManageRequirements);
 		}		
+	}
+	
+	
+	public void testOpenUPTaskDescriptorsRunDeveloperTestContainsOnePredecessor() {
+		Process theTestedProcess = null;
+		Iterator<BreakdownElement> itTopLevelAct,itSecondLevelAct,BdeIterator;
+		theTestedProcess = XMLParser.getProcess(pathOPenUP);
+		Activity topLevelActivity,secondLevelActivity;
+		int nbTaskDescriptors = 0;
+		BreakdownElement tmpBde = null;
+		Set<WorkBreakdownElement> listPredecessor = null;
+		Iterator<WorkBreakdownElement> itPredecessor;
+		int nbPredecessor = 0;
+		
+		assertNotNull(theTestedProcess);
+		itTopLevelAct = theTestedProcess.getBreakdownElements().iterator();
+		topLevelActivity = null;
+		
+		// We want the third Phase : Elaboration Iteration
+		while (itTopLevelAct.hasNext()) {
+			topLevelActivity = (Activity) itTopLevelAct.next();
+			if (topLevelActivity.getPresentationName().equals("Elaboration Iteration [1..n]")) {
+				break;
+			}			
+		}
+		
+		itSecondLevelAct = topLevelActivity.getBreakdownElements().iterator();
+		while (itSecondLevelAct.hasNext()) {
+			secondLevelActivity = (Activity) itSecondLevelAct.next();
+			if (secondLevelActivity.getPresentationName().equals("Develop Solution (for requirement) (within context)")) {
+				BdeIterator = secondLevelActivity.getBreakdownElements().iterator();
+				nbTaskDescriptors = 0;
+				
+				while (BdeIterator.hasNext()) {
+					tmpBde = BdeIterator.next();					
+				
+					if (tmpBde instanceof TaskDescriptor) {
+						nbTaskDescriptors++;
+						tmpBde = (TaskDescriptor) tmpBde;
+						assertNotNull(tmpBde);
+						
+						if (tmpBde.getPresentationName().equals("Run Developer Tests")) {
+							// on est dans la taskDescriptor qui est le predecesseur d'un autre tache
+							// on va verifie que le succeseur de cette TD est
+							// la taskDescriptor Design the solution
+							
+							assertTrue(((WorkBreakdownElement)tmpBde).getPredecessors().size() == 1);
+							listPredecessor = new HashSet<WorkBreakdownElement>();
+							for (WorkOrder wo: ((WorkBreakdownElement)tmpBde).getPredecessors()) {
+								listPredecessor.add(wo.getSuccessor());
+								assertTrue(wo.getLinkType().equals("finishToStart"));
+							}
+			
+							itPredecessor = listPredecessor.iterator();
+
+							WorkBreakdownElement tmpWBde = null;
+							while (itPredecessor.hasNext()) {
+								nbPredecessor++;
+								tmpWBde = itPredecessor.next();
+							}
+							assertTrue(nbPredecessor == 1);
+							assertTrue(tmpWBde.getPredecessors().iterator().next().getPredecessor().getPresentationName().equals("Implement Developer Tests"));
+							
+							
+						}
+					}
+				}
+			}
+				
+		}
+		
 	}
 	
 	public void testOpenUPTaskDescriptorDesignSolutionContainsPredecessor() {
