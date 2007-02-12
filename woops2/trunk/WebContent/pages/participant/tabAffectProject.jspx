@@ -38,7 +38,7 @@
 								    <ice:outputText value="#{project1.description}"/>
 								</ice:column>
 							</ice:dataTable>
-							<ice:commandButton value="#{msgs['component.tableparticipantproject.validationButton']}" action="#{ParticipantBean.saveProjectsAffectation}"/>
+							<ice:commandButton value="#{msgs['component.tableparticipantproject.validationButton']}" action="#{ParticipantBean.saveProjectsAffectation}" styleClass="smallbutton"/>
 						</ice:panelGroup>
 						<ice:panelGroup id="affected_no_records_view">
 							<h4><ice:outputText value="#{msgs['component.tableparticipantproject.norecords']}"/></h4>
