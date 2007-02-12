@@ -135,9 +135,6 @@ public class WizardStateMachine extends Observable{
 
 			WizardControler.getInstance().setLastCtd(ctd);
 			
-			if (WizardControler.getInstance().isShowInfo()){
-				h.get(null).viewObject(ctd);
-			}
 		}
 		else if (object instanceof Step)
 		{
@@ -152,15 +149,10 @@ public class WizardStateMachine extends Observable{
 				case STATE_STEP_READY :
 					updateState(STATE_STEP_READY);
 					break ;
-			}
-			h.get(null).viewObject(object);
-			
+			}		
 		}
-		else {
-			if (WizardControler.getInstance().isShowInfo()){
-				h.get(null).viewObject(object);
-				updateState(STATE_NOTHING);
-			}
+		if (WizardControler.getInstance().isShowInfo() || h != WizardControler.getInstance().getDefaultHTML(null)){
+			h.viewObject(object);
 		}
 	}
 	

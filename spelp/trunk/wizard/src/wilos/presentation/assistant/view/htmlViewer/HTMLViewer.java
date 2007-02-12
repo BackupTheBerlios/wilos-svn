@@ -70,7 +70,7 @@ public class HTMLViewer extends JFrame {
 	}
 	
 	public int getHeightToolbar (){
-		return northPanel.getSize().height ;
+		return this.northPanel.getSize().height ;
 	}
 	
 	public HTMLViewer(Point p) {
