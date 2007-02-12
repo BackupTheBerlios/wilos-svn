@@ -289,7 +289,10 @@ public class WizardControler {
 						if (ok) {
 							if (parent.getState().equals(Constantes.State.STARTED)){
 								if(JOptionPane.showOptionDialog(treePanel, Bundle.getText("endstep.message"), Bundle.getText("endstep.title"), JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,null) == JOptionPane.YES_OPTION){
-									finishConcreteTaskDescriptor(parent);
+									WizardControler.getInstance().changeHTMLViewerBehavior(true);
+									WizardControler.getInstance().finishConcreteTaskDescriptor(parent);
+									parent.setState(Constantes.State.FINISHED);
+									WizardStateMachine.getInstance().setFocusedObject(parent,null);
 								}
 							}
 						}
