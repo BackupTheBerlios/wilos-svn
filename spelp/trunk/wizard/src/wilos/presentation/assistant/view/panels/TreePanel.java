@@ -20,6 +20,7 @@ import javax.swing.tree.TreePath;
 import org.jdesktop.swingx.JXTree;
 
 import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
@@ -108,18 +109,21 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 		}
 		
 		public String toString() {
-			if (userObject instanceof ConcreteRoleDescriptor)
-				return ((ConcreteRoleDescriptor) userObject).getRoleDescriptor().getPresentationName();
-			else if (userObject instanceof Project)
-				return ((Project) userObject).getConcreteName();
-			else if (userObject instanceof ConcreteIteration)
-				return ((ConcreteIteration) userObject).getIteration().getPresentationName();
-			else if (userObject instanceof ConcretePhase)
-				return ((ConcretePhase) userObject).getPhase().getPresentationName();
-			else if (userObject instanceof ConcreteActivity)
-				return ((ConcreteActivity) userObject).getActivity().getPresentationName();
-			else if (userObject instanceof ConcreteTaskDescriptor) 
-				return ((ConcreteTaskDescriptor) userObject).getTaskDescriptor().getPresentationName();
+//			if (userObject instanceof ConcreteRoleDescriptor)
+//				return ((ConcreteRoleDescriptor) userObject).getRoleDescriptor().getPresentationName();
+//			else if (userObject instanceof Project)
+//				return ((Project) userObject).getConcreteName();
+//			else if (userObject instanceof ConcreteIteration)
+//				return ((ConcreteIteration) userObject).getIteration().getPresentationName();
+//			else if (userObject instanceof ConcretePhase)
+//				return ((ConcretePhase) userObject).getPhase().getPresentationName();
+//			else if (userObject instanceof ConcreteActivity)
+//				return ((ConcreteActivity) userObject).getActivity().getPresentationName();
+//			else if (userObject instanceof ConcreteTaskDescriptor) 
+//				return ((ConcreteTaskDescriptor) userObject).getTaskDescriptor().getPresentationName();
+			if (userObject instanceof ConcreteBreakdownElement){
+				return ((ConcreteBreakdownElement) userObject).getConcreteName();
+			}
 			else if (userObject instanceof Element)
 				return ((Element)userObject).getName();
 			else
