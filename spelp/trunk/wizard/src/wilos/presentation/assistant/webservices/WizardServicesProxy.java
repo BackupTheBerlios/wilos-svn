@@ -424,6 +424,7 @@ public class WizardServicesProxy {
             aTmpTask.setDescription("Un grand moment de haine");
             aTmpRole.addPrimaryTask(aTmpTask);
             aTmpTask.addConcreteTaskDescriptor(aTmpConcrete);
+            aTmpConcrete.setConcreteName(aTmpTask.getPresentationName());
 
             // ------------ nouveau
             
@@ -455,6 +456,7 @@ public class WizardServicesProxy {
             aTmpTask.setPresentationName("Conceptualiser les concepts du programme");
             aTmpRole.addPrimaryTask(aTmpTask);
             aTmpConcrete.setTaskDescriptor(aTmpTask);
+            aTmpConcrete.setConcreteName(aTmpTask.getPresentationName());
             aTmpConcreteRole.addConcreteTaskDescriptor(aTmpConcrete);
             
             aTmpTask = new TaskDescriptor();
@@ -463,6 +465,7 @@ public class WizardServicesProxy {
             aTmpTask.setPresentationName("Rever du programme");
             aTmpRole.addPrimaryTask(aTmpTask);
             aTmpConcrete.setTaskDescriptor(aTmpTask);
+            aTmpConcrete.setConcreteName(aTmpTask.getPresentationName());
             aTmpConcreteRole.addConcreteTaskDescriptor(aTmpConcrete);
             
             aTmpTask = new TaskDescriptor();
@@ -471,6 +474,7 @@ public class WizardServicesProxy {
             aTmpTask.setPresentationName("Faire le cafe concept");
             aTmpRole.addPrimaryTask(aTmpTask);
             aTmpConcrete.setTaskDescriptor(aTmpTask);
+            aTmpConcrete.setConcreteName(aTmpTask.getPresentationName());
             aTmpConcreteRole.addConcreteTaskDescriptor(aTmpConcrete);
             p.addConcreteRoleDescriptor(aTmpConcreteRole);
             
@@ -503,6 +507,7 @@ public class WizardServicesProxy {
             aTmpRole.addPrimaryTask(aTmpTask);
             
             aTmpConcrete.setTaskDescriptor(aTmpTask);
+            aTmpConcrete.setConcreteName(aTmpTask.getPresentationName());
             aTmpConcreteRole.addConcreteTaskDescriptor(aTmpConcrete);
             
             
