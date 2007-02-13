@@ -69,7 +69,7 @@ public class WizardServicesProxy {
                     //myWilosUser = port.getWilosUser(login,password);
                       XStream xstream = new XStream(); 
                       String result = port.getParticipant(login,password);
-                      System.out.println(result);
+                     // System.out.println(result);
                     myParticipant = (Participant) xstream.fromXML(result);
             	}
             }
