@@ -31,6 +31,7 @@ public class InitAppliService {
 	private ParticipantDao participantDao;
 	private ConcreteRoleDescriptorDao concreteRoleDescriptorDao;
 	private ConcreteTaskDescriptorDao concreteTaskDescriptorDao;
+	private ConcreteTaskDescriptorService concreteTaskDescriptorService;
 	
 	protected final Log logger = LogFactory.getLog(this.getClass());
 	
@@ -105,18 +106,21 @@ public class InitAppliService {
 			for (ConcreteTaskDescriptor ctd :  concreteTaskDescriptorDao.getAllConcreteTaskDescriptors()) {
 		    	logger.debug("bababa");
 		    	ConcreteTaskDescriptor ctd2 =  concreteTaskDescriptorDao.getConcreteTaskDescriptor(ctd.getId());
-		    	//concreteTaskDescriptorService.affectedConcreteTaskDescriptor(ctd2, pa);
-		    	for (ConcreteRoleDescriptor crd : pa.getConcreteRoleDescriptors()) {
-		    		/*for (TaskDescriptor td :  crd.getRoleDescriptor().getPrimaryTasks()) {
-		    			if (td.getGuid().equals(ctd2.getTaskDescriptor().getGuid())) {
-		    				crd.addConcreteTaskDescriptor(ctd2);
-		    			}
-		    		}*/
+		    	if ( ctd2.getTaskDescriptor().getMainRole() != null) {
+		    		logger.debug("appel");
+		    		concreteTaskDescriptorService.affectedConcreteTaskDescriptor(ctd2, pa);
+		    		logger.debug("sortie");
+		    		concreteTaskDescriptorService.affectedState(ctd2);
+		    		logger.debug("sortie");
+		    	}
+		    	
+		    	/* for (ConcreteRoleDescriptor crd : pa.getConcreteRoleDescriptors()) {
+
 		    		ctd2.setState("Ready");
 		    		crd.addConcreteTaskDescriptor(ctd2);
 		    		concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(crd);
 		    		concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(ctd2);
-		    	}
+		    	}*/
 		    }
 	    }
 	    
@@ -170,6 +174,15 @@ public class InitAppliService {
 	public void setConcreteTaskDescriptorDao(
 			ConcreteTaskDescriptorDao concreteTaskDescriptorDao) {
 		this.concreteTaskDescriptorDao = concreteTaskDescriptorDao;
+	}
+
+	public ConcreteTaskDescriptorService getConcreteTaskDescriptorService() {
+		return concreteTaskDescriptorService;
+	}
+
+	public void setConcreteTaskDescriptorService(
+			ConcreteTaskDescriptorService concreteTaskDescriptorService) {
+		this.concreteTaskDescriptorService = concreteTaskDescriptorService;
 	}
 	
 }

@@ -323,6 +323,8 @@
 		class="wilos.business.services.misc.wilosuser.ParticipantService">
 		<property name="participantDao" ref="ParticipantDao" />
 		<property name="projectService" ref="ProjectService" />
+		<property name="concreteRoleDescriptorService" ref="ConcreteRoleDescriptorService" />
+		
 	</bean>
 
 	<bean id="ProcessManagerService"
@@ -442,6 +444,8 @@
 			ref="TaskDescriptorService" />
 		<property name="roleDescriptorService"
 			ref="RoleDescriptorService" />
+		<property name="concreteRoleDescriptorService"
+			ref="ConcreteRoleDescriptorService" />
 	</bean>
 
 	<bean id="ConcreteRoleDescriptorService"
@@ -470,7 +474,8 @@
 		class="wilos.business.services.misc.concretebreakdownelement.ConcreteBreakdownElementService">
 		<property name="concreteBreakdownElementDao" ref="ConcreteBreakdownElementDao" />
 	</bean>
-	
+
+
 	
 	<!-- Service de test -->
 	<bean id="InitAppliService"
@@ -481,6 +486,7 @@
 		<property name="participantDao" ref ="ParticipantDao" />
 		<property name="concreteRoleDescriptorDao" ref ="ConcreteRoleDescriptorDao" />
 		<property name="concreteTaskDescriptorDao" ref ="ConcreteTaskDescriptorDao" />
+		<property name="concreteTaskDescriptorService" ref ="ConcreteTaskDescriptorService" />
 	</bean>
 
 </beans>
