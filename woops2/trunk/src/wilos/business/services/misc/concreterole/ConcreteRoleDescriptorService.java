@@ -33,6 +33,11 @@ public class ConcreteRoleDescriptorService {
 		public List<ConcreteTaskDescriptor> getAllConcreteTaskDescriptorsForConcreteRoleDescriptor(ConcreteRoleDescriptor _concreteRoleDescriptor) {
 			return this.concreteRoleDescriptorDao.getAllConcreteTaskDescriptorsForConcreteRoleDescriptor(_concreteRoleDescriptor.getId());
 		}
+		
+		public List<ConcreteActivity> getSuperConcreteActivities(String _crdid) {
+			ConcreteRoleDescriptor crd = this.getConcreteRoleDescriptorById(_crdid);
+			return (List<ConcreteActivity>) crd.getSuperConcreteActivities();
+		}
 
 		public ConcreteRoleDescriptorDao getConcreteRoleDescriptorDao() {
 			return concreteRoleDescriptorDao;
@@ -48,10 +53,5 @@ public class ConcreteRoleDescriptorService {
 			ConcreteRoleDescriptor concreteRoleDescriptor;
 			concreteRoleDescriptor = this.concreteRoleDescriptorDao.getConcreteRoleDescriptor(_id);
 			return concreteRoleDescriptor;
-		}
-		
-		public List<ConcreteActivity> getSuperConcreteActivities( String _crdid) {
-			ConcreteRoleDescriptor crd = this.getConcreteRoleDescriptorById(_crdid);
-			return (List<ConcreteActivity>) crd.getSuperConcreteActivities();
 		}
 }
