@@ -1,5 +1,5 @@
 <ice:panelStack id="panelStack_menu"
-                        styleClass=""
+                        styleClass="componentContentPanelStack"
                         selectedPanel="#{connect.selectedPanel.templateNameMenu}">
 	<ice:panelGroup id="no_tree_group">
 		<f:subview id="no_tree_subview">		

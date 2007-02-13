@@ -323,6 +323,8 @@
 		class="wilos.business.services.misc.wilosuser.ParticipantService">
 		<property name="participantDao" ref="ParticipantDao" />
 		<property name="projectService" ref="ProjectService" />
+		<property name="concreteRoleDescriptorService" ref="ConcreteRoleDescriptorService" />
+		
 	</bean>
 
 	<bean id="ProcessManagerService"
