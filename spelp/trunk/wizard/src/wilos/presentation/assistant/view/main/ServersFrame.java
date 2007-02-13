@@ -24,6 +24,7 @@ import javax.swing.JTextArea;
 import javax.swing.JList;
 import javax.swing.JComboBox;
 import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
 import javax.swing.table.DefaultTableModel;
 
 import wilos.presentation.assistant.ressources.Bundle;
@@ -204,11 +205,11 @@ public class ServersFrame {
 			{
 				public void actionPerformed(ActionEvent e) 
     			{
-					if (servs.getSelectedRow() != -1)
-						System.out.println(servs.getSelectedRow());
-						tables_serv.removeRow((servs.getSelectedRow()));
-					servs.setEditingRow(tables_serv.getRowCount());
-					System.out.println(servs.getSelectedRow());
+					if (servs.getSelectedRow() != -1) {
+						int currentRow = servs.getSelectedRow();
+						servs.editingCanceled(new ChangeEvent(this));
+						tables_serv.removeRow(currentRow);
+					}
     			}				
 			});
 			
