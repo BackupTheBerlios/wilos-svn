@@ -638,12 +638,12 @@ public class XMLParserTest extends TestCase {
 							if (!listGuides.isEmpty()) {
 								if (tmpBde.getName().equals("detail_requirements")) {
 									Iterator<Guidance> itGuide = listGuides.iterator();
-																		
+														
 									while (itGuide.hasNext()) {										
-										nbGuidances++;										
+										nbGuidances++;
 										assertTrue(itGuide.next().getDescription().length() > 0);
 									}
-									assertTrue(nbGuidances == 13);
+									assertTrue(nbGuidances == 10);
 									
 								}
 							}
@@ -913,8 +913,8 @@ public class XMLParserTest extends TestCase {
 		// Fourth Step, Check Number, Names and Types of the Guidances
 		int nbGuidances = 0;
 		HashSet<String> expectedGuidances = new HashSet<String>();
-		expectedGuidances.add("Vision");
-		expectedGuidances.add("Qualities of Good Requirements");
+		//expectedGuidances.add("Vision");
+		//expectedGuidances.add("Qualities of Good Requirements");
 		expectedGuidances.add("Requirements");
 		expectedGuidances.add("Requirements Gathering Techniques");
 		expectedGuidances.add("Effective Requirement Reviews");
@@ -937,7 +937,7 @@ public class XMLParserTest extends TestCase {
 			}
 		}
 		
-		assertTrue(nbGuidances == 5);
+		assertTrue(nbGuidances == 3);
 	}
 	
 	
@@ -987,7 +987,7 @@ public class XMLParserTest extends TestCase {
 		RoleDefinition supportN1Roledefinition = null;
 		
 		HashMap<String, String> expectedGuidances = new HashMap<String, String>();
-		expectedGuidances.put("New Checklist", Guidance.checklist);
+	//	expectedGuidances.put("New Checklist", Guidance.checklist);
 		expectedGuidances.put("New Concept", Guidance.concept);
 		expectedGuidances.put("New Guideline", Guidance.guideline);
 		expectedGuidances.put("New Supporting Material", Guidance.supportingMaterial);

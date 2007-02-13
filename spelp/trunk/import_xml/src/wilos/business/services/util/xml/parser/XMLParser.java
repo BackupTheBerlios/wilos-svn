@@ -54,7 +54,6 @@ public class XMLParser {
 	private static final String xpath_phase = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Phase']";
 	private static final String xpath_activity = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Activity']";
 	private static final String xpath_guidance = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Guideline' or " +
-			"@*[namespace-uri() and local-name()='type']='uma:Checklist' or " +
 			"@*[namespace-uri() and local-name()='type']='uma:Concept' or " +
 			"@*[namespace-uri() and local-name()='type']='uma:SupportingMaterial' or " +
 			"@*[namespace-uri() and local-name()='type']='uma:Roadmap' or " +
