@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import wilos.hibernate.misc.concreterole.ConcreteRoleDescriptorDao;
+import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 
@@ -47,5 +48,10 @@ public class ConcreteRoleDescriptorService {
 			ConcreteRoleDescriptor concreteRoleDescriptor;
 			concreteRoleDescriptor = this.concreteRoleDescriptorDao.getConcreteRoleDescriptor(_id);
 			return concreteRoleDescriptor;
+		}
+		
+		public List<ConcreteActivity> getSuperConcreteActivities( String _crdid) {
+			ConcreteRoleDescriptor crd = this.getConcreteRoleDescriptorById(_crdid);
+			return (List<ConcreteActivity>) crd.getSuperConcreteActivities();
 		}
 }
