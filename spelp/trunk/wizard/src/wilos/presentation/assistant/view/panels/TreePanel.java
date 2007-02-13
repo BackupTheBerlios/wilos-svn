@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.Vector;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
@@ -19,6 +21,8 @@ import javax.swing.tree.TreePath;
 
 import org.jdesktop.swingx.JXTree;
 
+import com.sun.xml.bind.v2.runtime.reflect.ListTransducedAccessorImpl;
+
 import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreteiteration.ConcreteIteration;
@@ -29,6 +33,7 @@ import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.element.Element;
 import wilos.model.spem2.task.Step;
+import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.ImagesService;
@@ -159,16 +164,16 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 			TreePanel.this.tree.removeAll();
 			WizardStateMachine.getInstance().deleteAllStep() ;
 			HashMap<ConcreteActivity, WizardMutableTreeNode> mapActivity = new HashMap<ConcreteActivity, WizardMutableTreeNode>();
-			
+			int idStep = 0 ;
 			this.root = new DefaultMutableTreeNode(participant.getName());
-			
+			ArrayList<Step> tmp = new ArrayList<Step>();
 			Set<ConcreteRoleDescriptor> roles = participant.getConcreteRoleDescriptors();
 			
 			// browse all the concrete roles
 			for (ConcreteRoleDescriptor crd : roles) {
+				
 				DefaultMutableTreeNode precedent = null;
 				WizardMutableTreeNode rdWmt = new WizardMutableTreeNode(crd);
-
 				ConcreteActivity ca = getActivity(crd.getSuperConcreteActivities());
 				WizardMutableTreeNode nodeAct = null  ;
 				// getting all the superactivities from the roles
@@ -210,8 +215,31 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 					rdWmt.add(ctdWmt);
 					// browse all the steps of the task def in task descriptors of concretetaskdescriptor
 					if (ctd.getTaskDescriptor().getTaskDefinition() != null) {
+						// cloning the steps to have same steps with different states
+						for (Step s : ctd.getTaskDescriptor().getTaskDefinition().getSteps()){
+							try {
+								// creating the clone and store them in a list
+								Step sCloned = s.clone();
+								sCloned.setGuid(String.valueOf(idStep));
+								idStep++;
+								tmp.add(sCloned);
+								
+							} catch (CloneNotSupportedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						// removing the steps from the task def and adding the cloned
+						TaskDefinition tdef = ctd.getTaskDescriptor().getTaskDefinition() ;
+						tdef.removeAllSteps();
+						for (Step s : tmp){
+							tdef.addStep(s);
+						}
+						tmp.clear();
+						// normal process
 						for (Step s : ctd.getTaskDescriptor().getTaskDefinition().getSteps()) {
-							WizardMutableTreeNode sWmt = new WizardMutableTreeNode(s);
+							WizardMutableTreeNode sWmt;
+							sWmt = new WizardMutableTreeNode(s);
 							ctdWmt.add(sWmt);
 							// managing the steps
 							if (ctd.getState().equals(Constantes.State.STARTED)){
@@ -223,12 +251,12 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 							else {
 								WizardStateMachine.getInstance().addStep(s,WizardStateMachine.STATE_STEP_CREATED ) ;
 							}
-								
 						}
 					}
 				}
 				//((DefaultMutableTreeNode) this.root).add(new DefaultMutableTreeNode(rd.getName()));
 			}
+
 		}
 
 //		public void addTreeModelListener(TreeModelListener arg0) {

@@ -32,7 +32,7 @@ public class WizardStateMachine extends Observable{
 	
 	private int currentState = 0;
 	
-	private HashMap<Step,Integer> stepState = new HashMap<Step,Integer> ();
+	private HashMap<String,Integer> stepState = new HashMap<String,Integer> ();
 	
 	private static WizardStateMachine wsm = null;
 			
@@ -46,7 +46,7 @@ public class WizardStateMachine extends Observable{
 	 * @param state state of the Step
 	 */
 	public void addStep (Step s, int state) {
-		this.stepState.put(s, new Integer(state));
+		this.stepState.put(s.getGuid(), new Integer(state));
 	}
 	
 	
@@ -56,9 +56,9 @@ public class WizardStateMachine extends Observable{
 	 * @param state new state of the step
 	 */
 	public void changeStepState (Step s, int state) {
-		if (this.stepState.containsKey(s))
+		if (this.stepState.containsKey(s.getGuid()))
 		{
-			this.stepState.put(s, new Integer(state));
+			this.stepState.put(s.getGuid(), new Integer(state));
 			this.currentState = state ;
 			this.setChanged();
 			this.notifyObservers();
@@ -72,7 +72,7 @@ public class WizardStateMachine extends Observable{
 	 */
 	public int getStepState (Step s)
 	{
-		return this.stepState.get(s).intValue();
+		return this.stepState.get(s.getGuid()).intValue();
 	}
 	
 	/**
