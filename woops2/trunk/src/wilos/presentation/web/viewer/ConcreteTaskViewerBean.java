@@ -37,6 +37,8 @@ public class ConcreteTaskViewerBean {
 	
 	private boolean visibleStop;
 	
+	private boolean visibleSuspended;
+	
 	private boolean visibleModifiable;
 	
     protected final Log logger = LogFactory.getLog(this.getClass()) ;
@@ -85,9 +87,20 @@ public class ConcreteTaskViewerBean {
 				.finishConcreteTaskDescriptor(this.concreteTaskDescriptor);
 	}
 	
+	public void suspendedActionListener(ActionEvent event) {
+		this.concreteTaskDescriptorService
+				.suspendConcreteTaskDescriptor(this.concreteTaskDescriptor);
+	}
+	
 	public boolean getVisibleStart() {
-		return (!(this.concreteTaskDescriptor.getConcreteRoleDescriptor() == null) && !this.concreteTaskDescriptor.getState().equals("Started") && !this.concreteTaskDescriptor.getState().equals("Finished"));
-		
+		if(this.concreteTaskDescriptor.getState().equals("Suspended"))
+		{
+			return true;
+		}
+		else
+		{
+			return (!(this.concreteTaskDescriptor.getConcreteRoleDescriptor() == null) && !this.concreteTaskDescriptor.getState().equals("Started") && !this.concreteTaskDescriptor.getState().equals("Finished"));
+		}
 	}
 
 
@@ -214,5 +227,19 @@ public class ConcreteTaskViewerBean {
 	 */
 	public void setVisibleStop(boolean visibleStop) {
 		this.visibleStop = visibleStop;
+	}
+
+	/**
+	 * @return the visibleSuspended
+	 */
+	public boolean isVisibleSuspended() {
+		return this.concreteTaskDescriptor.getState().equals("Started");
+	}
+
+	/**
+	 * @param visibleSuspended the visibleSuspended to set
+	 */
+	public void setVisibleSuspended(boolean visibleSuspended) {
+		this.visibleSuspended = visibleSuspended;
 	}
 }
