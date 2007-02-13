@@ -1,6 +1,7 @@
 
 package wilos.presentation.web.project ;
 
+import java.awt.event.ActionEvent;
 import java.text.SimpleDateFormat ;
 import java.util.ArrayList ;
 import java.util.List ;
@@ -21,6 +22,7 @@ import wilos.business.services.spem2.process.ProcessService ;
 import wilos.model.misc.project.Project ;
 import wilos.model.misc.wilosuser.Participant ;
 import wilos.model.spem2.process.Process ;
+import wilos.presentation.web.tree.TreeBean;
 
 /**
  * Managed-Bean link to project_create.jspx
@@ -38,6 +40,8 @@ public class ProjectBean {
 	private ParticipantService participantService ;
 
 	private Project project ;
+	
+	private TreeBean treeBean;
 
 	private String selectedProcessGuid ;
 
@@ -425,6 +429,22 @@ public class ProjectBean {
 	 */
 	public void setWebSessionService(WebSessionService _webSessionService) {
 		this.webSessionService = _webSessionService ;
+	}
+
+	/**
+	 * @return the treeBean
+	 */
+	public TreeBean getTreeBean() {
+		return this.treeBean ;
+	}
+
+	/**
+	 * Setter of treeBean.
+	 *
+	 * @param _treeBean The treeBean to set.
+	 */
+	public void setTreeBean(TreeBean _treeBean) {
+		this.treeBean = _treeBean ;
 	}
 
 }

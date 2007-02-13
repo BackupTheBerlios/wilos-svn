@@ -8,15 +8,15 @@
 	<br />
 
 	<!-- Check box - Concrete task filter -->
-	<ice:outputText visible="#{TreeBean.loadCheckBox}" styleClass="propertyLabel"
+	<!-- <ice:outputText visible="#{TreeBean.loadCheckBox}" styleClass="propertyLabel"
 		value="#{msgs['navigation.checkbox.label']}" />
 	<ice:selectBooleanCheckbox
-			rendered ="#{TreeBean.loadCheckBox}" 
+			rendered ="#{TreeBean.loadCheckBox}"
 			partialSubmit="true"
 			value="#{TreeBean.affectedTaskFilter}"
 		 	valueChangeListener="#{TreeBean.filterTreeActionListener}"/>
 	<br />
-	<br />
+	<br /> -->
 
 	<!-- ScrollBar -->
 	<div class="navTree">
