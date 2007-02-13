@@ -6,14 +6,13 @@
 					<ice:panelGroup styleClass="formBorderHighlight"
 						style="text-align:left">
 						<br />
-						
 						<ice:outputText value="Select a ZIP or XML file:" />
 						<br />
-						<ice:inputFile style="border:none; width:400px; height:70px;"
+						<ice:inputFile style="overflow:hidden; border:none; width:400px; height:70px;"
 							progressListener="#{XmlFileImportBean.progressListener}"
 							actionListener="#{XmlFileImportBean.uploadFileActionListener}"
 							uniqueFolder="false" file="#{XmlFileImportBean.file}"
-							immediate="true"  styleClass="smallbutton"/>
+							immediate="true" />
 						<ice:outputProgress id="pro" value="#{XmlFileImportBean.percent}" />
 						<ice:outputText value="File Name: #{XmlFileImportBean.fileName}" />
 						<br />

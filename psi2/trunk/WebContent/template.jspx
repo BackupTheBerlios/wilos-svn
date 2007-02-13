@@ -13,8 +13,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></meta>
         <title><ice:outputText value="" /></title>
 
-        <link href="css/ice.css" rel="stylesheet" type="text/css" />
-        <link href="css/wilos.css" rel="stylesheet" type="text/css" />
+        <ice:outputStyle href="css/ice.css" rel="stylesheet" type="text/css" />
+        <ice:outputStyle href="css/wilos.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
 
@@ -154,7 +154,51 @@
             'images/cal_off.gif',
             'images/expandableTable/contract.gif',
             'images/expandableTable/expand.gif',
-            'images/expandableTable/leaf.GIF'
+            'images/expandableTable/leaf.gif',
+            'images/xpwilos/spacer.gif',
+            'images/xpwilos/on-left-top.gif',
+            'images/xpwilos/on-mid-top.gif',
+            'images/xpwilos/on-right-top.gif',
+            'images/xpwilos/on-left-mid.gif',
+            'images/xpwilos/on-mid-mid.gif',
+            'images/xpwilos/on-right-mid.gif',
+            'images/xpwilos/on-left-bot.gif',
+            'images/xpwilos/on-mid-bot.gif',
+            'images/xpwilos/on-right-bot.gif',
+            'images/xpwilos/off-left-top.gif',
+            'images/xpwilos/off-mid-top.gif',
+            'images/xpwilos/off-right-top.gif',
+            'images/xpwilos/off-left-mid.gif',
+            'images/xpwilos/off-mid-mid.gif',
+            'images/xpwilos/off-right-mid.gif',
+            'images/xpwilos/off-left-bot.gif',
+            'images/xpwilos/off-mid-bot.gif',
+            'images/xpwilos/off-right-bot.gif',
+            'images/xpwilos/over-left-top.gif',
+            'images/xpwilos/over-mid-top.gif',
+            'images/xpwilos/over-right-top.gif',
+            'images/xpwilos/over-left-mid.gif',
+            'images/xpwilos/over-mid-mid.gif',
+            'images/xpwilos/over-right-mid.gif',
+            'images/xpwilos/over-left-bot.gif',
+            'images/xpwilos/over-mid-bot.gif',
+            'images/xpwilos/over-right-bot.gif',
+            'images/xpwilos/connect_active.gif',
+            'images/xpwilos/connect_caution.gif',
+            'images/xpwilos/connect_disconnected.gif',
+            'images/xpwilos/connect_idle.gif',
+            'images/xpwilos/tbot-off-left-top.gif',
+            'images/xpwilos/tbot-off-mid-top.gif',
+            'images/xpwilos/tbot-off-right-top.gif',
+            'images/xpwilos/tbot-off-left-bot.gif',
+            'images/xpwilos/tbot-off-mid-bot.gif',
+            'images/xpwilos/tbot-off-right-bot.gif',
+            'images/xpwilos/tbot-on-left-top.gif',
+            'images/xpwilos/tbot-on-mid-top.gif',
+            'images/xpwilos/tbot-on-right-top.gif',
+            'images/xpwilos/tbot-on-left-bot.gif',
+            'images/xpwilos/tbot-on-mid-bot.gif',
+            'images/xpwilos/tbot-on-right-bot.gif'
             
             
     );
