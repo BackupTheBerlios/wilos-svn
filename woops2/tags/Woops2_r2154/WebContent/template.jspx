@@ -1,0 +1,182 @@
+<f:view xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:jsp="http://java.sun.com/JSP/Page"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <f:loadBundle
+        basename="wilos.resources.messages"
+        var="msgs" />
+    <ice:outputDeclaration doctypeRoot="HTML"
+        doctypePublic="-//W3C//DTD HTML 4.01 Transitional//EN"
+        doctypeSystem="http://www.w3.org/TR/html4/loose.dtd"/>
+    <html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></meta>
+        <title><ice:outputText value="" /></title>
+
+        <link href="css/ice.css" rel="stylesheet" type="text/css" />
+        <link href="css/wilos.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+
+    <ice:panelBorder layout="hide east" border="0" cellpadding="0"
+        cellspacing="0" styleClass="mainBorderLayout" >
+
+        <f:facet name="north">
+            <ice:panelGroup styleClass="contentIncludePanelGroup" id="banner">  
+					<img src="images/logo_wilos.png"/>
+            <div id="roles_actions">
+            	<jsp:directive.include file="./pages/template/rolesActions.jspx" />
+            </div>
+            </ice:panelGroup>
+        </f:facet>
+
+        <f:facet name="west">
+            <ice:panelGroup styleClass="contentIncludePanelGroup" id="pnGleftmenu">
+            <div id="connection">
+				<jsp:directive.include file="./pages/template/connect.jspx"/>
+			</div>
+            <div id="menu">
+            	<jsp:directive.include file="./pages/template/Menu.jspx" />
+            </div>
+            </ice:panelGroup>
+        </f:facet>
+
+        <f:facet name="center">
+            
+            <ice:panelGroup id="navStatus">
+				<ice:panelGrid styleClass="pageHeader" cellpadding="">
+					<ice:messages id="wilos_messages"/><!--  styleClass="pageHeader"/>-->
+				</ice:panelGrid>
+                <ice:panelGrid styleClass="navConnectionStatus">
+                    <!-- Connection Status -->
+                    <ice:outputConnectionStatus style="iceOutConStat"/>
+                </ice:panelGrid>	
+                    
+                    <ice:panelStack id="panelStack"
+                        styleClass="componentContentPanelStack"
+                        selectedPanel="#{menu.selectedPanel.templateName}">
+
+					<ice:panelGroup id="wilos" styleClass="contentIncludePanelGroup" >
+                        <f:subview id="wilos_view">
+                            <jsp:directive.include file="./pages/common/wilos.jspx" />
+                        </f:subview>
+                    </ice:panelGroup>
+                    
+                    <ice:panelGroup id="participant_main" styleClass="contentIncludePanelGroup" >
+                        <f:subview id="welcome_view">
+                            <jsp:directive.include file="./pages/participant/participantMain.jspx" />
+                        </f:subview>
+                    </ice:panelGroup>
+
+                    <ice:panelGroup id="subscribe" styleClass="contentIncludePanelGroup" >
+                        <f:subview id="subscribe_view">
+                            <jsp:directive.include file="./pages/common/participantSubscribe.jspx" />
+                        </f:subview>
+                    </ice:panelGroup>
+                    
+                    <ice:panelGroup id="admin_main" styleClass="contentIncludePanelGroup" >
+                        <f:subview id="admin_view">
+                            <jsp:directive.include file="./pages/admin/adminMain.jspx" />
+                        </f:subview>
+                    </ice:panelGroup>
+                    
+                    <ice:panelGroup id="project_director_main" styleClass="contentIncludePanelGroup" >
+                        <f:subview id="projectDirector_view">
+                            <jsp:directive.include file="./pages/projectDirector/projectDirectorMain.jspx" />
+                        </f:subview>
+                    </ice:panelGroup>
+                    
+                    <ice:panelGroup id="process_manager_main" styleClass="contentIncludePanelGroup" >
+                        <f:subview id="processManager_view">
+                            <jsp:directive.include file="./pages/processManager/processManagerMain.jspx" />
+                        </f:subview>
+                    </ice:panelGroup>
+                    
+                      <ice:panelGroup id="ConcreteTaskViewer"
+						styleClass="contentIncludePanelGroup">
+						<f:subview id="ConcreteTaskViewer_view">
+							<jsp:directive.include file="./pages/common/ConcreteTaskViewer.jspx" />
+						</f:subview>
+					</ice:panelGroup>
+					
+					 <ice:panelGroup id="ConcretePhaseViewer"
+						styleClass="contentIncludePanelGroup">
+						<f:subview id="ConcretePhaseViewer_view">
+							<jsp:directive.include file="./pages/common/ConcretePhaseViewer.jspx" />
+						</f:subview>
+					</ice:panelGroup>
+
+					 <ice:panelGroup id="ConcreteActivityViewer"
+						styleClass="contentIncludePanelGroup">
+						<f:subview id="ConcreteActivityViewer_view">
+							<jsp:directive.include file="./pages/common/ConcreteActivityViewer.jspx" />
+						</f:subview>
+					</ice:panelGroup>
+
+					<ice:panelGroup id="ConcreteIterationViewer"
+						styleClass="contentIncludePanelGroup">
+						<f:subview id="ConcreteIterationViewer_view">
+							<jsp:directive.include file="./pages/common/ConcreteIterationViewer.jspx" />
+						</f:subview>
+					</ice:panelGroup>
+
+					<ice:panelGroup id="ProjectViewer"
+						styleClass="contentIncludePanelGroup">
+						<f:subview id="ProjectViewer_view">
+							<jsp:directive.include file="./pages/common/ProjectViewer.jspx" />
+						</f:subview>
+					</ice:panelGroup>
+					
+                </ice:panelStack>
+                <br />
+            </ice:panelGroup>
+        </f:facet>
+    </ice:panelBorder>
+    
+	<script language="JavaScript">
+    <![CDATA[
+    var preloaded = new Array();
+    function preload_images() {
+        for (var i = 0; i < arguments.length; i++){
+            preloaded[i] = document.createElement('img');
+            preloaded[i].setAttribute('src',arguments[i]);
+        };
+    };
+    preload_images(
+            'images/connect_active.gif',
+            'images/connect_caution.gif',
+            'images/connect_disconnected.gif',
+            'images/connect_idle.gif',
+            'images/arrow_messages.gif',
+            'images/cal_arrow_left.gif',
+            'images/cal_arrow_right.gif',
+            'images/cal_button.gif',
+            'images/cal_off.gif',
+            'images/expandableTable/contract.gif',
+            'images/expandableTable/expand.gif',
+            'images/expandableTable/leaf.GIF'
+            
+            
+    );
+    
+    function submitOnEnter(evt){
+			if( evt.keyCode == 13 ){
+				var inputs = document.getElementsByTagName('input');	
+				var submit;			
+				for( var i=0;i<=inputs.length;i+=1){
+					if( inputs[i].id.indexOf('submit') > -1 ){
+						submit = inputs[i];
+						submit.click();
+						break;
+					}
+				}
+			}
+			else
+				return true;
+		};
+    ]]>
+    
+</script>
+    </body>
+    </html>
+</f:view>

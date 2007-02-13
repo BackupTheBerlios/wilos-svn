@@ -1,0 +1,36 @@
+<ice:panelTab id="panelTab_processManager" label="Process Manager" imageDir="images">
+
+				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
+					<ice:panelGroup id="processManagerCreateGroup" styleClass="contentIncludePanelGroup">
+						<h2><ice:outputText value="#{msgs['component.processmanagercreate.title']}" /></h2>
+						<ice:panelGrid columns="2">
+							<ice:outputText value="#{msgs['component.processmanagercreate.lastname']}" />
+							<ice:inputText id="nomPM" value="#{ProcessManagerBean.processManager.name}" required="false"/>
+									
+							<ice:outputText value="#{msgs['component.processmanagercreate.firstname']}"/>
+							<ice:inputText id="prenomPM" value="#{ProcessManagerBean.processManager.firstname}" required="false"/>
+					
+							<ice:outputText value="#{msgs['component.processmanagercreate.login']}"/>
+							<ice:inputText id="loginPM" value="#{ProcessManagerBean.processManager.login}" required="false"/>
+							
+							<ice:outputText value="#{msgs['component.processmanagercreate.password']}"/>
+							<ice:inputSecret id="equal1PM" value="#{ProcessManagerBean.processManager.password}" required="false">		
+								<!--<f:validateLength minimum="6" />-->
+							</ice:inputSecret>
+				
+							<ice:outputText value="#{msgs['component.processmanagercreate.confirmpassword']}"/>
+							<ice:inputSecret id="equal2PM" value="#{ProcessManagerBean.passwordConfirmation}"
+								validator="#{ProcessManagerBean.passwordEqualValidation}"
+								required="false">
+							  	<!--  <f:validateLength minimum="6" />
+								<f:validator validatorId="equalValidator"/>-->
+							</ice:inputSecret>
+						</ice:panelGrid>
+				
+						<ice:panelGrid columns="2">
+							<ice:commandButton value="#{msgs['component.processmanagercreate.register']}" action="#{ProcessManagerBean.saveProcessManagerAction}" styleClass="smallbutton"/>
+						</ice:panelGrid>	
+				
+					</ice:panelGroup>
+				</ice:panelGrid>
+			</ice:panelTab>

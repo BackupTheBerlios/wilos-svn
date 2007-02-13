@@ -1,0 +1,51 @@
+<ice:form id="form">
+	<ice:panelTabSet id="panelTabSet_participant_subscribe"
+		styleClass="componentPanelTabSetLayout">
+		
+		<ice:panelTab id="panelTab_participant_roles" label="#{msgs['component.forminscription.title']}" imageDir="images">
+		<ice:panelGrid columns="2">
+			<ice:outputText value="#{msgs['component.forminscription.lastname']}" />
+			<ice:inputText id="nom" title="Nom"
+				value="#{ParticipantBean.participant.name}" required="false" />
+
+			<ice:outputText
+				value="#{msgs['component.forminscription.firstname']}" />
+			<ice:inputText id="prenom"
+				value="#{ParticipantBean.participant.firstname}" required="false" />
+
+			<ice:outputText value="#{msgs['component.forminscription.email']}" />
+			<ice:inputText id="email"
+				value="#{ParticipantBean.participant.emailAddress}"
+				validator="#{ParticipantBean.emailValidation}" required="false">
+			</ice:inputText>
+
+			<ice:outputText value="#{msgs['component.forminscription.login']}" />
+			<ice:inputText id="login"
+				value="#{ParticipantBean.participant.login}" required="false" />
+
+			<ice:outputText value="#{msgs['component.forminscription.password']}" />
+			<ice:inputSecret id="equal1"
+				value="#{ParticipantBean.participant.password}" required="false" />
+
+			<ice:outputText
+				value="#{msgs['component.forminscription.confirmpassword']}" />
+			<ice:inputSecret id="equal2"
+				value="#{ParticipantBean.passwordConfirmation}"
+				validator="#{ParticipantBean.passwordEqualValidation}"
+				required="false">
+				<f:param name="forPassword"
+					value="#{ParticipantBean.participant.password}" />
+			</ice:inputSecret>
+		</ice:panelGrid>
+		<ice:panelGrid columns="2">
+			<ice:commandButton
+				value="#{msgs['component.forminscription.register']}"
+				action="#{ParticipantBean.saveParticipantAction}"
+				styleClass="smallbutton" />
+			<ice:commandButton immediate="true"
+				value="#{msgs['component.forminscription.return']}"
+				action="#{menu.wilos}" styleClass="smallbutton" />
+		</ice:panelGrid>
+		</ice:panelTab>
+	</ice:panelTabSet>
+</ice:form>
