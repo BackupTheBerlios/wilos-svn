@@ -25,12 +25,14 @@ public class AssistantService {
 	private ParticipantDao participantDao;
 	private ConcreteTaskDescriptorService concreteTaskDescriptorService;
 	
+	
 	/**
 	 * 
 	 *
 	 * @param roleName
 	 * @return
 	 */
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
 	public ParticipantTO getParticipantTO (String login){
 		return new ParticipantTO(participantDao.getParticipant(login));		
 	}
