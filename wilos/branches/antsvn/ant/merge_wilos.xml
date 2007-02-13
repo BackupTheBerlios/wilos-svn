@@ -3,7 +3,7 @@
 	ANT-SVN Merge Script for WILOS 
 	Arnaud.GIULIANI
 -->
-<project name="Wilos Merger" default="merge_all" basedir=".">
+<project name="Wilos Merger" default="update_and_merge" basedir=".">
 
 	<property name="sources.psi2" value="../src_psi2" />
 	<property name="sources.woops2" value="../src_woops2" />
@@ -21,6 +21,9 @@
 	<taskdef resource="svntask.properties" classpathref="project.classpath" />
 
 	<!-- All merge operation -->
+	<target name="update_and_merge" depends="update_sources,update_branches,merge_all">
+	</target>
+	
 	<target name="merge_all" depends="merge_server,merge_web,merge_conf,merge_lib">
 	</target>
 

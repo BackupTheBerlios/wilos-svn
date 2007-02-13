@@ -2,6 +2,7 @@
 <!-- 
 	Ant Web Archive Script Building
 	Arnaud.GIULIANI
+	Nicolas.CASTEL
 -->
 <!-- The target archive will be created in the dist folder -->
 <project name="Wilos WAR Builder" default="build.war" basedir="../src_wilos">
