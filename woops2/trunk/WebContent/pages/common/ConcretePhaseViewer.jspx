@@ -1,31 +1,13 @@
 <ice:form>
 	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1">
-		<ice:panelTabSet >
+		<ice:panelTabSet>
 			<br />
-			<ice:panelTab label="Phase Display">
+			<ice:panelTab label="#{msgs['phaseViewer.tabtitle'] }">
 				<br />
-				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2"
-					border="0">
-					<ice:outputText value="guid " />
-					<ice:outputText
-						value="#{ConcretePhaseViewerBean.concretePhase.phase.guid}" />
-
-					<ice:outputText value="Concrete Name" />
+				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2">
+					<ice:outputText value="#{msgs['viewer.concreteName']}" />
 					<ice:outputText
 						value="#{ConcretePhaseViewerBean.concretePhase.concreteName}" />
-
-					<ice:outputText value="Name" />
-					<ice:outputText
-						value="#{ConcretePhaseViewerBean.concretePhase.phase.name}" />
-
-					<ice:outputText value="Description" />
-					<ice:outputText
-						value="#{ConcretePhaseViewerBean.concretePhase.phase.description}" />
-
-					<ice:outputText value="#{msgs['phaseviewer.isplanned'] }" />
-					<ice:outputText
-						value="#{ConcretePhaseViewerBean.concretePhase.phase.isPlanned}" />
-
 				</ice:panelGrid>
 			</ice:panelTab>
 		</ice:panelTabSet>

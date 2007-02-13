@@ -1,24 +1,17 @@
 <ice:form>
 	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1">
-		<ice:panelTabSet >
+		<ice:panelTabSet>
 			<br />
-			<ice:panelTab label="ConcreteTask Display">
+			<ice:panelTab label="#{msgs['taskviewer.tabtitle'] }">
 				<br />
-				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2"
-					border="0">
-					<!--
-					<ice:outputText value="id " />
-					<ice:outputText
-						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.id}" /> -->
-					<ice:outputText value="#{msgs['taskviewer.concreteName']}" />
+				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2">
+					<ice:outputText value="#{msgs['viewer.concreteName']}" />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.concreteName}" />
 
 					<ice:outputText value="#{msgs['taskviewer.state']}" />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.state}" />
-
-
 
 					<ice:outputText value="#{msgs['taskviewer.plannedstartingdate']}" />
 					<ice:outputText
@@ -28,32 +21,34 @@
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.plannedFinishingDate}" />
 
-					<ice:outputText value="#{msgs['concretetaskviewer.accomplishedtime']}" />
-					<ice:inputText value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.accomplishedTime}"
-						disabled="#{ConcreteTaskViewerBean.visibleModifiable}" >
+					<ice:outputText
+						value="#{msgs['taskviewer.accomplishedtime']}" />
+					<ice:inputText
+						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.accomplishedTime}"
+						disabled="#{ConcreteTaskViewerBean.visibleModifiable}">
 						<!--  <f:convertNumber pattern="#*0(.0)#" /> -->
 					</ice:inputText>
 
-					<ice:outputText value="#{msgs['concretetaskviewer.remainingtime']}" />
-					<ice:inputText value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.remainingTime}"
-						disabled="#{ConcreteTaskViewerBean.visibleModifiable}" >
+					<ice:outputText value="#{msgs['taskviewer.remainingtime']}" />
+					<ice:inputText
+						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.remainingTime}"
+						disabled="#{ConcreteTaskViewerBean.visibleModifiable}">
 						<!-- <f:convertNumber pattern="#*0(.0)#" /> -->
 					</ice:inputText>
 
 					<table>
-					<tr>
-					<td>
-					<ice:commandButton value="#{msgs['taskviewer.affecter']}"
-						actionListener="#{ConcreteTaskViewerBean.affectedActionListener}"
-						visible="#{ConcreteTaskViewerBean.visibleAffected}"/>
-					<ice:commandButton value="#{msgs['taskviewer.start']}"
-						actionListener="#{ConcreteTaskViewerBean.startActionListener}"
-						visible="#{ConcreteTaskViewerBean.visibleStart}"/>
-					<ice:commandButton value="#{msgs['concretetaskviewer.saveButton']}"
-						actionListener="#{ConcreteTaskViewerBean.updateActionListener}"
-						visible="#{ConcreteTaskViewerBean.visibleModifiable}"/>
-					</td>
-					</tr>
+						<tr>
+							<td><ice:commandButton
+								value="#{msgs['taskviewer.affecter']}"
+								actionListener="#{ConcreteTaskViewerBean.affectedActionListener}"
+								visible="#{ConcreteTaskViewerBean.visibleAffected}" /> <ice:commandButton
+								value="#{msgs['taskviewer.start']}"
+								actionListener="#{ConcreteTaskViewerBean.startActionListener}"
+								visible="#{ConcreteTaskViewerBean.visibleStart}" /> <ice:commandButton
+								value="#{msgs['concretetaskviewer.saveButton']}"
+								actionListener="#{ConcreteTaskViewerBean.updateActionListener}"
+								visible="#{ConcreteTaskViewerBean.visibleModifiable}" /></td>
+						</tr>
 					</table>
 				</ice:panelGrid>
 			</ice:panelTab>
