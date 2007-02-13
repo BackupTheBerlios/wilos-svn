@@ -23,7 +23,8 @@ public class ConnectContentBean extends IceUserObject {
     private boolean pageContent = true;
 
     // message bundle for component.
-    private static ResourceBundle messages = null;
+    @SuppressWarnings("unused")
+	private static ResourceBundle messages = null;
 
     // view reference to control the visible content
     private ConnectViewBean navigationBean;

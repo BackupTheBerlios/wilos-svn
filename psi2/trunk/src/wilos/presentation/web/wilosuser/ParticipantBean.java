@@ -16,8 +16,6 @@ import javax.faces.application.FacesMessage ;
 import javax.faces.component.UIComponent ;
 import javax.faces.context.FacesContext ;
 import javax.faces.validator.ValidatorException ;
-import javax.servlet.http.HttpServletRequest ;
-import javax.servlet.http.HttpSession ;
 
 import org.apache.commons.logging.Log ;
 import org.apache.commons.logging.LogFactory ;
@@ -79,8 +77,8 @@ public class ParticipantBean {
 	 */
 	public ParticipantBean() {
 		this.participant = new Participant() ;
-		this.affectedProjectsList = new ArrayList() ;
-		this.manageableProjectsList = new ArrayList() ;
+		this.affectedProjectsList = new ArrayList<HashMap<String, String>>() ;
+		this.manageableProjectsList = new ArrayList<HashMap<String, Object>>() ;
 		this.selectManageableProjectView = new String();
 		this.formatter = new SimpleDateFormat("dd/MM/yyyy");
 	}

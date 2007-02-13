@@ -8,7 +8,6 @@ import java.util.Set;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 

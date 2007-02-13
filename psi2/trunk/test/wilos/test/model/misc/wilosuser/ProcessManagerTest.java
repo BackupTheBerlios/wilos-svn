@@ -1,7 +1,5 @@
 package wilos.test.model.misc.wilosuser;
 
-import java.util.Set;
-
 import wilos.model.misc.wilosuser.ProcessManager;
 import wilos.model.spem2.process.Process;
 import junit.framework.TestCase;

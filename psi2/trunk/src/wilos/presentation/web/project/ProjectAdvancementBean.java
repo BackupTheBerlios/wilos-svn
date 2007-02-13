@@ -101,6 +101,7 @@ public class ProjectAdvancementBean {
 	/**
 	 * Utility method to add all child nodes to the parent dataTable list.
 	 */
+	@SuppressWarnings("unchecked")
 	private void expandNodeAction() {
 		FacesContext context = FacesContext.getCurrentInstance() ;
 		Map map = context.getExternalContext().getRequestParameterMap() ;
@@ -209,6 +210,7 @@ public class ProjectAdvancementBean {
 	 * @param elementId
 	 * @param tmp
 	 */
+	@SuppressWarnings("unchecked")
 	private void deleteChildren(String parentId, ArrayList<HashMap<String,Object>> parentList) {
 		for(Iterator iter = parentList.iterator(); iter.hasNext();)
 		{
@@ -431,8 +433,8 @@ public class ProjectAdvancementBean {
 	 * @return the selected_projectAdvancement_view
 	 */
 	public boolean getSelected_projectAdvancement_view() {
-		String user_id = (String)this.webSessionService.getAttribute(this.webSessionService.WILOS_USER_ID);
-		this.project = this.projectService.getProject((String)this.webSessionService.getAttribute(this.webSessionService.PROJECT_ID));
+		String user_id = (String)this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID);
+		this.project = this.projectService.getProject((String)this.webSessionService.getAttribute(WebSessionService.PROJECT_ID));
 		this.selected_projectAdvancement_view  = false;
 		if (this.project.getProjectManager() != null)
 		{

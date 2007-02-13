@@ -1,9 +1,11 @@
 
 package wilos.business.services.misc.wilosuser ;
 
+import java.util.ArrayList;
 import java.util.HashMap ;
 import java.util.HashSet ;
 import java.util.Iterator ;
+import java.util.List;
 import java.util.Map ;
 import java.util.Set ;
 
@@ -89,11 +91,26 @@ public class ParticipantService {
 	 * @return the roles
 	 */
 	@Transactional(readOnly = true)
-	public Set<ConcreteRoleDescriptor> getConcreteRoleDescriptorsForAParticipantAndForAProject(String _projectId, String _login) {
+	public HashMap<String,Boolean> getConcreteRoleDescriptorsForAParticipantAndForAProject(String _projectId, String _participantId) {
 		// TODO: getRolesListForAParticipant à deplacer dans le RoleService
-		this.concreteRoleDescriptorService.getAllConcreteRoleDescriptorsForProject(_projectId);
-		
-		return this.participantDao.getAllConcreteRolesForAParticipant(_login);
+		HashMap<String,Boolean> concreteRolesList = new HashMap<String,Boolean>();
+		List<ConcreteRoleDescriptor> projectConcreteRolesList = this.concreteRoleDescriptorService.getAllConcreteRoleDescriptorsForProject(_projectId);
+		if(projectConcreteRolesList != null){
+			this.logger.debug("roles : "+projectConcreteRolesList.size());
+			List<ConcreteRoleDescriptor> participantConcreteRolesList = new ArrayList<ConcreteRoleDescriptor>();
+			participantConcreteRolesList.addAll(this.participantDao.getAllConcreteRolesForAParticipant(_participantId));
+			for(Iterator iter = projectConcreteRolesList.iterator(); iter.hasNext();){
+				ConcreteRoleDescriptor element = (ConcreteRoleDescriptor) iter.next() ;
+				this.logger.debug("roles : "+element.getConcreteName());
+				for(ConcreteRoleDescriptor concreteRoleDescriptor : participantConcreteRolesList){
+					if(element.getId() == concreteRoleDescriptor.getId())
+						concreteRolesList.put(concreteRoleDescriptor.getId(),new Boolean(true));
+					else
+						concreteRolesList.put(concreteRoleDescriptor.getId(),new Boolean(true));
+				}			
+			}
+		}
+		return concreteRolesList;
 	}
 
 	/**
@@ -130,7 +147,7 @@ public class ParticipantService {
 	/**
 	 * 
 	 * return the list of project where a participant is affected to
-	 * 
+	 * TODO method description to improve
 	 * @param participant
 	 *            the participant which the affected to project are returned
 	 * @return list of project where the participant is affected to
@@ -152,6 +169,33 @@ public class ParticipantService {
 			}
 			else{
 				affectedProjectList.put(p, false) ;
+			}
+		}
+		return affectedProjectList ;
+	}
+	
+	/**
+	 * 
+	 * return the list of project where a participant is affected to
+	 * TODO
+	 * @param participant
+	 *            the participant which the affected to project are returned
+	 * @return list of project where the participant is affected to
+	 */
+	@Transactional (readOnly = true)
+	public List<Project> getAllAffectedProjectsForParticipant(Participant participant) {
+		List<Project> affectedProjectList = new ArrayList<Project>() ;
+		HashSet<Project> allProjectList = new HashSet<Project>() ;
+		Participant chargedParticipant = new Participant() ;
+
+		// chargement du participant et des projets
+		String login = participant.getLogin() ;
+		chargedParticipant = this.participantDao.getParticipant(login) ;
+		allProjectList = (HashSet<Project>) this.projectService.getUnfinishedProjects() ;
+
+		for(Project p : allProjectList){
+			if(chargedParticipant.getAffectedProjectList().contains(p)){
+				affectedProjectList.add(p) ;
 			}
 		}
 		return affectedProjectList ;

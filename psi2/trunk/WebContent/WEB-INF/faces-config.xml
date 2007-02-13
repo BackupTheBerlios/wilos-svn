@@ -137,23 +137,6 @@
 		</managed-property>
 	</managed-bean>
 	
-
-	<managed-bean>
-		<managed-bean-name>salesRecordsManager</managed-bean-name>
-		<managed-bean-class>
-			test.TestManager
-		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-
-	<managed-bean>
-		<managed-bean-name>salesRecords</managed-bean-name>
-		<managed-bean-class>
-			test.Test
-		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-
 	<managed-bean>
 		<managed-bean-name>ActionBean</managed-bean-name>
 		<managed-bean-class>
@@ -167,10 +150,6 @@
 		<managed-bean-class>wilos.presentation.web.role.ConcreteRoleAffectationBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
-			<property-name>projectAdvancementBean</property-name>
-			<value>#{ProjectAdvancementBean}</value>
-		</managed-property>
-		<managed-property>
 			<property-name>concreteRoleDescriptorService</property-name>
 			<value>#{ConcreteRoleDescriptorService}</value>
 		</managed-property>
@@ -183,18 +162,6 @@
 			<value>#{WebSessionService}</value>
 		</managed-property>
 	</managed-bean>
-
-	<!-- <managed-bean>
-		<managed-bean-name>RoleBean</managed-bean-name>
-		<managed-bean-class>
-			wilos.presentation.web.role.RoleBean
-		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-		<managed-property>
-			<property-name>roleService</property-name>
-			<value>#{RoleService}</value>
-		</managed-property>
-	</managed-bean>-->
 
 	<!-- =============================================================== -->
 	<!-- ========================= PSI2 Bean =========================== -->

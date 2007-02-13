@@ -9,11 +9,7 @@ import junit.framework.TestCase ;
 import wilos.business.services.misc.project.ProjectService ;
 import wilos.model.misc.project.Project ;
 import wilos.test.configuration.TestConfiguration ;
-import junit.framework.TestCase;
-import wilos.business.services.misc.project.ProjectService;
-import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
-import wilos.test.configuration.TestConfiguration;
 
 /**
  * This class represents the class test of the ProjectService class.

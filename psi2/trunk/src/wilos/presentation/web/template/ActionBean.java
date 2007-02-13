@@ -74,7 +74,6 @@ public class ActionBean {
 		Map map = context.getExternalContext().getRequestParameterMap();
 		String mainPage = (String) map.get("mainPage");
 		String pageToShow = (String) map.get("pageToShow");
-		Map map2 = context.getExternalContext().getApplicationMap();
 		MenuBean menuBean = (MenuBean)context.getExternalContext().getSessionMap().get("menu");
 		menuBean.getSelectedPanel().setTemplateName(mainPage);
 		menuBean.getSelectedPanel().setTemplateNameForARole(pageToShow);

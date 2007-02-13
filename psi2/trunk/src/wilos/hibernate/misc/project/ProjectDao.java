@@ -1,15 +1,10 @@
 package wilos.hibernate.misc.project;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.transaction.annotation.Transactional;
-
 import wilos.model.misc.project.Project;
-import wilos.model.misc.wilosuser.Participant;
-import wilos.model.spem2.process.Process;
 
 /**
  * ProjectDao manage requests from the system to store Project into the

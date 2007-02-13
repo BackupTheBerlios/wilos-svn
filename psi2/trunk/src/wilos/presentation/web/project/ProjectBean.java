@@ -51,6 +51,7 @@ public class ProjectBean {
 
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
+	@SuppressWarnings("unused")
 	private SimpleDateFormat formatter ;
 
 	private String selectProcessAffectation ;

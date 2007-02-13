@@ -5,7 +5,6 @@ import java.util.ResourceBundle ;
 
 import javax.faces.application.FacesMessage ;
 import javax.faces.context.FacesContext ;
-import javax.servlet.http.* ;
 import wilos.business.services.misc.wilosuser.LoginService ;
 import wilos.business.services.presentation.web.WebSessionService ;
 import wilos.business.util.Security ;

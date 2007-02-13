@@ -2,13 +2,11 @@
 package wilos.test.business.services.wilosuser ;
 
 import java.util.HashMap ;
-import java.util.HashSet ;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 
 import junit.framework.TestCase ;
 import wilos.business.services.misc.project.ProjectService ;
-import wilos.business.services.misc.role.RoleService ;
 import wilos.business.services.misc.wilosuser.ParticipantService ;
 import wilos.business.util.Security ;
 import wilos.model.misc.project.Project ;
@@ -157,6 +155,46 @@ public class ParticipantServiceTest extends TestCase {
 			
 		}
 		this.participantService.getParticipantDao().deleteParticipant(participant2) ;
+		
+	}
+	
+	/**
+	 * 
+	 * TODO a finir
+	 * 
+	 */
+	public void testGetAllAffectedProjectsForParticipant() 
+	{
+		this.participant.addToProject(this.p1);
+		participantService.saveParticipant(this.participant);
+		Participant participant2 = new Participant();
+		participant2.setLogin("test");
+		participant2.setName("test");
+		participant2.setPassword("test");
+		
+		participant2.addToProject(this.p2);
+		participantService.saveParticipant(participant2);
+		this.projectService.saveProject(p1);
+		p1 = this.projectService.getProject(p1.getId());
+		this.projectService.saveProject(p2);
+		
+		
+
+		List<Project> temp = this.participantService.getAllAffectedProjectsForParticipant(this.participant);
+		
+		for (Iterator iter = temp.iterator(); iter.hasNext();) {
+			Project p = (Project) iter.next();
+			if(p.getConcreteName().equals("projectTestPS1"))
+				assertTrue(p.getId().equals(p1.getId()));
+			if(p.getConcreteName().equals("projectTestPS2"))
+					assertTrue(p.getId().equals(p1.getId()));
+			
+		}
+		this.participantService.getParticipantDao().deleteParticipant(participant2) ;
+		for (Iterator iter = temp.iterator(); iter.hasNext();) {
+			Project p = (Project) iter.next();
+			this.projectService.getProjectDao().deleteProject(p) ;
+		}
 		
 	}
 

@@ -126,7 +126,7 @@ public class ProjectService {
 	public Set<Project> getAllProjectsWithNoProcess() {
 		HashSet<Project> projectList = new HashSet<Project>() ;
 		HashSet<Project> tmpList = new HashSet<Project>() ;
-		tmpList = (HashSet) this.projectDao.getAllProject() ;
+		tmpList = (HashSet<Project>) this.projectDao.getAllProject() ;
 		for(Iterator iter = tmpList.iterator(); iter.hasNext();){
 			Project project = (Project) iter.next() ;
 			if(project.getProcess() == null)
@@ -144,7 +144,7 @@ public class ProjectService {
 	public Set<Project> getAllProjectsWithProcess() {
 		HashSet<Project> projectList = new HashSet<Project>() ;
 		HashSet<Project> tmpList = new HashSet<Project>() ;
-		tmpList = (HashSet) this.projectDao.getAllProject() ;
+		tmpList = (HashSet<Project>) this.projectDao.getAllProject() ;
 		for(Iterator iter = tmpList.iterator(); iter.hasNext();){
 			Project project = (Project) iter.next() ;
 			if(project.getProcess() != null)

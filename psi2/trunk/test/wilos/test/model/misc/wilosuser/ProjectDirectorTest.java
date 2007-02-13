@@ -2,7 +2,6 @@ package wilos.test.model.misc.wilosuser;
 
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.ProjectDirector;
-import wilos.model.spem2.process.Process;
 import junit.framework.TestCase;
 
 /**

@@ -2,14 +2,12 @@
 package wilos.model.misc.wilosuser ;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder ;
 import org.apache.commons.lang.builder.HashCodeBuilder ;
 
 import wilos.model.misc.project.Project;
-import wilos.model.spem2.process.Process;
 
 /**
  * This class represents a project director using Wilos.
