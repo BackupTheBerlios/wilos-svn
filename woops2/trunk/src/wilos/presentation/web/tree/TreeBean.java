@@ -156,7 +156,7 @@ public class TreeBean {
                                        projectsList.add(new SelectItem(project.getId(), project.getConcreteName())) ;
                                }
                        }
-               }
+            	}
 
                projectsList.add(new SelectItem("default", "Choose a project ...")) ;
                return projectsList ;
