@@ -53,6 +53,9 @@
 								<ice:commandButton value="#{msgs['concretetaskviewer.stop']}"
 								actionListener="#{ConcreteTaskViewerBean.stopActionListener}"
 								visible="#{ConcreteTaskViewerBean.visibleStop}"/>
+								<ice:commandButton value="#{msgs['concretetaskviewer.suspended']}"
+								actionListener="#{ConcreteTaskViewerBean.suspendedActionListener}"
+								visible="#{ConcreteTaskViewerBean.visibleSuspended}"/>
 							</td>
 						</tr>
 					</table>
