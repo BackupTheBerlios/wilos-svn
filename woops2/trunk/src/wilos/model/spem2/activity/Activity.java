@@ -204,9 +204,9 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 * @param _breakDownElements
 	 *            The breakDownElements to set.
 	 */
-	@ SuppressWarnings ("unused")
 	private void setBreakdownElements(Set<BreakdownElement> _breakDownElements) {
-		this.breakdownElements.addAll(_breakDownElements);
+		//this.breakdownElements.addAll(_breakDownElements);
+		this.breakdownElements = _breakDownElements;
 	}
 
 	public Set<ConcreteActivity> getConcreteActivities() {
