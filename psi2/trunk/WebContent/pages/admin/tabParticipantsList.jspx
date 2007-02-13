@@ -4,7 +4,7 @@
 				
 				
 				<ice:panelGroup id="participantView_not_null" styleClass="contentIncludePanelGroup">
-					<ice:dataTable value="#{ParticipantBean.participantsList}" columnWidths="100px,100px,100px,100px" border="1" var="participant">
+					<ice:dataTable value="#{ParticipantBean.participantsList}" columnWidths="100px,100px,100px,100px" border="0" var="participant">
 						<ice:column>
 							<f:facet name="header">
 						    	<ice:outputText value="#{msgs['component.participantlist.column1']}"/>

@@ -5,7 +5,7 @@
 .pageHeader {
     font:bold 9pt Verdana;
     color:#766494;
-    border: 2px solid #FFFFFF;
+   /* border: 2px solid #FFFFFF;*/
     height: 50px;
     background-color: #CAC0D6;
     width:90%;
@@ -247,7 +247,7 @@ em {
 }
 
 .attributeColumnValue {
-
+	vertical-align: middle;
 }
 
 /*
@@ -279,6 +279,7 @@ em {
 .contentLayoutGridStyle {
     width: 100%; /* fixed height of content demos*/
     height: 200px;
+    border:0px;
 }
 
 .contentLayoutGridStyle td {
@@ -417,6 +418,7 @@ body, table {
 .iceCheckbox input, .iceRadioBtn input, .iceBooleanCheckbox {
     margin: 2px;
     padding: 2px;
+    text-align : middle;
 }
 
 .iceInputtext {
@@ -595,15 +597,16 @@ body, table {
     background-color: #FFFFFF;
     border: 1px solid #ABABAB;
     margin: 10px;
+    /*text-align: center;*/
 }
 
 .iceTblHeader {
 /*the header of a data tables */
-    background-color: #EFEFEF;
+    background-color: #E3DAEE;
     background-image: url( "../images/xpwilos/table_col_header.gif" );
     background-position: bottom;
     background-repeat: repeat-x;
-    font-weight: normal;
+    font-weight: bold;
     text-align: center;
     color: #000000;
     border-right: 1px solid #CCCCCC;
@@ -620,11 +623,11 @@ body, table {
 }
 
 .iceTblRow2 {
-    background-color: #FFFFFF;
+    background-color: #EFEFEF;
 }
 
 /* set the common attributes for the column classes */
-.column1, .column2, .column3 {
+.column1, .column2, .column3, .column4, .column5 {
     color: #000000;
     padding-left: 5px;
     padding-right: 5px;
@@ -632,6 +635,7 @@ body, table {
     padding-bottom: 3px;
     border-right: 1px solid #CCCCCC;
     border-bottom: 1px solid #CCCCCC;
+    /*text-align: center;*/
 }
 
 /* now you can add or override any attributes for the specific columns */
@@ -1873,6 +1877,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
     cursor: default;
     color: #CCCCCC;
     border: none;
+    text-align:center;
 }
 
 .iceSelect-dis {

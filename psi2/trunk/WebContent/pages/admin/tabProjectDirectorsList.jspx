@@ -3,7 +3,7 @@
 			<ice:panelStack id="panelStack_projectDirectorList" selectedPanel="#{ProjectDirectorBean.projectDirectorView}">
 
 				<ice:panelGroup id="projectDirectorView_not_null" styleClass="contentIncludePanelGroup">
-					<ice:dataTable value="#{ProjectDirectorBean.projectDirectorList}" columnWidths="100px,100px,100px" border="1" var="projectDirector">
+					<ice:dataTable value="#{ProjectDirectorBean.projectDirectorList}" columnWidths="100px,100px,100px" border="0" var="projectDirector">
 						<ice:column>
 							<f:facet name="header">
 						    	<ice:outputText value="Login"/>
