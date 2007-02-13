@@ -80,12 +80,7 @@ public class ConcreteTaskDescriptorService {
 			ConcreteTaskDescriptor _concreteTaskDescriptor) {
 
 		_concreteTaskDescriptor.setState(State.STARTED);
-		try {
-			_concreteTaskDescriptor.setRealStartingDate(Constantes.DATE_FORMAT
-					.parse(Calendar.getInstance().getTime().toString()));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		
 
 		// save changings.
 		this.concreteTaskDescriptorDao
@@ -161,12 +156,7 @@ public class ConcreteTaskDescriptorService {
 			ConcreteTaskDescriptor _concreteTaskDescriptor) {
 		// update changings.
 		_concreteTaskDescriptor.setState(State.FINISHED);
-		try {
-			_concreteTaskDescriptor.setRealFinishingDate(Constantes.DATE_FORMAT
-					.parse(Calendar.getInstance().getTime().toString()));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		
 		// save changings.
 		this.concreteTaskDescriptorDao
 				.saveOrUpdateConcreteTaskDescriptor(_concreteTaskDescriptor);

@@ -1,6 +1,13 @@
 package wilos.presentation.web.viewer;
 
+import java.util.ResourceBundle;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
@@ -28,7 +35,11 @@ public class ConcreteTaskViewerBean {
 
 	private boolean visibleStart;
 	
+	private boolean visibleStop;
+	
 	private boolean visibleModifiable;
+	
+    protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
 	public void buildConcreteTaskDescriptor() {
 		this.concreteTaskDescriptor = new ConcreteTaskDescriptor();
@@ -51,14 +62,12 @@ public class ConcreteTaskViewerBean {
 		this.concreteTaskDescriptorService.affectedState(this.concreteTaskDescriptor);
 	}
 
-	public boolean isVisibleAffected() {
-		String wilosUserId = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID) ;
-		Participant participant = this.participantService.getParticipant(wilosUserId);
-
-		boolean vis = this.affectedVisible(
-				this.concreteTaskDescriptor, participant);
-
-		return vis;
+	/**
+	 * @return the visibleAffected
+	 */
+	public boolean getVisibleAffected() {
+		return (this.concreteTaskDescriptor.getConcreteRoleDescriptor() == null);
+	
 	}
 
 	/**
@@ -71,68 +80,16 @@ public class ConcreteTaskViewerBean {
 				.startConcreteTaskDescriptor(this.concreteTaskDescriptor);
 	}
 
-	public boolean isVisibleStart() {
-		String wilosUserId = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID) ;
-		Participant participant = this.participantService.getParticipant(wilosUserId);
-
-		boolean vis = this.startVisible(
-				this.concreteTaskDescriptor, participant);
-		if (vis) {
-			return false;
-		} else {
-			return true;
-		}
+	public void stopActionListener(ActionEvent event) {
+		this.concreteTaskDescriptorService
+				.finishConcreteTaskDescriptor(this.concreteTaskDescriptor);
+	}
+	
+	public boolean getVisibleStart() {
+		return (!(this.concreteTaskDescriptor.getConcreteRoleDescriptor() == null) && !this.concreteTaskDescriptor.getState().equals("Started") && !this.concreteTaskDescriptor.getState().equals("Finished"));
+		
 	}
 
-	/**
-	 * Visible ob affected buton
-	 */
-	private boolean affectedVisible(
-			ConcreteTaskDescriptor _concreteTaskDescriptor, Participant _user) {
-
-		boolean visi = true;
-
-		/*
-		 * FIXME TaskDescriptor td =
-		 * _concreteTaskDescriptor.getTaskDescriptor(); TaskDescriptor tmp =
-		 * this.taskDescriptorService.getTaskDescriptorDao().getTaskDescriptor(td.getId());
-		 * RoleDescriptor roleDescriptor = tmp.getMainRole(); RoleDescriptor
-		 * tmpRd =
-		 * this.roleDescriptorService.getRoleDescriptorDao().getRoleDescriptor(roleDescriptor.getId());
-		 * Set<Participant> part = tmpRd.getParticipants();
-		 *
-		 * for (Participant parti : part) {
-		 * if(parti.getWilosuser_id().equals(_user.getWilosuser_id())) { visi=
-		 * false; } }
-		 */
-
-		return visi;
-	}
-
-	/**
-	 * Visible ob affected buton
-	 */
-	private boolean startVisible(ConcreteTaskDescriptor _concreteTaskDescriptor,
-			Participant _user) {
-
-		boolean visi = true;
-
-		/*
-		 * FIXME TaskDescriptor td =
-		 * _concreteTaskDescriptor.getTaskDescriptor(); TaskDescriptor tmp =
-		 * this.taskDescriptorService.getTaskDescriptorDao().getTaskDescriptor(td.getId());
-		 * RoleDescriptor roleDescriptor = tmp.getMainRole(); RoleDescriptor
-		 * tmpRd =
-		 * this.roleDescriptorService.getRoleDescriptorDao().getRoleDescriptor(roleDescriptor.getId());
-		 * Set<Participant> part = tmpRd.getParticipants();
-		 * if(!_concreteTaskDescriptor.getState().equals("Started")) { for
-		 * (Participant parti : part) {
-		 * if(parti.getWilosuser_id().equals(_user.getWilosuser_id())) { visi=
-		 * false; } } }
-		 */
-		return visi;
-
-	}
 
 	public ConcreteTaskDescriptor getConcreteTaskDescriptor() {
 		return concreteTaskDescriptor;
@@ -160,17 +117,11 @@ public class ConcreteTaskViewerBean {
 		this.concreteTaskDescriptorId = concreteTaskDescriptorId;
 	}
 
-	public boolean getVisibleAffected() {
-		return this.visibleAffected;
-	}
 
 	public void setVisibleAffected(boolean visibleAffected) {
 		this.visibleAffected = visibleAffected;
 	}
 
-	public boolean getVisibleStart() {
-		return this.visibleStart;
-	}
 
 	public void setVisibleStart(boolean visibleStart) {
 		this.visibleStart = visibleStart;
@@ -213,10 +164,10 @@ public class ConcreteTaskViewerBean {
 	 */
 	public boolean getVisibleModifiable() {
 		this.visibleModifiable = false;
-		if (this.visibleAffected && this.visibleStart)
+		if (!this.getVisibleAffected() && !this.getVisibleStart()&& !this.concreteTaskDescriptor.getState().equals("Finished"))
 		{
-			String participantId = (String)this.getWebSessionService().getAttribute(this.webSessionService.WILOS_USER_ID);
-			Participant user = this.participantService.getParticipant(participantId);
+			/*String participantId = (String)this.getWebSessionService().getAttribute(this.webSessionService.WILOS_USER_ID);
+			Participant user = this.participantService.getParticipant(participantId);*/
 			//TODO PSI2 : verifier si la concretetask est bien affectée au participant via les roles
 			this.visibleModifiable = true;
 		}
@@ -241,5 +192,27 @@ public class ConcreteTaskViewerBean {
 	public void updateActionListener(ActionEvent event)
 	{
 		this.concreteTaskDescriptorService.updateConcreteTaskDescriptor(this.concreteTaskDescriptor);
+		this.buildConcreteTaskDescriptor();
+		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale()) ;
+		FacesMessage message = new FacesMessage() ;
+        message.setSummary(bundle.getString("concretetaskviewer.updateMessage")) ;
+        message.setSeverity(FacesMessage.SEVERITY_INFO) ;
+        FacesContext facesContext = FacesContext.getCurrentInstance() ;
+        facesContext.addMessage(null, message) ;
+
+	}
+
+	/**
+	 * @return the visibleStop
+	 */
+	public boolean getVisibleStop() {
+		return this.concreteTaskDescriptor.getState().equals("Started");
+	}
+
+	/**
+	 * @param visibleStop the visibleStop to set
+	 */
+	public void setVisibleStop(boolean visibleStop) {
+		this.visibleStop = visibleStop;
 	}
 }
