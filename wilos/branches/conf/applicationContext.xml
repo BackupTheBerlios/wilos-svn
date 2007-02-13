@@ -444,6 +444,8 @@
 			ref="TaskDescriptorService" />
 		<property name="roleDescriptorService"
 			ref="RoleDescriptorService" />
+		<property name="concreteRoleDescriptorService"
+			ref="ConcreteRoleDescriptorService" />
 	</bean>
 
 	<bean id="ConcreteRoleDescriptorService"
