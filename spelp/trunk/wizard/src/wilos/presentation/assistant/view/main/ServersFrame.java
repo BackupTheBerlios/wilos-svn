@@ -165,10 +165,21 @@ public class ServersFrame {
 			{
 				public void actionPerformed(ActionEvent e) 
     			{
-					String alias = (String)servs.getValueAt(servs.getRowCount()-1,0);
-					String url = (String)servs.getValueAt(servs.getRowCount()-1,1);
 					
-					if(       (alias != null) &&     ( !alias.equals("") )   &&   (url != null) &&     ( !url.equals("") ))
+					String alias = ""; 
+					String url = "";
+					boolean ok = true;
+
+					for(int i=0;(i<servs.getRowCount())&&(ok == true);i++) {
+						alias = (String)servs.getValueAt(i,0);
+						url = (String)servs.getValueAt(i,1);
+						
+						if(       (alias == null) ||  (alias.equals("") ) ||  (url == null) || (url.equals("") )) {
+							ok = false;
+						}
+					}
+					
+					if(ok == true)
 					{
 						tables_serv.addRow(new Vector());
 						servs.setEditingRow(tables_serv.getRowCount());
@@ -194,7 +205,10 @@ public class ServersFrame {
 				public void actionPerformed(ActionEvent e) 
     			{
 					if (servs.getSelectedRow() != -1)
-						tables_serv.removeRow((servs.getSelectedRow()));			
+						System.out.println(servs.getSelectedRow());
+						tables_serv.removeRow((servs.getSelectedRow()));
+					servs.setEditingRow(tables_serv.getRowCount());
+					System.out.println(servs.getSelectedRow());
     			}				
 			});
 			
