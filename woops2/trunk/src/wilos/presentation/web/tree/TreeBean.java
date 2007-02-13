@@ -2,6 +2,7 @@
 package wilos.presentation.web.tree ;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -149,15 +150,11 @@ public class TreeBean {
                Participant participant = this.participantService.getParticipant(wilosUserId);
 
                if(participant != null){
-                       /*HashMap<Project, Boolean> projects = this.participantService.getProjectsForAParticipant(participant) ;
+                       HashMap<Project, Boolean> projects = this.participantService.getProjectsForAParticipant(participant) ;
                        for(Project project : projects.keySet()){
                                if(projects.get(project)){
                                        projectsList.add(new SelectItem(project.getId(), project.getConcreteName())) ;
                                }
-                       }*/
-
-                       for(Project project : this.projectService.getAllProjects()){
-                               projectsList.add(new SelectItem(project.getId(), project.getConcreteName())) ;
                        }
                }
 

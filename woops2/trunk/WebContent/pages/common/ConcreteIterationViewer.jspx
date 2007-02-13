@@ -1,5 +1,5 @@
 <ice:form>
-	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0" bgcolor="#BEB4CC">
+	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1">
 		<ice:panelTabSet >
 			<br />
 			<ice:panelTab label="Iteration Display">
@@ -9,15 +9,15 @@
 					<ice:outputText value="#{msgs['taskviewer.id'] }" />
 					<ice:outputText
 						value="#{ConcreteIterationViewerBean.concreteIteration.iteration.guid}" />
-						
+
 					<ice:outputText value="Concrete Name" />
 					<ice:outputText
 						value="#{ConcreteIterationViewerBean.concreteIteration.concreteName}" />
-						
+
 					<ice:outputText value="#{msgs['iterationviewer.isplanned'] }" />
 					<ice:outputText
 						value="#{ConcreteIterationViewerBean.concreteIteration.iteration.isPlanned}" />
-						
+
 					<ice:outputText value="#{msgs['iterationviewer.description'] }" />
 					<ice:outputText
 						value="#{ConcreteIterationViewerBean.concreteIteration.iteration.description}" />
