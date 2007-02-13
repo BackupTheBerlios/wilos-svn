@@ -6,7 +6,7 @@
 					<h3><ice:outputText value="#{msgs['component.table1participantprojectManager.title']}" /></h3>
 					<ice:panelStack id="panelStack_manageableProjects" selectedPanel="#{ParticipantBean.selectManageableProjectView}">
 						<ice:panelGroup id="manageable_records_view">
-							<ice:dataTable value="#{ParticipantBean.manageableProjectsList}" columnWidths="50px,200px,200px,100px,100px,300px" border="1" var="manageableProject">
+							<ice:dataTable value="#{ParticipantBean.manageableProjectsList}" columnWidths="50px,200px,200px,100px,100px,300px" border="0" var="manageableProject">
 								<ice:column>
 									<f:facet name="header">         			
 								    	<ice:outputText value="#{msgs['component.table1participantprojectManager.assignedto']}"/>
