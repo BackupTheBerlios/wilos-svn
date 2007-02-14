@@ -109,7 +109,7 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">
-					org.hibernate.dialect.MySQLDialect
+					org.hibernate.dialect.MySQLInnoDBDialect
 				</prop>
 				<!-- Mise a false pour eviter les affichages des requetes SQL -->
 				<prop key="hibernate.show_sql">false</prop>
@@ -117,7 +117,7 @@
 					true
 				</prop>
 				<prop key="hibernate.cache.provider_class">
-					org.hibernate.cache.HashtableCacheProvider
+					org.hibernate.cache.EhCacheProvider
 				</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>
