@@ -31,17 +31,7 @@ public class ConcreteTaskViewerBean {
 
 	private String concreteTaskDescriptorId = "";
 
-	private boolean visibleAffected;
-
-	private boolean visibleStart;
-
-	private boolean visibleStop;
-
-	private boolean visibleSuspended;
-
 	private boolean visibleModifiable;
-
-	private boolean visibleReprendre;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -142,14 +132,6 @@ public class ConcreteTaskViewerBean {
 		this.concreteTaskDescriptorId = concreteTaskDescriptorId;
 	}
 
-	public void setVisibleAffected(boolean visibleAffected) {
-		this.visibleAffected = visibleAffected;
-	}
-
-	public void setVisibleStart(boolean visibleStart) {
-		this.visibleStart = visibleStart;
-	}
-
 	/**
 	 * @return the webSessionService
 	 */
@@ -245,14 +227,6 @@ public class ConcreteTaskViewerBean {
 	}
 
 	/**
-	 * @param visibleStop
-	 *            the visibleStop to set
-	 */
-	public void setVisibleStop(boolean visibleStop) {
-		this.visibleStop = visibleStop;
-	}
-
-	/**
 	 * @return the visibleSuspended
 	 */
 	public boolean getVisibleSuspended() {
@@ -260,25 +234,9 @@ public class ConcreteTaskViewerBean {
 	}
 
 	/**
-	 * @param visibleSuspended
-	 *            the visibleSuspended to set
-	 */
-	public void setVisibleSuspended(boolean visibleSuspended) {
-		this.visibleSuspended = visibleSuspended;
-	}
-
-	/**
 	 * @return the visibleReprendre
 	 */
 	public boolean getVisibleReprendre() {
 		return this.concreteTaskDescriptor.getState().equals("Suspended");
-	}
-
-	/**
-	 * @param visibleReprendre
-	 *            the visibleReprendre to set
-	 */
-	public void setVisibleReprendre(boolean visibleReprendre) {
-		this.visibleReprendre = visibleReprendre;
 	}
 }
