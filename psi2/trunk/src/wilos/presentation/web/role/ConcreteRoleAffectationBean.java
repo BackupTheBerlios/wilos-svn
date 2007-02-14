@@ -150,7 +150,8 @@ public class ConcreteRoleAffectationBean {
 				HashMap<String,Object> hm = new HashMap<String,Object>();
 				hm.put("concreteId",element.getId());
 				hm.put("concreteName",element.getConcreteName());
-				hm.put("affected", this.getParticipantAffectationForConcreteRoleDescriptor((String)this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID),element.getId()));
+				hm.put("affected", ((HashMap<String,Boolean>)this.getParticipantAffectationForConcreteRoleDescriptor((String)this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID),element.getId())).get("affected"));
+				hm.put("not_allowed", ((HashMap<String,Boolean>)this.getParticipantAffectationForConcreteRoleDescriptor((String)this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID),element.getId())).get("not_allowed"));
 				this.concreteRolesDescriptorsList.add(hm);
 			}
 		return this.concreteRolesDescriptorsList ;
@@ -179,7 +180,7 @@ public class ConcreteRoleAffectationBean {
 	 * @return
 	 */
 	
-	private Boolean getParticipantAffectationForConcreteRoleDescriptor(String _wilosUserId, String _concreteId) {
+	private HashMap<String,Boolean> getParticipantAffectationForConcreteRoleDescriptor(String _wilosUserId, String _concreteId) {
 		return this.concreteRoleAffectationService.getParticipantAffectationForConcreteRoleDescriptor(_wilosUserId,_concreteId);
 	}
 

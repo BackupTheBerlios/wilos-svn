@@ -85,13 +85,15 @@ public class ConcreteRoleAffectationService {
 		Participant currentParticipant = this.participantDao.getParticipantById(_wilosUserId);
 		
 		ConcreteRoleDescriptor concreteRoleDescriptor = this.concreteRoleDescriptorService.getConcreteRoleDescriptorById((String)rolesParticipant.get("concreteId"));
-			if((Boolean)rolesParticipant.get("affected")){
-				currentParticipant.addConcreteRoleDescriptor(concreteRoleDescriptor);
+			if(!(Boolean)rolesParticipant.get("not_allowed")){
+				if((Boolean)rolesParticipant.get("affected")){
+					currentParticipant.addConcreteRoleDescriptor(concreteRoleDescriptor);
+				}
+				else{
+					currentParticipant.removeConcreteRoleDescriptor(concreteRoleDescriptor);
+				}
+				this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao().saveOrUpdateConcreteRoleDescriptor(concreteRoleDescriptor);
 			}
-			else{
-				currentParticipant.removeConcreteRoleDescriptor(concreteRoleDescriptor);
-			}
-			this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao().saveOrUpdateConcreteRoleDescriptor(concreteRoleDescriptor);
 		return "";
 	}
 
@@ -122,15 +124,22 @@ public class ConcreteRoleAffectationService {
 	 * @return
 	 */
 	@Transactional(readOnly = true)
-	public Boolean getParticipantAffectationForConcreteRoleDescriptor(String _wilosUserId, String _concreteId) {
+	public HashMap<String,Boolean> getParticipantAffectationForConcreteRoleDescriptor(String _wilosUserId, String _concreteId) {
+		HashMap<String,Boolean> roleStatus = new HashMap<String,Boolean>();
 		ConcreteRoleDescriptor crd = this.concreteRoleDescriptorService.getConcreteRoleDescriptorById(_concreteId);
 		if(crd.getParticipant() != null){
-			if(crd.getParticipant().getWilosuser_id().equals(_wilosUserId))
-				return true;
-			else
-				return false;
+			roleStatus.put("affected", new Boolean(true));
+			if(crd.getParticipant().getWilosuser_id().equals(_wilosUserId)){
+				roleStatus.put("not_allowed", new Boolean(false));
+			}
+			else{
+				roleStatus.put("not_allowed", new Boolean(true));
+			}
 		}
-		return false;
-		
+		else{
+			roleStatus.put("affected", new Boolean(false));
+			roleStatus.put("not_allowed", new Boolean(false));
+		}
+		return roleStatus;
 	}
 }
