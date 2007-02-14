@@ -26,6 +26,7 @@ import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.role.RoleDescriptor;
+import wilos.presentation.web.role.ConcreteRoleAffectationBean;
 import wilos.presentation.web.template.MenuBean;
 import wilos.presentation.web.viewer.ConcreteActivityViewerBean;
 import wilos.presentation.web.viewer.ConcreteIterationViewerBean;
@@ -111,9 +112,8 @@ public class TreeBean {
 
                                // Retrieve the entire project.
                                this.project = this.projectService.getProject(this.projectId) ;
-                               //this.project = this.processService.getEntireProject(this.projectId) ;
                        }
-                       ProjectNode projectNode = null ; Project p = new Project();
+                       ProjectNode projectNode = null ;
 
                        if(this.affectedTaskFilter){
                                // participant into session
@@ -175,19 +175,20 @@ public class TreeBean {
        public void filterTreeActionListener(ValueChangeEvent evt) {
                this.buildModel(false) ;
        }
-       //TODO ameliorer l'affichage d'un noeud en chargeant l'obejt a afficher direct dans le ViewerBean
+
        public void selectNodeActionListener(ActionEvent evt) {
-               logger.debug("### TreeBean ### selectNodeActionListener") ;
                FacesContext context = FacesContext.getCurrentInstance() ;
                Map map = context.getExternalContext().getRequestParameterMap() ;
 
                String nodeId = (String) map.get("nodeId") ;
-               logger.debug("### TreeBean ### selectNodeActionListener - nodeId =" + nodeId) ;
                String pageId = (String) map.get("pageId") ;
 
-               logger.debug("### TreeBean ### selectNodeActionListener - pageId =" + pageId) ;
-               //
                this.selectNodeToShow(nodeId, pageId) ;
+
+               //passege de l'id de lelement clique vers le bean de PSI2 ConcreteRoleAffectationBean.
+               ConcreteRoleAffectationBean crab = (ConcreteRoleAffectationBean) context.getApplication().getVariableResolver().resolveVariable(context,
+                       "ConcreteRoleAffectationBean") ;
+               crab.setNodeId(nodeId);
        }
 
        /**
@@ -247,19 +248,10 @@ public class TreeBean {
                }
        }
 
-       /**
-        * @return the processId
-        */
        public String getProjectId() {
                return this.projectId ;
        }
 
-       /**
-        * Setter of processId.
-        *
-        * @param _processId
-        *            The processId to set.
-        */
        public void setProjectId(String _processId) {
                this.projectId = _processId ;
        }
@@ -312,35 +304,18 @@ public class TreeBean {
                this.participantService = participantService ;
        }
 
-       /**
-        * @return the webSessionService
-        */
        public WebSessionService getWebSessionService() {
                return webSessionService ;
        }
 
-       /**
-        * Setter of webSessionService.
-        *
-        * @param webSessionService
-        *            The webSessionService to set.
-        */
        public void setWebSessionService(WebSessionService webSessionService) {
                this.webSessionService = webSessionService ;
        }
 
-       /**
-        * @return the processService
-        */
        public ProcessService getProcessService() {
                return processService ;
        }
 
-       /**
-        * Setter of processService.
-        *
-        * @param processService The processService to set.
-        */
        public void setProcessService(ProcessService processService) {
                this.processService = processService ;
        }
