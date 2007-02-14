@@ -8,8 +8,6 @@ import java.util.Set;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import wilos.business.services.spem2.iteration.IterationService;
-import wilos.business.services.spem2.phase.PhaseService;
 import wilos.business.services.spem2.role.RoleDescriptorService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.hibernate.misc.concreteactivity.ConcreteActivityDao;
@@ -19,8 +17,6 @@ import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
-import wilos.model.spem2.iteration.Iteration;
-import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
 
@@ -39,11 +35,11 @@ public class ActivityService {
 	private ConcreteActivityDao concreteActivityDao;
 
 	/*private PhaseService phaseService;
-	
+
 	private IterationService iterationService;*/
-	
+
 	private RoleDescriptorService roleDescriptorService;
-	
+
 	private TaskDescriptorService taskDescriptorService;
 
 	/**
@@ -54,10 +50,10 @@ public class ActivityService {
 	public ConcreteActivity activityInstanciation(Project _project, Activity _activity) {
 
 		ConcreteActivity cact = new ConcreteActivity();
-		
+
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 		bdes.addAll(_activity.getBreakdownElements());
-		
+
 		Set<ConcreteBreakdownElement> tmp = new HashSet<ConcreteBreakdownElement>();
 
 		if (_activity.getPresentationName() == null)
@@ -67,10 +63,10 @@ public class ActivityService {
 
 		cact.addActivity(_activity);
 		cact.setProject(_project);
-		
+
 		this.concreteActivityDao.saveOrUpdateConcreteActivity(cact);
 		System.out.println("### ConcreteActivity vide sauve");
-		
+
 		for (BreakdownElement bde : bdes ) {
 			/*if (bde instanceof Phase) {
 				Phase ph = (Phase) bde;
@@ -96,10 +92,10 @@ public class ActivityService {
 			}
 		}
 		cact.addAllConcreteBreakdownElements(tmp);
-		
+
 		this.concreteActivityDao.saveOrUpdateConcreteActivity(cact);
 		System.out.println("### Activity update");
-			
+
 		return cact;
 	}
 

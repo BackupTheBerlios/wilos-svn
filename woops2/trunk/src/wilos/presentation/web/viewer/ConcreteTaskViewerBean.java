@@ -89,7 +89,7 @@ public class ConcreteTaskViewerBean {
 
 	/**
 	 * action for button start
-	 * 
+	 *
 	 * @param event
 	 */
 	public void startActionListener(ActionEvent event) {
@@ -159,7 +159,7 @@ public class ConcreteTaskViewerBean {
 
 	/**
 	 * Setter of webSessionService.
-	 * 
+	 *
 	 * @param webSessionService
 	 *            The webSessionService to set.
 	 */
@@ -176,7 +176,7 @@ public class ConcreteTaskViewerBean {
 
 	/**
 	 * Setter of participantService.
-	 * 
+	 *
 	 * @param participantService
 	 *            The participantService to set.
 	 */
@@ -217,7 +217,7 @@ public class ConcreteTaskViewerBean {
 
 	/**
 	 * save the ConcreteTaskDescriptor
-	 * 
+	 *
 	 * @param event
 	 */
 	public void updateActionListener(ActionEvent event) {

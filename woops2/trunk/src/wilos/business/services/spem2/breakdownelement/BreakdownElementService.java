@@ -26,18 +26,19 @@ import wilos.model.spem2.task.TaskDescriptor;
  *
  */
 @ Transactional (readOnly = false, propagation = Propagation.REQUIRED)
+@ SuppressWarnings("unused")
 public class BreakdownElementService {
 
 	private ConcreteBreakdownElementDao concreteBreakdownElementDao ;
 
 	private PhaseService phaseService;
-	
+
 	private IterationService iterationService;
-	
+
 	private ActivityService activityService;
-	
+
 	private RoleDescriptorService roleDescriptorService;
-	
+
 	private TaskDescriptorService taskDescriptorService;
 
 	/**
@@ -48,7 +49,7 @@ public class BreakdownElementService {
 	/*public ConcreteBreakdownElement breakdownElementInstanciation (Project _project, BreakdownElement _bde, ConcreteActivity _superActivity) {
 
 		ConcreteBreakdownElement cbde = null;
-		
+
 		if (_bde instanceof Phase) {
 			Phase ph = (Phase) _bde;
 			this.phaseService.phaseInstanciation(_project, ph);

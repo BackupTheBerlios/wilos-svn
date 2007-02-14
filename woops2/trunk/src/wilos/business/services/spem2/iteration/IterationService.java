@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import wilos.business.services.spem2.activity.ActivityService;
 import wilos.business.services.spem2.breakdownelement.BreakdownElementService;
-import wilos.business.services.spem2.phase.PhaseService;
 import wilos.business.services.spem2.role.RoleDescriptorService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.hibernate.misc.concreteiteration.ConcreteIterationDao;
@@ -20,7 +19,6 @@ import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.iteration.Iteration;
-import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
 /**
@@ -32,15 +30,15 @@ import wilos.model.spem2.task.TaskDescriptor;
 public class IterationService {
 
 	private ConcreteIterationDao concreteIterationDao;
-	
+
 	private BreakdownElementService breakdownElementService;
-	
+
 	//private PhaseService phaseService;
-	
+
 	private ActivityService activityService;
-	
+
 	private RoleDescriptorService roleDescriptorService;
-	
+
 	private TaskDescriptorService taskDescriptorService;
 
 	/**
@@ -51,10 +49,10 @@ public class IterationService {
 	public ConcreteIteration iterationInstanciation (Project _project, Iteration _iteration) {
 
 		ConcreteIteration ci = new ConcreteIteration();
-		
+
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 		bdes.addAll(_iteration.getBreakdownElements());
-		
+
 		Set<ConcreteBreakdownElement> tmp = new HashSet<ConcreteBreakdownElement>();
 
 		if (_iteration.getPresentationName() == null)
@@ -64,10 +62,10 @@ public class IterationService {
 
 		ci.addIteration(_iteration);
 		ci.setProject(_project);
-		
+
 		this.concreteIterationDao.saveOrUpdateConcreteIteration(ci);
 		System.out.println("### ConcreteIteration vide sauve");
-		
+
 		for (BreakdownElement bde : bdes ) {
 			/*if (bde instanceof Phase) {
 				Phase ph = (Phase) bde;
@@ -92,12 +90,12 @@ public class IterationService {
 				//}
 			}
 		}
-		
+
 		ci.addAllConcreteBreakdownElements(tmp);
-		
+
 		this.concreteIterationDao.saveOrUpdateConcreteIteration(ci);
 		System.out.println("### ConcreteIteration update");
-		
+
 		return ci;
 	}
 

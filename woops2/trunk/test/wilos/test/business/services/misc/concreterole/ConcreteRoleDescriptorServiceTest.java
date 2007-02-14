@@ -74,7 +74,7 @@ public class ConcreteRoleDescriptorServiceTest extends TestCase {
 		//init.
 		ConcreteActivity ca = new ConcreteActivity();
 		ConcreteRoleDescriptor crd = new ConcreteRoleDescriptor();
-		crd.setConcreteName(this.NAME);
+		crd.setConcreteName(NAME);
 		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao().saveOrUpdateConcreteRoleDescriptor(crd);
 		ca.addConcreteBreakdownElement(crd);
 		this.concreteActivityDao.saveOrUpdateConcreteActivity(ca);
