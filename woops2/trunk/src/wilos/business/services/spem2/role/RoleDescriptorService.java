@@ -13,8 +13,6 @@ import wilos.model.spem2.role.RoleDescriptor;
 /**
  * @author Sebastien
  *
- * This class represents ... TODO
- *
  */
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class RoleDescriptorService {
@@ -56,7 +54,7 @@ public class RoleDescriptorService {
 
 		this.concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(crd);
 		System.out.println("### ConcreteRoleDescriptor sauve");
-		
+
 		return crd;
 	}
 

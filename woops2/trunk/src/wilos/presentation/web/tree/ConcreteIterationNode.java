@@ -35,14 +35,14 @@ public class ConcreteIterationNode extends DefaultMutableTreeNode {
 
 		for (ConcreteBreakdownElement concreteBreakdownElement : this.concreteIteration
 				.getConcreteBreakdownElements()) {
-			//FIXME LazyExceptrion
 			if (concreteBreakdownElement instanceof ConcreteActivity) {
-				this.add(new ConcreteActivityNode((ConcreteActivity) concreteBreakdownElement,
+				this.add(new ConcreteActivityNode(
+						(ConcreteActivity) concreteBreakdownElement,
 						_roleDescriptors));
-			}
-			else if (concreteBreakdownElement instanceof ConcreteTaskDescriptor) {
-				this.add(new ConcreteTaskDescriptorNode((ConcreteTaskDescriptor) concreteBreakdownElement,
-								_roleDescriptors));
+			} else if (concreteBreakdownElement instanceof ConcreteTaskDescriptor) {
+				this.add(new ConcreteTaskDescriptorNode(
+						(ConcreteTaskDescriptor) concreteBreakdownElement,
+						_roleDescriptors));
 			}
 		}
 	}

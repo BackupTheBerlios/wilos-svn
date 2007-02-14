@@ -13,10 +13,6 @@ public class RoleDescriptorServiceTest extends TestCase {
 		super.setUp() ;
 	}
 
-	public void testRoleDescriptorInstanciation(){
-		//TODO !!!
-	}
-
 	/*
 	 * (non-Javadoc)
 	 *

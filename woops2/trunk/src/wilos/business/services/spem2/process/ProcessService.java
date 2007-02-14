@@ -110,9 +110,9 @@ public class ProcessService {
 					+ _file.getAbsolutePath() + " abs path = "
 					+ _file.getPath());
 			String slash = System.getProperty("file.separator");
-			    
+
 			String path = _file.getAbsolutePath().substring(0,_file.getAbsolutePath().lastIndexOf(slash));
-		   
+
 			logger.debug("### ProcessService ### spelpParsingXML PATH == "+path);
 			spelpProcess = XMLServices.getProcess(_file.getAbsolutePath(), path );
 		} catch (Exception e) {
@@ -120,7 +120,7 @@ public class ProcessService {
 		}
 		return spelpProcess;
 	}
-	
+
 	/**
      * @param _processId
      * @return
@@ -561,8 +561,6 @@ public class ProcessService {
 	}
 
 	/**
-	 *
-	 * TODO Method description
 	 *
 	 * @param _tdef
 	 */

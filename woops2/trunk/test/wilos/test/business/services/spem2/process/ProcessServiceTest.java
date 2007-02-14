@@ -76,8 +76,6 @@ public class ProcessServiceTest extends TestCase {
 		// Save the activity.
 		this.processService.saveProcess(this.process);
 
-		// TODO !!!
-
 		// Rk: the tearDown method is called here.
 	}
 }
