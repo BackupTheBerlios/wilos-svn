@@ -148,10 +148,10 @@
 	<managed-bean>
 		<managed-bean-name>ConcreteRoleAffectationBean</managed-bean-name>
 		<managed-bean-class>wilos.presentation.web.role.ConcreteRoleAffectationBean</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
+		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
-			<property-name>concreteRoleDescriptorService</property-name>
-			<value>#{ConcreteRoleDescriptorService}</value>
+			<property-name>concreteRoleAffectationService</property-name>
+			<value>#{ConcreteRoleAffectationService}</value>
 		</managed-property>
 		<managed-property>
 		<property-name>participantService</property-name>

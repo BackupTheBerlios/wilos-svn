@@ -25,7 +25,7 @@ public class ParticipantServiceTest extends TestCase {
 
 	private ProjectService projectService ;
 
-	//private RoleService rs ;
+	//private ConcreteRoleAffectationService rs ;
 
 	private Participant participant ;
 
@@ -55,7 +55,7 @@ public class ParticipantServiceTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp() ;
 		this.participantService = (ParticipantService) TestConfiguration.getInstance().getApplicationContext().getBean("ParticipantService") ;
-		//this.rs = (RoleService) TestConfiguration.getInstance().getApplicationContext().getBean("RoleService") ;
+		//this.rs = (ConcreteRoleAffectationService) TestConfiguration.getInstance().getApplicationContext().getBean("ConcreteRoleAffectationService") ;
 		this.projectService = (ProjectService) TestConfiguration.getInstance().getApplicationContext().getBean("ProjectService") ;
 
 		p1 = new Project() ;

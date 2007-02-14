@@ -59,11 +59,7 @@ public class LoginService {
 		Set<WilosUser> wilosUsers = this.wilosUserDao.getAllWilosUsers() ;
 		for(WilosUser user : wilosUsers){
 			if(user.getLogin().equals(_login) && user.getPassword().equals(_password)){
-				this.logger.debug("### connection OK ###") ;
 				return user ;
-			}
-			else{
-				this.logger.debug("### connection PAS OK ###") ;
 			}
 		}
 		return null ;
@@ -82,11 +78,7 @@ public class LoginService {
 		for(WilosUser user : wilosUsers){
 			userLogin = user.getLogin().toUpperCase() ;
 			if(userLogin.equals(_login.toUpperCase())){
-				this.logger.debug("### new login " + userLogin + " already exists ###") ;
 				return true ;
-			}
-			else{
-				this.logger.debug("### new login " + userLogin + " is ok ###") ;
 			}
 		}
 		return found ;

@@ -4,16 +4,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import javax.faces.validator.ValidatorException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService;
+import wilos.business.services.misc.role.ConcreteRoleAffectationService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
@@ -29,16 +34,54 @@ import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
  */
 public class ConcreteRoleAffectationBean {
 
-	private ConcreteRoleDescriptorService concreteRoleDescriptorService;
+	private ConcreteRoleAffectationService concreteRoleAffectationService;
 	
 	private ParticipantService participantService;
 	
 	private WebSessionService webSessionService;
 	
 	private List<HashMap<String,Object>> concreteRolesDescriptorsList;
+	
+	private String nodeId;
+	
+	private String oldNodeId;
+	
+	private String selectRolesView;
 
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
+	public ConcreteRoleAffectationBean()
+	{
+		this.concreteRolesDescriptorsList = new ArrayList<HashMap<String,Object>>();
+	}
+	
+	
+	/**
+	 * Getter of selectAffectedProjectView.
+	 *
+	 * @return the selectAffectedProjectView.
+	 */
+	public String getSelectRolesView() {
+		if (this.getConcreteRolesDescriptorsList().size()==0 )
+		{
+			this.selectRolesView  = "no_roles_view";
+		}
+		else
+		{
+			this.selectRolesView ="roles_view";
+		}
+		return this.selectRolesView;
+	}
+
+	/**
+	 * Setter of selectAffectedProjectView.
+	 *
+	 * @param _selectAffectedProjectView The selectAffectedProjectView to set.
+	 */
+	public void setSelectRolesView(String _selectRolesView) {
+		this.selectRolesView = _selectRolesView ;
+	}
+	
 	/**
 	 * Getter of participantService.
 	 *
@@ -56,161 +99,23 @@ public class ConcreteRoleAffectationBean {
 	public void setParticipantService(ParticipantService _participantService) {
 		this.participantService = _participantService ;
 	}
-
-	/**
-	 * Constructor.
-	 * 
-	 */
-	public ConcreteRoleAffectationBean() {
-		this.logger.debug("--- ConcreteRoleAffectationBean --- == creating ..." + this);
-	}
-
-	/**
-	 * Getter of concreteRoleDescriptorService.
-	 *
-	 * @return the concreteRoleDescriptorService.
-	 */
-	public ConcreteRoleDescriptorService getConcreteRoleDescriptorService() {
-		return this.concreteRoleDescriptorService ;
-	}
-
-	/**
-	 * Setter of concreteRoleDescriptorService.
-	 *
-	 * @param _concreteRoleDescriptorService The concreteRoleDescriptorService to set.
-	 */
-	public void setConcreteRoleDescriptorService(ConcreteRoleDescriptorService _concreteRoleDescriptorService) {
-		this.concreteRoleDescriptorService = _concreteRoleDescriptorService ;
-	}
-
-	/**
-	 * Method for saving participant data from form
-	 * 
-	 * @return
-	 */
-//	public String saveRoleAction() {
-//		String url = "participant";
-//		//this.roleService.saveRoleDescriptor(this.roleDescriptor);
-//		return url;
-//	}
-//
-//	public void testTransactionActionListener(ActionEvent e) {
-//		// this.participantManager.Test();
-//	}
-//
-//	/**
-//	 * Getter of rolesList.
-//	 * 
-//	 * @return the rolesList.
-//	 */
-//	public List<ConcreteRoleDescriptor> getRolesList() {
-//		this.rolesList = new ArrayList<ConcreteRoleDescriptor>();
-//		//rolesList.addAll(this.roleService.getRolesDescriptor());
-//		this.logger.debug("roles list =" + this.rolesList);
-//		return this.rolesList;
-//	}
-//
-//	/**
-//	 * Getter of roleDescriptor.
-//	 * 
-//	 * @return the roleDescriptor.
-//	 */
-//	public ConcreteRoleDescriptor getRoleDescriptor() {
-//		return this.roleDescriptor;
-//	}
-//
-//	/**
-//	 * Setter of roleDescriptor.
-//	 * 
-//	 * @param _roleDescriptor
-//	 *            The roleDescriptor to set.
-//	 */
-//	public void setRoleDescriptor(ConcreteRoleDescriptor _roleDescriptor) {
-//		this.logger.debug("### Participant = " + _roleDescriptor + " ###");
-//		this.roleDescriptor = _roleDescriptor;
-//	}
-//
-//	/**
-//	 * Getter of roleService.
-//	 * 
-//	 * @return the roleService.
-//	 */
-//	public RoleService getRoleService() {
-//		return this.roleService;
-//	}
-//
-//	/**
-//	 * Setter of participantManager.
-//	 * 
-//	 * @param _participantManager
-//	 *            The participantManager to set.
-//	 */
-//	public void setRoleService(RoleService _roleService) {
-//		this.roleService = _roleService;
-//	}
-//
-//	/**
-//	 * Getter of project.
-//	 * 
-//	 * @return the project.
-//	 */
-//	public int getProject() {
-//		return this.project;
-//	}
-//
-//	/**
-//	 * Setter of project.
-//	 * 
-//	 * @param _project
-//	 *            The project to set.
-//	 */
-//	public void setProject(int _project) {
-//		this.project = _project;
-//	}
-//
-//	/**
-//	 * Setter of rolesList.
-//	 * 
-//	 * @param _rolesList
-//	 *            The rolesList to set.
-//	 */
-//	public void setRolesList(List<ConcreteRoleDescriptor> _rolesList) {
-//		this.rolesList = _rolesList;
-//	}
-//
-//	/**
-//	 * Save roles of a participant
-//	 * 
-//	 */
-//	public void saveParticipantRoles(){
-//	FacesMessage message = new FacesMessage() ;
-//	message.setSummary(bundle.getString("component.authentificationerror.loginError")) ;
-//	message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
-//		/*HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
-//		HttpSession sess = req.getSession() ;
-//		String userid = (String) sess.getAttribute("wilosUser") ;*/
-//		//WilosUser user = this.
-//		//String user_login = user.getLogin();
-//		//TODO Attentio nrecuperation de l'id en session et non plus de l'objet WilosUser
-//		//TODO ROLES : ATTENTION ENREGISTRER L ID AU LIEU DU LOGIN !!! 
-//		//this.roleService.saveParticipantRoles(this.getRolesParticipant(),user_login);
-//	}
 	
 	/**
-	 * Listener on the check action in the role checkboxes.
-	 * @param newRole
+	 * Getter of concreteRoleAffectationService.
+	 *
+	 * @return the concreteRoleAffectationService.
 	 */
-	public void addConcreteRoleDescriptorChangeListener(ValueChangeEvent newRole){
-		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		externalContext.getRemoteUser();
-		String concreteRoleId = (String)((ConcreteRoleDescriptor)FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("concreteRole")).getId();
-		String concreteBDEId = (String)((ConcreteBreakdownElement)FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("item")).getId();
-		if( (Boolean)newRole.getOldValue() != (Boolean)newRole.getNewValue()){
-			this.logger.debug("modif " + concreteBDEId + " : " + concreteRoleId + " = " + newRole.getNewValue());
-		}
-		/*this.concreteRolesDescriptorsForCurrentParticipant.put(concreteRoleId, (Boolean)newRole.getNewValue());
-		this.concreteRolesDescriptorsForCBDE.put(concreteBDEId,concreteRoleId);*/
-		
+	public ConcreteRoleAffectationService getConcreteRoleAffectationService() {
+		return this.concreteRoleAffectationService ;
+	}
+
+	/**
+	 * Setter of concreteRoleAffectationService.
+	 *
+	 * @param _concreteRoleAffectationService The concreteRoleAffectationService to set.
+	 */
+	public void setConcreteRoleAffectationService(ConcreteRoleAffectationService _concreteRoleAffectationService) {
+		this.concreteRoleAffectationService = _concreteRoleAffectationService ;
 	}
 
 	/**
@@ -237,34 +142,45 @@ public class ConcreteRoleAffectationBean {
 	 * @return the concreteRolesDescriptorsList.
 	 */
 	public List<HashMap<String, Object>> getConcreteRolesDescriptorsList() {
-		String currentConcreteActivityId = (String)FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("nodeId");
-		ArrayList<ConcreteRoleDescriptor> globalCRD;
-		
-		if(this.concreteRolesDescriptorsList == null){
-			globalCRD = (ArrayList<ConcreteRoleDescriptor>)this.concreteRoleDescriptorService.getAllConcreteRoleDescriptorsForProject((String)this.webSessionService.getAttribute(WebSessionService.PROJECT_ID));
-			for(ConcreteRoleDescriptor concreteRD : globalCRD){
-				Set<ConcreteActivity> globalCA = concreteRD.getSuperConcreteActivities();
-				System.out.println("tarace");
-				for(Iterator iter = globalCA.iterator(); iter.hasNext();){
-					ConcreteActivity ca = (ConcreteActivity) iter.next() ;
-					
-				}
-				
-				
-				/*for(ConcreteActivity currentActivity : globalCA){
-					if(currentActivity.getId().equals("currentConcreteActivityId")){
-						HashMap<String,Object> hm = new HashMap<String,Object>();
-						hm.put("concreteId",concreteRD.getId());
-						hm.put("concreteName",concreteRD.getConcreteName());
-						hm.put("affected", new Boolean(true));
-						hm.put("reference", currentActivity.getConcreteName());
-						this.concreteRolesDescriptorsList.add(hm);
-					}
-				}*/
+		this.concreteRolesDescriptorsList.clear();
+			List<ConcreteRoleDescriptor> globalCRD = this.concreteRoleAffectationService.getAllConcreteRolesDescriptorsForActivity(this.nodeId,(String)this.webSessionService.getAttribute(WebSessionService.PROJECT_ID));
+			this.logger.debug("nodeId : " + nodeId);
+			for(Iterator iter = globalCRD.iterator(); iter.hasNext();){
+				ConcreteRoleDescriptor element = (ConcreteRoleDescriptor) iter.next() ;
+				HashMap<String,Object> hm = new HashMap<String,Object>();
+				hm.put("concreteId",element.getId());
+				hm.put("concreteName",element.getConcreteName());
+				hm.put("affected", this.getParticipantAffectationForConcreteRoleDescriptor((String)this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID),element.getId()));
+				this.concreteRolesDescriptorsList.add(hm);
 			}
-			
-		}
 		return this.concreteRolesDescriptorsList ;
+	}
+	
+	public String saveConcreteRoleAffectation() {
+		for(HashMap<String,Object> concreteRoleInfo : this.concreteRolesDescriptorsList){
+			this.concreteRoleAffectationService.saveParticipantConcreteRoles(concreteRoleInfo,(String)this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID));
+		}
+		ResourceBundle bundle = ResourceBundle.getBundle(
+				"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
+		FacesMessage message = new FacesMessage() ;
+		message.setSummary(bundle.getString("component.project.projectroles.validationMessage")) ;
+		message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+		FacesContext facesContext = FacesContext.getCurrentInstance() ;
+		facesContext.addMessage(null, message) ;
+		return "";
+	}
+
+	
+	/**
+	 * TODO Method description
+	 *
+	 * @param _wilosUserId
+	 * @param _concreteId
+	 * @return
+	 */
+	
+	private Boolean getParticipantAffectationForConcreteRoleDescriptor(String _wilosUserId, String _concreteId) {
+		return this.concreteRoleAffectationService.getParticipantAffectationForConcreteRoleDescriptor(_wilosUserId,_concreteId);
 	}
 
 	/**
@@ -275,64 +191,41 @@ public class ConcreteRoleAffectationBean {
 	public void setConcreteRolesDescriptorsList(List<HashMap<String, Object>> _concreteRolesDescriptorsList) {
 		this.concreteRolesDescriptorsList = _concreteRolesDescriptorsList ;
 	}
-	
-//
-//	/**
-//	 * Getter of rolesParticipant.
-//	 * 
-//	 * @return the rolesParticipant.
-//	 */
-//	public HashMap<String, Boolean> getRolesParticipant() {
-//		ConcreteRoleDescriptor rd = null;
-//		/*HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest() ;
-//		HttpSession sess = req.getSession() ;
-//		WilosUser user = (WilosUser) sess.getAttribute("wilosUser") ;
-//		String user_login = user.getLogin();*/
-//		
-//		/*HashMap<ConcreteRoleDescriptor, Boolean> hashTemp = this.roleService
-//				.getRolesForAParticipant(user_login);*/
-//		/*for (Iterator iter = hashTemp.keySet().iterator(); iter.hasNext();) {
-//			rd = (ConcreteRoleDescriptor) iter.next();
-//			if(!this.rolesParticipant.containsKey(rd.getName()))
-//				this.rolesParticipant.put(rd.getName(), hashTemp.get(rd));
-//		}*/
-//		return this.rolesParticipant;
-//	}
-//
-//	/**
-//	 * Setter of rolesParticipant.
-//	 * 
-//	 * @param _rolesParticipant
-//	 *            The rolesParticipant to set.
-//	 */
-//	public void setRolesParticipant(HashMap<String, Boolean> _rolesParticipant) {
-//		this.rolesParticipant = _rolesParticipant;
-//	}
-//
-//	/**
-//	 * Getter of keysRolesParticipant.
-//	 * 
-//	 * @return the keysRolesParticipant.
-//	 */
-//	//TODO Methode getKeysRolesParticipant a TESTER !!!
-//	public List<String> getKeysRolesParticipant() {
-//		HashSet<String> os = new HashSet<String>((Set<String>) this
-//				.getRolesParticipant().keySet());
-//		for (Iterator iter = os.iterator(); iter.hasNext();) {
-//			String roleName = (String) iter.next();
-//			if(!this.keysRolesParticipant.contains(roleName))
-//				this.keysRolesParticipant.add(roleName);
-//		}
-//		return this.keysRolesParticipant;
-//	}
-//
-//	/**
-//	 * Setter of keysRolesParticipant.
-//	 * 
-//	 * @param _keysRolesParticipant
-//	 *            The keysRolesParticipant to set.
-//	 */
-//	public void setKeysRolesParticipant(List<String> _keysRolesParticipant) {
-//		this.keysRolesParticipant = _keysRolesParticipant;
-//	}
+
+	/**
+	 * Getter of nodeId.
+	 *
+	 * @return the nodeId.
+	 */
+	public String getNodeId() {
+		return this.nodeId ;
+	}
+
+	/**
+	 * Setter of nodeId.
+	 *
+	 * @param _nodeId The nodeId to set.
+	 */
+	public void setNodeId(String _nodeId) {
+		this.oldNodeId = this.nodeId;
+		this.nodeId = _nodeId ;
+	}
+
+	/**
+	 * Getter of oldNodeId.
+	 *
+	 * @return the oldNodeId.
+	 */
+	public String getOldNodeId() {
+		return this.oldNodeId ;
+	}
+
+	/**
+	 * Setter of oldNodeId.
+	 *
+	 * @param _oldNodeId The oldNodeId to set.
+	 */
+	public void setOldNodeId(String _oldNodeId) {
+		this.oldNodeId = _oldNodeId ;
+	}
 }
