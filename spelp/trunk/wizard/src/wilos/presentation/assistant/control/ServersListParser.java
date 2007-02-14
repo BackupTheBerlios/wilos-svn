@@ -27,7 +27,7 @@ import wilos.presentation.assistant.model.WizardServer;
  */
 public class ServersListParser {
 	
-	private static final String fic = "src/wilos/presentation/assistant/ressources/servers.xml";	//default file where the servers are stored
+	private static final String fic = "servers.xml";	//default file where the servers are stored
 	private File XML_File;
 	private ArrayList<WizardServer> serversList = null;
 	private static final String xpath_server ="//Server";
