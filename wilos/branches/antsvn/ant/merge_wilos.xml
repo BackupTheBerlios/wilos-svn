@@ -23,8 +23,8 @@
 	<!-- All merge operation -->
 	<target name="update_and_merge" depends="update_sources,update_branches,merge_all">
 	</target>
-	
-	<target name="merge_all" depends="merge_server,merge_web,merge_conf,merge_lib">
+
+	<target name="merge_all" depends="merge_server,merge_web,merge_conf,merge_bundle,merge_lib">
 	</target>
 
 
@@ -75,6 +75,20 @@
 		</copy>
 		<copyfile dest="${sources.wilos}/src/applicationContext.xml" 
 			src="${sources.branches}/conf/applicationContext.xml"/>
+	</target>
+
+	<!-- merge bundle file -->
+	<target name="merge_bundle">
+		<delete>
+			<fileset dir="${sources.wilos}/src/wilos/resources">
+				<include name="*" />
+			</fileset>
+		</delete>
+		<copy todir="${sources.wilos}/src/wilos/resources">
+			<fileset dir="${sources.branches}/bundles">
+				<include name="*" />
+			</fileset>
+		</copy>
 	</target>
 
 	<!-- merge librairies -->
