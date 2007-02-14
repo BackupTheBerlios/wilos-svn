@@ -117,7 +117,7 @@
 					true
 				</prop>
 				<prop key="hibernate.cache.provider_class">
-					org.hibernate.cache.HashtableCacheProvider
+					org.hibernate.cache.EhCacheProvider
 				</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>
@@ -474,8 +474,6 @@
 		class="wilos.business.services.misc.concretebreakdownelement.ConcreteBreakdownElementService">
 		<property name="concreteBreakdownElementDao" ref="ConcreteBreakdownElementDao" />
 	</bean>
-
-
 	
 	<!-- Service de test -->
 	<bean id="InitAppliService"
