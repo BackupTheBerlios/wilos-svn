@@ -18,7 +18,7 @@
 					       				 <ice:outputText value="#{concreteRD.concreteName}"/>
 					    			</f:facet>
 					    			<ice:panelGroup>
-				        				<ice:selectBooleanCheckbox partialSubmit="false" value="#{concreteRD.affected}"/>
+			        				<ice:selectBooleanCheckbox partialSubmit="false" value="#{concreteRD.affected}" disabled="#{concreteRD.not_allowed}"/>
 				        			</ice:panelGroup>
 								</ice:columns>
 							</ice:dataTable>
