@@ -117,7 +117,7 @@
 					true
 				</prop>
 				<prop key="hibernate.cache.provider_class">
-					org.hibernate.cache.EhCacheProvider
+					org.hibernate.cache.HashtableCacheProvider
 				</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>
