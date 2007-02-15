@@ -12,6 +12,7 @@ import java.util.Vector;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.ScrollPaneLayout;
+import javax.swing.SwingUtilities;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -73,16 +74,15 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 			
 			public void mousePressed(MouseEvent arg0) {
 				// selection with right button
-				if (arg0.getButton() == MouseEvent.BUTTON3){
+				if (SwingUtilities.isRightMouseButton(arg0)){
 					TreePanel.this.tree.setSelectionRow(TreePanel.this.tree.getRowForLocation(arg0.getX(), arg0.getY()));
 				}
 			}
 
 			public void mouseReleased(MouseEvent arg0) {
-				if (arg0.getButton() == MouseEvent.BUTTON3){
+				if (SwingUtilities.isRightMouseButton(arg0)){
 					// displaying contextual menu
 					TreePath path = TreePanel.this.tree.getPathForLocation(arg0.getX(), arg0.getY()); 
-					
 					if (path != null) { 
 							if (path.getLastPathComponent() == TreePanel.this.tree.getLastSelectedPathComponent()){
 								WizardControler.getInstance().showContextualMenu(arg0);

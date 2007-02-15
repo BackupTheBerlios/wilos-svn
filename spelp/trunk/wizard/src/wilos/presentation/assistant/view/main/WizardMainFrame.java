@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -75,19 +77,31 @@ public class WizardMainFrame extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.moveHTML();
 		this.addComponentListener(new ComponentListener(){
-	   		public void componentHidden(ComponentEvent e) {
-			// TODO Auto-generated method stub	
-			}
+	   		public void componentHidden(ComponentEvent e) {}
 			public void componentMoved(ComponentEvent e) {
 				moveHTML();
 			}
 			public void componentResized(ComponentEvent e) {
 				moveHTML() ;		
 			}
-			public void componentShown(ComponentEvent e) {
-				// TODO Auto-generated method stub	
-			}
+			public void componentShown(ComponentEvent e) {}
 		 });
+		this.addWindowListener(new WindowListener(){
+
+			public void windowActivated(WindowEvent arg0) {}
+			public void windowClosed(WindowEvent arg0) {}
+			public void windowClosing(WindowEvent arg0) {}
+			public void windowDeactivated(WindowEvent arg0) {
+			}
+			public void windowDeiconified(WindowEvent arg0) {
+				WizardControler.getInstance().deiconifyAllHTMLViewers();
+			}
+			public void windowIconified(WindowEvent arg0) {
+				WizardControler.getInstance().iconifyAllHTMLViewers();
+			}
+			public void windowOpened(WindowEvent arg0) {}
+			
+		});
 	}
 	
 	

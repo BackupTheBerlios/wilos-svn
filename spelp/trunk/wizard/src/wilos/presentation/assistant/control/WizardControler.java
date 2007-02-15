@@ -5,13 +5,18 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.jdesktop.swingx.JXTree;
+
+import sun.awt.WindowClosingListener;
 
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.task.Step;
@@ -103,6 +108,31 @@ public class WizardControler {
 		return al ;
 	}
 	
+	/**
+	 * Icon
+	 * @param h
+	 */
+	public void closeHTMLViewer (HTMLViewer h){			
+		listHTML.remove(h);
+	}
+	
+	/**
+	 * iconifyAllHTMLViewers hide all the htmlviewers
+	 */
+	public void iconifyAllHTMLViewers(){
+		for (HTMLViewer h : listHTML){
+			h.setExtendedState(JFrame.ICONIFIED);
+		}
+	}
+	
+	/**
+	 * deiconifyAllHTMLViewers show all the htmlviewers
+	 */
+	public void deiconifyAllHTMLViewers(){
+		for (HTMLViewer h : listHTML){
+			h.setExtendedState(JFrame.NORMAL);
+		}
+	}
 	/**
 	 * showContextualMenu display the contextual menu with correct buttons
 	 * @param arg0 the mouse event to delegate (needed for the position of the mouse)
