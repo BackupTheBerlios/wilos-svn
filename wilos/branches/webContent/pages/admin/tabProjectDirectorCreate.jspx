@@ -1,4 +1,4 @@
-<ice:panelTab id="panelTab_projectDirector" label="Project Director" imageDir="images">
+<ice:panelTab id="panelTab_projectDirector" label="#{msgs['component.projectdirectorcreate.title']}" imageDir="images">
 				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
 						<ice:panelGroup id="projectDirectorCreateGroup" styleClass="contentIncludePanelGroup">
 							<h2><ice:outputText value="#{msgs['component.projectdirectorcreate.title']}"/></h2>

@@ -1,12 +1,12 @@
 <ice:form id="participant_form">
 	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
 		<ice:panelTabSet id="panelTabSet_participant" styleClass="componentPanelTabSetLayout">
-			<ice:panelTab label="Import Process File">
+			<ice:panelTab label="#{msgs['welcomeProcessManager.mainTable.title']}">
 				<ice:panelGrid styleClass="componentLayoutRootTable" columns="1">
 					<ice:panelGroup styleClass="formBorderHighlight"
 						style="text-align:left">
 						<br />
-						<ice:outputText value="Select a ZIP or XML file:" />
+						<ice:outputText value="#{msgs['welcomeProcessManager.mainTable.textFieldTitle']}" />
 						<br />
 						<ice:inputFile style="overflow:hidden; border:none; width:400px; height:70px;"
 							progressListener="#{XmlFileImportBean.progressListener}"
@@ -14,11 +14,11 @@
 							uniqueFolder="false" file="#{XmlFileImportBean.file}"
 							immediate="true" />
 						<ice:outputProgress id="pro" value="#{XmlFileImportBean.percent}" />
-						<ice:outputText value="File Name: #{XmlFileImportBean.fileName}" />
+						<ice:outputText value="#{msgs['welcomeProcessManager.mainTable.labelFileName']} #{XmlFileImportBean.fileName}" />
 						<br />
-						<ice:outputText value="Content Type: #{XmlFileImportBean.contentType}" />
+						<ice:outputText value="#{msgs['welcomeProcessManager.mainTable.labelContentType']} #{XmlFileImportBean.contentType}" />
 						<br />
-						<ice:outputText value="Upload status: #{XmlFileImportBean.uploadStatus}" />
+						<ice:outputText value="#{msgs['welcomeProcessManager.mainTable.labelStatutUpload']} #{XmlFileImportBean.uploadStatus}" />
 						<ice:messages />
 					</ice:panelGroup>
 				</ice:panelGrid>
