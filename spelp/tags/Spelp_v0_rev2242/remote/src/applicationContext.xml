@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
+	default-lazy-init="true">
+
+	<!-- DataSource Definition -->
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName">
+			<value>org.gjt.mm.mysql.Driver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:mysql://127.0.0.1/wilos</value>
+		</property>
+		<property name="username">
+			<value>root</value>
+		</property>
+		<property name="password">
+			<value></value>
+		</property>
+	</bean>
+
+	<!-- Hibernate SessionFactory Definition -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+
+		<property name="mappingResources">
+			<list>
+				<value>
+					wilos/model/misc/wilosuser/Participant.hbm.xml
+				</value>
+				<value>
+					wilos/model/misc/wilosuser/WilosUser.hbm.xml
+				</value>
+				<value>
+					wilos/model/misc/wilosuser/Administrator.hbm.xml
+				</value>
+				<value>
+					wilos/model/misc/wilosuser/ProcessManager.hbm.xml
+				</value>
+				<value>
+					wilos/model/misc/wilosuser/ProjectDirector.hbm.xml
+				</value>
+				<value>wilos/model/misc/project/Project.hbm.xml</value>
+				<value>
+					wilos/model/misc/concretebreakdownelement/ConcreteBreakdownElement.hbm.xml
+				</value>
+				<value>
+					wilos/model/misc/concreteworkbreakdownelement/ConcreteWorkBreakdownElement.hbm.xml
+				</value>
+				<value>
+					wilos/model/misc/concreteactivity/ConcreteActivity.hbm.xml
+				</value>
+				<value>
+					wilos/model/misc/concretephase/ConcretePhase.hbm.xml
+				</value>
+				<value>
+					wilos/model/misc/concreteiteration/ConcreteIteration.hbm.xml
+				</value>
+				<value>
+					wilos/model/misc/concretetask/ConcreteTaskDescriptor.hbm.xml
+				</value>
+				<value>
+					wilos/model/misc/concreterole/ConcreteRoleDescriptor.hbm.xml
+				</value>
+				<value>wilos/model/spem2/element/Element.hbm.xml</value>
+				<value>
+					wilos/model/spem2/breakdownelement/BreakdownElement.hbm.xml
+				</value>
+				<value>
+					wilos/model/spem2/workbreakdownelement/WorkBreakdownElement.hbm.xml
+				</value>
+				<value>
+					wilos/model/spem2/activity/Activity.hbm.xml
+				</value>
+				<value>wilos/model/spem2/process/Process.hbm.xml</value>
+				<value>
+					wilos/model/spem2/iteration/Iteration.hbm.xml
+				</value>
+				<value>wilos/model/spem2/phase/Phase.hbm.xml</value>
+				<value>
+					wilos/model/spem2/task/TaskDescriptor.hbm.xml
+				</value>
+				<value>
+					wilos/model/spem2/task/TaskDefinition.hbm.xml
+				</value>
+				<value>wilos/model/spem2/task/Step.hbm.xml</value>
+				<value>
+					wilos/model/spem2/role/RoleDescriptor.hbm.xml
+				</value>
+				<value>
+					wilos/model/spem2/role/RoleDefinition.hbm.xml
+				</value>
+				<value>wilos/model/spem2/guide/Guidance.hbm.xml</value>
+			</list>
+		</property>
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLInnoDBDialect
+				</prop>
+				<!-- Mise a false pour eviter les affichages des requetes SQL -->
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.cglib.use_reflection_optimizer">
+					true
+				</prop>
+				<prop key="hibernate.cache.provider_class">
+					org.hibernate.cache.EhCacheProvider
+				</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+
+	</bean>
+
+	<!-- Spring Data Access Exception Translator Defintion -->
+	<bean id="jdbcExceptionTranslator"
+		class="org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+
+	<!-- Hibernate Template Defintion  -->
+	<bean id="hibernateTemplate"
+		class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<property name="jdbcExceptionTranslator">
+			<ref bean="jdbcExceptionTranslator" />
+		</property>
+	</bean>
+
+	<!-- Hibernate Transaction Manager Defintion  -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<!-- enable the configuration of transactional behavior based on annotations -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- ========================= Start of BEAN DEFINITIONS ========================= -->
+
+	<!-- ========================= DAO Layer ========================= -->
+
+	<!-- =============================================================== -->
+	<!-- ========================= SPELP DAO =========================== -->
+	<!-- =============================================================== -->
+	<bean id="GuidanceDao"
+		class="wilos.hibernate.spem2.guide.GuidanceDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+
+	<!-- =============================================================== -->
+	<!-- ========================= PSI2 DAO ============================ -->
+	<!-- =============================================================== -->
+	<bean id="ParticipantDao"
+		class="wilos.hibernate.misc.wilosuser.ParticipantDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="WilosUserDao"
+		class="wilos.hibernate.misc.wilosuser.WilosUserDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="AdministratorDao"
+		class="wilos.hibernate.misc.wilosuser.AdministratorDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="ProcessManagerDao"
+		class="wilos.hibernate.misc.wilosuser.ProcessManagerDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="ProjectDirectorDao"
+		class="wilos.hibernate.misc.wilosuser.ProjectDirectorDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="ProjectDao"
+		class="wilos.hibernate.misc.project.ProjectDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+
+	<!-- =============================================================== -->
+	<!-- ========================= WOOPS2 DAO ========================== -->
+	<!-- =============================================================== -->
+	<bean id="ProcessDao"
+		class="wilos.hibernate.spem2.process.ProcessDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="IterationDao"
+		class="wilos.hibernate.spem2.iteration.IterationDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="PhaseDao" class="wilos.hibernate.spem2.phase.PhaseDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="ActivityDao"
+		class="wilos.hibernate.spem2.activity.ActivityDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="ElementDao"
+		class="wilos.hibernate.spem2.element.ElementDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="BreakdownElementDao"
+		class="wilos.hibernate.spem2.breakdownelement.BreakdownElementDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="WorkBreakdownElementDao"
+		class="wilos.hibernate.spem2.workbreakdownelement.WorkBreakdownElementDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="TaskDefinitionDao"
+		class="wilos.hibernate.spem2.task.TaskDefinitionDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="TaskDescriptorDao"
+		class="wilos.hibernate.spem2.task.TaskDescriptorDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="RoleDefinitionDao"
+		class="wilos.hibernate.spem2.role.RoleDefinitionDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="RoleDescriptorDao"
+		class="wilos.hibernate.spem2.role.RoleDescriptorDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="StepDao" class="wilos.hibernate.spem2.task.StepDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="ConcreteTaskDescriptorDao"
+		class="wilos.hibernate.misc.concretetask.ConcreteTaskDescriptorDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="ConcreteRoleDescriptorDao"
+		class="wilos.hibernate.misc.concreterole.ConcreteRoleDescriptorDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="ConcreteBreakdownElementDao"
+		class="wilos.hibernate.misc.concretebreakdownelement.ConcreteBreakdownElementDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="ConcreteWorkBreakdownElementDao"
+		class="wilos.hibernate.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElementDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="ConcreteActivityDao"
+		class="wilos.hibernate.misc.concreteactivity.ConcreteActivityDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="ConcretePhaseDao"
+		class="wilos.hibernate.misc.concretephase.ConcretePhaseDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="ConcreteIterationDao"
+		class="wilos.hibernate.misc.concreteiteration.ConcreteIterationDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<!-- ========================= Business Layer ========================= -->
+
+	<!-- =============================================================== -->
+	<!-- ======================= SPELP Service ========================= -->
+	<!-- =============================================================== -->
+	<bean id="AssistantService"
+		class="wilos.business.services.assistant.AssistantService">
+		<property name="participantDao" ref="ParticipantDao" />
+		<property name="concreteTaskDescriptorService"
+			ref="ConcreteTaskDescriptorService" />
+	</bean>
+
+	<bean id="GuidanceService"
+		class="wilos.business.services.guide.GuidanceService">
+		<property name="guidanceDao" ref="GuidanceDao" />
+	</bean>
+
+
+	<!-- =============================================================== -->
+	<!-- ======================= PSI2 Service ========================= -->
+	<!-- =============================================================== -->
+	<bean id="ParticipantService"
+		class="wilos.business.services.misc.wilosuser.ParticipantService">
+		<property name="participantDao" ref="ParticipantDao" />
+		<property name="projectService" ref="ProjectService" />
+		<property name="concreteRoleDescriptorService" ref="ConcreteRoleDescriptorService" />
+		
+	</bean>
+
+	<bean id="ProcessManagerService"
+		class="wilos.business.services.misc.wilosuser.ProcessManagerService">
+		<property name="processManagerDao" ref="ProcessManagerDao" />
+	</bean>
+
+	<bean id="ProjectDirectorService"
+		class="wilos.business.services.misc.wilosuser.ProjectDirectorService">
+		<property name="projectDirectorDao" ref="ProjectDirectorDao" />
+	</bean>
+
+	<bean id="LoginService"
+		class="wilos.business.services.misc.wilosuser.LoginService">
+		<property name="wilosUserDao" ref="WilosUserDao" />
+	</bean>
+
+	<bean id="ProjectService"
+		class="wilos.business.services.misc.project.ProjectService">
+		<property name="projectDao" ref="ProjectDao" />
+		<property name="participantDao" ref="ParticipantDao" />
+		<property name="processService" ref="ProcessService" />
+	</bean>
+
+	<!-- =============================================================== -->
+	<!-- ====================== WOOPS2 Service ========================= -->
+	<!-- =============================================================== -->
+
+	<bean id="WebSessionService"
+		class="wilos.business.services.presentation.web.WebSessionService">
+	</bean>
+
+	<bean id="ProcessService"
+		class="wilos.business.services.spem2.process.ProcessService">
+		<property name="processDao" ref="ProcessDao" />
+		<property name="activityDao" ref="ActivityDao" />
+		<property name="activityService" ref="ActivityService" />
+		<property name="breakdownElementDao" ref="BreakdownElementDao" />
+		<property name="breakdownElementService"
+			ref="BreakdownElementService" />
+		<property name="workBreakdownElementDao"
+			ref="WorkBreakdownElementDao" />
+		<property name="phaseDao" ref="PhaseDao" />
+		<property name="phaseService" ref="PhaseService" />
+		<property name="iterationDao" ref="IterationDao" />
+		<property name="iterationService" ref="IterationService" />
+		<property name="roleDefinitionDao" ref="RoleDefinitionDao" />
+		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
+		<property name="roleDescriptorService"
+			ref="RoleDescriptorService" />
+		<property name="taskDefinitionDao" ref="TaskDefinitionDao" />
+		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
+		<property name="taskDescriptorService"
+			ref="TaskDescriptorService" />
+		<property name="elementDao" ref="ElementDao" />
+		<property name="projectDao" ref="ProjectDao" />
+		<property name="stepDao" ref="StepDao" />
+		<property name="guidanceDao" ref="GuidanceDao" />
+		<property name="concreteBreakdownElementService"
+			ref="ConcreteBreakdownElementService" />
+	</bean>
+
+	<bean id="BreakdownElementService"
+		class="wilos.business.services.spem2.breakdownelement.BreakdownElementService">
+		<property name="concreteBreakdownElementDao"
+			ref="ConcreteBreakdownElementDao" />
+		<property name="activityService" ref="ActivityService" />
+	</bean>
+
+	<bean id="ActivityService"
+		class="wilos.business.services.spem2.activity.ActivityService">
+		<property name="activityDao" ref="ActivityDao" />
+		<property name="concreteActivityDao" ref="ConcreteActivityDao" />
+		<!-- <property name="phaseService" ref="PhaseService" />
+		<property name="iterationService" ref="IterationService" />-->
+		<property name="roleDescriptorService" ref="RoleDescriptorService" />
+		<property name="taskDescriptorService" ref="TaskDescriptorService" />
+	</bean>
+
+	<bean id="RoleDescriptorService"
+		class="wilos.business.services.spem2.role.RoleDescriptorService">
+		<property name="concreteRoleDescriptorDao"
+			ref="ConcreteRoleDescriptorDao" />
+		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
+	</bean>
+
+	<bean id="TaskDescriptorService"
+		class="wilos.business.services.spem2.task.TaskDescriptorService">
+		<property name="concreteTaskDescriptorDao"
+			ref="ConcreteTaskDescriptorDao" />
+		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
+	</bean>
+
+	<bean id="PhaseService"
+		class="wilos.business.services.spem2.phase.PhaseService">
+		<property name="concretePhaseDao" ref="ConcretePhaseDao" />
+		<property name="activityService" ref="ActivityService" />
+		<property name="iterationService" ref="IterationService" />
+		<property name="roleDescriptorService" ref="RoleDescriptorService" />
+		<property name="taskDescriptorService" ref="TaskDescriptorService" />
+	</bean>
+
+	<bean id="IterationService"
+		class="wilos.business.services.spem2.iteration.IterationService">
+		<property name="concreteIterationDao" ref="ConcreteIterationDao" />
+		<property name="activityService" ref="ActivityService" />
+		<!-- <property name="phaseService" ref="PhaseService" />-->
+		<property name="roleDescriptorService" ref="RoleDescriptorService" />
+		<property name="taskDescriptorService" ref="TaskDescriptorService" />
+	</bean>
+
+	<bean id="ConcreteTaskDescriptorService"
+		class="wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService">
+		<property name="concreteTaskDescriptorDao"
+			ref="ConcreteTaskDescriptorDao" />
+		<property name="taskDescriptorService"
+			ref="TaskDescriptorService" />
+		<property name="roleDescriptorService"
+			ref="RoleDescriptorService" />
+		<property name="concreteRoleDescriptorService"
+			ref="ConcreteRoleDescriptorService" />
+	</bean>
+
+	<bean id="ConcreteRoleDescriptorService"
+		class="wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService">
+		<property name="concreteRoleDescriptorDao"
+			ref="ConcreteRoleDescriptorDao" />
+	</bean>
+
+	<bean id="ConcreteActivityService"
+		class="wilos.business.services.misc.concreteactivity.ConcreteActivityService">
+		<property name="concreteActivityDao" ref="ConcreteActivityDao" />
+	</bean>
+
+	<bean id="ConcreteIterationService"
+		class="wilos.business.services.misc.concreteiteration.ConcreteIterationService">
+		<property name="concreteIterationDao"
+			ref="ConcreteIterationDao" />
+	</bean>
+
+	<bean id="ConcretePhaseService"
+		class="wilos.business.services.misc.concretephase.ConcretePhaseService">
+		<property name="concretePhaseDao" ref="ConcretePhaseDao" />
+	</bean>
+
+	<bean id="ConcreteBreakdownElementService"
+		class="wilos.business.services.misc.concretebreakdownelement.ConcreteBreakdownElementService">
+		<property name="concreteBreakdownElementDao" ref="ConcreteBreakdownElementDao" />
+	</bean>
+
+</beans>

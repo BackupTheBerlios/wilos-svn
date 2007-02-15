@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping>
+
+	<joined-subclass
+		name="wilos.model.spem2.guide.Guidance"
+		extends="wilos.model.spem2.element.Element"
+		table="guidance" lazy="true">
+		<key column="guidance_id"></key>
+		
+		<property name="type" type="java.lang.String" column="type"
+			length="256" />
+			
+		<property name="presentationName" type="java.lang.String" column="presentationname"
+			length="256" />
+
+		<!-- Associations -->
+		
+		<set name="taskDefinitions" table="guidancetaskdefinition" lazy="true">
+			<key column="guidance_id"></key>
+			<many-to-many class="wilos.model.spem2.task.TaskDefinition"
+				column="taskdefinition_id">
+			</many-to-many>
+		</set>
+		
+		<set name="roleDefinitions" table="guidanceroledefinition" lazy="true">
+			<key column="guidance_id"></key>
+			<many-to-many class="wilos.model.spem2.role.RoleDefinition"
+				column="roledefinition_id">
+			</many-to-many>
+		</set>
+		
+		<set name="activities" table="guidanceactivity" lazy="true">
+			<key column="guidance_id"></key>
+			<many-to-many class="wilos.model.spem2.activity.Activity"
+				column="activity_id">
+			</many-to-many>
+		</set>
+
+		
+		
+	</joined-subclass>
+</hibernate-mapping>
