@@ -144,7 +144,6 @@ public class ConcreteRoleAffectationBean {
 	public List<HashMap<String, Object>> getConcreteRolesDescriptorsList() {
 		this.concreteRolesDescriptorsList.clear();
 			List<ConcreteRoleDescriptor> globalCRD = this.concreteRoleAffectationService.getAllConcreteRolesDescriptorsForActivity(this.nodeId,(String)this.webSessionService.getAttribute(WebSessionService.PROJECT_ID));
-			this.logger.debug("nodeId : " + nodeId);
 			for(Iterator iter = globalCRD.iterator(); iter.hasNext();){
 				ConcreteRoleDescriptor element = (ConcreteRoleDescriptor) iter.next() ;
 				HashMap<String,Object> hm = new HashMap<String,Object>();

@@ -1,4 +1,4 @@
-<ice:panelTab id="panelTab_process_managers_list" label="Liste des process managers" imageDir="images">
+<ice:panelTab id="panelTab_process_managers_list" label="#{msgs['component.processManagerList.title']}" imageDir="images">
 				
 				<ice:panelStack id="processManagerList" selectedPanel="#{ProcessManagerBean.processManagerView}">
 				
@@ -7,19 +7,19 @@
 					<ice:dataTable value="#{ProcessManagerBean.processManagerList}" columnWidths="100px,100px,100px" border="0" var="processManager">
 						<ice:column>
 							<f:facet name="header">
-						    	<ice:outputText value="Login"/>
+						    	<ice:outputText value="#{msgs['component.processManagerList.login']}"/>
 						    </f:facet>
 						    <ice:outputText value="#{processManager.login}"/>
 						</ice:column>
 						<ice:column>
 							<f:facet name="header">
-						    	<ice:outputText value="Nom"/>
+						    	<ice:outputText value="#{msgs['component.processManagerList.lastname']}"/>
 						    </f:facet>
 						    <ice:outputText value="#{processManager.name}"/>
 						</ice:column>
 						<ice:column>
 							<f:facet name="header">
-						    	<ice:outputText value="Prenom"/>
+						    	<ice:outputText value="#{msgs['component.processManagerList.firstname']}"/>
 						    </f:facet>
 						    <ice:outputText value="#{processManager.firstname}"/>
 						</ice:column>
@@ -28,7 +28,7 @@
 				
 				
 				<ice:panelGroup id="processManagerView_null">
-							<h4><ice:outputText value="Admin : Pas de processManagers"/></h4>
+							<h4><ice:outputText value="#{msgs['component.processManagerList.norecord']}"/></h4>
 						</ice:panelGroup>
 				</ice:panelStack>
 				
