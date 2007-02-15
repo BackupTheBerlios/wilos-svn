@@ -348,6 +348,12 @@
 		<property name="participantDao" ref="ParticipantDao" />
 		<property name="processService" ref="ProcessService" />
 	</bean>
+	
+	<bean id="ConcreteRoleAffectationService"
+		class="wilos.business.services.misc.role.ConcreteRoleAffectationService">
+		<property name="participantDao" ref="ParticipantDao" />
+		<property name="concreteRoleDescriptorService" ref="ConcreteRoleDescriptorService" />
+	</bean>
 
 	<!-- =============================================================== -->
 	<!-- ====================== WOOPS2 Service ========================= -->

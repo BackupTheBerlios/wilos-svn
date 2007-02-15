@@ -56,6 +56,7 @@ public class ConcreteTaskViewerBean {
 		this.concreteTaskDescriptor = this.concreteTaskDescriptorService
 				.affectedConcreteTaskDescriptor(this.concreteTaskDescriptor,
 						participant);
+		
 		this.concreteTaskDescriptorService
 				.affectedState(this.concreteTaskDescriptor);
 		ResourceBundle bundle = ResourceBundle.getBundle(
@@ -67,13 +68,18 @@ public class ConcreteTaskViewerBean {
 		message.setSeverity(FacesMessage.SEVERITY_INFO);
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		facesContext.addMessage(null, message);
+		
 	}
 
 	/**
 	 * @return the visibleAffected
 	 */
 	public boolean getVisibleAffected() {
-		return (this.concreteTaskDescriptor.getConcreteRoleDescriptor() == null);
+		String wilosUserId = (String) this.webSessionService
+		.getAttribute(WebSessionService.WILOS_USER_ID);
+		Participant participant = this.participantService
+		.getParticipant(wilosUserId);
+		return (this.concreteTaskDescriptor.getConcreteRoleDescriptor() == null && this.concreteTaskDescriptor.getTaskDescriptor().getMainRole() != null && this.concreteTaskDescriptorService.affectedvisible(this.concreteTaskDescriptor,participant));
 
 	}
 
@@ -97,6 +103,10 @@ public class ConcreteTaskViewerBean {
 				.suspendConcreteTaskDescriptor(this.concreteTaskDescriptor);
 	}
 
+	/**
+	 * return the value of visible buton start
+	 * @return
+	 */
 	public boolean getVisibleStart() {
 
 		return (!(this.concreteTaskDescriptor.getConcreteRoleDescriptor() == null)
@@ -173,12 +183,13 @@ public class ConcreteTaskViewerBean {
 		this.visibleModifiable = false;
 		if (!this.getVisibleAffected() && !this.getVisibleStart()
 				&& !this.concreteTaskDescriptor.getState().equals("Finished")
-				&& !this.concreteTaskDescriptor.getState().equals("Suspended")) {
-			/*
-			 * String participantId =
-			 * (String)this.getWebSessionService().getAttribute(this.webSessionService.WILOS_USER_ID);
-			 * Participant user =
-			 * this.participantService.getParticipant(participantId);
+				&& !this.concreteTaskDescriptor.getState().equals("Suspended")
+				&& this.concreteTaskDescriptor.getState().equals("Started")) {
+			
+			/*  String participantId =
+			  (String)this.getWebSessionService().getAttribute(this.webSessionService.WILOS_USER_ID);
+			  Participant user =
+			  this.participantService.getParticipant(participantId);
 			 */
 			// TODO PSI2 : verifier si la concretetask est bien affectée au
 			// participant via les roles

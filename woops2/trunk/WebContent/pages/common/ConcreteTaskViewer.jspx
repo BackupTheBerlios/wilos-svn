@@ -1,6 +1,6 @@
 <ice:form>
 	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1">
-		<ice:panelTabSet>
+		<ice:panelTabSet styleClass="componentPanelTabSetLayout">
 			<br />
 			<ice:panelTab label="#{msgs['taskviewer.tabtitle'] }">
 				<br />
@@ -43,24 +43,30 @@
 							<td><ice:commandButton
 								value="#{msgs['taskviewer.affecter']}"
 								actionListener="#{ConcreteTaskViewerBean.affectedActionListener}"
-								visible="#{ConcreteTaskViewerBean.visibleAffected}" /> <ice:commandButton
+								visible="#{ConcreteTaskViewerBean.visibleAffected}" 
+								styleClass="smallbutton"/><ice:commandButton
 								value="#{msgs['taskviewer.start']}"
 								actionListener="#{ConcreteTaskViewerBean.startActionListener}"
-								visible="#{ConcreteTaskViewerBean.visibleStart}" /> 
+								visible="#{ConcreteTaskViewerBean.visibleStart}" 
+								styleClass="smallbutton"/> 
 								<ice:commandButton
 								value="#{msgs['taskviewer.reprendre']}"
 								actionListener="#{ConcreteTaskViewerBean.startActionListener}"
-								visible="#{ConcreteTaskViewerBean.visibleReprendre}" />
+								visible="#{ConcreteTaskViewerBean.visibleReprendre}" 
+								styleClass="smallbutton"/>
 								<ice:commandButton
 								value="#{msgs['concretetaskviewer.saveButton']}"
 								actionListener="#{ConcreteTaskViewerBean.updateActionListener}"
-								visible="#{ConcreteTaskViewerBean.visibleModifiable}" />
+								visible="#{ConcreteTaskViewerBean.visibleModifiable}" 
+								styleClass="smallbutton"/>
 								<ice:commandButton value="#{msgs['concretetaskviewer.stop']}"
 								actionListener="#{ConcreteTaskViewerBean.stopActionListener}"
-								visible="#{ConcreteTaskViewerBean.visibleStop}"/>
+								visible="#{ConcreteTaskViewerBean.visibleStop}"
+								styleClass="smallbutton"/>
 								<ice:commandButton value="#{msgs['concretetaskviewer.suspended']}"
 								actionListener="#{ConcreteTaskViewerBean.suspendedActionListener}"
-								visible="#{ConcreteTaskViewerBean.visibleSuspended}"/>
+								visible="#{ConcreteTaskViewerBean.visibleSuspended}"
+								styleClass="smallbutton"/>
 							</td>
 						</tr>
 					</table>
