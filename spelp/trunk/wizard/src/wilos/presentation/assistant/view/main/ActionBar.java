@@ -95,8 +95,8 @@ public class ActionBar extends JToolBar implements Observer{
 			jCheckBoxShowViewer = new JCheckBox("Informations");
 			jCheckBoxShowViewer.setSize(100, 100);
 			jCheckBoxShowViewer.setSelected(true);
+			jCheckBoxShowViewer.setOpaque(false);
 			jCheckBoxShowViewer.addActionListener(new ActionListener() {
-
 				public void actionPerformed(ActionEvent e) {
 					WizardControler.getInstance().changeHTMLViewerBehavior(jCheckBoxShowViewer.isSelected());
 				}

@@ -78,7 +78,6 @@ public class HTMLViewer extends JFrame {
 	public HTMLViewer(Point p) {
 		super(Bundle.getText("htmlViewer.title"));
 		this.setLayout(new BorderLayout());
-		
 		this.addWindowListener(new WindowListener(){
 			public void windowActivated(WindowEvent arg0) {}
 			public void windowClosed(WindowEvent arg0) {}

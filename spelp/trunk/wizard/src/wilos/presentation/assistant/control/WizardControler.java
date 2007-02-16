@@ -36,7 +36,7 @@ public class WizardControler {
 	private ContextualMenu menuContextuel = null ;
 	private boolean showInfo = true ;
 	private Component src = null ;
-	private ConcreteTaskDescriptor lastCtd;
+	private Object lastCtd;
 	private ArrayList<HTMLViewer> listHTML = new ArrayList<HTMLViewer>() ;
 	
 	private WizardControler() {
@@ -100,9 +100,7 @@ public class WizardControler {
 					if(dmt != null) {
 						WizardStateMachine.getInstance().setFocusedObject(dmt.getUserObject(),newHTMLViewer);		
 					}
-				}
-					
-							
+				}	
 			}
 		};
 		return al ;
@@ -370,7 +368,7 @@ public class WizardControler {
 		return treePanel;
 	}
 
-	public void setLastCtd(ConcreteTaskDescriptor lastCtd) {
-		this.lastCtd = lastCtd;
+	public void setLastCtd(Object o) {
+		this.lastCtd = o;
 	}
 }

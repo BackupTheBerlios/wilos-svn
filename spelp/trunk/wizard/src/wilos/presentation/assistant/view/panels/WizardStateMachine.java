@@ -32,7 +32,7 @@ public class WizardStateMachine extends Observable{
 	
 	private int currentState = 0;
 	
-	private HashMap<String,Integer> stepState = new HashMap<String,Integer> ();
+	private HashMap<Step,Integer> stepState = new HashMap<Step,Integer> ();
 	
 	private static WizardStateMachine wsm = null;
 			
@@ -46,7 +46,7 @@ public class WizardStateMachine extends Observable{
 	 * @param state state of the Step
 	 */
 	public void addStep (Step s, int state) {
-		this.stepState.put(s.getGuid(), new Integer(state));
+		this.stepState.put(s, new Integer(state));
 	}
 	
 	
@@ -56,9 +56,9 @@ public class WizardStateMachine extends Observable{
 	 * @param state new state of the step
 	 */
 	public void changeStepState (Step s, int state) {
-		if (this.stepState.containsKey(s.getGuid()))
+		if (this.stepState.containsKey(s))
 		{
-			this.stepState.put(s.getGuid(), new Integer(state));
+			this.stepState.put(s, new Integer(state));
 			this.currentState = state ;
 			this.setChanged();
 			this.notifyObservers();
@@ -72,7 +72,7 @@ public class WizardStateMachine extends Observable{
 	 */
 	public int getStepState (Step s)
 	{
-		return this.stepState.get(s.getGuid()).intValue();
+		return this.stepState.get(s).intValue();
 	}
 	
 	/**
@@ -113,6 +113,7 @@ public class WizardStateMachine extends Observable{
 		if (h == null){
 			h = WizardControler.getInstance().getDefaultHTML(null);
 		}
+		WizardControler.getInstance().setLastCtd(object);
 		if (object instanceof ConcreteTaskDescriptor) {
 			ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) object;
 			if (ctd.getState() == Constantes.State.STARTED) {
@@ -133,9 +134,6 @@ public class WizardStateMachine extends Observable{
 			else {
 				updateState(STATE_NOTHING);
 			}
-
-			WizardControler.getInstance().setLastCtd(ctd);
-			
 		}
 		else if (object instanceof Step)
 		{
