@@ -1,7 +1,7 @@
 /*
  * ErrorDialog.java
  *
- * Created on 9 décembre 2006, 22:52
+ * Created on 9 decembre 2006, 22:52
  *
  * To change this template, choose Tools | Template Manager
  * and open the template in the editor.
@@ -27,7 +27,7 @@ public class ErrorDialog extends JOptionPane {
     /* initialisation of the Error JDialog */
     private void init(String mess) {
         
-        this.showMessageDialog(this,mess,Bundle.getText("ErrorDialog.title"),JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this,mess,Bundle.getText("ErrorDialog.title"),JOptionPane.ERROR_MESSAGE);
         this.setVisible(true);           
     }
 }

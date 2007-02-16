@@ -1,6 +1,5 @@
 package wilos.presentation.assistant.ressources;
 
-import java.io.File;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;

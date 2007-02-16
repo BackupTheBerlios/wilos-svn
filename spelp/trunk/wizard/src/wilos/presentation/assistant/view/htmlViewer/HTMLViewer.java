@@ -46,7 +46,6 @@ import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
-import wilos.presentation.assistant.view.panels.WizardStateMachine;
 
 public class HTMLViewer extends JFrame {
 	private static HTMLViewer instance = null;

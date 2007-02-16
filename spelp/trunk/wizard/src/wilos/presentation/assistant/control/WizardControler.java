@@ -5,8 +5,6 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -15,8 +13,6 @@ import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.jdesktop.swingx.JXTree;
-
-import sun.awt.WindowClosingListener;
 
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.task.Step;
@@ -237,7 +233,7 @@ public class WizardControler {
 					WizardControler.getInstance().startConcreteTaskDescriptor(selectedTask);
 					if (selectedTask.getTaskDescriptor().getTaskDefinition() != null){
 						for (Step s : selectedTask.getTaskDescriptor().getTaskDefinition().getSteps()){
-							if (WizardStateMachine.getInstance().getStepState(s) == WizardStateMachine.getInstance().STATE_STEP_CREATED){
+							if (WizardStateMachine.getInstance().getStepState(s) == WizardStateMachine.STATE_STEP_CREATED){
 								WizardStateMachine.getInstance().changeStepState(s, WizardStateMachine.STATE_STEP_READY);
 							}
 		
@@ -263,7 +259,7 @@ public class WizardControler {
 						// if the task is suspended then the steps can't be finish so they are put in CREATED state
 						if (selectedTask.getTaskDescriptor().getTaskDefinition() != null){
 							for (Step s : selectedTask.getTaskDescriptor().getTaskDefinition().getSteps()){
-								if (WizardStateMachine.getInstance().getStepState(s) != WizardStateMachine.getInstance().STATE_STEP_FINISHED){
+								if (WizardStateMachine.getInstance().getStepState(s) != WizardStateMachine.STATE_STEP_FINISHED){
 									WizardStateMachine.getInstance().changeStepState(s, WizardStateMachine.STATE_STEP_CREATED);
 								}
 							}
