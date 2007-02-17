@@ -41,12 +41,24 @@
     <listener>
         <listener-class>com.icesoft.faces.util.event.servlet.ContextEventRepeater</listener-class>
     </listener>
+
+    <!-- WebServices listener-->
+    <listener>
+        <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
+    </listener>
     
     <!-- file upload Servlet -->
     <servlet>
          <servlet-name>uploadServlet</servlet-name>
          <servlet-class>com.icesoft.faces.component.inputfile.FileUploadServlet</servlet-class>
          <load-on-startup> 1 </load-on-startup>
+    </servlet>
+	
+    <!-- WebServices Servlet -->
+    <servlet>
+        <servlet-name>WizardServices</servlet-name>
+        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
      
    
@@ -104,6 +116,12 @@
         <servlet-name>Blocking Servlet</servlet-name>
         <url-pattern>/block/*</url-pattern>
   </servlet-mapping>
+
+    <!-- WebServices mapping-->
+    <servlet-mapping>
+        <servlet-name>WizardServices</servlet-name>
+        <url-pattern>/WizardServices</url-pattern>
+    </servlet-mapping>
   
     <session-config>
       <session-timeout>15</session-timeout>
