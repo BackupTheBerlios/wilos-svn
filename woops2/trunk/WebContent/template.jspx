@@ -13,8 +13,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></meta>
         <title><ice:outputText value="" /></title>
 
-        <ice:outputStyle href="css/ice.css" rel="stylesheet" type="text/css" />
-        <ice:outputStyle href="css/wilos.css" rel="stylesheet" type="text/css" />
+        <link href="css/ice.css" rel="stylesheet" type="text/css" />
+        <link href="css/wilos.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
 
