@@ -6,6 +6,7 @@ import java.util.HashMap ;
 import java.util.Iterator ;
 import java.util.List ;
 import java.util.Map ;
+import java.util.ResourceBundle;
 
 import javax.faces.context.FacesContext ;
 import javax.faces.event.ActionEvent ;
@@ -132,7 +133,7 @@ public class ProjectAdvancementBean {
 	 * 
 	 * @param cbe
 	 * @return
-	 */
+	
 	public static double activityAdvancementCalculation(ConcreteBreakdownElement cbe) {
 		double result = 0.0 ;
 		ArrayList<Double> couples = ProjectAdvancementBean.taskAdvancementCalculation(cbe) ;
@@ -142,14 +143,14 @@ public class ProjectAdvancementBean {
 			}
 		}
 		return ( (result / couples.size()) * 100) ;
-	}
+	} */
 
 	/**
 	 * Sub recursive method used for the Concrete breakdown element advancement calculation
 	 * 
 	 * @param ctd
 	 * @return
-	 */
+	
 	private static ArrayList<Double> taskAdvancementCalculation(ConcreteBreakdownElement cbe) {
 		double advancement = 0.0 ;
 		ArrayList<Double> couple = new ArrayList<Double>() ;
@@ -173,6 +174,66 @@ public class ProjectAdvancementBean {
 					advancement = 0.0 ;
 				}
 				couple.add(advancement) ;
+			}
+		}
+		return couple ;
+	} */
+	
+	
+	/**
+	 * Return the advancement in percents of a Concrete breakdown element
+	 * @param cbe
+	 * @return
+	 */
+	public static Double activityAdvancementCalculation(ConcreteBreakdownElement cbe) {
+		Double result = 0.0 ;
+		double remainingTimes = 0.0 ;
+		double accomplishedTimes = 0.0 ;
+		HashMap<String, Double> couple = ProjectAdvancementBean.taskAdvancementCalculation(cbe) ;
+		remainingTimes = couple.get("remainingTime") ;
+		accomplishedTimes = couple.get("accomplishedTime") ;
+		if((remainingTimes + accomplishedTimes) > 0){
+			result = accomplishedTimes / (remainingTimes + accomplishedTimes) ;
+			result = result*100;
+		}
+		else
+		{
+			result = null;	
+		}
+		return result ;
+	}
+
+	/**
+	 * Sub recursive method used for the Concrete breakdown element advancement calculation
+	 * @param ctd
+	 * @return
+	 */
+	private static HashMap<String, Double> taskAdvancementCalculation(ConcreteBreakdownElement cbe)
+	{
+		HashMap<String, Double> coupletmp = new HashMap<String, Double>() ;
+		HashMap<String, Double> couple = new HashMap<String, Double>() ;
+		couple.put("remainingTime", 0.0) ;
+		couple.put("accomplishedTime", 0.0);
+		
+		//if the current element is an activity, parse the sub concrete breakdown elements
+		if(cbe instanceof ConcreteActivity){
+			ConcreteActivity ca = (ConcreteActivity) cbe ;
+			for(Iterator iter = ca.getConcreteBreakdownElements().iterator(); iter.hasNext();){
+				ConcreteBreakdownElement element = (ConcreteBreakdownElement) iter.next() ;
+				coupletmp = ProjectAdvancementBean.taskAdvancementCalculation(element) ;
+				couple.put("remainingTime", couple.get("remainingTime") + coupletmp.get("remainingTime")) ;
+				couple.put("accomplishedTime", couple.get("accomplishedTime") + coupletmp.get("accomplishedTime")) ;
+			}
+		}
+		//else if it's a concrete task get the values
+		else{
+			if(cbe instanceof ConcreteTaskDescriptor){
+				ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) cbe ;
+				if (ctd.getRemainingTime() != 0 && ctd.getAccomplishedTime() != 0)
+				{
+					couple.put("remainingTime", (double) ctd.getRemainingTime()) ;
+					couple.put("accomplishedTime", (double) ctd.getAccomplishedTime()) ;
+				}
 			}
 		}
 		return couple ;
@@ -226,9 +287,10 @@ public class ProjectAdvancementBean {
 	 * 
 	 */
 	private List<HashMap<String, Object>> retrieveHierarchicalItems(ConcreteActivity _concreteActivity) {
-		double currentAdvancedTime = 0.0 ;
+		Double currentAdvancedTime ;
 		String indentationString = "" ;
 		List<HashMap<String, Object>> subConcretesContent = new ArrayList<HashMap<String, Object>>() ;
+		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale()) ;
 
 		for(ConcreteBreakdownElement concreteBreakdownElement : _concreteActivity.getConcreteBreakdownElements()){
 			HashMap<String, Object> hm = new HashMap<String, Object>() ;
@@ -236,15 +298,35 @@ public class ProjectAdvancementBean {
 				if(concreteBreakdownElement instanceof ConcreteTaskDescriptor){
 					hm.put("nodeType", "leaf") ;
 					hm.put("expansionImage", TABLE_LEAF) ;
+					hm.put("concreteState", ((ConcreteTaskDescriptor)concreteBreakdownElement).getState()) ;
+					if(((ConcreteTaskDescriptor)concreteBreakdownElement).getConcreteRoleDescriptor() != null)
+					{
+						hm.put("participant", ((ConcreteTaskDescriptor)concreteBreakdownElement).getConcreteRoleDescriptor().getParticipant().getFirstname()+
+								" "+((ConcreteTaskDescriptor)concreteBreakdownElement).getConcreteRoleDescriptor().getParticipant().getName());
+					}
+					else
+					{
+						hm.put("participant", bundle.getString("component.project.projectadvancement.nobody"));
+					}
 				}
 				else{
 					hm.put("nodeType", "node") ;
 					hm.put("expansionImage", CONTRACT_TABLE_ARROW) ;
+					hm.put("concreteState", "") ;
+					hm.put("participant", "");
 				}
-				currentAdvancedTime = (double) Math.round(ProjectAdvancementBean.activityAdvancementCalculation(concreteBreakdownElement)) ;
-				hm.put("advancementTime", currentAdvancedTime) ;
+				currentAdvancedTime = ProjectAdvancementBean.activityAdvancementCalculation(concreteBreakdownElement) ;
+				if (currentAdvancedTime == null)
+				{
+					hm.put("advancementTime", 0) ;
+				}
+				else
+				{
+					hm.put("advancementTime", Math.round(currentAdvancedTime)) ;
+				}
 				hm.put("id", concreteBreakdownElement.getId()) ;
 				hm.put("concreteName", concreteBreakdownElement.getConcreteName()) ;
+				
 				hm.put("parentId", _concreteActivity.getId()) ;
 				subConcretesContent.add(hm) ;
 				if(needIndentation){
