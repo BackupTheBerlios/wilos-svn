@@ -71,10 +71,10 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 	 */
 	protected void copy(final TaskDescriptor _taskDescriptor) {
 		super.copy(_taskDescriptor) ;
-		this.setAdditionalRoles(_taskDescriptor.getAdditionalRoles()) ;
-		this.setConcreteTaskDescriptors(_taskDescriptor.getConcreteTaskDescriptors());
-		this.setTaskDefinition(_taskDescriptor.getTaskDefinition()) ;
-		this.setMainRole(_taskDescriptor.getMainRole()) ;
+		this.additionalRoles.addAll(_taskDescriptor.getAdditionalRoles()) ;
+		this.concreteTaskDescriptors.addAll(_taskDescriptor.getConcreteTaskDescriptors());
+		this.taskDefinition = _taskDescriptor.getTaskDefinition() ;
+		this.mainRole = _taskDescriptor.getMainRole() ;
 	}
 
 	/*

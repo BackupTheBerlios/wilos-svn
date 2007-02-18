@@ -50,6 +50,7 @@ public class Iteration extends Activity implements Cloneable{
 	 */
 	protected void copy(final Iteration _iteration) {
 		super.copy(_iteration) ;
+		this.concreteIterations.addAll(_iteration.getConcreteIterations());
 	}
 
 	/*

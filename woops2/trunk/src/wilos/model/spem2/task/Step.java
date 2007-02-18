@@ -44,7 +44,7 @@ public class Step extends Element implements Cloneable, Comparable {
 	 */
 	protected void copy(final Step _step) {
 		super.copy(_step) ;
-		this.setTaskDefinition(_step.getTaskDefinition()) ;
+		this.taskDefinition =_step.getTaskDefinition() ;
 	}
 
 	/*

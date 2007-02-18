@@ -83,8 +83,8 @@ public class RoleDefinition extends Element implements Cloneable {
 	 */
 	protected void copy(final RoleDefinition _roleDefinition) {
 		super.copy(_roleDefinition) ;
-		this.setRoleDescriptors(_roleDefinition.getRoleDescriptors()) ;
-		this.setGuidances(_roleDefinition.getGuidances()) ;
+		this.roleDescriptors.addAll(_roleDefinition.getRoleDescriptors()) ;
+		this.guidances.addAll(_roleDefinition.getGuidances()) ;
 	}
 
 	/**

@@ -75,8 +75,8 @@ public class BreakdownElement extends Element implements Cloneable {
 		this.hasMultipleOccurrences = _breakdownElement.hasMultipleOccurrences ;
 		this.isPlanned = _breakdownElement.isPlanned ;
 		this.isOptional = _breakdownElement.isOptional ;
-	    this.setConcreteBreakdownElements(_breakdownElement.getConcreteBreakdownElements());
-		this.setSuperActivities(_breakdownElement.getSuperActivities()) ;
+	    this.concreteBreakdownElements.addAll(_breakdownElement.getConcreteBreakdownElements());
+		this.superActivities.addAll(_breakdownElement.getSuperActivities()) ;
 	}
 
 	/*
@@ -289,7 +289,7 @@ public class BreakdownElement extends Element implements Cloneable {
 	 *            The activities to set.
 	 */
 	@ SuppressWarnings ("unused")
-	private void setSuperActivities(Set<Activity> _superActivities) {
+	public void setSuperActivities(Set<Activity> _superActivities) {
 		this.superActivities = _superActivities ;
 	}
 

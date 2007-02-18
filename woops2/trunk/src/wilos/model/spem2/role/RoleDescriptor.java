@@ -68,10 +68,10 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 */
 	protected void copy(final RoleDescriptor _roleDescriptor) {
 		super.copy(_roleDescriptor);
-		this.setAdditionalTasks(_roleDescriptor.getAdditionalTasks());
-		this.setPrimaryTasks(_roleDescriptor.getPrimaryTasks());
-		this.setRoleDefinition(_roleDescriptor.getRoleDefinition());
-		this.setConcreteRoleDescriptors(_roleDescriptor
+		this.additionalTasks.addAll(_roleDescriptor.getAdditionalTasks());
+		this.primaryTasks.addAll(_roleDescriptor.getPrimaryTasks());
+		this.roleDefinition = _roleDescriptor.getRoleDefinition();
+		this.concreteRoleDescriptors.addAll(_roleDescriptor
 				.getConcreteRoleDescriptors());
 	}
 

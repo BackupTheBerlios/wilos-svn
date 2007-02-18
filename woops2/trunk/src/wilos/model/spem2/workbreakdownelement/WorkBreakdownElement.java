@@ -95,12 +95,12 @@ public class WorkBreakdownElement extends BreakdownElement implements Cloneable 
 	 */
 	protected void copy(final WorkBreakdownElement _workBreakdownElement) {
 		super.copy(_workBreakdownElement);
-		this.setIsEvenDriven(_workBreakdownElement.getIsEvenDriven());
-		this.setIsOngoing(_workBreakdownElement.getIsOngoing());
-		this.setIsRepeatable(_workBreakdownElement.getIsRepeatable());
-		this.setConcreteWorkBreakdownElements(_workBreakdownElement.getConcreteWorkBreakdownElements());
-		this.setPredecessors(_workBreakdownElement.getPredecessors());
-		this.setSuccessors(_workBreakdownElement.getSuccessors());
+		this.isEvenDriven = _workBreakdownElement.getIsEvenDriven();
+		this.isOngoing = _workBreakdownElement.getIsOngoing();
+		this.isRepeatable = _workBreakdownElement.getIsRepeatable();
+		this.concreteWorkBreakdownElements = _workBreakdownElement.getConcreteWorkBreakdownElements();
+		this.predecessors.addAll(_workBreakdownElement.getPredecessors());
+		this.successors.addAll(_workBreakdownElement.getSuccessors());
 		
 	}
 	

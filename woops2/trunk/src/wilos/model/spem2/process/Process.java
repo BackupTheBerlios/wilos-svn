@@ -60,6 +60,8 @@ public class Process extends Activity implements Cloneable {
 	 */
 	protected void copy(final Process _process) {
 		super.copy(_process);
+		this.processManager = _process.getProcessManager();
+		this.projects.addAll(_process.getProjects());
 	}
 
 	/*

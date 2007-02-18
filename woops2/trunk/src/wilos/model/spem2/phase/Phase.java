@@ -50,7 +50,7 @@ public class Phase extends Activity implements Cloneable{
 	 */
 	protected void copy(final Phase _phase) {
 		super.copy(_phase) ;
-		this.setConcretePhases(_phase.getConcretePhases());
+		this.concretePhases.addAll(_phase.getConcretePhases());
 	}
 
 	/*

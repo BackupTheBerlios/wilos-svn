@@ -87,7 +87,9 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 */
 	protected void copy(final Activity _activity) {
 		super.copy(_activity) ;
-		this.setBreakdownElements(_activity.getBreakdownElements()) ;
+		this.breakdownElements.addAll(_activity.getBreakdownElements()) ;
+		this.concreteActivities.addAll(_activity.getConcreteActivities()) ;
+		this.guidances.addAll(_activity.getGuidances()) ;
 	}
 
 	/**
@@ -204,9 +206,9 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 * @param _breakDownElements
 	 *            The breakDownElements to set.
 	 */
-	private void setBreakdownElements(Set<BreakdownElement> _breakDownElements) {
-		this.breakdownElements.addAll(_breakDownElements);
-		//this.breakdownElements = _breakDownElements;
+	public void setBreakdownElements(Set<BreakdownElement> _breakDownElements) {
+		//this.breakdownElements.addAll(_breakDownElements);
+		this.breakdownElements = _breakDownElements;
 	}
 
 	public Set<ConcreteActivity> getConcreteActivities() {
