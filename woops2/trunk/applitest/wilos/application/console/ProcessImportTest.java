@@ -14,8 +14,8 @@ public class ProcessImportTest {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 		
 		ProcessService am = (ProcessService) ctx.getBean("ProcessService");
-		/*Process scrum = am.spelpParsingXML(new File("applitest/wilos/application/console/scrum.xml"));
-		am.saveProcess(scrum);*/
+		Process scrum = am.spelpParsingXML(new File("applitest/wilos/application/console/scrum.xml"));
+		am.saveProcess(scrum);
 		
 		Process openup = am.spelpParsingXML(new File("applitest/wilos/application/console/openUP.xml"));
 		//Process openup = am.spelpParsingXML(new File("applitest/wilos/application/console/openup.zip"));

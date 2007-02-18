@@ -723,7 +723,7 @@ public class ProcessService {
 					if (bde instanceof Activity) {
 						Activity act = (Activity) bde;
 						tmp.add(this.activityService.activityInstanciation(_project, act));
-					}/* else {
+					} else {
 						if (bde instanceof RoleDescriptor) {
 							RoleDescriptor rd = (RoleDescriptor) bde;
 							this.roleDescriptorService.roleDescriptorInstanciation(_project, rd);
@@ -731,7 +731,7 @@ public class ProcessService {
 							TaskDescriptor td = (TaskDescriptor) bde;
 							this.taskDescriptorService.taskDescriptorInstanciation(_project, td);
 						}
-					}*/
+					}
 				}
 			}
 		}
