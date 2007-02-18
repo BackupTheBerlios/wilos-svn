@@ -94,15 +94,15 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 	protected void copy(
 			final ConcreteWorkBreakdownElement _concreteWorkBreakdownElement) {
 		super.copy(_concreteWorkBreakdownElement);
-		this.setWorkBreakdownElement(_concreteWorkBreakdownElement
-				.getWorkBreakdownElement());
-		this.setPlannedFinishingDate(_concreteWorkBreakdownElement
-				.getPlannedFinishingDate());
-		this.setPlannedStartingDate(_concreteWorkBreakdownElement
-				.getPlannedStartingDate());
-		this.setPlannedTime(_concreteWorkBreakdownElement.getPlannedTime());
-		this.setConcretePredecessors(_concreteWorkBreakdownElement.getConcretePredecessors());
-		this.setConcreteSuccessors(_concreteWorkBreakdownElement.getConcreteSuccessors());
+		this.workBreakdownElement = _concreteWorkBreakdownElement
+				.getWorkBreakdownElement();
+		this.plannedFinishingDate = _concreteWorkBreakdownElement
+				.getPlannedFinishingDate();
+		this.plannedStartingDate = _concreteWorkBreakdownElement
+				.getPlannedStartingDate();
+		this.plannedTime = _concreteWorkBreakdownElement.getPlannedTime();
+		this.concretePredecessors.addAll(_concreteWorkBreakdownElement.getConcretePredecessors());
+		this.concreteSuccessors.addAll(_concreteWorkBreakdownElement.getConcreteSuccessors());
 	}
 
 	/*

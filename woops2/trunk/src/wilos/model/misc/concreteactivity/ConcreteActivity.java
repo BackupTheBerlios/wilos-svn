@@ -71,8 +71,8 @@ public class ConcreteActivity extends ConcreteWorkBreakdownElement implements
 	 */
 	protected void copy(final ConcreteActivity _concreteActivity) {
 		super.copy(_concreteActivity);
-		this.setActivity(_concreteActivity.getActivity());
-		this.setConcreteBreakdownElements(_concreteActivity
+		this.activity = _concreteActivity.getActivity();
+		this.concreteBreakdownElements.addAll(_concreteActivity
 				.getConcreteBreakdownElements());
 	}
 

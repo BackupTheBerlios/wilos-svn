@@ -40,9 +40,9 @@ public class ConcreteRoleDescriptor extends ConcreteBreakdownElement {
 	 */
 	protected void copy(final ConcreteRoleDescriptor _concreteRoleDescriptor) {
 		super.copy(_concreteRoleDescriptor);
-		this.setParticipant(_concreteRoleDescriptor.getParticipant());
-		this.setRoleDescriptor(_concreteRoleDescriptor.getRoleDescriptor());
-		this.setConcreteTaskDescriptors(_concreteRoleDescriptor
+		this.participant = _concreteRoleDescriptor.getParticipant();
+		this.roleDescriptor = _concreteRoleDescriptor.getRoleDescriptor();
+		this.concreteTaskDescriptors.addAll(_concreteRoleDescriptor
 				.getConcreteTaskDescriptors());
 	}
 

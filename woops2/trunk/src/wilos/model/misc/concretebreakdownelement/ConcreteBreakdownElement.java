@@ -42,12 +42,12 @@ public class ConcreteBreakdownElement implements Cloneable {
 	 *
 	 */
 	protected void copy(final ConcreteBreakdownElement _concreteBreakdownElement) {
-		this.setConcreteName(_concreteBreakdownElement.getConcreteName());
-		this.setBreakdownElement(_concreteBreakdownElement
-				.getBreakdownElement());
-		this.setSuperConcreteActivities(_concreteBreakdownElement
+		this.concreteName = _concreteBreakdownElement.getConcreteName();
+		this.breakdownElement = _concreteBreakdownElement
+				.getBreakdownElement();
+		this.superConcreteActivities.addAll(_concreteBreakdownElement
 				.getSuperConcreteActivities());
-		this.setProject(_concreteBreakdownElement.getProject());
+		this.project = _concreteBreakdownElement.getProject();
 	}
 
 	/*

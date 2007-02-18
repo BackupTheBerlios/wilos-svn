@@ -48,17 +48,17 @@ public class ConcreteTaskDescriptor extends ConcreteWorkBreakdownElement {
 	 */
 	protected void copy(final ConcreteTaskDescriptor _concreteTaskDescriptor) {
 		super.copy(_concreteTaskDescriptor);
-		this.setTaskDescriptor(_concreteTaskDescriptor.getTaskDescriptor());
-		this.setConcreteRoleDescriptor(_concreteTaskDescriptor
-				.getConcreteRoleDescriptor());
-		this.setAccomplishedTime(_concreteTaskDescriptor
-				.getAccomplishedTime());
-		this.setRealFinishingDate(_concreteTaskDescriptor
-				.getRealFinishingDate());
-		this.setRealStartingDate(_concreteTaskDescriptor
-				.getRealStartingDate());
-		this.setRemainingTime(_concreteTaskDescriptor.getRemainingTime());
-		this.setState(_concreteTaskDescriptor.getState());
+		this.taskDescriptor = _concreteTaskDescriptor.getTaskDescriptor();
+		this.concreteRoleDescriptor = _concreteTaskDescriptor
+				.getConcreteRoleDescriptor();
+		this.accomplishedTime = _concreteTaskDescriptor
+				.getAccomplishedTime();
+		this.realFinishingDate = _concreteTaskDescriptor
+				.getRealFinishingDate();
+		this.realStartingDate = _concreteTaskDescriptor
+				.getRealStartingDate();
+		this.remainingTime = _concreteTaskDescriptor.getRemainingTime();
+		this.state = _concreteTaskDescriptor.getState();
 	}
 
 	/*

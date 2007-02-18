@@ -43,7 +43,7 @@ public class ConcretePhase extends ConcreteActivity implements Cloneable{
 	 */
 	protected void copy(final ConcretePhase _concretePhase) {
 		super.copy(_concretePhase) ;
-		this.setPhase(_concretePhase.getPhase());
+		this.phase = _concretePhase.getPhase();
 	}
 
 	/*
