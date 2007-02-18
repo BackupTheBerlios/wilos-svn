@@ -238,7 +238,7 @@ public class ProjectBean {
 		ArrayList<wilos.model.spem2.process.Process> tmpListProcess = (ArrayList<wilos.model.spem2.process.Process>) this.processService.getProcessesList() ;
 
 		for(int i = 0; i < tmpListProcess.size(); i++ ){
-			tmpListNames.add(new SelectItem(tmpListProcess.get(i).getGuid(), tmpListProcess.get(i).getName())) ;
+			tmpListNames.add(new SelectItem(tmpListProcess.get(i).getGuid(), tmpListProcess.get(i).getPresentationName())) ;
 		}
 		processNamesList = tmpListNames ;
 		return this.processNamesList ;

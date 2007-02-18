@@ -298,6 +298,7 @@ public class ProjectAdvancementBean {
 				if(concreteBreakdownElement instanceof ConcreteTaskDescriptor){
 					hm.put("nodeType", "leaf") ;
 					hm.put("expansionImage", TABLE_LEAF) ;
+					
 					hm.put("concreteState", ((ConcreteTaskDescriptor)concreteBreakdownElement).getState()) ;
 					if(((ConcreteTaskDescriptor)concreteBreakdownElement).getConcreteRoleDescriptor() != null)
 					{
