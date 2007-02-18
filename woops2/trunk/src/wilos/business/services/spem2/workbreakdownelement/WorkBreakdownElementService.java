@@ -1,6 +1,9 @@
 
 package wilos.business.services.spem2.workbreakdownelement ;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,6 +11,7 @@ import wilos.hibernate.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownEl
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
+import wilos.model.spem2.workbreakdownelement.WorkOrder;
 
 /**
  *
@@ -32,6 +36,36 @@ public class WorkBreakdownElementService {
 		cwbe.setProject(_project);
 
 		this.concreteWorkBreakdownElementDao.saveOrUpdateConcreteWorkBreakdownElement(cwbe);
+	}
+	
+	/**
+	 *
+	 * @param _act
+	 * @return
+	 */
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+	public Set<WorkOrder> getPredecessors(WorkBreakdownElement _wbde) {
+
+		Set<WorkOrder> tmp = new HashSet<WorkOrder>();
+		for (WorkOrder wo : _wbde.getPredecessors()) {
+			tmp.add(wo);
+		}
+		return tmp;
+	}
+	
+	/**
+	 *
+	 * @param _act
+	 * @return
+	 */
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+	public Set<WorkOrder> getSuccessors(WorkBreakdownElement _wbde) {
+
+		Set<WorkOrder> tmp = new HashSet<WorkOrder>();
+		for (WorkOrder wo : _wbde.getSuccessors()) {
+			tmp.add(wo);
+		}
+		return tmp;
 	}
 
 	/**

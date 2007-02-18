@@ -297,7 +297,7 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 *            The primaryTasks to set.
 	 */
 	@SuppressWarnings("unused")
-	private void setPrimaryTasks(Set<TaskDescriptor> _primaryTasks) {
+	public void setPrimaryTasks(Set<TaskDescriptor> _primaryTasks) {
 		this.primaryTasks = _primaryTasks;
 	}
 
@@ -317,7 +317,7 @@ public class RoleDescriptor extends BreakdownElement implements Cloneable {
 	 *            The additionalTasks to set.
 	 */
 	@SuppressWarnings("unused")
-	private void setAdditionalTasks(Set<TaskDescriptor> _additionalTasks) {
+	public void setAdditionalTasks(Set<TaskDescriptor> _additionalTasks) {
 		this.additionalTasks = _additionalTasks;
 	}
 

@@ -16,8 +16,11 @@ import wilos.business.services.spem2.activity.ActivityService;
 import wilos.business.services.spem2.breakdownelement.BreakdownElementService;
 import wilos.business.services.spem2.iteration.IterationService;
 import wilos.business.services.spem2.phase.PhaseService;
+import wilos.business.services.spem2.role.RoleDefinitionService;
 import wilos.business.services.spem2.role.RoleDescriptorService;
+import wilos.business.services.spem2.task.TaskDefinitionService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
+import wilos.business.services.spem2.workbreakdownelement.WorkBreakdownElementService;
 import wilos.business.services.util.xml.parser.XMLServices;
 import wilos.hibernate.misc.project.ProjectDao;
 import wilos.hibernate.spem2.activity.ActivityDao;
@@ -62,6 +65,8 @@ public class ProcessService {
 	private ConcreteBreakdownElementService concreteBreakdownElementService;
 
 	private BreakdownElementService breakdownElementService;
+	
+	private WorkBreakdownElementService workBreakdownElementService;
 
 	private PhaseService phaseService;
 
@@ -70,8 +75,12 @@ public class ProcessService {
 	private ActivityService activityService;
 
 	private TaskDescriptorService taskDescriptorService;
+	
+	private TaskDefinitionService taskDefinitionService;
 
 	private RoleDescriptorService roleDescriptorService;
+	
+	private RoleDefinitionService roleDefinitionService;
 
 	private ActivityDao activityDao;
 
@@ -203,10 +212,15 @@ public class ProcessService {
 			this.parseGuidance(g);
 		}
 
+		// destroy the persistance of the collections
+		_process.setBreakdownElements(this.activityService.getBreakdownElements(_process));
+		_process.setPredecessors(this.workBreakdownElementService.getPredecessors(_process));
+		_process.setSuccessors(this.workBreakdownElementService.getSuccessors(_process));
+		_process.setSuperActivities(this.breakdownElementService.getSuperActivities(_process));
+		
 		// clone dependencies getting
 		_process.addAllBreakdownElements(clone.getBreakdownElements());
 		_process.addAllPredecessors(clone.getPredecessors());
-		_process.addAllProjects(clone.getProjects());
 		_process.addAllSuccessors(clone.getSuccessors());
 		_process.addAllSuperActivities(clone.getSuperActivities());
 
@@ -227,13 +241,13 @@ public class ProcessService {
 
 		List<Guidance> tmp = new ArrayList<Guidance>();
 		tmp.addAll(guid);
-
+		
 		try {
 			clone = _ph.clone();
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
-
+		
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 		bdes.addAll(_ph.getBreakdownElements());
 
@@ -241,7 +255,7 @@ public class ProcessService {
 		Set<Guidance> guidances = new HashSet<Guidance>();
 		guidances.addAll(_ph.getGuidances());
 
-		//	 clean of dependancies of _ph
+		// clean of dependancies of _ph
 		_ph.getBreakdownElements().clear();
 		_ph.getPredecessors().clear();
 		_ph.getSuccessors().clear();
@@ -276,11 +290,18 @@ public class ProcessService {
 			}
 		}
 
+		_ph.setBreakdownElements(this.activityService.getBreakdownElements(_ph));
+		_ph.setPredecessors(this.workBreakdownElementService.getPredecessors(_ph));
+		_ph.setSuccessors(this.workBreakdownElementService.getSuccessors(_ph));
+		_ph.setSuperActivities(this.breakdownElementService.getSuperActivities(_ph));
+		_ph.setGuidances(this.activityService.getGuidances(_ph));
+		
+		// clone dependencies getting
 		_ph.addAllBreakdownElements(clone.getBreakdownElements());
 		_ph.addAllPredecessors(clone.getPredecessors());
 		_ph.addAllSuccessors(clone.getSuccessors());
 		_ph.addAllSuperActivities(clone.getSuperActivities());
-		_ph.addAllGuidances(clone.getGuidances());
+		_ph.setGuidances(clone.getGuidances());
 
 		// Parse for guidances
 		this.phaseDao.saveOrUpdatePhase(_ph);
@@ -343,12 +364,19 @@ public class ProcessService {
 			}
 		}
 
+		_it.setBreakdownElements(this.activityService.getBreakdownElements(_it));
+		_it.setPredecessors(this.workBreakdownElementService.getPredecessors(_it));
+		_it.setSuccessors(this.workBreakdownElementService.getSuccessors(_it));
+		_it.setSuperActivities(this.breakdownElementService.getSuperActivities(_it));
+		_it.setGuidances(this.activityService.getGuidances(_it));
+		
+		// clone dependencies getting
 		_it.addAllBreakdownElements(clone.getBreakdownElements());
 		_it.addAllPredecessors(clone.getPredecessors());
 		_it.addAllSuccessors(clone.getSuccessors());
 		_it.addAllSuperActivities(clone.getSuperActivities());
-		_it.addAllGuidances(clone.getGuidances());
-
+		_it.setGuidances(clone.getGuidances());
+		
 		this.iterationDao.saveOrUpdateIteration(_it);
 		System.out.println("###Iteration sauve");
 
@@ -364,7 +392,7 @@ public class ProcessService {
 	private List<Guidance> parseActivity(Activity _act, List<Guidance> guid) {
 
 		Activity clone = null;
-
+		
 		List<Guidance> tmp = new ArrayList<Guidance>();
 		tmp.addAll(guid);
 
@@ -409,11 +437,18 @@ public class ProcessService {
 			}
 		}
 
+		_act.setBreakdownElements(this.activityService.getBreakdownElements(_act));
+		_act.setPredecessors(this.workBreakdownElementService.getPredecessors(_act));
+		_act.setSuccessors(this.workBreakdownElementService.getSuccessors(_act));
+		_act.setSuperActivities(this.breakdownElementService.getSuperActivities(_act));
+		_act.setGuidances(this.activityService.getGuidances(_act));
+		
+		// clone dependencies getting
 		_act.addAllBreakdownElements(clone.getBreakdownElements());
 		_act.addAllPredecessors(clone.getPredecessors());
 		_act.addAllSuccessors(clone.getSuccessors());
 		_act.addAllSuperActivities(clone.getSuperActivities());
-		_act.addAllGuidances(clone.getGuidances());
+		_act.setGuidances(clone.getGuidances());
 
 		this.activityDao.saveOrUpdateActivity(_act);
 		System.out.println("###Activity sauve");
@@ -443,7 +478,6 @@ public class ProcessService {
 		RoleDefinition rdef = _rd.getRoleDefinition();
 
 		_rd.getAdditionalTasks().clear();
-		_rd.getConcreteRoleDescriptors().clear();
 		_rd.getPrimaryTasks().clear();
 		_rd.getSuperActivities().clear();
 		_rd.setRoleDefinition(null);
@@ -455,8 +489,11 @@ public class ProcessService {
 			tmp = this.parseRoleDefinition(rdef, tmp);
 		}
 
-		_rd.addAllAdditionalTasks(clone.getAdditionalTasks());
-		_rd.addAllConcreteRoleDescriptors(clone.getConcreteRoleDescriptors());
+		//_rd.setAdditionalTasks(this.roleDescriptorService.getAdditionalTasks(_rd));
+		_rd.setPrimaryTasks(this.roleDescriptorService.getPrimaryTasks(_rd));
+		_rd.setSuperActivities(this.breakdownElementService.getSuperActivities(_rd));
+		
+		//_rd.addAllAdditionalTasks(clone.getAdditionalTasks());
 		_rd.addAllPrimaryTasks(clone.getPrimaryTasks());
 		_rd.addAllSuperActivities(clone.getSuperActivities());
 		_rd.setRoleDefinition(clone.getRoleDefinition());
@@ -501,7 +538,10 @@ public class ProcessService {
 			}
 		}
 
-		_rdef.addAllRoleDescriptors(clone.getRoleDescriptors());
+		//_rdef.setRoleDescriptors(this.roleDefinitionService.getRoleDescriptors(_rdef));
+		_rdef.setGuidances(this.roleDefinitionService.getGuidances(_rdef));
+		
+		//_rdef.addAllRoleDescriptors(clone.getRoleDescriptors());
 		_rdef.addAllGuidances(clone.getGuidances());
 
 		this.roleDefinitionDao.saveOrUpdateRoleDefinition(_rdef);
@@ -532,7 +572,6 @@ public class ProcessService {
 		TaskDefinition tdef = _td.getTaskDefinition();
 
 		_td.getAdditionalRoles().clear();
-		_td.getConcreteTaskDescriptors().clear();
 		_td.getPredecessors().clear();
 		_td.getSuccessors().clear();
 		_td.getSuperActivities().clear();
@@ -546,8 +585,13 @@ public class ProcessService {
 			tmp = this.parseTaskDefinition(tdef, tmp);
 		}
 
+		_td.setAdditionalRoles(this.taskDescriptorService.getAdditionalRoles(_td));
+		_td.setPredecessors(this.workBreakdownElementService.getPredecessors(_td));
+		_td.setSuccessors(this.workBreakdownElementService.getSuccessors(_td));
+		_td.setSuperActivities(this.breakdownElementService.getSuperActivities(_td));
+		
+		// clone dependencies getting
 		_td.addAllAdditionalRoles(clone.getAdditionalRoles());
-		_td.addAllConcreteTaskDescriptors(clone.getConcreteTaskDescriptors());
 		_td.addAllPredecessors(clone.getPredecessors());
 		_td.addAllSuccessors(clone.getSuccessors());
 		_td.addAllSuperActivities(clone.getSuperActivities());
@@ -600,9 +644,13 @@ public class ProcessService {
 		for (Step step : steps) {
 			this.parseStep(step);
 		}
-
+		
+		_tdef.setSteps(this.taskDefinitionService.getSteps(_tdef));
+		//_tdef.setTaskDescriptors(this.roleDefinitionService.getRoleDescriptors(_rdef));
+		_tdef.setGuidances(this.taskDefinitionService.getGuidances(_tdef));
+		
 		_tdef.addAllSteps(clone.getSteps());
-		_tdef.addAllTaskDesciptors(clone.getTaskDescriptors());
+		//_tdef.addAllTaskDesciptors(clone.getTaskDescriptors());
 		_tdef.addAllGuidances(clone.getGuidances());
 
 		this.taskDefinitionDao.saveOrUpdateTaskDefinition(_tdef);
@@ -656,10 +704,10 @@ public class ProcessService {
 	public void projectInstanciation(Project _project) {
 
 		Process p = this.processDao.getProcess(_project.getProcess().getId());
-
+		
 		// elements of collection getting
-		List<BreakdownElement> forInstanciation = new ArrayList<BreakdownElement>();
-		forInstanciation.addAll(p.getBreakdownElements());
+		//List<BreakdownElement> forInstanciation = new ArrayList<BreakdownElement>();
+		Set<BreakdownElement> forInstanciation = this.activityService.getInstanciableBreakdownElements(p);
 
 		Set<ConcreteBreakdownElement> tmp = new HashSet<ConcreteBreakdownElement>();
 
@@ -693,49 +741,6 @@ public class ProcessService {
 		this.projectDao.saveOrUpdateProject(_project);
 		System.out.println("### Project update");
 	}
-
-	/**
-	 *
-	 * @param _act
-	 * @return
-	 */
-	/*private List<BreakdownElement> getInstanciableBreakdownElement(Activity _act) {
-
-		// elements of collection getting
-		Set<BreakdownElement> bdes = _act.getBreakdownElements();
-
-		List<BreakdownElement> tmp = new ArrayList<BreakdownElement>();
-		tmp.add(_act);
-
-		// in function of element type
-		for (BreakdownElement bde : bdes) {
-			if (bde instanceof Phase) {
-				Phase ph = (Phase) bde;
-				tmp.addAll(this.getInstanciableBreakdownElement(ph));
-			} else {
-				if (bde instanceof Iteration) {
-					Iteration it = (Iteration) bde;
-					tmp.addAll(this.getInstanciableBreakdownElement(it));
-				} else {
-					if (bde instanceof Activity) {
-						Activity act = (Activity) bde;
-						tmp.addAll(this.getInstanciableBreakdownElement(act));
-					} else {
-						if (bde instanceof TaskDescriptor) {
-							TaskDescriptor td = (TaskDescriptor) bde;
-							tmp.add(td);
-						} else {
-							if (bde instanceof RoleDescriptor) {
-								RoleDescriptor rd = (RoleDescriptor) bde;
-								tmp.add(rd);
-							}
-						}
-					}
-				}
-			}
-		}
-		return tmp;
-	}*/
 
 	/**
 	 * Getter of processDao.
@@ -1030,5 +1035,50 @@ public class ProcessService {
 	 */
 	public void setConcreteBreakdownElementService(ConcreteBreakdownElementService concreteBreakdownElementService) {
 		this.concreteBreakdownElementService = concreteBreakdownElementService ;
+	}
+
+	/**
+	 * @return the workBreakdownElementService
+	 */
+	public WorkBreakdownElementService getWorkBreakdownElementService() {
+		return this.workBreakdownElementService;
+	}
+
+	/**
+	 * @param _workBreakdownElementService the workBreakdownElementService to set
+	 */
+	public void setWorkBreakdownElementService(
+			WorkBreakdownElementService _workBreakdownElementService) {
+		this.workBreakdownElementService = _workBreakdownElementService;
+	}
+
+	/**
+	 * @return the roleDefinitionService
+	 */
+	public RoleDefinitionService getRoleDefinitionService() {
+		return this.roleDefinitionService;
+	}
+
+	/**
+	 * @param _roleDefinitionService the roleDefinitionService to set
+	 */
+	public void setRoleDefinitionService(
+			RoleDefinitionService _roleDefinitionService) {
+		this.roleDefinitionService = _roleDefinitionService;
+	}
+
+	/**
+	 * @return the taskDefinitionService
+	 */
+	public TaskDefinitionService getTaskDefinitionService() {
+		return this.taskDefinitionService;
+	}
+
+	/**
+	 * @param _taskDefinitionService the taskDefinitionService to set
+	 */
+	public void setTaskDefinitionService(
+			TaskDefinitionService _taskDefinitionService) {
+		this.taskDefinitionService = _taskDefinitionService;
 	}
 }

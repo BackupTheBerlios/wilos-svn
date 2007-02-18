@@ -18,7 +18,7 @@
 			<one-to-many  class="wilos.model.spem2.task.TaskDescriptor"></one-to-many>
 		</set>
 
-		<set name="additionalTasks" table="perform" lazy="true">
+		<set name="additionalTasks" table="perform" lazy="true" inverse="true">
 			<key column="roledescriptor_id"></key>
 			<many-to-many class="wilos.model.spem2.task.TaskDescriptor"
 				column="taskdescriptor_id">

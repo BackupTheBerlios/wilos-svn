@@ -268,7 +268,7 @@ public class TaskDescriptor extends WorkBreakdownElement implements Cloneable {
 	 *            The additionalRoles to set.
 	 */
 	@ SuppressWarnings ("unused")
-	private void setAdditionalRoles(Set<RoleDescriptor> _additionalRoles) {
+	public void setAdditionalRoles(Set<RoleDescriptor> _additionalRoles) {
 		this.additionalRoles = _additionalRoles ;
 	}
 

@@ -178,7 +178,7 @@ public class RoleDefinition extends Element implements Cloneable {
 	 *            The roleDescriptors to set.
 	 */
 	@ SuppressWarnings ("unused")
-	private void setRoleDescriptors(Set<RoleDescriptor> _roleDescriptors) {
+	public void setRoleDescriptors(Set<RoleDescriptor> _roleDescriptors) {
 		this.roleDescriptors = _roleDescriptors ;
 	}
 

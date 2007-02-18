@@ -17,6 +17,7 @@ import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
 
@@ -98,7 +99,52 @@ public class ActivityService {
 
 		return cact;
 	}
+	
+	/**
+	 *
+	 * @param _act
+	 * @return
+	 */
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+	public Set<BreakdownElement> getBreakdownElements(Activity _act) {
 
+		Set<BreakdownElement> tmp = new HashSet<BreakdownElement>();
+		for (BreakdownElement bde : _act.getBreakdownElements()) {
+			tmp.add(bde);
+		}
+		return tmp;
+	}
+	
+	/**
+	 *
+	 * @param _act
+	 * @return
+	 */
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+	public Set<Guidance> getGuidances(Activity _act) {
+
+		Set<Guidance> tmp = new HashSet<Guidance>();
+		for (Guidance g : _act.getGuidances()) {
+			tmp.add(g);
+		}
+		return tmp;
+	}
+
+	/**
+	 *
+	 * @param _act
+	 * @return
+	 */
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+	public Set<BreakdownElement> getInstanciableBreakdownElements(Activity _act) {
+
+		Set<BreakdownElement> tmp = new HashSet<BreakdownElement>();
+		for (BreakdownElement bde : _act.getBreakdownElements()) {
+			tmp.add(bde);
+		}
+		return tmp;
+	}
+	
 	/**
 	 * Return activities list
 	 *

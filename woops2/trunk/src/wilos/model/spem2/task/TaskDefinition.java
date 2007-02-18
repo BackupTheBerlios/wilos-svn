@@ -199,7 +199,7 @@ public class TaskDefinition extends Element implements Cloneable {
 	 *            The steps to set.
 	 */
 	@SuppressWarnings("unused")
-	private void setSteps(SortedSet<Step> _steps) {
+	public void setSteps(SortedSet<Step> _steps) {
 		this.steps = _steps;
 	}
 

@@ -1,6 +1,9 @@
 
 package wilos.business.services.spem2.breakdownelement ;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,50 +33,21 @@ import wilos.model.spem2.task.TaskDescriptor;
 public class BreakdownElementService {
 
 	private ConcreteBreakdownElementDao concreteBreakdownElementDao ;
-
-	private PhaseService phaseService;
-
-	private IterationService iterationService;
-
-	private ActivityService activityService;
-
-	private RoleDescriptorService roleDescriptorService;
-
-	private TaskDescriptorService taskDescriptorService;
-
+	
 	/**
-	 * Instanciates a BreakdownElement
-	 * @param _project project for which the BreakdownElement shall be instanciated
-	 * @param _bde BreakdownElement to instanciate
+	 *
+	 * @param _act
+	 * @return
 	 */
-	/*public ConcreteBreakdownElement breakdownElementInstanciation (Project _project, BreakdownElement _bde, ConcreteActivity _superActivity) {
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+	public Set<Activity> getSuperActivities(BreakdownElement _bde) {
 
-		ConcreteBreakdownElement cbde = null;
-
-		if (_bde instanceof Phase) {
-			Phase ph = (Phase) _bde;
-			this.phaseService.phaseInstanciation(_project, ph);
-		} else {
-			if (_bde instanceof Iteration) {
-				Iteration it = (Iteration) _bde;
-				this.iterationService.iterationInstanciation(_project, it);
-			} else {
-				if (_bde instanceof Activity) {
-					Activity act = (Activity) _bde;
-					this.activityService.activityInstanciation(_project, act);
-				} else {
-					if (_bde instanceof RoleDescriptor) {
-						RoleDescriptor rd = (RoleDescriptor) _bde;
-						this.roleDescriptorService.roleDescriptorInstanciation(_project, rd, _superActivity);
-					} else {
-						TaskDescriptor td = (TaskDescriptor) _bde;
-						this.taskDescriptorService.taskDescriptorInstanciation(_project, td, _superActivity);
-					}
-				}
-			}
+		Set<Activity> tmp = new HashSet<Activity>();
+		for (Activity act : _bde.getSuperActivities()) {
+			tmp.add(act);
 		}
-		return cbde;
-	}*/
+		return tmp;
+	}
 
 	/**
 	 * Getter of concreteBreakdownElementDao
@@ -92,20 +66,6 @@ public class BreakdownElementService {
 	public void setConcreteBreakdownElementDao(
 			ConcreteBreakdownElementDao concreteBreakdownElementDao) {
 		this.concreteBreakdownElementDao = concreteBreakdownElementDao;
-	}
-
-	/**
-	 * @return the activityService
-	 */
-	public ActivityService getActivityService() {
-		return activityService;
-	}
-
-	/**
-	 * @param activityService the activityService to set
-	 */
-	public void setActivityService(ActivityService activityService) {
-		this.activityService = activityService;
 	}
 
 }

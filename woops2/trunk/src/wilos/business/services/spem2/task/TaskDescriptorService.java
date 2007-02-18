@@ -1,5 +1,8 @@
 package wilos.business.services.spem2.task;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,6 +11,7 @@ import wilos.hibernate.spem2.task.TaskDescriptorDao;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
+import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
 
 /**
@@ -38,6 +42,21 @@ public class TaskDescriptorService {
 		System.out.println("### ConcreteTaskDescriptor sauve");
 		
 		return ctd;
+	}
+	
+	/**
+	 *
+	 * @param _act
+	 * @return
+	 */
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+	public Set<RoleDescriptor> getAdditionalRoles(TaskDescriptor _td) {
+
+		Set<RoleDescriptor> tmp = new HashSet<RoleDescriptor>();
+		for (RoleDescriptor rd : _td.getAdditionalRoles()) {
+			tmp.add(rd);
+		}
+		return tmp;
 	}
 
 	public TaskDescriptor getTaskDescriptorById(String _id)

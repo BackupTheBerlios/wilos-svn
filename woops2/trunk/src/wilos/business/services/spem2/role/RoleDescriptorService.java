@@ -1,5 +1,8 @@
 package wilos.business.services.spem2.role;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,6 +12,7 @@ import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.task.TaskDescriptor;
 
 /**
  * @author Sebastien
@@ -33,6 +37,36 @@ public class RoleDescriptorService {
 	 */
 	public void setRoleDescriptorDao(RoleDescriptorDao roleDescriptorDao) {
 		this.roleDescriptorDao = roleDescriptorDao;
+	}
+	
+	/**
+	 *
+	 * @param _act
+	 * @return
+	 */
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+	public Set<TaskDescriptor> getAdditionalTasks(RoleDescriptor _rd) {
+
+		Set<TaskDescriptor> tmp = new HashSet<TaskDescriptor>();
+		for (TaskDescriptor td : _rd.getAdditionalTasks()) {
+			tmp.add(td);
+		}
+		return tmp;
+	}
+	
+	/**
+	 *
+	 * @param _act
+	 * @return
+	 */
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+	public Set<TaskDescriptor> getPrimaryTasks(RoleDescriptor _rd) {
+
+		Set<TaskDescriptor> tmp = new HashSet<TaskDescriptor>();
+		for (TaskDescriptor td : _rd.getPrimaryTasks()) {
+			tmp.add(td);
+		}
+		return tmp;
 	}
 
 	/**
