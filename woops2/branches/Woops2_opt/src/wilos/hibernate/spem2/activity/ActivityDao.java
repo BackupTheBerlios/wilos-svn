@@ -47,7 +47,7 @@ public class ActivityDao extends HibernateDaoSupport {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Activity> getAllActivities() {
-		this.getHibernateTemplate().setCacheQueries(true);
+		//this.getHibernateTemplate().setCacheQueries(true);
 		List<Activity> loadAll = new ArrayList<Activity>();
 		try {
 			loadAll.addAll(this.getHibernateTemplate().loadAll(Activity.class));
@@ -65,7 +65,7 @@ public class ActivityDao extends HibernateDaoSupport {
 	 * @return
 	 */
 	public Activity getActivity(String _id) {
-		this.getHibernateTemplate().setCacheQueries(true);
+		//this.getHibernateTemplate().setCacheQueries(true);
 		return (Activity) this.getHibernateTemplate().get(Activity.class, _id);
 	}
 

@@ -43,7 +43,7 @@ public class BreakdownElementDao extends HibernateDaoSupport {
 	 */
 	@ SuppressWarnings ("unchecked")
 	public List<BreakdownElement> getAllBreakdownElements() {
-		this.getHibernateTemplate().setCacheQueries(true);
+		//this.getHibernateTemplate().setCacheQueries(true);
 		List<BreakdownElement> loadAll = new ArrayList<BreakdownElement>() ;
 		try{
 			loadAll.addAll(this.getHibernateTemplate().loadAll(BreakdownElement.class)) ;
@@ -61,7 +61,7 @@ public class BreakdownElementDao extends HibernateDaoSupport {
 	 * @return
 	 */
 	public BreakdownElement getBreakdownElement(String _id) {
-		this.getHibernateTemplate().setCacheQueries(true);
+		//this.getHibernateTemplate().setCacheQueries(true);
 		return (BreakdownElement) this.getHibernateTemplate().get(BreakdownElement.class, _id) ;
 	}
 
