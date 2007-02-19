@@ -161,7 +161,7 @@ public class ParticipantBean {
 		}
 
 		if(!error){
-			if(this.loginService.loginExist(this.participant.getLogin())){
+			if(this.loginService.loginExist(this.participant.getLogin().trim())){
 				message.setSummary(bundle.getString("component.forminscription.err.loginalreadyexist")) ;
 				message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 				facesContext.addMessage(null, message) ;

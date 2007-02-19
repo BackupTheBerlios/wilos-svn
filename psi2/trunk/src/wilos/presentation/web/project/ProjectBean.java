@@ -1,7 +1,6 @@
 
 package wilos.presentation.web.project ;
 
-import java.awt.event.ActionEvent;
 import java.text.SimpleDateFormat ;
 import java.util.ArrayList ;
 import java.util.List ;
@@ -103,7 +102,7 @@ public class ProjectBean {
 			facesContext.addMessage(null, errDate) ;
 		}
 		if(!error){
-			if(this.projectService.projectExist(this.project.getConcreteName())){
+			if(this.projectService.projectExist(this.project.getConcreteName().trim())){
 
 				message.setSummary(bundle.getString("component.projectcreate.err.projectalreadyexists")) ;
 				message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
@@ -137,6 +136,9 @@ public class ProjectBean {
 				}
 			}
 		}
+		FacesContext context = FacesContext.getCurrentInstance();
+		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");
+		tb.buildModel(true);
 		return "" ;
 	}
 
@@ -326,7 +328,7 @@ public class ProjectBean {
 			}
 		}
 		else{
-			this.setProcessName(currentProject.getProcess().getName()) ;
+			this.setProcessName(currentProject.getProcess().getPresentationName()) ;
 			this.selectProcessAffectation = "selected_process_view" ;
 		}
 		return this.selectProcessAffectation ;

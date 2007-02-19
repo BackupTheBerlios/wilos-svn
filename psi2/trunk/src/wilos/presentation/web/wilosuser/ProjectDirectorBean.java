@@ -103,7 +103,7 @@ public class ProjectDirectorBean {
 		
 		if (!error)
 		{
-			if (this.loginService.loginExist(this.projectDirector.getLogin())) {			
+			if (this.loginService.loginExist(this.projectDirector.getLogin().trim())) {			
 				message.setSummary(bundle.getString("component.projectdirectorcreate.err.loginalreadyexist"));
 				message.setSeverity(FacesMessage.SEVERITY_ERROR);
 			} else {

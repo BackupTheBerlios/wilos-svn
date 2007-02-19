@@ -103,7 +103,7 @@ public class ProcessManagerBean {
 		
 		if (!error)
 		{
-			if(this.loginService.loginExist(this.processManager.getLogin())){
+			if(this.loginService.loginExist(this.processManager.getLogin().trim())){
 				message.setSummary(bundle.getString("component.processmanagercreate.err.loginalreadyexist"));
 				message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 			}
