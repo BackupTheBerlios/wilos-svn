@@ -7,7 +7,8 @@
 
 	<class name="wilos.model.spem2.element.Element" table="element"
 		lazy="true">
-
+		<cache usage="read-write"/>
+		
 		<id name="id" type="string"
 			column="element_id">
 			<!--identifiant auto-incrementé -->

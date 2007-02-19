@@ -4,11 +4,12 @@
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 
 <hibernate-mapping>
-
+	
 	<joined-subclass
 		name="wilos.model.spem2.breakdownelement.BreakdownElement"
 		extends="wilos.model.spem2.element.Element"
 		table="breakdownelement" lazy="true">
+		
 		<key column="breakdownelement_id"></key>
 
 		<property name="presentationName" type="java.lang.String" column="presentationName"
@@ -27,12 +28,14 @@
 			column="isOptional" length="1" />
 
 		<set name="concreteBreakdownElements" lazy="true">
+			<cache usage="read-write"/>
 			<key column="breakdownelement_id" />
 			<one-to-many class="wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement"></one-to-many>
 		</set>
 
 		<!-- Associations -->
 		<set name="superActivities" table="nesting" lazy="true">
+			<cache usage="read-write"/>
 			<key column="breakdownelement_id"></key>
 			<many-to-many class="wilos.model.spem2.activity.Activity"
 				column="superactivity_id">

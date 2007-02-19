@@ -190,7 +190,10 @@ public class TreeBean {
 	public void selectNodeActionListener(ActionEvent evt) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map map = context.getExternalContext().getRequestParameterMap();
-
+		
+		System.out.println("### TreeBean ### Hibernate Stats ");
+		System.out.println(this.projectService.getProjectDao().getSessionFactory().getStatistics());
+		
 		String nodeId = (String) map.get("nodeId");
 		String pageId = (String) map.get("pageId");
 

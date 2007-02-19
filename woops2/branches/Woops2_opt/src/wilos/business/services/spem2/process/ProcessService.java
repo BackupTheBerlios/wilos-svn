@@ -54,6 +54,7 @@ import wilos.model.spem2.task.TaskDescriptor;
  * ProcessService is a transactional class, that manage operations about
  * process, requested by web pages (?)
  *
+ * @author garwind
  * @author eperico
  * @author soosuske
  * @author Sebastien
@@ -227,6 +228,9 @@ public class ProcessService {
 		// update of the project
 		this.processDao.saveOrUpdateProcess(_process);
 		System.out.println("###Process sauve");
+		
+		System.out.println("### ProcessService ### Hibernate Stats ");
+		System.out.println(this.activityDao.getSessionFactory().getStatistics());
 	}
 
 	/**
