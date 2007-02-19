@@ -116,7 +116,7 @@
 			<value>#{WebSessionService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>ProjectAdvancementBean</managed-bean-name>
 		<managed-bean-class>
@@ -136,7 +136,7 @@
 			<value>#{WebSessionService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>ActionBean</managed-bean-name>
 		<managed-bean-class>
@@ -144,7 +144,7 @@
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>ConcreteRoleAffectationBean</managed-bean-name>
 		<managed-bean-class>wilos.presentation.web.role.ConcreteRoleAffectationBean</managed-bean-class>
@@ -317,6 +317,10 @@
 		<managed-property>
 			<property-name>projectService</property-name>
 			<value>#{ProjectService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>concreteBreakdownElementService</property-name>
+			<value>#{ConcreteBreakdownElementService}</value>
 		</managed-property>
 	</managed-bean>
 
