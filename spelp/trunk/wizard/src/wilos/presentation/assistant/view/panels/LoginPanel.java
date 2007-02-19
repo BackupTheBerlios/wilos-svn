@@ -264,7 +264,7 @@ public class LoginPanel extends JPanel {
 			if (participant == null)
 			{
 				setVisible(true);
-				new ErrorDialog("L'utilisateur n'existe pas");
+				new ErrorDialog(Bundle.getText("loginPanel.unknownUser"));
 			}  
 			else
 			{

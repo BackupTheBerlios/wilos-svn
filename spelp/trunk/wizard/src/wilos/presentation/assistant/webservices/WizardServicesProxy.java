@@ -24,6 +24,7 @@ import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
+import wilos.presentation.assistant.control.ExceptionManager;
 import wilos.utils.Constantes;
 
 import com.thoughtworks.xstream.XStream;
@@ -75,6 +76,7 @@ public class WizardServicesProxy {
             }
             catch (java.lang.Exception e) {
                 e.printStackTrace();
+        		new ExceptionManager(e);
             }
             return myParticipant;
         }

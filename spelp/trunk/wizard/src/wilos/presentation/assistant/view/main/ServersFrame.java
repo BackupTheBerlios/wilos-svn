@@ -1,47 +1,39 @@
 package wilos.presentation.assistant.view.main;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import javax.swing.JLabel;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.JButton;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JList;
-import javax.swing.JComboBox;
-import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.DefaultTableModel;
 
-import wilos.presentation.assistant.ressources.Bundle;
-import wilos.presentation.assistant.view.panels.LoginPanel;
-
 import wilos.presentation.assistant.control.ServersListParser;
 import wilos.presentation.assistant.model.WizardServer;
+import wilos.presentation.assistant.ressources.Bundle;
+import wilos.presentation.assistant.ressources.ImagesService;
+import wilos.presentation.assistant.view.dialogs.ErrorDialog;
+import wilos.presentation.assistant.view.panels.LoginPanel;
 
 public class ServersFrame {
 
-	private JDialog Fenetre1 = null;  //  @jve:decl-index=0:visual-constraint="165,55"
+	private JDialog serverDialog = null;  //  @jve:decl-index=0:visual-constraint="165,55"
 	private JPanel Fenetre = null;
 	private JButton add = null;
 	private JButton delete = null;
 	private JButton valider = null;
 	private JTable servs = null;
-	//private JLabel list_serv = null;
 	private JButton cancel = null;
 	private DefaultTableModel tables_serv;
 	private JScrollPane scrollServ = null;
@@ -51,18 +43,21 @@ public class ServersFrame {
 	 * 	
 	 * @return javax.swing.JFrame	
 	 */
-	private JDialog getFenetre1() {
-		if (Fenetre1 == null) {
-			Fenetre1 = new JDialog();
-			Fenetre1.setModal(true);
-			Fenetre1.setSize(new Dimension(680, 380));
-			Fenetre1.setResizable(false);
-			Fenetre1.setContentPane(getFenetre());
-			Fenetre1.setTitle(Bundle.getText("serversFrame.titre"));
-			Fenetre1.setVisible(true);
+	private JDialog getServerDialog() {
+		if (serverDialog == null) {
+	        int x = (int)(Toolkit.getDefaultToolkit().getScreenSize().width/2-(605/2));
+			int y = (int)(Toolkit.getDefaultToolkit().getScreenSize().height/2-(220/2)) ; 
+			
+			serverDialog = new JDialog();
+			serverDialog.setModal(true);
+			serverDialog.setBounds(x, y, 605, 220);
+			serverDialog.setResizable(false);
+			serverDialog.setContentPane(getServerPane());
+			serverDialog.setTitle(Bundle.getText("serversFrame.titre"));
+			serverDialog.setVisible(true);
 			
 		}
-		return Fenetre1;
+		return serverDialog;
 	}
 
 	/**
@@ -70,7 +65,7 @@ public class ServersFrame {
 	 * 	
 	 * @return javax.swing.JPanel	
 	 */
-	private JPanel getFenetre() {
+	private JPanel getServerPane() {
 		if (Fenetre == null) {
 			
 			//adr.setText(Bundle.getText("wilosServer.address"));
@@ -82,10 +77,10 @@ public class ServersFrame {
 			Fenetre.setLayout(null);
 			Fenetre.add(getAdd(), null);
 			Fenetre.add(getDelete(), null);
-			Fenetre.add(getValider(), null);
+			Fenetre.add(getValidate(), null);
 			Fenetre.add(getCancel(), null);
 			Fenetre.add(getScrollServ(), null);
-			Fenetre.add(getSave(), null);
+			Fenetre.add(getApply(), null);
 			//Fenetre.add(list_serv, null);
 			
 		}
@@ -96,25 +91,25 @@ public class ServersFrame {
 		if (cancel ==null)
 		{
 			cancel = new JButton();
-			cancel.setBounds(new Rectangle(350,270,125,35));
+			cancel.setBounds(new Rectangle(310,140,100,25));
 			cancel.setText(Bundle.getText("serversFrame.cancel"));
 			cancel.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent e) 
     			{
-					Fenetre1.dispose();
+					serverDialog.dispose();
     			}				
 			});
 		}
 		return cancel;
 	}
-	private JButton getSave()
+	private JButton getApply()
 	{
 		if (save ==null)
 		{
 			save = new JButton();
-			save.setBounds(new Rectangle(528,180,125,35));
-			save.setText(Bundle.getText("serversFrame.save"));
+			save.setBounds(new Rectangle(420,140,100,25));
+			save.setText(Bundle.getText("serversFrame.apply"));
 			save.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent e) 
@@ -160,8 +155,9 @@ public class ServersFrame {
 	private JButton getAdd() {
 		if (add == null) {
 			add = new JButton();
-			add.setBounds(new Rectangle(528, 60, 125, 35));
-			add.setText(Bundle.getText("serversFrame.ajouter"));
+			add.setBounds(new Rectangle(540, 25, 35, 35));
+			//add.setText(Bundle.getText("serversFrame.ajouter"));
+			add.setIcon(ImagesService.getImageIcon("images.iconAdd"));
 			add.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent e) 
@@ -199,13 +195,17 @@ public class ServersFrame {
 	private JButton getDelete() {
 		if (delete == null) {
 			delete = new JButton();
-			delete.setBounds(new Rectangle(528, 120, 125, 35));
-			delete.setText(Bundle.getText("serversFrame.delete"));
+			delete.setBounds(new Rectangle(540, 80, 35, 35));
+//			delete.setText(Bundle.getText("serversFrame.delete"));
+			delete.setIcon(ImagesService.getImageIcon("images.iconDelete"));
 			delete.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent e) 
     			{
-					if (servs.getSelectedRow() != -1) {
+					if (servs.getRowCount() == 1) {
+				        new ErrorDialog(Bundle.getText("serversFrame.aLineError"));
+					}
+					else if (servs.getSelectedRow() != -1) {
 						int currentRow = servs.getSelectedRow();
 						servs.editingCanceled(new ChangeEvent(this));
 						tables_serv.removeRow(currentRow);
@@ -222,10 +222,10 @@ public class ServersFrame {
 	 * 	
 	 * @return javax.swing.JButton	
 	 */
-	private JButton getValider() {
+	private JButton getValidate() {
 		if (valider == null) {
 			valider = new JButton();
-			valider.setBounds(new Rectangle(200, 270, 125, 35));
+			valider.setBounds(new Rectangle(200, 140, 100, 25));
 			valider.setText(Bundle.getText("serversFrame.ok"));
 			valider.addActionListener(new ActionListener()
 			{
@@ -252,7 +252,7 @@ public class ServersFrame {
 					if (valide)
 					{
 						LoginPanel.list_serv.saveServersList(new_list_serv);
-						Fenetre1.dispose();
+						serverDialog.dispose();
 					}
     			}
 			});
@@ -262,7 +262,7 @@ public class ServersFrame {
 
 	public ServersFrame()
 	{
-		getFenetre1();
+		getServerDialog();
 	}
 	/**
 	 * This method initializes servs	
@@ -303,7 +303,7 @@ public class ServersFrame {
 		if (this.scrollServ == null) {
 			scrollServ = new JScrollPane();
 		//	scrollServ.add(getServs());
-			scrollServ.setBounds(new Rectangle(45, 45, 437, 188));
+			scrollServ.setBounds(new Rectangle(20, 20, 500, 100));
 			scrollServ.setViewportView(getServs());
 			scrollServ.setVisible(true);
 			

@@ -6,22 +6,17 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.EventListener;
 
+import wilos.presentation.assistant.control.ExceptionManager;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.Bundle;
-import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
+import wilos.presentation.assistant.ressources.ImagesService;
 import wilos.presentation.assistant.view.panels.InfoPanel;
 import wilos.presentation.assistant.view.panels.LoginPanel;
 

@@ -13,6 +13,7 @@ import java.io.IOException;
 
 import org.jdesktop.swingx.JXImagePanel;
 
+import wilos.presentation.assistant.control.ExceptionManager;
 import wilos.presentation.assistant.ressources.ImagesService;
        
 
@@ -34,7 +35,8 @@ public class ImagePanel extends JXImagePanel {
             // récupération de l'image que l'on applique au panel
             this.setImage(ImagesService.getImage(pict));
        } catch (IOException ex) {
-            ex.printStackTrace();
+			ex.printStackTrace();
+			new ExceptionManager(ex);
        }
     }    
 }

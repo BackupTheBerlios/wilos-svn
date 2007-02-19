@@ -43,7 +43,10 @@ public class ServersListParser {
 		if (!XML_File.exists()) {
 			try {
 				XML_File.createNewFile();
-			} catch (Exception e) {}
+			} catch (IOException e) {
+				e.printStackTrace();
+				new ExceptionManager(e);
+			}
 		}
 	}
 	

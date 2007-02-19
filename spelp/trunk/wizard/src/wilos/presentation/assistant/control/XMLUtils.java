@@ -44,6 +44,7 @@ private static File document ;
 			
 		}catch(XPathExpressionException xpee){
 			xpee.printStackTrace();
+    		new ExceptionManager(xpee);
 		}
 		return resultat;
 	}
