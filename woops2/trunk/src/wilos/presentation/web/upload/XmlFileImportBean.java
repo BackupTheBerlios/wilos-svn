@@ -3,7 +3,9 @@ package wilos.presentation.web.upload;
 import java.io.File;
 import java.io.IOException;
 import java.util.EventObject;
+import java.util.ResourceBundle;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -65,79 +67,104 @@ public class XmlFileImportBean {
 	}
 
 	public void uploadFileActionListener(ActionEvent event) {
+		
 		InputFile inputFile = (InputFile) event.getSource();
-		if (inputFile.getStatus() == InputFile.SAVED) {
-			fileName = inputFile.getFileInfo().getFileName();
-			contentType = inputFile.getFileInfo().getContentType();
-			setFile(inputFile.getFile());
+		
+		if(inputFile.getFile() == null && file == null)
+		{
+			ResourceBundle bundle = ResourceBundle.getBundle(
+					"wilos.resources.messages", FacesContext.getCurrentInstance()
+							.getApplication().getDefaultLocale());
+			FacesMessage message = new FacesMessage();
+			message
+					.setSummary(bundle
+							.getString("XmlFileImportBean.noFile"));
+			message.setSeverity(FacesMessage.SEVERITY_INFO);
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			facesContext.addMessage(null, message);
 		}
-
-		if (! contentType.equalsIgnoreCase("application/zip")) {
-			if (! contentType.equalsIgnoreCase("text/xml")) {
-				uploadStatus = "File type error! Expecting XML or ZIP, please select another file." ;
-				file.delete() ;
-				logger.debug("### XmlFileImportBean ### File type error (got '"+contentType+"') - Deleting file");
-				return ;
+		else
+		{
+			
+			
+			if (inputFile.getStatus() == InputFile.SAVED) {
+				fileName = inputFile.getFileInfo().getFileName();
+				contentType = inputFile.getFileInfo().getContentType();
+				setFile(inputFile.getFile());
+			}
+	
+			if (! contentType.equalsIgnoreCase("application/zip")) {
+				if (! contentType.equalsIgnoreCase("text/xml")) {
+					uploadStatus = "File type error! Expecting XML or ZIP, please select another file." ;
+					file.delete() ;
+					logger.debug("### XmlFileImportBean ### File type error (got '"+contentType+"') - Deleting file");
+					return ;
+				}
+				else {
+					uploadStatus = "XML file successfully uploaded to server!" ;
+				}
 			}
 			else {
-				uploadStatus = "XML file successfully uploaded to server!" ;
+				uploadStatus = "ZIP file successfully uploaded to server!" ;
 			}
-		}
-		else {
-			uploadStatus = "ZIP file successfully uploaded to server!" ;
-		}
-
-		if (inputFile.getStatus() == InputFile.INVALID) {
-			inputFile.getFileInfo().getException().printStackTrace();
-		}
-
-		if (inputFile.getStatus() == InputFile.SIZE_LIMIT_EXCEEDED) {
-			inputFile.getFileInfo().getException().printStackTrace();
-		}
-
-		if (inputFile.getStatus() == InputFile.UNKNOWN_SIZE) {
-			inputFile.getFileInfo().getException().printStackTrace();
-		}
-		ExternalContext extCtx = FacesContext.getCurrentInstance()
-				.getExternalContext();
-		// File destFile = new File("/upload/"+file.getName());
-		logger.debug("### fichier uploade = " + file.getPath() + " => "
-				+ file.getName() + " ###");
-		try {
-			logger.debug("### getCanonicalPath = " + file.getCanonicalPath());
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		logger.debug("### getAbsoluteFile = " + file.getAbsoluteFile());
-		logger.debug("### getRequestContextPath = "
-				+ extCtx.getRequestContextPath());
-		logger.debug("### getRequestPathInfo = " + extCtx.getRequestPathInfo());
-		extCtx.getResourceAsStream("");
-
-
-		try {
-			Process p = processService.spelpParsingXML(file);
-			// save the process
-			logger.debug("### XmlFileImportBean ### action -> id=" + p.getId());
-			/* id = */
-			this.processService.saveProcess(p);
-		} catch (Exception e) {
-			logger.error("### XmlFileImportBean ### action -> " + e);
+	
+			if (inputFile.getStatus() == InputFile.INVALID) {
+				inputFile.getFileInfo().getException().printStackTrace();
+			}
+	
+			if (inputFile.getStatus() == InputFile.SIZE_LIMIT_EXCEEDED) {
+				inputFile.getFileInfo().getException().printStackTrace();
+			}
+	
+			if (inputFile.getStatus() == InputFile.UNKNOWN_SIZE) {
+				inputFile.getFileInfo().getException().printStackTrace();
+			}
+			ExternalContext extCtx = FacesContext.getCurrentInstance()
+					.getExternalContext();
+			// File destFile = new File("/upload/"+file.getName());
+			logger.debug("### fichier uploade = " + file.getPath() + " => "
+					+ file.getName() + " ###");
+			try {
+				logger.debug("### getCanonicalPath = " + file.getCanonicalPath());
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			logger.debug("### getAbsoluteFile = " + file.getAbsoluteFile());
+			logger.debug("### getRequestContextPath = "
+					+ extCtx.getRequestContextPath());
+			logger.debug("### getRequestPathInfo = " + extCtx.getRequestPathInfo());
+			extCtx.getResourceAsStream("");
+	
+	
+			try {
+				Process p = processService.spelpParsingXML(file);
+				// save the process
+				logger.debug("### XmlFileImportBean ### action -> id=" + p.getId());
+				/* id = */
+				this.processService.saveProcess(p);
+			} catch (Exception e) {
+				logger.error("### XmlFileImportBean ### action -> " + e);
+			}
+			
+			
 		}
 	}
 
 	public void progressListener(EventObject event) {
 		InputFile file = (InputFile) event.getSource();
-		this.percent = file.getFileInfo().getPercent();
-		try {
-			if (state != null) {
-				state.render();
-			} else {
-				System.out.println("state is null");
+		if(file.getFile() != null)
+		{
+			this.percent = file.getFileInfo().getPercent();
+			try {
+				if (state != null) {
+					state.render();
+				} else {
+					System.out.println("state is null");
+				}
+	
+			} catch (RenderingException ee) {
+				System.out.println(ee.getMessage());
 			}
-
-		} catch (RenderingException ee) {
-			System.out.println(ee.getMessage());
 		}
 	}
 
