@@ -1,0 +1,34 @@
+<ice:form>
+	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1">
+		<ice:panelTabSet styleClass="componentPanelTabSetLayout">
+			<br />
+			<ice:panelTab label="#{msgs['phaseViewer.tabtitle'] }">
+				<br />
+				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2">
+					<ice:outputText value="#{msgs['viewer.concreteName']}" />
+					<ice:outputText	value="#{ConcretePhaseViewerBean.concretePhase.concreteName}" />
+				</ice:panelGrid>
+					<ice:outputText styleClass="propertyLabel" value="#{msgs['component.project.projectroles.title']}" />
+					<ice:panelStack id="panelStack_manageableProjects" selectedPanel="#{ConcreteRoleAffectationBean.selectRolesView}">
+						<ice:panelGroup id="roles_view">
+							<ice:dataTable value="" var="">
+								<ice:columns value="#{ConcreteRoleAffectationBean.concreteRolesDescriptorsList}"
+									var="concreteRD">
+					    			<f:facet name="header">
+					       				 <ice:outputText value="#{concreteRD.concreteName}"/>
+					    			</f:facet>
+					    			<ice:panelGroup>
+			        				<ice:selectBooleanCheckbox partialSubmit="false" value="#{concreteRD.affected}" disabled="#{concreteRD.not_allowed}"/>
+				        			</ice:panelGroup>
+								</ice:columns>
+							</ice:dataTable>
+						<ice:commandButton value="#{msgs['component.project.projectroles.saveButton']}" action="#{ConcreteRoleAffectationBean.saveConcreteRoleAffectation}" styleClass="smallbutton"/>
+						</ice:panelGroup>
+						<ice:panelGroup id="no_roles_view">							
+							<ice:outputText value="#{msgs['component.project.projectroles.norecord']}"/>
+						</ice:panelGroup>
+					</ice:panelStack>
+			</ice:panelTab>
+		</ice:panelTabSet>
+	</ice:panelGrid>
+</ice:form>

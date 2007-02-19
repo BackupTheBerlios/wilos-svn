@@ -1,0 +1,44 @@
+<ice:form id="navigation">
+<!-- ComboBox -->
+	<!-- The projects combobox -->
+	<ice:selectOneMenu partialSubmit="true" value="#{TreeBean.projectId}" valueChangeListener="#{TreeBean.changeTreeActionListener}">
+		<f:selectItems value="#{TreeBean.projects}" />
+	</ice:selectOneMenu>
+	<br />
+	<br />
+
+	<!-- Check box - Concrete task filter -->
+	<!-- <ice:outputText visible="#{TreeBean.loadCheckBox}" styleClass="propertyLabel"
+		value="#{msgs['navigation.checkbox.label']}" />
+	<ice:selectBooleanCheckbox
+			rendered ="#{TreeBean.loadCheckBox}"
+			partialSubmit="true"
+			value="#{TreeBean.affectedTaskFilter}"
+		 	valueChangeListener="#{TreeBean.filterTreeActionListener}"/>
+	<br />
+	<br /> -->
+
+	<!-- ScrollBar -->
+	<div class="navTree">
+	<!-- Tree - The process tree with its taskDescriptors -->
+	<ice:tree id="tree" value="#{TreeBean.model}" var="item"
+		hideRootNode="#{TreeBean.loadTree}" hideNavigation="false"
+		imageDir="images/tree/">
+		<ice:treeNode>
+			<f:facet name="icon">
+				<ice:panelGroup style="display: inline">
+					<h:graphicImage value="#{item.userObject.icon}" />
+				</ice:panelGroup>
+			</f:facet>
+			<f:facet name="content">
+				<ice:panelGroup style="display: inline">
+					<ice:commandLink value="#{item.userObject.text}"
+						actionListener="#{TreeBean.selectNodeActionListener}">
+						<f:param name="nodeId" value="#{item.userObject.id}" />
+						<f:param name="pageId" value="#{item.userObject.pageId}" />
+					</ice:commandLink>
+				</ice:panelGroup>
+			</f:facet>
+		</ice:treeNode>
+	</ice:tree></div>
+</ice:form>
