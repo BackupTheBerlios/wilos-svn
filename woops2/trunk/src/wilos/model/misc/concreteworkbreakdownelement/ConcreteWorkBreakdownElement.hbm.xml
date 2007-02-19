@@ -10,6 +10,9 @@
 		table="concreteworkbreakdownelement" lazy="true">
 		<key column="concreteworkbreakdownelement_id"></key>
 
+		<property name="isInUsed" type="java.lang.Boolean"
+			column="isInUsed" length="1" />
+
 		<property name="plannedStartingDate" type="java.util.Date"
 			column="plannedstartingdate" length="256" />
 

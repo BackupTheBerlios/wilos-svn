@@ -17,7 +17,8 @@ public class ConcretePhaseNode extends DefaultMutableTreeNode {
 
 	private ConcretePhase concretePhase;
 
-	public ConcretePhaseNode(ConcretePhase _concretePhase, Set<RoleDescriptor> _roleDescriptors) {
+	public ConcretePhaseNode(ConcretePhase _concretePhase,
+			Set<RoleDescriptor> _roleDescriptors) {
 		super();
 		this.concretePhase = _concretePhase;
 
@@ -36,14 +37,21 @@ public class ConcretePhaseNode extends DefaultMutableTreeNode {
 		for (ConcreteBreakdownElement concreteBreakdownElement : this.concretePhase
 				.getConcreteBreakdownElements()) {
 			if (concreteBreakdownElement instanceof ConcreteIteration) {
-				this.add(new ConcreteIterationNode((ConcreteIteration) concreteBreakdownElement, _roleDescriptors));
-			}
-			else if (concreteBreakdownElement instanceof ConcreteActivity) {
-				this.add(new ConcreteActivityNode((ConcreteActivity) concreteBreakdownElement, _roleDescriptors));
-			}
-			else if (concreteBreakdownElement instanceof ConcreteTaskDescriptor) {
-				this.add(new ConcreteTaskDescriptorNode((ConcreteTaskDescriptor) concreteBreakdownElement,
-								_roleDescriptors));
+				ConcreteIteration ci = (ConcreteIteration) concreteBreakdownElement;
+				if (ci.getIsInUsed()) {
+					this.add(new ConcreteIterationNode(ci, _roleDescriptors));
+				}
+			} else if (concreteBreakdownElement instanceof ConcreteActivity) {
+				ConcreteActivity ca = (ConcreteActivity) concreteBreakdownElement;
+				if (ca.getIsInUsed()) {
+					this.add(new ConcreteActivityNode(ca, _roleDescriptors));
+				}
+			} else if (concreteBreakdownElement instanceof ConcreteTaskDescriptor) {
+				ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) concreteBreakdownElement;
+				if (ctd.getIsInUsed()) {
+					this.add(new ConcreteTaskDescriptorNode(ctd,
+							_roleDescriptors));
+				}
 			}
 		}
 	}

@@ -15,7 +15,8 @@ public class ConcreteActivityNode extends DefaultMutableTreeNode {
 
 	private ConcreteActivity concreteActivity;
 
-	public ConcreteActivityNode(ConcreteActivity _concreteActivity, Set<RoleDescriptor> _roleDescriptors) {
+	public ConcreteActivityNode(ConcreteActivity _concreteActivity,
+			Set<RoleDescriptor> _roleDescriptors) {
 		super();
 		this.concreteActivity = _concreteActivity;
 
@@ -34,12 +35,16 @@ public class ConcreteActivityNode extends DefaultMutableTreeNode {
 		for (ConcreteBreakdownElement concreteBreakdownElement : this.concreteActivity
 				.getConcreteBreakdownElements()) {
 			if (concreteBreakdownElement instanceof ConcreteActivity) {
-				this.add(new ConcreteActivityNode(
-						(ConcreteActivity) concreteBreakdownElement, _roleDescriptors));
-			}
-			else if (concreteBreakdownElement instanceof ConcreteTaskDescriptor) {
-				this.add(new ConcreteTaskDescriptorNode((ConcreteTaskDescriptor) concreteBreakdownElement,
-								_roleDescriptors));
+				ConcreteActivity ca = (ConcreteActivity) concreteBreakdownElement;
+				if (ca.getIsInUsed()) {
+					this.add(new ConcreteActivityNode(ca, _roleDescriptors));
+				}
+			} else if (concreteBreakdownElement instanceof ConcreteTaskDescriptor) {
+				ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) concreteBreakdownElement;
+				if (ctd.getIsInUsed()) {
+					this.add(new ConcreteTaskDescriptorNode(ctd,
+							_roleDescriptors));
+				}
 			}
 		}
 	}

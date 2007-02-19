@@ -20,6 +20,8 @@ import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 		implements Cloneable {
 
+	private boolean isInUsed;
+
 	private Date plannedStartingDate;
 
 	private Date plannedFinishingDate;
@@ -29,11 +31,12 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 	private WorkBreakdownElement workBreakdownElement;
 
 	private Set<ConcreteWorkOrder> concretePredecessors;
-	
+
 	private Set<ConcreteWorkOrder> concreteSuccessors;
-	
+
 	public ConcreteWorkBreakdownElement() {
 		super();
+		this.isInUsed = true;
 		this.concretePredecessors = new HashSet<ConcreteWorkOrder>();
 		this.concreteSuccessors = new HashSet<ConcreteWorkOrder>();
 	}
@@ -52,13 +55,19 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 		}
 		ConcreteWorkBreakdownElement concreteworkBreakdownElement = (ConcreteWorkBreakdownElement) obj;
 		return new EqualsBuilder().appendSuper(
-				super.equals(concreteworkBreakdownElement)).
-				append(this.plannedFinishingDate, concreteworkBreakdownElement.plannedFinishingDate).
-				append(this.plannedStartingDate, concreteworkBreakdownElement.plannedStartingDate).
-				append(this.plannedTime, concreteworkBreakdownElement.plannedTime).
-				append(this.concretePredecessors, concreteworkBreakdownElement.concretePredecessors).
-				append(this.concreteSuccessors,concreteworkBreakdownElement.concreteSuccessors).
-				append(this.workBreakdownElement, concreteworkBreakdownElement.workBreakdownElement)
+				super.equals(concreteworkBreakdownElement)).append(
+				this.isInUsed, concreteworkBreakdownElement.isInUsed).append(
+				this.plannedFinishingDate,
+				concreteworkBreakdownElement.plannedFinishingDate).append(
+				this.plannedStartingDate,
+				concreteworkBreakdownElement.plannedStartingDate).append(
+				this.plannedTime, concreteworkBreakdownElement.plannedTime)
+				.append(this.concretePredecessors,
+						concreteworkBreakdownElement.concretePredecessors)
+				.append(this.concreteSuccessors,
+						concreteworkBreakdownElement.concreteSuccessors)
+				.append(this.workBreakdownElement,
+						concreteworkBreakdownElement.workBreakdownElement)
 				.isEquals();
 	}
 
@@ -69,10 +78,9 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
-				.append(this.plannedFinishingDate).append(
-						this.plannedStartingDate).append(this.plannedTime)
-				.append(this.workBreakdownElement)
-				.toHashCode();
+				.append(this.isInUsed).append(this.plannedFinishingDate)
+				.append(this.plannedStartingDate).append(this.plannedTime)
+				.append(this.workBreakdownElement).toHashCode();
 	}
 
 	/*
@@ -94,6 +102,7 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 	protected void copy(
 			final ConcreteWorkBreakdownElement _concreteWorkBreakdownElement) {
 		super.copy(_concreteWorkBreakdownElement);
+		this.isInUsed = _concreteWorkBreakdownElement.getIsInUsed();
 		this.workBreakdownElement = _concreteWorkBreakdownElement
 				.getWorkBreakdownElement();
 		this.plannedFinishingDate = _concreteWorkBreakdownElement
@@ -101,8 +110,10 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 		this.plannedStartingDate = _concreteWorkBreakdownElement
 				.getPlannedStartingDate();
 		this.plannedTime = _concreteWorkBreakdownElement.getPlannedTime();
-		this.concretePredecessors.addAll(_concreteWorkBreakdownElement.getConcretePredecessors());
-		this.concreteSuccessors.addAll(_concreteWorkBreakdownElement.getConcreteSuccessors());
+		this.concretePredecessors.addAll(_concreteWorkBreakdownElement
+				.getConcretePredecessors());
+		this.concreteSuccessors.addAll(_concreteWorkBreakdownElement
+				.getConcreteSuccessors());
 	}
 
 	/*
@@ -121,22 +132,23 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 		_workbreakdownElement.getConcreteWorkBreakdownElements().remove(this);
 		this.workBreakdownElement = null;
 	}
-	
+
 	/*
 	 * Relation between ConcreteWorkBreakdownElement and ConcreteWorkOrder.
 	 *
 	 */
-		
+
 	/**
-	 * Add a concreteSuccesor to the concreteSuccessors collection of a concreteWorkOrder
-	 * 
+	 * Add a concreteSuccesor to the concreteSuccessors collection of a
+	 * concreteWorkOrder
+	 *
 	 * @param _concreteWorkOrder
 	 */
 	public void addConcreteSuccessor(ConcreteWorkOrder _concreteWorkOrder) {
 		this.concreteSuccessors.add(_concreteWorkOrder);
 		_concreteWorkOrder.setConcretePredecessor(this);
 	}
-	
+
 	/**
 	 * Remove from a ConcreteWbde one of these concreteSuccessor.
 	 *
@@ -147,14 +159,16 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 		_concreteWorkOrder.setConcretePredecessor(null);
 		this.concreteSuccessors.remove(_concreteWorkOrder);
 	}
-	
+
 	/**
-	 * Add a concreteSuccessors collection into the ConcreteWorkOrder successors collection.
+	 * Add a concreteSuccessors collection into the ConcreteWorkOrder successors
+	 * collection.
 	 *
 	 * @param _concreteWorkOrder
 	 *            The set of concreteSuccessors to add.
-	 */	
-	public void addAllConcreteSuccessors(Set<ConcreteWorkOrder> _concreteWorkOrder) {
+	 */
+	public void addAllConcreteSuccessors(
+			Set<ConcreteWorkOrder> _concreteWorkOrder) {
 		for (ConcreteWorkOrder cwo : _concreteWorkOrder) {
 			this.addConcreteSuccessor(cwo);
 		}
@@ -163,15 +177,16 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 	/**
 	 * Remove from a ConcreteWbde all its ConcreteWorkOrder successors.
 	 *
-	 */	
+	 */
 	public void removeAllConcreteSuccessors() {
 		for (ConcreteWorkOrder cwo : this.getConcreteSuccessors())
 			cwo.setConcretePredecessor(null);
-			this.getConcreteSuccessors().clear();
+		this.getConcreteSuccessors().clear();
 	}
-	
+
 	/**
-	 * Add a concretePredecessor into the ConcreteWorkOrder predecessors collection.
+	 * Add a concretePredecessor into the ConcreteWorkOrder predecessors
+	 * collection.
 	 *
 	 * @param _concreteWorkOrder
 	 *            The concretePredecessor to add.
@@ -180,7 +195,7 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 		this.concretePredecessors.add(_concreteWorkOrder);
 		_concreteWorkOrder.setConcreteSuccessor(this);
 	}
-	
+
 	/**
 	 * Remove from a ConcreteWbde one of these concretePredecessor.
 	 *
@@ -193,12 +208,14 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 	}
 
 	/**
-	 * Add a concretePredecessor collection into the ConcreteWorkOrder predecessors collection.
+	 * Add a concretePredecessor collection into the ConcreteWorkOrder
+	 * predecessors collection.
 	 *
 	 * @param _concreteWorkOrder
 	 *            The set of concretePredecessors to add.
 	 */
-	public void addAllConcretePredecessors(Set<ConcreteWorkOrder> _concreteWorkOrder) {
+	public void addAllConcretePredecessors(
+			Set<ConcreteWorkOrder> _concreteWorkOrder) {
 		for (ConcreteWorkOrder cwo : _concreteWorkOrder) {
 			this.addConcretePredecessor(cwo);
 		}
@@ -211,9 +228,9 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 	public void removeAllConcretePredecessors() {
 		for (ConcreteWorkOrder cwo : this.getConcretePredecessors())
 			cwo.setConcreteSuccessor(null);
-			this.getConcretePredecessors().clear();
+		this.getConcretePredecessors().clear();
 	}
-	
+
 	public WorkBreakdownElement getWorkBreakdownElement() {
 		return workBreakdownElement;
 	}
@@ -255,9 +272,11 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 	}
 
 	/**
-	 * @param concretePredecessors the concretePredecessors to set
+	 * @param concretePredecessors
+	 *            the concretePredecessors to set
 	 */
-	public void setConcretePredecessors(Set<ConcreteWorkOrder> _concretePredecessors) {
+	public void setConcretePredecessors(
+			Set<ConcreteWorkOrder> _concretePredecessors) {
 		this.concretePredecessors = _concretePredecessors;
 	}
 
@@ -269,9 +288,25 @@ public class ConcreteWorkBreakdownElement extends ConcreteBreakdownElement
 	}
 
 	/**
-	 * @param concreteSuccessors the concreteSuccessors to set
+	 * @param concreteSuccessors
+	 *            the concreteSuccessors to set
 	 */
 	public void setConcreteSuccessors(Set<ConcreteWorkOrder> _concreteSuccessors) {
 		this.concreteSuccessors = _concreteSuccessors;
+	}
+
+	/**
+	 * @return the isInUsed
+	 */
+	public boolean getIsInUsed() {
+		return isInUsed;
+	}
+
+	/**
+	 * @param isInUsed
+	 *            the isInUsed to set
+	 */
+	public void setIsInUsed(boolean _isInUsed) {
+		this.isInUsed = _isInUsed;
 	}
 }
