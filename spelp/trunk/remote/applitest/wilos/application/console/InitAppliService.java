@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService;
-import wilos.business.services.misc.wilosuser.ParticipantService;
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.business.util.Security;
 import wilos.hibernate.misc.concreterole.ConcreteRoleDescriptorDao;
@@ -21,7 +20,6 @@ import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.process.Process;
-import wilos.model.spem2.task.TaskDescriptor;
 
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class InitAppliService {
@@ -58,7 +56,7 @@ public class InitAppliService {
 
 		processService.projectInstanciation(project);
 
-		String s2 = processService.getProcessDao().getProcessFromGuid("_0uyGoMlgEdmt3adZL5Dmdw").getId();
+		/*String s2 = processService.getProcessDao().getProcessFromGuid("_0uyGoMlgEdmt3adZL5Dmdw").getId();
 		openup = processDao.getProcess(s2);
 
 		Project project2 = new Project();
@@ -70,7 +68,7 @@ public class InitAppliService {
 		processService.projectInstanciation(project2);
 		
 		project2 = processService.getProjectDao().getProject(project2.getId());
-		project= processService.getProjectDao().getProject(project.getId());
+		project= processService.getProjectDao().getProject(project.getId());*/
 		
 		// creation du participant 	
 		Participant pa = new Participant();

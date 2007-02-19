@@ -356,6 +356,12 @@
 		<property name="participantDao" ref="ParticipantDao" />
 		<property name="processService" ref="ProcessService" />
 	</bean>
+	
+	<bean id="ConcreteRoleAffectationService"
+		class="wilos.business.services.misc.role.ConcreteRoleAffectationService">
+		<property name="participantDao" ref="ParticipantDao" />
+		<property name="concreteRoleDescriptorService" ref="ConcreteRoleDescriptorService" />
+	</bean>
 
 	<!-- =============================================================== -->
 	<!-- ====================== WOOPS2 Service ========================= -->
@@ -373,6 +379,8 @@
 		<property name="breakdownElementDao" ref="BreakdownElementDao" />
 		<property name="breakdownElementService"
 			ref="BreakdownElementService" />
+		<property name="workBreakdownElementService"
+			ref="WorkBreakdownElementService" />
 		<property name="workBreakdownElementDao"
 			ref="WorkBreakdownElementDao" />
 		<property name="phaseDao" ref="PhaseDao" />
@@ -383,10 +391,14 @@
 		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
 		<property name="roleDescriptorService"
 			ref="RoleDescriptorService" />
+		<property name="roleDefinitionService"
+			ref="RoleDefinitionService" />
 		<property name="taskDefinitionDao" ref="TaskDefinitionDao" />
 		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
 		<property name="taskDescriptorService"
 			ref="TaskDescriptorService" />
+		<property name="taskDefinitionService"
+			ref="TaskDefinitionService" />
 		<property name="elementDao" ref="ElementDao" />
 		<property name="projectDao" ref="ProjectDao" />
 		<property name="stepDao" ref="StepDao" />
@@ -399,7 +411,12 @@
 		class="wilos.business.services.spem2.breakdownelement.BreakdownElementService">
 		<property name="concreteBreakdownElementDao"
 			ref="ConcreteBreakdownElementDao" />
-		<property name="activityService" ref="ActivityService" />
+	</bean>
+	
+	<bean id="WorkBreakdownElementService"
+		class="wilos.business.services.spem2.workbreakdownelement.WorkBreakdownElementService">
+		<property name="concreteWorkBreakdownElementDao"
+			ref="ConcreteWorkBreakdownElementDao" />
 	</bean>
 
 	<bean id="ActivityService"
@@ -418,12 +435,22 @@
 			ref="ConcreteRoleDescriptorDao" />
 		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
 	</bean>
+	
+	<bean id="RoleDefinitionService"
+		class="wilos.business.services.spem2.role.RoleDefinitionService">
+		<property name="roleDefinitionDao" ref="RoleDefinitionDao" />
+	</bean>
 
 	<bean id="TaskDescriptorService"
 		class="wilos.business.services.spem2.task.TaskDescriptorService">
 		<property name="concreteTaskDescriptorDao"
 			ref="ConcreteTaskDescriptorDao" />
 		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
+	</bean>
+	
+	<bean id="TaskDefinitionService"
+		class="wilos.business.services.spem2.task.TaskDefinitionService">
+		<property name="taskDefinitionDao" ref="TaskDefinitionDao" />
 	</bean>
 
 	<bean id="PhaseService"
