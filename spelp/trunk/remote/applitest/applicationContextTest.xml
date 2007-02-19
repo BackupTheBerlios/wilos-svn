@@ -18,8 +18,8 @@
 			<value>org.gjt.mm.mysql.Driver</value>
 		</property>
 		<property name="url">
-			<value>jdbc:mysql://127.0.0.1/wilos</value>
-		</property>
+			<value>jdbc:mysql://127.0.0.1/wilos?useUnicode=true&amp;characterEncoding=UTF-8</value>
+		</property>		
 		<property name="username">
 			<value>root</value>
 		</property>
@@ -500,6 +500,18 @@
 	<bean id="ConcreteBreakdownElementService"
 		class="wilos.business.services.misc.concretebreakdownelement.ConcreteBreakdownElementService">
 		<property name="concreteBreakdownElementDao" ref="ConcreteBreakdownElementDao" />
+	</bean>
+	
+	<!-- Service de test -->
+	<bean id="InitAppliService"
+		class="wilos.application.console.InitAppliService">
+		<property name="processService" ref="ProcessService" />
+		<property name="projectDao" ref ="ProjectDao" />
+		<property name="processDao" ref ="ProcessDao" />
+		<property name="participantDao" ref ="ParticipantDao" />
+		<property name="concreteRoleDescriptorDao" ref ="ConcreteRoleDescriptorDao" />
+		<property name="concreteTaskDescriptorDao" ref ="ConcreteTaskDescriptorDao" />
+		<property name="concreteTaskDescriptorService" ref ="ConcreteTaskDescriptorService" />
 	</bean>
 
 </beans>
