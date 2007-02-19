@@ -4,13 +4,20 @@ import java.util.List;
 
 import wilos.hibernate.misc.concretebreakdownelement.ConcreteBreakdownElementDao;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
+import wilos.model.misc.project.Project;
 
 public class ConcreteBreakdownElementService {
 
 	ConcreteBreakdownElementDao concreteBreakdownElementDao;
 
-	public List<ConcreteBreakdownElement> getAllBreakdownElementsFromProject(String _projectId) {
+	public List<ConcreteBreakdownElement> getAllConcreteBreakdownElementsFromProject(String _projectId) {
 		return this.concreteBreakdownElementDao.getAllConcreteBreakdownElements();
+	}
+
+	public void saveAllConcreteBreakdownElementsForAProject(Project _project){
+		for(ConcreteBreakdownElement cbde : _project.getConcreteBreakdownElements()){
+			this.concreteBreakdownElementDao.saveOrUpdateConcreteBreakdownElement(cbde);
+		}
 	}
 
 	/**

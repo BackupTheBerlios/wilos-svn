@@ -7,7 +7,7 @@
 					<ice:inputText id="nom" value="#{ProjectBean.project.concreteName}" required="false" />
 
 					<ice:outputText value="#{msgs['component.projectcreate.description']}" />
-					<ice:inputTextarea id="description" value="#{ProjectBean.project.description}" required="false" cols="60" rows="7" />
+					<ice:inputTextarea id="description" value="#{ProjectBean.project.description}" required="false"  />
 
 					<ice:outputText
 						value="#{msgs['component.projectcreate.launchingdate']}">
