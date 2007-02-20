@@ -138,7 +138,7 @@ public class ProjectBean {
 		}
 		FacesContext context = FacesContext.getCurrentInstance();
 		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");
-		tb.buildModel(true);
+		tb.refreshProjectTree();
 		return "" ;
 	}
 
