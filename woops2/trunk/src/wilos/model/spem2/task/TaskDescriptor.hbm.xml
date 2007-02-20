@@ -18,6 +18,7 @@
 		</many-to-one>
 		
 		<set name="additionalRoles" table="perform" lazy="true">
+			<cache usage="read-write"/>
 			<key column="taskdescriptor_id"></key>
 			<many-to-many class="wilos.model.spem2.role.RoleDescriptor"
 				column="roledescriptor_id">
@@ -25,6 +26,7 @@
 		</set>
 		
 		<set name="concreteTaskDescriptors" lazy="true">
+			<cache usage="read-write"/>
 			<key column="taskdescriptor_id" />
 			<one-to-many class="wilos.model.misc.concretetask.ConcreteTaskDescriptor"></one-to-many>
 		</set>

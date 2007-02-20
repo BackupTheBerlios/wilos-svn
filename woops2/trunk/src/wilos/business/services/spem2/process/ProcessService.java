@@ -54,6 +54,7 @@ import wilos.model.spem2.task.TaskDescriptor;
  * ProcessService is a transactional class, that manage operations about
  * process, requested by web pages (?)
  *
+ * @author garwind
  * @author eperico
  * @author soosuske
  * @author Sebastien

@@ -11,6 +11,7 @@
 		<key column="process_id"></key>
 
 		<set name="projects" lazy="true">
+			<cache usage="read-write"/>
 			<key column="process_id" />
 			<one-to-many class="wilos.model.misc.project.Project"></one-to-many>
 		</set>

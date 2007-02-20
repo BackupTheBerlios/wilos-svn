@@ -13,6 +13,7 @@
 		
 		<!-- Associations -->
 		<set name="breakdownElements" table="nesting" lazy="true" inverse="true">
+			<cache usage="read-write"/>
 			<key column="superactivity_id"></key>
 			<many-to-many class="wilos.model.spem2.breakdownelement.BreakdownElement"
 				column="breakdownelement_id">
@@ -21,12 +22,14 @@
 		
 		<!-- ConcreteActivities -->
 		<set name="concreteActivities" lazy="true">
+			<cache usage="read-write"/>
 			<key column="activity_id"></key>
 			<one-to-many class="wilos.model.misc.concreteactivity.ConcreteActivity" />
 		</set>
 		
 		<!-- Guidances -->
 		<set name="guidances" table="guidanceactivity" lazy="true" inverse="true">
+			<cache usage="read-write"/>
 			<key column="activity_id"></key>
 			<many-to-many class="wilos.model.spem2.guide.Guidance"
 				column="guidance_id">
