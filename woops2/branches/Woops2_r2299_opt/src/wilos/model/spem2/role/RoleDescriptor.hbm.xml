@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping>
+	<joined-subclass name="wilos.model.spem2.role.RoleDescriptor"
+		extends="wilos.model.spem2.breakdownelement.BreakdownElement"
+		table="roledescriptor" lazy="false">
+		<key column="roledescriptor_id"></key>
+
+		<many-to-one name="roleDefinition" class="wilos.model.spem2.role.RoleDefinition"
+			column="roledefinition_id" lazy="false">
+		</many-to-one>
+
+		<set name="primaryTasks" lazy="true">
+			<key column="roledescriptor_id" />
+			<one-to-many  class="wilos.model.spem2.task.TaskDescriptor"></one-to-many>
+		</set>
+
+		<set name="additionalTasks" table="perform" lazy="true" inverse="true">
+			<key column="roledescriptor_id"></key>
+			<many-to-many class="wilos.model.spem2.task.TaskDescriptor"
+				column="taskdescriptor_id">
+			</many-to-many>
+		</set>
+
+		<set name="concreteRoleDescriptors" lazy="true">
+			<key column="roledescriptor_id" />
+			<one-to-many class="wilos.model.misc.concreterole.ConcreteRoleDescriptor"></one-to-many>
+		</set>
+
+	</joined-subclass>
+</hibernate-mapping>
