@@ -162,6 +162,16 @@
 			<value>#{WebSessionService}</value>
 		</managed-property>
 	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>ProcessBean</managed-bean-name>
+		<managed-bean-class>wilos.presentation.web.process.ProcessBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>processService</property-name>
+			<value>#{ProcessService}</value>
+		</managed-property>
+	</managed-bean>
 
 	<!-- =============================================================== -->
 	<!-- ========================= PSI2 Bean =========================== -->
