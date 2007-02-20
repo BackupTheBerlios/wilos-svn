@@ -99,13 +99,14 @@ public class ConcreteBreakdownElementTest extends TestCase {
 	 */
 	public void testAddSuperConcreteActivity() {
 		// Rk: the setUp method is called here.
-		
+		this.concreteBreakdownElement.removeSuperConcreteActivity(this.concreteActivity);
+		this.concreteBreakdownElement.addSuperConcreteActivity(this.concreteActivity);
 		assertNotNull(this.concreteBreakdownElement.getSuperConcreteActivities());
 		assertTrue(this.concreteBreakdownElement.getSuperConcreteActivities().size() == 1);
 		assertTrue(this.concreteBreakdownElement.getSuperConcreteActivities().contains(this.concreteActivity));
 
 		assertNotNull(this.concreteActivity.getConcreteBreakdownElements());
-		assertTrue(this.concreteActivity.getConcreteBreakdownElements().size() == 1);
+		assertTrue(this.concreteActivity.getConcreteBreakdownElements().size() == 2);
 		assertTrue(this.concreteActivity.getConcreteBreakdownElements().contains(this.concreteBreakdownElement));
 		
 		// Rk: the tearDown method is called here.
@@ -119,6 +120,8 @@ public class ConcreteBreakdownElementTest extends TestCase {
 
 		this.concreteBreakdownElement.removeSuperConcreteActivity(this.concreteActivity);
 		assertTrue(this.concreteBreakdownElement.getSuperConcreteActivities().size() == 0);
+		assertFalse(this.concreteActivity.getConcreteBreakdownElements().contains(this.concreteBreakdownElement));
+		assertTrue(this.concreteActivity.getConcreteBreakdownElements().size() == 1);
 		
 		ConcreteActivity superConcreteActivity = new ConcreteActivity();
 		superConcreteActivity.setConcreteName("Name");
@@ -126,6 +129,8 @@ public class ConcreteBreakdownElementTest extends TestCase {
 		assertNotNull(this.concreteBreakdownElement.getSuperConcreteActivities());
 		assertNotNull(superConcreteActivity.getConcreteBreakdownElements());
 
+		this.concreteBreakdownElement.addSuperConcreteActivity(superConcreteActivity);
+		assertTrue(this.concreteBreakdownElement.getSuperConcreteActivities().contains(superConcreteActivity));
 		this.concreteBreakdownElement.removeSuperConcreteActivity(superConcreteActivity);
 		assertTrue(this.concreteBreakdownElement.getSuperConcreteActivities().size() == 0);
 
@@ -171,6 +176,8 @@ public class ConcreteBreakdownElementTest extends TestCase {
 
 		this.concreteBreakdownElement.removeSuperConcreteActivity(this.concreteActivity);
 		assertEquals(0, this.concreteBreakdownElement.getSuperConcreteActivities().size());
+		assertTrue(this.concreteActivity.getConcreteBreakdownElements().size() == 1);
+		assertFalse(this.concreteActivity.getConcreteBreakdownElements().contains(this.concreteBreakdownElement));
 		
 		ConcreteActivity cAct = new ConcreteActivity() ;
 		cAct.setConcreteName("a name");
