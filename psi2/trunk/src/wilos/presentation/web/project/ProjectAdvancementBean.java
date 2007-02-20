@@ -59,6 +59,8 @@ public class ProjectAdvancementBean {
 
 	private boolean selected_projectAdvancement_view ;
 
+	private boolean projectModified;
+
 	/**
 	 * Constructor.
 	 * 
@@ -68,6 +70,15 @@ public class ProjectAdvancementBean {
 		this.displayContent = new ArrayList<HashMap<String, Object>>() ;
 		this.indentationContent = new HashMap<String, String>() ;
 		this.advancementTimes = new HashMap<String, Double>() ;
+	}
+	
+	/**
+	 * put the attribut project modified to true which force the project table to be recalculated
+	 *
+	 */
+	public void refreshProjectTable()
+	{
+		this.projectModified = true;
 	}
 
 	/**
@@ -297,13 +308,15 @@ public class ProjectAdvancementBean {
 	public ArrayList<HashMap<String, Object>> getDisplayContent() {
 		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID) ;
 		this.project = this.projectService.getProject(projectId) ;
-		if(this.projectViewedId == null || projectViewedId != projectId){
+		if(this.projectViewedId == null || projectViewedId != projectId || this.projectModified){
 			projectViewedId = projectId ;
 			this.displayContent.clear() ;
-			this.needIndentation = false ;
+			this.indentationContent.clear();
 			this.displayContent.addAll(this.retrieveHierarchicalItems(this.project)) ;
+			this.needIndentation = false ;
 			this.needIndentation = true ;
 		}
+		this.projectModified = false;
 		return this.displayContent ;
 	}
 

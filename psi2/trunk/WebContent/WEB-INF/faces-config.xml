@@ -282,6 +282,18 @@
 			<property-name>concretePhaseService</property-name>
 			<value>#{ConcretePhaseService}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>concreteBreakdownElementService</property-name>
+			<value>#{ConcreteBreakdownElementService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -294,6 +306,18 @@
 			<property-name>concreteActivityService</property-name>
 			<value>#{ConcreteActivityService}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>concreteBreakdownElementService</property-name>
+			<value>#{ConcreteBreakdownElementService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -305,6 +329,18 @@
 		<managed-property>
 			<property-name>concreteIterationService</property-name>
 			<value>#{ConcreteIterationService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>concreteBreakdownElementService</property-name>
+			<value>#{ConcreteBreakdownElementService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
 		</managed-property>
 	</managed-bean>
 
@@ -321,6 +357,10 @@
 		<managed-property>
 			<property-name>concreteBreakdownElementService</property-name>
 			<value>#{ConcreteBreakdownElementService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
 		</managed-property>
 	</managed-bean>
 

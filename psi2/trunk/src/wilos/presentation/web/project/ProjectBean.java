@@ -169,6 +169,11 @@ public class ProjectBean {
 		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver()
 				.resolveVariable(context, "TreeBean");
 		tb.refreshProjectTree();
+		
+		ProjectAdvancementBean pab = (ProjectAdvancementBean) context.getApplication().getVariableResolver()
+		.resolveVariable(context, "ProjectAdvancementBean");
+		pab.refreshProjectTable();
+		
 		return "";
 	}
 
