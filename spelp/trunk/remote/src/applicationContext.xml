@@ -21,7 +21,7 @@
 			<value>jdbc:mysql://127.0.0.1/wilos?useUnicode=true&amp;characterEncoding=UTF-8</value>
 		</property>
 		<property name="username">
-			<value>wilos</value>
+			<value>root</value>
 		</property>
 		<property name="password">
 			<value></value>
