@@ -1,13 +1,11 @@
 package wilos.presentation.web.tree;
 
-import java.util.Set;
-
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
-import wilos.model.spem2.role.RoleDescriptor;
 
 public class ConcreteActivityNode extends DefaultMutableTreeNode {
 
@@ -16,7 +14,7 @@ public class ConcreteActivityNode extends DefaultMutableTreeNode {
 	private ConcreteActivity concreteActivity;
 
 	public ConcreteActivityNode(ConcreteActivity _concreteActivity,
-			Set<RoleDescriptor> _roleDescriptors) {
+			boolean _isConcreteTaskDescriptorsTree) {
 		super();
 		this.concreteActivity = _concreteActivity;
 
@@ -37,13 +35,20 @@ public class ConcreteActivityNode extends DefaultMutableTreeNode {
 			if (concreteBreakdownElement instanceof ConcreteActivity) {
 				ConcreteActivity ca = (ConcreteActivity) concreteBreakdownElement;
 				if (ca.getIsInUsed()) {
-					this.add(new ConcreteActivityNode(ca, _roleDescriptors));
+					this.add(new ConcreteActivityNode(ca,
+							_isConcreteTaskDescriptorsTree));
 				}
-			} else if (concreteBreakdownElement instanceof ConcreteTaskDescriptor) {
-				ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) concreteBreakdownElement;
-				if (ctd.getIsInUsed()) {
-					this.add(new ConcreteTaskDescriptorNode(ctd,
-							_roleDescriptors));
+			} else if (_isConcreteTaskDescriptorsTree) {
+				if (concreteBreakdownElement instanceof ConcreteTaskDescriptor) {
+					ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) concreteBreakdownElement;
+					if (ctd.getIsInUsed()) {
+						this.add(new ConcreteTaskDescriptorNode(ctd));
+					}
+				}
+			} else {
+				if (concreteBreakdownElement instanceof ConcreteRoleDescriptor) {
+					this.add(new ConcreteRoleDescriptorNode(
+									(ConcreteRoleDescriptor) concreteBreakdownElement));
 				}
 			}
 		}

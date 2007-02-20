@@ -1,11 +1,8 @@
 package wilos.presentation.web.tree;
 
-import java.util.Set;
-
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
-import wilos.model.spem2.role.RoleDescriptor;
 import wilos.utils.Constantes.State;
 
 public class ConcreteTaskDescriptorNode extends DefaultMutableTreeNode {
@@ -19,8 +16,7 @@ public class ConcreteTaskDescriptorNode extends DefaultMutableTreeNode {
 	 * @param _parentTree
 	 */
 	public ConcreteTaskDescriptorNode(
-			ConcreteTaskDescriptor _concreteTaskDescriptor,
-			Set<RoleDescriptor> roleDescriptors) {
+			ConcreteTaskDescriptor _concreteTaskDescriptor) {
 		super();
 		WilosObjectNode iceUserObject = new WilosObjectNode(this);
 		this.setUserObject(iceUserObject);

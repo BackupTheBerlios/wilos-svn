@@ -6,12 +6,12 @@ import com.icesoft.faces.component.tree.IceUserObject;
 
 /**
  * Extend the IceUserObject in order to add object id, bean name and page Id
- * @see 
+ * @see
  * @author garwind
  *
  */
 public class WilosObjectNode extends IceUserObject {
-	
+
 	// static fields
 	// Project Node
 	public final static String PROJECTNODE = "ProjectViewer";
@@ -21,16 +21,18 @@ public class WilosObjectNode extends IceUserObject {
 	public final static String ITERATIONNODE = "ConcreteIterationViewer";
 	// ConcreteTask Node
 	public final static String CONCRETETASKNODE = "ConcreteTaskViewer";
+	// ConcreteRole Node
+	public final static String CONCRETEROLENODE = "ConcreteRoleViewer";
 	// ConcreteTask Node
 	public final static String ACTIVITYNODE = "ConcreteActivityViewer";
-	
+
 	// properties
 	private String id = "";
-	
+
 	private String pageId = "";
-	
+
 	private Boolean isSelected = false;
-	
+
 	public WilosObjectNode(DefaultMutableTreeNode arg0) {
 		super(arg0);
 	}

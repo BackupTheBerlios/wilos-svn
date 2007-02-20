@@ -1,16 +1,14 @@
 package wilos.presentation.web.tree;
 
-import java.util.Set;
-
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.model.misc.concretephase.ConcretePhase;
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
-import wilos.model.spem2.role.RoleDescriptor;
 
 public class ProjectNode extends DefaultMutableTreeNode {
 
@@ -18,7 +16,7 @@ public class ProjectNode extends DefaultMutableTreeNode {
 
 	private Project project;
 
-	public ProjectNode(Project _project, Set<RoleDescriptor> _roleDescriptors) {
+	public ProjectNode(Project _project, boolean _isConcreteTaskDescriptorsTree) {
 		super();
 		this.project = _project;
 
@@ -44,25 +42,32 @@ public class ProjectNode extends DefaultMutableTreeNode {
 				if (concreteBreakdownElement instanceof ConcretePhase) {
 					ConcretePhase cp = (ConcretePhase) concreteBreakdownElement;
 					if (cp.getIsInUsed()) {
-						this.add(new ConcretePhaseNode(cp, _roleDescriptors));
+						this.add(new ConcretePhaseNode(cp,
+								_isConcreteTaskDescriptorsTree));
 					}
 				} else if (concreteBreakdownElement instanceof ConcreteIteration) {
 					ConcreteIteration ci = (ConcreteIteration) concreteBreakdownElement;
 					if (ci.getIsInUsed()) {
 						this.add(new ConcreteIterationNode(ci,
-										_roleDescriptors));
+								_isConcreteTaskDescriptorsTree));
 					}
 				} else if (concreteBreakdownElement instanceof ConcreteActivity) {
 					ConcreteActivity ca = (ConcreteActivity) concreteBreakdownElement;
 					if (ca.getIsInUsed()) {
 						this.add(new ConcreteActivityNode(ca,
-										_roleDescriptors));
+								_isConcreteTaskDescriptorsTree));
 					}
-				} else if (concreteBreakdownElement instanceof ConcreteTaskDescriptor) {
-					ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) concreteBreakdownElement;
-					if (ctd.getIsInUsed()) {
-						this.add(new ConcreteTaskDescriptorNode(ctd,
-								_roleDescriptors));
+				} else if (_isConcreteTaskDescriptorsTree) {
+					if (concreteBreakdownElement instanceof ConcreteTaskDescriptor) {
+						ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) concreteBreakdownElement;
+						if (ctd.getIsInUsed()) {
+							this.add(new ConcreteTaskDescriptorNode(ctd));
+						}
+					}
+				} else {
+					if (concreteBreakdownElement instanceof ConcreteRoleDescriptor) {
+						this.add(new ConcreteRoleDescriptorNode(
+										(ConcreteRoleDescriptor) concreteBreakdownElement));
 					}
 				}
 			}

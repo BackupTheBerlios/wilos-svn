@@ -129,10 +129,10 @@ public class TreeBean {
 				if (participant != null) {
 					Set<RoleDescriptor> roleDescriptorsList = new HashSet<RoleDescriptor>();
 					projectNode = new ProjectNode(this.project,
-							roleDescriptorsList);
+							true);
 				}
 			} else {
-				projectNode = new ProjectNode(this.project, null);
+				projectNode = new ProjectNode(this.project, true);
 			}
 			this.model = new DefaultTreeModel(projectNode);
 		} else {
