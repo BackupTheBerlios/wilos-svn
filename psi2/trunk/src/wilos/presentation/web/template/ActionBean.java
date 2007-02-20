@@ -22,6 +22,7 @@ public class ActionBean {
 	private String affectProjectAsManager = "affectProjectAsManager";
 	
 	private String importProcessFile = "importProcessFile";
+	private String manageProcesses = "manageProcesses";
 	
 	private String projectCreate="projectCreate";
 	private String projectList = "projectList";
@@ -257,5 +258,23 @@ public class ActionBean {
 	 */
 	public void setProjectDirectorMain(String _projectDirectorMain) {
 		this.projectDirectorMain = _projectDirectorMain ;
+	}
+
+	/**
+	 * Getter of manageProcesses.
+	 *
+	 * @return the manageProcesses.
+	 */
+	public String getManageProcesses() {
+		return this.manageProcesses ;
+	}
+
+	/**
+	 * Setter of manageProcesses.
+	 *
+	 * @param _manageProcesses The manageProcesses to set.
+	 */
+	public void setManageProcesses(String _manageProcesses) {
+		this.manageProcesses = _manageProcesses ;
 	}
 }

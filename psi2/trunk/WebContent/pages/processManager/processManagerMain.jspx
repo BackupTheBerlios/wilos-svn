@@ -6,4 +6,9 @@
 			<jsp:directive.include file="./pages/processManager/tabImportProcessFile.jspx"/>
 		</f:subview>
 	</ice:panelGroup>
+	<ice:panelGroup id="manageProcesses" styleClass="contentIncludePanelGroup" >
+    	<f:subview id="manageProcesses_view">
+			<jsp:directive.include file="./pages/processManager/tabManageProcesses.jspx"/>
+		</f:subview>
+	</ice:panelGroup>
 </ice:panelStack>
