@@ -161,8 +161,8 @@ public class TreeBean {
 					.getProjectsForAParticipant(participant);
 			for (Project project : projects.keySet()) {
 				if (projects.get(project)) {
-					projectsList.add(new SelectItem(project.getId(), project
-							.getConcreteName()));
+					this.addSelectItemToList(projectsList,
+							new SelectItem(project.getId(), project.getConcreteName())) ;
 				}
 			}
 		}
@@ -170,9 +170,22 @@ public class TreeBean {
 		ResourceBundle bundle = ResourceBundle.getBundle(
 				"wilos.resources.messages", FacesContext.getCurrentInstance()
 						.getApplication().getDefaultLocale());
-		projectsList.add(new SelectItem("default", bundle
+		projectsList.add(0, new SelectItem("default", bundle
 				.getString("navigation.tree.defaulttreenodetext")));
 		return projectsList;
+	}
+	
+	private void addSelectItemToList(List <SelectItem> projectsList, SelectItem si) {
+		if (projectsList.size() == 0)
+			projectsList.add(si) ;
+		else {
+			int i ;
+			//inserting the project in an alphabetically ordered list
+			for (i = 0 ; projectsList.size() >= i
+							&& si.getLabel().compareTo(projectsList.get(i).getLabel()) > 0 ;
+							i++) {}
+			projectsList.add(i, si) ;
+		}
 	}
 
 	public void changeTreeActionListener(ValueChangeEvent evt) {
