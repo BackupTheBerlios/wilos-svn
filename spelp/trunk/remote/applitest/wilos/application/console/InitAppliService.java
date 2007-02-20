@@ -34,41 +34,7 @@ public class InitAppliService {
 	protected final Log logger = LogFactory.getLog(this.getClass());
 	
 	@Transactional(readOnly = false)
-	public void initAppli() {
-		logger.debug("bababa");
-		
-		Process openup = processService.spelpParsingXML(new File("applitest/wilos/application/console/openUP.xml"));
-		processService.saveProcess(openup);
-		Process scrum = processService.spelpParsingXML(new File("applitest/wilos/application/console/scrum.xml"));
-		processService.saveProcess(scrum);
-		
-		
-		// instanciation des projets	
-
-		String s = processService.getProcessDao().getProcessFromGuid("_9llsAQAvEdubGMceRDupFQ").getId();
-		scrum = processDao.getProcess(s);
-		
-		Project project = new Project();
-		project.setConcreteName("Wilos");
-		project.setProcess(scrum);
-		projectDao.saveOrUpdateProject(project);
-		project= processService.getProjectDao().getProject(project.getId());
-
-		processService.projectInstanciation(project);
-
-		/*String s2 = processService.getProcessDao().getProcessFromGuid("_0uyGoMlgEdmt3adZL5Dmdw").getId();
-		openup = processDao.getProcess(s2);
-
-		Project project2 = new Project();
-		project2.setConcreteName("IceOpenUP");
-		project2.setProcess(openup);
-		projectDao.saveOrUpdateProject(project2);
-		project2 = processService.getProjectDao().getProject(project2.getId());
-
-		processService.projectInstanciation(project2);
-		
-		project2 = processService.getProjectDao().getProject(project2.getId());
-		project= processService.getProjectDao().getProject(project.getId());*/
+	public void initAppli() {	
 		
 		// creation du participant 	
 		Participant pa = new Participant();
@@ -110,15 +76,8 @@ public class InitAppliService {
 		    		logger.debug("sortie");
 		    		concreteTaskDescriptorService.affectedState(ctd2);
 		    		logger.debug("sortie");
-		    	}
-		    	
-		    	/* for (ConcreteRoleDescriptor crd : pa.getConcreteRoleDescriptors()) {
-
-		    		ctd2.setState("Ready");
-		    		crd.addConcreteTaskDescriptor(ctd2);
-		    		concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(crd);
-		    		concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(ctd2);
-		    	}*/
+		    	}		    	
+		    
 		    }
 	    }
 	    

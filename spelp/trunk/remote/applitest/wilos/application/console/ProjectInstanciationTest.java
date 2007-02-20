@@ -1,45 +1,17 @@
 package wilos.application.console;
 
-import java.io.File;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import wilos.business.services.misc.wilosuser.ParticipantService;
 import wilos.business.services.spem2.process.ProcessService;
-import wilos.business.util.Security;
-import wilos.hibernate.misc.concreterole.ConcreteRoleDescriptorDao;
 import wilos.hibernate.misc.project.ProjectDao;
 import wilos.hibernate.spem2.process.ProcessDao;
-import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.project.Project;
-import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.process.Process;
 
-public class InitAppliTest {
+public class ProjectInstanciationTest {
 	public static void main(String[] args) {
-		importXML();
-		instanciation();
-		affectation();	    
-	}
-	
-	
-	private static void importXML() {
 		// Getback the application context from the spring configuration file
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-		
-		ProcessService am = (ProcessService) ctx.getBean("ProcessService");
-		Process scrum = am.spelpParsingXML(new File("applitest/wilos/application/console/scrum.xml"));
-		am.saveProcess(scrum);
-		
-		Process openup = am.spelpParsingXML(new File("applitest/wilos/application/console/openUP.xml"));
-		//Process openup = am.spelpParsingXML(new File("applitest/wilos/application/console/openup.zip"));
-		am.saveProcess(openup);
-		
-	}
-	
-	private static void instanciation() {		
-//		 Getback the application context from the spring configuration file
 		ApplicationContext ctx = new ClassPathXmlApplicationContext(
 				"applicationContext.xml");
 
@@ -66,14 +38,5 @@ public class InitAppliTest {
 		pm.saveOrUpdateProject(project2);
 
 		am.projectInstanciation(project2);
-	}
-	
-	private static void affectation () {
-//		 Notre fabrique SPRING permettant l'acc�s aux beans d�clar�s
-		ApplicationContext factory = new ClassPathXmlApplicationContext("applicationContextTest.xml");
-		// import des processus
-		InitAppliService am = (InitAppliService) factory.getBean("InitAppliService");
-		am.initAppli();
-	}
+		}
 }
-
