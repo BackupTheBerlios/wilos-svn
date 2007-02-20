@@ -18,15 +18,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import wilos.business.services.assistant.AssistantService;
 import wilos.business.services.misc.wilosuser.LoginService;
-import wilos.business.transfertobject.ParticipantTO;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
-import wilos.model.spem2.role.RoleDescriptor;
-import wilos.model.spem2.task.Step;
-import wilos.model.spem2.task.TaskDefinition;
-import wilos.model.spem2.task.TaskDescriptor;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 /**
  *
@@ -60,7 +56,8 @@ public class WizardServices {
        wu =  as.getParticipantTO(getAuthentifiedParticipant(login,password).getLogin());       
 	   System.out.println("Le user "+wu.getName()+" est logge");
 
-       XStream xstream = new XStream();
+       XStream xstream = new XStream(new DomDriver("utf-8"));       
+
        result= xstream.toXML(wu);
        return result;
     }
