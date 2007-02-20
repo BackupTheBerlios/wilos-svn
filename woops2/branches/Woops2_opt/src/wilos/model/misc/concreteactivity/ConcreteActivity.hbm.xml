@@ -13,6 +13,7 @@
 
 		<!-- Associations -->
 		<set name="concreteBreakdownElements" table="concretenesting" lazy="false" inverse="true">
+			<cache usage="read-write"/>
 			<key column="superconcreteactivity_id"></key>
 			<many-to-many class="wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement"
 				column="concretebreakdownelement_id">

@@ -12,6 +12,7 @@
 		<key column="phase_id"></key>
 		
 		<set name="concretePhases" lazy="true">
+			<cache usage="read-write"/>
 			<key column="phase_id" />
 			<one-to-many class="wilos.model.misc.concretephase.ConcretePhase" ></one-to-many>
 		</set>

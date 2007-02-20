@@ -27,6 +27,7 @@
 
 		<set name="concretePredecessors" table="concreteworkorder"
 			lazy="true">
+			<cache usage="read-write"/>
 			<key column="concretepredecessor_id" />
 			<composite-element
 				class="wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkOrder">
@@ -39,6 +40,7 @@
 
 		<set name="concreteSuccessors" table="concreteworkorder"
 			lazy="true" inverse="true">
+			<cache usage="read-write"/>
 			<key column="concretesuccessor_id" />
 			<composite-element
 				class="wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkOrder">

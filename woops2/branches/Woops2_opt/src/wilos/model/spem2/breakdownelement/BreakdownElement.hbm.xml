@@ -4,7 +4,7 @@
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 
 <hibernate-mapping>
-	
+
 	<joined-subclass
 		name="wilos.model.spem2.breakdownelement.BreakdownElement"
 		extends="wilos.model.spem2.element.Element"
