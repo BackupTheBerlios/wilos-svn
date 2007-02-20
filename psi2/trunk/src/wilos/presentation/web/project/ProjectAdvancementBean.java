@@ -127,58 +127,6 @@ public class ProjectAdvancementBean {
 			}
 		}
 	}
-
-	/**
-	 * Return the advancement in percents of a Concrete breakdown element
-	 * 
-	 * @param cbe
-	 * @return
-	
-	public static double activityAdvancementCalculation(ConcreteBreakdownElement cbe) {
-		double result = 0.0 ;
-		ArrayList<Double> couples = ProjectAdvancementBean.taskAdvancementCalculation(cbe) ;
-		for(Double currentAdvancement : couples){
-			if(currentAdvancement != null){
-				result += currentAdvancement ;
-			}
-		}
-		return ( (result / couples.size()) * 100) ;
-	} */
-
-	/**
-	 * Sub recursive method used for the Concrete breakdown element advancement calculation
-	 * 
-	 * @param ctd
-	 * @return
-	
-	private static ArrayList<Double> taskAdvancementCalculation(ConcreteBreakdownElement cbe) {
-		double advancement = 0.0 ;
-		ArrayList<Double> couple = new ArrayList<Double>() ;
-
-		// if the current element is an activity, parse the sub concrete breakdown elements
-		if(cbe instanceof ConcreteActivity){
-			ConcreteActivity ca = (ConcreteActivity) cbe ;
-			for(Iterator iter = ca.getConcreteBreakdownElements().iterator(); iter.hasNext();){
-				ConcreteBreakdownElement element = (ConcreteBreakdownElement) iter.next() ;
-				couple.addAll(ProjectAdvancementBean.taskAdvancementCalculation(element)) ;
-			}
-		}
-		// else if it's a concrete task get the values
-		else{
-			if(cbe instanceof ConcreteTaskDescriptor){
-				ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) cbe ;
-				if( (ctd.getRemainingTime() + ctd.getAccomplishedTime()) != 0){
-					advancement = ctd.getAccomplishedTime() / (ctd.getRemainingTime() + ctd.getAccomplishedTime()) ;
-				}
-				else{
-					advancement = 0.0 ;
-				}
-				couple.add(advancement) ;
-			}
-		}
-		return couple ;
-	} */
-	
 	
 	/**
 	 * Return the advancement in percents of a Concrete breakdown element
