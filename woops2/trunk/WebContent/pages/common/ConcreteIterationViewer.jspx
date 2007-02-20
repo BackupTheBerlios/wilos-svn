@@ -8,6 +8,29 @@
 					<ice:outputText value="#{msgs['viewer.concreteName']}" />
 					<ice:outputText
 						value="#{ConcreteIterationViewerBean.concreteIteration.concreteName}" />
+
+					<ice:outputText styleClass="propertyLabel" value="#Visible#" />
+					<ice:panelStack>
+						<ice:panelGroup>
+							<ice:dataTable value="" var="">
+								<ice:columns
+									value="#{ConcreteIterationViewerBean.concreteBreakdownElementsList}"
+									var="concretewbde">
+									<f:facet name="header">
+										<ice:outputText value="#{concretewbde.concreteName}" />
+									</f:facet>
+									<ice:panelGroup>
+										<ice:selectBooleanCheckbox partialSubmit="false"
+											value="#{concretewbde.isInUsed}" />
+									</ice:panelGroup>
+								</ice:columns>
+							</ice:dataTable>
+							<ice:commandButton value="#Save#"
+								action="#{ConcreteIterationViewerBean.saveIteration}"
+								styleClass="smallbutton" />
+						</ice:panelGroup>
+					</ice:panelStack>
+
 				</ice:panelGrid>
 				<ice:outputText styleClass="propertyLabel"
 					value="#{msgs['component.project.projectroles.title']}" />
