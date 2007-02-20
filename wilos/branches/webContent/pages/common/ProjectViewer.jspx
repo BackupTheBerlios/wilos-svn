@@ -24,8 +24,8 @@
 
 				<ice:outputText styleClass="propertyLabel"
 					value="#Visible#" />
-				<ice:panelStack id="panelStack_manageableProjects">
-					<ice:panelGroup id="roles_view">
+				<ice:panelStack>
+					<ice:panelGroup>
 						<ice:dataTable value="" var="">
 							<ice:columns
 								value="#{ProjectViewerBean.concreteBreakdownElementsList}"
@@ -45,6 +45,67 @@
 							styleClass="smallbutton" />
 					</ice:panelGroup>
 				</ice:panelStack>
+
+			</ice:panelTab>
+			<!-- ####################################################################################################
+			PSI2 ONGLET DE L AVANCEMENT DU PROJET
+			#################################################################################################### -->
+			<ice:panelTab id="panelTab_projectAdvancement"
+				label="#{msgs['component.project.projectadvancement.title']}"
+				rendered="#{ProjectAdvancementBean.selected_projectAdvancement_view}">
+				<ice:dataTable value="#{ProjectAdvancementBean.displayContent}"
+					var="cbde" cellpadding="0"
+					columnWidths="30px,400px,200px,100px,100px">
+					<ice:column>
+						<f:facet name="header">
+							<ice:outputText value="" />
+						</f:facet>
+						<ice:commandLink value=""
+							actionListener="#{ProjectAdvancementBean.toggleSubGroupAction}">
+							<f:param name="elementId" value="#{cbde.id}" />
+							<ice:graphicImage value="#{cbde.expansionImage}"
+								style="border: 0px solid;" />
+						</ice:commandLink>
+					</ice:column>
+					<ice:column>
+						<f:facet name="header">
+							<ice:outputText
+								value="#{msgs['component.project.projectadvancement.column1']}" />
+						</f:facet>
+						<ice:outputText
+							value="#{ProjectAdvancementBean.indentationContent[cbde.id]}#{cbde.concreteName}" />
+					</ice:column>
+					<ice:column>
+						<f:facet name="header">
+							<ice:outputText
+								value="#{msgs['component.project.projectadvancement.column2']}" />
+						</f:facet>
+						<ice:outputText value="#{cbde.participant}" />
+					</ice:column>
+					<ice:column>
+						<f:facet name="header">
+							<ice:outputText
+								value="#{msgs['component.project.projectadvancement.column3']}" />
+						</f:facet>
+						<ice:outputText value="#{cbde.concreteState}" />
+					</ice:column>
+					<ice:column>
+						<f:facet name="header">
+							<ice:outputText
+								value="#{msgs['component.project.projectadvancement.column4']}" />
+						</f:facet>
+						<ice:outputText value="#{cbde.advancementTime} %" />
+					</ice:column>
+				</ice:dataTable>
+			</ice:panelTab>
+			<!-- #################################################################################################### -->
+
+			<!-- ####################################################################################################
+			Woops2 ONGLET de l'instanciation d'un process
+			#################################################################################################### -->
+			<ice:panelTab id="panelTab_processInstanciation"
+				label="#{msgs['component.project.processinstanciation.title']}"
+				rendered="#{ProjectAdvancementBean.selected_projectAdvancement_view}">
 
 				<ice:outputText styleClass="propertyLabel"
 					value="#{msgs['component.tableparticipantProcessProject.processList']}" />
@@ -74,20 +135,14 @@
 						<ice:outputText value="#{ProjectBean.processName}" />
 					</f:subview>
 				</ice:panelStack>
-			</ice:panelTab>
-			<!-- ####################################################################################################
-			PSI2 ONGLET DE L AVANCEMENT DU PROJET
-			#################################################################################################### -->
-			<ice:panelTab id="panelTab_projectAdvancement"
-				label="#{msgs['component.project.projectadvancement.title']}"
-				rendered="#{ProjectAdvancementBean.selected_projectAdvancement_view}">
+
 				<ice:dataTable value="#{ProjectAdvancementBean.displayContent}"
 					var="cbde" cellpadding="0"
-					columnWidths="30px,400px,200px,100px,100px">
+					columnWidths="30px,400px,200px">
 					<ice:column>
-						<f:facet name="header">
+						<!--  <f:facet name="header">
 							<ice:outputText value="" />
-						</f:facet>
+						</f:facet>-->
 						<ice:commandLink value=""
 							actionListener="#{ProjectAdvancementBean.toggleSubGroupAction}">
 							<f:param name="elementId" value="#{cbde.id}" />
