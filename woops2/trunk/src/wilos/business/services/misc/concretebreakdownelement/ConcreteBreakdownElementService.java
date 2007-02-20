@@ -3,8 +3,8 @@ package wilos.business.services.misc.concretebreakdownelement;
 import java.util.List;
 
 import wilos.hibernate.misc.concretebreakdownelement.ConcreteBreakdownElementDao;
+import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
-import wilos.model.misc.project.Project;
 
 public class ConcreteBreakdownElementService {
 
@@ -14,8 +14,8 @@ public class ConcreteBreakdownElementService {
 		return this.concreteBreakdownElementDao.getAllConcreteBreakdownElements();
 	}
 
-	public void saveAllConcreteBreakdownElementsForAProject(Project _project){
-		for(ConcreteBreakdownElement cbde : _project.getConcreteBreakdownElements()){
+	public void saveAllFirstSonsConcreteBreakdownElementsForConcreteActivity(ConcreteActivity _concreteActivity){
+		for(ConcreteBreakdownElement cbde : _concreteActivity.getConcreteBreakdownElements()){
 			this.concreteBreakdownElementDao.saveOrUpdateConcreteBreakdownElement(cbde);
 		}
 	}

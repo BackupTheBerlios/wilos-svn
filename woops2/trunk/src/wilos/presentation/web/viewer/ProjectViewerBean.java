@@ -8,6 +8,7 @@ import javax.faces.context.FacesContext;
 import wilos.business.services.misc.concretebreakdownelement.ConcreteBreakdownElementService;
 import wilos.business.services.misc.project.ProjectService;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
+import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
 import wilos.model.misc.project.Project;
 import wilos.presentation.web.tree.TreeBean;
 
@@ -31,12 +32,20 @@ public class ProjectViewerBean {
 	public List<ConcreteBreakdownElement> getConcreteBreakdownElementsList() {
 		List<ConcreteBreakdownElement> list = new ArrayList<ConcreteBreakdownElement>();
 		list.addAll(this.project.getConcreteBreakdownElements());
-		return list;
+
+		// Filter to obtain only concreteworkbreakdownelement (without
+		// concreterole).
+		List<ConcreteBreakdownElement> cwbdes = new ArrayList<ConcreteBreakdownElement>();
+		for(ConcreteBreakdownElement cbde : list)
+			if(cbde instanceof ConcreteWorkBreakdownElement)
+				cwbdes.add(cbde);
+
+		return cwbdes;
 	}
 
 	public void saveProject() {
 		this.concreteBreakdownElementService
-				.saveAllConcreteBreakdownElementsForAProject(this.project);
+				.saveAllFirstSonsConcreteBreakdownElementsForConcreteActivity(this.project);
 
 		//Reload the treebean.
 		FacesContext context = FacesContext.getCurrentInstance();
