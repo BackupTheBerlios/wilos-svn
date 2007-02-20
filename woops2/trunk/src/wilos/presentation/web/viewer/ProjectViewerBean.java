@@ -43,7 +43,7 @@ public class ProjectViewerBean {
 		TreeBean treeBean = (TreeBean) context
 		.getApplication().getVariableResolver().resolveVariable(
 				context, "TreeBean");
-		treeBean.buildModel(true);
+		treeBean.refreshProjectTree();
 	}
 
 	public Project getProject() {

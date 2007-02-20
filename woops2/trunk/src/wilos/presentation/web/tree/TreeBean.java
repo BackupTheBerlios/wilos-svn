@@ -103,7 +103,11 @@ public class TreeBean {
 		return defaultTree;
 	}
 
-	public void buildModel(boolean _mustBuildProject) {
+	public void refreshProjectTree(){
+		this.buildModel(true);
+	}
+
+	private void buildModel(boolean _mustBuildProject) {
 		if (this.projectId != null && !this.projectId.equals("default")) {
 			if (_mustBuildProject) {
 				// Put into the session the current project used.
