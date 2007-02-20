@@ -1,5 +1,9 @@
 package wilos.presentation.assistant.webservices;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.net.URL;
 import java.util.Date;
 import java.util.HashSet;
@@ -28,6 +32,7 @@ import wilos.presentation.assistant.control.ExceptionManager;
 import wilos.utils.Constantes;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 public class WizardServicesProxy {
    	public static String ENDPOINT = "/WizardServices?wsdl";
@@ -68,9 +73,12 @@ public class WizardServicesProxy {
                 	WizardServicesService service = new WizardServicesService(new URL(address+ENDPOINT), new QName(URLWebService, nameWebService));            	
                     WizardServices port = service.getWizardServicesPort();
                     //myWilosUser = port.getWilosUser(login,password);
-                      XStream xstream = new XStream(); 
+                      XStream xstream = new XStream(new DomDriver("utf-8"));
                       String result = port.getParticipant(login,password);
-                     // System.out.println(result);
+                      File xstreamFile = new File ("xstream.xml");
+                      PrintStream out = new PrintStream(new FileOutputStream(xstreamFile));
+                      //System.out.println(result);
+                      out.println(result);
                     myParticipant = (Participant) xstream.fromXML(result);
             	}
             }
