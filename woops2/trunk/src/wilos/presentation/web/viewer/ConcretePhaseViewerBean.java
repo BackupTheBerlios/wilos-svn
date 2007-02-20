@@ -7,20 +7,45 @@ import javax.faces.context.FacesContext;
 
 import wilos.business.services.misc.concretebreakdownelement.ConcreteBreakdownElementService;
 import wilos.business.services.misc.concretephase.ConcretePhaseService;
+import wilos.business.services.misc.project.ProjectService;
+import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
+import wilos.model.misc.project.Project;
 import wilos.presentation.web.tree.TreeBean;
 
 public class ConcretePhaseViewerBean {
 
 	private ConcretePhase concretePhase;
 
+	private WebSessionService webSessionService;
+
+	private ProjectService projectService;
+
 	private ConcretePhaseService concretePhaseService;
 
 	private ConcreteBreakdownElementService concreteBreakdownElementService;
 
 	private String concretePhaseId = "";
+
+	// To have the mask available only for the ProjectManager.
+	public boolean getTreeMaskIsAvailable() {
+		// participant into session
+		String wilosUserId = (String) this.webSessionService
+				.getAttribute(WebSessionService.WILOS_USER_ID);
+
+		Project project = this.projectService
+				.getProject((String) this.webSessionService
+						.getAttribute(WebSessionService.PROJECT_ID));
+
+		if ((project.getProjectManager() != null)
+				&& (project.getProjectManager().getWilosuser_id()
+						.equals(wilosUserId)))
+			return true;
+		else
+			return false;
+	}
 
 	public void buildConcretePhaseModel() {
 		this.concretePhase = new ConcretePhase();
@@ -101,6 +126,36 @@ public class ConcretePhaseViewerBean {
 	public void setConcreteBreakdownElementService(
 			ConcreteBreakdownElementService concreteBreakdownElementService) {
 		this.concreteBreakdownElementService = concreteBreakdownElementService;
+	}
+
+	/**
+	 * @return the webSessionService
+	 */
+	public WebSessionService getWebSessionService() {
+		return webSessionService;
+	}
+
+	/**
+	 * @param webSessionService
+	 *            the webSessionService to set
+	 */
+	public void setWebSessionService(WebSessionService webSessionService) {
+		this.webSessionService = webSessionService;
+	}
+
+	/**
+	 * @return the projectService
+	 */
+	public ProjectService getProjectService() {
+		return projectService;
+	}
+
+	/**
+	 * @param projectService
+	 *            the projectService to set
+	 */
+	public void setProjectService(ProjectService projectService) {
+		this.projectService = projectService;
 	}
 
 }

@@ -7,14 +7,21 @@ import javax.faces.context.FacesContext;
 
 import wilos.business.services.misc.concreteactivity.ConcreteActivityService;
 import wilos.business.services.misc.concretebreakdownelement.ConcreteBreakdownElementService;
+import wilos.business.services.misc.project.ProjectService;
+import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
+import wilos.model.misc.project.Project;
 import wilos.presentation.web.tree.TreeBean;
 
 public class ConcreteActivityViewerBean {
 
 	private ConcreteActivity concreteActivity = null;
+
+	private WebSessionService webSessionService;
+
+	private ProjectService projectService;
 
 	private ConcreteActivityService concreteActivityService;
 
@@ -22,10 +29,30 @@ public class ConcreteActivityViewerBean {
 
 	private String concreteActivityId = "";
 
+	// To have the mask available only for the ProjectManager.
+	public boolean getTreeMaskIsAvailable() {
+		// participant into session
+		String wilosUserId = (String) this.webSessionService
+				.getAttribute(WebSessionService.WILOS_USER_ID);
+
+		Project project = this.projectService
+				.getProject((String) this.webSessionService
+						.getAttribute(WebSessionService.PROJECT_ID));
+
+		if ((project.getProjectManager() != null)
+				&& (project.getProjectManager().getWilosuser_id()
+						.equals(wilosUserId)))
+			return true;
+		else
+			return false;
+	}
+
 	public void buildConcreteActivity() {
 		this.concreteActivity = new ConcreteActivity();
-		if (!(this.concreteActivityId.equals("")) || this.concreteActivityId != null) {
-			this.concreteActivity = this.concreteActivityService.getConcreteActivity(this.concreteActivityId);
+		if (!(this.concreteActivityId.equals(""))
+				|| this.concreteActivityId != null) {
+			this.concreteActivity = this.concreteActivityService
+					.getConcreteActivity(this.concreteActivityId);
 		}
 	}
 
@@ -74,7 +101,8 @@ public class ConcreteActivityViewerBean {
 		return this.concreteActivityService;
 	}
 
-	public void setConcreteActivityService(ConcreteActivityService _concreteActivityService) {
+	public void setConcreteActivityService(
+			ConcreteActivityService _concreteActivityService) {
 		this.concreteActivityService = _concreteActivityService;
 	}
 
@@ -86,12 +114,40 @@ public class ConcreteActivityViewerBean {
 	}
 
 	/**
-	 * @param concreteBreakdownElementService the concreteBreakdownElementService to set
+	 * @param concreteBreakdownElementService
+	 *            the concreteBreakdownElementService to set
 	 */
 	public void setConcreteBreakdownElementService(
 			ConcreteBreakdownElementService concreteBreakdownElementService) {
 		this.concreteBreakdownElementService = concreteBreakdownElementService;
 	}
 
+	/**
+	 * @return the projectService
+	 */
+	public ProjectService getProjectService() {
+		return projectService;
+	}
+
+	/**
+	 * @param projectService the projectService to set
+	 */
+	public void setProjectService(ProjectService projectService) {
+		this.projectService = projectService;
+	}
+
+	/**
+	 * @return the webSessionService
+	 */
+	public WebSessionService getWebSessionService() {
+		return webSessionService;
+	}
+
+	/**
+	 * @param webSessionService the webSessionService to set
+	 */
+	public void setWebSessionService(WebSessionService webSessionService) {
+		this.webSessionService = webSessionService;
+	}
 
 }
