@@ -9,27 +9,31 @@
 					<ice:outputText
 						value="#{ConcretePhaseViewerBean.concretePhase.concreteName}" />
 
-					<ice:outputText styleClass="propertyLabel" value="#Visible#" />
-					<ice:panelStack>
-						<ice:panelGroup>
-							<ice:dataTable value="" var="">
-								<ice:columns
-									value="#{ConcretePhaseViewerBean.concreteBreakdownElementsList}"
-									var="concretewbde">
-									<f:facet name="header">
-										<ice:outputText value="#{concretewbde.concreteName}" />
-									</f:facet>
-									<ice:panelGroup>
-										<ice:selectBooleanCheckbox partialSubmit="false"
-											value="#{concretewbde.isInUsed}" />
-									</ice:panelGroup>
-								</ice:columns>
-							</ice:dataTable>
-							<ice:commandButton value="#Save#"
-								action="#{ConcretePhaseViewerBean.savePhase}"
-								styleClass="smallbutton" />
-						</ice:panelGroup>
-					</ice:panelStack>
+
+					<ice:panelGroup
+						visible="#{ConcretePhaseViewerBean.treeMaskIsAvailable}">
+						<ice:outputText styleClass="propertyLabel" value="#Visible#" />
+						<ice:panelStack>
+							<ice:panelGroup>
+								<ice:dataTable value="" var="">
+									<ice:columns
+										value="#{ConcretePhaseViewerBean.concreteBreakdownElementsList}"
+										var="concretewbde">
+										<f:facet name="header">
+											<ice:outputText value="#{concretewbde.concreteName}" />
+										</f:facet>
+										<ice:panelGroup>
+											<ice:selectBooleanCheckbox partialSubmit="false"
+												value="#{concretewbde.isInUsed}" />
+										</ice:panelGroup>
+									</ice:columns>
+								</ice:dataTable>
+								<ice:commandButton value="#Save#"
+									action="#{ConcretePhaseViewerBean.savePhase}"
+									styleClass="smallbutton" />
+							</ice:panelGroup>
+						</ice:panelStack>
+					</ice:panelGroup>
 
 				</ice:panelGrid>
 				<ice:outputText styleClass="propertyLabel"
