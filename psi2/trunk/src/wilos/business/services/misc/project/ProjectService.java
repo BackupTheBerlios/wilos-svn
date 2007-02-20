@@ -42,6 +42,24 @@ public class ProjectService {
 	public void saveProject(Project _project) {
 		this.projectDao.saveOrUpdateProject(_project) ;
 	}
+	
+	/**
+	 * delete a participant
+	 * @param participantId
+	 */
+	@ Transactional (readOnly = false)
+	public boolean deleteProject(String projectId)
+	{
+		boolean ok = false;
+		Project project = this.getProject(projectId);
+		if(project.getProcess() == null && project.getParticipants().size() == 0 && project.getProjectManager() == null)
+		{
+			this.projectDao.deleteProject(project);
+			ok = true;
+		}
+		return ok;
+		
+	}
 
 	/**
 	 * Check if the project already exist

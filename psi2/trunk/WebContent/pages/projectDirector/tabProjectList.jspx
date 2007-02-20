@@ -5,17 +5,7 @@
 			<ice:panelStack id="panelStack_project_List" selectedPanel="#{ProjectBean.projectListView}">
 
 			<ice:panelGroup id="projectsListPanelGroup_not_null" styleClass="contentIncludePanelGroup">
-				<ice:dataTable value="#{ProjectBean.projectList}" columnWidths="10px,150px,100px,100px,300px" border="0" var="project">
-					<ice:column>
-						<f:facet name="header">
-							<ice:outputText value="" />
-						</f:facet>
-						<ice:commandLink value="" actionListener="#{ProjectBean.modifyProject}">
-							<f:param name="projectId" value="#{project.id}" />
-							<ice:graphicImage value="images/modify.gif" style="border: 0px solid;" />
-						</ice:commandLink>
-					</ice:column>
-					
+				<ice:dataTable value="#{ProjectBean.projectList}" columnWidths="150px,100px,100px,300px,50px" border="0" var="project">
 					<ice:column>
 						<f:facet name="header">
 							<ice:outputText value="#{msgs['component.projectList.name']}" />
@@ -43,6 +33,19 @@
 							<ice:outputText value="#{msgs['component.projectList.description']}" />
 						</f:facet>
 						<ice:outputText value="#{project.description}" />
+					</ice:column>
+					<ice:column>
+						<f:facet name="header">
+							<ice:outputText value="#{msgs['component.projectList.action']}" />
+						</f:facet>
+						<ice:commandLink value="" actionListener="#{ProjectBean.modifyProject}">
+							<f:param name="projectId" value="#{project.id}" />
+							<ice:graphicImage value="images/modify.gif" style="border: 0px solid;" />
+						</ice:commandLink>
+						<ice:commandLink value="" actionListener="#{ProjectBean.deleteProject}">
+							<f:param name="projectId" value="#{project.id}" />
+							<ice:graphicImage value="images/delete.gif" style="border: 0px solid;" />
+						</ice:commandLink>
 					</ice:column>
 					
 					

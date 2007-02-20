@@ -390,6 +390,35 @@ public class ProjectBean {
 				.resolveVariable(context, "menu");
 		mb.getSelectedPanel().setTemplateNameForARole("projectCreate");
 	}
+	
+	/**
+	 * delete a participant selected
+	 * @param event
+	 */
+	public void deleteProject(ActionEvent event)
+	{
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map map = context.getExternalContext().getRequestParameterMap();
+		String projectId = (String) map.get("projectId");
+		
+		ResourceBundle bundle = ResourceBundle.getBundle(
+				"wilos.resources.messages", FacesContext.getCurrentInstance()
+						.getApplication().getDefaultLocale());
+		FacesMessage message = new FacesMessage();
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		
+		if(this.projectService.deleteProject(projectId))
+		{
+			message.setSummary(bundle.getString("component.projectcreate.deleteSuccess"));
+			message.setSeverity(FacesMessage.SEVERITY_INFO);
+		}
+		else
+		{
+			message.setSummary(bundle.getString("component.projectcreate.deleteError"));
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
+		}
+		facesContext.addMessage(null, message);
+	}
 
 	/**
 	 * @param selectProcessAffectation

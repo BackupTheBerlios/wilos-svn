@@ -143,6 +143,16 @@ public class ParticipantService {
 		_participant.setPassword(Security.encode(_participant.getPassword())) ;
 		participantDao.saveOrUpdateParticipant(_participant) ;
 	}
+	
+	/**
+	 * delete a participant
+	 * @param participantId
+	 */
+	public void deleteParticipant(String participantId)
+	{
+		Participant participant = this.getParticipant(participantId);
+		this.participantDao.deleteParticipant(participant);
+	}
 
 	/**
 	 * 
