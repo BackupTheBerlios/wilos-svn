@@ -15,13 +15,13 @@ import javax.swing.tree.DefaultTreeModel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Hibernate;
 
 import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.misc.wilosuser.LoginService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.process.ProcessService;
+import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.presentation.web.role.ConcreteRoleAffectationBean;
@@ -87,6 +87,9 @@ public class TreeBean {
 	private DefaultTreeModel model = null;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
+	
+	// HashMap which contains the object and his id
+	private HashMap<String, Object> treeMap = new HashMap<String, Object>();
 
 	public TreeBean() {
 		this.model = new DefaultTreeModel(this.getDefaultTree());
@@ -119,11 +122,12 @@ public class TreeBean {
 
 			// Retrieve the entire project.
 			this.project = this.projectService.getProject(this.projectId);
+			ProjectNode projectNode = new ProjectNode(this.project, true, treeMap);
 			ProjectNode projectNode;
 			if (this.selectedMode.equals(TASKS_MODE))
-				projectNode = new ProjectNode(this.project, true);
+				projectNode = new ProjectNode(this.project, true, treeMap);
 			else
-				projectNode = new ProjectNode(this.project, false);
+				projectNode = new ProjectNode(this.project, false, treeMap);
 			this.model = new DefaultTreeModel(projectNode);
 		} else {
 			// Build the default tree.
@@ -133,7 +137,7 @@ public class TreeBean {
 			//ICI this.loadTree = true;
 		}
 	}
-
+	
 	public void changeTreeActionListener(ValueChangeEvent evt) {
 		this.projectId = (String) evt.getNewValue();
 		//ICI this.loadTree = false;
@@ -226,6 +230,10 @@ public class TreeBean {
 				av.setConcreteActivityId(_objectId);
 				// model building
 				av.buildConcreteActivity();
+				
+				ConcreteActivity ca = (ConcreteActivity) treeMap.get(_objectId);
+				av.setConcreteActivity(ca);
+				
 				mb.changePage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.CONCRETETASKNODE)) {
 				ConcreteTaskViewerBean ctv = (ConcreteTaskViewerBean) context
@@ -330,6 +338,14 @@ public class TreeBean {
 
 	public void setProcessService(ProcessService processService) {
 		this.processService = processService;
+	}
+
+	public HashMap<String, Object> getTreeMap() {
+		return treeMap;
+	}
+
+	public void setTreeMap(HashMap<String, Object> _treeMap) {
+		this.treeMap = _treeMap;
 	}
 
 	/**
