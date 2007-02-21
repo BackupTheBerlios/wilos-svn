@@ -4,5 +4,9 @@
 			<f:param name="mainPage" value="#{ActionBean.processManagerMain }" />
 			<f:param name="pageToShow" value="#{ActionBean.importProcessFile}" />
 		</ice:commandLink>
+		<ice:commandLink immediate="true" type="submit" value="#{msgs['action.link.manageProcesses']}" action="" styleClass="button" actionListener="#{ActionBean.selectNodeActionListener}">
+			<f:param name="mainPage" value="#{ActionBean.processManagerMain}" />
+			<f:param name="pageToShow" value="#{ActionBean.manageProcesses}" />
+		</ice:commandLink>
 	</ice:panelGrid>		
 </ice:form>
