@@ -48,7 +48,6 @@ public class XMLParser {
 	private static final String xpath_roleDescriptor = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:RoleDescriptor']";
 	private static final String xpath_taskDescriptor = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:TaskDescriptor']";
 	private static final String xpath_roleDefinition =  "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Role' ]";
-	private static final String xpath_workProductDescriptor = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Role' ]";
 	private static final String xpath_taskDefinition  = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Task']";
 	private static final String xpath_deliveryProcess = "//Process[@*[namespace-uri() and local-name()='type']='uma:DeliveryProcess']";
 	private static final String xpath_iteration = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Iteration']";
@@ -62,8 +61,12 @@ public class XMLParser {
 			"@*[namespace-uri() and local-name()='type']='uma:ToolMentor' or " +
 			"@*[namespace-uri() and local-name()='type']='uma:Whitepaper' or " +
 			"@*[namespace-uri() and local-name()='type']='uma:ReusableAsset' or " +
-			"@*[namespace-uri() and local-name()='type']='uma:Report' " +
+			"@*[namespace-uri() and local-name()='type']='uma:Report' or " +
+			"@*[namespace-uri() and local-name()='type']='uma:Template' or " +
+			"@*[namespace-uri() and local-name()='type']='uma:Example' " +
 			"]";
+	
+	private static final String xpath_workProductDescriptorFake = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Artifact']";
 	
 	private static final String xpath_checklist = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Checklist']";
 	
@@ -77,6 +80,7 @@ public class XMLParser {
 	public static final String breakdownElement = "BreakdownElement";
 	public static final String predecessor = "Predecessor";
 	public static final String maindescription = "MainDescription";
+	public static final String output = "Output";
 	
 	
 	private static Set<String> guidancesTypes = new LinkedHashSet<String>();
@@ -121,8 +125,11 @@ public class XMLParser {
 			initGuidancesTypesList();
 			
 			GuidancesList = fillGuidesList();
+
 			RoleDefinitionsList = fillRoleDefinitionsList();
+
 			TaskDefinitionsList = fillTaskDefinitionsList();
+
 			
 			WorkProductDescriptorFakesList = fillWorkProductDescriptorFakesList();
 			
@@ -150,23 +157,95 @@ public class XMLParser {
 		WorkProductDescriptorFakesList.clear();
 		
 		// gets all the nodes containing roleDefinions
-		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_roleDefinition,XPathConstants.NODESET);
+		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_workProductDescriptorFake,XPathConstants.NODESET);
 		
 		// For each node...
 		Node aNode;
+		// Through the Artifacts...
 		for(int i=0;i<nodeReturned.getLength();i++){
 			aNode = nodeReturned.item(i);
 			
-			// Fills the RoleDefinition from the node
-			RoleDefinition  aRoleDefinition = new RoleDefinition();
-			FillerRole aFiller = new FillerRole(aRoleDefinition,aNode);	
-			aRoleDefinition = (RoleDefinition)aFiller.getFilledElement();
-			// affect the additional guidance to the current role 
-			setGuidanceByRoleDefinition(aRoleDefinition, aNode);
-			// add the filled RoleDefinition in the list to be return
-		//	theRoleDefinitionsList.add(aRoleDefinition);
+			NodeList ArtifactChildren = aNode.getChildNodes();
+			
+			// Trough the Artifacts Children...
+			for (int j = 0; j < ArtifactChildren.getLength(); j++) {
+				// Inside Presentation
+				if (ArtifactChildren.item(j).getNodeName().equals(XMLParser.presentation)) {
+					//System.out.println("Inside presentation");
+					NodeList presentationChildren;
+					presentationChildren = ArtifactChildren.item(j).getChildNodes();
+					// Trough the Presentation Children
+					for (int k = 0; k < presentationChildren.getLength(); k++) {
+						// This Artifact contains at least a template or an example
+						if (presentationChildren.item(k).getNodeName().equals(Guidance.template)
+								|| presentationChildren.item(k).getNodeName().equals(Guidance.example)) {
+
+							// We get the Id of the WorkProduct
+							String artifactGuid;
+
+							if (aNode.getAttributes().getNamedItem(attr_name_variabilityBasedOnElement) != null) {
+								// the current node contains the attribute: variabilityBasedOnElement in the XML file				
+								artifactGuid = aNode.getAttributes().getNamedItem(attr_name_variabilityBasedOnElement).getNodeValue();
+							} 
+							else {
+								artifactGuid = aNode.getAttributes().getNamedItem(id).getNodeValue();
+							}
+							
+							Guidance theGuidance = getGuidanceById(presentationChildren.item(k).getNodeValue());
+							
+							
+							boolean alreadyExists = false;
+							for (WorkProductDescriptorFake WPDF : WorkProductDescriptorFakesList) {
+								if (WPDF.Guid.equals(artifactGuid)) {
+									WPDF.addTemplateOrExample(theGuidance);
+									alreadyExists = false;
+								}
+							}
+							
+							if (! alreadyExists) {
+								WorkProductDescriptorFake WPDF = (new XMLParser()).new WorkProductDescriptorFake();
+								WPDF.setGuid(artifactGuid);
+								WPDF.addTemplateOrExample(theGuidance);
+								WorkProductDescriptorFakesList.add(WPDF);
+							}
+						}
+					}
+				}
+				else if (ArtifactChildren.item(j).getNodeName().equals(Guidance.template)
+						|| ArtifactChildren.item(j).getNodeName().equals(Guidance.example)) {
+					
+					// We get the Id of the WorkProduct
+					String artifactGuid;
+
+					if (aNode.getAttributes().getNamedItem(attr_name_variabilityBasedOnElement) != null) {
+						// the current node contains the attribute: variabilityBasedOnElement in the XML file				
+						artifactGuid = aNode.getAttributes().getNamedItem(attr_name_variabilityBasedOnElement).getNodeValue();
+					} 
+					else {
+						artifactGuid = aNode.getAttributes().getNamedItem(id).getNodeValue();
+					}
+					
+					Guidance theGuidance = getGuidanceById(ArtifactChildren.item(j).getNodeValue());
+					
+					
+					boolean alreadyExists = false;
+					for (WorkProductDescriptorFake WPDF : WorkProductDescriptorFakesList) {
+						if (WPDF.Guid.equals(artifactGuid)) {
+							WPDF.addTemplateOrExample(theGuidance);
+							alreadyExists = false;
+						}
+					}
+					
+					if (! alreadyExists) {
+						WorkProductDescriptorFake WPDF = (new XMLParser()).new WorkProductDescriptorFake();
+						WPDF.setGuid(artifactGuid);
+						WPDF.addTemplateOrExample(theGuidance);
+						WorkProductDescriptorFakesList.add(WPDF);
+					}
+				}
+			}
 		}	
-		return null;//theRoleDefinitionsList;
+		return WorkProductDescriptorFakesList;
 	}
 
 
@@ -228,7 +307,6 @@ public class XMLParser {
 		/* evaluate the XPAth request and return the nodeList*/
 		NodeList activities = (NodeList)XMLUtils.evaluate(xpath_activity,XPathConstants.NODESET);
 		
-
 		/* For each node */
 		Node aNode;
 		for(int i = 0 ; i < activities.getLength(); i++){
@@ -626,7 +704,7 @@ public class XMLParser {
 	}
 	
 	/**
-	 * setGuideByTaskDefinition
+	 * setGuidanceByTaskDefinition
 	 * @param _taskDefinition
 	 * @param _node
 	 */
@@ -649,6 +727,18 @@ public class XMLParser {
 					 //add the current guidance to the taskDefinition
 					_taskDefinition.addGuidance(GuideTobereturn);
 				}				
+			}
+			// We'll get The templates and examples of the Outputs of the TaskDef
+			else if (listOfTdNodes.item(i).getNodeName().equals(output)) {
+				String wpdfGuid = listOfTdNodes.item(i).getNodeValue();
+				WorkProductDescriptorFake wpdf = getWorkProductDescriptorFakeById(wpdfGuid);
+				
+				// For each template or guidance of the WorkProduct
+				if (wpdf != null) {
+					for (Guidance aGuidance : wpdf.getTemplatesAndExamples()) {
+						_taskDefinition.addGuidance(aGuidance);
+					}
+				}
 			}
 		}	
 	}
@@ -1053,6 +1143,20 @@ public class XMLParser {
 		return null ;
 	}
 	
+	/**
+	 * getWorkProductDescriptorFakeById
+	 * @param _wpdfId
+	 * @return the WPDF which has the specified Id
+	 */
+	private static WorkProductDescriptorFake getWorkProductDescriptorFakeById(String _wpdfId) {
+		for (WorkProductDescriptorFake wpdf : WorkProductDescriptorFakesList) {
+			if( wpdf.Guid.equals(_wpdfId)) {
+				return wpdf;
+			}
+		}
+		return null;
+	}
+	
 	
 	private class WorkProductDescriptorFake {
 		private String Guid;
@@ -1063,6 +1167,10 @@ public class XMLParser {
 			templatesAndExamples = new HashSet<Guidance>();
 		}
 		
+		public Set<Guidance> getTemplatesAndExamples() {
+			return templatesAndExamples;
+		}
+
 		/**
 		 * @return the guid
 		 */
