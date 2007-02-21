@@ -28,6 +28,31 @@ public class ConcretePhaseViewerBean {
 	private ConcreteBreakdownElementService concreteBreakdownElementService;
 
 	private String concretePhaseId = "";
+	
+	public boolean getChangeButtonIsDisabled() {
+		String wilosUserId = (String) this.webSessionService
+			.getAttribute(WebSessionService.WILOS_USER_ID);
+
+		Project project = this.projectService
+				.getProject((String) this.webSessionService
+						.getAttribute(WebSessionService.PROJECT_ID));
+		
+		if ((project.getProjectManager() != null)
+				&& (project.getProjectManager().getWilosuser_id()
+						.equals(wilosUserId)))
+			return false;
+		else
+			return true;
+	}
+
+	public boolean getIsOutputNameReadOnly() {
+		return this.getChangeButtonIsDisabled(); 
+	}
+	
+	public void changeConcreteName() {
+		this.concretePhaseService.getConcretePhaseDao()
+			.saveOrUpdateConcretePhase(this.concretePhase);
+	}
 
 	// To have the mask available only for the ProjectManager.
 	public boolean getTreeMaskIsAvailable() {
