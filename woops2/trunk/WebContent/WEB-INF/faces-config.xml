@@ -162,7 +162,7 @@
 			<value>#{WebSessionService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>ProcessBean</managed-bean-name>
 		<managed-bean-class>wilos.presentation.web.process.ProcessBean</managed-bean-class>
@@ -172,7 +172,7 @@
 			<value>#{ProcessService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>ConcreteRoleViewerBean</managed-bean-name>
 		<managed-bean-class>
@@ -291,10 +291,6 @@
 		<managed-property>
 			<property-name>participantService</property-name>
 			<value>#{ParticipantService}</value>
-		</managed-property>
-		<managed-property>
-			<property-name>projectService</property-name>
-			<value>#{ProjectService}</value>
 		</managed-property>
 	</managed-bean>
 
