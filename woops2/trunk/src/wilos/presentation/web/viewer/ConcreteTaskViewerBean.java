@@ -75,12 +75,14 @@ public class ConcreteTaskViewerBean {
 	 * @return the visibleAffected
 	 */
 	public boolean getVisibleAffected() {
+		/*
 		String wilosUserId = (String) this.webSessionService
 		.getAttribute(WebSessionService.WILOS_USER_ID);
 		Participant participant = this.participantService
 		.getParticipant(wilosUserId);
 		return (this.concreteTaskDescriptor.getConcreteRoleDescriptor() == null && this.concreteTaskDescriptor.getTaskDescriptor().getMainRole() != null && this.concreteTaskDescriptorService.affectedvisible(this.concreteTaskDescriptor,participant));
-
+		*/
+		return true;
 	}
 
 	/**
@@ -191,7 +193,7 @@ public class ConcreteTaskViewerBean {
 			  Participant user =
 			  this.participantService.getParticipant(participantId);
 			 */
-			// TODO PSI2 : verifier si la concretetask est bien affectée au
+			// TODO PSI2 : verifier si la concretetask est bien affectï¿½e au
 			// participant via les roles
 			this.visibleModifiable = true;
 		} else {
