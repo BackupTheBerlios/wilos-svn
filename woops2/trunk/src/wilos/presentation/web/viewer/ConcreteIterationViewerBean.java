@@ -28,6 +28,31 @@ public class ConcreteIterationViewerBean {
 	private ConcreteBreakdownElementService concreteBreakdownElementService;
 
 	private String concreteIterationId = "";
+	
+	public boolean getChangeButtonIsDisabled() {
+		String wilosUserId = (String) this.webSessionService
+			.getAttribute(WebSessionService.WILOS_USER_ID);
+
+		Project project = this.projectService
+				.getProject((String) this.webSessionService
+						.getAttribute(WebSessionService.PROJECT_ID));
+		
+		if ((project.getProjectManager() != null)
+				&& (project.getProjectManager().getWilosuser_id()
+						.equals(wilosUserId)))
+			return false;
+		else
+			return true;
+	}
+	
+	public boolean getIsInputNameReadOnly() {
+		return (this.getChangeButtonIsDisabled()); 
+	}
+	
+	public void changeConcreteName() {
+		this.concreteIterationService.getConcreteIterationDao()
+			.saveOrUpdateConcreteIteration(this.concreteIteration);
+	}
 
 	// To have the mask available only for the ProjectManager.
 	public boolean getTreeMaskIsAvailable() {

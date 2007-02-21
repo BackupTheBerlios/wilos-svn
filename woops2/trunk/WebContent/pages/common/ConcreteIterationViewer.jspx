@@ -4,11 +4,15 @@
 			<br />
 			<ice:panelTab label="#{msgs['iterationViewer.tabtitle'] }">
 				<br />
-				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2">
+				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="3">
 					<ice:outputText value="#{msgs['viewer.concreteName']}" />
-					<ice:outputText
-						value="#{ConcreteIterationViewerBean.concreteIteration.concreteName}" />
-
+					<ice:inputText
+						value="#{ConcreteIterationViewerBean.concreteIteration.concreteName}" 
+						readonly="#{ConcreteIterationViewerBean.isInputNameReadOnly}"/>
+					<ice:commandButton value="#{msgs['button.changeconcretename']}"
+						action="#{ConcreteIterationViewerBean.changeConcreteName}" 
+						disabled="#{ConcreteIterationViewerBean.changeButtonIsDisabled}"/>
+					<ice:outputText value=""/>
 					<ice:panelGroup
 						visible="#{ConcreteIterationViewerBean.treeMaskIsAvailable}">
 						<ice:outputText styleClass="propertyLabel" value="#Visible#" />
