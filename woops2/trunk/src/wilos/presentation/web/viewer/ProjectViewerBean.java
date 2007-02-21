@@ -7,10 +7,12 @@ import javax.faces.context.FacesContext;
 
 import wilos.business.services.misc.concretebreakdownelement.ConcreteBreakdownElementService;
 import wilos.business.services.misc.project.ProjectService;
+import wilos.business.services.misc.wilosuser.ParticipantService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
 import wilos.model.misc.project.Project;
+import wilos.model.misc.wilosuser.Participant;
 import wilos.presentation.web.tree.TreeBean;
 
 public class ProjectViewerBean {
@@ -24,6 +26,30 @@ public class ProjectViewerBean {
 	private ConcreteBreakdownElementService concreteBreakdownElementService;
 
 	private String projectId = "";
+	
+	public boolean getChangeButtonIsDisabled() {
+		String wilosUserId = (String) this.webSessionService
+			.getAttribute(WebSessionService.WILOS_USER_ID);
+
+		Project project = this.projectService
+				.getProject((String) this.webSessionService
+						.getAttribute(WebSessionService.PROJECT_ID));
+		
+		if ((project.getProjectManager() != null)
+				&& (project.getProjectManager().getWilosuser_id()
+						.equals(wilosUserId)))
+			return false;
+		else
+			return true;
+	}
+	
+	public void changeConcreteName() {
+		projectService.saveProject(project);
+	}
+	
+	public boolean getIsInputNameReadOnly() {
+		return (this.getChangeButtonIsDisabled()); 
+	}
 
 	//To have the mask available only for the ProjectManager.
 	public boolean getTreeMaskIsAvailable() {
