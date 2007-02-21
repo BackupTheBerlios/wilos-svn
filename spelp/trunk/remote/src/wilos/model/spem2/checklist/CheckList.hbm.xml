@@ -11,10 +11,10 @@
 		table="checklist" lazy="true">
 		<key column="checklist_id"></key>
 		
-		<!-- <set name="concreteIterations" lazy="true">
-			<key column="iteration_id" />
-			<one-to-many class="wilos.model.misc.concreteiteration.ConcreteIteration"></one-to-many>
-		</set> -->
+		<set name="sections" lazy="true">
+			<key column="checklist_id" />
+			<one-to-many class="wilos.model.spem2.section.Section"></one-to-many>
+		</set>
 		
 	</joined-subclass>
 	

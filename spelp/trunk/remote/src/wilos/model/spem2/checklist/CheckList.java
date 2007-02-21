@@ -4,26 +4,28 @@ import java.util.HashSet;
 import java.util.Set;
 
 import wilos.model.spem2.guide.Guidance;
+import wilos.model.spem2.section.Section;
 
 public class CheckList extends Guidance{
 	
-	Set<String> sections;
+	/* Collection of Sections */
+	Set<Section> sections;
 	
 	public CheckList() {		
-		this.sections = new HashSet<String>();
+		this.sections = new HashSet<Section>();
 	}
 
 	/**
 	 * @return the sections
 	 */
-	public Set<String> getSections() {
+	public Set<Section> getSections() {
 		return sections;
 	}
 
 	/**
 	 * @param sections the sections to set
 	 */
-	public void setSections(Set<String> _sections) {
+	public void setSections(Set<Section> _sections) {
 		this.sections = _sections;
 	}
 }

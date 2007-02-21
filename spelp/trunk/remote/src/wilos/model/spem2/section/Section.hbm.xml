@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping>
+	
+	<joined-subclass
+		name="wilos.model.spem2.section.Section"
+		extends="wilos.model.spem2.element.Element"
+		table="section" lazy="true">
+		<key column="section_id"></key>	
+		
+		<many-to-one name="checklist" class="wilos.model.spem2.checklist.CheckList"
+			column="checklist_id">
+		</many-to-one>			
+	</joined-subclass>
+	
+</hibernate-mapping>

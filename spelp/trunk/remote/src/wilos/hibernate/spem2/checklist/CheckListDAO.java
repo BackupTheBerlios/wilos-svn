@@ -53,7 +53,7 @@ public class CheckListDAO extends HibernateDaoSupport{
 	 * @param _id
 	 * @return
 	 */
-	public CheckList getGuidance(String _id) {
+	public CheckList getCheckList(String _id) {
 		return (CheckList) this.getHibernateTemplate().get(CheckList.class, _id) ;
 	}
 
