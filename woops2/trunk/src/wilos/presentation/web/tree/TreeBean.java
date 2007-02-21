@@ -15,6 +15,7 @@ import javax.swing.tree.DefaultTreeModel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Hibernate;
 
 import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.misc.wilosuser.LoginService;
@@ -147,6 +148,7 @@ public class TreeBean {
 				.getApplication().getVariableResolver().resolveVariable(
 						context, "ConcreteRoleAffectationBean");
 		crab.setNodeId(nodeId);
+		logger.debug("### TreeBean ### HIBERNATE STATS :: \n"+this.getProcessService().getActivityDao().getSessionFactory().getStatistics());
 	}
 
 	/* Manage the combobox. */
