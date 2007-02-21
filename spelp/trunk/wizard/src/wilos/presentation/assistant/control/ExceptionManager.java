@@ -1,35 +1,56 @@
 package wilos.presentation.assistant.control;
 
-import java.io.IOException;
-
-import javax.xml.xpath.XPathExpressionException;
-
+import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.view.dialogs.ErrorDialog;
 
 public class ExceptionManager {
 	
 	public ExceptionManager(Exception e) {
 		
-		String classe = e.getClass().getName();
-		String cause = e.getCause().toString();
-		String msg = e.getMessage();
-		String locMsg = e.getLocalizedMessage();
+		String texte = Bundle.getText("exceptionManager.simpleError");
 		
-		String texte = "Une erreur est survennue.";
-		String nomExep = cause.substring(0, cause.indexOf(':'));
-		String descExep = cause.substring(cause.indexOf(':')+2,cause.length());
+		String classe = null;
+		String msg = null;
 		
-		if(nomExep.equalsIgnoreCase("java.net.UnknownHostException")) {
-			texte = "Le serveur '" + descExep + "' est introuvable.";
+		classe = e.getClass().getName();
+		msg = e.getMessage();
+		
+
+
+		// WebServices' exceptions
+		if(classe.equals("javax.xml.ws.WebServiceException")) {
+			String nomExep = msg.substring(0, msg.indexOf(':'));
+			
+			if(nomExep.equalsIgnoreCase("java.net.UnknownHostException"))
+			{
+				texte = Bundle.getText("exceptionManager.unknownHost");
+			}
+			else if (nomExep.equalsIgnoreCase("java.io.FileNotFoundException")) {
+				texte = Bundle.getText("exceptionManager.unknownHost");
+			}
+			else if (nomExep.equalsIgnoreCase("java.net.ConnectException")) {
+				texte = Bundle.getText("exceptionManager.connectionRefused");
+			}
 		}
-		else if (nomExep.equalsIgnoreCase("java.net.ConnectException")) {
-			texte = "Connection refusée.";
+		
+		// Wilos' exceptions
+		if(classe.substring(0, 6).equals("wilos.")) {
+			System.out.println("wil");
+			if(msg.equalsIgnoreCase("le wilos user n'existe pas")) {
+				texte = Bundle.getText("exceptionManager.unknownUser");
+			}
+		}
+
+		// others exceptions
+		if (classe.equalsIgnoreCase("java.net.MalformedURLException")) {
+			texte = Bundle.getText("exceptionManager.malformedURL");
 		}
 
 		
-	//	texte = classe + "\n" + cause + "\n" + msg + "\n" + locMsg + "\n" + nomExep;
-	//	System.out.println("\n\n\n"+texte+"\n\n\n");
-
+//		texte = classe + "\n" + msg;
+		
+		
+		// shows the message box
 		new ErrorDialog(texte);
 	}
 }

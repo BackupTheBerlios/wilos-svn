@@ -264,7 +264,8 @@ public class LoginPanel extends JPanel {
 			if (participant == null)
 			{
 				setVisible(true);
-				new ErrorDialog(Bundle.getText("loginPanel.unknownUser"));
+				// TODO : Verifier ce "if-else"
+	//			new ErrorDialog(Bundle.getText("loginPanel.unknownUser"));
 			}  
 			else
 			{
