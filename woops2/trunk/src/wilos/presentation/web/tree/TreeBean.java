@@ -28,6 +28,7 @@ import wilos.presentation.web.template.MenuBean;
 import wilos.presentation.web.viewer.ConcreteActivityViewerBean;
 import wilos.presentation.web.viewer.ConcreteIterationViewerBean;
 import wilos.presentation.web.viewer.ConcretePhaseViewerBean;
+import wilos.presentation.web.viewer.ConcreteRoleViewerBean;
 import wilos.presentation.web.viewer.ConcreteTaskViewerBean;
 import wilos.presentation.web.viewer.ProjectViewerBean;
 
@@ -55,6 +56,8 @@ public class TreeBean {
 	private static final String ITERATION_VIEWER_BEAN = "ConcreteIterationViewerBean";
 
 	private static final String CONCRETE_TASK_VIEWER_BEAN = "ConcreteTaskViewerBean";
+
+	private static final String CONCRETE_ROLE_VIEWER_BEAN = "ConcreteRoleViewerBean";
 
 	private WebSessionService webSessionService;
 
@@ -121,7 +124,7 @@ public class TreeBean {
 
 			// Retrieve the entire project.
 			this.project = this.projectService.getProject(this.projectId);
-			ProjectNode projectNode ;
+			ProjectNode projectNode;
 			if (this.selectedMode.equals(TASKS_MODE))
 				projectNode = new ProjectNode(this.project, true, treeMap);
 			else
@@ -156,7 +159,9 @@ public class TreeBean {
 				.getApplication().getVariableResolver().resolveVariable(
 						context, "ConcreteRoleAffectationBean");
 		crab.setNodeId(nodeId);
-		logger.debug("### TreeBean ### HIBERNATE STATS :: \n"+this.getProcessService().getActivityDao().getSessionFactory().getStatistics());
+		logger.debug("### TreeBean ### HIBERNATE STATS :: \n"
+				+ this.getProcessService().getActivityDao().getSessionFactory()
+						.getStatistics());
 	}
 
 	/* Manage the select one radio */
@@ -225,8 +230,9 @@ public class TreeBean {
 				// model building
 				av.buildConcreteActivity();
 
-				//TODO ConcreteActivity ca = (ConcreteActivity) treeMap.get(_objectId);
-				//av.setConcreteActivity(ca);
+				// TODO ConcreteActivity ca = (ConcreteActivity)
+				// treeMap.get(_objectId);
+				// av.setConcreteActivity(ca);
 
 				mb.changePage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.CONCRETETASKNODE)) {
@@ -236,6 +242,14 @@ public class TreeBean {
 				ctv.setConcreteTaskDescriptorId(_objectId);
 				// model building
 				ctv.buildConcreteTaskDescriptor();
+				mb.changePage(_pageId);
+			} else if (_pageId.equals(WilosObjectNode.CONCRETEROLENODE)) {
+				ConcreteRoleViewerBean crv = (ConcreteRoleViewerBean) context
+						.getApplication().getVariableResolver()
+						.resolveVariable(context, CONCRETE_ROLE_VIEWER_BEAN);
+				crv.setConcreteRoleDescriptorId(_objectId);
+				// model building
+				crv.buildConcreteRoleModel();
 				mb.changePage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.ITERATIONNODE)) {
 				ConcreteIterationViewerBean iv = (ConcreteIterationViewerBean) context
