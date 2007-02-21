@@ -21,7 +21,6 @@ import wilos.business.services.misc.wilosuser.LoginService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.process.ProcessService;
-import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.presentation.web.role.ConcreteRoleAffectationBean;
@@ -87,7 +86,7 @@ public class TreeBean {
 	private DefaultTreeModel model = null;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
-	
+
 	// HashMap which contains the object and his id
 	private HashMap<String, Object> treeMap = new HashMap<String, Object>();
 
@@ -122,8 +121,7 @@ public class TreeBean {
 
 			// Retrieve the entire project.
 			this.project = this.projectService.getProject(this.projectId);
-			ProjectNode projectNode = new ProjectNode(this.project, true, treeMap);
-			ProjectNode projectNode;
+			ProjectNode projectNode ;
 			if (this.selectedMode.equals(TASKS_MODE))
 				projectNode = new ProjectNode(this.project, true, treeMap);
 			else
@@ -132,15 +130,11 @@ public class TreeBean {
 		} else {
 			// Build the default tree.
 			this.model = new DefaultTreeModel(this.getDefaultTree());
-
-			// hide tree.
-			//ICI this.loadTree = true;
 		}
 	}
-	
+
 	public void changeTreeActionListener(ValueChangeEvent evt) {
 		this.projectId = (String) evt.getNewValue();
-		//ICI this.loadTree = false;
 		this.buildModel();
 
 		if (this.projectId.length() > 0)
@@ -230,10 +224,10 @@ public class TreeBean {
 				av.setConcreteActivityId(_objectId);
 				// model building
 				av.buildConcreteActivity();
-				
-				ConcreteActivity ca = (ConcreteActivity) treeMap.get(_objectId);
-				av.setConcreteActivity(ca);
-				
+
+				//TODO ConcreteActivity ca = (ConcreteActivity) treeMap.get(_objectId);
+				//av.setConcreteActivity(ca);
+
 				mb.changePage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.CONCRETETASKNODE)) {
 				ConcreteTaskViewerBean ctv = (ConcreteTaskViewerBean) context
