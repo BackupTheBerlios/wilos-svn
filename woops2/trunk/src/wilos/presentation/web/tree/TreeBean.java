@@ -2,11 +2,9 @@ package wilos.presentation.web.tree;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -25,7 +23,6 @@ import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
-import wilos.model.spem2.role.RoleDescriptor;
 import wilos.presentation.web.role.ConcreteRoleAffectationBean;
 import wilos.presentation.web.template.MenuBean;
 import wilos.presentation.web.viewer.ConcreteActivityViewerBean;
@@ -75,11 +72,7 @@ public class TreeBean {
 
 	private String projectId = "default";
 
-	private boolean affectedTaskFilter = false;
-
 	private boolean loadTree = true;
-
-	private boolean loadCheckBox = false;
 
 	// tree default model, used as a value for the tree component
 	private DefaultTreeModel model = null;
@@ -89,6 +82,8 @@ public class TreeBean {
 	public TreeBean() {
 		this.model = new DefaultTreeModel(this.getDefaultTree());
 	}
+
+	/* Manage the tree. */
 
 	public DefaultMutableTreeNode getDefaultTree() {
 		DefaultMutableTreeNode defaultTree = new DefaultMutableTreeNode();
@@ -103,37 +98,19 @@ public class TreeBean {
 		return defaultTree;
 	}
 
-	public void refreshProjectTree(){
-		this.buildModel(true);
+	public void refreshProjectTree() {
+		this.buildModel();
 	}
 
-	public void buildModel(boolean _mustBuildProject) {
+	private void buildModel() {
 		if (this.projectId != null && !this.projectId.equals("default")) {
-			if (_mustBuildProject) {
-				// Put into the session the current project used.
-				this.webSessionService.setAttribute(
-						WebSessionService.PROJECT_ID, this.projectId);
+			// Put into the session the current project used.
+			this.webSessionService.setAttribute(WebSessionService.PROJECT_ID,
+					this.projectId);
 
-				// Retrieve the entire project.
-				this.project = this.projectService.getProject(this.projectId);
-			}
-			ProjectNode projectNode = null;
-
-			if (this.affectedTaskFilter) {
-				// participant into session
-				String wilosUserId = (String) this.webSessionService
-						.getAttribute(WebSessionService.WILOS_USER_ID);
-				Participant participant = this.participantService
-						.getParticipant(wilosUserId);
-
-				if (participant != null) {
-					Set<RoleDescriptor> roleDescriptorsList = new HashSet<RoleDescriptor>();
-					projectNode = new ProjectNode(this.project,
-							true);
-				}
-			} else {
-				projectNode = new ProjectNode(this.project, true);
-			}
+			// Retrieve the entire project.
+			this.project = this.projectService.getProject(this.projectId);
+			ProjectNode projectNode = new ProjectNode(this.project, true);
 			this.model = new DefaultTreeModel(projectNode);
 		} else {
 			// Build the default tree.
@@ -144,64 +121,15 @@ public class TreeBean {
 		}
 	}
 
-	public DefaultTreeModel getModel() {
-		return this.model;
-	}
-
-	public List<SelectItem> getProjects() {
-		List<SelectItem> projectsList = new ArrayList<SelectItem>();
-
-		String wilosUserId = (String) this.webSessionService
-				.getAttribute(WebSessionService.WILOS_USER_ID);
-		Participant participant = this.participantService
-				.getParticipant(wilosUserId);
-
-		if (participant != null) {
-			HashMap<Project, Boolean> projects = this.participantService
-					.getProjectsForAParticipant(participant);
-			for (Project project : projects.keySet()) {
-				if (projects.get(project)) {
-					this.addSelectItemToList(projectsList,
-							new SelectItem(project.getId(), project.getConcreteName())) ;
-				}
-			}
-		}
-
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
-		projectsList.add(0, new SelectItem("default", bundle
-				.getString("navigation.tree.defaulttreenodetext")));
-		return projectsList;
-	}
-	
-	private void addSelectItemToList(List <SelectItem> projectsList, SelectItem si) {
-		if (projectsList.size() == 0)
-			projectsList.add(si) ;
-		else {
-			int i ;
-			//inserting the project in an alphabetically ordered list
-			for (i = 0 ; projectsList.size() >= i
-							&& si.getLabel().compareTo(projectsList.get(i).getLabel()) > 0 ;
-							i++) {}
-			projectsList.add(i, si) ;
-		}
-	}
-
 	public void changeTreeActionListener(ValueChangeEvent evt) {
 		this.projectId = (String) evt.getNewValue();
-		this.loadCheckBox = true;
 		this.loadTree = false;
-		this.buildModel(true);
+		this.buildModel();
 
 		if (this.projectId.length() > 0)
 			this.selectNodeToShow(this.projectId, WilosObjectNode.PROJECTNODE);
 		logger.debug("### TreeBean ### changeTreeActionListener projectId="
 				+ this.projectId);
-	}
-
-	public void filterTreeActionListener(ValueChangeEvent evt) {
-		this.buildModel(false);
 	}
 
 	public void selectNodeActionListener(ActionEvent evt) {
@@ -220,6 +148,37 @@ public class TreeBean {
 						context, "ConcreteRoleAffectationBean");
 		crab.setNodeId(nodeId);
 	}
+
+	/* Manage the combobox. */
+
+	public List<SelectItem> getProjects() {
+		List<SelectItem> projectsList = new ArrayList<SelectItem>();
+
+		String wilosUserId = (String) this.webSessionService
+				.getAttribute(WebSessionService.WILOS_USER_ID);
+		Participant participant = this.participantService
+				.getParticipant(wilosUserId);
+
+		if (participant != null) {
+			HashMap<Project, Boolean> projects = this.participantService
+					.getProjectsForAParticipant(participant);
+			for (Project project : projects.keySet()) {
+				if (projects.get(project)) {
+					projectsList.add(new SelectItem(project.getId(), project
+							.getConcreteName()));
+				}
+			}
+		}
+
+		ResourceBundle bundle = ResourceBundle.getBundle(
+				"wilos.resources.messages", FacesContext.getCurrentInstance()
+						.getApplication().getDefaultLocale());
+		projectsList.add(new SelectItem("default", bundle
+				.getString("navigation.tree.defaulttreenodetext")));
+		return projectsList;
+	}
+
+	/* Private methods. */
 
 	/**
 	 *
@@ -281,20 +240,18 @@ public class TreeBean {
 		}
 	}
 
+	/* Getters & Setters */
+
+	public DefaultTreeModel getModel() {
+		return this.model;
+	}
+
 	public String getProjectId() {
 		return this.projectId;
 	}
 
 	public void setProjectId(String _processId) {
 		this.projectId = _processId;
-	}
-
-	public Boolean getAffectedTaskFilter() {
-		return affectedTaskFilter;
-	}
-
-	public void setAffectedTaskFilter(Boolean _affectedTaskFilter) {
-		this.affectedTaskFilter = _affectedTaskFilter;
 	}
 
 	public ProjectService getProjectService() {
@@ -311,14 +268,6 @@ public class TreeBean {
 
 	public void setLoadTree(Boolean loadTree) {
 		this.loadTree = loadTree;
-	}
-
-	public Boolean getLoadCheckBox() {
-		return loadCheckBox;
-	}
-
-	public void setLoadCheckBox(Boolean loadCheckBox) {
-		this.loadCheckBox = loadCheckBox;
 	}
 
 	public LoginService getLoginService() {
