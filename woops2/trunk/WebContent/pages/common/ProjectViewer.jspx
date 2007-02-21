@@ -103,38 +103,32 @@
 			<!-- ####################################################################################################
 			Woops2 ONGLET de l'instanciation d'un process
 			#################################################################################################### -->
-			<ice:panelTab id="panelTab_processInstanciation"
-				label="#{msgs['component.project.processinstanciation.title']}"
-				rendered="#{ProjectAdvancementBean.selected_projectAdvancement_view}">
-
-				<ice:outputText styleClass="propertyLabel"
-					value="#{msgs['component.tableparticipantProcessProject.processList']}" />
-				<ice:panelStack id="panelStack_projectProcess"
-					selectedPanel="#{ProjectBean.selectProcessAffectation}">
+			<ice:panelTab id="panelTab_processInstanciation" label="#{msgs['component.tab.processinstanciation.title']}"><!--rendered="#{ProjectAdvancementBean.selected_projectAdvancement_view}"-->
+				<ice:outputText styleClass="propertyLabel" value="#{msgs['component.tableparticipantProcessProject.processList']}" />
+				<ice:panelStack id="panelStack_projectProcess" selectedPanel="#{ProjectBean.selectProcessAffectation}">
 					<f:subview id="process_affectation_view">
-						<ice:panelGroup id="projectProcessPanelGroup"
-							styleClass="contentIncludePanelGroup">
-							<ice:selectOneRadio value="#{ProjectBean.selectedProcessGuid}"
-								layout="pageDirection">
+						<ice:panelGroup id="projectProcessPanelGroup" styleClass="contentIncludePanelGroup">
+							<ice:selectOneRadio value="#{ProjectBean.selectedProcessGuid}" layout="pageDirection">
 								<f:selectItems value="#{ProjectBean.processNamesList}" />
 								<br />
 							</ice:selectOneRadio>
 							<br />
-							<ice:commandButton
-								value="#{msgs['component.tableparticipantProcessProject.affectButton']}"
-								action="#{ProjectBean.saveProjectProcessAffectation}" />
+							<ice:commandButton value="#{msgs['component.tableparticipantProcessProject.affectButton']}"	action="#{ProjectBean.saveProjectProcessAffectation}" />
 						</ice:panelGroup>
 					</f:subview>
-					<!-- <f:subview id="no_process_affectation_view">
-						<ice:outputText
-							value="#{msgs['component.tableparticipantProcessProject.noallowed']}" />
-					</f:subview>-->
 					<f:subview id="selected_process_view">
-						<ice:outputText
-							value="#{msgs['component.tableparticipantProcessProject.selected']}" />
+						<ice:outputText	value="#{msgs['component.tableparticipantProcessProject.selected']}" />
 						<ice:outputText value="#{ProjectBean.processName}" />
 					</f:subview>
 				</ice:panelStack>
+				
+				<!--  <ice:panelStack id="panelStack_projectProcess" selectedPanel="#{ProjectBean.selectProcessAffectation}">
+					<f:subview id="selected_process_view">-->
+						<ice:selectOneMenu partialSubmit="true" value="#{ProcessBean.selectedProcessGuid}" valueChangeListener="#{ProcessBean.changeProcessSelectionListener}">
+							<f:selectItems value="#{ProcessBean.projects}" />
+						</ice:selectOneMenu>
+					<!--</f:subview>
+				</ice:panelStack>-->
 
 				<ice:dataTable value="#{ProjectAdvancementBean.displayContent}"
 					var="cbde" cellpadding="0" columnWidths="30px,400px,200px">
