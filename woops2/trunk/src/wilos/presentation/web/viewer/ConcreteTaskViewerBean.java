@@ -10,9 +10,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService;
+import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 
 public class ConcreteTaskViewerBean {
@@ -24,17 +26,44 @@ public class ConcreteTaskViewerBean {
 	private ConcreteTaskDescriptorService concreteTaskDescriptorService;
 
 	private ParticipantService participantService;
+	
+	private ProjectService projectService;
 
 	/* Simple fields */
 
 	private ConcreteTaskDescriptor concreteTaskDescriptor;
 
 	private String concreteTaskDescriptorId = "";
-	
+
 	private boolean visibleModifiable;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 	
+	public boolean getChangeButtonIsDisabled() {
+		String wilosUserId = (String) this.webSessionService
+			.getAttribute(WebSessionService.WILOS_USER_ID);
+
+		Project project = this.projectService
+				.getProject((String) this.webSessionService
+						.getAttribute(WebSessionService.PROJECT_ID));
+		
+		if ((project.getProjectManager() != null)
+				&& (project.getProjectManager().getWilosuser_id()
+						.equals(wilosUserId)))
+			return false;
+		else
+			return true;
+	}
+	
+	public boolean getIsInputNameReadOnly() {
+		return (this.getChangeButtonIsDisabled()); 
+	}
+	
+	public void changeConcreteName() {
+		this.concreteTaskDescriptorService.getConcreteTaskDescriptorDao()
+			.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
+	}
+
 	public void buildConcreteTaskDescriptor() {
 		this.concreteTaskDescriptor = new ConcreteTaskDescriptor();
 		if (!(this.concreteTaskDescriptorId.equals(""))
@@ -135,6 +164,8 @@ public class ConcreteTaskViewerBean {
 			ConcreteTaskDescriptorService concreteTaskDescriptorService) {
 		this.concreteTaskDescriptorService = concreteTaskDescriptorService;
 	}
+//		this.concreteTaskDescriptorId = concreteTaskDescriptorId;
+//	}
 
 	/**
 	 * @return the webSessionService
@@ -244,12 +275,20 @@ public class ConcreteTaskViewerBean {
 	public boolean getVisibleReprendre() {
 		return this.concreteTaskDescriptor.getState().equals("Suspended");
 	}
-
+	
 	public String getConcreteTaskDescriptorId() {
 		return concreteTaskDescriptorId;
 	}
 
 	public void setConcreteTaskDescriptorId(String _concreteTaskDescriptorId) {
 		this.concreteTaskDescriptorId = _concreteTaskDescriptorId;
+	}
+
+	public ProjectService getProjectService() {
+		return projectService;
+	}
+
+	public void setProjectService(ProjectService projectService) {
+		this.projectService = projectService;
 	}
 }
