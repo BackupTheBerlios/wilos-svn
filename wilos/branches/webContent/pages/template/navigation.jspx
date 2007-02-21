@@ -1,26 +1,25 @@
 <ice:form id="navigation">
-<!-- ComboBox -->
+	<!-- ComboBox -->
 	<!-- The projects combobox -->
-	<ice:selectOneMenu partialSubmit="true" value="#{TreeBean.projectId}" valueChangeListener="#{TreeBean.changeTreeActionListener}">
+	<ice:selectOneMenu id="combo" partialSubmit="true"
+		value="#{TreeBean.projectId}"
+		valueChangeListener="#{TreeBean.changeTreeActionListener}">
 		<f:selectItems value="#{TreeBean.projects}" />
 	</ice:selectOneMenu>
 	<br />
-	<br />
 
-	<!-- Check box - Concrete task filter -->
-	<!-- <ice:outputText visible="#{TreeBean.loadCheckBox}" styleClass="propertyLabel"
-		value="#{msgs['navigation.checkbox.label']}" />
-	<ice:selectBooleanCheckbox
-			rendered ="#{TreeBean.loadCheckBox}"
-			partialSubmit="true"
-			value="#{TreeBean.affectedTaskFilter}"
-		 	valueChangeListener="#{TreeBean.filterTreeActionListener}"/>
+	<!-- Select One Radio -->
+	<ice:panelGroup visible="#{TreeBean.hideRadio}">
+		<ice:selectOneRadio id="radio" partialSubmit="true"
+			value="#{TreeBean.selectedMode}"
+			valueChangeListener="#{TreeBean.changeModeActionListener}">
+			<f:selectItems value="#{TreeBean.modesList}" />
+		</ice:selectOneRadio>
+	</ice:panelGroup>
 	<br />
-	<br /> -->
 
 	<!-- ScrollBar -->
-	<div class="navTree">
-	<!-- Tree - The process tree with its taskDescriptors -->
+	<div class="navTree"><!-- Tree - The process tree with its taskDescriptors -->
 	<ice:tree id="tree" value="#{TreeBean.model}" var="item"
 		hideRootNode="#{TreeBean.loadTree}" hideNavigation="false"
 		imageDir="images/tree/">
