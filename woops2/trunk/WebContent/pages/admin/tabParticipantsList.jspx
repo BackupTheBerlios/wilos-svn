@@ -29,6 +29,7 @@
 						    </f:facet>
 						    <ice:outputText value="#{participant.emailAddress}"/>
 						</ice:column>
+
 					</ice:dataTable>
 				</ice:panelGroup>
 				
