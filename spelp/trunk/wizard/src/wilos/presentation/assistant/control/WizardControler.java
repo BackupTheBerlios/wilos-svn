@@ -34,6 +34,7 @@ public class WizardControler {
 	private Component src = null ;
 	private Object lastCtd;
 	private ArrayList<HTMLViewer> listHTML = new ArrayList<HTMLViewer>() ;
+	// TODO ajouter les attributs tps, langue + getters setters
 	
 	private WizardControler() {
 		

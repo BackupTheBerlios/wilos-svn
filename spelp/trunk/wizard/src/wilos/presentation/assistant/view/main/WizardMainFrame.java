@@ -27,27 +27,16 @@ import wilos.presentation.assistant.view.panels.WizardStateMachine;
 
 public class WizardMainFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
-
 	private ActionBar actionToolBar = null;
-
 	private JMenuBar jJMenuBar = null;
-
 	private JMenu jMenuFile = null;
-
 	private JMenuItem jMenuItemQuit = null;
-
 	private JMenu jMenuTools = null;
-
 	private JMenuItem jMenuItemOptions = null;
-
 	private JMenuItem jMenuItemServers = null;
-
 	private JMenu jMenuHelp = null;
-
 	private JMenuItem jMenuItemHelp = null;
-
 	private JPanel jPanel = null;
-
 	private TreePanel jTree = null;
 
 	/**
@@ -158,7 +147,7 @@ public class WizardMainFrame extends JFrame {
 	private JMenu getJMenuFile() {
 		if (jMenuFile == null) {
 			jMenuFile = new JMenu();
-			jMenuFile.setText("Fichier");
+			jMenuFile.setText(Bundle.getText("wizardMainFrame.menuBar.file"));
 			jMenuFile.add(getJMenuItemQuit());
 		}
 		return jMenuFile;
@@ -190,7 +179,7 @@ public class WizardMainFrame extends JFrame {
 	private JMenu getJMenuTools() {
 		if (jMenuTools == null) {
 			jMenuTools = new JMenu();
-			jMenuTools.setText("Outils");
+			jMenuTools.setText(Bundle.getText("wizardMainFrame.menuBar.tools"));
 			jMenuTools.add(getJMenuItemOptions());
 			jMenuTools.add(getJMenuItemServers());
 		}
@@ -205,7 +194,12 @@ public class WizardMainFrame extends JFrame {
 	private JMenuItem getJMenuItemOptions() {
 		if (jMenuItemOptions == null) {
 			jMenuItemOptions = new JMenuItem();
-			jMenuItemOptions.setText("Options");
+			jMenuItemOptions.setText(Bundle.getText("wizardMainFrame.menuBar.tools.options"));
+			jMenuItemOptions.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					new OptionFrame();
+				}
+			});
 		}
 		return jMenuItemOptions;
 	}
@@ -218,7 +212,7 @@ public class WizardMainFrame extends JFrame {
 	private JMenuItem getJMenuItemServers() {
 		if (jMenuItemServers == null) {
 			jMenuItemServers = new JMenuItem();
-			jMenuItemServers.setText("Serveurs");
+			jMenuItemServers.setText(Bundle.getText("wizardMainFrame.menuBar.tools.servers"));
 			jMenuItemServers.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					new ServersFrame();
@@ -236,7 +230,7 @@ public class WizardMainFrame extends JFrame {
 	private JMenu getJMenuHelp() {
 		if (jMenuHelp == null) {
 			jMenuHelp = new JMenu();
-			jMenuHelp.setText("Aide");
+			jMenuHelp.setText(Bundle.getText("wizardMainFrame.menuBar.help"));
 			jMenuHelp.add(getJMenuItemHelp());
 		}
 		return jMenuHelp;
@@ -250,7 +244,7 @@ public class WizardMainFrame extends JFrame {
 	private JMenuItem getJMenuItemHelp() {
 		if (jMenuItemHelp == null) {
 			jMenuItemHelp = new JMenuItem();
-			jMenuItemHelp.setText("Aide");
+			jMenuItemHelp.setText(Bundle.getText("wizardMainFrame.menuBar.help.help"));
 		}
 		return jMenuItemHelp;
 	}

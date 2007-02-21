@@ -53,7 +53,7 @@ public class ServersFrame {
 			serverDialog.setBounds(x, y, 605, 220);
 			serverDialog.setResizable(false);
 			serverDialog.setContentPane(getServerPane());
-			serverDialog.setTitle(Bundle.getText("serversFrame.titre"));
+			serverDialog.setTitle(Bundle.getText("serversFrame.title"));
 			serverDialog.setVisible(true);
 			
 		}
