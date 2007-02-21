@@ -26,9 +26,9 @@ public class ConcreteTaskDescriptorDao extends HibernateDaoSupport {
 	 * @param _concreteTaskdescriptor
 	 */
 	public void saveOrUpdateConcreteTaskDescriptor(
-			ConcreteTaskDescriptor _concreteTaskdescriptor) {
+			ConcreteTaskDescriptor _concreteTaskDescriptor) {
 		try {
-			this.getHibernateTemplate().saveOrUpdate(_concreteTaskdescriptor);
+			this.getHibernateTemplate().saveOrUpdate(_concreteTaskDescriptor);
 		} catch (DataIntegrityViolationException _e) {
 			ExceptionManager.getInstance()
 					.manageDataIntegrityViolationException(
