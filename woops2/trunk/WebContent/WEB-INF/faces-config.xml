@@ -292,6 +292,10 @@
 			<property-name>participantService</property-name>
 			<value>#{ParticipantService}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
