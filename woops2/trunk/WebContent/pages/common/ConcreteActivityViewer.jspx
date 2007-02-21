@@ -4,11 +4,15 @@
 			<br />
 			<ice:panelTab label="#{msgs['activityViewer.tabtitle'] }">
 				<br />
-				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2">
+				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="3">
 					<ice:outputText value="#{msgs['viewer.concreteName'] }" />
-					<ice:outputText
-						value="#{ConcreteActivityViewerBean.concreteActivity.concreteName}" />
-
+					<ice:inputText
+						value="#{ConcreteActivityViewerBean.concreteActivity.concreteName}" 
+						readonly="#{ConcreteActivityViewerBean.isInputNameReadOnly}"/>
+					<ice:commandButton value="#{msgs['button.changeconcretename']}"
+						action="#{ConcreteActivityViewerBean.changeConcreteName}" 
+						disabled="#{ConcreteActivityViewerBean.changeButtonIsDisabled}"/>
+					<ice:outputText value=""/>
 					<ice:panelGroup
 						visible="#{ConcreteActivityViewerBean.treeMaskIsAvailable}">
 						<ice:outputText styleClass="propertyLabel" value="#Visible#" />
