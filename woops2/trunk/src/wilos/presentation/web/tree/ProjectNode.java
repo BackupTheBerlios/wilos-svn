@@ -83,9 +83,6 @@ public class ProjectNode extends DefaultMutableTreeNode {
 			}
 		}
 		
-		logger.debug("=========> HashMap"+_treeMap);
-		logger.debug("=========> HashMap size" + _treeMap.size());
-		
 		FacesContext context = FacesContext.getCurrentInstance();
 		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver()
 			.resolveVariable(context, "TreeBean");
