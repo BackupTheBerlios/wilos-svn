@@ -128,7 +128,7 @@ public class ConcreteTaskDescriptorService {
 
 		this.updateConcreteTaskDescriptor(_concreteTaskDescriptor);
 	}
-	
+	@Transactional(readOnly = true)
 	public boolean affectedvisible(
 			ConcreteTaskDescriptor _concreteTaskDescriptor, Participant _user) {
 		
@@ -136,14 +136,14 @@ public class ConcreteTaskDescriptorService {
 		boolean afficher = false;
 		TaskDescriptor tmp = _concreteTaskDescriptor.getTaskDescriptor();
 		RoleDescriptor tmpRoleDescriptor;
+		TaskDescriptor tmp2 = this.taskDescriptorService.getTaskDescriptorById(tmp.getId());
 		
-		
-		if(tmp.getMainRole() == null)
+		if(tmp2.getMainRole() == null)
 		{
 			return false;
 		}
-		tmpRoleDescriptor = tmp.getMainRole();
-		RoleDescriptor rd = this.roleDescriptorService.getRoleDescriptorById(tmpRoleDescriptor.getId());
+		tmpRoleDescriptor = tmp2.getMainRole();
+			RoleDescriptor rd = this.roleDescriptorService.getRoleDescriptorById(tmpRoleDescriptor.getId());
 		// recuperation des deux listes.
 		Set<ConcreteRoleDescriptor> listeRd = rd.getConcreteRoleDescriptors();
 

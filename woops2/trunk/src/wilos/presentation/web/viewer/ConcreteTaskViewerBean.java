@@ -75,15 +75,14 @@ public class ConcreteTaskViewerBean {
 	 * @return the visibleAffected
 	 */
 	public boolean getVisibleAffected() {
-		//FIXME Pb de lazy
-			/*
+	
 		String wilosUserId = (String) this.webSessionService
 		.getAttribute(WebSessionService.WILOS_USER_ID);
 		Participant participant = this.participantService
 		.getParticipant(wilosUserId);
-		return (this.concreteTaskDescriptor.getConcreteRoleDescriptor() == null && this.concreteTaskDescriptor.getTaskDescriptor().getMainRole() != null && this.concreteTaskDescriptorService.affectedvisible(this.concreteTaskDescriptor,participant));
-		*/
-		return true;
+		return (this.concreteTaskDescriptor.getConcreteRoleDescriptor() == null && this.concreteTaskDescriptorService.affectedvisible(this.concreteTaskDescriptor,participant));
+		
+		
 	}
 
 	/**
