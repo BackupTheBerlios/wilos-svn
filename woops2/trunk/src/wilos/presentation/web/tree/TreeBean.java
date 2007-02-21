@@ -73,7 +73,15 @@ public class TreeBean {
 
 	private String projectId = "default";
 
-	private boolean loadTree = true;
+	private boolean loadTree;
+
+	private boolean hideRadio;
+
+	private String selectedMode = TASKS_MODE;
+
+	private static final String TASKS_MODE = "tasksMode";
+
+	private static final String ROLES_MODE = "rolesMode";
 
 	// tree default model, used as a value for the tree component
 	private DefaultTreeModel model = null;
@@ -111,26 +119,28 @@ public class TreeBean {
 
 			// Retrieve the entire project.
 			this.project = this.projectService.getProject(this.projectId);
-			ProjectNode projectNode = new ProjectNode(this.project, true);
+			ProjectNode projectNode;
+			if (this.selectedMode.equals(TASKS_MODE))
+				projectNode = new ProjectNode(this.project, true);
+			else
+				projectNode = new ProjectNode(this.project, false);
 			this.model = new DefaultTreeModel(projectNode);
 		} else {
 			// Build the default tree.
 			this.model = new DefaultTreeModel(this.getDefaultTree());
 
 			// hide tree.
-			this.loadTree = true;
+			//ICI this.loadTree = true;
 		}
 	}
 
 	public void changeTreeActionListener(ValueChangeEvent evt) {
 		this.projectId = (String) evt.getNewValue();
-		this.loadTree = false;
+		//ICI this.loadTree = false;
 		this.buildModel();
 
 		if (this.projectId.length() > 0)
 			this.selectNodeToShow(this.projectId, WilosObjectNode.PROJECTNODE);
-		logger.debug("### TreeBean ### changeTreeActionListener projectId="
-				+ this.projectId);
 	}
 
 	public void selectNodeActionListener(ActionEvent evt) {
@@ -149,6 +159,22 @@ public class TreeBean {
 						context, "ConcreteRoleAffectationBean");
 		crab.setNodeId(nodeId);
 		logger.debug("### TreeBean ### HIBERNATE STATS :: \n"+this.getProcessService().getActivityDao().getSessionFactory().getStatistics());
+	}
+
+	/* Manage the select one radio */
+
+	public void changeModeActionListener(ValueChangeEvent evt) {
+		this.selectedMode = (String) evt.getNewValue();
+		this.buildModel();
+	}
+
+	public List<SelectItem> getModesList() {
+		ArrayList<SelectItem> modesList = new ArrayList<SelectItem>();
+
+		modesList.add(new SelectItem(TASKS_MODE, "Tasks"));
+		modesList.add(new SelectItem(ROLES_MODE, "Roles"));
+
+		return modesList;
 	}
 
 	/* Manage the combobox. */
@@ -189,8 +215,6 @@ public class TreeBean {
 	 *            node selection function
 	 */
 	private void selectNodeToShow(String _objectId, String _pageId) {
-		logger.debug("### TreeBean ### selectNodeToShow id=" + _objectId
-				+ " page=" + _pageId);
 		FacesContext context = FacesContext.getCurrentInstance();
 		MenuBean mb = (MenuBean) context.getApplication().getVariableResolver()
 				.resolveVariable(context, "menu");
@@ -265,7 +289,11 @@ public class TreeBean {
 	}
 
 	public Boolean getLoadTree() {
-		return loadTree;
+		if (this.projectId != null && !this.projectId.equals("default"))
+			this.loadTree = false;
+		else
+			this.loadTree = true;
+		return this.loadTree;
 	}
 
 	public void setLoadTree(Boolean loadTree) {
@@ -302,5 +330,32 @@ public class TreeBean {
 
 	public void setProcessService(ProcessService processService) {
 		this.processService = processService;
+	}
+
+	/**
+	 * @return the selectedMode
+	 */
+	public String getSelectedMode() {
+		return this.selectedMode;
+	}
+
+	/**
+	 * @param selectedMode
+	 *            the selectedMode to set
+	 */
+	public void setSelectedMode(String _selectedMode) {
+		this.selectedMode = _selectedMode;
+	}
+
+	public boolean getHideRadio() {
+		if (this.projectId != null && !this.projectId.equals("default"))
+			this.hideRadio = true;
+		else
+			this.hideRadio = false;
+		return this.hideRadio;
+	}
+
+	public void setHideRadio(boolean _hideRadio) {
+		this.hideRadio = _hideRadio;
 	}
 }
