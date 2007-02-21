@@ -11,6 +11,10 @@ public class ConcretePhaseService {
 		return this.getConcretePhaseDao().getConcretePhase(_concretePhaseId);
 	}
 
+	public void saveConcretePhase(ConcretePhase _concretePhase) {
+		this.concretePhaseDao.saveOrUpdateConcretePhase(_concretePhase);
+	}
+
 	/**
 	 * @return the concretePhaseDao
 	 */
@@ -24,5 +28,4 @@ public class ConcretePhaseService {
 	public void setConcretePhaseDao(ConcretePhaseDao concretePhaseDao) {
 		this.concretePhaseDao = concretePhaseDao;
 	}
-
 }
