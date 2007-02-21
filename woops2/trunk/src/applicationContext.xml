@@ -128,7 +128,6 @@
 				<prop key="hibernate.cache.use_minimal_puts">true</prop>
 
 				<prop key="hibernate.default_batch_fetch_size">16</prop>
-
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>
 		</property>
