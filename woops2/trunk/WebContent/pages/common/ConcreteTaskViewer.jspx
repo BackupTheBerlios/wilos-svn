@@ -7,10 +7,10 @@
 				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="3">
 					<ice:outputText value="#{msgs['viewer.concreteName']}" />
 					<ice:inputText
-						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.concreteName}" 
+						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.concreteName}"
 						readonly="#{ConcreteTaskViewerBean.isInputNameReadOnly}"/>
 					<ice:commandButton value="#{msgs['button.changeconcretename']}"
-						action="#{ConcreteTaskViewerBean.changeConcreteName}" 
+						action="#{ConcreteTaskViewerBean.changeConcreteName}"
 						disabled="#{ConcreteTaskViewerBean.changeButtonIsDisabled}"/>
 					<ice:outputText value="#{msgs['taskviewer.state']}" />
 					<ice:outputText
@@ -25,7 +25,7 @@
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.plannedFinishingDate}" />
 					<ice:outputText value=""/>
 					<ice:outputText
-						value="#{msgs['taskviewer.accomplishedtime']}" 
+						value="#{msgs['taskviewer.accomplishedtime']}"
 						visible="#{ConcreteTaskViewerBean.visibleModifiable}"/>
 					<ice:inputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.accomplishedTime}"
@@ -33,7 +33,7 @@
 						<!--  <f:convertNumber pattern="#*0(.0)#" /> -->
 					</ice:inputText>
 					<ice:outputText value=""/>
-					<ice:outputText value="#{msgs['taskviewer.remainingtime']}" 
+					<ice:outputText value="#{msgs['taskviewer.remainingtime']}"
 					visible="#{ConcreteTaskViewerBean.visibleModifiable}"/>
 					<ice:inputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.remainingTime}"
@@ -46,21 +46,21 @@
 							<td><ice:commandButton
 								value="#{msgs['taskviewer.affecter']}"
 								actionListener="#{ConcreteTaskViewerBean.affectedActionListener}"
-								visible="#{ConcreteTaskViewerBean.visibleAffected}" 
+								visible="#{ConcreteTaskViewerBean.visibleAffected}"
 								styleClass="smallbutton"/><ice:commandButton
 								value="#{msgs['taskviewer.start']}"
 								actionListener="#{ConcreteTaskViewerBean.startActionListener}"
-								visible="#{ConcreteTaskViewerBean.visibleStart}" 
-								styleClass="smallbutton"/> 
+								visible="#{ConcreteTaskViewerBean.visibleStart}"
+								styleClass="smallbutton"/>
 								<ice:commandButton
 								value="#{msgs['taskviewer.reprendre']}"
 								actionListener="#{ConcreteTaskViewerBean.startActionListener}"
-								visible="#{ConcreteTaskViewerBean.visibleReprendre}" 
+								visible="#{ConcreteTaskViewerBean.visibleReprendre}"
 								styleClass="smallbutton"/>
 								<ice:commandButton
 								value="#{msgs['concretetaskviewer.saveButton']}"
 								actionListener="#{ConcreteTaskViewerBean.updateActionListener}"
-								visible="#{ConcreteTaskViewerBean.visibleModifiable}" 
+								visible="#{ConcreteTaskViewerBean.visibleModifiable}"
 								styleClass="smallbutton"/>
 								<ice:commandButton value="#{msgs['concretetaskviewer.stop']}"
 								actionListener="#{ConcreteTaskViewerBean.stopActionListener}"
