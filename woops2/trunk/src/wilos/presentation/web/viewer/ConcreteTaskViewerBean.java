@@ -75,7 +75,8 @@ public class ConcreteTaskViewerBean {
 	 * @return the visibleAffected
 	 */
 	public boolean getVisibleAffected() {
-		/*
+		//FIXME Pb de lazy
+			/*
 		String wilosUserId = (String) this.webSessionService
 		.getAttribute(WebSessionService.WILOS_USER_ID);
 		Participant participant = this.participantService
