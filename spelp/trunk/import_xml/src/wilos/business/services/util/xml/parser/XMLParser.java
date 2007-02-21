@@ -127,11 +127,10 @@ public class XMLParser {
 			GuidancesList = fillGuidesList();
 
 			RoleDefinitionsList = fillRoleDefinitionsList();
-
-			TaskDefinitionsList = fillTaskDefinitionsList();
-
 			
 			WorkProductDescriptorFakesList = fillWorkProductDescriptorFakesList();
+			
+			TaskDefinitionsList = fillTaskDefinitionsList();
 			
 			roleDescriptorsList = fillRoleDescriptorsList() ;
 			taskDescriptorsList = fillTaskDescriptorsList(roleDescriptorsList);			
@@ -191,14 +190,13 @@ public class XMLParser {
 								artifactGuid = aNode.getAttributes().getNamedItem(id).getNodeValue();
 							}
 							
-							Guidance theGuidance = getGuidanceById(presentationChildren.item(k).getNodeValue());
-							
+							Guidance theGuidance = getGuidanceById(presentationChildren.item(k).getTextContent());
 							
 							boolean alreadyExists = false;
 							for (WorkProductDescriptorFake WPDF : WorkProductDescriptorFakesList) {
 								if (WPDF.Guid.equals(artifactGuid)) {
 									WPDF.addTemplateOrExample(theGuidance);
-									alreadyExists = false;
+									alreadyExists = true;
 								}
 							}
 							
@@ -225,14 +223,13 @@ public class XMLParser {
 						artifactGuid = aNode.getAttributes().getNamedItem(id).getNodeValue();
 					}
 					
-					Guidance theGuidance = getGuidanceById(ArtifactChildren.item(j).getNodeValue());
-					
+					Guidance theGuidance = getGuidanceById(ArtifactChildren.item(j).getTextContent());					
 					
 					boolean alreadyExists = false;
 					for (WorkProductDescriptorFake WPDF : WorkProductDescriptorFakesList) {
 						if (WPDF.Guid.equals(artifactGuid)) {
 							WPDF.addTemplateOrExample(theGuidance);
-							alreadyExists = false;
+							alreadyExists = true;
 						}
 					}
 					
@@ -730,8 +727,9 @@ public class XMLParser {
 			}
 			// We'll get The templates and examples of the Outputs of the TaskDef
 			else if (listOfTdNodes.item(i).getNodeName().equals(output)) {
-				String wpdfGuid = listOfTdNodes.item(i).getNodeValue();
+				String wpdfGuid = listOfTdNodes.item(i).getTextContent();
 				WorkProductDescriptorFake wpdf = getWorkProductDescriptorFakeById(wpdfGuid);
+				//System.out.println(_taskDefinition.getName() + wpdfGuid);
 				
 				// For each template or guidance of the WorkProduct
 				if (wpdf != null) {
