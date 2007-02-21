@@ -16,7 +16,6 @@ import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
-import wilos.utils.Constantes.State;
 
 public class ConcreteTaskViewerBean {
 
@@ -110,7 +109,8 @@ public class ConcreteTaskViewerBean {
 				.getAttribute(WebSessionService.WILOS_USER_ID);
 		Participant participant = this.participantService
 				.getParticipant(wilosUserId);
-		return (this.concreteTaskDescriptor.getConcreteRoleDescriptor() == null && this.concreteTaskDescriptorService
+		
+		return (this.concreteTaskDescriptor.getState().equals("Created")&& this.concreteTaskDescriptorService
 				.affectedvisible(this.concreteTaskDescriptor, participant));
 
 	}
@@ -142,10 +142,7 @@ public class ConcreteTaskViewerBean {
 	 */
 	public boolean getVisibleStart() {
 
-		return (!(this.concreteTaskDescriptor.getConcreteRoleDescriptor() == null)
-				&& !this.concreteTaskDescriptor.getState().equals(State.CREATED)
-				&& !this.concreteTaskDescriptor.getState().equals(State.FINISHED) && !this.concreteTaskDescriptor
-				.getState().equals(State.SUSPENDED));
+		return (this.concreteTaskDescriptor.getState().equals("Ready"));
 
 	}
 

@@ -96,8 +96,9 @@ public class ConcreteTaskDescriptorService {
 
 		TaskDescriptor tmp = _concreteTaskDescriptor.getTaskDescriptor();
 		RoleDescriptor tmpRoleDescriptor;
+		TaskDescriptor td = this.taskDescriptorService.getTaskDescriptorById(tmp.getId());
 
-			tmpRoleDescriptor = tmp.getMainRole();
+		tmpRoleDescriptor = td.getMainRole();
 
 
 		RoleDescriptor rd = this.roleDescriptorService.getRoleDescriptorById(tmpRoleDescriptor.getId());
@@ -116,8 +117,9 @@ public class ConcreteTaskDescriptorService {
 			}
 
 		}
-
-		_concreteTaskDescriptor.addConcreteRoleDescriptor(concreteRoleDescriptor);
+		ConcreteRoleDescriptor crd = this.concreteRoleDescriptorService.getConcreteRoleDescriptorById(concreteRoleDescriptor.getId());
+		
+		this.getConcreteTaskDescriptor(_concreteTaskDescriptor.getId()).addConcreteRoleDescriptor(crd);
 
 		return _concreteTaskDescriptor;
 	}
