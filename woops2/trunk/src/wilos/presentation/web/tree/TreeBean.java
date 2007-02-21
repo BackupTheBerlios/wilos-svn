@@ -28,7 +28,6 @@ import wilos.presentation.web.template.MenuBean;
 import wilos.presentation.web.viewer.ConcreteActivityViewerBean;
 import wilos.presentation.web.viewer.ConcreteIterationViewerBean;
 import wilos.presentation.web.viewer.ConcretePhaseViewerBean;
-import wilos.presentation.web.viewer.ConcreteRoleViewerBean;
 import wilos.presentation.web.viewer.ConcreteTaskViewerBean;
 import wilos.presentation.web.viewer.ProjectViewerBean;
 
@@ -124,7 +123,7 @@ public class TreeBean {
 
 			// Retrieve the entire project.
 			this.project = this.projectService.getProject(this.projectId);
-			ProjectNode projectNode;
+			ProjectNode projectNode ;
 			if (this.selectedMode.equals(TASKS_MODE))
 				projectNode = new ProjectNode(this.project, true, treeMap);
 			else
@@ -226,15 +225,17 @@ public class TreeBean {
 				ConcreteActivityViewerBean av = (ConcreteActivityViewerBean) context
 						.getApplication().getVariableResolver()
 						.resolveVariable(context, ACTIVITY_VIEWER_BEAN);
+				
 				av.setConcreteActivityId(_objectId);
 				// model building
-				av.buildConcreteActivity();
-
-				// TODO ConcreteActivity ca = (ConcreteActivity)
-				// treeMap.get(_objectId);
-				// av.setConcreteActivity(ca);
+				av.buildConcreteActivity();		
+				
+//				// recover the object in the HashMap for the viewer
+//				ConcreteActivity ca = (ConcreteActivity) treeMap.get(_objectId);
+//				av.setConcreteActivity(ca);
 
 				mb.changePage(_pageId);
+				
 			} else if (_pageId.equals(WilosObjectNode.CONCRETETASKNODE)) {
 				ConcreteTaskViewerBean ctv = (ConcreteTaskViewerBean) context
 						.getApplication().getVariableResolver()
@@ -242,15 +243,13 @@ public class TreeBean {
 				ctv.setConcreteTaskDescriptorId(_objectId);
 				// model building
 				ctv.buildConcreteTaskDescriptor();
+				
+//				// recover the object in the HashMap for the viewer
+//				ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) treeMap.get(_objectId);
+//				ctv.setConcreteTaskDescriptor(ctd);
+				
 				mb.changePage(_pageId);
-			} else if (_pageId.equals(WilosObjectNode.CONCRETEROLENODE)) {
-				ConcreteRoleViewerBean crv = (ConcreteRoleViewerBean) context
-						.getApplication().getVariableResolver()
-						.resolveVariable(context, CONCRETE_ROLE_VIEWER_BEAN);
-				crv.setConcreteRoleDescriptorId(_objectId);
-				// model building
-				crv.buildConcreteRoleModel();
-				mb.changePage(_pageId);
+				
 			} else if (_pageId.equals(WilosObjectNode.ITERATIONNODE)) {
 				ConcreteIterationViewerBean iv = (ConcreteIterationViewerBean) context
 						.getApplication().getVariableResolver()
@@ -258,7 +257,13 @@ public class TreeBean {
 				iv.setConcreteIterationId(_objectId);
 				// model building
 				iv.buildConcreteIteration();
+				
+//				// recover the object in the HashMap for the viewer
+//				ConcreteIteration ci = (ConcreteIteration) treeMap.get(_objectId);
+//				iv.setConcreteIteration(ci);
+
 				mb.changePage(_pageId);
+				
 			} else if (_pageId.equals(WilosObjectNode.PHASENODE)) {
 				ConcretePhaseViewerBean pb = (ConcretePhaseViewerBean) context
 						.getApplication().getVariableResolver()
@@ -266,7 +271,13 @@ public class TreeBean {
 				pb.setConcretePhaseId(_objectId);
 				// model building
 				pb.buildConcretePhaseModel();
+				
+//				// recover the object in the HashMap for the viewer
+//				ConcretePhase cp = (ConcretePhase) treeMap.get(_objectId);
+//				pb.setConcretePhase(cp);
+
 				mb.changePage(_pageId);
+				
 			} else if (_pageId.equals(WilosObjectNode.PROJECTNODE)) {
 				ProjectViewerBean p = (ProjectViewerBean) context
 						.getApplication().getVariableResolver()
@@ -274,7 +285,13 @@ public class TreeBean {
 				p.setProjectId(_objectId);
 				// model building
 				p.buildProjectModel();
+				
+//				// recover the object in the HashMap for the viewer
+//				Project proj = (Project) treeMap.get(_objectId);
+//				p.setProject(proj);
+
 				mb.changePage(_pageId);
+				
 			} else {
 				// didnt found the node's class
 				new ClassNotFoundException("coulnd't found the node class");
