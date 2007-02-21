@@ -25,6 +25,8 @@ public class Guidance extends Element {
 	
 	private String presentationName = "";
 	
+	private String attachment = "";
+	
 	/* Type guide constant */
 	public static final String guideline = "Guideline";
 	public static final String checklist = "Checklist";
@@ -126,6 +128,7 @@ public class Guidance extends Element {
 	protected void copy(final Guidance _guidance) {
 		super.copy(_guidance) ;
 		this.setType(_guidance.getType());
+		this.setAttachment(_guidance.getAttachment());
 		this.getTaskDefinitions().addAll(_guidance.getTaskDefinitions());
 		this.getActivities().addAll(_guidance.getActivities());
 		this.getRoleDefinitions().addAll(_guidance.getRoleDefinitions());		
@@ -146,7 +149,7 @@ public class Guidance extends Element {
 
 		Guidance guidance = (Guidance) obj ;
 		return new EqualsBuilder().appendSuper(super.equals(guidance)).append(this.getTaskDefinitions(), guidance.getTaskDefinitions()).append(this.getRoleDefinitions(),
-				guidance.getRoleDefinitions()).append(this.getActivities(), guidance.getActivities()).append(this.type, guidance.type).append(this.presentationName,guidance.getPresentationName()).isEquals() ;
+				guidance.getRoleDefinitions()).append(this.getActivities(), guidance.getActivities()).append(this.type, guidance.type).append(this.presentationName,guidance.getPresentationName()).append(this.attachment, guidance.getAttachment()).isEquals() ;
 	}
 
 	/*
@@ -155,7 +158,7 @@ public class Guidance extends Element {
 	 * @see woops2.model.breakdownelement.BreakdownElement#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.type).append(this.presentationName).toHashCode();
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.type).append(this.presentationName).append(this.attachment).toHashCode();
 	}
 
 
@@ -298,6 +301,22 @@ public class Guidance extends Element {
 	 */
 	public void setTaskDefinitions(Set<TaskDefinition> taskDefinitions) {
 		this.taskDefinitions = taskDefinitions;
+	}
+
+
+	/**
+	 * @return the associatedFile
+	 */
+	public String getAttachment() {
+		return attachment;
+	}
+
+
+	/**
+	 * @param _attachment the associatedFile to set
+	 */
+	public void setAttachment(String _attachment) {
+		this.attachment = _attachment;
 	}
 	
 }

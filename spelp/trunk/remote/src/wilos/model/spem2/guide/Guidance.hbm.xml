@@ -16,6 +16,9 @@
 			
 		<property name="presentationName" type="java.lang.String" column="presentationname"
 			length="256" />
+			
+		<property name="attachment" type="java.lang.String" column="attachment"
+			length="256" />
 
 		<!-- Associations -->
 		
