@@ -28,6 +28,7 @@ import wilos.presentation.web.template.MenuBean;
 import wilos.presentation.web.viewer.ConcreteActivityViewerBean;
 import wilos.presentation.web.viewer.ConcreteIterationViewerBean;
 import wilos.presentation.web.viewer.ConcretePhaseViewerBean;
+import wilos.presentation.web.viewer.ConcreteRoleViewerBean;
 import wilos.presentation.web.viewer.ConcreteTaskViewerBean;
 import wilos.presentation.web.viewer.ProjectViewerBean;
 
@@ -45,18 +46,6 @@ import wilos.presentation.web.viewer.ProjectViewerBean;
 public class TreeBean {
 
 	/* Services */
-
-	private static final String ACTIVITY_VIEWER_BEAN = "ConcreteActivityViewerBean";
-
-	private static final String PROJECT_VIEWER_BEAN = "ProjectViewerBean";
-
-	private static final String PHASE_VIEWER_BEAN = "ConcretePhaseViewerBean";
-
-	private static final String ITERATION_VIEWER_BEAN = "ConcreteIterationViewerBean";
-
-	private static final String CONCRETE_TASK_VIEWER_BEAN = "ConcreteTaskViewerBean";
-
-	private static final String CONCRETE_ROLE_VIEWER_BEAN = "ConcreteRoleViewerBean";
 
 	private WebSessionService webSessionService;
 
@@ -123,7 +112,7 @@ public class TreeBean {
 
 			// Retrieve the entire project.
 			this.project = this.projectService.getProject(this.projectId);
-			ProjectNode projectNode ;
+			ProjectNode projectNode;
 			if (this.selectedMode.equals(TASKS_MODE))
 				projectNode = new ProjectNode(this.project, true, treeMap);
 			else
@@ -224,8 +213,7 @@ public class TreeBean {
 			if (_pageId.equals(WilosObjectNode.ACTIVITYNODE)) {
 				ConcreteActivityViewerBean av = (ConcreteActivityViewerBean) context
 						.getApplication().getVariableResolver()
-						.resolveVariable(context, ACTIVITY_VIEWER_BEAN);
-				
+						.resolveVariable(context, WilosObjectNode.ACTIVITYNODE + "Bean");
 				av.setConcreteActivityId(_objectId);
 				// model building
 				av.buildConcreteActivity();		
@@ -235,11 +223,10 @@ public class TreeBean {
 //				av.setConcreteActivity(ca);
 
 				mb.changePage(_pageId);
-				
 			} else if (_pageId.equals(WilosObjectNode.CONCRETETASKNODE)) {
 				ConcreteTaskViewerBean ctv = (ConcreteTaskViewerBean) context
 						.getApplication().getVariableResolver()
-						.resolveVariable(context, CONCRETE_TASK_VIEWER_BEAN);
+						.resolveVariable(context, WilosObjectNode.CONCRETETASKNODE + "Bean");
 				ctv.setConcreteTaskDescriptorId(_objectId);
 				// model building
 				ctv.buildConcreteTaskDescriptor();
@@ -249,11 +236,18 @@ public class TreeBean {
 //				ctv.setConcreteTaskDescriptor(ctd);
 				
 				mb.changePage(_pageId);
-				
+			} else if (_pageId.equals(WilosObjectNode.CONCRETEROLENODE)) {
+				ConcreteRoleViewerBean crv = (ConcreteRoleViewerBean) context
+						.getApplication().getVariableResolver()
+						.resolveVariable(context, WilosObjectNode.CONCRETEROLENODE + "Bean");
+				crv.setConcreteRoleDescriptorId(_objectId);
+				// model building
+				crv.buildConcreteRoleModel();
+				mb.changePage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.ITERATIONNODE)) {
 				ConcreteIterationViewerBean iv = (ConcreteIterationViewerBean) context
 						.getApplication().getVariableResolver()
-						.resolveVariable(context, ITERATION_VIEWER_BEAN);
+						.resolveVariable(context, WilosObjectNode.ITERATIONNODE + "Bean");
 				iv.setConcreteIterationId(_objectId);
 				// model building
 				iv.buildConcreteIteration();
@@ -263,11 +257,10 @@ public class TreeBean {
 //				iv.setConcreteIteration(ci);
 
 				mb.changePage(_pageId);
-				
 			} else if (_pageId.equals(WilosObjectNode.PHASENODE)) {
 				ConcretePhaseViewerBean pb = (ConcretePhaseViewerBean) context
 						.getApplication().getVariableResolver()
-						.resolveVariable(context, PHASE_VIEWER_BEAN);
+						.resolveVariable(context, WilosObjectNode.PHASENODE + "Bean");
 				pb.setConcretePhaseId(_objectId);
 				// model building
 				pb.buildConcretePhaseModel();
@@ -277,11 +270,10 @@ public class TreeBean {
 //				pb.setConcretePhase(cp);
 
 				mb.changePage(_pageId);
-				
 			} else if (_pageId.equals(WilosObjectNode.PROJECTNODE)) {
 				ProjectViewerBean p = (ProjectViewerBean) context
 						.getApplication().getVariableResolver()
-						.resolveVariable(context, PROJECT_VIEWER_BEAN);
+						.resolveVariable(context, WilosObjectNode.PROJECTNODE + "Bean");
 				p.setProjectId(_objectId);
 				// model building
 				p.buildProjectModel();
@@ -291,7 +283,6 @@ public class TreeBean {
 //				p.setProject(proj);
 
 				mb.changePage(_pageId);
-				
 			} else {
 				// didnt found the node's class
 				new ClassNotFoundException("coulnd't found the node class");
