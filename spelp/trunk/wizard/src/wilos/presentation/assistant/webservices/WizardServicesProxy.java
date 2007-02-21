@@ -5,8 +5,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.net.URL;
+import java.text.Format;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.xml.namespace.QName;
@@ -75,10 +77,13 @@ public class WizardServicesProxy {
                     //myWilosUser = port.getWilosUser(login,password);
                       XStream xstream = new XStream(new DomDriver("utf-8"));
                       String result = port.getParticipant(login,password);
-                      File xstreamFile = new File ("xstream.xml");
-                      PrintStream out = new PrintStream(new FileOutputStream(xstreamFile));
+                      
+                      /*File xstreamFile = new File ("xstream.xml");
+                      PrintStream out = new PrintStream(new FileOutputStream(xstreamFile), false, "UTF-8");
+                      out.println(result);*/
+
                       //System.out.println(result);
-                      out.println(result);
+
                     myParticipant = (Participant) xstream.fromXML(result);
             	}
             }
