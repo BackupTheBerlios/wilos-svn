@@ -12,6 +12,9 @@ import javax.xml.xpath.XPathFactory;
 
 import org.xml.sax.InputSource;
 
+import sun.io.CharacterEncoding;
+import sun.misc.CharacterEncoder;
+
 import wilos.model.spem2.process.Process;
 
 public class XMLUtils {
@@ -57,12 +60,13 @@ public class XMLUtils {
 		try{
 			//creation de la source
 			if (isExtension(document.getName(), "xml")) {
-				source = new InputSource(new FileInputStream(document));
+				source = new InputSource(new FileInputStream(document));								
 			}
 			else if (isExtension(document.getName(), "zip")) {
 				source = new InputSource(new ZIPUtils(document).getXMLStream());
 			}
 			if (source != null) {
+				source.setEncoding("utf-8");
 				//creation du XPath 
 				XPathFactory fabrique = XPathFactory.newInstance();
 				XPath xpath = fabrique.newXPath();
