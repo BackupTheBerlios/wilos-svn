@@ -4,23 +4,26 @@
 			<br />
 			<ice:panelTab label="#{msgs['taskviewer.tabtitle'] }">
 				<br />
-				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2">
+				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="3">
 					<ice:outputText value="#{msgs['viewer.concreteName']}" />
-					<ice:outputText
-						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.concreteName}" />
-
+					<ice:inputText
+						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.concreteName}" 
+						readonly="#{ConcreteTaskViewerBean.isInputNameReadOnly}"/>
+					<ice:commandButton value="#{msgs['button.changeconcretename']}"
+						action="#{ConcreteTaskViewerBean.changeConcreteName}" 
+						disabled="#{ConcreteTaskViewerBean.changeButtonIsDisabled}"/>
 					<ice:outputText value="#{msgs['taskviewer.state']}" />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.state}" />
-
+					<ice:outputText value=""/>
 					<ice:outputText value="#{msgs['taskviewer.plannedstartingdate']}" />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.plannedStartingDate}" />
-
+					<ice:outputText value=""/>
 					<ice:outputText value="#{msgs['taskviewer.plannedFinishingDate']}" />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.plannedFinishingDate}" />
-
+					<ice:outputText value=""/>
 					<ice:outputText
 						value="#{msgs['taskviewer.accomplishedtime']}" 
 						visible="#{ConcreteTaskViewerBean.visibleModifiable}"/>
@@ -29,7 +32,7 @@
 						visible="#{ConcreteTaskViewerBean.visibleModifiable}">
 						<!--  <f:convertNumber pattern="#*0(.0)#" /> -->
 					</ice:inputText>
-
+					<ice:outputText value=""/>
 					<ice:outputText value="#{msgs['taskviewer.remainingtime']}" 
 					visible="#{ConcreteTaskViewerBean.visibleModifiable}"/>
 					<ice:inputText
@@ -37,7 +40,7 @@
 						visible="#{ConcreteTaskViewerBean.visibleModifiable}">
 						<!-- <f:convertNumber pattern="#*0(.0)#" /> -->
 					</ice:inputText>
-
+					<ice:outputText value=""/>
 					<table>
 						<tr>
 							<td><ice:commandButton
