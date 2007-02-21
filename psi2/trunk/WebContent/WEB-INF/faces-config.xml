@@ -172,6 +172,18 @@
 			<value>#{ProcessService}</value>
 		</managed-property>
 	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>ConcreteRoleViewerBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.viewer.ConcreteRoleViewerBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>concreteRoleDescriptorService</property-name>
+			<value>#{ConcreteRoleDescriptorService}</value>
+		</managed-property>
+	</managed-bean>
 
 	<!-- =============================================================== -->
 	<!-- ========================= PSI2 Bean =========================== -->
