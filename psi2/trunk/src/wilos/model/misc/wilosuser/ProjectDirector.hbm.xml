@@ -8,7 +8,8 @@
 		extends="wilos.model.misc.wilosuser.WilosUser" table="projectdirector">
 		<key column="projectdirector_id"></key>
 
-		<set name="projectMonitored" lazy="false">
+		<set name="projectMonitored" lazy="true">
+			<cache usage="read-write"/>
 			<key column="projectdirector_id"></key>
 			<one-to-many class="wilos.model.misc.project.Project"></one-to-many>
 		</set>

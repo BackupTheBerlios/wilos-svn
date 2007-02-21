@@ -8,7 +8,8 @@
 		extends="wilos.model.misc.wilosuser.WilosUser" table="processmanager">
 		<key column="processmanager_id"></key>
 
-		<set name="processesManaged" lazy="false">
+		<set name="processesManaged" lazy="true">
+			<cache usage="read-write"/>
 			<key column="processmanager_id"></key>
 			<one-to-many class="wilos.model.spem2.process.Process"></one-to-many>
 		</set>

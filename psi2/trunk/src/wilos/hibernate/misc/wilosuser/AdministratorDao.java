@@ -45,6 +45,7 @@ public class AdministratorDao extends HibernateDaoSupport {
 	 * @return
 	 */
 	public Administrator getAdministrator(String _login) {
+		//this.getHibernateTemplate().setCacheQueries(true);
 		ArrayList administrators = (ArrayList)this.getHibernateTemplate().find("from Administrator a where a.login=?",_login);
 		if(administrators.size()>0){
 			return (Administrator)administrators.get(0);

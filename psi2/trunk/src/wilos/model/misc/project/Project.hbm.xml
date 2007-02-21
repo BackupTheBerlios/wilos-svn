@@ -5,7 +5,7 @@
 
 <hibernate-mapping>
 
-	<joined-subclass name="wilos.model.misc.project.Project" extends="wilos.model.misc.concreteactivity.ConcreteActivity" table="project" lazy="false">
+	<joined-subclass name="wilos.model.misc.project.Project" extends="wilos.model.misc.concreteactivity.ConcreteActivity" table="project" lazy="true">
 		<key column="project_id"></key>
 
 		<property name="description" type="java.lang.String" column="description" length="1024" />
@@ -14,18 +14,19 @@
 		<property name="isFinished" type="java.lang.Boolean" column="isFinished"/>
 		
 		<many-to-one name="process" class="wilos.model.spem2.process.Process"
-			column="process_id" lazy="false">
+			column="process_id" >
 		</many-to-one>
 		
 		<many-to-one name="projectManager" class="wilos.model.misc.wilosuser.Participant"
-			column="participant_id" lazy="false">
+			column="participant_id" >
 		</many-to-one>
 		
 		<many-to-one name="projectDirector" class="wilos.model.misc.wilosuser.ProjectDirector"
-			column="projectdirector_id" lazy="false">
+			column="projectdirector_id" >
 		</many-to-one>
 		
-		<set name="participants" table="affectedto" lazy="false" inverse="true">
+		<set name="participants" table="affectedto" lazy="true" inverse="true">
+			<cache usage="read-write"/>
 			<key column="project_id"></key>
 			<many-to-many class="wilos.model.misc.wilosuser.Participant"
 				column="participant_id">

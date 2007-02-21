@@ -10,11 +10,13 @@
 		<key column="participant_id"></key>
 
 		<set name="concreteRoleDescriptors" lazy="true">
+			<cache usage="read-write"/>
 			<key column="participant_id"></key>
 			<one-to-many class="wilos.model.misc.concreterole.ConcreteRoleDescriptor"></one-to-many>
 		</set>
 		
-		<set name="affectedProjectList" table="affectedto" lazy="false">
+		<set name="affectedProjectList" table="affectedto" lazy="true">
+			<cache usage="read-write"/>
 			<key column="participant_id"></key>
 			<many-to-many class="wilos.model.misc.project.Project"
 				column="project_id">
