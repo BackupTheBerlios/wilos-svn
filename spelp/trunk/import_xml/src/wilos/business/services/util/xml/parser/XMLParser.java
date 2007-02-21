@@ -48,6 +48,7 @@ public class XMLParser {
 	private static final String xpath_roleDescriptor = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:RoleDescriptor']";
 	private static final String xpath_taskDescriptor = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:TaskDescriptor']";
 	private static final String xpath_roleDefinition =  "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Role' ]";
+	private static final String xpath_workProductDescriptor = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Role' ]";
 	private static final String xpath_taskDefinition  = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Task']";
 	private static final String xpath_deliveryProcess = "//Process[@*[namespace-uri() and local-name()='type']='uma:DeliveryProcess']";
 	private static final String xpath_iteration = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Iteration']";
@@ -63,6 +64,8 @@ public class XMLParser {
 			"@*[namespace-uri() and local-name()='type']='uma:ReusableAsset' or " +
 			"@*[namespace-uri() and local-name()='type']='uma:Report' " +
 			"]";
+	
+	private static final String xpath_checklist = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Checklist']";
 	
 	// Sections
 	public static final String task = "Task";
@@ -98,6 +101,7 @@ public class XMLParser {
 	protected static Vector<TaskDefinition> TaskDefinitionsList = new Vector<TaskDefinition> ();
 	protected static Vector<RoleDefinition> RoleDefinitionsList = new Vector<RoleDefinition>() ;
 	protected static Vector<Guidance> GuidancesList = new Vector<Guidance>() ;
+	protected static Vector<WorkProductDescriptorFake> WorkProductDescriptorFakesList = new Vector<WorkProductDescriptorFake> ();
 	
 	
 	// this variables contain all the Elements that concern them
@@ -120,6 +124,8 @@ public class XMLParser {
 			RoleDefinitionsList = fillRoleDefinitionsList();
 			TaskDefinitionsList = fillTaskDefinitionsList();
 			
+			WorkProductDescriptorFakesList = fillWorkProductDescriptorFakesList();
+			
 			roleDescriptorsList = fillRoleDescriptorsList() ;
 			taskDescriptorsList = fillTaskDescriptorsList(roleDescriptorsList);			
 			setAllTaskDescriptorsDependencies(taskDescriptorsList);
@@ -135,6 +141,34 @@ public class XMLParser {
 		}
 	}
 	
+
+	private static Vector<WorkProductDescriptorFake> fillWorkProductDescriptorFakesList() {
+		Vector<WorkProductDescriptorFake> WorkProductDescriptorFakesList; // the return of the function
+		
+		// initializes the List
+		WorkProductDescriptorFakesList = new Vector<WorkProductDescriptorFake>();
+		WorkProductDescriptorFakesList.clear();
+		
+		// gets all the nodes containing roleDefinions
+		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_roleDefinition,XPathConstants.NODESET);
+		
+		// For each node...
+		Node aNode;
+		for(int i=0;i<nodeReturned.getLength();i++){
+			aNode = nodeReturned.item(i);
+			
+			// Fills the RoleDefinition from the node
+			RoleDefinition  aRoleDefinition = new RoleDefinition();
+			FillerRole aFiller = new FillerRole(aRoleDefinition,aNode);	
+			aRoleDefinition = (RoleDefinition)aFiller.getFilledElement();
+			// affect the additional guidance to the current role 
+			setGuidanceByRoleDefinition(aRoleDefinition, aNode);
+			// add the filled RoleDefinition in the list to be return
+		//	theRoleDefinitionsList.add(aRoleDefinition);
+		}	
+		return null;//theRoleDefinitionsList;
+	}
+
 
 	/**
 	 * make a set with the name of each type of guidance
@@ -1017,6 +1051,35 @@ public class XMLParser {
 			}
 		}
 		return null ;
-	}	
+	}
+	
+	
+	private class WorkProductDescriptorFake {
+		private String Guid;
+		
+		private Set<Guidance> templatesAndExamples;
+
+		public WorkProductDescriptorFake() {
+			templatesAndExamples = new HashSet<Guidance>();
+		}
+		
+		/**
+		 * @return the guid
+		 */
+		public String getGuid() {
+			return Guid;
+		}
+
+		/**
+		 * @param guid the guid to set
+		 */
+		public void setGuid(String _guid) {
+			Guid = _guid;
+		} 
+		
+		public void addTemplateOrExample(Guidance _templateOrGuidance) {
+			this.templatesAndExamples.add(_templateOrGuidance);
+		}
+	}
 }
 
