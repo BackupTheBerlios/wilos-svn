@@ -30,11 +30,11 @@ public class ConcreteTaskViewerBean {
 	private ConcreteTaskDescriptor concreteTaskDescriptor;
 
 	private String concreteTaskDescriptorId = "";
-
+	
 	private boolean visibleModifiable;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
-
+	
 	public void buildConcreteTaskDescriptor() {
 		this.concreteTaskDescriptor = new ConcreteTaskDescriptor();
 		if (!(this.concreteTaskDescriptorId.equals(""))
@@ -134,14 +134,6 @@ public class ConcreteTaskViewerBean {
 	public void setConcreteTaskDescriptorService(
 			ConcreteTaskDescriptorService concreteTaskDescriptorService) {
 		this.concreteTaskDescriptorService = concreteTaskDescriptorService;
-	}
-
-	public String getConcreteTaskDescriptorId() {
-		return concreteTaskDescriptorId;
-	}
-
-	public void setConcreteTaskDescriptorId(String concreteTaskDescriptorId) {
-		this.concreteTaskDescriptorId = concreteTaskDescriptorId;
 	}
 
 	/**
@@ -251,5 +243,13 @@ public class ConcreteTaskViewerBean {
 	 */
 	public boolean getVisibleReprendre() {
 		return this.concreteTaskDescriptor.getState().equals("Suspended");
+	}
+
+	public String getConcreteTaskDescriptorId() {
+		return concreteTaskDescriptorId;
+	}
+
+	public void setConcreteTaskDescriptorId(String _concreteTaskDescriptorId) {
+		this.concreteTaskDescriptorId = _concreteTaskDescriptorId;
 	}
 }
