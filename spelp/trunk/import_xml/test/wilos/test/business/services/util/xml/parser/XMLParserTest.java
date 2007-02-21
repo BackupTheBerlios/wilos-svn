@@ -1113,24 +1113,63 @@ public class XMLParserTest extends TestCase {
 		}
 		
 		assertTrue(defineVision != null);
-		
-		
-		
-		/*Iterator<Guidance> itGuidances = inceptionIterationAct.getGuidances().iterator();
-		while (itGuidances.hasNext()) {
-			Guidance tmpGuidance;
-			tmpGuidance = itGuidances.next();
-			
-			
-			//assertTrue(expectedGuidances.contains(tmpGuidance.getPresentationName()));
-			
-			if (tmpGuidance.getName().equals("Inception Phase")) {
-				assertTrue(tmpGuidance.getType().equals(Guidance.concept));
-			}
-		}*/
-		
-		
 	}
+	
+	
+	public void testOpenUPDefineVisionTaskDefinitionContainsATemplateCalledVision () {
+		Process openUpProcess = XMLParser.getProcess(pathOPenUP);
+		Activity inceptionIterationAct = null;
+		Activity initiateProject = null;
+		TaskDescriptor defineVision = null;
+		
+		// First Step, Stop on Inception Iteration
+		Iterator<BreakdownElement> itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
+		while (itTopLevelAct.hasNext()) {
+			BreakdownElement tmpBde = itTopLevelAct.next();
+			if (tmpBde.getPresentationName().equals("Inception Iteration [1..n]")) {
+				inceptionIterationAct = (Activity) tmpBde;
+			}
+		}
+		
+		assertTrue(inceptionIterationAct != null);
+		
+		// get the Activity Initiate Project
+		Iterator<BreakdownElement> itSecondLevelAct = inceptionIterationAct.getBreakdownElements().iterator();
+		while (itSecondLevelAct.hasNext()) {
+			BreakdownElement tmpBde = itSecondLevelAct.next();
+			if (tmpBde.getPresentationName().equals("Initiate Project")) {
+				initiateProject = (Activity) tmpBde;
+			}
+		}
+		
+		assertTrue(initiateProject != null);
+		
+		
+		Iterator<BreakdownElement> itTaskDescriptor = initiateProject.getBreakdownElements().iterator();
+		while (itTaskDescriptor.hasNext()) {
+			BreakdownElement tmpBde = itTaskDescriptor.next();
+			if (tmpBde.getPresentationName().equals("Define Vision")) {
+				defineVision = (TaskDescriptor) tmpBde;
+			}
+		}
+		
+		assertTrue(defineVision != null);
+		
+		assertTrue(defineVision.getTaskDefinition() != null);
+		
+		int cptTemplateVisionFound = 0;
+		for (Guidance aGuidance : defineVision.getTaskDefinition().getGuidances()) {
+			if (aGuidance.getType().equals(Guidance.template)) {
+				assertTrue(aGuidance.getPresentationName().equals("Vision"));
+				assertTrue(aGuidance.getAttachment().equals("openup_basic/guidances/templates/resources/vision.dot"));
+				assertTrue(aGuidance.getDescription().equals(""));
+				cptTemplateVisionFound += 1;
+			}
+		}
+		assertTrue(cptTemplateVisionFound == 1);
+	}
+	
+	
 	
 	/*
 	public void testGetProcess(){
