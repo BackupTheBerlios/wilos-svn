@@ -12,6 +12,10 @@ public class ConcreteIterationService {
 				_concreteIterationId);
 	}
 
+	public void saveConcreteIteration(ConcreteIteration _concreteIteration) {
+		this.concreteIterationDao.saveOrUpdateConcreteIteration(_concreteIteration);
+	}
+
 	/**
 	 * @return the concreteIterationDao
 	 */
