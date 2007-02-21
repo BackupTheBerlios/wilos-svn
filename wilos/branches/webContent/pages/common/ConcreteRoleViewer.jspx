@@ -1,0 +1,14 @@
+<ice:form>
+	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1">
+		<ice:panelTabSet styleClass="componentPanelTabSetLayout">
+			<br />
+			<ice:panelTab label="#{msgs['concreteRoleViewer.tabtitle'] }">
+				<br />
+				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2">
+					<ice:outputText value="#{msgs['viewer.concreteName']}" />
+					<ice:outputText value="#{ConcreteRoleViewerBean.concreteRoleDescriptor.concreteName}" />
+				</ice:panelGrid>
+			</ice:panelTab>
+		</ice:panelTabSet>
+	</ice:panelGrid>
+</ice:form>
