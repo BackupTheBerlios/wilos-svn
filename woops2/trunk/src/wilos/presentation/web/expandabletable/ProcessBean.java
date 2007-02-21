@@ -20,12 +20,14 @@ public class ProcessBean {
 	private ProcessService processService;
 
 	private String selectedProcessGuid = "default";
+	
+	private boolean isVisibleExpTable = false;
 
 	/**
 	 * Give all the processes save in the database
 	 * @return
 	 */
-	public List<SelectItem> getProjects() {
+	public List<SelectItem> getProcesses() {
 
 		List<SelectItem> processesList = new ArrayList<SelectItem>();
 
@@ -49,6 +51,11 @@ public class ProcessBean {
 	 */
 	public void changeProcessSelectionListener(ValueChangeEvent evt) {
 		this.selectedProcessGuid = (String) evt.getNewValue();
+		if (this.selectedProcessGuid.equals("default")) {
+			this.isVisibleExpTable = false;
+		} else {
+			this.isVisibleExpTable = true;
+		}
 	}
 
 	/**
@@ -78,5 +85,19 @@ public class ProcessBean {
 	 */
 	public void setSelectedProcessGuid(String _processGuid) {
 		this.selectedProcessGuid = _processGuid;
+	}
+
+	/**
+	 * @return the isVisibleExpTable
+	 */
+	public boolean getIsVisibleExpTable() {
+		return this.isVisibleExpTable;
+	}
+
+	/**
+	 * @param _isVisibleExpTable the isVisibleExpTable to set
+	 */
+	public void setVisibleExpTable(boolean _isVisibleExpTable) {
+		this.isVisibleExpTable = _isVisibleExpTable;
 	}
 }
