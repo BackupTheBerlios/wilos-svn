@@ -28,31 +28,17 @@ public class ConcreteIterationViewerBean {
 	private ConcreteBreakdownElementService concreteBreakdownElementService;
 
 	private String concreteIterationId = "";
-	
-	public boolean getChangeButtonIsDisabled() {
-		String wilosUserId = (String) this.webSessionService
-			.getAttribute(WebSessionService.WILOS_USER_ID);
 
-		Project project = this.projectService
-				.getProject((String) this.webSessionService
-						.getAttribute(WebSessionService.PROJECT_ID));
-		
-		if ((project.getProjectManager() != null)
-				&& (project.getProjectManager().getWilosuser_id()
-						.equals(wilosUserId)))
-			return false;
-		else
-			return true;
+	public void buildConcreteIteration() {
+		this.concreteIteration = new ConcreteIteration();
+		if (!(this.concreteIterationId.equals(""))
+				|| this.concreteIterationId != null) {
+			this.concreteIteration = this.concreteIterationService
+					.getConcreteIteration(this.concreteIterationId);
+		}
 	}
-	
-	public boolean getIsInputNameReadOnly() {
-		return (this.getChangeButtonIsDisabled()); 
-	}
-	
-	public void changeConcreteName() {
-		this.concreteIterationService.getConcreteIterationDao()
-			.saveOrUpdateConcreteIteration(this.concreteIteration);
-	}
+
+	/* Manage the table for the visible elements in the tree. */
 
 	// To have the mask available only for the ProjectManager.
 	public boolean getTreeMaskIsAvailable() {
@@ -70,15 +56,6 @@ public class ConcreteIterationViewerBean {
 			return true;
 		else
 			return false;
-	}
-
-	public void buildConcreteIteration() {
-		this.concreteIteration = new ConcreteIteration();
-		if (!(this.concreteIterationId.equals(""))
-				|| this.concreteIterationId != null) {
-			this.concreteIteration = this.concreteIterationService
-					.getConcreteIteration(this.concreteIterationId);
-		}
 	}
 
 	public List<ConcreteBreakdownElement> getConcreteBreakdownElementsList() {
@@ -105,6 +82,35 @@ public class ConcreteIterationViewerBean {
 				.getVariableResolver().resolveVariable(context, "TreeBean");
 		treeBean.refreshProjectTree();
 	}
+
+	/* Manage the concretename field editable. */
+
+	public boolean getChangeButtonIsDisabled() {
+		String wilosUserId = (String) this.webSessionService
+				.getAttribute(WebSessionService.WILOS_USER_ID);
+
+		Project project = this.projectService
+				.getProject((String) this.webSessionService
+						.getAttribute(WebSessionService.PROJECT_ID));
+
+		if ((project.getProjectManager() != null)
+				&& (project.getProjectManager().getWilosuser_id()
+						.equals(wilosUserId)))
+			return false;
+		else
+			return true;
+	}
+
+	public boolean getIsInputNameReadOnly() {
+		return (this.getChangeButtonIsDisabled());
+	}
+
+	public void changeConcreteName() {
+		this.concreteIterationService
+				.saveConcreteIteration(this.concreteIteration);
+	}
+
+	/* Getters & Setters */
 
 	public ConcreteIteration getConcreteIteration() {
 		return concreteIteration;

@@ -28,31 +28,16 @@ public class ConcretePhaseViewerBean {
 	private ConcreteBreakdownElementService concreteBreakdownElementService;
 
 	private String concretePhaseId = "";
-	
-	public boolean getChangeButtonIsDisabled() {
-		String wilosUserId = (String) this.webSessionService
-			.getAttribute(WebSessionService.WILOS_USER_ID);
 
-		Project project = this.projectService
-				.getProject((String) this.webSessionService
-						.getAttribute(WebSessionService.PROJECT_ID));
-		
-		if ((project.getProjectManager() != null)
-				&& (project.getProjectManager().getWilosuser_id()
-						.equals(wilosUserId)))
-			return false;
-		else
-			return true;
+	public void buildConcretePhaseModel() {
+		this.concretePhase = new ConcretePhase();
+		if (!(concretePhaseId.equals("")) || concretePhaseId != null) {
+			this.concretePhase = this.concretePhaseService
+					.getConcretePhase(this.concretePhaseId);
+		}
 	}
 
-	public boolean getIsOutputNameReadOnly() {
-		return this.getChangeButtonIsDisabled(); 
-	}
-	
-	public void changeConcreteName() {
-		this.concretePhaseService.getConcretePhaseDao()
-			.saveOrUpdateConcretePhase(this.concretePhase);
-	}
+	/* Manage the table for the visible elements in the tree. */
 
 	// To have the mask available only for the ProjectManager.
 	public boolean getTreeMaskIsAvailable() {
@@ -70,14 +55,6 @@ public class ConcretePhaseViewerBean {
 			return true;
 		else
 			return false;
-	}
-
-	public void buildConcretePhaseModel() {
-		this.concretePhase = new ConcretePhase();
-		if (!(concretePhaseId.equals("")) || concretePhaseId != null) {
-			this.concretePhase = this.concretePhaseService
-					.getConcretePhase(this.concretePhaseId);
-		}
 	}
 
 	public List<ConcreteBreakdownElement> getConcreteBreakdownElementsList() {
@@ -104,6 +81,34 @@ public class ConcretePhaseViewerBean {
 				.getVariableResolver().resolveVariable(context, "TreeBean");
 		treeBean.refreshProjectTree();
 	}
+
+	/* Manage the concretename field editable. */
+
+	public boolean getIsInputNameReadOnly() {
+		return this.getChangeButtonIsDisabled();
+	}
+
+	public boolean getChangeButtonIsDisabled() {
+		String wilosUserId = (String) this.webSessionService
+				.getAttribute(WebSessionService.WILOS_USER_ID);
+
+		Project project = this.projectService
+				.getProject((String) this.webSessionService
+						.getAttribute(WebSessionService.PROJECT_ID));
+
+		if ((project.getProjectManager() != null)
+				&& (project.getProjectManager().getWilosuser_id()
+						.equals(wilosUserId)))
+			return false;
+		else
+			return true;
+	}
+
+	public void changeConcreteName() {
+		this.concretePhaseService.saveConcretePhase(this.concretePhase);
+	}
+
+	/* Getters & Setters */
 
 	public ConcretePhase getConcretePhase() {
 		return concretePhase;
