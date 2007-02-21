@@ -108,24 +108,26 @@
 
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</prop>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLInnoDBDialect
+				</prop>
 				<!-- Mise a false pour eviter les affichages des requetes SQL -->
 				<prop key="hibernate.show_sql">false</prop>
 				<prop key="hibernate.generate_statistics">true</prop>
-				
-				<prop key="hibernate.cglib.use_reflection_optimizer">true</prop>
-				
+				<prop key="hibernate.cglib.use_reflection_optimizer">
+					true
+				</prop>
 				<prop key="hibernate.c3p0.min_size">5</prop>
 				<prop key="hibernate.c3p0.max_size">20</prop>
 				<prop key="hibernate.c3p0.timeout">1800</prop>
 				<prop key="hibernate.c3p0.max_statement">50</prop>
-				
+
 				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
-				<prop key="hibernate.cache.use_second_level_cache">true</prop> 
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
 				<prop key="hibernate.cache.use_query_cache">true</prop>
-				
+
 				<prop key="hibernate.default_batch_fetch_size">16</prop>
-					
+
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>
 		</property>
@@ -331,7 +333,7 @@
 		<property name="participantDao" ref="ParticipantDao" />
 		<property name="projectService" ref="ProjectService" />
 		<property name="concreteRoleDescriptorService" ref="ConcreteRoleDescriptorService" />
-		
+
 	</bean>
 
 	<bean id="ProcessManagerService"
@@ -355,7 +357,7 @@
 		<property name="participantDao" ref="ParticipantDao" />
 		<property name="processService" ref="ProcessService" />
 	</bean>
-	
+
 	<bean id="ConcreteRoleAffectationService"
 		class="wilos.business.services.misc.role.ConcreteRoleAffectationService">
 		<property name="participantDao" ref="ParticipantDao" />
@@ -411,7 +413,7 @@
 		<property name="concreteBreakdownElementDao"
 			ref="ConcreteBreakdownElementDao" />
 	</bean>
-	
+
 	<bean id="WorkBreakdownElementService"
 		class="wilos.business.services.spem2.workbreakdownelement.WorkBreakdownElementService">
 		<property name="concreteWorkBreakdownElementDao"
@@ -434,7 +436,7 @@
 			ref="ConcreteRoleDescriptorDao" />
 		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
 	</bean>
-	
+
 	<bean id="RoleDefinitionService"
 		class="wilos.business.services.spem2.role.RoleDefinitionService">
 		<property name="roleDefinitionDao" ref="RoleDefinitionDao" />
@@ -446,7 +448,7 @@
 			ref="ConcreteTaskDescriptorDao" />
 		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
 	</bean>
-	
+
 	<bean id="TaskDefinitionService"
 		class="wilos.business.services.spem2.task.TaskDefinitionService">
 		<property name="taskDefinitionDao" ref="TaskDefinitionDao" />
