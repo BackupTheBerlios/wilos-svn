@@ -1,5 +1,7 @@
 package wilos.presentation.web.tree;
 
+import java.util.HashMap;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
@@ -16,7 +18,7 @@ public class ConcreteRoleDescriptorNode extends DefaultMutableTreeNode {
 	 * @param _parentTree
 	 */
 	public ConcreteRoleDescriptorNode(
-			ConcreteRoleDescriptor _concreteRoleDescriptor) {
+			ConcreteRoleDescriptor _concreteRoleDescriptor, HashMap<String, Object> _treeMap) {
 		super();
 		WilosObjectNode iceUserObject = new WilosObjectNode(this);
 		this.setUserObject(iceUserObject);
@@ -30,6 +32,9 @@ public class ConcreteRoleDescriptorNode extends DefaultMutableTreeNode {
 		// node information
 		iceUserObject.setId(_concreteRoleDescriptor.getId());
 		iceUserObject.setPageId(WilosObjectNode.CONCRETEROLENODE);
+		
+		// add the concreteRoleDescriptor object with his id in the treeMap
+		_treeMap.put(iceUserObject.getId(), _concreteRoleDescriptor);
 	}
 
 }

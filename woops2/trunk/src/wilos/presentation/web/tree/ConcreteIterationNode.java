@@ -1,5 +1,7 @@
 package wilos.presentation.web.tree;
 
+import java.util.HashMap;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import wilos.model.misc.concreteactivity.ConcreteActivity;
@@ -15,7 +17,7 @@ public class ConcreteIterationNode extends DefaultMutableTreeNode {
 	private ConcreteIteration concreteIteration;
 
 	public ConcreteIterationNode(ConcreteIteration _concreteIteration,
-			boolean _isConcreteTaskDescriptorsTree) {
+			boolean _isConcreteTaskDescriptorsTree, HashMap<String, Object> _treeMap) {
 		super();
 		this.concreteIteration = _concreteIteration;
 
@@ -31,25 +33,28 @@ public class ConcreteIterationNode extends DefaultMutableTreeNode {
 		iceUserObject.setId(this.concreteIteration.getId());
 		iceUserObject.setPageId(WilosObjectNode.ITERATIONNODE);
 
+		// add the concreteIteration object with his id in the treeMap
+		_treeMap.put(iceUserObject.getId(), _concreteIteration);
+		
 		for (ConcreteBreakdownElement concreteBreakdownElement : this.concreteIteration
 				.getConcreteBreakdownElements()) {
 			if (concreteBreakdownElement instanceof ConcreteActivity) {
 				ConcreteActivity ca = (ConcreteActivity) concreteBreakdownElement;
 				if (ca.getIsInUsed()) {
 					this.add(new ConcreteActivityNode(ca,
-							_isConcreteTaskDescriptorsTree));
+							_isConcreteTaskDescriptorsTree, _treeMap));
 				}
 			} else if (_isConcreteTaskDescriptorsTree) {
 				if (concreteBreakdownElement instanceof ConcreteTaskDescriptor) {
 					ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) concreteBreakdownElement;
 					if (ctd.getIsInUsed()) {
-						this.add(new ConcreteTaskDescriptorNode(ctd));
+						this.add(new ConcreteTaskDescriptorNode(ctd, _treeMap));
 					}
 				}
 			} else {
 				if (concreteBreakdownElement instanceof ConcreteRoleDescriptor) {
 					this.add(new ConcreteRoleDescriptorNode(
-									(ConcreteRoleDescriptor) concreteBreakdownElement));
+									(ConcreteRoleDescriptor) concreteBreakdownElement, _treeMap));
 				}
 			}
 		}

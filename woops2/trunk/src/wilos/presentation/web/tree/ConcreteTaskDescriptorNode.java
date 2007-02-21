@@ -1,5 +1,7 @@
 package wilos.presentation.web.tree;
 
+import java.util.HashMap;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
@@ -16,7 +18,7 @@ public class ConcreteTaskDescriptorNode extends DefaultMutableTreeNode {
 	 * @param _parentTree
 	 */
 	public ConcreteTaskDescriptorNode(
-			ConcreteTaskDescriptor _concreteTaskDescriptor) {
+			ConcreteTaskDescriptor _concreteTaskDescriptor, HashMap<String, Object> _treeMap) {
 		super();
 		WilosObjectNode iceUserObject = new WilosObjectNode(this);
 		this.setUserObject(iceUserObject);
@@ -37,6 +39,9 @@ public class ConcreteTaskDescriptorNode extends DefaultMutableTreeNode {
 		// node information
 		iceUserObject.setId(_concreteTaskDescriptor.getId());
 		iceUserObject.setPageId(WilosObjectNode.CONCRETETASKNODE);
+		
+		// add the concreteTaskDescriptor object with his id in the treeMap
+		_treeMap.put(iceUserObject.getId(), _concreteTaskDescriptor);
 	}
 
 }
