@@ -85,8 +85,6 @@ public class XmlFileImportBean {
 		}
 		else
 		{
-			
-			
 			if (inputFile.getStatus() == InputFile.SAVED) {
 				fileName = inputFile.getFileInfo().getFileName();
 				contentType = inputFile.getFileInfo().getContentType();
@@ -95,9 +93,17 @@ public class XmlFileImportBean {
 	
 			if (! contentType.equalsIgnoreCase("application/zip")) {
 				if (! contentType.equalsIgnoreCase("text/xml")) {
-					uploadStatus = "File type error! Expecting XML or ZIP, please select another file." ;
+					ResourceBundle bundle = ResourceBundle.getBundle(
+							"wilos.resources.messages", FacesContext.getCurrentInstance()
+									.getApplication().getDefaultLocale());
+					FacesMessage message = new FacesMessage();
+					message
+							.setSummary(bundle
+									.getString("XmlFileImportBean.noGoodExtensionFile"));
+					message.setSeverity(FacesMessage.SEVERITY_INFO);
+					FacesContext facesContext = FacesContext.getCurrentInstance();
+					facesContext.addMessage(null, message);
 					file.delete() ;
-					logger.debug("### XmlFileImportBean ### File type error (got '"+contentType+"') - Deleting file");
 					return ;
 				}
 				else {
@@ -109,8 +115,20 @@ public class XmlFileImportBean {
 			}
 	
 			if (inputFile.getStatus() == InputFile.INVALID) {
-				inputFile.getFileInfo().getException().printStackTrace();
+				//inputFile.getFileInfo().getException().printStackTrace();
+				ResourceBundle bundle = ResourceBundle.getBundle(
+						"wilos.resources.messages", FacesContext.getCurrentInstance()
+								.getApplication().getDefaultLocale());
+				FacesMessage message = new FacesMessage();
+				message
+						.setSummary(bundle
+								.getString("XmlFileImportBean.noFile"));
+				message.setSeverity(FacesMessage.SEVERITY_INFO);
+				FacesContext facesContext = FacesContext.getCurrentInstance();
+				facesContext.addMessage(null, message);
 			}
+			else
+			{
 	
 			if (inputFile.getStatus() == InputFile.SIZE_LIMIT_EXCEEDED) {
 				inputFile.getFileInfo().getException().printStackTrace();
@@ -142,18 +160,28 @@ public class XmlFileImportBean {
 				logger.debug("### XmlFileImportBean ### action -> id=" + p.getId());
 				/* id = */
 				this.processService.saveProcess(p);
+				ResourceBundle bundle = ResourceBundle.getBundle(
+						"wilos.resources.messages", FacesContext.getCurrentInstance()
+								.getApplication().getDefaultLocale());
+				FacesMessage message = new FacesMessage();
+				message
+						.setSummary(bundle
+								.getString("XmlFileImportBean.processok"));
+				message.setSeverity(FacesMessage.SEVERITY_INFO);
+				FacesContext facesContext = FacesContext.getCurrentInstance();
+				facesContext.addMessage(null, message);
 			} catch (Exception e) {
 				logger.error("### XmlFileImportBean ### action -> " + e);
 			}
-			
+			}
+			state = PersistentFacesState.getInstance();
 			
 		}
 	}
 
 	public void progressListener(EventObject event) {
 		InputFile file = (InputFile) event.getSource();
-		if(file.getFile() != null)
-		{
+		
 			this.percent = file.getFileInfo().getPercent();
 			try {
 				if (state != null) {
@@ -164,8 +192,7 @@ public class XmlFileImportBean {
 	
 			} catch (RenderingException ee) {
 				System.out.println(ee.getMessage());
-			}
-		}
+			}	
 	}
 
 	public void setFileName(String fileName) {
