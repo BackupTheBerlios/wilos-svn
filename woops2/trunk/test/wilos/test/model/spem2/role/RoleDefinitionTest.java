@@ -1,245 +1,225 @@
+package wilos.test.model.spem2.role;
 
-package wilos.test.model.spem2.role ;
+import static org.junit.Assert.*;
 
-import java.util.HashSet ;
-import java.util.Set ;
+import java.util.HashSet;
+import java.util.Set;
 
-import junit.framework.TestCase ;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.role.RoleDefinition;
 import wilos.model.spem2.role.RoleDescriptor;
 
-public class RoleDefinitionTest extends TestCase {
+public class RoleDefinitionTest {
 
-	private RoleDefinition roleDefinition ;
+	private RoleDefinition roleDefinition;
 
-	public static final String NAME = "name" ;
+	public static final String NAME = "name";
 
-	public static final String NAME2 = "name1" ;
+	public static final String NAME2 = "name1";
 
-	public static final String DESCRIPTION = "roleDescriptor description" ;
+	public static final String DESCRIPTION = "roleDescriptor description";
 
-	public static final String DESCRIPTION2 = "description" ;
+	public static final String DESCRIPTION2 = "description";
 
-	public static final String PREFIX = "prefix" ;
+	public static final String PREFIX = "prefix";
 
-	public static final Boolean IS_OPTIONAL = true ;
+	public static final Boolean IS_OPTIONAL = true;
 
-	public static final Boolean HAS_MULTIPLE_OCCURENCES = true ;
+	public static final Boolean HAS_MULTIPLE_OCCURENCES = true;
 
-	public static final Boolean IS_PLANNED = true ;
+	public static final Boolean IS_PLANNED = true;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp() ;
-		this.roleDefinition = new RoleDefinition() ;
-		this.roleDefinition.setDescription(DESCRIPTION) ;
-		this.roleDefinition.setName(NAME) ;
+	@Before
+	public void setUp() {
+		this.roleDefinition = new RoleDefinition();
+		this.roleDefinition.setDescription(DESCRIPTION);
+		this.roleDefinition.setName(NAME);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown() ;
+	@After
+	public void tearDown() {
+		// None.
 	}
 
-	/**
-	 * Test method for {@link wilos.model.spem2.role.RoleDefinition#clone()}.
-	 */
+	@Test
 	public final void testClone() {
 		// Rk: the setUp method is called here.
 
-		try{
-			assertEquals(this.roleDefinition.clone(), this.roleDefinition) ;
-		}
-		catch(CloneNotSupportedException e){
-			fail("Error CloneNotSupportedException in the testClone method") ;
+		try {
+			assertEquals(this.roleDefinition.clone(), this.roleDefinition);
+		} catch (CloneNotSupportedException e) {
+			fail("Error CloneNotSupportedException in the testClone method");
 		}
 
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for {@link wilos.model.spem2.role.RoleDefinition#hashCode()}.
-	 */
+	@Test
 	public void testHashCode() {
 
-		RoleDefinition rd = new RoleDefinition() ;
-		rd.setDescription(DESCRIPTION) ;
-		rd.setName(NAME) ;
+		RoleDefinition rd = new RoleDefinition();
+		rd.setDescription(DESCRIPTION);
+		rd.setName(NAME);
 
-		assertNotNull(this.roleDefinition.hashCode()) ;
-		assertNotNull(rd.hashCode()) ;
-		assertEquals(this.roleDefinition.hashCode(), rd.hashCode()) ;
+		assertNotNull(this.roleDefinition.hashCode());
+		assertNotNull(rd.hashCode());
+		assertEquals(this.roleDefinition.hashCode(), rd.hashCode());
 	}
 
-	/**
-	 * Test method for {@link wilos.model.spem2.role.RoleDefinition#equals(java.lang.Object)}.
-	 */
+	@Test
 	public void testEquals() {
-		RoleDefinition tmp = null ;
-		try{
-			tmp = this.roleDefinition.clone() ;
+		RoleDefinition tmp = null;
+		try {
+			tmp = this.roleDefinition.clone();
+		} catch (CloneNotSupportedException e) {
+			fail("Error CloneNotSupportedException in the testEquals method");
 		}
-		catch(CloneNotSupportedException e){
-			fail("Error CloneNotSupportedException in the testEquals method") ;
-		}
-		assertTrue(this.roleDefinition.equals(tmp)) ;
+		assertTrue(this.roleDefinition.equals(tmp));
 
-		RoleDefinition role = new RoleDefinition() ;
-		role.setName("name2") ;
-		role.setDescription(DESCRIPTION) ;
+		RoleDefinition role = new RoleDefinition();
+		role.setName("name2");
+		role.setDescription(DESCRIPTION);
 
-		assertFalse(this.roleDefinition.equals(role)) ;
+		assertFalse(this.roleDefinition.equals(role));
 	}
 
-	/**
-	 * Test method for {@link wilos.model.spem2.role.RoleDefinition#addRoleDescriptor()}.
-	 */
+	@Test
 	public void testAddRoleDescriptor() {
-		RoleDescriptor role = new RoleDescriptor() ;
-		role.setName(NAME) ;
-		role.setDescription(DESCRIPTION) ;
+		RoleDescriptor role = new RoleDescriptor();
+		role.setName(NAME);
+		role.setDescription(DESCRIPTION);
 
-		this.roleDefinition.addRoleDescriptor(role) ;
-		assertFalse(this.roleDefinition.getRoleDescriptors().isEmpty()) ;
-		assertTrue(this.roleDefinition.getRoleDescriptors().size() == 1) ;
+		this.roleDefinition.addRoleDescriptor(role);
+		assertFalse(this.roleDefinition.getRoleDescriptors().isEmpty());
+		assertTrue(this.roleDefinition.getRoleDescriptors().size() == 1);
 	}
 
-	/**
-	 * Test method for {@link wilos.model.spem2.role.RoleDefinition#RemoveRoleDescriptor()}.
-	 */
+	@Test
 	public void testRemoveRoleDescriptor() {
-		RoleDescriptor role = new RoleDescriptor() ;
-		role.setName(NAME) ;
-		role.setDescription(DESCRIPTION) ;
+		RoleDescriptor role = new RoleDescriptor();
+		role.setName(NAME);
+		role.setDescription(DESCRIPTION);
 
-		this.roleDefinition.addRoleDescriptor(role) ;
-		assertFalse(this.roleDefinition.getRoleDescriptors().isEmpty()) ;
-		
-		this.roleDefinition.removeRoleDescriptor(role) ;
-		assertTrue(this.roleDefinition.getRoleDescriptors().isEmpty()) ;
+		this.roleDefinition.addRoleDescriptor(role);
+		assertFalse(this.roleDefinition.getRoleDescriptors().isEmpty());
+
+		this.roleDefinition.removeRoleDescriptor(role);
+		assertTrue(this.roleDefinition.getRoleDescriptors().isEmpty());
 	}
 
-	/**
-	 * Test method for {@link wilos.model.spem2.role.RoleDefinition#RemoveAllRoleDescriptor()}.
-	 * 
-	 */
+	@Test
 	public void testRemoveAllRoleDescriptor() {
-		RoleDescriptor role = new RoleDescriptor() ;
-		role.setName(NAME) ;
-		role.setDescription(DESCRIPTION) ;
+		RoleDescriptor role = new RoleDescriptor();
+		role.setName(NAME);
+		role.setDescription(DESCRIPTION);
 
-		RoleDescriptor tmp = new RoleDescriptor() ;
-		tmp.setName(NAME2) ;
-		tmp.setDescription(DESCRIPTION) ;
+		RoleDescriptor tmp = new RoleDescriptor();
+		tmp.setName(NAME2);
+		tmp.setDescription(DESCRIPTION);
 
-		Set<RoleDescriptor> set = new HashSet<RoleDescriptor>() ;
-		set.add(role) ;
-		set.add(tmp) ;
+		Set<RoleDescriptor> set = new HashSet<RoleDescriptor>();
+		set.add(role);
+		set.add(tmp);
 
-		this.roleDefinition.addAllRoleDescriptors(set) ;
-		assertNotNull(role.getRoleDefinition()) ;
-		assertNotNull(tmp.getRoleDefinition()) ;
-		assertTrue(this.roleDefinition.getRoleDescriptors().size() == set.size()) ;
-		
-		this.roleDefinition.removeAllRoleDescriptors() ;
-		assertNull(role.getRoleDefinition()) ;
-		assertNull(tmp.getRoleDefinition()) ;
-		assertTrue(this.roleDefinition.getRoleDescriptors().isEmpty()) ;
+		this.roleDefinition.addAllRoleDescriptors(set);
+		assertNotNull(role.getRoleDefinition());
+		assertNotNull(tmp.getRoleDefinition());
+		assertTrue(this.roleDefinition.getRoleDescriptors().size() == set
+				.size());
+
+		this.roleDefinition.removeAllRoleDescriptors();
+		assertNull(role.getRoleDefinition());
+		assertNull(tmp.getRoleDefinition());
+		assertTrue(this.roleDefinition.getRoleDescriptors().isEmpty());
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.model.spem2.role.RoleDefinitionTest#addToAllRoleDescriptors(java.util.Set)}.
-	 */
+	@Test
 	public void testAddToAllRoleDescriptors() {
-		RoleDescriptor role = new RoleDescriptor() ;
-		role.setName(NAME2) ;
-		role.setDescription(DESCRIPTION2) ;
+		RoleDescriptor role = new RoleDescriptor();
+		role.setName(NAME2);
+		role.setDescription(DESCRIPTION2);
 
-		RoleDescriptor tmp = new RoleDescriptor() ;
-		tmp.setName(NAME) ;
-		tmp.setDescription(DESCRIPTION) ;
+		RoleDescriptor tmp = new RoleDescriptor();
+		tmp.setName(NAME);
+		tmp.setDescription(DESCRIPTION);
 
-		Set<RoleDescriptor> set = new HashSet<RoleDescriptor>() ;
-		set.add(role) ;
-		set.add(tmp) ;
+		Set<RoleDescriptor> set = new HashSet<RoleDescriptor>();
+		set.add(role);
+		set.add(tmp);
 
-		this.roleDefinition.addAllRoleDescriptors(set) ;
+		this.roleDefinition.addAllRoleDescriptors(set);
 
-		assertFalse(this.roleDefinition.getRoleDescriptors().isEmpty()) ;
-		assertTrue(this.roleDefinition.getRoleDescriptors().size() == 2) ;
-		assertNotNull(role.getRoleDefinition()) ;
-		assertNotNull(tmp.getRoleDefinition()) ;
+		assertFalse(this.roleDefinition.getRoleDescriptors().isEmpty());
+		assertTrue(this.roleDefinition.getRoleDescriptors().size() == 2);
+		assertNotNull(role.getRoleDefinition());
+		assertNotNull(tmp.getRoleDefinition());
 	}
-	
-	
-	
+
+	@Test
 	public void testAddGuidance() {
-		Guidance guidance = new Guidance() ;
-		guidance.setName("name") ;
-
-		this.roleDefinition.addGuidance(guidance) ;
-
-		assertTrue(this.roleDefinition.getGuidances().size() == 1) ;
-		assertTrue(guidance.getRoleDefinitions().contains(this.roleDefinition));
-	}
-	
-	public void testaddAllGuidances() {
-		Guidance g1 = new Guidance() ;
-		g1.setName("name1") ;
-
-		Guidance g2 = new Guidance() ;
-		g2.setName("name2")  ;
-
-		Set<Guidance> set = new HashSet<Guidance>() ;
-		set.add(g1) ;
-		set.add(g2) ;
-
-		this.roleDefinition.addAllGuidances(set) ;
-
-		assertFalse(this.roleDefinition.getGuidances().isEmpty()) ;
-		assertEquals(2, this.roleDefinition.getGuidances().size()) ;
-		assertTrue(g1.getRoleDefinitions().contains(this.roleDefinition));
-		assertTrue(g2.getRoleDefinitions().contains(this.roleDefinition));
-	}
-	
-	public void testRemoveGuidance() {
-		Guidance guidance = new Guidance() ;
+		Guidance guidance = new Guidance();
 		guidance.setName("name");
 
-		this.roleDefinition.removeGuidance(guidance) ;
+		this.roleDefinition.addGuidance(guidance);
 
-		assertTrue(this.roleDefinition.getGuidances().isEmpty()) ;
+		assertTrue(this.roleDefinition.getGuidances().size() == 1);
+		assertTrue(guidance.getRoleDefinitions().contains(this.roleDefinition));
+	}
+
+	@Test
+	public void testaddAllGuidances() {
+		Guidance g1 = new Guidance();
+		g1.setName("name1");
+
+		Guidance g2 = new Guidance();
+		g2.setName("name2");
+
+		Set<Guidance> set = new HashSet<Guidance>();
+		set.add(g1);
+		set.add(g2);
+
+		this.roleDefinition.addAllGuidances(set);
+
+		assertFalse(this.roleDefinition.getGuidances().isEmpty());
+		assertEquals(2, this.roleDefinition.getGuidances().size());
+		assertTrue(g1.getRoleDefinitions().contains(this.roleDefinition));
+		assertTrue(g2.getRoleDefinitions().contains(this.roleDefinition));
+	}
+
+	@Test
+	public void testRemoveGuidance() {
+		Guidance guidance = new Guidance();
+		guidance.setName("name");
+
+		this.roleDefinition.removeGuidance(guidance);
+
+		assertTrue(this.roleDefinition.getGuidances().isEmpty());
 		assertFalse(guidance.getRoleDefinitions().contains(this.roleDefinition));
 	}
-	
+
+	@Test
 	public void testRemoveAllGuidances() {
-		Guidance g1 = new Guidance() ;
-		g1.setName("name1") ;
+		Guidance g1 = new Guidance();
+		g1.setName("name1");
 
-		Guidance g2 = new Guidance() ;
-		g2.setName("name2")  ;
+		Guidance g2 = new Guidance();
+		g2.setName("name2");
 
-		Set<Guidance> set = new HashSet<Guidance>() ;
-		set.add(g1) ;
-		set.add(g2) ;
+		Set<Guidance> set = new HashSet<Guidance>();
+		set.add(g1);
+		set.add(g2);
 
-		this.roleDefinition.addAllGuidances(set) ;
-		assertTrue(this.roleDefinition.getGuidances().size() == 2) ;
+		this.roleDefinition.addAllGuidances(set);
+		assertTrue(this.roleDefinition.getGuidances().size() == 2);
 		assertTrue(g1.getRoleDefinitions().contains(this.roleDefinition));
 		assertTrue(g2.getRoleDefinitions().contains(this.roleDefinition));
 
-		this.roleDefinition.removeAllGuidances() ;
-		assertTrue(this.roleDefinition.getGuidances().isEmpty()) ;
+		this.roleDefinition.removeAllGuidances();
+		assertTrue(this.roleDefinition.getGuidances().isEmpty());
 		assertFalse(g1.getRoleDefinitions().contains(this.roleDefinition));
 		assertFalse(g2.getRoleDefinitions().contains(this.roleDefinition));
 	}

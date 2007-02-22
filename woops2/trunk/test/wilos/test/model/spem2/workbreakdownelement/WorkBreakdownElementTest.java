@@ -1,21 +1,22 @@
 package wilos.test.model.spem2.workbreakdownelement;
 
+import static org.junit.Assert.*;
+
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 import wilos.model.spem2.workbreakdownelement.WorkOrder;
 
-/**
- * @author deder
- *
- */
-public class WorkBreakdownElementTest extends TestCase {
+public class WorkBreakdownElementTest {
 
 	private WorkBreakdownElement workBreakdownElement;
-	
+
 	private String LINK_TYPE = "link type";
 
 	public WorkBreakdownElementTest(){
@@ -32,29 +33,18 @@ public class WorkBreakdownElementTest extends TestCase {
 		this.workBreakdownElement.setIsRepeatable(true);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp();
+	@Before
+	public void setUp() {
+		//None.
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@After
+	public void tearDown() {
 		this.workBreakdownElement.getPredecessors().clear();
 		this.workBreakdownElement.getSuccessors().clear();
 	}
 
-	/**
-	 * Test method for {@link wilos.model.spem2.workbreakdownelement.WorkBreakdownElement#clone()}.
-	 */
+	@Test
 	public void testClone() {
 		try {
 			assertEquals(this.workBreakdownElement, this.workBreakdownElement.clone());
@@ -63,10 +53,7 @@ public class WorkBreakdownElementTest extends TestCase {
 		}
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.model.spem2.workbreakdownelement.WorkBreakdownElement#hashCode()}.
-	 */
+	@Test
 	public final void testHashCode() {
 		// Rk: the setUp method is called here.
 
@@ -77,10 +64,7 @@ public class WorkBreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.model.spem2.workbreakdownelement.WorkBreakdownElement#equals(java.lang.Object)}.
-	 */
+	@Test
 	public final void testEquals() {
 		// Rk: the setUp method is called here.
 
@@ -114,6 +98,7 @@ public class WorkBreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public final void testAddConcreteWorkBreakdownElement() {
 		// Rk: the setUp method is called here.
 
@@ -127,6 +112,7 @@ public class WorkBreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public final void testRemoveConcreteWorkBreakdownElement() {
 		// Rk: the setUp method is called here.
 
@@ -136,10 +122,11 @@ public class WorkBreakdownElementTest extends TestCase {
 
 		assertFalse(this.workBreakdownElement.getConcreteWorkBreakdownElements().contains(tmp));
 		assertFalse(this.workBreakdownElement.equals(tmp.getWorkBreakdownElement()));
-		
+
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public final void testAddAllConcreteWorkBreakdownElements() {
 		// Rk: the setUp method is called here.
 
@@ -152,7 +139,7 @@ public class WorkBreakdownElementTest extends TestCase {
 		list.add(tmp2);
 
 		this.workBreakdownElement.addAllConcreteWorkBreakdownElements(list);
-		
+
 		assertTrue(this.workBreakdownElement.getConcreteWorkBreakdownElements().size() >= 2);
 		assertTrue(this.workBreakdownElement.getConcreteWorkBreakdownElements().contains(tmp1));
 		assertTrue(this.workBreakdownElement.getConcreteWorkBreakdownElements().contains(tmp2));
@@ -162,6 +149,7 @@ public class WorkBreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public final void testRemoveAllConcreteWorkBreakdownElements() {
 		// Rk: the setUp method is called here.
 
@@ -185,6 +173,7 @@ public class WorkBreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public final void testAddSuccessor() {
 		// Rk: the setUp method is called here.
 
@@ -197,6 +186,7 @@ public class WorkBreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public final void testAddPredecessor() {
 		// Rk: the setUp method is called here.
 
@@ -209,6 +199,7 @@ public class WorkBreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public final void testRemoveSuccessor() {
 		// Rk: the setUp method is called here.
 
@@ -222,6 +213,7 @@ public class WorkBreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public final void testRemovePredecessor() {
 		// Rk: the setUp method is called here.
 
@@ -234,7 +226,8 @@ public class WorkBreakdownElementTest extends TestCase {
 
 		// Rk: the tearDown method is called here.
 	}
-	
+
+	@Test
 	public final void testAddAllSuccessors() {
 		// Rk: the setUp method is called here.
 
@@ -257,6 +250,7 @@ public class WorkBreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public final void testAddAllPredecessors() {
 		// Rk: the setUp method is called here.
 
@@ -275,10 +269,11 @@ public class WorkBreakdownElementTest extends TestCase {
 		assertTrue(this.workBreakdownElement.getPredecessors().contains(tmp2));
 		assertTrue(this.workBreakdownElement.equals(tmp1.getSuccessor()));
 		assertTrue(this.workBreakdownElement.equals(tmp2.getSuccessor()));
-		
+
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public final void testRemoveAllSuccessors() {
 		// Rk: the setUp method is called here.
 
@@ -302,6 +297,7 @@ public class WorkBreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public final void testRemoveAllPredecessors() {
 		// Rk: the setUp method is called here.
 

@@ -1,310 +1,277 @@
+package wilos.test.model.spem2.task;
 
-package wilos.test.model.spem2.task ;
+import static org.junit.Assert.*;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
 
-/**
- * @author eperico
- * 
- * Unit test case of TaskDefinition model class
- * 
- */
-public class TaskDefinitionTest extends TestCase {
+public class TaskDefinitionTest {
 
-	private TaskDefinition taskDefinition ;
+	private TaskDefinition taskDefinition;
 
-	/**
-	 * attribute from Element class
-	 */
-	public static final String NAME = "name" ;
+	public static final String NAME = "name";
 
-	public static final String DESCRIPTION = "description" ;
+	public static final String DESCRIPTION = "description";
 
-	/**
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp() ;
-		this.taskDefinition = new TaskDefinition() ;
-		this.taskDefinition.setDescription(DESCRIPTION) ;
-		this.taskDefinition.setName(NAME) ;
+	@Before
+	public void setUp() {
+		this.taskDefinition = new TaskDefinition();
+		this.taskDefinition.setDescription(DESCRIPTION);
+		this.taskDefinition.setName(NAME);
 	}
 
-	/**
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown() ;
+	@After
+	public void tearDown() {
+		// None.
 	}
 
-	/**
-	 * Test method for {@link wilos.model.spem2.task.TaskDefinition#hashCode()}.
-	 */
+	@Test
 	public void testHashCode() {
-		assertNotNull(this.taskDefinition.hashCode()) ;
+		assertNotNull(this.taskDefinition.hashCode());
 	}
 
-	/**
-	 * Test method for {@link wilos.model.spem2.task.TaskDefinition#equals(Object obj)}.
-	 */
+	@Test
 	public void testEquals() {
 
 		// Assert if it's equal by references.
-		assertTrue("By references", this.taskDefinition.equals(this.taskDefinition)) ;
+		assertTrue("By references", this.taskDefinition
+				.equals(this.taskDefinition));
 
 		// Assert if it's equal field by field.
-		TaskDefinition td1 = null ;
-		try{
-			td1 = this.taskDefinition.clone() ;
+		TaskDefinition td1 = null;
+		try {
+			td1 = this.taskDefinition.clone();
+		} catch (CloneNotSupportedException e) {
+			fail("Error CloneNotSupportedException in the testEquals method");
 		}
-		catch(CloneNotSupportedException e){
-			fail("Error CloneNotSupportedException in the testEquals method") ;
-		}
-		assertTrue("Field by field", this.taskDefinition.equals(td1)) ;
+		assertTrue("Field by field", this.taskDefinition.equals(td1));
 
 		// Assert if it's not equal.
-		TaskDescriptor td2 = new TaskDescriptor() ;
-		td2.setIsRepeatable(false) ;
-		td2.setPrefix("prefixFalse") ;
-		assertFalse("Not equals", this.taskDefinition.equals(td2)) ;
+		TaskDescriptor td2 = new TaskDescriptor();
+		td2.setIsRepeatable(false);
+		td2.setPrefix("prefixFalse");
+		assertFalse("Not equals", this.taskDefinition.equals(td2));
 	}
 
-	/**
-	 * Test method for {@link wilos.model.spem2.task.TaskDefinition#addStep(wilos.model.spem2.task.Step)}.
-	 */
+	@Test
 	public void testAddStep() {
-		Step step = new Step() ;
-		step.setDescription(DESCRIPTION) ;
-		step.setName(NAME) ;
+		Step step = new Step();
+		step.setDescription(DESCRIPTION);
+		step.setName(NAME);
 
-		this.taskDefinition.addStep(step) ;
+		this.taskDefinition.addStep(step);
 
-		assertTrue(this.taskDefinition.getSteps().size() == 1) ;
-		assertNotNull(step.getTaskDefinition()) ;
+		assertTrue(this.taskDefinition.getSteps().size() == 1);
+		assertNotNull(step.getTaskDefinition());
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.model.spem2.task.TaskDefinition#addTaskDescriptor(wilos.model.spem2.task.TaskDescriptor)}.
-	 */
+	@Test
 	public void testAddTaskDescriptor() {
-		TaskDescriptor taskDescriptor = new TaskDescriptor() ;
-		taskDescriptor.setDescription(DESCRIPTION) ;
-		taskDescriptor.setName(NAME) ;
+		TaskDescriptor taskDescriptor = new TaskDescriptor();
+		taskDescriptor.setDescription(DESCRIPTION);
+		taskDescriptor.setName(NAME);
 
-		this.taskDefinition.addTaskDescriptor(taskDescriptor) ;
+		this.taskDefinition.addTaskDescriptor(taskDescriptor);
 
-		assertTrue(this.taskDefinition.getTaskDescriptors().size() == 1) ;
-		assertNotNull(taskDescriptor.getTaskDefinition()) ;
+		assertTrue(this.taskDefinition.getTaskDescriptors().size() == 1);
+		assertNotNull(taskDescriptor.getTaskDefinition());
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.model.spem2.task.TaskDefinition#addToAllSteps(wilos.model.spem2.task.Step)}.
-	 */
+	@Test
 	public void testAddToAllSteps() {
-		Step step1 = new Step() ;
-		step1.setDescription("description1") ;
-		step1.setName("name1") ;
+		Step step1 = new Step();
+		step1.setDescription("description1");
+		step1.setName("name1");
 
-		Step step2 = new Step() ;
-		step2.setDescription("description2") ;
-		step2.setName("name2") ;
+		Step step2 = new Step();
+		step2.setDescription("description2");
+		step2.setName("name2");
 
-		SortedSet<Step> set = new TreeSet<Step>() ;
-		set.add(step1) ;
-		set.add(step2) ;
+		SortedSet<Step> set = new TreeSet<Step>();
+		set.add(step1);
+		set.add(step2);
 
-		this.taskDefinition.addAllSteps(set) ;
+		this.taskDefinition.addAllSteps(set);
 
-		assertFalse(this.taskDefinition.getSteps().isEmpty()) ;
-		assertEquals(2, this.taskDefinition.getSteps().size()) ;
-		assertNotNull(step1.getTaskDefinition()) ;
-		assertNotNull(step2.getTaskDefinition()) ;
-		
-		//check that the set is almost sorted.
+		assertFalse(this.taskDefinition.getSteps().isEmpty());
+		assertEquals(2, this.taskDefinition.getSteps().size());
+		assertNotNull(step1.getTaskDefinition());
+		assertNotNull(step2.getTaskDefinition());
+
+		// check that the set is almost sorted.
 		assertEquals(this.taskDefinition.getSteps().first(), step1);
 		assertEquals(this.taskDefinition.getSteps().last(), step2);
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.model.spem2.task.TaskDefinition#addToAllTaskDesciptors(wilos.model.spem2.task.TaskDesciptor)}.
-	 */
+	@Test
 	public void testAddToAllTaskDesciptors() {
-		TaskDescriptor td1 = new TaskDescriptor() ;
-		td1.setDescription("description1") ;
-		td1.setName("name1") ;
+		TaskDescriptor td1 = new TaskDescriptor();
+		td1.setDescription("description1");
+		td1.setName("name1");
 
-		TaskDescriptor td2 = new TaskDescriptor() ;
-		td2.setDescription("description2") ;
-		td2.setName("name2") ;
+		TaskDescriptor td2 = new TaskDescriptor();
+		td2.setDescription("description2");
+		td2.setName("name2");
 
-		Set<TaskDescriptor> set = new HashSet<TaskDescriptor>() ;
-		set.add(td1) ;
-		set.add(td2) ;
+		Set<TaskDescriptor> set = new HashSet<TaskDescriptor>();
+		set.add(td1);
+		set.add(td2);
 
-		this.taskDefinition.addAllTaskDesciptors(set) ;
+		this.taskDefinition.addAllTaskDesciptors(set);
 
-		assertFalse(this.taskDefinition.getTaskDescriptors().isEmpty()) ;
-		assertEquals(2, this.taskDefinition.getTaskDescriptors().size()) ;
-		assertNotNull(td1.getTaskDefinition()) ;
-		assertNotNull(td2.getTaskDefinition()) ;
+		assertFalse(this.taskDefinition.getTaskDescriptors().isEmpty());
+		assertEquals(2, this.taskDefinition.getTaskDescriptors().size());
+		assertNotNull(td1.getTaskDefinition());
+		assertNotNull(td2.getTaskDefinition());
 	}
 
-	/**
-	 * Test method for {@link wilos.model.spem2.task.TaskDefinition#removeStep(wilos.model.spem2.task.Step)}.
-	 */
+	@Test
 	public void testRemoveStep() {
-		Step step = new Step() ;
-		step.setDescription(DESCRIPTION) ;
-		step.setName(NAME) ;
+		Step step = new Step();
+		step.setDescription(DESCRIPTION);
+		step.setName(NAME);
 
-		this.taskDefinition.removeStep(step) ;
+		this.taskDefinition.removeStep(step);
 
-		assertTrue(this.taskDefinition.getSteps().isEmpty()) ;
-		assertNull(step.getTaskDefinition()) ;
+		assertTrue(this.taskDefinition.getSteps().isEmpty());
+		assertNull(step.getTaskDefinition());
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.model.spem2.task.TaskDefinition#removeTaskDescriptor(wilos.model.spem2.task.TaskDescriptor)}.
-	 */
+	@Test
 	public void testRemoveTaskDescriptor() {
-		TaskDescriptor taskDescriptor = new TaskDescriptor() ;
-		taskDescriptor.setDescription(DESCRIPTION) ;
-		taskDescriptor.setName(NAME) ;
+		TaskDescriptor taskDescriptor = new TaskDescriptor();
+		taskDescriptor.setDescription(DESCRIPTION);
+		taskDescriptor.setName(NAME);
 
-		this.taskDefinition.removeTaskDescriptor(taskDescriptor) ;
+		this.taskDefinition.removeTaskDescriptor(taskDescriptor);
 
-		assertTrue(this.taskDefinition.getTaskDescriptors().isEmpty()) ;
-		assertNull(taskDescriptor.getTaskDefinition()) ;
+		assertTrue(this.taskDefinition.getTaskDescriptors().isEmpty());
+		assertNull(taskDescriptor.getTaskDefinition());
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.model.spem2.task.TaskDefinition#removeAllSteps(wilos.model.spem2.task.Step)}.
-	 */
+	@Test
 	public void testRemoveAllSteps() {
-		Step step1 = new Step() ;
-		step1.setDescription(DESCRIPTION) ;
-		step1.setName("otherName") ;
+		Step step1 = new Step();
+		step1.setDescription(DESCRIPTION);
+		step1.setName("otherName");
 
-		Step step2 = new Step() ;
-		step2.setDescription(DESCRIPTION) ;
-		step2.setName(NAME) ;
+		Step step2 = new Step();
+		step2.setDescription(DESCRIPTION);
+		step2.setName(NAME);
 
-		SortedSet<Step> set = new TreeSet<Step>() ;
-		set.add(step1) ;
-		set.add(step2) ;
+		SortedSet<Step> set = new TreeSet<Step>();
+		set.add(step1);
+		set.add(step2);
 
-		this.taskDefinition.addAllSteps(set) ;
-		assertTrue(this.taskDefinition.getSteps().size() == 2) ;
-		assertNotNull(step1.getTaskDefinition()) ;
-		assertNotNull(step2.getTaskDefinition()) ;
+		this.taskDefinition.addAllSteps(set);
+		assertTrue(this.taskDefinition.getSteps().size() == 2);
+		assertNotNull(step1.getTaskDefinition());
+		assertNotNull(step2.getTaskDefinition());
 
-		this.taskDefinition.removeAllSteps() ;
-		assertTrue(this.taskDefinition.getSteps().isEmpty()) ;
-		assertNull(step1.getTaskDefinition()) ;
-		assertNull(step2.getTaskDefinition()) ;
+		this.taskDefinition.removeAllSteps();
+		assertTrue(this.taskDefinition.getSteps().isEmpty());
+		assertNull(step1.getTaskDefinition());
+		assertNull(step2.getTaskDefinition());
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.model.spem2.task.TaskDefinition#removeAllTaskDescriptors(wilos.model.spem2.task.TaskDescriptor)}.
-	 */
+	@Test
 	public void testRemoveAllTaskDescriptors() {
-		TaskDescriptor td1 = new TaskDescriptor() ;
-		td1.setDescription(DESCRIPTION) ;
-		td1.setName(NAME) ;
+		TaskDescriptor td1 = new TaskDescriptor();
+		td1.setDescription(DESCRIPTION);
+		td1.setName(NAME);
 
-		TaskDescriptor td2 = new TaskDescriptor() ;
-		td2.setDescription(DESCRIPTION) ;
-		td2.setName("otherName") ;
+		TaskDescriptor td2 = new TaskDescriptor();
+		td2.setDescription(DESCRIPTION);
+		td2.setName("otherName");
 
-		Set<TaskDescriptor> set = new HashSet<TaskDescriptor>() ;
-		set.add(td1) ;
-		set.add(td2) ;
+		Set<TaskDescriptor> set = new HashSet<TaskDescriptor>();
+		set.add(td1);
+		set.add(td2);
 
-		this.taskDefinition.addAllTaskDesciptors(set) ;
-		assertTrue(this.taskDefinition.getTaskDescriptors().size() == 2) ;
-		assertNotNull(td1.getTaskDefinition()) ;
-		assertNotNull(td2.getTaskDefinition()) ;
+		this.taskDefinition.addAllTaskDesciptors(set);
+		assertTrue(this.taskDefinition.getTaskDescriptors().size() == 2);
+		assertNotNull(td1.getTaskDefinition());
+		assertNotNull(td2.getTaskDefinition());
 
-		this.taskDefinition.removeAllTaskDescriptors() ;
-		assertTrue(this.taskDefinition.getTaskDescriptors().isEmpty()) ;
-		assertNull(td1.getTaskDefinition()) ;
-		assertNull(td2.getTaskDefinition()) ;
+		this.taskDefinition.removeAllTaskDescriptors();
+		assertTrue(this.taskDefinition.getTaskDescriptors().isEmpty());
+		assertNull(td1.getTaskDefinition());
+		assertNull(td2.getTaskDefinition());
 	}
-	
+
+	@Test
 	public void testAddGuidance() {
-		Guidance guidance = new Guidance() ;
-		guidance.setName("name") ;
-
-		this.taskDefinition.addGuidance(guidance) ;
-
-		assertTrue(this.taskDefinition.getGuidances().size() == 1) ;
-		assertTrue(guidance.getTaskDefinitions().contains(this.taskDefinition));
-	}
-	
-	public void testaddAllGuidances() {
-		Guidance g1 = new Guidance() ;
-		g1.setName("name1") ;
-
-		Guidance g2 = new Guidance() ;
-		g2.setName("name2")  ;
-
-		Set<Guidance> set = new HashSet<Guidance>() ;
-		set.add(g1) ;
-		set.add(g2) ;
-
-		this.taskDefinition.addAllGuidances(set) ;
-
-		assertFalse(this.taskDefinition.getGuidances().isEmpty()) ;
-		assertEquals(2, this.taskDefinition.getGuidances().size()) ;
-		assertTrue(g1.getTaskDefinitions().contains(this.taskDefinition));
-		assertTrue(g2.getTaskDefinitions().contains(this.taskDefinition));
-	}
-	
-	public void testRemoveGuidance() {
-		Guidance guidance = new Guidance() ;
+		Guidance guidance = new Guidance();
 		guidance.setName("name");
 
-		this.taskDefinition.removeGuidance(guidance) ;
+		this.taskDefinition.addGuidance(guidance);
 
-		assertTrue(this.taskDefinition.getGuidances().isEmpty()) ;
+		assertTrue(this.taskDefinition.getGuidances().size() == 1);
+		assertTrue(guidance.getTaskDefinitions().contains(this.taskDefinition));
+	}
+
+	@Test
+	public void testaddAllGuidances() {
+		Guidance g1 = new Guidance();
+		g1.setName("name1");
+
+		Guidance g2 = new Guidance();
+		g2.setName("name2");
+
+		Set<Guidance> set = new HashSet<Guidance>();
+		set.add(g1);
+		set.add(g2);
+
+		this.taskDefinition.addAllGuidances(set);
+
+		assertFalse(this.taskDefinition.getGuidances().isEmpty());
+		assertEquals(2, this.taskDefinition.getGuidances().size());
+		assertTrue(g1.getTaskDefinitions().contains(this.taskDefinition));
+		assertTrue(g2.getTaskDefinitions().contains(this.taskDefinition));
+	}
+
+	@Test
+	public void testRemoveGuidance() {
+		Guidance guidance = new Guidance();
+		guidance.setName("name");
+
+		this.taskDefinition.removeGuidance(guidance);
+
+		assertTrue(this.taskDefinition.getGuidances().isEmpty());
 		assertFalse(guidance.getTaskDefinitions().contains(this.taskDefinition));
 	}
-	
+
+	@Test
 	public void testRemoveAllGuidances() {
-		Guidance g1 = new Guidance() ;
-		g1.setName("name1") ;
+		Guidance g1 = new Guidance();
+		g1.setName("name1");
 
-		Guidance g2 = new Guidance() ;
-		g2.setName("name2")  ;
+		Guidance g2 = new Guidance();
+		g2.setName("name2");
 
-		Set<Guidance> set = new HashSet<Guidance>() ;
-		set.add(g1) ;
-		set.add(g2) ;
+		Set<Guidance> set = new HashSet<Guidance>();
+		set.add(g1);
+		set.add(g2);
 
-		this.taskDefinition.addAllGuidances(set) ;
-		assertTrue(this.taskDefinition.getGuidances().size() == 2) ;
+		this.taskDefinition.addAllGuidances(set);
+		assertTrue(this.taskDefinition.getGuidances().size() == 2);
 		assertTrue(g1.getTaskDefinitions().contains(this.taskDefinition));
 		assertTrue(g2.getTaskDefinitions().contains(this.taskDefinition));
 
-		this.taskDefinition.removeAllGuidances() ;
-		assertTrue(this.taskDefinition.getGuidances().isEmpty()) ;
+		this.taskDefinition.removeAllGuidances();
+		assertTrue(this.taskDefinition.getGuidances().isEmpty());
 		assertFalse(g1.getTaskDefinitions().contains(this.taskDefinition));
 		assertFalse(g2.getTaskDefinitions().contains(this.taskDefinition));
 	}
-	
 }

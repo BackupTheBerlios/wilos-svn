@@ -1,19 +1,19 @@
 package wilos.test.model.spem2.process;
 
+import static org.junit.Assert.*;
+
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.ProcessManager;
 import wilos.model.spem2.process.Process;
 
-/**
- * @author soosuske
- * @author deder
- *
- */
-public class ProcessTest extends TestCase {
+public class ProcessTest {
 
 	private Process process;
 
@@ -27,30 +27,19 @@ public class ProcessTest extends TestCase {
 
 	public static final String DESCRIPTION = "roleDescriptor description";
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp();
+	@Before
+	public void setUp() {
 		this.process = new Process();
 		this.process.setPrefix(PREFIX);
 		this.process.setIsOptional(IS_OPTIONAL);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@After
+	public void tearDown() {
+		// None.
 	}
 
-	/**
-	 * Test method for {@link wilos.model.spem2.process.Process#hashCode()}.
-	 */
+	@Test
 	public final void testHashCode() {
 		// Rk: the setUp method is called here.
 
@@ -65,10 +54,7 @@ public class ProcessTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.model.spem2.process.Process#equals(java.lang.Object)}.
-	 */
+	@Test
 	public final void testEquals() {
 		// Rk: the setUp method is called here.
 
@@ -93,9 +79,7 @@ public class ProcessTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for {@link wilos.model.spem2.process.Process#clone()}.
-	 */
+	@Test
 	public final void testClone() {
 		// Rk: the setUp method is called here.
 
@@ -108,6 +92,7 @@ public class ProcessTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public void testRemoveProjects() {
 		Project proj = new Project();
 		proj.setConcreteName(NAME);
@@ -121,6 +106,7 @@ public class ProcessTest extends TestCase {
 
 	}
 
+	@Test
 	public void testAddProject() {
 		Project proj = new Project();
 		proj.setConcreteName(NAME);
@@ -132,6 +118,7 @@ public class ProcessTest extends TestCase {
 
 	}
 
+	@Test
 	public void testRemoveAllProject() {
 		Project proj = new Project();
 		proj.setConcreteName(NAME);
@@ -139,7 +126,7 @@ public class ProcessTest extends TestCase {
 
 		Project tmp = new Project();
 		tmp.setConcreteName(NAME2);
-		//tmp.setDescription(DESCRIPTION);
+		// tmp.setDescription(DESCRIPTION);
 
 		Set<Project> set = new HashSet<Project>();
 		set.add(proj);
@@ -156,7 +143,7 @@ public class ProcessTest extends TestCase {
 		assertTrue(this.process.getProjects().isEmpty());
 	}
 
-
+	@Test
 	public void testAddToAllProjects() {
 		Project proj = new Project();
 		proj.setConcreteName(NAME);
@@ -178,28 +165,29 @@ public class ProcessTest extends TestCase {
 		assertNotNull(tmp.getProcess());
 	}
 
-
+	@Test
 	public void testAddToProcessManager() {
-		ProcessManager processManager = new ProcessManager() ;
-		processManager.setName(NAME) ;
+		ProcessManager processManager = new ProcessManager();
+		processManager.setName(NAME);
 
-		this.process.addProcessManager(processManager) ;
+		this.process.addProcessManager(processManager);
 
-		assertNotNull(this.process.getProcessManager()) ;
-		assertTrue(processManager.getProcessesManaged().size() == 1) ;
+		assertNotNull(this.process.getProcessManager());
+		assertTrue(processManager.getProcessesManaged().size() == 1);
 	}
 
+	@Test
 	public void testRemoveFromProcessManager() {
-		ProcessManager processManager = new ProcessManager() ;
-		processManager.setName(NAME) ;
+		ProcessManager processManager = new ProcessManager();
+		processManager.setName(NAME);
 
-		this.process.addProcessManager(processManager) ;
-		assertNotNull("null", this.process.getProcessManager()) ;
-		assertTrue("empty", processManager.getProcessesManaged().size() == 1) ;
+		this.process.addProcessManager(processManager);
+		assertNotNull("null", this.process.getProcessManager());
+		assertTrue("empty", processManager.getProcessesManaged().size() == 1);
 
 		this.process.removeFromProcessManager(processManager);
-		assertNull("null", this.process.getProcessManager()) ;
-		assertTrue("empty", processManager.getProcessesManaged().isEmpty()) ;
+		assertNull("null", this.process.getProcessManager());
+		assertTrue("empty", processManager.getProcessesManaged().isEmpty());
 	}
 
 }
