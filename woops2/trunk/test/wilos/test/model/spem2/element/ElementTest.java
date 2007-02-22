@@ -1,64 +1,50 @@
 package wilos.test.model.spem2.element;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.model.spem2.element.Element;
 
-/**
- * @author Sebastien
- * 
- * This class represents the class test of the Element class.
- * 
- */
-public class ElementTest extends TestCase {
+public class ElementTest {
 
 	private Element element;
 
 	public static final String IDEPF = "idEPF";
-	
+
 	public static final String NAME = "name";
 
 	public static final String DESCRIPTION = "description";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp();
+	@Before
+	public void setUp() throws Exception {
 		this.element = new Element();
 		this.element.setDescription(DESCRIPTION);
 		this.element.setName(NAME);
 		this.element.setName(IDEPF);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@After
+	public void tearDown() throws Exception {
+		//None.
 	}
 
-	/**
-	 * Test method for {@link wilos.model.spem2.element.Element#hashCode()}.
-	 */
+	@Test
 	public void testHashCode() {
-		
+
 		Element elt = new Element();
 		elt.setDescription(DESCRIPTION);
 		elt.setName(NAME);
 		elt.setName(IDEPF);
-		
+
 		assertNotNull(this.element.hashCode());
 		assertNotNull(elt.hashCode());
 		assertEquals(this.element.hashCode(),elt.hashCode());
 	}
-	
-	/**
-	 * Test method for {@link wilos.model.spem2.element.Element#clone()}.
-	 */
+
+	@Test
 	public void testClone() {
 		try {
 			assertTrue(this.element.equals(this.element.clone()));
@@ -67,10 +53,7 @@ public class ElementTest extends TestCase {
 		}
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.model.spem2.element.Element#equals(java.lang.Object)}.
-	 */
+	@Test
 	public void testEquals() {
 		Element elt = new Element();
 		elt.setDescription(DESCRIPTION);

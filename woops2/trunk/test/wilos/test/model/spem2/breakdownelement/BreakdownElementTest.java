@@ -1,30 +1,24 @@
 
 package wilos.test.model.spem2.breakdownelement ;
 
-import java.util.HashSet ;
-import java.util.Set ;
+import static org.junit.Assert.*;
 
-import junit.framework.TestCase ;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 
-/**
- * This class represents the class test of the BreakdownElement class.
- *
- * @author deder
- *
- */
-public class BreakdownElementTest extends TestCase {
+public class BreakdownElementTest {
 
 	private BreakdownElement breakdownElement ;
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp() ;
+	@Before
+	public void setUp() throws Exception {
 		this.breakdownElement = new BreakdownElement() ;
 		this.breakdownElement.setGuid("idEPF1") ;
 		this.breakdownElement.setName("name1") ;
@@ -35,18 +29,12 @@ public class BreakdownElementTest extends TestCase {
 		this.breakdownElement.setHasMultipleOccurrences(false) ;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown() ;
+	@After
+	public void tearDown() throws Exception {
+		//None.
 	}
 
-	/**
-	 * Test method for {@link wilos.model.spem2.element.BreakdownElement#clone()}.
-	 */
+	@Test
 	public void testClone() {
 		try{
 			assertEquals(this.breakdownElement, this.breakdownElement.clone()) ;
@@ -56,9 +44,7 @@ public class BreakdownElementTest extends TestCase {
 		}
 	}
 
-	/**
-	 * Test method for {@link wilos.model.spem2.breakdownelement.BreakdownElement#hashCode()}.
-	 */
+	@Test
 	public void testHashCode() {
 		// Rk: the setUp method is called here.
 
@@ -78,9 +64,7 @@ public class BreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for {@link wilos.model.spem2.breakdownelement.BreakdownElement#equals(Object obj)}.
-	 */
+	@Test
 	public void testEquals() {
 		// Rk: the setUp method is called here.
 
@@ -112,10 +96,7 @@ public class BreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.model.spem2.breakdownelement.BreakdownElement#addSuperActivity(wilos.model.spem2.activity.Activity)}.
-	 */
+	@Test
 	public void testAddToActivity() {
 		// Rk: the setUp method is called here.
 
@@ -154,10 +135,7 @@ public class BreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for
-	 * {@link woops2.model.breakdownelement.BreakdownElement#addAllActivities(java.util.Set<Activity>)}.
-	 */
+	@Test
 	public void testAddToAllActivities() {
 		// Rk: the setUp method is called here.
 
@@ -198,10 +176,7 @@ public class BreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.model.spem2.breakdownelement.BreakdownElement#removeSuperActivity(wilos.model.spem2.activity.Activity)}.
-	 */
+	@Test
 	public void testRemoveFromActivity() {
 		// Rk: the setUp method is called here.
 
@@ -225,10 +200,7 @@ public class BreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.model.spem2.breakdownelement.BreakdownElement#removeAllActivity()}.
-	 */
+	@Test
 	public void testRemoveFromAllActivities() {
 		// Rk: the setUp method is called here.
 
