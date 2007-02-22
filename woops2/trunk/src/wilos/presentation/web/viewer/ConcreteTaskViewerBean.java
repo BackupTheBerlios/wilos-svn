@@ -16,6 +16,7 @@ import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
+import wilos.utils.Constantes.State;
 
 public class ConcreteTaskViewerBean {
 
@@ -110,7 +111,7 @@ public class ConcreteTaskViewerBean {
 		Participant participant = this.participantService
 				.getParticipant(wilosUserId);
 		
-		return (this.concreteTaskDescriptor.getState().equals("Created")&& this.concreteTaskDescriptorService
+		return (this.concreteTaskDescriptor.getState().equals(State.CREATED)&& this.concreteTaskDescriptorService
 				.affectedvisible(this.concreteTaskDescriptor, participant));
 
 	}
@@ -142,7 +143,7 @@ public class ConcreteTaskViewerBean {
 	 */
 	public boolean getVisibleStart() {
 
-		return (this.concreteTaskDescriptor.getState().equals("Ready"));
+		return (this.concreteTaskDescriptor.getState().equals(State.READY));
 
 	}
 
@@ -204,18 +205,10 @@ public class ConcreteTaskViewerBean {
 	public boolean getVisibleModifiable() {
 		this.visibleModifiable = false;
 		if (!this.getVisibleAffected() && !this.getVisibleStart()
-				&& !this.concreteTaskDescriptor.getState().equals("Finished")
-				&& !this.concreteTaskDescriptor.getState().equals("Suspended")
-				&& this.concreteTaskDescriptor.getState().equals("Started")) {
+				&& !this.concreteTaskDescriptor.getState().equals(State.FINISHED)
+				&& !this.concreteTaskDescriptor.getState().equals(State.SUSPENDED)
+				&& this.concreteTaskDescriptor.getState().equals(State.STARTED)) {
 
-			/*
-			 * String participantId =
-			 * (String)this.getWebSessionService().getAttribute(this.webSessionService.WILOS_USER_ID);
-			 * Participant user =
-			 * this.participantService.getParticipant(participantId);
-			 */
-			// TODO PSI2 : verifier si la concretetask est bien affect�e au
-			// participant via les roles
 			this.visibleModifiable = true;
 		} else {
 			this.visibleModifiable = false;
@@ -257,21 +250,21 @@ public class ConcreteTaskViewerBean {
 	 * @return the visibleStop
 	 */
 	public boolean getVisibleStop() {
-		return this.concreteTaskDescriptor.getState().equals("Started");
+		return this.concreteTaskDescriptor.getState().equals(State.STARTED);
 	}
 
 	/**
 	 * @return the visibleSuspended
 	 */
 	public boolean getVisibleSuspended() {
-		return this.concreteTaskDescriptor.getState().equals("Started");
+		return this.concreteTaskDescriptor.getState().equals(State.STARTED);
 	}
 
 	/**
 	 * @return the visibleReprendre
 	 */
 	public boolean getVisibleReprendre() {
-		return this.concreteTaskDescriptor.getState().equals("Suspended");
+		return this.concreteTaskDescriptor.getState().equals(State.SUSPENDED);
 	}
 
 	public String getConcreteTaskDescriptorId() {
