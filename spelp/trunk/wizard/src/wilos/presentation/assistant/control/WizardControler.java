@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -13,10 +14,12 @@ import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.jdesktop.swingx.JXTree;
+import org.jdesktop.swingx.util.SwingWorker;
 
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.task.Step;
 import wilos.presentation.assistant.ressources.Bundle;
+import wilos.presentation.assistant.ressources.ImagesService;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 import wilos.presentation.assistant.view.main.ActionBar;
 import wilos.presentation.assistant.view.main.ContextualMenu;
@@ -34,6 +37,7 @@ public class WizardControler {
 	private Component src = null ;
 	private Object lastCtd;
 	private ArrayList<HTMLViewer> listHTML = new ArrayList<HTMLViewer>() ;
+	private Vector<Runnable> listThread = new Vector<Runnable>() ;
 	// TODO ajouter les attributs tps, langue + getters setters
 	
 	private WizardControler() {
@@ -42,6 +46,57 @@ public class WizardControler {
 	
 	public Component getSrc () {
 		return src ;
+	}
+	
+	public synchronized void launchBackgroundThreadForTree(){
+		Thread theThread = new Thread (new Runnable(){
+			public void run() {
+				while (true){
+					try {
+						WizardControler.getInstance().connectToServer(this);
+						updateTree();
+						WizardControler.getInstance().disconnectToServer(this);
+						Thread.sleep(WizardControler.getInstance().getTimeToRefresh());
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		theThread.start();
+	}
+	
+	public void updateTree() {
+		
+	}
+	
+	public long getTimeToRefresh() {
+		// TODO Auto-generated method stub
+		return 5000;
+	}
+
+	/**
+	 * connectToServer indics that a thread is connecting to a server 
+	 * this method will change the icon of the toolbar the thread must give this in parameter 
+	 * @param r
+	 */
+	public synchronized void connectToServer(Runnable r) {
+		 if (listThread.size() == 0){
+			actionBar.getJLabelConnect().setIcon(ImagesService.getImageIcon("images.connection.active"));
+		}
+		listThread.add(r);
+	}
+	
+	/**
+	 * disconnectToServer indics that a thread is disconnecting to a server 
+	 * this method will change the icon of the toolbar the thread must give this in parameter 
+	 * @param r
+	 */
+	public void disconnectToServer(Runnable r) {
+		listThread.remove(r);
+		if (listThread.size() == 0){
+			actionBar.getJLabelConnect().setIcon(ImagesService.getImageIcon("images.connection.idle"));
+		}
 	}
 	
 	/**
@@ -181,7 +236,9 @@ public class WizardControler {
 	 */
 	public void startConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
 		if (ctd.getState() == Constantes.State.READY || ctd.getState() == Constantes.State.SUSPENDED ) {
+			WizardControler.getInstance().connectToServer(null);
 			WizardServicesProxy.startConcreteTaskDescriptor(ctd.getId());
+			WizardControler.getInstance().disconnectToServer(null);
 		}
 	}
 	
@@ -191,7 +248,9 @@ public class WizardControler {
 	 */	
 	public void pauseConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
 		if (ctd.getState() == Constantes.State.STARTED) {
+			WizardControler.getInstance().connectToServer(null);
 			WizardServicesProxy.suspendConcreteTaskDescriptor(ctd.getId());
+			WizardControler.getInstance().disconnectToServer(null);
 		}
 	}
 	
@@ -201,7 +260,9 @@ public class WizardControler {
 	 */
 	public void finishConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
 		if (ctd.getState() == Constantes.State.STARTED) {
+			WizardControler.getInstance().connectToServer(null);
 			WizardServicesProxy.stopConcreteTaskDescriptor(ctd.getId());
+			WizardControler.getInstance().disconnectToServer(null);
 		}
 	}
 	

@@ -366,6 +366,7 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 	public void setParticipant(Participant participant) {
 		WizardTreeModel wtm = new WizardTreeModel(participant);
 		tree.setModel(wtm);
+		WizardControler.getInstance().launchBackgroundThreadForTree();
 	}
 
 	public void valueChanged(TreeSelectionEvent e) {

@@ -1,5 +1,6 @@
 package wilos.presentation.assistant.view.main;
 
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +10,7 @@ import java.util.Observer;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JToolBar;
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -27,6 +29,7 @@ public class ActionBar extends JToolBar implements Observer{
 	private JButton jButtonFinished = null;
 	private JButton jButtonPlayTask = null;
 	private JButton jButtonRefresh = null;
+	private JLabel jLabelConnect = null ;
 	private JCheckBox jCheckBoxShowViewer;
 	
 	private static ActionBar barre = null;
@@ -42,6 +45,8 @@ public class ActionBar extends JToolBar implements Observer{
 		super ();
 		this.setLayout(new FlowLayout());
 		//this.add(runButton);
+		this.add(getJLabelConnect());
+		this.addSeparator();
 		this.add(getJButtonPlayTask());
 		this.add(getJButtonPauseTask());
 		this.add(getJButtonFinished());
@@ -50,6 +55,7 @@ public class ActionBar extends JToolBar implements Observer{
 		this.add(getJButtonRefresh());
 		this.addSeparator();
 		this.addSeparator();
+		
 		this.add(getJCheckBoxShowViewer());
 		this.setFloatable(false);
 		this.setButtons(DISABLED, DISABLED, DISABLED);
@@ -80,6 +86,13 @@ public class ActionBar extends JToolBar implements Observer{
 		}
 		bt.setToolTipText(toolTip);
 		return bt ;
+	}
+	
+	public JLabel getJLabelConnect() {
+		if (jLabelConnect == null){
+			jLabelConnect = new JLabel(ImagesService.getImageIcon("images.connection.idle"));
+		}
+		return jLabelConnect;
 	}
 	
 	public JButton getJButtonPlayTask() {
