@@ -6,7 +6,7 @@ import junit.framework.TestSuite ;
 
 /**
  * @author deder
- * 
+ *
  */
 public class AllTests {
 
@@ -14,7 +14,7 @@ public class AllTests {
 		TestSuite suite = new TestSuite("Test for wilos.test.hibernate.spem2") ;
 		// $JUnit-BEGIN$
 		suite.addTest(wilos.test.hibernate.spem2.process.AllTests.suite()) ;
-		suite.addTest(wilos.test.hibernate.spem2.activity.AllTests.suite()) ;
+		//suite.addTest(wilos.test.hibernate.spem2.activity.TestSuite.suite()) ;
 		suite.addTest(wilos.test.hibernate.spem2.element.AllTests.suite()) ;
 		suite.addTest(wilos.test.hibernate.spem2.breakdownelement.AllTests.suite()) ;
 		suite.addTest(wilos.test.hibernate.spem2.workbreakdownelement.AllTests.suite()) ;
