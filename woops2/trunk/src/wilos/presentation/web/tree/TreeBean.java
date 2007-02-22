@@ -210,7 +210,7 @@ public class TreeBean {
 		else {
 			int i ;
 			//inserting the project in an alphabetically ordered list
-			for (i = 0 ; i <= _projectsList.size()
+			for (i = 0 ; i < _projectsList.size()
 							&& _si.getLabel().compareTo(_projectsList.get(i).getLabel()) > 0 ;
 							i++) {}
 			_projectsList.add(i, _si) ;
