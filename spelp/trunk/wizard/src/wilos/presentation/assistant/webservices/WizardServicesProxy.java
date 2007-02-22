@@ -74,9 +74,8 @@ public class WizardServicesProxy {
             	} else {
                 	WizardServicesService service = new WizardServicesService(new URL(address+ENDPOINT), new QName(URLWebService, nameWebService));            	
                     WizardServices port = service.getWizardServicesPort();
-                    //myWilosUser = port.getWilosUser(login,password);
-                      XStream xstream = new XStream(new DomDriver("utf-8"));
-                      String result = port.getParticipant(login,password);
+                    XStream xstream = new XStream();
+                    String result = port.getParticipant(login,password);
                       
                       /*File xstreamFile = new File ("xstream.xml");
                       PrintStream out = new PrintStream(new FileOutputStream(xstreamFile), false, "UTF-8");
