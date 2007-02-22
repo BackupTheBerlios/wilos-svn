@@ -693,6 +693,16 @@ public class ProcessService {
 	public List<Process> getProcessesList() {
 		return this.processDao.getAllProcesses();
 	}
+	
+	/**
+	 * 
+	 * @param _guid
+	 * @return
+	 */
+	@ Transactional (readOnly = true, propagation = Propagation.REQUIRED)
+	public Process getProcessFromGuid(String _guid) {
+		return this.processDao.getProcessFromGuid(_guid);
+	}
 
 	/**
 	 *

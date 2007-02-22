@@ -56,7 +56,7 @@ public class ActivityDao extends HibernateDaoSupport {
 		}
 		return loadAll;
 	}
-
+	
 	/**
 	 * Return the activity which have the id _id
 	 * 
@@ -64,7 +64,22 @@ public class ActivityDao extends HibernateDaoSupport {
 	 * @return
 	 */
 	public Activity getActivity(String _id) {
-		return (Activity) this.getHibernateTemplate().get(Activity.class, _id);
+		return (Activity) this.getHibernateTemplate().get(Activity.class, _id) ;
+	}
+
+	/**
+	 * Return a activity  with the given guid If there are many activities with
+	 * the same guid, it returns the first
+	 * 
+	 * @param _process
+	 * @return
+	 */
+	public Activity getActivityFromGuid(String _guid) {
+		List activities = this.getHibernateTemplate().find("from Activity a where a.guid=?", _guid) ;
+		if(activities.size() > 0)
+			return (Activity) activities.get(0) ;
+		else
+			return null ;
 	}
 
 	/**

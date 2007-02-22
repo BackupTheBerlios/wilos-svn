@@ -154,6 +154,16 @@ public class ActivityService {
 	public List<Activity> getActivitiesList() {
 		return this.activityDao.getAllActivities();
 	}
+	
+	/**
+	 * 
+	 * @param _guid
+	 * @return
+	 */
+	@ Transactional (readOnly = true, propagation = Propagation.REQUIRED)
+	public Activity getActivityFromGuid(String _guid) {
+		return this.activityDao.getActivityFromGuid(_guid);
+	}
 
 	/**
 	 * Save activity

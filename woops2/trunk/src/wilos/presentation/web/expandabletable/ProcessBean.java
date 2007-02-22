@@ -50,7 +50,14 @@ public class ProcessBean {
 	 * listener on the processes selection combobox
 	 */
 	public void changeProcessSelectionListener(ValueChangeEvent evt) {
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		
+		ExpTableBean expTableBean = (ExpTableBean) context.getApplication().getVariableResolver()
+				.resolveVariable(context, "ExpTableBean");
+		
 		this.selectedProcessGuid = (String) evt.getNewValue();
+		expTableBean.setSelectedProcessGuid((String) evt.getNewValue());
 		if (this.selectedProcessGuid.equals("default")) {
 			this.isVisibleExpTable = false;
 		} else {
