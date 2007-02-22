@@ -1,45 +1,40 @@
 package wilos.test.model.spem2.phase;
 
+import static org.junit.Assert.*;
+
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.spem2.phase.Phase;
 
-public class PhaseTest extends TestCase{
+public class PhaseTest{
+
 	private Phase phase ;
 
 	public static final String PREFIX = "prefix" ;
 
 	public static final Boolean IS_OPTIONAL = true ;
-	
+
 	public static final String CONCRETENAME = "ConcreteName" ;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp() ;
+	@Before
+	public void setUp() {
 		this.phase = new Phase() ;
 		this.phase.setPrefix(PREFIX) ;
 		this.phase.setIsOptional(IS_OPTIONAL) ;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown() ;
+	@After
+	public void tearDown() {
+		//None.
 	}
 
-	/**
-	 * Test method for {@link wilos.model.spem2.iteration.Iteration#hashCode()}.
-	 */
+	@Test
 	public final void testHashCode() {
 		// Rk: the setUp method is called here.
 
@@ -54,9 +49,7 @@ public class PhaseTest extends TestCase{
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for {@link wilos.model.spem2.phase.Phase#equals(java.lang.Object)}.
-	 */
+	@Test
 	public final void testEquals() {
 		// Rk: the setUp method is called here.
 
@@ -82,9 +75,7 @@ public class PhaseTest extends TestCase{
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for {@link wilos.model.spem2.phase.Phase#clone()}.
-	 */
+	@Test
 	public final void testClone() {
 		// Rk: the setUp method is called here.
 
@@ -97,7 +88,8 @@ public class PhaseTest extends TestCase{
 
 		// Rk: the tearDown method is called here.
 	}
-	
+
+	@Test
 	public void testAddConcretePhase() {
 		ConcretePhase concretePhase = new ConcretePhase() ;
 		concretePhase.setConcreteName(CONCRETENAME) ;
@@ -107,7 +99,8 @@ public class PhaseTest extends TestCase{
 		assertTrue(this.phase.getConcretePhases().size() == 1) ;
 		assertNotNull(concretePhase.getPhase()) ;
 	}
-	
+
+	@Test
 	public void testAddToAllConcretePhase() {
 		ConcretePhase cp1 = new ConcretePhase() ;
 		cp1.setConcreteName("name1") ;
@@ -126,7 +119,8 @@ public class PhaseTest extends TestCase{
 		assertNotNull(cp1.getPhase()) ;
 		assertNotNull(cp2.getPhase()) ;
 	}
-	
+
+	@Test
 	public void testRemoveConcretePhase() {
 		ConcretePhase concretePhase = new ConcretePhase() ;
 		concretePhase.setConcreteName(CONCRETENAME);
@@ -136,7 +130,8 @@ public class PhaseTest extends TestCase{
 		assertTrue(this.phase.getConcretePhases().isEmpty()) ;
 		assertNull(concretePhase.getPhase()) ;
 	}
-	
+
+	@Test
 	public void testRemoveAllConcretePhases() {
 		ConcretePhase cp1 = new ConcretePhase() ;
 		cp1.setConcreteName("name1") ;
