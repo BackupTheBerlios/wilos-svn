@@ -7,12 +7,10 @@ import javax.faces.context.FacesContext;
 
 import wilos.business.services.misc.concretebreakdownelement.ConcreteBreakdownElementService;
 import wilos.business.services.misc.project.ProjectService;
-import wilos.business.services.misc.wilosuser.ParticipantService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
 import wilos.model.misc.project.Project;
-import wilos.model.misc.wilosuser.Participant;
 import wilos.presentation.web.tree.TreeBean;
 
 public class ProjectViewerBean {
@@ -25,8 +23,6 @@ public class ProjectViewerBean {
 
 	private ConcreteBreakdownElementService concreteBreakdownElementService;
 
-	private String projectId = "";
-	
 	public boolean getChangeButtonIsDisabled() {
 		String wilosUserId = (String) this.webSessionService
 			.getAttribute(WebSessionService.WILOS_USER_ID);
@@ -62,13 +58,6 @@ public class ProjectViewerBean {
 			return false;
 	}
 
-	public void buildProjectModel() {
-		this.project = new Project();
-		if (!(projectId.equals("")) || projectId != null) {
-			this.project = this.projectService.getProject(this.projectId);
-		}
-	}
-
 	public List<ConcreteBreakdownElement> getConcreteBreakdownElementsList() {
 		List<ConcreteBreakdownElement> list = new ArrayList<ConcreteBreakdownElement>();
 		list.addAll(this.project.getConcreteBreakdownElements());
@@ -100,14 +89,6 @@ public class ProjectViewerBean {
 
 	public void setProject(Project project) {
 		this.project = project;
-	}
-
-	public String getProjectId() {
-		return projectId;
-	}
-
-	public void setProjectId(String projectId) {
-		this.projectId = projectId;
 	}
 
 	public ProjectService getProjectService() {

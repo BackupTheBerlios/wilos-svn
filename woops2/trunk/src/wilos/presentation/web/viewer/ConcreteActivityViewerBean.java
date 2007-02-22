@@ -26,8 +26,6 @@ public class ConcreteActivityViewerBean {
 	private ConcreteActivityService concreteActivityService;
 
 	private ConcreteBreakdownElementService concreteBreakdownElementService;
-
-	private String concreteActivityId = "";
 	
 	public boolean getChangeButtonIsDisabled() {
 		String wilosUserId = (String) this.webSessionService
@@ -72,15 +70,6 @@ public class ConcreteActivityViewerBean {
 			return false;
 	}
 
-	public void buildConcreteActivity() {
-		this.concreteActivity = new ConcreteActivity();
-		if (!(this.concreteActivityId.equals(""))
-				|| this.concreteActivityId != null) {
-			this.concreteActivity = this.concreteActivityService
-					.getConcreteActivity(this.concreteActivityId);
-		}
-	}
-
 	public List<ConcreteBreakdownElement> getConcreteBreakdownElementsList() {
 		List<ConcreteBreakdownElement> list = new ArrayList<ConcreteBreakdownElement>();
 		list.addAll(this.concreteActivity.getConcreteBreakdownElements());
@@ -112,14 +101,6 @@ public class ConcreteActivityViewerBean {
 
 	public void setConcreteActivity(ConcreteActivity _concreteActivity) {
 		this.concreteActivity = _concreteActivity;
-	}
-
-	public String getConcreteActivityId() {
-		return concreteActivityId;
-	}
-
-	public void setConcreteActivityId(String _concreteActivityId) {
-		this.concreteActivityId = _concreteActivityId;
 	}
 
 	public ConcreteActivityService getConcreteActivityService() {

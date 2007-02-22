@@ -27,16 +27,6 @@ public class ConcretePhaseViewerBean {
 
 	private ConcreteBreakdownElementService concreteBreakdownElementService;
 
-	private String concretePhaseId = "";
-
-	public void buildConcretePhaseModel() {
-		this.concretePhase = new ConcretePhase();
-		if (!(concretePhaseId.equals("")) || concretePhaseId != null) {
-			this.concretePhase = this.concretePhaseService
-					.getConcretePhase(this.concretePhaseId);
-		}
-	}
-
 	/* Manage the table for the visible elements in the tree. */
 
 	// To have the mask available only for the ProjectManager.
@@ -116,14 +106,6 @@ public class ConcretePhaseViewerBean {
 
 	public void setConcretePhase(ConcretePhase concretePhase) {
 		this.concretePhase = concretePhase;
-	}
-
-	public String getConcretePhaseId() {
-		return concretePhaseId;
-	}
-
-	public void setConcretePhaseId(String concretePhaseId) {
-		this.concretePhaseId = concretePhaseId;
 	}
 
 	/**

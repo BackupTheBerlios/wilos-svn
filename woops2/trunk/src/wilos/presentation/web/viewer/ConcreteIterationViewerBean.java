@@ -27,17 +27,6 @@ public class ConcreteIterationViewerBean {
 
 	private ConcreteBreakdownElementService concreteBreakdownElementService;
 
-	private String concreteIterationId = "";
-
-	public void buildConcreteIteration() {
-		this.concreteIteration = new ConcreteIteration();
-		if (!(this.concreteIterationId.equals(""))
-				|| this.concreteIterationId != null) {
-			this.concreteIteration = this.concreteIterationService
-					.getConcreteIteration(this.concreteIterationId);
-		}
-	}
-
 	/* Manage the table for the visible elements in the tree. */
 
 	// To have the mask available only for the ProjectManager.
@@ -118,14 +107,6 @@ public class ConcreteIterationViewerBean {
 
 	public void setConcreteIteration(ConcreteIteration _concreteIteration) {
 		this.concreteIteration = _concreteIteration;
-	}
-
-	public String getConcreteIterationId() {
-		return concreteIterationId;
-	}
-
-	public void setConcreteIterationId(String _concreteIterationId) {
-		this.concreteIterationId = _concreteIterationId;
 	}
 
 	/**
