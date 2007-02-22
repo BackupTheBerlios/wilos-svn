@@ -34,20 +34,9 @@ public class ConcreteTaskViewerBean {
 
 	private ConcreteTaskDescriptor concreteTaskDescriptor;
 
-	private String concreteTaskDescriptorId = "";
-
 	private boolean visibleModifiable;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
-
-	public void buildConcreteTaskDescriptor() {
-		this.concreteTaskDescriptor = new ConcreteTaskDescriptor();
-		if (!(this.concreteTaskDescriptorId.equals(""))
-				|| this.concreteTaskDescriptorId != null) {
-			this.concreteTaskDescriptor = this.concreteTaskDescriptorService
-					.getConcreteTaskDescriptor(this.concreteTaskDescriptorId);
-		}
-	}
 
 	public boolean getChangeButtonIsDisabled() {
 		String wilosUserId = (String) this.webSessionService
@@ -232,7 +221,6 @@ public class ConcreteTaskViewerBean {
 	public void updateActionListener(ActionEvent event) {
 		this.concreteTaskDescriptorService
 				.updateConcreteTaskDescriptor(this.concreteTaskDescriptor);
-		this.buildConcreteTaskDescriptor();
 		ResourceBundle bundle = ResourceBundle.getBundle(
 				"wilos.resources.messages", FacesContext.getCurrentInstance()
 						.getApplication().getDefaultLocale());
@@ -265,14 +253,6 @@ public class ConcreteTaskViewerBean {
 	 */
 	public boolean getVisibleReprendre() {
 		return this.concreteTaskDescriptor.getState().equals(State.SUSPENDED);
-	}
-
-	public String getConcreteTaskDescriptorId() {
-		return concreteTaskDescriptorId;
-	}
-
-	public void setConcreteTaskDescriptorId(String _concreteTaskDescriptorId) {
-		this.concreteTaskDescriptorId = _concreteTaskDescriptorId;
 	}
 
 	public ProjectService getProjectService() {
