@@ -9,7 +9,7 @@
 
 	<application>
 		<locale-config>
-			<default-locale>fr</default-locale>
+			<default-locale>en</default-locale>
 		</locale-config>
 	</application>
 
@@ -182,6 +182,14 @@
 		<managed-property>
 			<property-name>concreteRoleDescriptorService</property-name>
 			<value>#{ConcreteRoleDescriptorService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>participantService</property-name>
+			<value>#{ParticipantService}</value>
 		</managed-property>
 	</managed-bean>
 
