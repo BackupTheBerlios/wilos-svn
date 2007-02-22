@@ -192,7 +192,7 @@ public class TreeBean {
 		ResourceBundle bundle = ResourceBundle.getBundle(
 				"wilos.resources.messages", FacesContext.getCurrentInstance()
 						.getApplication().getDefaultLocale());
-		projectsList.add(new SelectItem("default", bundle
+		projectsList.add(0, new SelectItem("default", bundle
 				.getString("navigation.tree.defaulttreenodetext")));
 		return projectsList;
 	}
