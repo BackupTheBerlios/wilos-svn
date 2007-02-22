@@ -127,7 +127,7 @@ public class HTMLViewer extends JFrame {
 		/* ----- CENTER PANEL -----*/
 		
 		this.myEditorPane = new JEditorPane();
-		this.myEditorPane.setContentType("text/html; charset=utf-8");
+		this.myEditorPane.setContentType("text/html");
 		this.myEditorPane.setVisible(true);
 		this.myEditorPane.setEditable(false);
 
