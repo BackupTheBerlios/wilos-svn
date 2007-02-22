@@ -183,8 +183,8 @@ public class TreeBean {
 					.getProjectsForAParticipant(participant);
 			for (Project project : projects.keySet()) {
 				if (projects.get(project)) {
-					projectsList.add(new SelectItem(project.getId(), project
-							.getConcreteName()));
+					this.addSelectItemToList(projectsList,
+							new SelectItem(project.getId(), project.getConcreteName()));
 				}
 			}
 		}
@@ -198,6 +198,24 @@ public class TreeBean {
 	}
 
 	/* Private methods. */
+	
+	/**
+	 * Inserts the SelectItem _si representing a project into the list used by the combo
+	 * @param _projectsList the projectsList
+	 * @param _si the SelectItem
+	 */
+	private void addSelectItemToList(List <SelectItem> _projectsList, SelectItem _si) {
+		if (_projectsList.size() == 0)
+			_projectsList.add(_si) ;
+		else {
+			int i ;
+			//inserting the project in an alphabetically ordered list
+			for (i = 0 ; i <= _projectsList.size()
+							&& _si.getLabel().compareTo(_projectsList.get(i).getLabel()) > 0 ;
+							i++) {}
+			_projectsList.add(i, _si) ;
+		}
+	}
 
 	/**
 	 *
