@@ -9,6 +9,10 @@
 
 package wilos.business.webservices;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -23,6 +27,8 @@ import wilos.model.misc.wilosuser.WilosUser;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.io.xml.JDomDriver;
+import com.thoughtworks.xstream.io.xml.XppDriver;
 
 /**
  *
@@ -56,9 +62,14 @@ public class WizardServices {
        wu =  as.getParticipantTO(getAuthentifiedParticipant(login,password).getLogin());       
 	   System.out.println("Le user "+wu.getName()+" est logge");
 
-       XStream xstream = new XStream(new DomDriver("utf-8"));       
+       XStream xstream = new XStream(); 
 
        result= xstream.toXML(wu);
+       
+       /*File xstreamFile = new File ("xstream.xml");
+       PrintStream out = new PrintStream(new FileOutputStream(xstreamFile), false, "UTF-8");
+       out.println(result);*/
+       
        return result;
     }
     
@@ -66,7 +77,7 @@ public class WizardServices {
     public void startConcreteTaskDescriptor (@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="id") String id) throws Exception {
 		System.out.println("APPEL DE METHODE : startConcreteTaskDescriptor");
     	if (getAuthentifiedParticipant (login, password)!=null) {
-    		System.out.println("le Participant est loggé");
+    		System.out.println("le Participant est logge");
     		as.startConcreteTaskDescriptor(id);
     	}
     }
@@ -75,7 +86,7 @@ public class WizardServices {
     public void suspendConcreteTaskDescriptor (@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="id") String id) throws Exception {
 		System.out.println("APPEL DE METHODE : suspendConcreteTaskDescriptor");
     	if (getAuthentifiedParticipant (login, password)!=null) {
-    		System.out.println("le Participant est loggé");
+    		System.out.println("le Participant est loggï¿½");
     		as.suspendConcreteTaskDescriptor(id);
     	}
     }
@@ -84,7 +95,7 @@ public class WizardServices {
     public void resumeConcreteTaskDescriptor (@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="id") String id) throws Exception {
 		System.out.println("APPEL DE METHODE : resumeConcreteTaskDescriptor");
     	if (getAuthentifiedParticipant (login, password)!=null) {
-    		System.out.println("le Participant est loggé");
+    		System.out.println("le Participant est loggï¿½");
     		as.resumeConcreteTaskDescriptor(id);
     	}
     }
@@ -93,7 +104,7 @@ public class WizardServices {
     public void stopConcreteTaskDescriptor (@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="id") String id) throws Exception {
 		System.out.println("APPEL DE METHODE : stopConcreteTaskDescriptor");
     	if (getAuthentifiedParticipant (login, password)!=null) {
-    		System.out.println("le Participant est loggé");
+    		System.out.println("le Participant est loggï¿½");
     		as.finishConcreteTaskDescriptor(id);
     	}
     }
