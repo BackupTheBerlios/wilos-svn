@@ -58,6 +58,10 @@ public class ProjectBean {
 	private List<Project> projectListWithProcess = new ArrayList<Project>();
 
 	public static final String MODIFY_ICON = "images/modify.gif";
+	
+	private static final String PROCESS_NULL = "projectProcesses_null" ;
+
+	private static final String PROCESS_NOT_NULL = "projectProcesses_not_null" ;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -69,6 +73,8 @@ public class ProjectBean {
 	private String processName;
 
 	private String projectListView;
+	
+	private String processesListView ;
 
 	/**
 	 * Constructor.
@@ -532,6 +538,31 @@ public class ProjectBean {
 	 */
 	public void setTreeBean(TreeBean _treeBean) {
 		this.treeBean = _treeBean;
+	}
+	
+	/**
+	 * Getter of processesListView.
+	 * 
+	 * @return the processesListView.
+	 */
+	public String getProcessesListView() {
+		if(this.getProcessNamesList().size() == 0){
+			this.processesListView = PROCESS_NULL ;
+		}
+		else{
+			this.processesListView = PROCESS_NOT_NULL ;
+		}
+		return this.processesListView ;
+	}
+
+	/**
+	 * Setter of processesListView.
+	 * 
+	 * @param _processesListView
+	 *            The processesListView to set.
+	 */
+	public void setProcessesListView(String _processesListView) {
+		this.processesListView = _processesListView ;
 	}
 
 }
