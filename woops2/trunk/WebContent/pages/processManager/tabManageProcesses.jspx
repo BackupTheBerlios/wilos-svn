@@ -23,10 +23,10 @@
 								<f:param name="processSaveId" value="#{process.id}"/>
 								<ice:graphicImage value="images/save.gif" style="border: 0px solid;" />
 							</ice:commandLink>
-							<!--  <ice:commandLink value="" actionListener="#{ProcessBean.deleteProcess}">
+							  <ice:commandLink value="" actionListener="#{ProcessBean.deleteProcess}">
 								<f:param name="processId" value="#{process.id}"/>
 								<ice:graphicImage value="images/delete.gif" style="border: 0px solid;" />
-							</ice:commandLink>-->
+							</ice:commandLink>
 						</ice:column>
 					</ice:dataTable>
 				</ice:panelGroup>				
