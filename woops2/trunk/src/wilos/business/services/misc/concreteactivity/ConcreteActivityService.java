@@ -8,6 +8,10 @@ import wilos.model.misc.concreteactivity.ConcreteActivity;
 public class ConcreteActivityService {
 
 	private ConcreteActivityDao concreteActivityDao;
+	
+	public void saveConcreteActivity(ConcreteActivity _concreteActivity) {
+		this.concreteActivityDao.saveOrUpdateConcreteActivity(_concreteActivity);
+	}
 
 	public ConcreteActivity getConcreteActivity(String _concreteActivityId) {
 		return this.concreteActivityDao.getConcreteActivity(_concreteActivityId);

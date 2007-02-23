@@ -44,8 +44,7 @@ public class ConcreteActivityViewerBean {
 	}
 	
 	public void changeConcreteName() {
-		this.concreteActivityService.getConcreteActivityDao()
-			.saveOrUpdateConcreteActivity(this.concreteActivity);
+		this.concreteActivityService.saveConcreteActivity(this.concreteActivity);
 	}
 	
 	public boolean getIsInputNameReadOnly() {
