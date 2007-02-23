@@ -124,18 +124,25 @@ public class TreeBean {
 	}
 
 	public void changeTreeActionListener(ValueChangeEvent evt) {
-		this.projectId = (String) evt.getNewValue();
-		// Put into the session the current project used.
-		this.webSessionService.setAttribute(WebSessionService.PROJECT_ID,
-				this.projectId);
-
-		// Retrieve the entire project.
-		this.project = this.projectService.getProject(this.projectId);
-
-		this.buildTreeModel();
-
-		if (this.projectId.length() > 0)
-			this.selectNodeToShow(this.projectId, WilosObjectNode.PROJECTNODE);
+		if (((String) evt.getNewValue()).compareTo("default") != 0) {
+			this.projectId = (String) evt.getNewValue();
+			// Put into the session the current project used.
+			this.webSessionService.setAttribute(WebSessionService.PROJECT_ID,
+					this.projectId);
+	
+			// Retrieve the entire project.
+			this.project = this.projectService.getProject(this.projectId);
+	
+			this.buildTreeModel();
+	
+			if (this.projectId.length() > 0)
+				this.selectNodeToShow(this.projectId, WilosObjectNode.PROJECTNODE);
+		}
+		else {
+			this.buildTreeModel() ;
+			
+			this.selectNodeToShow(null, "wilos") ;
+		}
 	}
 
 	public void selectNodeActionListener(ActionEvent evt) {
@@ -239,7 +246,7 @@ public class TreeBean {
 		FacesContext context = FacesContext.getCurrentInstance();
 		MenuBean mb = (MenuBean) context.getApplication().getVariableResolver()
 				.resolveVariable(context, "menu");
-		if (_objectId != null && _pageId != null) {
+		if (_objectId != null && _pageId != null) {		
 			if (_pageId.equals(WilosObjectNode.ACTIVITYNODE)) {
 				ConcreteActivityViewerBean av = (ConcreteActivityViewerBean) context
 						.getApplication().getVariableResolver()
@@ -313,6 +320,11 @@ public class TreeBean {
 				// didnt found the node's class
 				new ClassNotFoundException("coulnd't found the node class");
 			}
+		}
+		// _objectId or _pageId null -> display blank page
+		else {
+			if (_pageId.equals("wilos"))
+				mb.changePage("wilos") ;
 		}
 	}
 
