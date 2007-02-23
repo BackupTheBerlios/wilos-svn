@@ -14,8 +14,6 @@ public class SectionTO extends Section implements Serializable {
 		this.setName(mySection.getName());
 		this.setDescription(mySection.getDescription());
 		this.setGuid(mySection.getGuid());
-		
-		// TODO : avoir avec CheckList
 	}
 	
 	
