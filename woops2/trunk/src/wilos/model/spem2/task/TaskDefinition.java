@@ -51,6 +51,8 @@ public class TaskDefinition extends Element implements Cloneable {
 		this.steps = new TreeSet<Step>();
 		this.taskDescriptors = new HashSet<TaskDescriptor>();
 		this.guidances = new HashSet<Guidance>();
+		this.alternatives = "";
+		this.purpose = "";
 	}
 
 	/*
@@ -69,7 +71,9 @@ public class TaskDefinition extends Element implements Cloneable {
 		return new EqualsBuilder().appendSuper(super.equals(task)).append(
 				this.steps, task.steps).append(this.taskDescriptors,
 				task.taskDescriptors).append(this.guidances,
-						task.guidances).isEquals();
+						task.guidances).append(this.alternatives,
+								task.alternatives).append(this.purpose,
+										task.purpose).isEquals();
 	}
 
 	/*
@@ -78,8 +82,7 @@ public class TaskDefinition extends Element implements Cloneable {
 	 * @see woops2.model.element.Element#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode())
-				.toHashCode();
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.alternatives).append(this.purpose).toHashCode();
 	}
 
 	/*
@@ -102,6 +105,8 @@ public class TaskDefinition extends Element implements Cloneable {
 		this.steps.addAll(_taskDefinition.getSteps());
 		this.taskDescriptors.addAll(_taskDefinition.getTaskDescriptors());
 		this.guidances.addAll(_taskDefinition.getGuidances());
+		this.alternatives = _taskDefinition.getAlternatives();
+		this.purpose = _taskDefinition.getPurpose();
 	}
 
 	/**
