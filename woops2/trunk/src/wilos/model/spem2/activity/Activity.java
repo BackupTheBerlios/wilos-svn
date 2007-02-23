@@ -30,6 +30,12 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	private Set<ConcreteActivity> concreteActivities;
 
 	private Set<Guidance> guidances;
+	
+	private String alternatives;
+	
+	private String howToStaff;
+	
+	private String purpose;
 
 	/**
 	 * Constructor.
@@ -225,5 +231,29 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 
 	public void setGuidances(Set<Guidance> guidances) {
 		this.guidances = guidances;
+	}
+
+	public String getAlternatives() {
+		return alternatives;
+	}
+
+	public void setAlternatives(String _alternatives) {
+		this.alternatives = _alternatives;
+	}
+
+	public String getHowToStaff() {
+		return howToStaff;
+	}
+
+	public void setHowToStaff(String _howToStaff) {
+		this.howToStaff = _howToStaff;
+	}
+
+	public String getPurpose() {
+		return purpose;
+	}
+
+	public void setPurpose(String _purpose) {
+		this.purpose = _purpose;
 	}
 }

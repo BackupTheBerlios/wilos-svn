@@ -38,6 +38,10 @@ public class TaskDefinition extends Element implements Cloneable {
 	// The Project of Process
 
 	private Set<Guidance> guidances;
+	
+	private String alternatives;
+	
+	private String purpose;
 
 	/**
 	 * Default constructor
@@ -258,5 +262,47 @@ public class TaskDefinition extends Element implements Cloneable {
 
 	public void setGuidances(Set<Guidance> _guidances) {
 		this.guidances = _guidances;
+	}
+
+	
+	/**
+	 * Getter of alternatives
+	 * 
+	 * @return the alternatives
+	 */
+	public String getAlternatives() {
+		return alternatives;
+	}
+	
+	/**
+	 * Setter of alternatives
+	 * 
+	 * @param _alternatives
+	 * 				the alternatives to set
+	 */
+
+	public void setAlternatives(String _alternatives) {
+		this.alternatives = _alternatives;
+	}
+	
+	/**
+	 * Getter of purpose
+	 * 
+	 * @return the purpose
+	 */
+
+	public String getPurpose() {
+		return purpose;
+	}
+	
+	/**
+	 * Setter of purpose
+	 * 
+	 * @param _purpose
+	 * 				the purpose to set
+	 */
+
+	public void setPurpose(String _purpose) {
+		this.purpose = _purpose;
 	}
 }

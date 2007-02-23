@@ -36,6 +36,15 @@
 			</many-to-many>
 		</set>
 		
+		<property name="alternatives" type="java.lang.String" column="alternatives"
+			length="256" />
+			
+		<property name="homToStaff" type="java.lang.String" column="howtostaff"
+			length="256" />
+			
+		<property name="purpose" type="java.lang.String" column="purpose"
+			length="256" />
+		
 	</joined-subclass>
 	
 </hibernate-mapping>

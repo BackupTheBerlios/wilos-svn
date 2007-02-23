@@ -28,8 +28,13 @@ public class RoleDefinition extends Element implements Cloneable {
 	 */
 	private Set<RoleDescriptor> roleDescriptors ;
 	
-	
 	private Set<Guidance> guidances;
+	
+	private String assignmentApproaches;
+	
+	private String skills;
+	
+	private String synonyms;
 
 	/**
 	 * Constructor.
@@ -188,5 +193,29 @@ public class RoleDefinition extends Element implements Cloneable {
 
 	public void setGuidances(Set<Guidance> guidances) {
 		this.guidances = guidances;
+	}
+
+	public String getAssignmentApproaches() {
+		return assignmentApproaches;
+	}
+
+	public void setAssignmentApproaches(String _assignmentApproaches) {
+		this.assignmentApproaches = _assignmentApproaches;
+	}
+
+	public String getSkills() {
+		return skills;
+	}
+
+	public void setSkills(String _skills) {
+		this.skills = _skills;
+	}
+
+	public String getSynonyms() {
+		return synonyms;
+	}
+
+	public void setSynonyms(String _synonyms) {
+		this.synonyms = _synonyms;
 	}
 }

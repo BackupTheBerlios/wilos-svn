@@ -21,5 +21,14 @@
 				column="guidance_id">
 			</many-to-many>
 		</set>
+		
+		<property name="assignmentApproaches" type="java.lang.String" column="assignmentapproaches"
+			length="256" />
+			
+		<property name="skills" type="java.lang.String" column="skills"
+			length="256" />
+			
+		<property name="synonyms" type="java.lang.String" column="synonyms"
+			length="256" />
 	</joined-subclass>
 </hibernate-mapping>

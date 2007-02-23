@@ -34,7 +34,17 @@ public class Element implements Cloneable {
 	 * The sentences describe this element.
 	 */
 	private String description ;
-
+	
+	/**
+	 *  The main description of the element
+	 */
+	private String mainDescription;
+	
+	/**
+	 * the key considerations of the element
+	 */
+	private String keyConsiderations;
+	
 	/**
 	 * Constructor.
 	 * 
@@ -169,6 +179,44 @@ public class Element implements Cloneable {
 	 */
 	public void setGuid(String _guid) {
 		this.guid = _guid ;
+	}
+
+	/**
+	 * Getter of KeyConsiderations
+	 * 
+	 * @return the KeyConsiderations
+	 */
+	public String getKeyConsiderations() {
+		return keyConsiderations;
+	}
+
+	/**
+	 * Setter of KeyConsideration
+	 * 
+	 * @param _keyConsiderations
+	 * 				The KeyConsideration to set
+	 */
+	public void setKeyConsiderations(String _keyConsiderations) {
+		keyConsiderations = _keyConsiderations;
+	}
+
+	/**
+	 * Getter on MainDescription
+	 * 
+	 * @return the MainDescription 
+	 */
+	public String getMainDescription() {
+		return mainDescription;
+	}
+
+	/**
+	 * Setter of the MainDescription
+	 * 
+	 * @param _mainDescription
+	 * 				The MainDescription to set
+	 */
+	public void setMainDescription(String _mainDescription) {
+		mainDescription = _mainDescription;
 	}
 
 }

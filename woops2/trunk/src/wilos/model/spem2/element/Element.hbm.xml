@@ -24,5 +24,11 @@
 		<property name="description" type="java.lang.String" column="description"
 			length="256" />
 			
+		<property name="mainDescription" type="java.lang.String" column="maindescription"
+			length="256" />
+			
+		<property name="keyConsiderations" type="java.lang.String" column="keyconsiderations"
+			length="256" />
+			
 	</class>
 </hibernate-mapping>
