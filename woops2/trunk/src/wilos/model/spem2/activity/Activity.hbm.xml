@@ -39,7 +39,7 @@
 		<property name="alternatives" type="java.lang.String" column="alternatives"
 			length="256" />
 			
-		<property name="homToStaff" type="java.lang.String" column="howtostaff"
+		<property name="howToStaff" type="java.lang.String" column="howtostaff"
 			length="256" />
 			
 		<property name="purpose" type="java.lang.String" column="purpose"
