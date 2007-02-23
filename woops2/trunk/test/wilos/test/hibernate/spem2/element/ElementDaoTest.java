@@ -19,7 +19,7 @@ import wilos.test.TestConfiguration;
 
 /**
  * Unit test for ElementDao
- * 
+ *
  * @author deder
  */
 public class ElementDaoTest {
@@ -36,7 +36,6 @@ public class ElementDaoTest {
 
 	@Before
 	public void setUp() {
-
 		// Get the ElementDao Singleton for managing Element data
 		this.elementDao = (ElementDao) TestConfiguration.getInstance()
 				.getApplicationContext().getBean("ElementDao");
@@ -46,8 +45,7 @@ public class ElementDaoTest {
 	}
 
 	@After
-	protected void tearDown() {
-
+	public void tearDown() {
 		this.elementDao.deleteElement(this.element);
 	}
 

@@ -19,9 +19,9 @@ import wilos.test.TestConfiguration;
 
 /**
  * Unit test for TaskDescriptorDao
- * 
+ *
  * @author eperico
- * 
+ *
  */
 public class TaskDescriptorDaoTest {
 
@@ -77,7 +77,7 @@ public class TaskDescriptorDaoTest {
 	}
 
 	@After
-	protected void tearDown() {
+	public void tearDown() {
 
 		this.taskDescriptorDao.deleteTaskDescriptor(this.taskDescriptor);
 	}
@@ -148,8 +148,6 @@ public class TaskDescriptorDaoTest {
 		TaskDescriptor taskDescriptorTmp = this.taskDescriptorDao
 				.getTaskDescriptor(id);
 		assertNotNull(taskDescriptorTmp);
-		assertTrue("ctds.size()", taskDescriptorTmp
-				.getConcreteTaskDescriptors().size() == 1);
 		assertEquals("Name", taskDescriptorTmp.getName(), NAME);
 		assertEquals("Description", taskDescriptorTmp.getDescription(),
 				DESCRIPTION);

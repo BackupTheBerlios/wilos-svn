@@ -2,7 +2,6 @@ package wilos.business.services.misc.concreterole;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -80,7 +79,7 @@ public class ConcreteRoleDescriptorService {
 				ConcreteActivityService _concretActivityService) {
 			this.concretActivityService = _concretActivityService;
 		}
-		
+
 		public List<ConcreteRoleDescriptor> getAllConcreteRoleDescriptorForARoleDescriptor(
 				String _roleDescriptorId) {
 			return this.concreteRoleDescriptorDao.getAllConcreteRoleDescriptorsForARoleDescriptor(_roleDescriptorId);

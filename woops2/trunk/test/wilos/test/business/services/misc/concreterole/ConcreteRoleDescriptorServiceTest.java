@@ -19,7 +19,6 @@ import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.test.TestConfiguration;
 
-
 public class ConcreteRoleDescriptorServiceTest {
 
 	private ConcreteRoleDescriptor concreteRoleDescriptor;

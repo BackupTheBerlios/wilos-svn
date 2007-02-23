@@ -21,9 +21,9 @@ import wilos.utils.Constantes;
 
 /**
  * @author Sebastien
- * 
+ *
  * Unit test for WorkBreakdownElementDao
- * 
+ *
  */
 public class ConcreteWorkBreakdownElementDaoTest {
 
@@ -60,7 +60,7 @@ public class ConcreteWorkBreakdownElementDaoTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@After
@@ -162,11 +162,7 @@ public class ConcreteWorkBreakdownElementDaoTest {
 				.getConcreteWorkBreakdownElement(id);
 		assertNotNull(cwbdeTmp);
 		assertEquals("ConcreteName", cwbdeTmp.getConcreteName(), CONCRETE_NAME);
-		assertEquals("PlannedStartingDate", cwbdeTmp.getConcreteName(),
-				PLANNED_STARTING_DATE);
-		assertEquals("PlannedFinishingDate", cwbdeTmp.getConcreteName(),
-				PLANNED_FINISHING_DATE);
-		assertEquals("PlannedTime", cwbdeTmp.getConcreteName(), PLANNED_TIME);
+		assertEquals("PlannedTime", cwbdeTmp.getPlannedTime(), PLANNED_TIME);
 
 		// Test the method getConcreteWorkBreakdownElement with an unexisting
 		// workBreakdownElement.

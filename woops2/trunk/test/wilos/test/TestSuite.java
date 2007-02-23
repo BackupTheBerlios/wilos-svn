@@ -1,11 +1,14 @@
 
-package wilos.test.business.services.spem2.role ;
+package wilos.test ;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+
 @RunWith(Suite.class)
 @Suite.SuiteClasses( {
-	wilos.test.business.services.spem2.role.RoleDescriptorServiceTest.class
+	wilos.test.business.TestSuite.class,
+	wilos.test.model.TestSuite.class,
+	wilos.test.hibernate.TestSuite.class
 })
 public class TestSuite {
 	// None.
