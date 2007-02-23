@@ -47,8 +47,16 @@ public class ConcreteTaskViewerBean {
 	/* Simple fields */
 
 	private ConcreteTaskDescriptor concreteTaskDescriptor;
-
-	private boolean visibleModifiable;
+	
+	private boolean accomplishedTimeVisible;
+	
+	private boolean accomplishedTimeModifiable;
+	
+	private boolean remainingTimeVisible;
+	
+	private boolean remainingTimeModifiable;
+	
+	private boolean visibleSaveButton;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 	
@@ -293,33 +301,109 @@ public class ConcreteTaskViewerBean {
 	}
 
 	/**
-	 * @return the visibleModifiable
+	 * Getter of accomplishedTimeModifiable.
+	 *
+	 * @return the accomplishedTimeModifiable.
 	 */
-	public boolean getVisibleModifiable() {
-		this.visibleModifiable = false;
-		if (!this.getVisibleAffected()
-				&& !this.getVisibleStart()
-				&& !this.concreteTaskDescriptor.getState().equals(
-						State.FINISHED)
-				&& !this.concreteTaskDescriptor.getState().equals(
-						State.SUSPENDED)
-				&& this.concreteTaskDescriptor.getState().equals(State.STARTED)) {
-
-			this.visibleModifiable = true;
+	public boolean getAccomplishedTimeModifiable() {
+		this.accomplishedTimeModifiable = false;
+		if (this.getAccomplishedTimeVisible()
+				&& !this.concreteTaskDescriptor.getState().equals(State.SUSPENDED)
+				&& !this.concreteTaskDescriptor.getState().equals(State.FINISHED)) {
+			this.accomplishedTimeModifiable = false;
 		} else {
-			this.visibleModifiable = false;
+			this.accomplishedTimeModifiable = true;
 		}
-		return this.visibleModifiable;
+		return this.accomplishedTimeModifiable;
 	}
 
 	/**
-	 * @param visibleModifiable
-	 *            the visibleModifiable to set
+	 * Setter of accomplishedTimeModifiable.
+	 *
+	 * @param _accomplishedTimeModifiable The accomplishedTimeModifiable to set.
 	 */
-	public void setVisibleModifiable(boolean _visibleModifiable) {
-		this.visibleModifiable = _visibleModifiable;
+	public void setAccomplishedTimeModifiable(boolean _accomplishedTimeModifiable) {
+		this.accomplishedTimeModifiable = _accomplishedTimeModifiable ;
 	}
 
+	/**
+	 * Getter of accomplishedTimeVisible.
+	 *
+	 * @return the accomplishedTimeVisible.
+	 */
+	public boolean getAccomplishedTimeVisible() {
+		this.accomplishedTimeVisible = false ;
+		if(!this.getVisibleAffected() 
+				&& !this.concreteTaskDescriptor.getState().equals(State.CREATED)
+				&& !this.concreteTaskDescriptor.getState().equals(State.READY)
+				){
+			this.accomplishedTimeVisible = true ;
+		}
+		else{
+			this.accomplishedTimeVisible = false ;
+		}
+		return this.accomplishedTimeVisible ;
+	}
+
+	/**
+	 * Setter of accomplishedTimeVisible.
+	 *
+	 * @param _accomplishedTimeVisible The accomplishedTimeVisible to set.
+	 */
+	public void setAccomplishedTimeVisible(boolean _accomplishedTimeVisible) {
+		this.accomplishedTimeVisible = _accomplishedTimeVisible ;
+	}
+
+	/**
+	 * Getter of remainingTimeModifiable.
+	 *
+	 * @return the remainingTimeModifiable.
+	 */
+	public boolean getRemainingTimeModifiable() {		
+		this.remainingTimeModifiable = false;
+		if (getRemainingTimeVisible()) {
+			this.remainingTimeModifiable = false;
+		} else {
+			this.remainingTimeModifiable = true;
+		}		
+		return this.remainingTimeModifiable ;
+	}
+
+	/**
+	 * Setter of remainingTimeModifiable.
+	 *
+	 * @param _remainingTimeModifiable The remainingTimeModifiable to set.
+	 */
+	public void setRemainingTimeModifiable(boolean _remainingTimeModifiable) {
+		this.remainingTimeModifiable = _remainingTimeModifiable ;
+	}
+
+	/**
+	 * Getter of remainingTimeVisible.
+	 *
+	 * @return the remainingTimeVisible.
+	 */
+	public boolean getRemainingTimeVisible() {
+		this.remainingTimeVisible = false;
+		if (!this.getVisibleAffected() 
+				&& !this.concreteTaskDescriptor.getState().equals(State.CREATED)
+				&& !this.concreteTaskDescriptor.getState().equals(State.FINISHED)){
+			this.remainingTimeVisible = true;
+		} else {
+			this.remainingTimeVisible = false;
+		}
+		return this.remainingTimeVisible ;
+	}
+
+	/**
+	 * Setter of remainingTimeVisible.
+	 *
+	 * @param _remainingTimeVisible The remainingTimeVisible to set.
+	 */
+	public void setRemainingTimeVisible(boolean _remainingTimeVisible) {
+		this.remainingTimeVisible = _remainingTimeVisible ;
+	}
+	
 	/**
 	 * save the ConcreteTaskDescriptor
 	 *
@@ -339,6 +423,15 @@ public class ConcreteTaskViewerBean {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		facesContext.addMessage(null, message);
 
+	}
+
+	/**
+	 * Getter of visibleSaveButton.
+	 *
+	 * @return the visibleSaveButton.
+	 */
+	public boolean getVisibleSaveButton() {
+		return (!accomplishedTimeModifiable||!remainingTimeModifiable) ;
 	}
 
 	/**
