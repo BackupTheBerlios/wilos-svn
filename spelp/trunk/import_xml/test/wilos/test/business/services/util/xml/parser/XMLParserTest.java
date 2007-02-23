@@ -1304,6 +1304,32 @@ public class XMLParserTest extends TestCase {
 		assertTrue(nbBdes == 3);
 	}
 	
+	public void testTmpPbApostrophes() {
+		Process theProcess;
+		theProcess = XMLParser.getProcess(pathScrum);
+		Phase thePhase = null;
+		RoleDescriptor theRoleDesc = null;
+		RoleDefinition theRoleDef;
+
+		for (BreakdownElement bde : theProcess.getBreakdownElements()) {
+			if (bde.getName().equals("Preparation Phase")) {
+				thePhase = (Phase) bde;
+				break;
+			}
+		}
+		
+		for (BreakdownElement bde : thePhase.getBreakdownElements()) {
+			if (bde.getName().equals("Product Owner")) {
+				theRoleDesc = (RoleDescriptor) bde;
+				break;
+			}
+		}
+		
+		theRoleDef = theRoleDesc.getRoleDefinition();
+		
+		System.out.println(theRoleDef.getDescription());
+	}
+	
 	/*
 	public void testGetProcess(){
 		Process p;		
