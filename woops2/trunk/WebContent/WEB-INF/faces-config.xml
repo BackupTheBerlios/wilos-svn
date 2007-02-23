@@ -289,6 +289,18 @@
 			<value>#{ConcreteTaskDescriptorService}</value>
 		</managed-property>
 		<managed-property>
+			<property-name>taskDescriptorService</property-name>
+			<value>#{TaskDescriptorService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>concreteRoleDescriptorService</property-name>
+			<value>#{ConcreteRoleDescriptorService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>roleDescriptorService</property-name>
+			<value>#{RoleDescriptorService}</value>
+		</managed-property>
+		<managed-property>
 			<property-name>participantService</property-name>
 			<value>#{ParticipantService}</value>
 		</managed-property>

@@ -2,6 +2,7 @@ package wilos.hibernate.misc.concreterole;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataAccessException;
@@ -103,5 +104,13 @@ public class ConcreteRoleDescriptorDao extends HibernateDaoSupport {
 				"from ConcreteTaskDescriptor ctd where ctd.concreteRoleDescriptor.id=?",
 				_concreteRoleDescriptorId);
 		return crds;
+	}
+	@SuppressWarnings("unchecked")
+	public List<ConcreteRoleDescriptor> getAllConcreteRoleDescriptorsForARoleDescriptor(
+			String _roleId) {
+		List ctds = this.getHibernateTemplate().find(
+				"from ConcreteRoleDescriptor ctd where ctd.roleDescriptor.id=?",
+				_roleId);
+		return ctds;
 	}
 }

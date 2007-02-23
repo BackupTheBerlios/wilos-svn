@@ -130,46 +130,7 @@ public class ConcreteTaskDescriptorService {
 
 		this.updateConcreteTaskDescriptor(_concreteTaskDescriptor);
 	}
-	@Transactional(readOnly = true)
-	public boolean affectedvisible(
-			ConcreteTaskDescriptor _concreteTaskDescriptor, Participant _user) {
-
-
-		boolean afficher = false;
-		TaskDescriptor tmp = _concreteTaskDescriptor.getTaskDescriptor();
-		RoleDescriptor tmpRoleDescriptor;
-		TaskDescriptor tmp2 = this.taskDescriptorService.getTaskDescriptorById(tmp.getId());
-
-		if(tmp2.getMainRole() == null)
-		{
-			return false;
-		}
-		tmpRoleDescriptor = tmp2.getMainRole();
-			RoleDescriptor rd = this.roleDescriptorService.getRoleDescriptorById(tmpRoleDescriptor.getId());
-		// recuperation des deux listes.
-		Set<ConcreteRoleDescriptor> listeRd = rd.getConcreteRoleDescriptors();
-
-		// on parcours les deux liste afin de trouver le bon
-		// concreteRoledescriptor
-		for (ConcreteRoleDescriptor tmpListeRd : listeRd) {
-
-			ConcreteRoleDescriptor crd = this.concreteRoleDescriptorService.getConcreteRoleDescriptorById(tmpListeRd.getId());
-			if(crd.getParticipant() == null)
-			{
-				return false;
-			}
-			else
-			{
-				if(crd.getParticipant().getWilosuser_id().equals(_user.getWilosuser_id()))
-				{
-					afficher = true;
-				}
-			}
-
-		}
-		return afficher;
-	}
-
+	
 	/**
 	 * Suspend the ConcreteTaskDescriptor and save into the data base changings
 	 * (i.e. State).
