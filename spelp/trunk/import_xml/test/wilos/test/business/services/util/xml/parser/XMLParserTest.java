@@ -28,7 +28,7 @@ public class XMLParserTest extends TestCase {
 	public static File pathFileError = new File("noFile");
 	public static File pathScrumWithArte = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "scrum_with_ArteF.xml"); 
 	public static File pathEmptyFile = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "emptyFile.xml"); 
-	public static File pathItil = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "itil2.xml");
+	public static File pathItil = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "itil.xml");
 	public static File crashingScrum = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "crashingScrum.xml");
 	
 	/**
@@ -1016,6 +1016,7 @@ public class XMLParserTest extends TestCase {
 			}
 		}
 
+		assertNotNull(supportN1Roledefinition);
 		// Now we work on the guidances we have
 		int nbGuidances = 0;
 		for (Guidance aGuidance : supportN1Roledefinition.getGuidances()) {

@@ -52,7 +52,11 @@ public class XMLParser {
 	private static final String xpath_deliveryProcess = "//Process[@*[namespace-uri() and local-name()='type']='uma:DeliveryProcess']";
 	private static final String xpath_iteration = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Iteration']";
 	private static final String xpath_phase = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Phase']";
-	private static final String xpath_activity = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Activity']";
+		// CapabilityPatterns are treated as Activities
+	private static final String xpath_activity = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Activity' or " +
+			"@*[namespace-uri() and local-name()='type']='uma:CapabilityPattern' " +
+			"]";
+			
 	private static final String xpath_guidance = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Guideline' or " +
 			"@*[namespace-uri() and local-name()='type']='uma:Concept' or " +
 			"@*[namespace-uri() and local-name()='type']='uma:SupportingMaterial' or " +
@@ -93,6 +97,7 @@ public class XMLParser {
 	private static final String task_descriptor = "uma:TaskDescriptor";
 	private static final String role_descriptor = "uma:RoleDescriptor";
 	private static final String iteration = "uma:Iteration";
+	private static final String capabilityPattern = "uma:CapabilityPattern";
 	
 	// Attributes Names
 	private static final String id = "id";
@@ -1070,8 +1075,9 @@ public class XMLParser {
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(iteration)) {
 			_nullBdeToReturn = getIterationById(iterationsList, bdeId);
 		}
-		
-		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(activity)) {
+		// Capability Patterns are treated as Activities
+		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(activity) 
+				|| _node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(capabilityPattern) ) {
 			_nullBdeToReturn = getActivityById(activitiesList, bdeId);
 		}
 		
