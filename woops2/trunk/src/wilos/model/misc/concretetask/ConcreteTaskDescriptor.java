@@ -1,9 +1,6 @@
 package wilos.model.misc.concretetask;
 
 import java.util.Date;
-import java.util.ResourceBundle;
-
-import javax.faces.context.FacesContext;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -193,33 +190,7 @@ public class ConcreteTaskDescriptor extends ConcreteWorkBreakdownElement {
 	}
 
 	public String getState() {
-		String _state ="";
-		if (this.state.equals(State.CREATED)) {
-			_state = ResourceBundle.getBundle(
-					"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale()).getString("constantes.state.created");
-		}
-		else if (this.state.equals(State.READY)) {
-					_state = ResourceBundle.getBundle(
-							"wilos.resources.messages", FacesContext.getCurrentInstance()
-								.getApplication().getDefaultLocale()).getString("constantes.state.ready");
-				}
-				else if (this.state.equals(State.STARTED)) {
-							_state = ResourceBundle.getBundle(
-									"wilos.resources.messages", FacesContext.getCurrentInstance()
-										.getApplication().getDefaultLocale()).getString("constantes.state.started");
-						}
-						else if (this.state.equals(State.SUSPENDED)) {
-									_state = ResourceBundle.getBundle(
-											"wilos.resources.messages", FacesContext.getCurrentInstance()
-												.getApplication().getDefaultLocale()).getString("constantes.state.suspended");
-								}
-								else if (this.state.equals(State.FINISHED)) {
-											_state = ResourceBundle.getBundle(
-													"wilos.resources.messages", FacesContext.getCurrentInstance()
-														.getApplication().getDefaultLocale()).getString("constantes.state.finished");
-										}
-		return _state;
+		return state;
 	}
 
 	public void setState(String state) {
