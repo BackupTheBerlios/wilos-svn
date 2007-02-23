@@ -1,8 +1,11 @@
 package wilos.business.transfertobject;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import wilos.model.spem2.checklist.CheckList;
+import wilos.model.spem2.section.Section;
 
 
 
@@ -22,6 +25,11 @@ public class CheckListTO extends CheckList implements Serializable {
         this.setPresentationName(myCheckList.getPresentationName());
         this.setAttachment(myCheckList.getAttachment());
         
-        // TODO: A voir avec la liste de sections
+        // set the sections 
+		Set<Section> sections = new HashSet<Section>();
+        for (Section s : myCheckList.getSections()) {
+        	sections.add(new SectionTO(s));	        	
+        }
+        this.setSections(sections);
     }
 }
