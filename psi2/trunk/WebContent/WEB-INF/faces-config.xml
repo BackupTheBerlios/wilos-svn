@@ -305,6 +305,18 @@
 			<value>#{ConcreteTaskDescriptorService}</value>
 		</managed-property>
 		<managed-property>
+			<property-name>taskDescriptorService</property-name>
+			<value>#{TaskDescriptorService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>concreteRoleDescriptorService</property-name>
+			<value>#{ConcreteRoleDescriptorService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>roleDescriptorService</property-name>
+			<value>#{RoleDescriptorService}</value>
+		</managed-property>
+		<managed-property>
 			<property-name>participantService</property-name>
 			<value>#{ParticipantService}</value>
 		</managed-property>
@@ -420,6 +432,14 @@
 		<managed-bean-name>ExpTableBean</managed-bean-name>
 		<managed-bean-class>wilos.presentation.web.expandabletable.ExpTableBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>processService</property-name>
+			<value>#{ProcessService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>activityService</property-name>
+			<value>#{ActivityService}</value>
+		</managed-property>
 	</managed-bean>
 
 

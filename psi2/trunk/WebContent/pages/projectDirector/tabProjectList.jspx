@@ -63,7 +63,7 @@
 			</ice:panelGroup>
 
 			<ice:panelGroup id="projectsListPanelGroup_null">
-				<h4><ice:outputText value="Project Director : Pas de projets"/></h4>
+				<h4><ice:outputText value="#{msgs['component.projectList.norecord']}"/></h4>
 			</ice:panelGroup>
 			
 		</ice:panelStack>
