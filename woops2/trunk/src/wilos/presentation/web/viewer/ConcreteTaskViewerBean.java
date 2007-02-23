@@ -51,6 +51,36 @@ public class ConcreteTaskViewerBean {
 	private boolean visibleModifiable;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
+	
+	public String getDisplayedState() {
+		String _state ="";
+		if (this.concreteTaskDescriptor.getState().equals(State.CREATED)) {
+			_state = ResourceBundle.getBundle(
+					"wilos.resources.messages", FacesContext.getCurrentInstance()
+						.getApplication().getDefaultLocale()).getString("constantes.state.created");
+		}
+		else if (this.concreteTaskDescriptor.getState().equals(State.READY)) {
+					_state = ResourceBundle.getBundle(
+							"wilos.resources.messages", FacesContext.getCurrentInstance()
+								.getApplication().getDefaultLocale()).getString("constantes.state.ready");
+				}
+				else if (this.concreteTaskDescriptor.getState().equals(State.STARTED)) {
+							_state = ResourceBundle.getBundle(
+									"wilos.resources.messages", FacesContext.getCurrentInstance()
+										.getApplication().getDefaultLocale()).getString("constantes.state.started");
+						}
+						else if (this.concreteTaskDescriptor.getState().equals(State.SUSPENDED)) {
+									_state = ResourceBundle.getBundle(
+											"wilos.resources.messages", FacesContext.getCurrentInstance()
+												.getApplication().getDefaultLocale()).getString("constantes.state.suspended");
+								}
+								else if (this.concreteTaskDescriptor.getState().equals(State.FINISHED)) {
+											_state = ResourceBundle.getBundle(
+													"wilos.resources.messages", FacesContext.getCurrentInstance()
+														.getApplication().getDefaultLocale()).getString("constantes.state.finished");
+										}
+		return _state;
+	}
 
 	public boolean getChangeButtonIsDisabled() {
 		String wilosUserId = (String) this.webSessionService
@@ -75,6 +105,12 @@ public class ConcreteTaskViewerBean {
 	public void changeConcreteName() {
 		this.concreteTaskDescriptorService
 				.saveConcreteTaskDescriptor(this.concreteTaskDescriptor);
+		
+		//	 Refresh the treebean.
+		FacesContext context = FacesContext.getCurrentInstance();
+		TreeBean treeBean = (TreeBean) context.getApplication()
+				.getVariableResolver().resolveVariable(context, "TreeBean");
+		treeBean.refreshProjectTree();
 	}
 
 	/**

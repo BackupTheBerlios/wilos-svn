@@ -14,7 +14,7 @@
 						disabled="#{ConcreteTaskViewerBean.changeButtonIsDisabled}"/>
 					<ice:outputText value="#{msgs['taskviewer.state']}" />
 					<ice:outputText
-						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.state}" />
+						value="#{ConcreteTaskViewerBean.displayedState}" />
 					<ice:outputText value=""/>
 					<ice:outputText value="#{msgs['taskviewer.plannedstartingdate']}" />
 					<ice:outputText
