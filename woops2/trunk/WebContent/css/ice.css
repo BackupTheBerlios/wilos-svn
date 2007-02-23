@@ -1833,6 +1833,26 @@ background-image:url("../images/xpwilos/tab-over.gif");
     background-color: #DDDDDD;
 }
 
+/*
+   Classes for the output progress bar
+*/
+
+.iceOutputProgressIndeterminateActiveClass {
+    background-color: #EFEFEF;
+    background-image: url( css-images/in_progress.gif );
+    background-position: center;
+    background-repeat: repeat-x;
+}
+
+.iceOutputProgressIndeterminateInactiveClass {
+    background-color: #EFEFEF;
+    background-image: url( css-images/in_progress_inactive.gif );
+    background-position: center;
+    background-repeat: repeat-x;
+}
+
+
+
 /* XP Disabled styles CSS Document  v1.0 mar 31 2006 */
 
 .iceBtn-dis {
