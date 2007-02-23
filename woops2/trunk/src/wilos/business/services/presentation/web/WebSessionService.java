@@ -42,6 +42,14 @@ public class WebSessionService {
 		this.getHttpSession().setAttribute(_attributeName, _value) ;
 	}
 
+	/**
+	 * Free all attributes in the current session.
+	 *
+	 */
+	public void cleanSesssion(){
+		this.getHttpSession().invalidate();
+	}
+
 	/*
 	 * Return the current session.
 	 */
