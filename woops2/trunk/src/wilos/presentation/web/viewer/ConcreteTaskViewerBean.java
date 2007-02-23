@@ -1,5 +1,6 @@
 package wilos.presentation.web.viewer;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
@@ -9,14 +10,20 @@ import javax.faces.event.ActionEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService;
 import wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService;
 import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
 import wilos.business.services.presentation.web.WebSessionService;
+import wilos.business.services.spem2.role.RoleDescriptorService;
+import wilos.business.services.spem2.task.TaskDescriptorService;
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
+import wilos.model.spem2.role.RoleDescriptor;
 import wilos.presentation.web.tree.TreeBean;
+import wilos.model.spem2.task.TaskDescriptor;
 import wilos.utils.Constantes.State;
 
 public class ConcreteTaskViewerBean {
@@ -26,6 +33,12 @@ public class ConcreteTaskViewerBean {
 	private WebSessionService webSessionService;
 
 	private ConcreteTaskDescriptorService concreteTaskDescriptorService;
+	
+	private TaskDescriptorService taskDescriptorService;
+	
+	private ConcreteRoleDescriptorService concreteRoleDescriptorService;
+
+	private RoleDescriptorService roleDescriptorService;
 
 	private ParticipantService participantService;
 
@@ -96,14 +109,52 @@ public class ConcreteTaskViewerBean {
 	 */
 	public boolean getVisibleAffected() {
 
+		return (this.concreteTaskDescriptor.getState().equals(State.CREATED)&& this.visibleAffected());
+
+	}
+	/**
+	 * Methode for check if user can affected to a task
+	 */
+	public boolean visibleAffected() {
+
 		String wilosUserId = (String) this.webSessionService
 				.getAttribute(WebSessionService.WILOS_USER_ID);
 		Participant participant = this.participantService
 				.getParticipant(wilosUserId);
+		boolean afficher = false;
+		TaskDescriptor tmp = this.concreteTaskDescriptor.getTaskDescriptor();
+		RoleDescriptor tmpRoleDescriptor;
+		TaskDescriptor tmp2 = this.taskDescriptorService.getTaskDescriptorById(tmp.getId());
 
-		return (this.concreteTaskDescriptor.getState().equals(State.CREATED) && this.concreteTaskDescriptorService
-				.affectedvisible(this.concreteTaskDescriptor, participant));
+		if(tmp2.getMainRole() == null)
+		{
+			return false;
+		}
+		tmpRoleDescriptor = tmp2.getMainRole();
+			RoleDescriptor rd = this.roleDescriptorService.getRoleDescriptorById(tmpRoleDescriptor.getId());
+		// recuperation des deux listes.
+		//	this.roleDescriptorService.
+		List<ConcreteRoleDescriptor> listeRd = this.concreteRoleDescriptorService.getAllConcreteRoleDescriptorForARoleDescriptor(rd.getId());
 
+		// on parcours les deux liste afin de trouver le bon
+		// concreteRoledescriptor
+		for (ConcreteRoleDescriptor tmpListeRd : listeRd) {
+
+			ConcreteRoleDescriptor crd = this.concreteRoleDescriptorService.getConcreteRoleDescriptorById(tmpListeRd.getId());
+			if(crd.getParticipant() == null)
+			{
+				return false;
+			}
+			else
+			{
+				if(crd.getParticipant().getWilosuser_id().equals(participant.getWilosuser_id()))
+				{
+					afficher = true;
+				}
+			}
+
+		}
+		return afficher;
 	}
 
 	/**
@@ -281,5 +332,48 @@ public class ConcreteTaskViewerBean {
 
 	public void setProjectService(ProjectService projectService) {
 		this.projectService = projectService;
+	}
+
+	/**
+	 * @return the concreteRoleDescriptorService
+	 */
+	public ConcreteRoleDescriptorService getConcreteRoleDescriptorService() {
+		return concreteRoleDescriptorService;
+	}
+
+	/**
+	 * @param concreteRoleDescriptorService the concreteRoleDescriptorService to set
+	 */
+	public void setConcreteRoleDescriptorService(
+			ConcreteRoleDescriptorService concreteRoleDescriptorService) {
+		this.concreteRoleDescriptorService = concreteRoleDescriptorService;
+	}
+
+	/**
+	 * @return the roleDescriptorService
+	 */
+	public RoleDescriptorService getRoleDescriptorService() {
+		return roleDescriptorService;
+	}
+
+	/**
+	 * @param roleDescriptorService the roleDescriptorService to set
+	 */
+	public void setRoleDescriptorService(RoleDescriptorService roleDescriptorService) {
+		this.roleDescriptorService = roleDescriptorService;
+	}
+
+	/**
+	 * @return the taskDescriptorService
+	 */
+	public TaskDescriptorService getTaskDescriptorService() {
+		return taskDescriptorService;
+	}
+
+	/**
+	 * @param taskDescriptorService the taskDescriptorService to set
+	 */
+	public void setTaskDescriptorService(TaskDescriptorService taskDescriptorService) {
+		this.taskDescriptorService = taskDescriptorService;
 	}
 }
