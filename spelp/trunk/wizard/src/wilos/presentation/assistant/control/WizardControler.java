@@ -258,11 +258,10 @@ public class WizardControler {
 	 * Start a concrete task descriptor
 	 * @param ctd
 	 */
-	public void startConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
+	public synchronized void startConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
 		if (ctd.getState() == Constantes.State.READY || ctd.getState() == Constantes.State.SUSPENDED ) {
-			WizardControler.getInstance().connectToServer(null);
-			WizardServicesProxy.startConcreteTaskDescriptor(ctd.getId());
-			WizardControler.getInstance().disconnectToServer(null);
+			RunnableTaskEvent traitement = new RunnableTaskEvent (RunnableTaskEvent.START,ctd.getId());
+			(new Thread (traitement)).start();
 		}
 	}
 	
@@ -270,11 +269,10 @@ public class WizardControler {
 	 * Suspend a concrete task descriptor
 	 * @param ctd
 	 */	
-	public void pauseConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
+	public synchronized void pauseConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
 		if (ctd.getState() == Constantes.State.STARTED) {
-			WizardControler.getInstance().connectToServer(null);
-			WizardServicesProxy.suspendConcreteTaskDescriptor(ctd.getId());
-			WizardControler.getInstance().disconnectToServer(null);
+			RunnableTaskEvent traitement = new RunnableTaskEvent (RunnableTaskEvent.SUSPEND,ctd.getId());
+			(new Thread (traitement)).start();
 		}
 	}
 	
@@ -282,11 +280,10 @@ public class WizardControler {
 	 * Finish  a concrete task descriptor and finish all of its step if they exist
 	 * @param ctd
 	 */
-	public void finishConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
+	public synchronized void finishConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
 		if (ctd.getState() == Constantes.State.STARTED) {
-			WizardControler.getInstance().connectToServer(null);
-			WizardServicesProxy.stopConcreteTaskDescriptor(ctd.getId());
-			WizardControler.getInstance().disconnectToServer(null);
+			RunnableTaskEvent traitement = new RunnableTaskEvent (RunnableTaskEvent.FINISH,ctd.getId());
+			(new Thread (traitement)).start();
 		}
 	}
 	
@@ -452,5 +449,35 @@ public class WizardControler {
 
 	public void setLastCtd(Object o) {
 		this.lastCtd = o;
+	}
+	
+	private class RunnableTaskEvent implements Runnable {
+		private static final int START = 0;
+		private static final int SUSPEND = 1;
+		private static final int FINISH = 2;
+		
+		private int type;
+		private String taskId;
+		
+		public RunnableTaskEvent (int t, String id) {
+			type = t;
+			taskId = id;
+		}
+		
+		public void run () {
+			WizardControler.getInstance().connectToServer(this);
+			switch (type)
+			{
+				case START:
+					WizardServicesProxy.startConcreteTaskDescriptor(taskId);
+					break;
+				case SUSPEND:
+					WizardServicesProxy.startConcreteTaskDescriptor(taskId);
+					break;
+				case FINISH:
+					WizardServicesProxy.startConcreteTaskDescriptor(taskId);
+			}
+			WizardControler.getInstance().disconnectToServer(this);
+		}
 	}
 }
