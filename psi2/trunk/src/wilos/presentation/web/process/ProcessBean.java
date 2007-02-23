@@ -88,16 +88,23 @@ public class ProcessBean {
 		 if(this.processesList == null || this.processesList.size()!=this.processService.getProcessesList().size()){
 			this.processesList = new ArrayList<HashMap<String, Object>>() ;
 			for(Process process : this.processService.getProcessesList()){
-				HashMap<String, Object> processDescription = new HashMap<String, Object>() ;
+				HashMap<String, Object> processDescription = new HashMap<String , Object>() ;
 				processDescription.put("presentationName", process.getPresentationName()) ;
 				processDescription.put("id", process.getId()) ;
 				processDescription.put("isEditable", new Boolean(false)) ;
+				
+				//process = this.processService.getProcessDao().getProcess(process.getId());
+				//ProcessManager pm = this.
+				//String name = process.getProcessManager().getFirstname();
+				//System.out.println(" ####################" + name + "###############################");
+				//processDescription.put("owner", process.getProcessManager().getFirstname());
 				this.processesList.add(processDescription) ;
 			}
 			return this.processesList ;
 		 }
 		return this.processesList ;
 	}
+	
 	
 	public void editName(ActionEvent e){
 		String processId = (String)FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("processEditId");

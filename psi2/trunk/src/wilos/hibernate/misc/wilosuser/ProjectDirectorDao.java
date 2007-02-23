@@ -38,9 +38,9 @@ public class ProjectDirectorDao extends HibernateDaoSupport {
 	}
 
 	/**
-	 * Return the projectdirector which have the id _id.
+	 * Return the projectdirector which have the login _login.
 	 * 
-	 * @param _id
+	 * @param _login
 	 * @return
 	 */
 	public ProjectDirector getProjectDirector(String _login) {
@@ -52,6 +52,16 @@ public class ProjectDirectorDao extends HibernateDaoSupport {
 		}
 	}
 
+	/**
+	 * Return the projectdirector which have the id _id.
+	 * 
+	 * @param _id
+	 * @return
+	 */
+	public ProjectDirector getProjectDirectorById(String _id) {
+		return (ProjectDirector)this.getHibernateTemplate().get(ProjectDirector.class, _id);
+	}
+	
 	/**
 	 * Delete the projectdirector.
 	 * 

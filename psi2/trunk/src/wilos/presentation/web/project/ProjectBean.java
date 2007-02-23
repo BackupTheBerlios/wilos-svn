@@ -17,10 +17,12 @@ import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
+import wilos.business.services.misc.wilosuser.ProjectDirectorService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
+import wilos.model.misc.wilosuser.ProjectDirector;
 import wilos.model.spem2.process.Process;
 import wilos.presentation.web.template.MenuBean;
 import wilos.presentation.web.tree.TreeBean;
@@ -40,6 +42,8 @@ public class ProjectBean {
 	private WebSessionService webSessionService;
 
 	private ParticipantService participantService;
+	
+	private ProjectDirectorService projectDirectorService;
 
 	private Project project;
 
@@ -133,6 +137,9 @@ public class ProjectBean {
 			}
 		}
 		if (!error) {
+			String user_id = (String)this.webSessionService.getAttribute(this.webSessionService.WILOS_USER_ID);
+			ProjectDirector pd = this.projectDirectorService.getProjectDirector(user_id) ;		
+			this.project.setProjectDirector(pd);
 			this.projectService.saveProject(this.project);
 			if (this.projectModification) {
 				message
@@ -238,6 +245,11 @@ public class ProjectBean {
 	public List<Project> getProjectList() {
 		this.projectList = new ArrayList<Project>();
 		projectList.addAll(this.projectService.getAllProjects());
+		
+		//loading of the project director for the displayed list
+		for (Project p : projectList) {
+			p.setProjectDirector(this.projectDirectorService.getProjectDirector(p.getProjectDirector().getWilosuser_id()));
+		}
 		return this.projectList;
 	}
 
@@ -563,6 +575,21 @@ public class ProjectBean {
 	 */
 	public void setProcessesListView(String _processesListView) {
 		this.processesListView = _processesListView ;
+	}
+
+	/**
+	 * @return the projectDirectorService
+	 */
+	public ProjectDirectorService getProjectDirectorService() {
+		return projectDirectorService;
+	}
+
+	/**
+	 * @param projectDirectorService the projectDirectorService to set
+	 */
+	public void setProjectDirectorService(
+			ProjectDirectorService projectDirectorService) {
+		this.projectDirectorService = projectDirectorService;
 	}
 
 }

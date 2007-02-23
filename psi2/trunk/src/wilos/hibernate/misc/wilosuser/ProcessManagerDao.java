@@ -8,6 +8,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.ProcessManager;
+import wilos.model.misc.wilosuser.ProjectDirector;
 
 /**
  * ProcessManagerDao manage requests from the system to store ProcessManager
@@ -40,7 +41,7 @@ public class ProcessManagerDao extends HibernateDaoSupport {
 
 	
 	/**
-	 * Return the processmanager which have the id _id.
+	 * Return the processmanager which have the login _login.
 	 * TODO !!! FINIR LE HSQL ET APPELLER LES BONNES METHODES DANS LES TESTS !!!!  
 	 * @param _login
 	 * @return
@@ -64,6 +65,8 @@ public class ProcessManagerDao extends HibernateDaoSupport {
 		return (ProcessManager) this.getHibernateTemplate().get(ProcessManager.class, _id);
 	}
 
+
+	
 	/**
 	 * Delete the processmanager.
 	 * 

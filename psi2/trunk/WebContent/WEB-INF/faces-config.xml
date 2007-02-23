@@ -104,6 +104,10 @@
 			<value>#{ProjectService}</value>
 		</managed-property>
 		<managed-property>
+			<property-name>projectDirectorService</property-name>
+			<value>#{ProjectDirectorService}</value>
+		</managed-property>
+		<managed-property>
 			<property-name>processService</property-name>
 			<value>#{ProcessService}</value>
 		</managed-property>

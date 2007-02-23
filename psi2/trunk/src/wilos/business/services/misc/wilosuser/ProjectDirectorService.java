@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import wilos.business.util.Security;
 import wilos.hibernate.misc.wilosuser.ProjectDirectorDao;
+import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.ProjectDirector;
 
 /**
@@ -61,6 +62,17 @@ public class ProjectDirectorService {
 	public Set<ProjectDirector> getProjectDirectors() {
 		return this.projectDirectorDao.getAllProjectDirectors();
 	}	
+	
+	/**
+	 * Return the ProjectDirector which have the id _id.
+	 * 
+	 * @return the projectDirector which have the id gived in parameter
+	 */
+	@Transactional(readOnly = true)
+	public ProjectDirector getProjectDirector(String _id) {
+		return this.projectDirectorDao.getProjectDirectorById(_id) ;
+	};
+
 	
 	/**
 	 * delete a Project Director gived in parameter

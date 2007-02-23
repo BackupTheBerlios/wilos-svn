@@ -63,6 +63,17 @@ public class ProcessManagerService {
 	}
 
 	/**
+	 * Return Process Mannager list
+	 * 
+	 * @return the list of Process Managers
+	 */
+	@Transactional(readOnly = true)
+	public ProcessManager getProcessManager(String _id) {
+		return this.processManagerDao.getProcessManagerById(_id);
+	}
+
+	
+	/**
 	 * delete a Process Manager gived in parameter
 	 * @param processManager
 	 * 				the process manager which have to be deleted
