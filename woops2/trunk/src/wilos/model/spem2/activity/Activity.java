@@ -46,6 +46,8 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 		this.breakdownElements = new HashSet<BreakdownElement>() ;
 		this.concreteActivities = new HashSet<ConcreteActivity>();
 		this.guidances = new HashSet<Guidance>();
+		this.howToStaff = "";
+		this.purpose = "";
 	}
 
 	/*
@@ -61,7 +63,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 			return true ;
 		}
 		Activity activity = (Activity) obj ;
-		return new EqualsBuilder().appendSuper(super.equals(activity)).append(this.breakdownElements, activity.breakdownElements).append(this.concreteActivities,activity.concreteActivities).append(this.guidances, activity.guidances).isEquals() ;
+		return new EqualsBuilder().appendSuper(super.equals(activity)).append(this.breakdownElements, activity.breakdownElements).append(this.concreteActivities,activity.concreteActivities).append(this.guidances, activity.guidances).append(this.alternatives,activity.alternatives).append(this.howToStaff,activity.howToStaff).append(this.purpose,activity.purpose).isEquals() ;
 	}
 
 	/*
@@ -70,7 +72,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 * @see woops2.model.workbreakdownelement.WorkBreakdownElement#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode() ;
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.alternatives).append(this.howToStaff).append(this.purpose).toHashCode() ;
 	}
 
 	/*
@@ -96,6 +98,9 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 		this.breakdownElements.addAll(_activity.getBreakdownElements()) ;
 		this.concreteActivities.addAll(_activity.getConcreteActivities()) ;
 		this.guidances.addAll(_activity.getGuidances()) ;
+		this.alternatives = _activity.getAlternatives();
+		this.howToStaff = _activity.getHowToStaff();
+		this.purpose = _activity.getPurpose();
 	}
 
 	/**
