@@ -1,8 +1,16 @@
 package wilos.test.hibernate.misc.concrecteactivity;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.hibernate.misc.concreteactivity.ConcreteActivityDao;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.test.TestConfiguration;
@@ -13,7 +21,7 @@ import wilos.test.TestConfiguration;
  * @author deder
  * @author garwind
  */
-public class ConcreteActivityDaoTest extends TestCase {
+public class ConcreteActivityDaoTest {
 
 	private ConcreteActivityDao concreteactivityDao = null;
 
@@ -45,36 +53,20 @@ public class ConcreteActivityDaoTest extends TestCase {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+	@Before
+	public void setUp() {
 
 		// Create empty ConcreteActivity.
 		this.concreteactivity = new ConcreteActivity();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	@Override
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@After
+	public void tearDown() {
 
 		this.concreteactivityDao.deleteConcreteActivity(this.concreteactivity);
 	}
 
-	/*
-	 * Test method for
-	 * {@link woops2.hibernate.activity.ConcreteActivityDao#saveOrUpdateConcreteActivity(woops2.model.activity.ConcreteActivity)}.
-	 *
-	 */
+	@Test
 	public void testSaveOrUpdateConcreteActivity() {
 		// Rk: the setUp method is called here.
 
@@ -87,17 +79,13 @@ public class ConcreteActivityDaoTest extends TestCase {
 		ConcreteActivity concreteactivityTmp = (ConcreteActivity) this.concreteactivityDao
 				.getConcreteActivity(id);
 		assertNotNull(concreteactivityTmp);
-		
+
 		// Delete the data stored in the database
 		this.concreteactivityDao.deleteConcreteActivity(this.concreteactivity);
 		// Rk: the tearDown method is called here.
 	}
 
-	/*
-	 * Test method for
-	 * {@link woops2.hibernate.activity.ConcreteActivityDao#getAllConcreteActivities()}.
-	 *
-	 */
+	@Test
 	public void testGetAllConcreteActivities() {
 		// Rk: the setUp method is called here.
 
@@ -111,17 +99,13 @@ public class ConcreteActivityDaoTest extends TestCase {
 				.getAllConcreteActivities();
 		assertNotNull(concreteactivities);
 		assertTrue(concreteactivities.size() >= 1);
-		
-//		 Delete the data stored in the database
+
+		// Delete the data stored in the database
 		this.concreteactivityDao.deleteConcreteActivity(this.concreteactivity);
 		// Rk: the tearDown method is called here.
 	}
 
-	/*
-	 * Test method for
-	 * {@link woops2.hibernate.activity.ConcreteActivityDao#getConcreteActivity()}.
-	 *
-	 */
+	@Test
 	public void testGetConcreteActivity() {
 		// Rk: the setUp method is called here.
 
@@ -147,11 +131,7 @@ public class ConcreteActivityDaoTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/*
-	 * Test method for
-	 * {@link woops2.hibernate.activity.ConcreteActivityDao#deleteConcreteActivity()}.
-	 *
-	 */
+	@Test
 	public void testDeleteConcreteActivity() {
 		// Rk: the setUp method is called here.
 

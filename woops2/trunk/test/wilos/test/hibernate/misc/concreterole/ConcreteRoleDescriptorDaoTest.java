@@ -1,20 +1,28 @@
 package wilos.test.hibernate.misc.concreterole;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Date;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.hibernate.misc.concreterole.ConcreteRoleDescriptorDao;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.test.TestConfiguration;
 
 /**
- *
+ * 
  * @author Almiriad
- *
+ * 
  */
-public class ConcreteRoleDescriptorDaoTest extends TestCase {
+public class ConcreteRoleDescriptorDaoTest {
 
 	private ConcreteRoleDescriptorDao concreteRoleDescriptorDao = null;
 
@@ -58,33 +66,22 @@ public class ConcreteRoleDescriptorDaoTest extends TestCase {
 						"ConcreteRoleDescriptorDao");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+	@Before
+	public void setUp() {
 
 		// Create empty TaskDescriptor
 		this.concreteRoleDescriptor = new ConcreteRoleDescriptor();
 		this.concreteRoleDescriptor.setConcreteName(CONCRETE_NAME);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	@Override
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@After
+	public void tearDown() {
 
 		this.concreteRoleDescriptorDao
 				.deleteConcreteRoleDescriptor(this.concreteRoleDescriptor);
 	}
 
+	@Test
 	public void testSaveOrUpdateConcreteRoleDescriptor() {
 		// Rk: the setUp method is called here.
 
@@ -100,10 +97,12 @@ public class ConcreteRoleDescriptorDaoTest extends TestCase {
 		assertEquals(roleDescriptorTmp.getConcreteName(), CONCRETE_NAME);
 
 		// Delete the data stored in the database
-		this.concreteRoleDescriptorDao.deleteConcreteRoleDescriptor(this.concreteRoleDescriptor);
+		this.concreteRoleDescriptorDao
+				.deleteConcreteRoleDescriptor(this.concreteRoleDescriptor);
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public void testGetAllConcreteRoleDescriptors() {
 		// Rk: the setUp method is called here.
 
@@ -119,10 +118,12 @@ public class ConcreteRoleDescriptorDaoTest extends TestCase {
 		assertTrue(concreteRoleDescriptors.size() >= 1);
 
 		// Delete the data stored in the database
-		this.concreteRoleDescriptorDao.deleteConcreteRoleDescriptor(this.concreteRoleDescriptor);
+		this.concreteRoleDescriptorDao
+				.deleteConcreteRoleDescriptor(this.concreteRoleDescriptor);
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public void testDeleteConcreteRoleDescriptor() {
 		// Rk: the setUp method is called here.
 
@@ -150,6 +151,7 @@ public class ConcreteRoleDescriptorDaoTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public void testGetConcreteRoleDescriptor() {
 		// Adds properties to the concreteBreakdownElement.
 		this.concreteRoleDescriptor.setConcreteName(CONCRETE_NAME);
@@ -174,7 +176,8 @@ public class ConcreteRoleDescriptorDaoTest extends TestCase {
 		assertNull(cbdeTmp);
 
 		// Delete the data stored in the database
-		this.concreteRoleDescriptorDao.deleteConcreteRoleDescriptor(this.concreteRoleDescriptor);
+		this.concreteRoleDescriptorDao
+				.deleteConcreteRoleDescriptor(this.concreteRoleDescriptor);
 		// Rk: the tearDown method is called here.
 	}
 }

@@ -1,18 +1,26 @@
 package wilos.test.hibernate.misc.concretephase;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.hibernate.misc.concretephase.ConcretePhaseDao;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.test.TestConfiguration;
 
 /**
- *
+ * 
  * @author Soosuske
- *
+ * 
  */
-public class ConcretePhaseDaoTest extends TestCase {
+public class ConcretePhaseDaoTest {
 
 	private ConcretePhaseDao concretePhaseDao = null;
 
@@ -27,14 +35,8 @@ public class ConcretePhaseDaoTest extends TestCase {
 						"ConcretePhaseDao");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+	@Before
+	public void setUp() {
 
 		// Create empty Concretephase
 		this.concretePhase = new ConcretePhase();
@@ -43,22 +45,13 @@ public class ConcretePhaseDaoTest extends TestCase {
 		this.concretePhaseDao.saveOrUpdateConcretePhase(this.concretePhase);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	@Override
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@After
+	public void tearDown() {
 
 		this.concretePhaseDao.deleteConcretePhase(this.concretePhase);
 	}
 
-	/*
-	 * Test method for
-	 * {@link woops2.hibernate.process.ProcessDao#saveOrUpdateProcess(woops2.model.process.Process)}.
-	 */
+	@Test
 	public final void testSaveOrUpdateConcretePhase() {
 		// Rk: the setUp method is called here.
 
@@ -76,10 +69,7 @@ public class ConcretePhaseDaoTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/*
-	 * Test method for
-	 * {@link woops2.hibernate.process.ProcessDao#getAllProcesses()}.
-	 */
+	@Test
 	public final void testGetAllConcretePhases() {
 		// Rk: the setUp method is called here.
 
@@ -98,10 +88,7 @@ public class ConcretePhaseDaoTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/*
-	 * Test method for
-	 * {@link woops2.hibernate.process.ProcessDao#getProcess(java.lang.String)}.
-	 */
+	@Test
 	public final void testGetConcretePhase() {
 		// Rk: the setUp method is called here.
 
@@ -126,10 +113,7 @@ public class ConcretePhaseDaoTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/*
-	 * Test method for
-	 * {@link woops2.hibernate.process.ProcessDao#deleteProcess(woops2.model.process.Process)}.
-	 */
+	@Test
 	public final void testDeleteConcretePhase() {
 		// Rk: the setUp method is called here.
 

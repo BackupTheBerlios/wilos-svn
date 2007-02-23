@@ -1,11 +1,17 @@
 package wilos.test.hibernate.misc.concretetaskdescriptor;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
-import junit.framework.TestCase;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
 import wilos.hibernate.misc.concretetask.ConcreteTaskDescriptorDao;
@@ -16,12 +22,12 @@ import wilos.test.TestConfiguration;
 import wilos.utils.Constantes;
 
 /**
- *
+ * 
  * @author Sebastien
- *
- *
+ * 
+ * 
  */
-public class ConcreteTaskDescriptorDaoTest extends TestCase {
+public class ConcreteTaskDescriptorDaoTest {
 
 	private ConcreteTaskDescriptorDao concreteTaskDescriptorDao = null;
 
@@ -82,14 +88,8 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 						"ConcreteTaskDescriptorDao");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+	@Before
+	public void setUp() {
 
 		// Create empty TaskDescriptor
 		this.concreteTaskDescriptor = new ConcreteTaskDescriptor();
@@ -98,19 +98,14 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 		this.concreteTaskDescriptor.setPlannedFinishingDate(date);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	@Override
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@After
+	public void tearDown() {
 
 		this.concreteTaskDescriptorDao
 				.deleteConcreteTaskDescriptor(this.concreteTaskDescriptor);
 	}
 
+	@Test
 	public void testSaveOrUpdateConcreteTaskDescriptor() {
 		// Rk: the setUp method is called here.
 
@@ -125,15 +120,18 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 		assertNotNull(taskDescriptorTmp);
 
 		// Delete the data stored in the database
-		this.concreteTaskDescriptorDao.deleteConcreteTaskDescriptor(this.concreteTaskDescriptor);
+		this.concreteTaskDescriptorDao
+				.deleteConcreteTaskDescriptor(this.concreteTaskDescriptor);
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public void testGetAllConcreteTaskDescriptors() {
 		// Rk: the setUp method is called here.
 
 		// Save the taskDescriptor into the database.
-		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
+		this.concreteTaskDescriptorDao
+				.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
 
 		// Look if this taskDescriptor is also into the database and look if the
 		// size of the set is >= 1.
@@ -143,10 +141,12 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 		assertTrue(concretetaskDescriptors.size() >= 1);
 
 		// Delete the data stored in the database
-		this.concreteTaskDescriptorDao.deleteConcreteTaskDescriptor(this.concreteTaskDescriptor);
+		this.concreteTaskDescriptorDao
+				.deleteConcreteTaskDescriptor(this.concreteTaskDescriptor);
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public void testGetConcreteTaskDescriptor() {
 
 		ApplicationContext ctx = TestConfiguration.getInstance()
@@ -179,7 +179,8 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 		this.concreteTaskDescriptor.setTaskDescriptor(taskDescriptorTmp);
 
 		// Save the taskDescriptor into the database.
-		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
+		this.concreteTaskDescriptorDao
+				.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
 		String id = this.concreteTaskDescriptor.getId();
 
 		// Test the method getTaskDescriptor with an existing taskDescriptor.
@@ -194,7 +195,8 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 				.getTaskDescriptor().getId(), id_taskDescriptor);
 
 		// Test the method getTaskDescriptor with an unexisting taskDescriptor.
-		this.concreteTaskDescriptorDao.deleteConcreteTaskDescriptor(this.concreteTaskDescriptor);
+		this.concreteTaskDescriptorDao
+				.deleteConcreteTaskDescriptor(this.concreteTaskDescriptor);
 		concreteTaskDescriptorTmp = this.concreteTaskDescriptorDao
 				.getConcreteTaskDescriptor(id);
 		assertNull(concreteTaskDescriptorTmp);
@@ -203,11 +205,13 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public void testDeleteConcreteTaskDescriptor() {
 		// Rk: the setUp method is called here.
 
 		// Save the taskDescriptor into the database.
-		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
+		this.concreteTaskDescriptorDao
+				.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
 		String id = this.concreteTaskDescriptor.getId();
 
 		// Test the method deleteTaskDescriptor with an acitivity existing into
@@ -229,6 +233,7 @@ public class ConcreteTaskDescriptorDaoTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public void testGetAllConcreteTaskDescriptorsForProject() {
 		// Rk: the setUp method is called here.
 

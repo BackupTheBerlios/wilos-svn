@@ -1,18 +1,26 @@
 package wilos.test.hibernate.misc.concreteiteration;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.hibernate.misc.concreteiteration.ConcreteIterationDao;
 import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.test.TestConfiguration;
 
 /**
- *
+ * 
  * @author Almiriad
- *
+ * 
  */
-public class ConcreteIterationDaoTest extends TestCase {
+public class ConcreteIterationDaoTest {
 
 	private ConcreteIterationDao concreteIterationDao = null;
 
@@ -26,14 +34,8 @@ public class ConcreteIterationDaoTest extends TestCase {
 						"ConcreteIterationDao");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+	@Before
+	public void setUp() {
 
 		// Create empty ConcreteIteration
 		this.concreteIteration = new ConcreteIteration();
@@ -43,23 +45,14 @@ public class ConcreteIterationDaoTest extends TestCase {
 				.saveOrUpdateConcreteIteration(this.concreteIteration);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	@Override
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@After
+	public void tearDown() {
 
 		this.concreteIterationDao
 				.deleteConcreteIteration(this.concreteIteration);
 	}
 
-	/*
-	 * Test method for
-	 * {@link woops2.hibernate.ConcreteIteration.ConcreteIterationDao#saveOrUpdateProcess(woops2.model.process.Process)}.
-	 */
+	@Test
 	public final void testSaveOrUpdateConcreteIteration() {
 		// Rk: the setUp method is called here.
 
@@ -74,14 +67,12 @@ public class ConcreteIterationDaoTest extends TestCase {
 		assertNotNull(ConcreteIterationTmp);
 
 		// Delete the data stored in the database
-		this.concreteIterationDao.deleteConcreteIteration(this.concreteIteration);
+		this.concreteIterationDao
+				.deleteConcreteIteration(this.concreteIteration);
 		// Rk: the tearDown method is called here.
 	}
 
-	/*
-	 * Test method for
-	 * {@link woops2.hibernate.process.ProcessDao#getAllProcesses()}.
-	 */
+	@Test
 	public final void testGetAllConcreteIterations() {
 		// Rk: the setUp method is called here.
 
@@ -97,14 +88,12 @@ public class ConcreteIterationDaoTest extends TestCase {
 		assertTrue(ConcreteIterations.size() >= 1);
 
 		// Delete the data stored in the database
-		this.concreteIterationDao.deleteConcreteIteration(this.concreteIteration);
+		this.concreteIterationDao
+				.deleteConcreteIteration(this.concreteIteration);
 		// Rk: the tearDown method is called here.
 	}
 
-	/*
-	 * Test method for
-	 * {@link woops2.hibernate.process.ProcessDao#getProcess(java.lang.String)}.
-	 */
+	@Test
 	public final void testGetConcreteIteration() {
 		// Rk: the setUp method is called here.
 
@@ -135,10 +124,7 @@ public class ConcreteIterationDaoTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/*
-	 * Test method for
-	 * {@link woops2.hibernate.process.ProcessDao#deleteProcess(woops2.model.process.Process)}.
-	 */
+	@Test
 	public final void testDeleteConcreteIteration() {
 		// Rk: the setUp method is called here.
 
