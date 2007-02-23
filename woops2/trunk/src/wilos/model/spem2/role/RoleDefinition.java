@@ -44,6 +44,9 @@ public class RoleDefinition extends Element implements Cloneable {
 		super() ;
 		this.roleDescriptors = new HashSet<RoleDescriptor>() ;
 		this.guidances = new HashSet<Guidance>() ;
+		this.assignmentApproaches = "";
+		this.skills = "";
+		this.synonyms = "";
 	}
 
 	/*
@@ -59,7 +62,7 @@ public class RoleDefinition extends Element implements Cloneable {
 			return true ;
 		}
 		RoleDefinition role = (RoleDefinition) obj ;
-		return new EqualsBuilder().appendSuper(super.equals(role)).append(this.roleDescriptors, role.roleDescriptors).append(this.guidances, role.guidances).isEquals() ;
+		return new EqualsBuilder().appendSuper(super.equals(role)).append(this.roleDescriptors, role.roleDescriptors).append(this.guidances, role.guidances).append(this.assignmentApproaches,role.assignmentApproaches).append(this.skills,role.skills).append(this.synonyms,role.synonyms).isEquals() ;
 	}
 
 	/*
@@ -68,7 +71,7 @@ public class RoleDefinition extends Element implements Cloneable {
 	 * @see woops2.model.element.Element#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode() ;
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.assignmentApproaches).append(this.skills).append(this.synonyms).toHashCode() ;
 	}
 
 	/*
@@ -90,6 +93,9 @@ public class RoleDefinition extends Element implements Cloneable {
 		super.copy(_roleDefinition) ;
 		this.roleDescriptors.addAll(_roleDefinition.getRoleDescriptors()) ;
 		this.guidances.addAll(_roleDefinition.getGuidances()) ;
+		this.assignmentApproaches = _roleDefinition.getAssignmentApproaches();
+		this.skills  = _roleDefinition.getSkills();
+		this.synonyms = _roleDefinition.getSynonyms();
 	}
 
 	/**
