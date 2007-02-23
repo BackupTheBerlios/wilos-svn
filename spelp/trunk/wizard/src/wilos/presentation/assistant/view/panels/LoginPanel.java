@@ -1,10 +1,14 @@
 package wilos.presentation.assistant.view.panels;
 import java.awt.BorderLayout;
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.InputStream;
@@ -12,8 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -25,6 +32,7 @@ import wilos.model.spem2.role.RoleDescriptor;
 import wilos.presentation.assistant.control.ServersListParser;
 import wilos.presentation.assistant.model.WizardServer;
 import wilos.presentation.assistant.ressources.Bundle;
+import wilos.presentation.assistant.ressources.ImagesService;
 import wilos.presentation.assistant.ressources.ProfileReader;
 import wilos.presentation.assistant.view.dialogs.ErrorDialog;
 import wilos.presentation.assistant.view.main.MainFrame;
@@ -251,31 +259,16 @@ public class LoginPanel extends JPanel {
 		/* */
 
 		/*check if there is a server selected and not "Ajouter"*/
-		if (!String.valueOf(adressTextField.getSelectedItem()).equals(new String("Ajouter")))
+		if (!String.valueOf(adressTextField.getSelectedItem()).equals(Bundle.getText("loginPanel.ajouter")))
 		{
 			String passcript =  Security.encode(new String(passwordPasswordField.getPassword()));
 			WizardServicesProxy.setIdentificationParamaters(loginTextField.getText(),passcript, serverAdress);
-			System.out.print(String.valueOf(adressTextField.getSelectedItem()));
-			Participant participant = WizardServicesProxy.getParticipant();                          
-			
+			//System.out.print(String.valueOf(adressTextField.getSelectedItem()));
+
 			/*Save the last server used*/
 			list_serv.lastUsedServer(adressTextField.getSelectedIndex()+1);
 			
-			if (participant == null)
-			{
-				setVisible(true);
-				// TODO : Verifier ce "if-else"
-	//			new ErrorDialog(Bundle.getText("loginPanel.unknownUser"));
-			}  
-			else
-			{
-				
-				WizardMainFrame wmf = new WizardMainFrame();
-				wmf.setParticipant(participant);
-				wmf.setVisible(true);
-        	
-				mframe.setVisible(false);
-			}
+			startLoading();
 		}
 	}
 	
@@ -327,5 +320,63 @@ public class LoginPanel extends JPanel {
 		loadXML();	
 		
 	}
+	
+	private void startLoading() {
+		JLabel img = new JLabel(ImagesService.getImageIcon("images.startLoading"));
+		img.setSize(150, 80);
 
+		this.removeAll();
+		
+		this.add(getImagePanel(),BorderLayout.NORTH);
+		this.add(img, BorderLayout.CENTER);
+		this.add(new JLabel(Bundle.getText("loginPanel.loading")), BorderLayout.SOUTH);
+
+		this.doLayout();
+		this.repaint();
+
+		// launch the loading
+		(new LoadingThread(this)).start();
+	}
+	
+	private void finishLoading(Participant p)
+	{
+		if (p == null)
+		{
+			this.removeAll();
+			
+			this.add(getImagePanel(),BorderLayout.NORTH);
+			this.add(this.getFieldsPanel(), BorderLayout.CENTER);
+			this.add(this.getButtonsPanel(), BorderLayout.SOUTH);
+
+			this.doLayout();
+			this.repaint();
+			
+			setVisible(true);
+			// TODO : Verifier ce "if-else"
+			// new ErrorDialog(Bundle.getText("loginPanel.unknownUser"));
+		}  
+		else
+		{
+
+			WizardMainFrame wmf = new WizardMainFrame();
+			wmf.setParticipant(p);
+			wmf.setVisible(true);
+    	
+			mframe.setVisible(false);
+		}
+	}
+	
+	private class LoadingThread extends Thread {
+		private LoginPanel parentClass;
+		
+		public LoadingThread (LoginPanel obj) {
+			this.parentClass = obj;
+		}
+		
+		public void run ()
+		{
+			Participant participant = WizardServicesProxy.getParticipant();
+			this.parentClass.finishLoading(participant);
+		}
+	}
 }
