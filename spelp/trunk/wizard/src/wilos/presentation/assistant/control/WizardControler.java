@@ -78,7 +78,6 @@ public class WizardControler {
 	
 	public void updateTree () {
 		// recuperation de l'arbre sur le serveur
-		System.out.print("\ncoucou");
 		Participant p = WizardServicesProxy.getParticipant() ;
 		WizardTreeModel newModel = new WizardTreeModel(p,false);
 		WizardTreeModel thisModel = (WizardTreeModel) treePanel.getTree().getModel() ;
