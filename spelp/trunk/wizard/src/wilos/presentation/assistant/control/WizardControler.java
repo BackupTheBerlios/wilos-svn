@@ -132,7 +132,7 @@ public class WizardControler {
 		for (int i = 0 ; i < newNode.getChildCount() ; i ++) {
 			if (guid1.equals(guid2)) {
 				if (getState(newNode.getUserObject()) != ""){
-					System.out.println(newNode + " " + getState(newNode.getUserObject()) + actualNode + " "+ getState(actualNode.getUserObject()) );
+					//System.out.println(newNode + " " + getState(newNode.getUserObject()) + actualNode + " "+ getState(actualNode.getUserObject()) );
 					if(!(getState(newNode.getUserObject()).equals(getState(actualNode.getUserObject())))){
 						ConcreteTaskDescriptor ctdactual = (ConcreteTaskDescriptor) actualNode.getUserObject();
 						ConcreteTaskDescriptor ctdnew = (ConcreteTaskDescriptor) newNode.getUserObject();
