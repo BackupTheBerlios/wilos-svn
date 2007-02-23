@@ -104,6 +104,10 @@
 			<value>#{ProjectService}</value>
 		</managed-property>
 		<managed-property>
+			<property-name>projectDirectorService</property-name>
+			<value>#{ProjectDirectorService}</value>
+		</managed-property>
+		<managed-property>
 			<property-name>processService</property-name>
 			<value>#{ProcessService}</value>
 		</managed-property>
@@ -171,6 +175,10 @@
 			<property-name>processService</property-name>
 			<value>#{ProcessService}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -182,6 +190,14 @@
 		<managed-property>
 			<property-name>concreteRoleDescriptorService</property-name>
 			<value>#{ConcreteRoleDescriptorService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>participantService</property-name>
+			<value>#{ParticipantService}</value>
 		</managed-property>
 	</managed-bean>
 

@@ -3,7 +3,7 @@
 		<ice:panelTab id="panelTab_processes_management" label="#{msgs['component.process.management.tabtitle']}" imageDir="images">
 			<ice:panelStack id="panelStack_processes_management" selectedPanel="#{ProcessBean.processesListView}">			
 				<ice:panelGroup id="processesManagementPanelGroup_not_null" styleClass="contentIncludePanelGroup">
-					<ice:dataTable value="#{ProcessBean.processesList}" columnWidths="400px,30px,30px" border="0" var="process">
+					<ice:dataTable value="#{ProcessBean.processesList}" columnWidths="400px,150px,30px" border="0" var="process">
 						<ice:column>
 							<f:facet name="header">
 								<ice:outputText value="#{msgs['component.process.management.name']}" />
@@ -11,6 +11,17 @@
 							<ice:inputText value="#{process.presentationName}" rendered="#{process.isEditable}"/>
 							<ice:outputText value="#{process.presentationName}" rendered="#{!process.isEditable}"/>
 						</ice:column>
+						
+						
+						<ice:column>
+							<f:facet name="header">
+								<ice:outputText value="#{msgs['component.process.management.processmanagername']}" />
+							</f:facet>
+							
+							<ice:outputText value="#{process.owner}"/>
+						</ice:column>
+						
+						
 						<ice:column>
 							<f:facet name="header">
 								<ice:outputText value="#{msgs['component.process.management.actions']}" />

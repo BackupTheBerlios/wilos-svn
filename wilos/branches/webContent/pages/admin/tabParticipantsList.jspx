@@ -34,7 +34,7 @@
 				</ice:panelGroup>
 				
 					<ice:panelGroup id="participantView_null">
-							<h4><ice:outputText value="Admin : Pas de participants"/></h4>
+							<h4><ice:outputText value="#{msgs['component.participantlist.norecord']}"/></h4>
 						</ice:panelGroup>
 				</ice:panelStack>
 				
