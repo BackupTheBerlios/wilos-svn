@@ -1,17 +1,21 @@
 package wilos.test.business.services.spem2.activity;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.business.services.spem2.activity.ActivityService;
 import wilos.model.spem2.activity.Activity;
 import wilos.test.TestConfiguration;
 
-/**
- * @author deder
- *
- */
-public class ActivityServiceTest extends TestCase {
+
+public class ActivityServiceTest {
 
 	private ActivityService activityService;
 
@@ -29,37 +33,20 @@ public class ActivityServiceTest extends TestCase {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+	@Before
+	public void setUp() {
 
 		// Create empty Activity
 		this.activity = new Activity();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	@Override
-	protected void tearDown() throws Exception {
-		super.tearDown();
-
+	@After
+	public void tearDown() {
 		// Delete the tmp activity from the database.
 		this.activityService.getActivityDao().deleteActivity(this.activity);
 	}
 
-	/*
-	 * (non-Javadoc) Test method for
-	 * {@link woops2.business.activity.ActivityManager#getActivitiesList()}.
-	 *
-	 */
+	@Test
 	public void testGetActivitiesList() {
 		// Rk: the setUp method is called here.
 
@@ -75,11 +62,7 @@ public class ActivityServiceTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/*
-	 * (non-Javadoc) Test method for
-	 * {@link woops2.business.activity.ActivityManager#saveActivity(woops2.model.activity.Activity)}.
-	 *
-	 */
+	@Test
 	public void testSaveActivity() {
 		// Rk: the setUp method is called here.
 

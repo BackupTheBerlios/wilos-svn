@@ -1,8 +1,15 @@
 package wilos.test.business.services.misc.concretetask;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService;
 import wilos.hibernate.misc.concreterole.ConcreteRoleDescriptorDao;
 import wilos.hibernate.misc.concretetask.ConcreteTaskDescriptorDao;
@@ -19,7 +26,7 @@ import wilos.model.spem2.task.TaskDescriptor;
 import wilos.test.TestConfiguration;
 import wilos.utils.Constantes.State;
 
-public class ConcreteTaskDescriptorServiceTest extends TestCase {
+public class ConcreteTaskDescriptorServiceTest {
 
 	ConcreteTaskDescriptorService concreteTaskDescriptorService;
 
@@ -59,13 +66,8 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp();
+	@Before
+	public void setUp() {
 
 		this.concreteTaskDescriptor = new ConcreteTaskDescriptor();
 
@@ -74,17 +76,13 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 				.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@After
+	public void tearDown() {
 		this.concreteTaskDescriptorService.getConcreteTaskDescriptorDao()
 				.deleteConcreteTaskDescriptor(this.concreteTaskDescriptor);
 	}
 
+	@Test
 	public void testGetConcreteTaskDescriptorsForProject() {
 		// Rk: the setUp method is called here.
 
@@ -129,6 +127,7 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public void testStartConcreteTaskDescriptor() {
 		// Rk: the setUp method is called here.
 
@@ -150,6 +149,7 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public void testSuspendConcreteTaskDescriptor() {
 		// Rk: the setUp method is called here.
 
@@ -171,6 +171,7 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public void testFinishConcreteTaskDescriptor() {
 		// Rk: the setUp method is called here.
 
@@ -193,6 +194,7 @@ public class ConcreteTaskDescriptorServiceTest extends TestCase {
 	}
 	
 	
+	@Test
 	public void testAffectedConcreteTaskDescriptor()
 	{
 		Participant monpar = new Participant();

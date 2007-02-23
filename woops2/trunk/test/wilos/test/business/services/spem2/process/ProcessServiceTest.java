@@ -1,17 +1,20 @@
 package wilos.test.business.services.spem2.process;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.spem2.process.Process;
 import wilos.test.TestConfiguration;
 
-/*
- * @author deder
- *
- */
-public class ProcessServiceTest extends TestCase {
+
+public class ProcessServiceTest {
 
 	private ProcessService processService;
 
@@ -23,34 +26,21 @@ public class ProcessServiceTest extends TestCase {
 				.getApplicationContext().getBean("ProcessService");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp();
+	@Before
+	public void setUp() {
 
 		// Create empty Activity
 		this.process = new Process();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@After
+	public void tearDown() {
 
 		// Delete the tmp activity from the database.
 		this.processService.getProcessDao().deleteProcess(this.process);
 	}
 
-	/*
-	 * (non-Javadoc) Test method for
-	 * {@link woops2.business.process.ProcessService#getProcessesList()}.
-	 */
+	@Test
 	public final void testGetProcessesList() {
 		// Rk: the setUp method is called here.
 
@@ -66,10 +56,7 @@ public class ProcessServiceTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/*
-	 * (non-Javadoc) Test method for
-	 * {@link woops2.business.process.ProcessService#saveActivity(woops2.model.process.Process)}.
-	 */
+	@Test
 	public final void testSaveProcess() {
 		// Rk: the setUp method is called here.
 

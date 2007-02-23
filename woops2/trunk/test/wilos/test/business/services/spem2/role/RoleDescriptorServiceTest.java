@@ -1,24 +1,17 @@
+package wilos.test.business.services.spem2.role;
 
-package wilos.test.business.services.spem2.role ;
+import org.junit.After;
+import org.junit.Before;
 
-import junit.framework.TestCase;
+public class RoleDescriptorServiceTest {
 
-public class RoleDescriptorServiceTest extends TestCase {
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp() ;
+	@Before
+	public void setUp() {
+		// None
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown() ;
+	@After
+	public void tearDown() {
+		// None
 	}
 }

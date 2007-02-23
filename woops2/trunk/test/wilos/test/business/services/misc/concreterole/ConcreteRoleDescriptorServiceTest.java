@@ -1,8 +1,14 @@
 package wilos.test.business.services.misc.concreterole;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService;
 import wilos.hibernate.misc.concreteactivity.ConcreteActivityDao;
 import wilos.hibernate.misc.concretetask.ConcreteTaskDescriptorDao;
@@ -13,12 +19,8 @@ import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.test.TestConfiguration;
 
-/**
- *
- * @author eperico
- *
- */
-public class ConcreteRoleDescriptorServiceTest extends TestCase {
+
+public class ConcreteRoleDescriptorServiceTest {
 
 	private ConcreteRoleDescriptor concreteRoleDescriptor;
 
@@ -47,27 +49,18 @@ public class ConcreteRoleDescriptorServiceTest extends TestCase {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp();
-
+	@Before
+	public void setUp() {
 		this.concreteRoleDescriptor = new ConcreteRoleDescriptor();
 		this.concreteRoleDescriptor.setConcreteName(NAME);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@After
+	public void tearDown() {
+		//None
 	}
 
+	@Test
 	public void testGetSuperConcreteActivities() {
 		// Rk: the setUp method is called here.
 
@@ -90,6 +83,7 @@ public class ConcreteRoleDescriptorServiceTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public void testGetAllConcreteRoleDescriptorsForProject() {
 		// Rk: the setUp method is called here.
 
@@ -138,6 +132,7 @@ public class ConcreteRoleDescriptorServiceTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public void testGetAllConcreteTaskDescriptorsForConcreteRoleDescriptor() {
 		// Rk: the setUp method is called here.
 
