@@ -1,11 +1,18 @@
 package wilos.test.hibernate.spem2.element;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
 import wilos.hibernate.spem2.element.ElementDao;
 import wilos.model.spem2.element.Element;
 import wilos.test.TestConfiguration;
@@ -15,10 +22,10 @@ import wilos.test.TestConfiguration;
  * 
  * @author deder
  */
-public class ElementDaoTest extends TestCase {
-	
-	protected final Log logger = LogFactory.getLog(this.getClass()) ;
-	
+public class ElementDaoTest {
+
+	protected final Log logger = LogFactory.getLog(this.getClass());
+
 	private ElementDao elementDao = null;
 
 	private Element element = null;
@@ -27,40 +34,24 @@ public class ElementDaoTest extends TestCase {
 
 	public static final String DESCRIPTION = "elt description";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+	@Before
+	public void setUp() {
 
 		// Get the ElementDao Singleton for managing Element data
-		this.elementDao = (ElementDao) TestConfiguration.getInstance().getApplicationContext().getBean(
-				"ElementDao");
+		this.elementDao = (ElementDao) TestConfiguration.getInstance()
+				.getApplicationContext().getBean("ElementDao");
 
 		// Create empty Activity
 		this.element = new Element();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	@Override
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@After
+	protected void tearDown() {
 
 		this.elementDao.deleteElement(this.element);
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.hibernate.spem2.element.ElementDao#saveOrUpdateActivity(wilos.model.spem2.element.Element)}.
-	 * 
-	 */
+	@Test
 	public void testSaveOrUpdateElement() {
 		// Rk: the setUp method is called here.
 
@@ -76,11 +67,7 @@ public class ElementDaoTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.hibernate.spem2.element.ElementDao#getAllElements()}.
-	 * 
-	 */
+	@Test
 	public void testgetAllElements() {
 		// Rk: the setUp method is called here.
 
@@ -91,16 +78,15 @@ public class ElementDaoTest extends TestCase {
 		// of the set is >= 1.
 		List<Element> elements = this.elementDao.getAllElements();
 		assertNotNull(elements);
-		logger.error("####### ElementDaoTest.testgetAllElements ####### --> elements.sze() == " + elements.size());
+		logger
+				.error("####### ElementDaoTest.testgetAllElements ####### --> elements.sze() == "
+						+ elements.size());
 		assertTrue(elements.size() >= 1);
 
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for {@link wilos.hibernate.spem2.element.ElementDao#getElement()}.
-	 * 
-	 */
+	@Test
 	public void testGetElement() {
 		// Rk: the setUp method is called here.
 
@@ -126,11 +112,7 @@ public class ElementDaoTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.hibernate.spem2.element.ElementDao#deleteElement()}.
-	 * 
-	 */
+	@Test
 	public void testDeleteElement() {
 		// Rk: the setUp method is called here.
 

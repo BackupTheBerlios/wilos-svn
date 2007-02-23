@@ -1,10 +1,18 @@
 package wilos.test.hibernate.spem2.breakdownelement;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.hibernate.spem2.breakdownelement.BreakdownElementDao;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
@@ -15,8 +23,8 @@ import wilos.test.TestConfiguration;
  * 
  * @author deder
  */
-public class BreakdownElementDaoTest extends TestCase {
-	
+public class BreakdownElementDaoTest {
+
 	private BreakdownElementDao breakdownElementDao = null;
 
 	private BreakdownElement breakdownElement = null;
@@ -35,40 +43,26 @@ public class BreakdownElementDaoTest extends TestCase {
 
 	public Set<Activity> superActivities = new HashSet<Activity>();
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+	@Before
+	public void setUp() {
 
 		// Get the BreakdownElementDao Singleton for managing BreakdownElement
 		// data
-		this.breakdownElementDao = (BreakdownElementDao) TestConfiguration.getInstance().getApplicationContext().getBean("BreakdownElementDao");
+		this.breakdownElementDao = (BreakdownElementDao) TestConfiguration
+				.getInstance().getApplicationContext().getBean(
+						"BreakdownElementDao");
 
 		// Create empty BreakdownElement
 		this.breakdownElement = new BreakdownElement();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	@Override
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@After
+	public void tearDown() {
 
 		this.breakdownElementDao.deleteBreakdownElement(this.breakdownElement);
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.hibernate.spem2.breakdownElement.BreakdownElementDao#saveOrUpdateBreakdownElement(wilos.model.spem2.breakdownElement.breakdownElement)}.
-	 * 
-	 */
+	@Test
 	public void testSaveOrUpdateBreakdownElement() {
 		// Rk: the setUp method is called here.
 
@@ -81,20 +75,17 @@ public class BreakdownElementDaoTest extends TestCase {
 		BreakdownElement bdeTmp = (BreakdownElement) this.breakdownElementDao
 				.getHibernateTemplate().load(BreakdownElement.class, id);
 		assertNotNull(bdeTmp);
-		
+
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.hibernate.spem2.breakdownelement.BreakdownElementDao#getAllBreakdownElements()}.
-	 * 
-	 */
+	@Test
 	public void testGetAllBreakdownElements() {
 		// Rk: the setUp method is called here.
 
 		// Save the activity into the database.
-		this.breakdownElementDao.saveOrUpdateBreakdownElement(this.breakdownElement);
+		this.breakdownElementDao
+				.saveOrUpdateBreakdownElement(this.breakdownElement);
 
 		// Look if this bde is also into the database and look if the size of
 		// the set is >= 1.
@@ -106,11 +97,7 @@ public class BreakdownElementDaoTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.hibernate.spem2.breakdownelement.BreakdownElementDao#getBreakdownElement()}.
-	 * 
-	 */
+	@Test
 	public void testGetBreakdownElement() {
 		// Rk: the setUp method is called here.
 
@@ -122,9 +109,10 @@ public class BreakdownElementDaoTest extends TestCase {
 				.setHasMultipleOccurrences(HAS_MULTIPLE_OCCURENCES);
 		this.breakdownElement.setIsOptional(IS_OPTIONAL);
 		this.breakdownElement.setIsPlanned(IS_PLANNED);
-		
+
 		// Save the breakdownElement into the database.
-		this.breakdownElementDao.saveOrUpdateBreakdownElement(this.breakdownElement);
+		this.breakdownElementDao
+				.saveOrUpdateBreakdownElement(this.breakdownElement);
 		String id = this.breakdownElement.getId();
 
 		// Test the method getBreakdownElement with an existing
@@ -139,7 +127,7 @@ public class BreakdownElementDaoTest extends TestCase {
 				.getHasMultipleOccurrences(), HAS_MULTIPLE_OCCURENCES);
 		assertEquals("IsOptional", bdeTmp.getIsOptional(), IS_OPTIONAL);
 		assertEquals("IsPlanned", bdeTmp.getIsPlanned(), IS_PLANNED);
-		
+
 		// Test the method getBreakdownElement with an unexisting
 		// breakdownElement.
 		this.breakdownElementDao.deleteBreakdownElement(this.breakdownElement);
@@ -149,16 +137,13 @@ public class BreakdownElementDaoTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.hibernate.spem2.breakdownelement.BreakdownElementDao#deleteBreakdownElement()}.
-	 * 
-	 */
+	@Test
 	public void testDeleteBreakdownElement() {
 		// Rk: the setUp method is called here.
 
 		// Save the BreakdownElement into the database.
-		this.breakdownElementDao.saveOrUpdateBreakdownElement(this.breakdownElement);
+		this.breakdownElementDao
+				.saveOrUpdateBreakdownElement(this.breakdownElement);
 		String id = this.breakdownElement.getId();
 
 		// Test the method deleteBreakdownElement with an BreakdownElement

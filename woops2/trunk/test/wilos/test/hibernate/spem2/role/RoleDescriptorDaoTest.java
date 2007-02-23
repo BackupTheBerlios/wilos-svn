@@ -1,8 +1,16 @@
 package wilos.test.hibernate.spem2.role;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.hibernate.spem2.role.RoleDescriptorDao;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.test.TestConfiguration;
@@ -12,8 +20,8 @@ import wilos.test.TestConfiguration;
  * 
  * @author Soosuske.
  */
-public class RoleDescriptorDaoTest extends TestCase {
-	
+public class RoleDescriptorDaoTest {
+
 	private RoleDescriptorDao roleDescriptorDao = null;
 
 	private RoleDescriptor roleDescriptor = null;
@@ -30,43 +38,25 @@ public class RoleDescriptorDaoTest extends TestCase {
 
 	public static final Boolean IS_PLANNED = true;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+	@Before
+	public void setUp() {
 
 		// Get the RoleDescriptorDao Singleton for managing RoleDescriptor data
-		this.roleDescriptorDao = (RoleDescriptorDao) TestConfiguration.getInstance().getApplicationContext().getBean("RoleDescriptorDao");
+		this.roleDescriptorDao = (RoleDescriptorDao) TestConfiguration
+				.getInstance().getApplicationContext().getBean(
+						"RoleDescriptorDao");
 
 		// Create empty roleDescriptor
 		this.roleDescriptor = new RoleDescriptor();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	@Override
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@After
+	public void tearDown() {
 
 		this.roleDescriptorDao.deleteRoleDescriptor(this.roleDescriptor);
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.hibernate.spem2.role.RoleDescriptorDao#saveOrUpdateRoleDescriptor(wilos.model.spem2.role.RoleDescriptor)}.
-	 * 
-	 * PRINCIPLE Create a tmp roleDescriptor, save it into the database with the
-	 * method to test. Then look for the database to check if this tmp
-	 * roleDescriptor exists. To finish delete this tmp roleDescriptor from the
-	 * database.
-	 */
+	@Test
 	public void testSaveOrUpdateRoleDescriptor() {
 		// Rk: the setUp method is called here.
 
@@ -82,15 +72,7 @@ public class RoleDescriptorDaoTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.hibernate.spem2.role.RoleDescriptorDao#getAllRoleDescriptor()}.
-	 * 
-	 * PRINCIPLE Create a tmp roleDescriptor, save it into the database. Then
-	 * get all roleDescriptor from the database with the method to test, and
-	 * look if the size of the roleDescriptor set got is >= 1. To finish delete
-	 * this tmp roleDescriptor from the database.
-	 */
+	@Test
 	public void testGetAllRoleDescriptor() {
 		// Rk: the setUp method is called here.
 
@@ -100,18 +82,15 @@ public class RoleDescriptorDaoTest extends TestCase {
 
 		// Look if this roleDescriptor is also into the database and look if the
 		// size of the set is >= 1.
-		List<RoleDescriptor> roleDescriptors = this.roleDescriptorDao.getAllRoleDescriptors();
+		List<RoleDescriptor> roleDescriptors = this.roleDescriptorDao
+				.getAllRoleDescriptors();
 		assertNotNull(roleDescriptors);
 		assertTrue(roleDescriptors.size() >= 1);
 
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.hibernate.spem2.role.RoleDescriptorDao#getRoleDescriptor()}.
-	 * 
-	 */
+	@Test
 	public void testGetRoleDescriptor() {
 		// Rk: the setUp method is called here.
 
@@ -150,11 +129,7 @@ public class RoleDescriptorDaoTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.hibernate.spem2.role.RoleDescriptorDao#deleteRoleDescriptor()}.
-	 * 
-	 */
+	@Test
 	public void testDeleteRoleDescriptor() {
 		// Rk: the setUp method is called here.
 

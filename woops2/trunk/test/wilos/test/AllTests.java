@@ -15,8 +15,8 @@ public class AllTests {
 		// $JUnit-BEGIN$
 		suite.addTest(wilos.test.business.services.misc.AllTests.suite()) ;
 		suite.addTest(wilos.test.business.services.spem2.AllTests.suite()) ;
-		suite.addTest(wilos.test.hibernate.AllTests.suite()) ;
-		suite.addTest(wilos.test.model.AllTests.suite()) ;
+		suite.addTest(wilos.test.hibernate.TestSuite.suite()) ;
+		suite.addTest(wilos.test.model.TestSuite.suite()) ;
 		// $JUnit-END$
 		return suite ;
 	}
