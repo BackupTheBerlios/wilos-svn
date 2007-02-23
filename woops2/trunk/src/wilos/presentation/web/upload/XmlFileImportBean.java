@@ -160,6 +160,7 @@ public class XmlFileImportBean {
 				logger.debug("### XmlFileImportBean ### action -> id=" + p.getId());
 				/* id = */
 				this.processService.saveProcess(p);
+				this.percent = -1;
 				ResourceBundle bundle = ResourceBundle.getBundle(
 						"wilos.resources.messages", FacesContext.getCurrentInstance()
 								.getApplication().getDefaultLocale());
@@ -180,9 +181,9 @@ public class XmlFileImportBean {
 	}
 
 	public void progressListener(EventObject event) {
-		InputFile file = (InputFile) event.getSource();
+		//InputFile file = (InputFile) event.getSource();
 		
-			this.percent = file.getFileInfo().getPercent();
+			this.percent = 1; //file.getFileInfo().getPercent();
 			try {
 				if (state != null) {
 					state.render();
