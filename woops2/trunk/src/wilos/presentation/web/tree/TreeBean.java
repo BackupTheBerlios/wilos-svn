@@ -28,7 +28,6 @@ import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
-import wilos.presentation.web.role.ConcreteRoleAffectationBean;
 import wilos.presentation.web.template.MenuBean;
 import wilos.presentation.web.viewer.ConcreteActivityViewerBean;
 import wilos.presentation.web.viewer.ConcreteIterationViewerBean;
@@ -125,7 +124,7 @@ public class TreeBean {
 
 	public void changeTreeActionListener(ValueChangeEvent evt) {
 		String nodeTypeToShow = "default" ;
-		
+
 		this.projectId = (String) evt.getNewValue();
 		// Put into the session the current project used.
 		this.webSessionService.setAttribute(WebSessionService.PROJECT_ID,
@@ -135,15 +134,15 @@ public class TreeBean {
 
 			// Retrieve the entire project.
 			this.project = this.projectService.getProject(this.projectId);
-			
+
 			nodeTypeToShow = WilosObjectNode.PROJECTNODE ;
 		}
-		
+
 		this.buildTreeModel();
 
 		if (this.projectId.length() > 0)
 			this.selectNodeToShow(this.projectId, nodeTypeToShow);
-		
+
 	}
 
 	/**
@@ -166,12 +165,6 @@ public class TreeBean {
 
 		this.selectNodeToShow(nodeId, pageId);
 
-		// passege de l'id de lelement clique vers le bean de PSI2
-		// ConcreteRoleAffectationBean.
-		ConcreteRoleAffectationBean crab = (ConcreteRoleAffectationBean) context
-				.getApplication().getVariableResolver().resolveVariable(
-						context, "ConcreteRoleAffectationBean");
-		crab.setNodeId(nodeId);
 		logger.debug("### TreeBean ### HIBERNATE STATS :: \n"
 				+ this.getProcessService().getActivityDao().getSessionFactory()
 						.getStatistics());
@@ -227,7 +220,7 @@ public class TreeBean {
 	/**
 	 * Inserts the SelectItem _si representing a project into the list used by
 	 * the combo
-	 * 
+	 *
 	 * @param _projectsList
 	 *            the projectsList
 	 * @param _si
@@ -249,7 +242,7 @@ public class TreeBean {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param _objectId
 	 * @param _pageId
 	 *            node selection function
