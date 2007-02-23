@@ -129,6 +129,9 @@
 					</f:subview>
 				</ice:panelStack>-->
 				
+				<ice:panelStack id="panelStack_projectProcess" selectedPanel="#{ProjectBean.processesListView}">
+				<ice:panelGroup id="projectProcesses_not_null" styleClass="contentIncludePanelGroup">
+				
 				<f:subview id="process_affectation_view">
 					<ice:panelGroup id="projectProcessPanelGroup" styleClass="contentIncludePanelGroup">
 						<ice:selectOneMenu partialSubmit="true" value="#{ProjectBean.selectedProcessGuid}" valueChangeListener="#{Woops2ProcessBean.changeProcessSelectionListener}">
@@ -166,6 +169,15 @@
 						</ice:column>
 					</ice:dataTable>
 				</ice:panelGroup>
+				
+				</ice:panelGroup>
+				
+				<ice:panelGroup id="projectProcesses_null">
+					<h4><ice:outputText value="#{msgs['component.process.management.empty']}"/></h4>
+				</ice:panelGroup>
+				
+				</ice:panelStack>
+				
 			</ice:panelTab>
 			<!-- #################################################################################################### -->
 		</ice:panelTabSet>

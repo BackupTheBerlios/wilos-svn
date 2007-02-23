@@ -53,7 +53,7 @@
 			</ice:panelGroup>
 
 			<ice:panelGroup id="projectsListPanelGroup_null">
-				<h4><ice:outputText value="patalon vide"/></h4>
+				<h4><ice:outputText value="Project Director : Pas de projets"/></h4>
 			</ice:panelGroup>
 			
 		</ice:panelStack>
