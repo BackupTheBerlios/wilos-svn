@@ -1327,8 +1327,7 @@ public class XMLParserTest extends TestCase {
 		}
 		
 		theRoleDef = theRoleDesc.getRoleDefinition();
-		
-		System.out.println(theRoleDef.getDescription());
+
 		assertEquals("C'est le représentant du \"métier\" dans le projet. ", theRoleDef.getDescription());
 	}
 	
