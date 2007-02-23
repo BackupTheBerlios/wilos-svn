@@ -45,6 +45,12 @@ public class ConcreteActivityViewerBean {
 	
 	public void changeConcreteName() {
 		this.concreteActivityService.saveConcreteActivity(this.concreteActivity);
+		
+		//	 Refresh the treebean.
+		FacesContext context = FacesContext.getCurrentInstance();
+		TreeBean treeBean = (TreeBean) context.getApplication()
+				.getVariableResolver().resolveVariable(context, "TreeBean");
+		treeBean.refreshProjectTree();
 	}
 	
 	public boolean getIsInputNameReadOnly() {

@@ -40,7 +40,13 @@ public class ProjectViewerBean {
 	}
 	
 	public void changeConcreteName() {
-		projectService.saveProject(project);
+		this.projectService.saveProject(project);
+		
+		//	 Refresh the treebean.
+		FacesContext context = FacesContext.getCurrentInstance();
+		TreeBean treeBean = (TreeBean) context.getApplication()
+				.getVariableResolver().resolveVariable(context, "TreeBean");
+		treeBean.refreshProjectTree();
 	}
 	
 	public boolean getIsInputNameReadOnly() {

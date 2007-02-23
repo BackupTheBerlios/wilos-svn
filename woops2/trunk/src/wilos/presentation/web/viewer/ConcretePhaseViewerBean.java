@@ -96,6 +96,12 @@ public class ConcretePhaseViewerBean {
 
 	public void changeConcreteName() {
 		this.concretePhaseService.saveConcretePhase(this.concretePhase);
+		
+		//	Refresh the treebean.
+		FacesContext context = FacesContext.getCurrentInstance();
+		TreeBean treeBean = (TreeBean) context.getApplication()
+				.getVariableResolver().resolveVariable(context, "TreeBean");
+		treeBean.refreshProjectTree();
 	}
 
 	/* Getters & Setters */
