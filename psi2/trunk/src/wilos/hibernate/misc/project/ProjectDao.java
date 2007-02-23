@@ -3,8 +3,10 @@ package wilos.hibernate.misc.project;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import wilos.model.misc.project.Project;
+import wilos.utils.ExceptionManager;
 
 /**
  * ProjectDao manage requests from the system to store Project into the
@@ -27,10 +29,16 @@ public class ProjectDao extends HibernateDaoSupport {
 	 * 
 	 * @return
 	 */
-	public Set<Project> getAllProject() {
+	@ SuppressWarnings ("unchecked")
+	public Set<Project> getAllProjects() {
 		Set<Project> loadAll = new HashSet<Project>();
-		loadAll.addAll(this.getHibernateTemplate().loadAll(Project.class));
-		return loadAll;
+		try{
+			loadAll.addAll(this.getHibernateTemplate().loadAll(Project.class));
+		}
+		catch(DataAccessException _e){
+			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "getAllProject", _e);
+		}
+		return loadAll ;
 	}
 
 	/**

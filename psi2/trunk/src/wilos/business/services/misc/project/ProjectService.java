@@ -71,7 +71,7 @@ public class ProjectService {
 	public boolean projectExist(String _projectName) {
 		boolean found = false ;
 		String projectName ;
-		Set<Project> projects = this.projectDao.getAllProject() ;
+		Set<Project> projects = this.projectDao.getAllProjects() ;
 		for(Project project : projects){
 			projectName = project.getConcreteName().toUpperCase() ;
 			if(projectName.equals(_projectName.toUpperCase())){
@@ -93,7 +93,7 @@ public class ProjectService {
 	@ Transactional (readOnly = true)
 	public Set<Project> getUnfinishedProjects() {
 		Set<Project> unfinishedP = new HashSet<Project>() ;
-		Set<Project> projects = this.projectDao.getAllProject() ;
+		Set<Project> projects = this.projectDao.getAllProjects() ;
 
 		for(Iterator iter = projects.iterator(); iter.hasNext();){
 			Project project = (Project) iter.next() ;
@@ -131,7 +131,7 @@ public class ProjectService {
 	@ Transactional (readOnly = true)
 	public Set<Project> getAllProjects() {
 		HashSet<Project> projectList = new HashSet<Project>() ;
-		projectList = (HashSet<Project>) this.projectDao.getAllProject() ;
+		projectList = (HashSet<Project>) this.projectDao.getAllProjects() ;
 		return projectList ;
 	}
 
@@ -144,7 +144,7 @@ public class ProjectService {
 	public Set<Project> getAllProjectsWithNoProcess() {
 		HashSet<Project> projectList = new HashSet<Project>() ;
 		HashSet<Project> tmpList = new HashSet<Project>() ;
-		tmpList = (HashSet<Project>) this.projectDao.getAllProject() ;
+		tmpList = (HashSet<Project>) this.projectDao.getAllProjects() ;
 		for(Iterator iter = tmpList.iterator(); iter.hasNext();){
 			Project project = (Project) iter.next() ;
 			if(project.getProcess() == null)
@@ -162,7 +162,7 @@ public class ProjectService {
 	public Set<Project> getAllProjectsWithProcess() {
 		HashSet<Project> projectList = new HashSet<Project>() ;
 		HashSet<Project> tmpList = new HashSet<Project>() ;
-		tmpList = (HashSet<Project>) this.projectDao.getAllProject() ;
+		tmpList = (HashSet<Project>) this.projectDao.getAllProjects() ;
 		for(Iterator iter = tmpList.iterator(); iter.hasNext();){
 			Project project = (Project) iter.next() ;
 			if(project.getProcess() != null)

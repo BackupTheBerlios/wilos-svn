@@ -449,20 +449,6 @@ public class ProjectBean {
 	}
 
 	/**
-	 * Getter of projectListView
-	 * 
-	 * @return the projectListView.
-	 */
-	public String getprojectListView() {
-		if (this.getProjectList().size() == 0) {
-			this.projectListView = "projectsListPanelGroup_null";
-		} else {
-			this.projectListView = "projectsListPanelGroup_not_null";
-		}
-		return this.projectListView;
-	}
-
-	/**
 	 * Setter of projectListView.
 	 * 
 	 * @param _projectListView
@@ -490,10 +476,18 @@ public class ProjectBean {
 	}
 
 	/**
-	 * @return the projectListView
+	 * Getter of projectListView
+	 * 
+	 * @return the projectListView.
 	 */
 	public String getProjectListView() {
-		return this.projectListView;
+		if(this.getProjectList().size() == 0){
+			this.projectListView = "projectsListPanelGroup_null" ;
+		}
+		else{
+			this.projectListView = "projectsListPanelGroup_not_null" ;
+		}
+		return this.projectListView ;
 	}
 
 	/**

@@ -165,6 +165,7 @@ public class Project extends ConcreteActivity implements Cloneable {
 									.append(this.participants, project.participants)
 									.append(this.projectManager, project.projectManager)
 									.isEquals() ;
+	
 	}
 
 	/**
