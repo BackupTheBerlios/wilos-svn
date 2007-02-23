@@ -3,6 +3,8 @@ package wilos.business.services.util.xml.fillers;
 import org.w3c.dom.Node;
 
 import wilos.model.spem2.element.Element;
+import wilos.business.services.util.xml.parser.EncodingProcessor;
+
 
 public class FillerElement {
 	Element myElement ;
@@ -28,7 +30,7 @@ public class FillerElement {
 		// setting the name
 		myElement.setName(myNode.getAttributes().getNamedItem(AttributeName).getNodeValue());
 		// setting the description
-		myElement.setDescription(myNode.getAttributes().getNamedItem(AttributeDescription).getNodeValue());
+		myElement.setDescription(EncodingProcessor.cleanString(myNode.getAttributes().getNamedItem(AttributeDescription).getNodeValue()));
 	}
 	
 	public Element getFilledElement(){

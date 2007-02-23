@@ -98,7 +98,7 @@ public class XMLParserTest extends TestCase {
 		assertTrue( theScrumProcess.getIsRepeatable() );
 		assertTrue( ! theScrumProcess.getIsOngoing() );
 		assertTrue( theScrumProcess.getPrefix().equals("") );
-		assertTrue( theScrumProcess.getDescription().equals("Les phases, les sprints et les tâches dans la production d'une release") );
+		assertTrue( theScrumProcess.getDescription().equals("Les phases, les sprints et les tï¿½ches dans la production d'une release") );
 		assertTrue( theScrumProcess.getGuid().equals("_9llsAQAvEdubGMceRDupFQ") );
 		assertTrue( ! theScrumProcess.getHasMultipleOccurrences() );
 		assertTrue( ! theScrumProcess.getIsEvenDriven() );		
@@ -159,7 +159,7 @@ public class XMLParserTest extends TestCase {
 	}
 	
 	/**
-	 * Checks that the phase called "Phase de préparation" From Scrum contains roleDescriptors
+	 * Checks that the phase called "Phase de prï¿½paration" From Scrum contains roleDescriptors
 	 *
 	 */
 	public void testPhase1FromScrumContainsRoleDescriptors() {
@@ -175,7 +175,7 @@ public class XMLParserTest extends TestCase {
 		// Only the first Phase has role Descriptors !!!
 		assertTrue(itAct.hasNext());
 		Activity tmpAct = (Activity) itAct.next();
-		if (! tmpAct.getPresentationName().equals("Phase de préparation")) {
+		if (! tmpAct.getPresentationName().equals("Phase de prï¿½paration")) {
 			assertTrue(itAct.hasNext());
 			tmpAct = (Activity) itAct.next();
 		}
@@ -196,7 +196,7 @@ public class XMLParserTest extends TestCase {
 	}
 	
 	/**
-	 * Checks that the phase called "Phase de préparation" From Scrum contains taskDescriptors
+	 * Checks that the phase called "Phase de prï¿½paration" From Scrum contains taskDescriptors
 	 *
 	 */
 	public void testPhase1FromScrumContainsTaskDescriptors() {
@@ -213,7 +213,7 @@ public class XMLParserTest extends TestCase {
 		assertTrue(itAct.hasNext());
 		Activity tmpAct = (Activity) itAct.next();
 		// We want to get the right Phase (only two Phases in this process)
-		if (! tmpAct.getPresentationName().equals("Phase de préparation")) {
+		if (! tmpAct.getPresentationName().equals("Phase de prï¿½paration")) {
 			assertTrue(itAct.hasNext());
 			tmpAct = (Activity) itAct.next();
 		}
@@ -548,7 +548,7 @@ public class XMLParserTest extends TestCase {
 		BreakdownElement tmpAct = itAct.next();
 		
 		assertTrue(tmpAct instanceof Phase);
-		if (tmpAct.getPresentationName().equals("Phase de préparation")) {
+		if (tmpAct.getPresentationName().equals("Phase de prï¿½paration")) {
 			assertTrue(itAct.hasNext());
 			tmpAct = itAct.next();
 		}
@@ -1277,7 +1277,7 @@ public class XMLParserTest extends TestCase {
 		
 		// The expected presentationNames
 		HashSet<String> presentationNames = new HashSet<String>();
-		presentationNames.add("Phase de préparation");
+		presentationNames.add("Phase de prï¿½paration");
 		presentationNames.add("Phase des sprints");
 		presentationNames.add("Directeur Produit");
 		
@@ -1328,6 +1328,7 @@ public class XMLParserTest extends TestCase {
 		theRoleDef = theRoleDesc.getRoleDefinition();
 		
 		System.out.println(theRoleDef.getDescription());
+		assertEquals("C'est le reprÃ©sentant du \"mÃ©tier\" dans le projet.", theRoleDef.getDescription());
 	}
 	
 	/*
