@@ -1,7 +1,0 @@
-<ice:form id="manageParticipants_form">
-	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
-		<ice:panelTabSet id="panelTabSet_manageParticipants" styleClass="componentPanelTabSetLayout">
-			<jsp:directive.include file="./pages/admin/tabParticipantsList.jspx"/>
-		</ice:panelTabSet>
-	</ice:panelGrid>
-</ice:form>
