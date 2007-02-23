@@ -2,8 +2,8 @@ package wilos.presentation.web.template;
 
 import javax.faces.context.FacesContext;
 
-import wilos.presentation.web.role.ConcreteRoleAffectationBean;
-import wilos.presentation.web.tree.TreeBean;
+import wilos.business.services.presentation.web.WebSessionService;
+
 
 /**
  * TODO Method description
@@ -11,6 +11,8 @@ import wilos.presentation.web.tree.TreeBean;
 public class ConnectViewBean {
 
     private ConnectContentBean selectedPanel;
+    
+    private WebSessionService webSessionService;
 
     /**
      * Gets the currently selected content panel.
@@ -58,10 +60,7 @@ public class ConnectViewBean {
     		connectContent.setTemplateName("not_connected");
     		connectContent.setTemplateNameActions("none");
     		connectContent.setTemplateNameMenu("no_tree_group");
-    		TreeBean treeBean = (TreeBean) context
-    		.getApplication().getVariableResolver().resolveVariable(
-    				context, "TreeBean");
-    		treeBean.cleanTreeDisplay();
+    		this.webSessionService.cleanSesssion();
     	}
     	connectContent.setNavigationSelection(this);
     	this.selectedPanel = connectContent;
