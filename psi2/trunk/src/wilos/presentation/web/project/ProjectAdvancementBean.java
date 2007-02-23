@@ -60,6 +60,25 @@ public class ProjectAdvancementBean {
 	private boolean selected_projectAdvancement_view ;
 
 	private boolean projectModified;
+	
+	private String projectInstanciated;
+
+	public String getProjectInstanciated() 
+	{
+		if(this.project.getProcess()==null)
+		{
+			this.projectInstanciated="projectNotInstanciated";
+		}
+		else
+		{
+			this.projectInstanciated="projectInstanciated";
+		}
+		return this.projectInstanciated;
+	}
+
+	public void setProjectInstanciated(String projectInstanciated) {
+		this.projectInstanciated = projectInstanciated;
+	}
 
 	/**
 	 * Constructor.
