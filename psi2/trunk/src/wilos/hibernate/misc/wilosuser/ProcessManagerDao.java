@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.ProcessManager;
 
 /**
@@ -51,6 +52,16 @@ public class ProcessManagerDao extends HibernateDaoSupport {
 		}else{
 			return null;
 		}
+	}
+	
+	/**
+	 * Return the ProcessManager which have the id _id.
+	 * TODO JUNIT
+	 * @param _id
+	 * @return
+	 */
+	public ProcessManager getProcessManagerById(String _id) {
+		return (ProcessManager) this.getHibernateTemplate().get(ProcessManager.class, _id);
 	}
 
 	/**
