@@ -30,21 +30,28 @@ public class ConcreteIterationViewerBean {
 	/* Manage the table for the visible elements in the tree. */
 
 	// To have the mask available only for the ProjectManager.
+	// And Only for the TasksTreeMode (not for RolesTreeMode).
 	public boolean getTreeMaskIsAvailable() {
-		// participant into session
-		String wilosUserId = (String) this.webSessionService
-				.getAttribute(WebSessionService.WILOS_USER_ID);
+		// Get the treemode.
+		String treeMode = (String) this.webSessionService
+				.getAttribute(WebSessionService.TREE_MODE);
 
-		Project project = this.projectService
-				.getProject((String) this.webSessionService
-						.getAttribute(WebSessionService.PROJECT_ID));
+		if (treeMode.equals(TreeBean.TASKS_MODE)) {
+			// participant into session
+			String wilosUserId = (String) this.webSessionService
+					.getAttribute(WebSessionService.WILOS_USER_ID);
 
-		if ((project.getProjectManager() != null)
-				&& (project.getProjectManager().getWilosuser_id()
-						.equals(wilosUserId)))
-			return true;
-		else
-			return false;
+			Project project = this.projectService
+					.getProject((String) this.webSessionService
+							.getAttribute(WebSessionService.PROJECT_ID));
+
+			if ((project.getProjectManager() != null)
+					&& (project.getProjectManager().getWilosuser_id()
+							.equals(wilosUserId)))
+				return true;
+		}
+
+		return false;
 	}
 
 	public List<ConcreteBreakdownElement> getConcreteBreakdownElementsList() {
@@ -97,8 +104,8 @@ public class ConcreteIterationViewerBean {
 	public void changeConcreteName() {
 		this.concreteIterationService
 				.saveConcreteIteration(this.concreteIteration);
-		
-		//	Refresh the treebean.
+
+		// Refresh the treebean.
 		FacesContext context = FacesContext.getCurrentInstance();
 		TreeBean treeBean = (TreeBean) context.getApplication()
 				.getVariableResolver().resolveVariable(context, "TreeBean");

@@ -25,12 +25,12 @@ public class ProjectViewerBean {
 
 	public boolean getChangeButtonIsDisabled() {
 		String wilosUserId = (String) this.webSessionService
-			.getAttribute(WebSessionService.WILOS_USER_ID);
+				.getAttribute(WebSessionService.WILOS_USER_ID);
 
 		Project project = this.projectService
 				.getProject((String) this.webSessionService
 						.getAttribute(WebSessionService.PROJECT_ID));
-		
+
 		if ((project.getProjectManager() != null)
 				&& (project.getProjectManager().getWilosuser_id()
 						.equals(wilosUserId)))
@@ -38,30 +38,40 @@ public class ProjectViewerBean {
 		else
 			return true;
 	}
-	
+
 	public void changeConcreteName() {
 		this.projectService.saveProject(project);
-		
-		//	 Refresh the treebean.
+
+		// Refresh the treebean.
 		FacesContext context = FacesContext.getCurrentInstance();
 		TreeBean treeBean = (TreeBean) context.getApplication()
 				.getVariableResolver().resolveVariable(context, "TreeBean");
 		treeBean.refreshProjectTree();
 	}
-	
+
 	public boolean getIsInputNameReadOnly() {
-		return (this.getChangeButtonIsDisabled()); 
+		return (this.getChangeButtonIsDisabled());
 	}
 
-	//To have the mask available only for the ProjectManager.
+	// To have the mask available only for the ProjectManager.
+	// And Only for the TasksTreeMode (not for RolesTreeMode).
 	public boolean getTreeMaskIsAvailable() {
-		// participant into session
-		String wilosUserId = (String) this.webSessionService
-				.getAttribute(WebSessionService.WILOS_USER_ID);
-		if ((this.project.getProjectManager() != null)&&(this.project.getProjectManager().getWilosuser_id().equals(wilosUserId)))
-			return true;
-		else
-			return false;
+		// Get the treemode.
+		String treeMode = (String) this.webSessionService
+				.getAttribute(WebSessionService.TREE_MODE);
+
+		if (treeMode.equals(TreeBean.TASKS_MODE)) {
+			// participant into session
+			String wilosUserId = (String) this.webSessionService
+					.getAttribute(WebSessionService.WILOS_USER_ID);
+
+			if ((this.project.getProjectManager() != null)
+					&& (this.project.getProjectManager().getWilosuser_id()
+							.equals(wilosUserId)))
+				return true;
+		}
+
+		return false;
 	}
 
 	public List<ConcreteBreakdownElement> getConcreteBreakdownElementsList() {

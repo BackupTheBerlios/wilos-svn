@@ -23,6 +23,11 @@ public class WebSessionService {
 	public static final String ROLE_TYPE = "roleType" ;
 
 	/**
+	 * The session attribute Tree Mode.
+	 */
+	public static final String TREE_MODE = "treeMode" ;
+
+	/**
 	 * Get the value of the _attributeName
 	 *
 	 * @param _attributeName

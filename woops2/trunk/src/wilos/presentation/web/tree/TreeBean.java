@@ -65,7 +65,9 @@ public class TreeBean {
 
 	private Project project;
 
-	private String projectId = "default";
+	private static final String DEFAULT_PROJECT_ID = "default";
+
+	private String projectId = DEFAULT_PROJECT_ID;
 
 	private boolean loadTree;
 
@@ -73,9 +75,9 @@ public class TreeBean {
 
 	private String selectedMode = TASKS_MODE;
 
-	private static final String TASKS_MODE = "tasksMode";
+	public static final String TASKS_MODE = "tasksMode";
 
-	private static final String ROLES_MODE = "rolesMode";
+	public static final String ROLES_MODE = "rolesMode";
 
 	// tree default model, used as a value for the tree component
 	private DefaultTreeModel model = null;
@@ -109,12 +111,18 @@ public class TreeBean {
 	}
 
 	private void buildTreeModel() {
-		if (this.projectId != null && !this.projectId.equals("default")) {
+		if (this.projectId != null
+				&& !this.projectId.equals(DEFAULT_PROJECT_ID)) {
 			ProjectNode projectNode;
-			if (this.selectedMode.equals(TASKS_MODE))
+			if (this.selectedMode.equals(TASKS_MODE)) {
 				projectNode = new ProjectNode(this.project, true, treeMap);
-			else
+				this.webSessionService.setAttribute(WebSessionService.TREE_MODE,
+						TASKS_MODE);
+			} else {
 				projectNode = new ProjectNode(this.project, false, treeMap);
+				this.webSessionService.setAttribute(WebSessionService.TREE_MODE,
+						ROLES_MODE);
+			}
 			this.model = new DefaultTreeModel(projectNode);
 		} else {
 			// Build the default tree.
@@ -123,19 +131,19 @@ public class TreeBean {
 	}
 
 	public void changeTreeActionListener(ValueChangeEvent evt) {
-		String nodeTypeToShow = "default" ;
+		String nodeTypeToShow = DEFAULT_PROJECT_ID;
 
 		this.projectId = (String) evt.getNewValue();
 		// Put into the session the current project used.
 		this.webSessionService.setAttribute(WebSessionService.PROJECT_ID,
 				this.projectId);
 
-		if (!this.projectId.equals("default")) {
+		if (!this.projectId.equals(DEFAULT_PROJECT_ID)) {
 
 			// Retrieve the entire project.
 			this.project = this.projectService.getProject(this.projectId);
 
-			nodeTypeToShow = WilosObjectNode.PROJECTNODE ;
+			nodeTypeToShow = WilosObjectNode.PROJECTNODE;
 		}
 
 		this.buildTreeModel();
@@ -146,13 +154,12 @@ public class TreeBean {
 	}
 
 	/**
-	 * Sets PROJECT_ID attribute to "default" and cleans tree and
-	 * node to show
-	 * Must be called at participant logout
+	 * Sets PROJECT_ID attribute to DEFAULT_PROJECT_ID and cleans tree and node
+	 * to show Must be called at participant logout
 	 */
 	public void cleanTreeDisplay() {
 		this.webSessionService.setAttribute(WebSessionService.PROJECT_ID,
-				"default");
+				DEFAULT_PROJECT_ID);
 		this.buildTreeModel();
 	}
 
@@ -180,8 +187,14 @@ public class TreeBean {
 	public List<SelectItem> getModesList() {
 		ArrayList<SelectItem> modesList = new ArrayList<SelectItem>();
 
-		modesList.add(new SelectItem(TASKS_MODE, "Tasks"));
-		modesList.add(new SelectItem(ROLES_MODE, "Roles"));
+		ResourceBundle bundle = ResourceBundle.getBundle(
+				"wilos.resources.messages", FacesContext.getCurrentInstance()
+						.getApplication().getDefaultLocale());
+
+		modesList.add(new SelectItem(TASKS_MODE, bundle
+				.getString("navigation.tree.checkboxlabel.tasks")));
+		modesList.add(new SelectItem(ROLES_MODE, bundle
+				.getString("navigation.tree.checkboxlabel.roles")));
 
 		return modesList;
 	}
@@ -210,7 +223,7 @@ public class TreeBean {
 		ResourceBundle bundle = ResourceBundle.getBundle(
 				"wilos.resources.messages", FacesContext.getCurrentInstance()
 						.getApplication().getDefaultLocale());
-		projectsList.add(0, new SelectItem("default", bundle
+		projectsList.add(0, new SelectItem(DEFAULT_PROJECT_ID, bundle
 				.getString("navigation.tree.defaulttreenodetext")));
 		return projectsList;
 	}
@@ -351,7 +364,8 @@ public class TreeBean {
 	}
 
 	public Boolean getLoadTree() {
-		if (this.projectId != null && !this.projectId.equals("default"))
+		if (this.projectId != null
+				&& !this.projectId.equals(DEFAULT_PROJECT_ID))
 			this.loadTree = false;
 		else
 			this.loadTree = true;
@@ -418,7 +432,8 @@ public class TreeBean {
 	}
 
 	public boolean getHideRadio() {
-		if (this.projectId != null && !this.projectId.equals("default"))
+		if (this.projectId != null
+				&& !this.projectId.equals(DEFAULT_PROJECT_ID))
 			this.hideRadio = true;
 		else
 			this.hideRadio = false;
