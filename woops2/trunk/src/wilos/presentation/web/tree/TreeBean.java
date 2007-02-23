@@ -106,17 +106,11 @@ public class TreeBean {
 	}
 
 	public void refreshProjectTree() {
-		this.buildModel();
+		this.buildTreeModel();
 	}
 
-	private void buildModel() {
+	private void buildTreeModel() {
 		if (this.projectId != null && !this.projectId.equals("default")) {
-			// Put into the session the current project used.
-			this.webSessionService.setAttribute(WebSessionService.PROJECT_ID,
-					this.projectId);
-
-			// Retrieve the entire project.
-			this.project = this.projectService.getProject(this.projectId);
 			ProjectNode projectNode;
 			if (this.selectedMode.equals(TASKS_MODE))
 				projectNode = new ProjectNode(this.project, true, treeMap);
@@ -131,7 +125,14 @@ public class TreeBean {
 
 	public void changeTreeActionListener(ValueChangeEvent evt) {
 		this.projectId = (String) evt.getNewValue();
-		this.buildModel();
+		// Put into the session the current project used.
+		this.webSessionService.setAttribute(WebSessionService.PROJECT_ID,
+				this.projectId);
+
+		// Retrieve the entire project.
+		this.project = this.projectService.getProject(this.projectId);
+
+		this.buildTreeModel();
 
 		if (this.projectId.length() > 0)
 			this.selectNodeToShow(this.projectId, WilosObjectNode.PROJECTNODE);
@@ -161,7 +162,7 @@ public class TreeBean {
 
 	public void changeModeActionListener(ValueChangeEvent evt) {
 		this.selectedMode = (String) evt.getNewValue();
-		this.buildModel();
+		this.buildTreeModel();
 	}
 
 	public List<SelectItem> getModesList() {
@@ -188,8 +189,8 @@ public class TreeBean {
 					.getProjectsForAParticipant(participant);
 			for (Project project : projects.keySet()) {
 				if (projects.get(project)) {
-					this.addSelectItemToList(projectsList,
-							new SelectItem(project.getId(), project.getConcreteName()));
+					this.addSelectItemToList(projectsList, new SelectItem(
+							project.getId(), project.getConcreteName()));
 				}
 			}
 		}
@@ -203,22 +204,28 @@ public class TreeBean {
 	}
 
 	/* Private methods. */
-	
+
 	/**
-	 * Inserts the SelectItem _si representing a project into the list used by the combo
-	 * @param _projectsList the projectsList
-	 * @param _si the SelectItem
+	 * Inserts the SelectItem _si representing a project into the list used by
+	 * the combo
+	 *
+	 * @param _projectsList
+	 *            the projectsList
+	 * @param _si
+	 *            the SelectItem
 	 */
-	private void addSelectItemToList(List <SelectItem> _projectsList, SelectItem _si) {
+	private void addSelectItemToList(List<SelectItem> _projectsList,
+			SelectItem _si) {
 		if (_projectsList.size() == 0)
-			_projectsList.add(_si) ;
+			_projectsList.add(_si);
 		else {
-			int i ;
-			//inserting the project in an alphabetically ordered list
-			for (i = 0 ; i < _projectsList.size()
-							&& _si.getLabel().compareTo(_projectsList.get(i).getLabel()) > 0 ;
-							i++) {}
-			_projectsList.add(i, _si) ;
+			int i;
+			// inserting the project in an alphabetically ordered list
+			for (i = 0; i < _projectsList.size()
+					&& _si.getLabel()
+							.compareTo(_projectsList.get(i).getLabel()) > 0; i++) {
+			}
+			_projectsList.add(i, _si);
 		}
 	}
 
@@ -236,48 +243,56 @@ public class TreeBean {
 			if (_pageId.equals(WilosObjectNode.ACTIVITYNODE)) {
 				ConcreteActivityViewerBean av = (ConcreteActivityViewerBean) context
 						.getApplication().getVariableResolver()
-						.resolveVariable(context, WilosObjectNode.ACTIVITYNODE + "Bean");
-				
+						.resolveVariable(context,
+								WilosObjectNode.ACTIVITYNODE + "Bean");
+
 				// recover the object in the HashMap for the viewer
 				ConcreteActivity ca = (ConcreteActivity) treeMap.get(_objectId);
 				av.setConcreteActivity(ca);
-				
+
 				mb.changePage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.CONCRETETASKNODE)) {
 				ConcreteTaskViewerBean ctv = (ConcreteTaskViewerBean) context
 						.getApplication().getVariableResolver()
-						.resolveVariable(context, WilosObjectNode.CONCRETETASKNODE + "Bean");
-				
+						.resolveVariable(context,
+								WilosObjectNode.CONCRETETASKNODE + "Bean");
+
 				// recover the object in the HashMap for the viewer
-				ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) treeMap.get(_objectId);
+				ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) treeMap
+						.get(_objectId);
 				ctv.setConcreteTaskDescriptor(ctd);
-				
+
 				mb.changePage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.CONCRETEROLENODE)) {
 				ConcreteRoleViewerBean crv = (ConcreteRoleViewerBean) context
 						.getApplication().getVariableResolver()
-						.resolveVariable(context, WilosObjectNode.CONCRETEROLENODE + "Bean");
-				
+						.resolveVariable(context,
+								WilosObjectNode.CONCRETEROLENODE + "Bean");
+
 				// recover the object in the HashMap for the viewer
-				ConcreteRoleDescriptor crd = (ConcreteRoleDescriptor) treeMap.get(_objectId);
+				ConcreteRoleDescriptor crd = (ConcreteRoleDescriptor) treeMap
+						.get(_objectId);
 				crv.setConcreteRoleDescriptor(crd);
-				
+
 				mb.changePage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.ITERATIONNODE)) {
 				ConcreteIterationViewerBean iv = (ConcreteIterationViewerBean) context
 						.getApplication().getVariableResolver()
-						.resolveVariable(context, WilosObjectNode.ITERATIONNODE + "Bean");
-				
+						.resolveVariable(context,
+								WilosObjectNode.ITERATIONNODE + "Bean");
+
 				// recover the object in the HashMap for the viewer
-				ConcreteIteration ci = (ConcreteIteration) treeMap.get(_objectId);
+				ConcreteIteration ci = (ConcreteIteration) treeMap
+						.get(_objectId);
 				iv.setConcreteIteration(ci);
 
 				mb.changePage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.PHASENODE)) {
 				ConcretePhaseViewerBean pb = (ConcretePhaseViewerBean) context
 						.getApplication().getVariableResolver()
-						.resolveVariable(context, WilosObjectNode.PHASENODE + "Bean");
-				
+						.resolveVariable(context,
+								WilosObjectNode.PHASENODE + "Bean");
+
 				// recover the object in the HashMap for the viewer
 				ConcretePhase cp = (ConcretePhase) treeMap.get(_objectId);
 				pb.setConcretePhase(cp);
@@ -286,8 +301,9 @@ public class TreeBean {
 			} else if (_pageId.equals(WilosObjectNode.PROJECTNODE)) {
 				ProjectViewerBean p = (ProjectViewerBean) context
 						.getApplication().getVariableResolver()
-						.resolveVariable(context, WilosObjectNode.PROJECTNODE + "Bean");
-				
+						.resolveVariable(context,
+								WilosObjectNode.PROJECTNODE + "Bean");
+
 				// recover the object in the HashMap for the viewer
 				Project proj = (Project) treeMap.get(_objectId);
 				p.setProject(proj);

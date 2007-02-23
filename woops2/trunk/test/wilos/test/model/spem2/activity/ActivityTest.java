@@ -14,12 +14,6 @@ import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.guide.Guidance;
 
-/**
- * @author Sebastien
- *
- * This class represents the class test of the Activity class.
- *
- */
 public class ActivityTest {
 
 	private Activity activity;

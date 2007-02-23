@@ -16,6 +16,7 @@ import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
+import wilos.presentation.web.tree.TreeBean;
 import wilos.utils.Constantes.State;
 
 public class ConcreteTaskViewerBean {
@@ -99,8 +100,8 @@ public class ConcreteTaskViewerBean {
 				.getAttribute(WebSessionService.WILOS_USER_ID);
 		Participant participant = this.participantService
 				.getParticipant(wilosUserId);
-		
-		return (this.concreteTaskDescriptor.getState().equals(State.CREATED)&& this.concreteTaskDescriptorService
+
+		return (this.concreteTaskDescriptor.getState().equals(State.CREATED) && this.concreteTaskDescriptorService
 				.affectedvisible(this.concreteTaskDescriptor, participant));
 
 	}
@@ -113,16 +114,32 @@ public class ConcreteTaskViewerBean {
 	public void startActionListener(ActionEvent event) {
 		this.concreteTaskDescriptorService
 				.startConcreteTaskDescriptor(this.concreteTaskDescriptor);
+		FacesContext context = FacesContext.getCurrentInstance();
+		TreeBean treeBean = (TreeBean) context.getApplication()
+				.getVariableResolver().resolveVariable(context, "TreeBean");
+		treeBean.refreshProjectTree();
 	}
 
 	public void stopActionListener(ActionEvent event) {
 		this.concreteTaskDescriptorService
 				.finishConcreteTaskDescriptor(this.concreteTaskDescriptor);
+
+		// Refresh the treebean.
+		FacesContext context = FacesContext.getCurrentInstance();
+		TreeBean treeBean = (TreeBean) context.getApplication()
+				.getVariableResolver().resolveVariable(context, "TreeBean");
+		treeBean.refreshProjectTree();
 	}
 
 	public void suspendedActionListener(ActionEvent event) {
 		this.concreteTaskDescriptorService
 				.suspendConcreteTaskDescriptor(this.concreteTaskDescriptor);
+
+		// Refresh the treebean.
+		FacesContext context = FacesContext.getCurrentInstance();
+		TreeBean treeBean = (TreeBean) context.getApplication()
+				.getVariableResolver().resolveVariable(context, "TreeBean");
+		treeBean.refreshProjectTree();
 	}
 
 	/**
@@ -193,9 +210,12 @@ public class ConcreteTaskViewerBean {
 	 */
 	public boolean getVisibleModifiable() {
 		this.visibleModifiable = false;
-		if (!this.getVisibleAffected() && !this.getVisibleStart()
-				&& !this.concreteTaskDescriptor.getState().equals(State.FINISHED)
-				&& !this.concreteTaskDescriptor.getState().equals(State.SUSPENDED)
+		if (!this.getVisibleAffected()
+				&& !this.getVisibleStart()
+				&& !this.concreteTaskDescriptor.getState().equals(
+						State.FINISHED)
+				&& !this.concreteTaskDescriptor.getState().equals(
+						State.SUSPENDED)
 				&& this.concreteTaskDescriptor.getState().equals(State.STARTED)) {
 
 			this.visibleModifiable = true;
