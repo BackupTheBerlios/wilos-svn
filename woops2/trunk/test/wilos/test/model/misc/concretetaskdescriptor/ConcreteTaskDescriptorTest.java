@@ -1,15 +1,24 @@
 package wilos.test.model.misc.concretetaskdescriptor;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.text.ParseException;
 import java.util.Date;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.utils.Constantes;
 import wilos.utils.Constantes.State;
 
-public class ConcreteTaskDescriptorTest extends TestCase {
+public class ConcreteTaskDescriptorTest {
 
 	private ConcreteTaskDescriptor concreteTaskDescriptor ;
 
@@ -32,13 +41,8 @@ public class ConcreteTaskDescriptorTest extends TestCase {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp() ;
+	@Before
+	public void setUp() {
 		this.concreteTaskDescriptor = new ConcreteTaskDescriptor() ;
 		this.concreteTaskDescriptor.setConcreteName(CONCRETE_NAME);
 		this.concreteTaskDescriptor.setAccomplishedTime(ACCOMPLISHED_TIME);
@@ -46,15 +50,12 @@ public class ConcreteTaskDescriptorTest extends TestCase {
 		this.concreteTaskDescriptor.setPlannedFinishingDate(this.date);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown() ;
+	@After
+	public void tearDown() {
+		//None
 	}
 
+	@Test
 	public void testClone () {
 		try{
 			assertEquals(this.concreteTaskDescriptor, this.concreteTaskDescriptor.clone()) ;
@@ -64,6 +65,7 @@ public class ConcreteTaskDescriptorTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testHashCode() {
 		ConcreteTaskDescriptor ctd = new ConcreteTaskDescriptor();
 		ctd.setConcreteName(CONCRETE_NAME);
@@ -76,6 +78,7 @@ public class ConcreteTaskDescriptorTest extends TestCase {
 		assertEquals(this.concreteTaskDescriptor.hashCode(),ctd.hashCode());
 	}
 
+	@Test
 	public void testAddTaskDescriptor() {
 		TaskDescriptor taskDescriptor = new TaskDescriptor();
 		this.concreteTaskDescriptor.addTaskDescriptor(taskDescriptor);
@@ -88,6 +91,7 @@ public class ConcreteTaskDescriptorTest extends TestCase {
 		System.out.println(this.concreteTaskDescriptor.getPlannedFinishingDate());
 	}
 
+	@Test
 	public void testRemoveTaskDescriptor() {
 		TaskDescriptor taskDescriptor = new TaskDescriptor();
 

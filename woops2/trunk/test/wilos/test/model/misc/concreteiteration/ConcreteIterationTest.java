@@ -1,17 +1,21 @@
-/**
- * 
- */
 package wilos.test.model.misc.concreteiteration;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.model.spem2.iteration.Iteration;
 
-/**
- * @author Sebastien
- * 
- */
-public class ConcreteIterationTest extends TestCase {
+
+public class ConcreteIterationTest {
 
 	private ConcreteIteration concreteIteration;
 
@@ -21,30 +25,18 @@ public class ConcreteIterationTest extends TestCase {
 
 	public static final Boolean IS_OPTIONAL = true ;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp();
+	@Before
+	public void setUp() {
 		this.concreteIteration = new ConcreteIteration();
 		this.concreteIteration.setConcreteName(CONCRETENAME);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@After
+	public void tearDown() {
+		//None
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.model.misc.concreteiteration.ConcreteIteration#hashCode()}.
-	 */
+	@Test
 	public void testHashCode() {
 		
 		// Rk: the setUp method is called here.
@@ -66,10 +58,7 @@ public class ConcreteIterationTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.model.misc.concreteiteration.ConcreteIteration#equals(java.lang.Object)}.
-	 */
+	@Test
 	public void testEqualsObject() {
 		
 		// Rk: the setUp method is called here.
@@ -91,10 +80,7 @@ public class ConcreteIterationTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.model.misc.concreteiteration.ConcreteIteration#clone()}.
-	 */
+	@Test
 	public void testClone() {
 		
 		// Rk: the setUp method is called here.
@@ -121,10 +107,7 @@ public class ConcreteIterationTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.model.misc.concreteiteration.ConcreteIteration#addIteration(wilos.model.spem2.iteration.Iteration)}.
-	 */
+	@Test
 	public void testAddIteration() {
 
 		// Rk: the setUp method is called here.
@@ -141,10 +124,7 @@ public class ConcreteIterationTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.model.misc.concreteiteration.ConcreteIteration#removeIteration(wilos.model.spem2.iteration.Iteration)}.
-	 */
+	@Test
 	public void testRemoveIteration() {
 
 		// Rk: the setUp method is called here.

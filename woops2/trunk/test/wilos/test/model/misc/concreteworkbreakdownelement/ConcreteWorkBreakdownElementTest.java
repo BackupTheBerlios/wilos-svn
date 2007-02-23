@@ -1,17 +1,27 @@
 package wilos.test.model.misc.concreteworkbreakdownelement;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.text.ParseException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkOrder;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 import wilos.utils.Constantes;
 
-public class ConcreteWorkBreakdownElementTest extends TestCase {
+public class ConcreteWorkBreakdownElementTest {
 
 	private ConcreteWorkBreakdownElement concreteWorkBreakdownElement ;
 
@@ -35,33 +45,22 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp() ;
+	@Before
+	public void setUp() {
 		this.concreteWorkBreakdownElement = new ConcreteWorkBreakdownElement() ;
 		this.concreteWorkBreakdownElement.setConcreteName(CONCRETE_NAME);
 		this.concreteWorkBreakdownElement.setPlannedTime(PLANNED_TIME);
 		this.concreteWorkBreakdownElement.setPlannedFinishingDate(this.date);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown() ;
+	@After
+	public void tearDown() {
+		//FIXME
 		//this.concreteWorkBreakdownElement.getConcretePredecessors().clear();
 		//this.concreteWorkBreakdownElement.getConcreteSuccessors().clear();
 	}
 
-	/**
-	 * Test method for {@link wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement#clone()}.
-	 */
+	@Test
 	public void testClone() {
 		try{
 			assertEquals(this.concreteWorkBreakdownElement, this.concreteWorkBreakdownElement.clone()) ;
@@ -71,9 +70,7 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 		}
 	}
 
-	/**
-	 * Test method for {@link wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement#hashCode()}.
-	 */
+	@Test
 	public void testHashCode() {
 
 		ConcreteWorkBreakdownElement cwbe = new ConcreteWorkBreakdownElement() ;
@@ -86,9 +83,7 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 		assertEquals(this.concreteWorkBreakdownElement.hashCode(), cwbe.hashCode()) ;
 	}
 
-	/**
-	 * Test method for {@link wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement#equals(java.lang.Object)}.
-	 */
+	@Test
 	public void testEqualsObject() {
 
 		ConcreteWorkBreakdownElement cwbe = new ConcreteWorkBreakdownElement() ;
@@ -106,6 +101,7 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 		assertFalse(this.concreteWorkBreakdownElement.equals(cwbe2)) ;
 	}
 
+	@Test
 	public void testAddWorkBreakdownElement() {
 		// Rk: the setUp method is called here.
 
@@ -118,6 +114,7 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public void testRemoveWorkBreakdownElement() {
 		// Rk: the setUp method is called here.
 
@@ -135,10 +132,7 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 	
-	/*
-	 * a modifier pour prendre en compte des concreteWorkOrder
-	 * 
-	 */
+	@Test
 	public final void testAddConcreteSuccessor() {
 		// Rk: the setUp method is called here.
 
@@ -151,6 +145,7 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public final void testAddConcretePredecessor() {
 		// Rk: the setUp method is called here.
 
@@ -163,6 +158,7 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public final void testRemoveConcreteSuccessor() {
 		// Rk: the setUp method is called here.
 
@@ -176,6 +172,7 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public final void testRemoveConcretePredecessor() {
 		// Rk: the setUp method is called here.
 
@@ -189,6 +186,7 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 	
+	@Test
 	public final void testAddAllConcreteSuccessors() {
 		// Rk: the setUp method is called here.
 
@@ -211,6 +209,7 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public final void testAddAllConcretePredecessors() {
 		// Rk: the setUp method is called here.
 
@@ -233,6 +232,7 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public final void testRemoveAllConcreteSuccessors() {
 		// Rk: the setUp method is called here.
 
@@ -256,6 +256,7 @@ public class ConcreteWorkBreakdownElementTest extends TestCase {
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public final void testRemoveAllConcretePredecessors() {
 		// Rk: the setUp method is called here.
 

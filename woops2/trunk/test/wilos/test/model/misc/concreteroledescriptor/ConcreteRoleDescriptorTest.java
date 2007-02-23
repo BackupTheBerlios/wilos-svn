@@ -1,16 +1,21 @@
 package wilos.test.model.misc.concreteroledescriptor;
 
 
+import static org.junit.Assert.*;
+
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.role.RoleDescriptor;
 
-public class ConcreteRoleDescriptorTest extends TestCase {
+public class ConcreteRoleDescriptorTest {
 
 	private ConcreteRoleDescriptor concreteRoleDescriptor ;
 
@@ -20,30 +25,18 @@ public static final String CONCRETENAME = "concreteName";
 
 	public static final Boolean IS_OPTIONAL = true ;
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp() ;
+	@Before
+	public void setUp() {
 		this.concreteRoleDescriptor = new ConcreteRoleDescriptor() ;
 		this.concreteRoleDescriptor.setConcreteName(CONCRETENAME);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown() ;
+	@After
+	public void tearDown() {
+		//None
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.model.misc.concreteRoleDescriptor.ConcreteRoleDescriptor#hashCode()}.
-	 */
+	@Test
 	public void testHashCode() {
 
 		// Rk: the setUp method is called here.
@@ -65,10 +58,7 @@ public static final String CONCRETENAME = "concreteName";
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.model.misc.concreteRoleDescriptor.ConcreteRoleDescriptor#equals(java.lang.Object)}.
-	 */
+	@Test
 	public void testEqualsObject() {
 
 		// Rk: the setUp method is called here.
@@ -90,10 +80,7 @@ public static final String CONCRETENAME = "concreteName";
 		// Rk: the tearDown method is called here.
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.model.misc.concreteRoleDescriptor.ConcreteRoleDescriptor#clone()}.
-	 */
+	@Test
 	public void testClone() {
 
 		// Rk: the setUp method is called here.
@@ -120,6 +107,7 @@ public static final String CONCRETENAME = "concreteName";
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public void testAddParticipant() {
 		// Rk: the setUp method is called here.
 
@@ -131,6 +119,7 @@ public static final String CONCRETENAME = "concreteName";
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public void testRemoveParticipant() {
 		// Rk: the setUp method is called here.
 
@@ -151,8 +140,8 @@ public static final String CONCRETENAME = "concreteName";
 		// Rk: the tearDown method is called here.
 	}
 
-	/**********/
-
+	
+	@Test
 	public void testAddRoleDescriptor() {
 		// Rk: the setUp method is called here.
 
@@ -164,6 +153,7 @@ public static final String CONCRETENAME = "concreteName";
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public void testRemoveRoleDescriptor() {
 		// Rk: the setUp method is called here.
 
@@ -183,8 +173,7 @@ public static final String CONCRETENAME = "concreteName";
 		// Rk: the tearDown method is called here.
 	}
 
-	/**********/
-
+	@Test
 	public void testAddConcreteTaskDescriptor() {
 		// Rk: the setUp method is called here.
 
@@ -200,6 +189,7 @@ public static final String CONCRETENAME = "concreteName";
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public void testRemoveConcreteTaskDescriptor() {
 		// Rk: the setUp method is called here.
 
@@ -218,6 +208,7 @@ public static final String CONCRETENAME = "concreteName";
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public void testAddAllConcreteTaskDescriptors() {
 		// Rk: the setUp method is called here.
 
@@ -247,6 +238,7 @@ public static final String CONCRETENAME = "concreteName";
 		// Rk: the tearDown method is called here.
 	}
 
+	@Test
 	public void testRemoveAllConcreteTaskDescriptors() {
 		// Rk: the setUp method is called here.
 
