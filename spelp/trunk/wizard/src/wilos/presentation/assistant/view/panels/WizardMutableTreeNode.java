@@ -7,6 +7,10 @@ import wilos.model.spem2.element.Element;
 
 public class WizardMutableTreeNode extends DefaultMutableTreeNode {
 	
+//	public boolean equals(Object obj) {
+//		return (this.getUserObject().equals(this.getUserObject()));
+//	}
+
 	public WizardMutableTreeNode(Object element) {
 		super();
 		this.userObject = element;

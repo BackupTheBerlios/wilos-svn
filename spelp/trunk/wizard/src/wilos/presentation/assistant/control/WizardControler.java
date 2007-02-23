@@ -12,12 +12,19 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.MutableTreeNode;
 
 import org.jdesktop.swingx.JXTree;
 
+import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
+import wilos.model.misc.concreteiteration.ConcreteIteration;
+import wilos.model.misc.concretephase.ConcretePhase;
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
-import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
+import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
+import wilos.model.spem2.element.Element;
 import wilos.model.spem2.task.Step;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
@@ -56,10 +63,10 @@ public class WizardControler {
 			public void run() {
 				while (true){
 					try {
+						Thread.sleep(WizardControler.getInstance().getTimeToRefresh());
 						WizardControler.getInstance().connectToServer(this);
 						updateTree();
 						WizardControler.getInstance().disconnectToServer(this);
-						Thread.sleep(WizardControler.getInstance().getTimeToRefresh());
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -77,21 +84,76 @@ public class WizardControler {
 		WizardTreeModel thisModel = (WizardTreeModel) treePanel.getTree().getModel() ;
 		DefaultMutableTreeNode newRoot = (DefaultMutableTreeNode)newModel.getRoot();
 		DefaultMutableTreeNode thisRoot = (DefaultMutableTreeNode)thisModel.getRoot();
-		int nbChild = newRoot.getChildCount() ;
-		for (int i = 0 ; i < nbChild ; i ++){
-			WizardMutableTreeNode node = (WizardMutableTreeNode)newRoot.getNextNode() ;
-			WizardMutableTreeNode node2 = (WizardMutableTreeNode)thisRoot.getNextNode() ;
-			trtNodes(node,node2);
+		int i = 0 ;
+		for ( ; i < newRoot.getChildCount() && i < thisRoot.getChildCount() ; i ++) {
+			trtNode((WizardMutableTreeNode)newRoot.getChildAt(i),(WizardMutableTreeNode)thisRoot.getChildAt(i)) ;
 		}
-		
+		if (i == thisRoot.getChildCount()){
+			for ( ; i < newRoot.getChildCount() ; i ++) {
+				thisRoot.add((WizardMutableTreeNode) newRoot.getChildAt(i));
+			}
+			treePanel.getTree().treeDidChange() ;
+		}
 	}
 	
-	private void trtNodes(WizardMutableTreeNode newNode, WizardMutableTreeNode actualNode) {
-//		ConcreteWorkBreakdownElement bde1 = (ConcreteWorkBreakdownElement) newNode.getUserObject();
-//		ConcreteWorkBreakdownElement bde2 = (ConcreteWorkBreakdownElement) actualNode.getUserObject();
-//		if (bde1.getBreakdownElement().getGuid().equals(bde2.getBreakdownElement().getGuid())){
-//			System.out.println("couou");
-//		}
+	private String getGuid(Object userObject){
+		if (userObject instanceof ConcreteRoleDescriptor)
+			return ((ConcreteRoleDescriptor) userObject).getRoleDescriptor().getGuid();
+		else if (userObject instanceof Project)
+			return ((Project) userObject).getConcreteName();
+		else if (userObject instanceof ConcreteIteration)
+			return ((ConcreteIteration) userObject).getIteration().getGuid();
+		else if (userObject instanceof ConcretePhase)
+			return ((ConcretePhase) userObject).getPhase().getGuid();
+		else if (userObject instanceof ConcreteActivity)
+			return ((ConcreteActivity) userObject).getActivity().getGuid();
+		else if (userObject instanceof ConcreteTaskDescriptor) 
+			return ((ConcreteTaskDescriptor) userObject).getTaskDescriptor().getGuid();
+		else if (userObject instanceof ConcreteBreakdownElement)
+			return ((ConcreteBreakdownElement) userObject).getBreakdownElement().getGuid() ;
+		else if (userObject instanceof Element)
+			return ((Element)userObject).getGuid();
+		else return "" ;
+	}
+	
+	private String getState (Object userObject) {
+		if (userObject instanceof ConcreteTaskDescriptor){
+			return ((ConcreteTaskDescriptor) userObject).getState();
+		}
+		return "" ;
+	}
+
+	private void trtNode(WizardMutableTreeNode newNode, WizardMutableTreeNode actualNode) {
+		//System.out.println(newNode.getUserObject() + " " + actualNode.getUserObject());
+		WizardMutableTreeNode tmpNode = null;
+		String guid1 = getGuid(newNode.getUserObject()) ;
+		String guid2 = getGuid(actualNode.getUserObject()) ;
+				
+		
+		for (int i = 0 ; i < newNode.getChildCount() ; i ++) {
+			if (guid1.equals(guid2)) {
+				if (getState(newNode.getUserObject()) != ""){
+					System.out.println(newNode + " " + getState(newNode.getUserObject()) + actualNode + " "+ getState(actualNode.getUserObject()) );
+					if(!(getState(newNode.getUserObject()).equals(getState(actualNode.getUserObject())))){
+						ConcreteTaskDescriptor ctdactual = (ConcreteTaskDescriptor) actualNode.getUserObject();
+						ConcreteTaskDescriptor ctdnew = (ConcreteTaskDescriptor) newNode.getUserObject();
+						ctdactual.setState(ctdnew.getState());
+						treePanel.getTree().treeDidChange();
+					}
+				}
+				else {
+					WizardMutableTreeNode tnew = (WizardMutableTreeNode) newNode.getChildAt(i);
+					WizardMutableTreeNode tactual = (WizardMutableTreeNode) actualNode.getChildAt(i);
+					trtNode(tnew,tactual) ;
+					//System.out.println(actualNode +" " + newNode);
+				}
+			}
+			else {
+				actualNode = new WizardMutableTreeNode(newNode.getUserObject()) ;
+				treePanel.getTree().treeDidChange();
+			}
+		}
+		
 	}
 
 	public long getTimeToRefresh() {
