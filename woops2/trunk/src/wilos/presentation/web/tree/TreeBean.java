@@ -149,14 +149,12 @@ public class TreeBean {
 	/**
 	 * Sets PROJECT_ID attribute to "default" and cleans tree and
 	 * node to show
-	 * Must be called at participant login
+	 * Must be called at participant logout
 	 */
 	public void cleanTreeDisplay() {
-		//TODO maj attribut project session => default
 		this.webSessionService.setAttribute(WebSessionService.PROJECT_ID,
 				"default");
 		this.buildTreeModel();
-		this.selectNodeToShow("default", "wilos");
 	}
 
 	public void selectNodeActionListener(ActionEvent evt) {
