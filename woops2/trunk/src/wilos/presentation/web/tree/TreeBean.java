@@ -124,25 +124,39 @@ public class TreeBean {
 	}
 
 	public void changeTreeActionListener(ValueChangeEvent evt) {
-		if (((String) evt.getNewValue()).compareTo("default") != 0) {
-			this.projectId = (String) evt.getNewValue();
-			// Put into the session the current project used.
-			this.webSessionService.setAttribute(WebSessionService.PROJECT_ID,
-					this.projectId);
-	
+		String nodeTypeToShow = "default" ;
+		
+		this.projectId = (String) evt.getNewValue();
+		// Put into the session the current project used.
+		this.webSessionService.setAttribute(WebSessionService.PROJECT_ID,
+				this.projectId);
+
+		if (!this.projectId.equals("default")) {
+
 			// Retrieve the entire project.
 			this.project = this.projectService.getProject(this.projectId);
-	
-			this.buildTreeModel();
-	
-			if (this.projectId.length() > 0)
-				this.selectNodeToShow(this.projectId, WilosObjectNode.PROJECTNODE);
-		}
-		else {
-			this.buildTreeModel() ;
 			
-			this.selectNodeToShow(null, "wilos") ;
+			nodeTypeToShow = WilosObjectNode.PROJECTNODE ;
 		}
+		
+		this.buildTreeModel();
+
+		if (this.projectId.length() > 0)
+			this.selectNodeToShow(this.projectId, nodeTypeToShow);
+		
+	}
+
+	/**
+	 * Sets PROJECT_ID attribute to "default" and cleans tree and
+	 * node to show
+	 * Must be called at participant login
+	 */
+	public void cleanTreeDisplay() {
+		//TODO maj attribut project session => default
+		this.webSessionService.setAttribute(WebSessionService.PROJECT_ID,
+				"default");
+		this.buildTreeModel();
+		this.selectNodeToShow("default", "wilos");
 	}
 
 	public void selectNodeActionListener(ActionEvent evt) {
@@ -215,7 +229,7 @@ public class TreeBean {
 	/**
 	 * Inserts the SelectItem _si representing a project into the list used by
 	 * the combo
-	 *
+	 * 
 	 * @param _projectsList
 	 *            the projectsList
 	 * @param _si
@@ -237,7 +251,7 @@ public class TreeBean {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param _objectId
 	 * @param _pageId
 	 *            node selection function
@@ -246,7 +260,7 @@ public class TreeBean {
 		FacesContext context = FacesContext.getCurrentInstance();
 		MenuBean mb = (MenuBean) context.getApplication().getVariableResolver()
 				.resolveVariable(context, "menu");
-		if (_objectId != null && _pageId != null) {		
+		if (_objectId != null && _pageId != null) {
 			if (_pageId.equals(WilosObjectNode.ACTIVITYNODE)) {
 				ConcreteActivityViewerBean av = (ConcreteActivityViewerBean) context
 						.getApplication().getVariableResolver()
@@ -317,14 +331,9 @@ public class TreeBean {
 
 				mb.changePage(_pageId);
 			} else {
-				// didnt found the node's class
-				new ClassNotFoundException("coulnd't found the node class");
+				// displays blank page
+				mb.changePage("wilos");
 			}
-		}
-		// _objectId or _pageId null -> display blank page
-		else {
-			if (_pageId.equals("wilos"))
-				mb.changePage("wilos") ;
 		}
 	}
 
