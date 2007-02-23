@@ -15,7 +15,9 @@ import javax.faces.event.ActionEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.spem2.process.ProcessService;
+import wilos.model.misc.project.Project;
 import wilos.model.spem2.process.Process;
 
 /**
@@ -27,6 +29,8 @@ import wilos.model.spem2.process.Process;
 public class ProcessBean {
 
 	private ProcessService processService ;
+	
+	private ProjectService projectService;
 
 	private List<HashMap<String, Object>> processesList ;
 
@@ -38,8 +42,6 @@ public class ProcessBean {
 
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
-	private boolean isEditable = false;
-
 	public ProcessBean() {
 
 	}
@@ -47,21 +49,30 @@ public class ProcessBean {
 	public void deleteProcess(ActionEvent e) {
 		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
 		FacesMessage message = new FacesMessage() ;
+		FacesContext facesContext = FacesContext.getCurrentInstance() ;
+		boolean allowed = true;
 		
 		String processId = (String)FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("processId");
 		for(Process process : this.processService.getProcessesList()){
 			if(process.getId().equals(processId)){
-				if(process.getProjects().size() == 0){
+				for(Project project : this.projectService.getAllProjects()){
+					if(project.getProcess()!= null){
+						if(project.getProcess().getId().equals(process.getId())){
+							allowed = false;
+							break;
+						}
+					}
+				}
+				//if(process.getProjects() == null || process.getProjects().isEmpty()){
+				if(allowed){
 					this.processService.getProcessDao().deleteProcess(process);
 					message.setSummary(bundle.getString("component.process.management.deletiondone")) ;
-					message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
-					FacesContext facesContext = FacesContext.getCurrentInstance() ;
+					message.setSeverity(FacesMessage.SEVERITY_ERROR) ;					
 					facesContext.addMessage(null, message) ;
 				}
 				else{
 					message.setSummary(bundle.getString("component.process.management.deletionforbidden")) ;
 					message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
-					FacesContext facesContext = FacesContext.getCurrentInstance() ;
 					facesContext.addMessage(null, message) ;
 				}
 			}
@@ -74,7 +85,7 @@ public class ProcessBean {
 	 * @return the processesList.
 	 */
 	public List<HashMap<String, Object>> getProcessesList() {
-		 if(this.processesList == null){
+		 if(this.processesList == null || this.processesList.size()!=this.processService.getProcessesList().size()){
 			this.processesList = new ArrayList<HashMap<String, Object>>() ;
 			for(Process process : this.processService.getProcessesList()){
 				HashMap<String, Object> processDescription = new HashMap<String, Object>() ;
@@ -164,22 +175,23 @@ public class ProcessBean {
 		this.processService = _processService ;
 	}
 	
+
 	/**
-	 * Getter of isEditable.
+	 * Getter of projectService.
 	 *
-	 * @return the isEditable.
+	 * @return the projectService.
 	 */
-	public boolean getIsEditable() {
-		return this.isEditable ;
+	public ProjectService getProjectService() {
+		return this.projectService ;
 	}
 
 	/**
-	 * Setter of isEditable.
+	 * Setter of projectService.
 	 *
-	 * @param _isEditable The isEditable to set.
+	 * @param _projectService The projectService to set.
 	 */
-	public void setIsEditable(boolean _isEditable) {
-		this.isEditable = _isEditable ;
+	public void setProjectService(ProjectService _projectService) {
+		this.projectService = _projectService ;
 	}
 
 }
