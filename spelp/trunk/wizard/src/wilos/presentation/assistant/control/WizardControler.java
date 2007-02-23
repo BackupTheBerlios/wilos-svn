@@ -472,10 +472,10 @@ public class WizardControler {
 					WizardServicesProxy.startConcreteTaskDescriptor(taskId);
 					break;
 				case SUSPEND:
-					WizardServicesProxy.startConcreteTaskDescriptor(taskId);
+					WizardServicesProxy.suspendConcreteTaskDescriptor(taskId);
 					break;
 				case FINISH:
-					WizardServicesProxy.startConcreteTaskDescriptor(taskId);
+					WizardServicesProxy.stopConcreteTaskDescriptor(taskId);
 			}
 			WizardControler.getInstance().disconnectToServer(this);
 		}
