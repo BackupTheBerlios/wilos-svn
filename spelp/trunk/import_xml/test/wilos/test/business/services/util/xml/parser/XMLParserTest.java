@@ -29,6 +29,7 @@ public class XMLParserTest extends TestCase {
 	public static File pathScrumWithArte = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "scrum_with_ArteF.xml"); 
 	public static File pathEmptyFile = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "emptyFile.xml"); 
 	public static File pathItil = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "itil2.xml");
+	public static File crashingScrum = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "crashingScrum.xml");
 	
 	/**
 	 * Checks that the ProcessReturned is null if the file doesnt exist
@@ -644,10 +645,10 @@ public class XMLParserTest extends TestCase {
 										Guidance aGuidance = itGuide.next();
 										if ( ! aGuidance.getType().equals(Guidance.example) &&
 												! aGuidance.getType().equals(Guidance.template)) {
-											assertTrue(aGuidance.getDescription().length() > 0);
+											assertTrue(aGuidance.getDescription().length() > 0);	
 										}
 									}
-									// TODO Verifier le nombre de guidances attendues
+									// 5 Concepts, 5 Guidelines et 2 Templates
 									assertTrue(nbGuidances == 12);
 									
 								}
@@ -1174,7 +1175,134 @@ public class XMLParserTest extends TestCase {
 		assertTrue(cptTemplateVisionFound == 1);
 	}
 	
+	public void testOpenUPPlanTheProjectTaskDefinitionContains2ExamplesAnd3Templates () {
+		Process openUpProcess = XMLParser.getProcess(pathOPenUP);
+		Activity inceptionIterationAct = null;
+		Activity initiateProject = null;
+		TaskDescriptor planTheProject = null;
+		
+		// First Step, Stop on Inception Iteration
+		Iterator<BreakdownElement> itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
+		while (itTopLevelAct.hasNext()) {
+			BreakdownElement tmpBde = itTopLevelAct.next();
+			if (tmpBde.getPresentationName().equals("Inception Iteration [1..n]")) {
+				inceptionIterationAct = (Activity) tmpBde;
+			}
+		}
+		
+		assertTrue(inceptionIterationAct != null);
+		
+		// get the Activity Initiate Project
+		Iterator<BreakdownElement> itSecondLevelAct = inceptionIterationAct.getBreakdownElements().iterator();
+		while (itSecondLevelAct.hasNext()) {
+			BreakdownElement tmpBde = itSecondLevelAct.next();
+			if (tmpBde.getPresentationName().equals("Initiate Project")) {
+				initiateProject = (Activity) tmpBde;
+			}
+		}
+		
+		assertTrue(initiateProject != null);
+		
+		// get The Task Plan the Project
+		Iterator<BreakdownElement> itTaskDescriptor = initiateProject.getBreakdownElements().iterator();
+		while (itTaskDescriptor.hasNext()) {
+			BreakdownElement tmpBde = itTaskDescriptor.next();
+			if (tmpBde.getPresentationName().equals("Plan the Project")) {
+				planTheProject = (TaskDescriptor) tmpBde;
+			}
+		}
+		
+		assertTrue(planTheProject != null);
+		
+		assertTrue(planTheProject.getTaskDefinition() != null);
+		
+		int cptExampleFound = 0;
+		int cptTemplateFound = 0;
+		for (Guidance aGuidance : planTheProject.getTaskDefinition().getGuidances()) {
+			if (aGuidance.getType().equals(Guidance.example) && aGuidance.getPresentationName().equals("Project Plan")) {
+				assertTrue(aGuidance.getAttachment().equals("openup_basic/guidances/examples/resources/project_plan.doc"));
+				assertTrue(aGuidance.getDescription().equals(""));
+				cptExampleFound += 1;
+			}
+			if (aGuidance.getType().equals(Guidance.example) && aGuidance.getPresentationName().equals("Work Items List")) {
+				assertTrue(aGuidance.getAttachment().equals("openup_basic/guidances/examples/resources/ex_work_items_list.xls"));
+				assertTrue(aGuidance.getDescription().equals(""));
+				cptExampleFound += 1;
+			}
+			if (aGuidance.getType().equals(Guidance.template) && aGuidance.getPresentationName().equals("Work Items List")) {
+				assertTrue(aGuidance.getAttachment().equals("openup_basic/guidances/templates/resources/work_items_list.xls"));
+				assertTrue(aGuidance.getDescription().equals(""));
+				cptTemplateFound += 1;
+			}
+			if (aGuidance.getType().equals(Guidance.template) && aGuidance.getPresentationName().equals("Project Plan")) {
+				assertTrue(aGuidance.getAttachment().equals("openup_basic/guidances/templates/resources/project_plan.dot"));
+				assertTrue(aGuidance.getDescription().equals(""));
+				cptTemplateFound += 1;
+			}
+			if (aGuidance.getType().equals(Guidance.template) && aGuidance.getPresentationName().equals("Risk List")) {
+				assertTrue(aGuidance.getAttachment().equals("openup_basic/guidances/templates/resources/risk_list.xls"));
+				assertTrue(aGuidance.getDescription().equals(""));
+				cptTemplateFound += 1;
+			}
+		}
+		// Do we have what we want ?
+		assertTrue(cptExampleFound == 2);
+		assertTrue(cptTemplateFound == 3);
+	}
 	
+	
+	
+	
+	
+	/**
+	 * Checks that CrashingScrum cointains a not null Process
+	 *
+	 */
+	public void testThatCrashingScrumDoesntCrash() {
+		Process theProcess;
+		theProcess = XMLParser.getProcess(crashingScrum);
+		assertTrue(theProcess != null);
+	}
+	
+	/**
+	 * Checks that CrashingScrum contains two Phases and a roledesciptor.
+	 * Also Checks that the presentationNames are right and the the role descriptor
+	 * id linked to a role definition
+	 *
+	 */
+	public void testThatCrashingScrumContainsTheTwoExpectedPhasesAndARoleDescriptor() {
+		Process theProcess;
+		theProcess = XMLParser.getProcess(crashingScrum);
+		int nbPhases, nbRoleDescriptors, nbBdes;
+		
+		// The expected presentationNames
+		HashSet<String> presentationNames = new HashSet<String>();
+		presentationNames.add("Phase de préparation");
+		presentationNames.add("Phase des sprints");
+		presentationNames.add("Directeur Produit");
+		
+		// Counters init
+		nbPhases = 0;
+		nbRoleDescriptors = 0;
+		nbBdes = 0;
+		for (BreakdownElement bde : theProcess.getBreakdownElements()) {
+			if (bde instanceof Phase) {
+				nbPhases++;
+			}
+			if (bde instanceof RoleDescriptor) {
+				nbRoleDescriptors++;
+				assertTrue( ((RoleDescriptor) bde).getRoleDefinition() != null  );
+			}
+			nbBdes += 1;
+			
+			assertTrue(presentationNames.contains(bde.getPresentationName()));
+		}
+		
+		// Do we have 1 RD and 2 Phases and only 3 Bdes ?
+		assertTrue(nbRoleDescriptors == 1);
+		assertTrue(nbPhases == 2);
+		assertTrue(nbBdes == 3);
+	}
 	
 	/*
 	public void testGetProcess(){
