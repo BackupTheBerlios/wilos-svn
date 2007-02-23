@@ -18,7 +18,6 @@ public class InfoPanel extends JXPanel {
 
 	/**
 	 * This method initializes this
-	 * 
 	 */
 	private void initialize() {
 		this.setLayout(new BorderLayout());

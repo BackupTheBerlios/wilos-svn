@@ -14,9 +14,10 @@ import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.jdesktop.swingx.JXTree;
-import org.jdesktop.swingx.util.SwingWorker;
 
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
+import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.task.Step;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
@@ -24,7 +25,9 @@ import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 import wilos.presentation.assistant.view.main.ActionBar;
 import wilos.presentation.assistant.view.main.ContextualMenu;
 import wilos.presentation.assistant.view.panels.TreePanel;
+import wilos.presentation.assistant.view.panels.WizardMutableTreeNode;
 import wilos.presentation.assistant.view.panels.WizardStateMachine;
+import wilos.presentation.assistant.view.panels.WizardTreeModel;
 import wilos.presentation.assistant.webservices.WizardServicesProxy;
 import wilos.utils.Constantes;
 
@@ -66,10 +69,31 @@ public class WizardControler {
 		theThread.start();
 	}
 	
-	public void updateTree() {
+	public void updateTree () {
+		// recuperation de l'arbre sur le serveur
+		System.out.print("\ncoucou");
+		Participant p = WizardServicesProxy.getParticipant() ;
+		WizardTreeModel newModel = new WizardTreeModel(p,false);
+		WizardTreeModel thisModel = (WizardTreeModel) treePanel.getTree().getModel() ;
+		DefaultMutableTreeNode newRoot = (DefaultMutableTreeNode)newModel.getRoot();
+		DefaultMutableTreeNode thisRoot = (DefaultMutableTreeNode)thisModel.getRoot();
+		int nbChild = newRoot.getChildCount() ;
+		for (int i = 0 ; i < nbChild ; i ++){
+			WizardMutableTreeNode node = (WizardMutableTreeNode)newRoot.getNextNode() ;
+			WizardMutableTreeNode node2 = (WizardMutableTreeNode)thisRoot.getNextNode() ;
+			trtNodes(node,node2);
+		}
 		
 	}
 	
+	private void trtNodes(WizardMutableTreeNode newNode, WizardMutableTreeNode actualNode) {
+//		ConcreteWorkBreakdownElement bde1 = (ConcreteWorkBreakdownElement) newNode.getUserObject();
+//		ConcreteWorkBreakdownElement bde2 = (ConcreteWorkBreakdownElement) actualNode.getUserObject();
+//		if (bde1.getBreakdownElement().getGuid().equals(bde2.getBreakdownElement().getGuid())){
+//			System.out.println("couou");
+//		}
+	}
+
 	public long getTimeToRefresh() {
 		// TODO Auto-generated method stub
 		return 5000;
@@ -92,7 +116,7 @@ public class WizardControler {
 	 * this method will change the icon of the toolbar the thread must give this in parameter 
 	 * @param r
 	 */
-	public void disconnectToServer(Runnable r) {
+	public synchronized void disconnectToServer(Runnable r) {
 		listThread.remove(r);
 		if (listThread.size() == 0){
 			actionBar.getJLabelConnect().setIcon(ImagesService.getImageIcon("images.connection.idle"));

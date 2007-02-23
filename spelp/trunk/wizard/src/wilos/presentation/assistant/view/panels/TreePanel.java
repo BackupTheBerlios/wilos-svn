@@ -100,164 +100,7 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 	
 	public JXTree getTree (){
 		return tree;
-	}
-	
-	private class WizardMutableTreeNode extends DefaultMutableTreeNode {
-		
-		public WizardMutableTreeNode(Object element) {
-			super();
-			this.userObject = element;
-		}
-
-		public Object getUserObject() {
-			return userObject;
-		}
-		
-		public String toString() {
-//			if (userObject instanceof ConcreteRoleDescriptor)
-//				return ((ConcreteRoleDescriptor) userObject).getRoleDescriptor().getPresentationName();
-//			else if (userObject instanceof Project)
-//				return ((Project) userObject).getConcreteName();
-//			else if (userObject instanceof ConcreteIteration)
-//				return ((ConcreteIteration) userObject).getIteration().getPresentationName();
-//			else if (userObject instanceof ConcretePhase)
-//				return ((ConcretePhase) userObject).getPhase().getPresentationName();
-//			else if (userObject instanceof ConcreteActivity)
-//				return ((ConcreteActivity) userObject).getActivity().getPresentationName();
-//			else if (userObject instanceof ConcreteTaskDescriptor) 
-//				return ((ConcreteTaskDescriptor) userObject).getTaskDescriptor().getPresentationName();
-			if (userObject instanceof ConcreteBreakdownElement){
-				return ((ConcreteBreakdownElement) userObject).getConcreteName();
-			}
-			else if (userObject instanceof Element)
-				return ((Element)userObject).getName();
-			else
-				return "";
-		}
-	}
-	
-	private class WizardTreeModel extends DefaultTreeModel {
-		Participant participant;
-		//String root;
-		
-		public WizardTreeModel(Participant aParticipant) {
-			super(null);
-			this.participant = aParticipant;
-			initTree();
-		}
-		
-		// TODO : actuellement prise en compte d'une super activity a voir pour plusieurs
-		private ConcreteActivity getActivity (Set<ConcreteActivity> s){
-			ConcreteActivity ca = null ;
-			try {
-				ca = s.iterator().next();
-			}
-			catch(Exception e){
-				
-			}
-			
-			return ca ;
-		}
-		
-		// init tree initialize all the nodes of the jtree
-		private void initTree() {
-			TreePanel.this.tree.removeAll();
-			WizardStateMachine.getInstance().deleteAllStep() ;
-			HashMap<ConcreteActivity, WizardMutableTreeNode> mapActivity = new HashMap<ConcreteActivity, WizardMutableTreeNode>();
-			int idStep = 0 ;
-			this.root = new DefaultMutableTreeNode(participant.getName());
-			ArrayList<Step> tmp = new ArrayList<Step>();
-			Set<ConcreteRoleDescriptor> roles = participant.getConcreteRoleDescriptors();
-			
-			// browse all the concrete roles
-			for (ConcreteRoleDescriptor crd : roles) {
-				
-				DefaultMutableTreeNode precedent = null;
-				WizardMutableTreeNode rdWmt = new WizardMutableTreeNode(crd);
-				ConcreteActivity ca = getActivity(crd.getSuperConcreteActivities());
-				WizardMutableTreeNode nodeAct = null  ;
-				// getting all the superactivities from the roles
-				if (ca == null){
-					// if there is no super activity we add the role to the root
-					((DefaultMutableTreeNode)this.root).add(rdWmt);
-				}
-				else {
-					// if there is super activities 
-					// we have to add them to the root or to an other super activity
-					while (ca != null){
-						// search if the activity is already treated as a node
-						if (!mapActivity.containsKey(ca)){
-							nodeAct = new WizardMutableTreeNode(ca);
-							mapActivity.put(ca, nodeAct);
-						}
-						else {
-							nodeAct = mapActivity.get(ca);
-						}
-						if (precedent == null){
-							// if precedent == null we are at the first round 
-							// so we had to add the role descriptor
-							nodeAct.add(rdWmt);
-						}
-						else {
-							nodeAct.add(precedent);
-						}
-						ca = getActivity(ca.getSuperConcreteActivities());
-						if (ca == null ){
-							((DefaultMutableTreeNode)this.root).add(nodeAct);
-						}
-						precedent = nodeAct ;
-					}				
-				}
-				// brows all the concrete tasks
-				for(ConcreteTaskDescriptor ctd : crd.getConcreteTaskDescriptors()) {
-					
-					WizardMutableTreeNode ctdWmt = new WizardMutableTreeNode(ctd);
-					rdWmt.add(ctdWmt);
-					// browse all the steps of the task def in task descriptors of concretetaskdescriptor
-					if (ctd.getTaskDescriptor().getTaskDefinition() != null) {
-						// cloning the steps to have same steps with different states
-						for (Step s : ctd.getTaskDescriptor().getTaskDefinition().getSteps()){
-							try {
-								// creating the clone and store them in a list
-								Step sCloned = s.clone();
-								sCloned.setGuid(String.valueOf(idStep));
-								idStep++;
-								tmp.add(sCloned);
-								
-							} catch (CloneNotSupportedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-						// removing the steps from the task def and adding the cloned
-						TaskDefinition tdef = ctd.getTaskDescriptor().getTaskDefinition() ;
-						tdef.removeAllSteps();
-						for (Step s : tmp){
-							tdef.addStep(s);
-						}
-						tmp.clear();
-						// normal process
-						for (Step s : ctd.getTaskDescriptor().getTaskDefinition().getSteps()) {
-							WizardMutableTreeNode sWmt;
-							sWmt = new WizardMutableTreeNode(s);
-							ctdWmt.add(sWmt);
-							// managing the steps
-							if (ctd.getState().equals(Constantes.State.STARTED)){
-								WizardStateMachine.getInstance().addStep(s,WizardStateMachine.STATE_STEP_READY ) ;
-							}
-							else if (ctd.getState().equals(Constantes.State.FINISHED)){
-								WizardStateMachine.getInstance().addStep(s,WizardStateMachine.STATE_STEP_FINISHED ) ;
-							}
-							else {
-								WizardStateMachine.getInstance().addStep(s,WizardStateMachine.STATE_STEP_CREATED ) ;
-							}
-						}
-					}
-				}
-				//((DefaultMutableTreeNode) this.root).add(new DefaultMutableTreeNode(rd.getName()));
-			}
-
-		}
+	}	
 
 //		public void addTreeModelListener(TreeModelListener arg0) {
 //			// TODO Auto-generated method stub
@@ -298,9 +141,21 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 //			// TODO Auto-generated method stub
 //			
 //		}		
+
+	public void setParticipant(Participant participant) {
+		WizardTreeModel wtm = new WizardTreeModel(participant,true);
+		tree.setModel(wtm);
+		WizardControler.getInstance().launchBackgroundThreadForTree();
+	}
+
+	public void valueChanged(TreeSelectionEvent e) {
+		if (tree.getLastSelectedPathComponent() != null) {
+			Object objet = ((DefaultMutableTreeNode) tree.getLastSelectedPathComponent()).getUserObject();
+			WizardStateMachine.getInstance().setFocusedObject(objet,WizardControler.getInstance().getDefaultHTML(null));
+		}
 	}
 	
-	// the renderer for the icon and label
+//	 the renderer for the icon and label
 	private class WizardTreeRenderer extends DefaultTreeCellRenderer {
 		public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected,
 				boolean expanded, boolean leaf, int row, boolean hasFocus) {
@@ -360,19 +215,6 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 			}
 			
 			return this;
-		}
-	}
-
-	public void setParticipant(Participant participant) {
-		WizardTreeModel wtm = new WizardTreeModel(participant);
-		tree.setModel(wtm);
-		WizardControler.getInstance().launchBackgroundThreadForTree();
-	}
-
-	public void valueChanged(TreeSelectionEvent e) {
-		if (tree.getLastSelectedPathComponent() != null) {
-			Object objet = ((DefaultMutableTreeNode) tree.getLastSelectedPathComponent()).getUserObject();
-			WizardStateMachine.getInstance().setFocusedObject(objet,WizardControler.getInstance().getDefaultHTML(null));
 		}
 	}
 }

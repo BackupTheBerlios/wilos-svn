@@ -260,7 +260,7 @@ public class WizardMainFrame extends JFrame {
 			jPanel.setLayout(new BorderLayout());
 			
 			jPanel.add(getJTree(), BorderLayout.CENTER);
-			//jPanel.add(new InfoPanel(), BorderLayout.SOUTH);
+			jPanel.add(new InfoPanel(), BorderLayout.SOUTH);
 			
 		}
 		return jPanel;
