@@ -1,5 +1,10 @@
 package wilos.presentation.web.template;
 
+import javax.faces.context.FacesContext;
+
+import wilos.presentation.web.role.ConcreteRoleAffectationBean;
+import wilos.presentation.web.tree.TreeBean;
+
 /**
  * TODO Method description
  */
@@ -36,6 +41,8 @@ public class ConnectViewBean {
      */
     public String connected(boolean _connected, String _applicationRole){
     	ConnectContentBean connectContent = new ConnectContentBean();
+    	FacesContext context = FacesContext.getCurrentInstance();
+    	
     	if(_connected)
     	{
     		
@@ -51,6 +58,10 @@ public class ConnectViewBean {
     		connectContent.setTemplateName("not_connected");
     		connectContent.setTemplateNameActions("none");
     		connectContent.setTemplateNameMenu("no_tree_group");
+    		TreeBean treeBean = (TreeBean) context
+    		.getApplication().getVariableResolver().resolveVariable(
+    				context, "TreeBean");
+    		treeBean.cleanTreeDisplay();
     	}
     	connectContent.setNavigationSelection(this);
     	this.selectedPanel = connectContent;
