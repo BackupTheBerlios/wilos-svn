@@ -53,6 +53,8 @@ public class Element implements Cloneable {
 		this.guid = "" ;
 		this.name = "" ;
 		this.description = "" ;
+		this.mainDescription = "";
+		this.keyConsiderations = "";
 	}
 
 	/*
@@ -77,6 +79,8 @@ public class Element implements Cloneable {
 		this.guid = _element.guid ;
 		this.name = _element.name ;
 		this.description = _element.description ;
+		this.keyConsiderations = _element.keyConsiderations;
+		this.mainDescription = _element.mainDescription;
 	}
 
 	/*
@@ -92,7 +96,7 @@ public class Element implements Cloneable {
 			return true ;
 		}
 		Element element = (Element) _obj ;
-		return new EqualsBuilder().append(this.guid, element.guid).append(this.name, element.name).append(this.description, element.description).isEquals() ;
+		return new EqualsBuilder().append(this.guid, element.guid).append(this.name, element.name).append(this.description, element.description).append(this.keyConsiderations,element.keyConsiderations).append(this.mainDescription, element.mainDescription).isEquals() ;
 	}
 
 	/*
@@ -101,7 +105,7 @@ public class Element implements Cloneable {
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(this.guid).append(this.name).append(this.description).toHashCode() ;
+		return new HashCodeBuilder(17, 37).append(this.guid).append(this.name).append(this.description).append(this.keyConsiderations).append(this.mainDescription).toHashCode() ;
 	}
 
 	/**
