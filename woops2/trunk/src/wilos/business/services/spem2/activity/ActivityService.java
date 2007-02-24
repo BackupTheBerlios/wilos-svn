@@ -129,6 +129,18 @@ public class ActivityService {
 		}
 		return tmp;
 	}
+	
+	/**
+	 * 
+	 * Getter of project
+	 * 
+	 * @param _id
+	 * @return
+	 */
+	@ Transactional (readOnly = true)
+	public Activity getActivity(String _id) {
+		return this.activityDao.getActivity(_id) ;
+	}
 
 	/**
 	 *
