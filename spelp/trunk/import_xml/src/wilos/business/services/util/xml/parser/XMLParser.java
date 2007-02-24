@@ -14,6 +14,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import wilos.business.services.util.xml.fillers.FillerActivity;
+import wilos.business.services.util.xml.fillers.FillerCheckList;
 import wilos.business.services.util.xml.fillers.FillerElement;
 import wilos.business.services.util.xml.fillers.FillerGuidance;
 import wilos.business.services.util.xml.fillers.FillerIteration;
@@ -26,6 +27,7 @@ import wilos.business.services.util.xml.fillers.FillerTask;
 import wilos.business.services.util.xml.fillers.FillerTaskDescriptor;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.checklist.CheckList;
 import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
@@ -52,11 +54,7 @@ public class XMLParser {
 	private static final String xpath_deliveryProcess = "//Process[@*[namespace-uri() and local-name()='type']='uma:DeliveryProcess']";
 	private static final String xpath_iteration = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Iteration']";
 	private static final String xpath_phase = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Phase']";
-		// CapabilityPatterns are treated as Activities
-	private static final String xpath_activity = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Activity' or " +
-			"@*[namespace-uri() and local-name()='type']='uma:CapabilityPattern' " +
-			"]";
-			
+	private static final String xpath_activity = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Activity']";
 	private static final String xpath_guidance = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Guideline' or " +
 			"@*[namespace-uri() and local-name()='type']='uma:Concept' or " +
 			"@*[namespace-uri() and local-name()='type']='uma:SupportingMaterial' or " +
@@ -67,12 +65,11 @@ public class XMLParser {
 			"@*[namespace-uri() and local-name()='type']='uma:ReusableAsset' or " +
 			"@*[namespace-uri() and local-name()='type']='uma:Report' or " +
 			"@*[namespace-uri() and local-name()='type']='uma:Template' or " +
-			"@*[namespace-uri() and local-name()='type']='uma:Example' " +
+			"@*[namespace-uri() and local-name()='type']='uma:Example' or " +
+			"@*[namespace-uri() and local-name()='type']='uma:Checklist' " +
 			"]";
 	
 	private static final String xpath_workProductDescriptorFake = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Artifact']";
-	
-	private static final String xpath_checklist = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Checklist']";
 	
 	// Sections
 	public static final String task = "Task";
@@ -85,6 +82,8 @@ public class XMLParser {
 	public static final String predecessor = "Predecessor";
 	public static final String maindescription = "MainDescription";
 	public static final String output = "Output";
+	public static final String section = "Section" ;
+	public static final String description = "Description";
 	
 	
 	private static Set<String> guidancesTypes = new LinkedHashSet<String>();
@@ -97,8 +96,9 @@ public class XMLParser {
 	private static final String task_descriptor = "uma:TaskDescriptor";
 	private static final String role_descriptor = "uma:RoleDescriptor";
 	private static final String iteration = "uma:Iteration";
-	private static final String capabilityPattern = "uma:CapabilityPattern";
+	private static final String checklist = "uma:Checklist";
 	
+
 	// Attributes Names
 	private static final String id = "id";
 	private static final String attr_name_xsitype = "xsi:type";
@@ -278,6 +278,44 @@ public class XMLParser {
 		
 		// initializes the List
 		theGuidanceList = new Vector<Guidance>();
+		theGuidanceList.clear();	
+		
+		// gets all the nodes containing all guidances
+		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_guidance,XPathConstants.NODESET);
+		if (nodeReturned.getLength() != 0) {
+			// For each node...
+			Node aNode;
+			for(int i=0;i<nodeReturned.getLength();i++){
+				aNode = nodeReturned.item(i);
+				Guidance  aGuidance = null ;
+				CheckList aCheckList;	
+				// test if there is a flag "checklist" in the XML file
+				if (aNode.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(checklist)) {
+					aCheckList = new CheckList();
+					FillerCheckList aFillerCheckList = new FillerCheckList(aCheckList, aNode);
+					aCheckList = (CheckList) aFillerCheckList.getFilledElement();
+					aGuidance = aCheckList;
+				
+				}
+				// others guidance
+				else{
+					aGuidance = new Guidance();
+					FillerGuidance aFiller = new FillerGuidance(aGuidance,aNode);	
+					aGuidance = (Guidance)aFiller.getFilledElement();
+				}
+				// add the filled guidance in the list to be return
+				theGuidanceList.add(aGuidance);
+			}	
+		}
+		return theGuidanceList;
+		
+		
+		/* ------------------------------------------------------------ */
+		
+		/*Vector<Guidance> theGuidanceList; // the return of the function
+		
+		// initializes the List
+		theGuidanceList = new Vector<Guidance>();
 		theGuidanceList.clear();
 		
 		// gets all the nodes containing all guidances
@@ -296,7 +334,7 @@ public class XMLParser {
 				theGuidanceList.add(aGuidance);
 			}	
 		}
-		return theGuidanceList;
+		return theGuidanceList;*/
 	}
 
 	/**
@@ -1029,7 +1067,7 @@ public class XMLParser {
 					// test if the BreakDownElement exist
 					if (tmpBde != null) {					
 						if (tmpBde instanceof Activity) {
-							((Activity) returnedBde).addBreakdownElement((Activity) tmpBde);
+							((Activity) returnedBde).addBreakdownElement(tmpBde);
 						}
 						else {
 							((Activity) returnedBde).addBreakdownElement(tmpBde);
@@ -1075,9 +1113,8 @@ public class XMLParser {
 		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(iteration)) {
 			_nullBdeToReturn = getIterationById(iterationsList, bdeId);
 		}
-		// Capability Patterns are treated as Activities
-		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(activity) 
-				|| _node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(capabilityPattern) ) {
+		
+		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(activity)) {
 			_nullBdeToReturn = getActivityById(activitiesList, bdeId);
 		}
 		
