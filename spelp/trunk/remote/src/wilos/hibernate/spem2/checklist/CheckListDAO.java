@@ -11,7 +11,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import wilos.model.spem2.checklist.CheckList;
 import wilos.utils.ExceptionManager;
 
-public class CheckListDAO extends HibernateDaoSupport{
+public class CheckListDao extends HibernateDaoSupport{
 	
 	/**
 	 * Save or update CheckList object

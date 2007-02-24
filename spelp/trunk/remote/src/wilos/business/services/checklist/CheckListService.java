@@ -7,12 +7,12 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
 
-import wilos.hibernate.spem2.checklist.CheckListDAO;
+import wilos.hibernate.spem2.checklist.CheckListDao;
 import wilos.model.spem2.checklist.CheckList;
 
 @ Transactional (readOnly = false, propagation = Propagation.REQUIRED)
 public class CheckListService {
-	private CheckListDAO checkListDao ;
+	private CheckListDao checkListDao ;
 
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
@@ -37,7 +37,7 @@ public class CheckListService {
 	 * 
 	 * @return the checkListDAO.
 	 */
-	public CheckListDAO getCheckListDao() {
+	public CheckListDao getCheckListDao() {
 		return this.checkListDao ;
 	}
 
@@ -47,7 +47,11 @@ public class CheckListService {
 	 * @param _checklistDao
 	 *            The checklistDAO to set.
 	 */
-	public void setGuidanceDao(CheckListDAO _checklistDao) {
+	public void setGuidanceDao(CheckListDao _checklistDao) {
 		this.checkListDao = _checklistDao ;
+	}
+
+	public void setCheckListDao(CheckListDao checkListDao) {
+		this.checkListDao = checkListDao;
 	}
 }

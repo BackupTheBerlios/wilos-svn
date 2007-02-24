@@ -11,7 +11,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import wilos.model.spem2.section.Section;
 import wilos.utils.ExceptionManager;
 
-public class SectionDAO extends HibernateDaoSupport{
+public class SectionDao extends HibernateDaoSupport{
 	
 	/**
 	 * Save or update Section object
@@ -72,3 +72,4 @@ public class SectionDAO extends HibernateDaoSupport{
 	}
 
 }
+

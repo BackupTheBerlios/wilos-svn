@@ -417,8 +417,8 @@
 		<property name="projectDao" ref="ProjectDao" />
 		<property name="stepDao" ref="StepDao" />
 		<property name="guidanceDao" ref="GuidanceDao" />
-		<property name="checklistDao" ref="CheckListDao" />
-		<property name="sectionDao" ref="SectionDao" />
+		<!-- <property name="checklistDao" ref="CheckListDao" /> -->
+		<!-- <property name="sectionDao" ref="SectionDao" /> -->
 		<property name="concreteBreakdownElementService"
 			ref="ConcreteBreakdownElementService" />
 	</bean>

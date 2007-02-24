@@ -7,12 +7,12 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import wilos.hibernate.spem2.section.SectionDAO;
+import wilos.hibernate.spem2.section.SectionDao;
 import wilos.model.spem2.section.Section;
 
 @ Transactional (readOnly = false, propagation = Propagation.REQUIRED)
 public class SectionService {
-	private SectionDAO sectionDao ;
+	private SectionDao sectionDao ;
 
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
@@ -37,7 +37,7 @@ public class SectionService {
 	 * 
 	 * @return the sectionDAO.
 	 */
-	public SectionDAO getSectionDao() {
+	public SectionDao getSectionDao() {
 		return this.sectionDao ;
 	}
 
@@ -47,7 +47,7 @@ public class SectionService {
 	 * @param _sectionDAO
 	 *            The sectionDAO to set.
 	 */
-	public void setSectionDao(SectionDAO _sectionDAO) {
+	public void setSectionDao(SectionDao _sectionDAO) {
 		this.sectionDao = _sectionDAO ;
 	}
 }
