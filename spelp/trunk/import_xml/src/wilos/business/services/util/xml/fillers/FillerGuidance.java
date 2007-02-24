@@ -3,6 +3,7 @@ package wilos.business.services.util.xml.fillers;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import wilos.business.services.util.xml.parser.EncodingProcessor;
 import wilos.business.services.util.xml.parser.XMLParser;
 import wilos.model.spem2.guide.Guidance;
 
@@ -51,7 +52,7 @@ public class FillerGuidance extends FillerElement{
 			}			
 		}
 		
-		((Guidance) myElement).setDescription(mainDescription);
+		((Guidance) myElement).setDescription(EncodingProcessor.cleanString(mainDescription));
 		((Guidance) myElement).setAttachment(attachment);
 	}
 	

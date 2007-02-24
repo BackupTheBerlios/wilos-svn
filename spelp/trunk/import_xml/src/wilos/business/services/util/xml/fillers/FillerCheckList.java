@@ -6,6 +6,7 @@ import java.util.Set;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import wilos.business.services.util.xml.parser.EncodingProcessor;
 import wilos.business.services.util.xml.parser.XMLParser;
 import wilos.model.spem2.checklist.CheckList;
 import wilos.model.spem2.guide.Guidance;
@@ -58,7 +59,7 @@ public class FillerCheckList extends FillerGuidance {
 						// set the different attributs
 						aSection.setName(aName);
 						aSection.setGuid(aId);
-						aSection.setDescription(aDescriptionSection);
+						aSection.setDescription(EncodingProcessor.cleanString(aDescriptionSection));
 						
 						// add the fill element in the list of sections
 						sections.add(aSection);						
@@ -68,6 +69,6 @@ public class FillerCheckList extends FillerGuidance {
 		}		
 		// set the list of sections by the element
 		((CheckList) myElement).setSections(sections);
-		((CheckList) myElement).setDescription(mainDescription);
+		((CheckList) myElement).setDescription(EncodingProcessor.cleanString(mainDescription));
 	}
 }
