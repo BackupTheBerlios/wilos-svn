@@ -3,6 +3,8 @@ package wilos.model.spem2.checklist;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+
 import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.section.Section;
 
@@ -14,6 +16,37 @@ public class CheckList extends Guidance{
 	public CheckList() {		
 		this.sections = new HashSet<Section>();
 	}
+	
+	
+	@ Override
+	public CheckList clone() throws CloneNotSupportedException {
+		CheckList checklist = new CheckList() ;
+		checklist.copy(this) ;
+		return checklist ;
+	}
+	
+	
+	protected void copy(final CheckList _checklist) {
+		super.copy(_checklist) ;
+		this.getSections().addAll(_checklist.getSections());
+	}
+	
+	public boolean equals(Object obj) {
+		if(obj instanceof CheckList == false){
+			return false ;
+		}
+		if(this == obj){
+			return true ;
+		}
+
+		CheckList checklist = (CheckList) obj ;
+		return new EqualsBuilder().appendSuper(super.equals(checklist)).append(this.getSections(),checklist.getSections()).isEquals() ;
+	}
+	
+	
+	/* public int hashCode() {
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.type).append(this.presentationName).append(this.attachment).toHashCode();
+	} */
 
 	/**
 	 * @return the sections
