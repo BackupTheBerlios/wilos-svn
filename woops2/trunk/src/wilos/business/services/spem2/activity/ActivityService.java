@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -105,9 +106,8 @@ public class ActivityService {
 	 * @param _act
 	 * @return
 	 */
-	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
 	public Set<BreakdownElement> getBreakdownElements(Activity _act) {
-
+		
 		Set<BreakdownElement> tmp = new HashSet<BreakdownElement>();
 		for (BreakdownElement bde : _act.getBreakdownElements()) {
 			tmp.add(bde);
@@ -120,7 +120,7 @@ public class ActivityService {
 	 * @param _act
 	 * @return
 	 */
-	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+	@Transactional(readOnly = true)
 	public Set<Guidance> getGuidances(Activity _act) {
 
 		Set<Guidance> tmp = new HashSet<Guidance>();
@@ -147,7 +147,7 @@ public class ActivityService {
 	 * @param _act
 	 * @return
 	 */
-	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+	@Transactional(readOnly = true)
 	public Set<BreakdownElement> getInstanciableBreakdownElements(Activity _act) {
 
 		Set<BreakdownElement> tmp = new HashSet<BreakdownElement>();
@@ -172,7 +172,7 @@ public class ActivityService {
 	 * @param _guid
 	 * @return
 	 */
-	@ Transactional (readOnly = true, propagation = Propagation.REQUIRED)
+	@ Transactional (readOnly = true)
 	public Activity getActivityFromGuid(String _guid) {
 		return this.activityDao.getActivityFromGuid(_guid);
 	}
