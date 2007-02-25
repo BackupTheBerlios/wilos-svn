@@ -52,7 +52,10 @@ public class WebSessionService {
 	 *
 	 */
 	public void cleanSesssion(){
-		this.getHttpSession().invalidate();
+		this.getHttpSession().removeAttribute(WILOS_USER_ID);
+		this.getHttpSession().removeAttribute(PROJECT_ID);
+		this.getHttpSession().removeAttribute(ROLE_TYPE);
+		this.getHttpSession().removeAttribute(TREE_MODE);
 	}
 
 	/*
