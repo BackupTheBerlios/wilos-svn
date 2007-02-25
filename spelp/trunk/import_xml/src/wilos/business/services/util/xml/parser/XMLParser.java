@@ -54,7 +54,9 @@ public class XMLParser {
 	private static final String xpath_deliveryProcess = "//Process[@*[namespace-uri() and local-name()='type']='uma:DeliveryProcess']";
 	private static final String xpath_iteration = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Iteration']";
 	private static final String xpath_phase = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Phase']";
-	private static final String xpath_activity = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Activity']";
+	private static final String xpath_activity = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:Activity' or " +
+			"@*[namespace-uri() and local-name()='type']='uma:CapabilityPattern' " +
+			"]";
 	private static final String xpath_guidance = "//ContentElement[@*[namespace-uri() and local-name()='type']='uma:Guideline' or " +
 			"@*[namespace-uri() and local-name()='type']='uma:Concept' or " +
 			"@*[namespace-uri() and local-name()='type']='uma:SupportingMaterial' or " +
@@ -97,6 +99,7 @@ public class XMLParser {
 	private static final String role_descriptor = "uma:RoleDescriptor";
 	private static final String iteration = "uma:Iteration";
 	private static final String checklist = "uma:Checklist";
+	private static final String capability_pattern = "uma:CapabilityPattern";
 	
 
 	// Attributes Names
@@ -1114,7 +1117,8 @@ public class XMLParser {
 			_nullBdeToReturn = getIterationById(iterationsList, bdeId);
 		}
 		
-		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(activity)) {
+		if (_node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(activity)
+				|| _node.getAttributes().getNamedItem(attr_name_xsitype).getNodeValue().equals(capability_pattern)) {
 			_nullBdeToReturn = getActivityById(activitiesList, bdeId);
 		}
 		

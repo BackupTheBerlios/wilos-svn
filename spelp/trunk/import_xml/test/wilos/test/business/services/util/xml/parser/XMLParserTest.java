@@ -1020,18 +1020,18 @@ public class XMLParserTest extends TestCase {
 			}
 		}
 
-		// TODO: assertNotNull(supportN1Roledefinition);
+		assertNotNull(supportN1Roledefinition);
 		// Now we work on the guidances we have
-		/*int nbGuidances = 0;
+		int nbGuidances = 0;
 		for (Guidance aGuidance : supportN1Roledefinition.getGuidances()) {
 			if ( expectedGuidances.get(aGuidance.getPresentationName()) != null) {
 				// The PresentationName and the type must match
 				assertTrue(expectedGuidances.get(aGuidance.getPresentationName()).equals(aGuidance.getType()));
 				nbGuidances++;
 			}
-		}*/
+		}
 		// We must have the right number of guidances
-		//assertTrue(nbGuidances == nbExpectedGuidances);
+		assertTrue(nbGuidances == nbExpectedGuidances);
 	}
 	
 	/**
