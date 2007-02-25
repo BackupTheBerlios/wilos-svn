@@ -41,11 +41,6 @@
     <listener>
         <listener-class>com.icesoft.faces.util.event.servlet.ContextEventRepeater</listener-class>
     </listener>
-
-    <!-- WebServices listener-->
-    <listener>
-        <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
-    </listener>
     
     <!-- file upload Servlet -->
     <servlet>
@@ -55,11 +50,10 @@
     </servlet>
 	
     <!-- WebServices Servlet -->
-    <servlet>
-        <servlet-name>WizardServices</servlet-name>
-        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
+	<servlet>
+		<servlet-name>jaxws-servlet</servlet-name>
+		<servlet-class>com.sun.xml.ws.transport.http.servlet.WSSpringServlet</servlet-class>
+	</servlet>
      
    
     <!-- Faces Servlet -->
@@ -119,7 +113,7 @@
 
     <!-- WebServices mapping-->
     <servlet-mapping>
-        <servlet-name>WizardServices</servlet-name>
+        <servlet-name>jaxws-servlet</servlet-name>
         <url-pattern>/WizardServices</url-pattern>
     </servlet-mapping>
   
