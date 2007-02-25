@@ -182,14 +182,14 @@
 
 	<!-- ========================= Start of BEAN DEFINITIONS ========================= -->
 
-	<!-- ========================= DAO Layer ========================= -->
-
 	<!-- ========================= Webservices Layer ========================= -->
 	<bean id="WizardServices"
 		class="wilos.business.webservices.WizardServices">
 		<property name="loginService" ref="LoginService" />		
 		<property name="assistantService" ref="AssistantService" />
 	</bean>
+	
+	<!-- ========================= DAO Layer ========================= -->
 
 	<!-- =============================================================== -->
 	<!-- ========================= SPELP DAO =========================== -->
