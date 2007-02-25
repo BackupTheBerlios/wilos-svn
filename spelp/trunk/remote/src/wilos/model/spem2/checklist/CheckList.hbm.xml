@@ -12,7 +12,8 @@
 		<key column="checklist_id"></key>
 		
 		<set name="sections" lazy="true">
-			<key column="checklist_id" />
+			<cache usage="read-write"/>
+			<key column="checklist_id" />			
 			<one-to-many class="wilos.model.spem2.section.Section"></one-to-many>
 		</set>
 		

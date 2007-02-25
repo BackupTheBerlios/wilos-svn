@@ -23,6 +23,7 @@
 		<!-- Associations -->
 		
 		<set name="taskDefinitions" table="guidancetaskdefinition" lazy="true">
+			<cache usage="read-write"/>
 			<key column="guidance_id"></key>
 			<many-to-many class="wilos.model.spem2.task.TaskDefinition"
 				column="taskdefinition_id">
@@ -30,6 +31,7 @@
 		</set>
 		
 		<set name="roleDefinitions" table="guidanceroledefinition" lazy="true">
+			<cache usage="read-write"/>
 			<key column="guidance_id"></key>
 			<many-to-many class="wilos.model.spem2.role.RoleDefinition"
 				column="roledefinition_id">
@@ -37,6 +39,7 @@
 		</set>
 		
 		<set name="activities" table="guidanceactivity" lazy="true">
+			<cache usage="read-write"/>
 			<key column="guidance_id"></key>
 			<many-to-many class="wilos.model.spem2.activity.Activity"
 				column="activity_id">
