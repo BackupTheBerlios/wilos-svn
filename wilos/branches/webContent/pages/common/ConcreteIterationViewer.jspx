@@ -7,35 +7,31 @@
 				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="3">
 					<ice:outputText value="#{msgs['viewer.concreteName']}" />
 					<ice:inputText
-						value="#{ConcreteIterationViewerBean.concreteIteration.concreteName}" 
-						readonly="#{ConcreteIterationViewerBean.isInputNameReadOnly}"/>
+						value="#{ConcreteIterationViewerBean.concreteIteration.concreteName}"
+						readonly="#{ConcreteIterationViewerBean.isInputNameReadOnly}" />
 					<ice:commandButton value="#{msgs['button.changeconcretename']}"
-						action="#{ConcreteIterationViewerBean.changeConcreteName}" 
-						disabled="#{ConcreteIterationViewerBean.changeButtonIsDisabled}"/>
-					<ice:outputText value=""/>
+						action="#{ConcreteIterationViewerBean.changeConcreteName}"
+						disabled="#{ConcreteIterationViewerBean.changeButtonIsDisabled}" />
+					<ice:outputText value="" />
 					<ice:panelGroup
 						visible="#{ConcreteIterationViewerBean.treeMaskIsAvailable}">
-						<ice:outputText styleClass="propertyLabel" value="#Visible#" />
-						<ice:panelStack>
-							<ice:panelGroup>
-								<ice:dataTable value="" var="">
-									<ice:columns
-										value="#{ConcreteIterationViewerBean.concreteBreakdownElementsList}"
-										var="concretewbde">
-										<f:facet name="header">
-											<ice:outputText value="#{concretewbde.concreteName}" />
-										</f:facet>
-										<ice:panelGroup>
-											<ice:selectBooleanCheckbox partialSubmit="false"
-												value="#{concretewbde.isInUsed}" />
-										</ice:panelGroup>
-									</ice:columns>
-								</ice:dataTable>
-								<ice:commandButton value="#Save#"
-									action="#{ConcreteIterationViewerBean.saveIteration}"
-									styleClass="smallbutton" />
-							</ice:panelGroup>
-						</ice:panelStack>
+						<ice:outputText styleClass="propertyLabel" value="#{msgs['viewer.elementsvisible']}" />
+						<ice:dataTable value="" var="">
+							<ice:columns
+								value="#{ConcreteIterationViewerBean.concreteBreakdownElementsList}"
+								var="concretewbde">
+								<f:facet name="header">
+									<ice:outputText value="#{concretewbde.concreteName}" />
+								</f:facet>
+								<ice:panelGroup>
+									<ice:selectBooleanCheckbox partialSubmit="false"
+										value="#{concretewbde.isInUsed}" />
+								</ice:panelGroup>
+							</ice:columns>
+						</ice:dataTable>
+						<ice:commandButton value="#{msgs['viewer.buttonlabel']}"
+							action="#{ConcreteIterationViewerBean.saveIteration}"
+							styleClass="smallbutton" />
 					</ice:panelGroup>
 				</ice:panelGrid>
 			</ice:panelTab>
