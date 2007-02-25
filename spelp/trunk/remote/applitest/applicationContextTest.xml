@@ -19,7 +19,7 @@
 		</property>
 		<property name="url">
 			<value>jdbc:mysql://127.0.0.1/wilos</value>
-		</property>		
+		</property>
 		<property name="username">
 			<value>root</value>
 		</property>
@@ -27,7 +27,6 @@
 			<value></value>
 		</property>
 	</bean>
-
 	<!-- Hibernate SessionFactory Definition -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
@@ -102,7 +101,15 @@
 				<value>
 					wilos/model/spem2/role/RoleDefinition.hbm.xml
 				</value>
-				<value>wilos/model/spem2/guide/Guidance.hbm.xml</value>
+				<value>
+					wilos/model/spem2/guide/Guidance.hbm.xml
+				</value>
+				<value>
+					wilos/model/spem2/checklist/CheckList.hbm.xml
+				</value>	
+				<value>
+					wilos/model/spem2/section/Section.hbm.xml
+				</value>							
 			</list>
 		</property>
 
@@ -166,6 +173,14 @@
 		class="wilos.hibernate.spem2.guide.GuidanceDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
+	<bean id="CheckListDao"
+		class="wilos.hibernate.spem2.checklist.CheckListDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	<bean id="SectionDao"
+		class="wilos.hibernate.spem2.section.SectionDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>		
 
 
 	<!-- =============================================================== -->
@@ -314,7 +329,14 @@
 		class="wilos.business.services.guide.GuidanceService">
 		<property name="guidanceDao" ref="GuidanceDao" />
 	</bean>
-
+	<bean id="CheckListService"
+		class="wilos.business.services.checklist.CheckListService">
+		<property name="checklistDao" ref="CheckListDao" />
+	</bean>
+	<bean id="SectionService"
+		class="wilos.business.services.section.SectionService">
+		<property name="sectionDao" ref="SectionDao" />
+	</bean>	
 
 	<!-- =============================================================== -->
 	<!-- ======================= PSI2 Service ========================= -->
@@ -395,6 +417,8 @@
 		<property name="projectDao" ref="ProjectDao" />
 		<property name="stepDao" ref="StepDao" />
 		<property name="guidanceDao" ref="GuidanceDao" />
+		<!-- <property name="checklistDao" ref="CheckListDao" /> -->
+		<!-- <property name="sectionDao" ref="SectionDao" /> -->
 		<property name="concreteBreakdownElementService"
 			ref="ConcreteBreakdownElementService" />
 	</bean>
