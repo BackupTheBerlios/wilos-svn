@@ -9,48 +9,43 @@
 				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="3"
 					border="0">
 					<ice:outputText value="#{msgs['viewer.concreteName']}" />
-					<ice:inputText value="#{ProjectViewerBean.project.concreteName}" 
-						readonly="#{ProjectViewerBean.isInputNameReadOnly}"/>
+					<ice:inputText value="#{ProjectViewerBean.project.concreteName}"
+						readonly="#{ProjectViewerBean.isInputNameReadOnly}" />
 					<ice:commandButton value="#{msgs['button.changeconcretename']}"
-						action="#{ProjectViewerBean.changeConcreteName}" 
-						disabled="#{ProjectViewerBean.changeButtonIsDisabled}"/>
+						action="#{ProjectViewerBean.changeConcreteName}"
+						disabled="#{ProjectViewerBean.changeButtonIsDisabled}" />
 					<ice:outputText value="#{msgs['projectviewer.creationdate']}" />
 					<ice:outputText value="#{ProjectViewerBean.project.creationDate}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</ice:outputText>
-					<ice:outputText value=""/>
+					<ice:outputText value="" />
 					<ice:outputText value="#{msgs['projectviewer.launchingdate']}" />
 					<ice:outputText value="#{ProjectViewerBean.project.launchingDate}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</ice:outputText>
-					<ice:outputText value=""/>
+					<ice:outputText value="" />
 					<ice:outputText value="#{msgs['projectviewer.isFinished']}" />
 					<ice:outputText value="#{ProjectViewerBean.project.isFinished}" />
-					<ice:outputText value=""/>
+					<ice:outputText value="" />
 				</ice:panelGrid>
 
-				<ice:panelGroup visible="#{ProjectViewerBean.treeMaskIsAvailable}" >
-					<ice:outputText styleClass="propertyLabel" value="#Visible#" />
-					<ice:panelStack>
-						<ice:panelGroup>
-							<ice:dataTable value="" var="">
-								<ice:columns
-									value="#{ProjectViewerBean.concreteBreakdownElementsList}"
-									var="concretewbde">
-									<f:facet name="header">
-										<ice:outputText value="#{concretewbde.concreteName}" />
-									</f:facet>
-									<ice:panelGroup>
-										<ice:selectBooleanCheckbox partialSubmit="false"
-											value="#{concretewbde.isInUsed}" />
-									</ice:panelGroup>
-								</ice:columns>
-							</ice:dataTable>
-							<ice:commandButton value="#Save#"
-								action="#{ProjectViewerBean.saveProject}"
-								styleClass="smallbutton" />
-						</ice:panelGroup>
-					</ice:panelStack>
+				<ice:panelGroup visible="#{ProjectViewerBean.treeMaskIsAvailable}">
+					<ice:outputText styleClass="propertyLabel" value="#{msgs['viewer.elementsvisible']}" />
+					<ice:dataTable value="" var="">
+						<ice:columns
+							value="#{ProjectViewerBean.concreteBreakdownElementsList}"
+							var="concretewbde">
+							<f:facet name="header">
+								<ice:outputText value="#{concretewbde.concreteName}" />
+							</f:facet>
+							<ice:panelGroup>
+								<ice:selectBooleanCheckbox partialSubmit="false"
+									value="#{concretewbde.isInUsed}" />
+							</ice:panelGroup>
+						</ice:columns>
+					</ice:dataTable>
+					<ice:commandButton value="#{msgs['viewer.buttonlabel']}"
+						action="#{ProjectViewerBean.saveProject}" styleClass="smallbutton" />
 				</ice:panelGroup>
 
 			</ice:panelTab>
@@ -60,67 +55,72 @@
 			<ice:panelTab id="panelTab_projectAdvancement"
 				label="#{msgs['component.project.projectadvancement.title']}"
 				rendered="#{ProjectAdvancementBean.selected_projectAdvancement_view}">
-				
-				
-				<ice:panelStack id="panelStack_projectInstanciated" selectedPanel="#{ProjectAdvancementBean.projectInstanciated}">
-						<ice:panelGrid id="projectInstanciated" styleClass="contentLayoutGridStyle" columns="3">
-							<ice:dataTable value="#{ProjectAdvancementBean.displayContent}"
+
+
+				<ice:panelStack id="panelStack_projectInstanciated"
+					selectedPanel="#{ProjectAdvancementBean.projectInstanciated}">
+					<ice:panelGrid id="projectInstanciated"
+						styleClass="contentLayoutGridStyle" columns="3">
+						<ice:dataTable value="#{ProjectAdvancementBean.displayContent}"
 							var="cbde" cellpadding="0"
 							columnWidths="30px,400px,200px,100px,100px">
-								<ice:column>
-									<f:facet name="header">
-										<ice:outputText value="" />
-									</f:facet>
-									<ice:commandLink value=""
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputText value="" />
+								</f:facet>
+								<ice:commandLink value=""
 									actionListener="#{ProjectAdvancementBean.toggleSubGroupAction}">
 									<f:param name="elementId" value="#{cbde.id}" />
 									<ice:graphicImage value="#{cbde.expansionImage}"
-									style="border: 0px solid;" />
-									</ice:commandLink>
-								</ice:column>
-								<ice:column>
-									<f:facet name="header">
-										<ice:outputText
+										style="border: 0px solid;" />
+								</ice:commandLink>
+							</ice:column>
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputText
 										value="#{msgs['component.project.projectadvancement.column1']}" />
-									</f:facet>
-										<ice:outputText
-										value="#{ProjectAdvancementBean.indentationContent[cbde.id]}#{cbde.concreteName}" />
-								</ice:column>
-								<ice:column>
-									<f:facet name="header">
-										<ice:outputText
+								</f:facet>
+								<ice:outputText
+									value="#{ProjectAdvancementBean.indentationContent[cbde.id]}#{cbde.concreteName}" />
+							</ice:column>
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputText
 										value="#{msgs['component.project.projectadvancement.column2']}" />
-										</f:facet>
-										<ice:outputText value="#{cbde.participant}" />
-								</ice:column>
-								<ice:column>
-									<f:facet name="header">
-										<ice:outputText
+								</f:facet>
+								<ice:outputText value="#{cbde.participant}" />
+							</ice:column>
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputText
 										value="#{msgs['component.project.projectadvancement.column3']}" />
-									</f:facet>
-									<ice:outputText value="#{cbde.concreteState}" />
-								</ice:column>
-								<ice:column>
-									<f:facet name="header">
-										<ice:outputText
+								</f:facet>
+								<ice:outputText value="#{cbde.concreteState}" />
+							</ice:column>
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputText
 										value="#{msgs['component.project.projectadvancement.column4']}" />
-									</f:facet>
-									<ice:outputText value="#{cbde.advancementTime} %" />
-								</ice:column>
-							</ice:dataTable>
-						</ice:panelGrid>
-						<ice:panelGrid id="projectNotInstanciated" styleClass="contentLayoutGridStyle" columns="3">
-								<ice:outputText value="#{msgs['component.project.projectadvancement.projectNotInstanciated']}" />
-						</ice:panelGrid>
+								</f:facet>
+								<ice:outputText value="#{cbde.advancementTime} %" />
+							</ice:column>
+						</ice:dataTable>
+					</ice:panelGrid>
+					<ice:panelGrid id="projectNotInstanciated"
+						styleClass="contentLayoutGridStyle" columns="3">
+						<ice:outputText
+							value="#{msgs['component.project.projectadvancement.projectNotInstanciated']}" />
+					</ice:panelGrid>
 				</ice:panelStack>
-				
+
 			</ice:panelTab>
 			<!-- #################################################################################################### -->
 
 			<!-- ####################################################################################################
 			Woops2 ONGLET de l'instanciation d'un process
 			#################################################################################################### -->
-			<ice:panelTab id="panelTab_processInstanciation" label="#{msgs['component.tab.processinstanciation.title']}">
+			<ice:panelTab id="panelTab_processInstanciation"
+				label="#{msgs['component.tab.processinstanciation.title']}">
 				<!-- <ice:outputText styleClass="propertyLabel" value="#{msgs['component.tableparticipantProcessProject.processList']}" />
 				<ice:panelStack id="panelStack_projectProcess" selectedPanel="#{ProjectBean.selectProcessAffectation}">
 					<f:subview id="process_affectation_view">
@@ -138,56 +138,65 @@
 						<ice:outputText value="#{ProjectBean.processName}" />
 					</f:subview>
 				</ice:panelStack>-->
-				
-				<ice:panelStack id="panelStack_projectProcess" selectedPanel="#{ProjectBean.processesListView}">
-				<ice:panelGroup id="projectProcesses_not_null" styleClass="contentIncludePanelGroup">
-				
-				<f:subview id="process_affectation_view">
-					<ice:panelGroup id="projectProcessPanelGroup" styleClass="contentIncludePanelGroup">
-						<ice:selectOneMenu partialSubmit="true" value="#{ProjectBean.selectedProcessGuid}" valueChangeListener="#{Woops2ProcessBean.changeProcessSelectionListener}">
-							<f:selectItems value="#{Woops2ProcessBean.processes}" />
-						</ice:selectOneMenu>
-						<ice:commandButton visible="#{Woops2ProcessBean.isVisibleExpTable}" value="#{msgs['component.instanciation.button']}" action="#{ProjectBean.saveProjectProcessAffectation}" />
-					</ice:panelGroup>
-				</f:subview>
-				
-				<ice:panelGroup visible="#{Woops2ProcessBean.isVisibleExpTable}">
-					<ice:dataTable value="#{ProjectAdvancementBean.displayContent}"
-						var="cbde" cellpadding="0" columnWidths="30px,600px,200px">
-						<ice:column>
-							<!--<ice:commandLink value=""
+
+				<ice:panelStack id="panelStack_projectProcess"
+					selectedPanel="#{ProjectBean.processesListView}">
+					<ice:panelGroup id="projectProcesses_not_null"
+						styleClass="contentIncludePanelGroup">
+
+						<f:subview id="process_affectation_view">
+							<ice:panelGroup id="projectProcessPanelGroup"
+								styleClass="contentIncludePanelGroup">
+								<ice:selectOneMenu partialSubmit="true"
+									value="#{ProjectBean.selectedProcessGuid}"
+									valueChangeListener="#{Woops2ProcessBean.changeProcessSelectionListener}">
+									<f:selectItems value="#{Woops2ProcessBean.processes}" />
+								</ice:selectOneMenu>
+								<ice:commandButton
+									visible="#{Woops2ProcessBean.isVisibleExpTable}"
+									value="#{msgs['component.instanciation.button']}"
+									action="#{ProjectBean.saveProjectProcessAffectation}" />
+							</ice:panelGroup>
+						</f:subview>
+
+						<ice:panelGroup visible="#{Woops2ProcessBean.isVisibleExpTable}">
+							<ice:dataTable value="#{ProjectAdvancementBean.displayContent}"
+								var="cbde" cellpadding="0" columnWidths="30px,600px,200px">
+								<ice:column>
+									<!--<ice:commandLink value=""
 								actionListener="#{ProjectAdvancementBean.toggleSubGroupAction}">
 								<f:param name="elementId" value="#{cbde.id}" />
 								<ice:graphicImage value="#{cbde.expansionImage}"
 									style="border: 0px solid;" />
 							</ice:commandLink>-->
-						</ice:column>
-						<ice:column>
-							<f:facet name="header">
-								<ice:outputText
-									value="#{msgs['component.exptable.header.column1']}" />
-							</f:facet>
-							<!--<ice:outputText
+								</ice:column>
+								<ice:column>
+									<f:facet name="header">
+										<ice:outputText
+											value="#{msgs['component.exptable.header.column1']}" />
+									</f:facet>
+									<!--<ice:outputText
 								value="#{ProjectAdvancementBean.indentationContent[cbde.id]}#{cbde.concreteName}" />-->
-						</ice:column>
-						<ice:column>
-							<f:facet name="header">
-								<ice:outputText
-									value="#{msgs['component.exptable.header.column2']}" />
-							</f:facet>
-							<!--<ice:outputText value="#{cbde.participant}" />-->
-						</ice:column>
-					</ice:dataTable>
-				</ice:panelGroup>
-				
-				</ice:panelGroup>
-				
-				<ice:panelGroup id="projectProcesses_null">
-					<h4><ice:outputText value="#{msgs['component.process.management.empty']}"/></h4>
-				</ice:panelGroup>
-				
+								</ice:column>
+								<ice:column>
+									<f:facet name="header">
+										<ice:outputText
+											value="#{msgs['component.exptable.header.column2']}" />
+									</f:facet>
+									<!--<ice:outputText value="#{cbde.participant}" />-->
+								</ice:column>
+							</ice:dataTable>
+						</ice:panelGroup>
+
+					</ice:panelGroup>
+
+					<ice:panelGroup id="projectProcesses_null">
+						<h4><ice:outputText
+							value="#{msgs['component.process.management.empty']}" /></h4>
+					</ice:panelGroup>
+
 				</ice:panelStack>
-				
+
 			</ice:panelTab>
 			<!-- #################################################################################################### -->
 		</ice:panelTabSet>
