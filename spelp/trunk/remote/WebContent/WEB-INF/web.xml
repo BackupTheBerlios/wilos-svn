@@ -3,10 +3,14 @@
 	<display-name>
 	remote</display-name>
 
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-	
+    <servlet>
+    	<servlet-name>SpringContextServlet</servlet-name>
+    	<servlet-class>
+			org.springframework.web.context.ContextLoaderServlet
+		</servlet-class>
+    	<load-on-startup>1</load-on-startup>
+ 	</servlet>
+ 	
 	<servlet>
 		<servlet-name>jaxws-servlet</servlet-name>
 		<servlet-class>com.sun.xml.ws.transport.http.servlet.WSSpringServlet</servlet-class>
