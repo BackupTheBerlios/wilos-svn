@@ -2,6 +2,9 @@ package wilos.presentation.web.upload;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.EventObject;
 import java.util.ResourceBundle;
 
@@ -109,11 +112,19 @@ public class XmlFileImportBean {
 					return ;
 				}
 				else {
-					uploadStatus = "XML file successfully uploaded to server!" ;
+					// xml upload ok
+					ResourceBundle bundle = ResourceBundle.getBundle(
+							"wilos.resources.messages", FacesContext.getCurrentInstance()
+									.getApplication().getDefaultLocale());
+					uploadStatus = bundle.getString("XmlFileImportBean.xmlFileUploadOk") ;
 				}
 			}
 			else {
-				uploadStatus = "ZIP file successfully uploaded to server!" ;
+				// zip upload ok
+				ResourceBundle bundle = ResourceBundle.getBundle(
+						"wilos.resources.messages", FacesContext.getCurrentInstance()
+								.getApplication().getDefaultLocale());
+				uploadStatus = bundle.getString("XmlFileImportBean.zipFileUploadOk") ;
 			}
 	
 			if (inputFile.getStatus() == InputFile.INVALID) {
@@ -143,7 +154,6 @@ public class XmlFileImportBean {
 			}
 			ExternalContext extCtx = FacesContext.getCurrentInstance()
 					.getExternalContext();
-			// File destFile = new File("/upload/"+file.getName());
 			logger.debug("### fichier uploade = " + file.getPath() + " => "
 					+ file.getName() + " ###");
 			try {
@@ -157,7 +167,45 @@ public class XmlFileImportBean {
 			logger.debug("### getRequestPathInfo = " + extCtx.getRequestPathInfo());
 			extCtx.getResourceAsStream("");
 	
-	
+			// generating current date for file's dedicated directory
+			Format formatter = new SimpleDateFormat("_yyyy.MM.dd.HH.mm.ss");
+		    String stringDateId = formatter.format(new Date());
+			logger.debug("### XmlFileImportBean ### date generation -> date="	
+													+stringDateId);
+			
+			try {
+				// creating new directory
+				File targetDirectoryForUploadedFile = 
+					new File(this.file.getAbsolutePath()
+							.substring(0, this.file.getAbsolutePath()
+														.lastIndexOf(File.separator))
+							+File.separator+this.file.getName()+stringDateId) ;
+				targetDirectoryForUploadedFile.mkdirs() ;
+				
+				if (targetDirectoryForUploadedFile.isDirectory()) {
+					logger.debug("### XmlFileImportBean ### target directory -> path="+
+									targetDirectoryForUploadedFile.getAbsolutePath());
+					
+					// moving uploaded file to dedicated directory
+					if (!this.file.renameTo(new File(targetDirectoryForUploadedFile.
+												getAbsolutePath()
+												+File.separator+this.fileName))) {
+						throw new Exception("failed to move file") ;
+					} else {
+						logger.debug("### XmlFileImportBean ### " +
+									"file moved successfully -> file path="+
+										this.file.getAbsolutePath());
+					}
+					
+				} else {
+					logger.error("### XmlFileImportBean ### target directory -> " +
+													"directory has not been created!");
+				}
+			}
+			catch (Exception e) {
+				logger.error("### XmlFileImportBean ### file move -> " + e);
+			}
+					
 			try {
 				Process p = processService.spelpParsingXML(file);
 				// save the process
