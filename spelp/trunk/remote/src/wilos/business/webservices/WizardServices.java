@@ -9,16 +9,9 @@
 
 package wilos.business.webservices;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
-
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import wilos.business.services.assistant.AssistantService;
 import wilos.business.services.misc.wilosuser.LoginService;
@@ -26,9 +19,6 @@ import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
 
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
-import com.thoughtworks.xstream.io.xml.JDomDriver;
-import com.thoughtworks.xstream.io.xml.XppDriver;
 
 /**
  *
@@ -36,19 +26,18 @@ import com.thoughtworks.xstream.io.xml.XppDriver;
  */
 @WebService()
 public class WizardServices {
-	ApplicationContext ctx;
-	LoginService ls;
-	AssistantService as;
+	LoginService loginService;
+	AssistantService assistantService;
 	
-	public WizardServices() {
+	/*public WizardServices() {
        // Getback the application context from the spring configuration file
        ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
        // Show what is in the factory
        System.out.println("factory => "+ctx);
        // Get the LoginService Singleton for managing Activity data  
-       ls = (LoginService) ctx.getBean("LoginService");
-       as = (AssistantService) ctx.getBean("AssistantService");
-	}
+       loginService = (LoginService) ctx.getBean("LoginService");
+       assistantService = (AssistantService) ctx.getBean("AssistantService");
+	}*/
 	
     @WebMethod
     public String getParticipant(@WebParam(name="login") String login, @WebParam(name="password")  String password) throws Exception
@@ -59,7 +48,7 @@ public class WizardServices {
        System.out.println("LOGIN : "+login);
        System.out.println("PASS : "+password);
          
-       wu =  as.getParticipantTO(getAuthentifiedParticipant(login,password).getLogin());       
+       wu =  assistantService.getParticipantTO(getAuthentifiedParticipant(login,password).getLogin());       
 	   System.out.println("Le user "+wu.getName()+" est logge");
 
        XStream xstream = new XStream(); 
@@ -78,7 +67,7 @@ public class WizardServices {
 		System.out.println("APPEL DE METHODE : startConcreteTaskDescriptor");
     	if (getAuthentifiedParticipant (login, password)!=null) {
     		System.out.println("le Participant est logge");
-    		as.startConcreteTaskDescriptor(id);
+    		assistantService.startConcreteTaskDescriptor(id);
     	}
     }
     
@@ -87,7 +76,7 @@ public class WizardServices {
 		System.out.println("APPEL DE METHODE : suspendConcreteTaskDescriptor");
     	if (getAuthentifiedParticipant (login, password)!=null) {
     		System.out.println("le Participant est logg�");
-    		as.suspendConcreteTaskDescriptor(id);
+    		assistantService.suspendConcreteTaskDescriptor(id);
     	}
     }
     
@@ -96,7 +85,7 @@ public class WizardServices {
 		System.out.println("APPEL DE METHODE : resumeConcreteTaskDescriptor");
     	if (getAuthentifiedParticipant (login, password)!=null) {
     		System.out.println("le Participant est logg�");
-    		as.resumeConcreteTaskDescriptor(id);
+    		assistantService.resumeConcreteTaskDescriptor(id);
     	}
     }
     
@@ -105,13 +94,13 @@ public class WizardServices {
 		System.out.println("APPEL DE METHODE : stopConcreteTaskDescriptor");
     	if (getAuthentifiedParticipant (login, password)!=null) {
     		System.out.println("le Participant est logg�");
-    		as.finishConcreteTaskDescriptor(id);
+    		assistantService.finishConcreteTaskDescriptor(id);
     	}
     }
     
     private Participant getAuthentifiedParticipant (String login,  String password) throws Exception {
     	Participant result = null;
-        WilosUser tmpwu = ls.getAuthentifiedUser(login,password);
+        WilosUser tmpwu = loginService.getAuthentifiedUser(login,password);
        if (tmpwu == null)
        {
            throw new Exception("le wilos user n'existe pas");
@@ -128,5 +117,21 @@ public class WizardServices {
            }
        }
        return result;
-    }   
+    }
+
+	public AssistantService getAssistantService() {
+		return assistantService;
+	}
+
+	public void setAssistantService(AssistantService assistantService) {
+		this.assistantService = assistantService;
+	}
+
+	public LoginService getLoginService() {
+		return loginService;
+	}
+
+	public void setLoginService(LoginService loginService) {
+		this.loginService = loginService;
+	}   
 }
