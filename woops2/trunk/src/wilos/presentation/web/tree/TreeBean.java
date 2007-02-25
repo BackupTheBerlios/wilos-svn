@@ -171,10 +171,10 @@ public class TreeBean {
 		String pageId = (String) map.get("pageId");
 
 		this.selectNodeToShow(nodeId, pageId);
-
+		/*
 		logger.debug("### TreeBean ### HIBERNATE STATS :: \n"
 				+ this.getProcessService().getActivityDao().getSessionFactory()
-						.getStatistics());
+						.getStatistics());*/
 	}
 
 	/* Manage the select one radio */
