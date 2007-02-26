@@ -34,7 +34,7 @@ public class ExpTableBean {
 
 	public static final String TABLE_LEAF = "images/expandableTable/leaf.gif";
 
-	private ArrayList<HashMap<String, Object>> expTableContent;
+	private List<HashMap<String, Object>> expTableContent;
 
 	protected HashMap<String, Boolean> isExpanded = new HashMap<String, Boolean>();
 
@@ -45,16 +45,22 @@ public class ExpTableBean {
 	private boolean isVisible = true;
 
 	private String selectedProcessGuid = "default";
+	
+	public ExpTableBean() {
+		this.expTableContent = new ArrayList<HashMap<String, Object>>();
+	}
 
 	/**
 	 * @return the expTableContent
 	 */
-	public ArrayList<HashMap<String, Object>> getExpTableContent() {
+	public List<HashMap<String, Object>> getExpTableContent() {
 
 		if (!this.selectedProcessGuid.equals("default")) {
 			Process process = this.processService
 					.getProcessFromGuid(this.selectedProcessGuid);
-			this.expTableContent.addAll(this.getExpTableLineContent(process));
+			this.expTableContent.clear() ;
+			List<HashMap<String, Object>> lines = this.getExpTableLineContent(process);
+			this.expTableContent.addAll(lines);
 		}
 		return this.expTableContent;
 	}
@@ -65,7 +71,7 @@ public class ExpTableBean {
 	 */
 	private List<HashMap<String, Object>> getExpTableLineContent(Activity _act) {
 
-		List<HashMap<String, Object>> subConcretesContent = new ArrayList<HashMap<String, Object>>();
+		List<HashMap<String, Object>> lines = new ArrayList<HashMap<String, Object>>();
 		Activity act = this.activityService.getActivity(_act.getId()) ;
 		Set<BreakdownElement> set = this.activityService.getBreakdownElements(act);
 		act.setBreakdownElements(set);
@@ -78,16 +84,14 @@ public class ExpTableBean {
 				} else {
 					hm.put("nodeType", "node");
 					hm.put("expansionImage", CONTRACT_TABLE_ARROW);
-					hm.put("participant", "");
 				}
+				hm.put("id", bde.getId());
+				hm.put("name", bde.getPresentationName());
 
-				hm.put("id", ((TaskDescriptor) bde).getId());
-				hm.put("name", ((TaskDescriptor) bde).getPresentationName());
-
-				subConcretesContent.add(hm);
+				lines.add(hm);
 			}
 		}
-		return subConcretesContent;
+		return lines;
 	}
 
 	/**
@@ -157,10 +161,10 @@ public class ExpTableBean {
 		for (Iterator iter = parentList.iterator(); iter.hasNext();) {
 			HashMap<String, Object> child = (HashMap<String, Object>) iter
 					.next();
-			if (child.get("parentId").equals(parentId)) {
+			/*if (child.get("parentId").equals(parentId)) {
 				this.expTableContent.remove(child);
 				deleteChildren((String) child.get("id"), parentList);
-			}
+			}*/
 			if (child.get("id").equals(parentId)) {
 				child.put("expansionImage",
 						ProjectAdvancementBean.CONTRACT_TABLE_ARROW);
