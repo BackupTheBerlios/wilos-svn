@@ -180,6 +180,7 @@ public class LoginBean {
 		String url = "wilos" ;
 		changeContentPage(url) ;
 		changeConnectView(false, "none") ;
+		this.webSessionService.cleanSesssion();
 		return url ;
 	}
 

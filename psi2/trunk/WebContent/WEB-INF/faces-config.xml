@@ -229,10 +229,6 @@
 			wilos.presentation.web.template.ConnectViewBean
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
-		<managed-property>
-			<property-name>webSessionService</property-name>
-			<value>#{WebSessionService}</value>
-		</managed-property>
 	</managed-bean>
 
 
