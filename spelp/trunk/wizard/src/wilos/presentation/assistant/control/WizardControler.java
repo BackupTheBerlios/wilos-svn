@@ -49,6 +49,9 @@ public class WizardControler {
 	private ArrayList<HTMLViewer> listHTML = new ArrayList<HTMLViewer>() ;
 	private Vector<Runnable> listThread = new Vector<Runnable>() ;
 	// TODO ajouter les attributs tps, langue + getters setters
+	private volatile Thread currentRefreshThread = null ;
+	private Runnable currentRefreshRunnable = null ;
+	private int flagThread = 0 ;
 	
 	private WizardControler() {
 		
@@ -59,21 +62,21 @@ public class WizardControler {
 	}
 	
 	public synchronized void launchBackgroundThreadForTree(){
-		Thread theThread = new Thread (new Runnable(){
+		currentRefreshThread = new Thread (new Runnable(){
 			public void run() {
+				currentRefreshRunnable = this ;
 				while (true){
 					try {
 						Thread.sleep(WizardControler.getInstance().getTimeToRefresh());
 						WizardControler.getInstance().connectToServer(this);
+						WizardControler.this.flagThread = 1 ;
 						updateTree();
 						WizardControler.getInstance().disconnectToServer(this);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+					} catch (InterruptedException e) {}
 				}
 			}
 		});
-		theThread.start();
+		currentRefreshThread.start();
 	}
 	
 	public void updateTree () {
@@ -87,9 +90,15 @@ public class WizardControler {
 		for ( ; i < newRoot.getChildCount() && i < thisRoot.getChildCount() ; i ++) {
 			trtNode((WizardMutableTreeNode)newRoot.getChildAt(i),(WizardMutableTreeNode)thisRoot.getChildAt(i)) ;
 		}
-		if (i == thisRoot.getChildCount()){
+		if (i == thisRoot.getChildCount() && thisRoot.getChildCount() != newRoot.getChildCount() ){
 			for ( ; i < newRoot.getChildCount() ; i ++) {
 				thisRoot.add((WizardMutableTreeNode) newRoot.getChildAt(i));
+			}
+			treePanel.getTree().treeDidChange() ;
+		}
+		else if (i == newRoot.getChildCount() && thisRoot.getChildCount() != newRoot.getChildCount()){
+			for ( ; i < thisRoot.getChildCount() ; i ++) {
+				thisRoot.remove(i);
 			}
 			treePanel.getTree().treeDidChange() ;
 		}
@@ -124,37 +133,84 @@ public class WizardControler {
 
 	private void trtNode(WizardMutableTreeNode newNode, WizardMutableTreeNode actualNode) {
 		//System.out.println(newNode.getUserObject() + " " + actualNode.getUserObject());
-		WizardMutableTreeNode tmpNode = null;
+		boolean finish = false ;
 		String guid1 = getGuid(newNode.getUserObject()) ;
 		String guid2 = getGuid(actualNode.getUserObject()) ;
-				
-		
-		for (int i = 0 ; i < newNode.getChildCount() ; i ++) {
-			if (guid1.equals(guid2)) {
-				if (getState(newNode.getUserObject()) != ""){
-					//System.out.println(newNode + " " + getState(newNode.getUserObject()) + actualNode + " "+ getState(actualNode.getUserObject()) );
-					if(!(getState(newNode.getUserObject()).equals(getState(actualNode.getUserObject())))){
+		int i = 0 ;
+		for ( ; !finish &&  i < newNode.getChildCount() && i < actualNode.getChildCount() ; i ++) {
+			if (flagThread != 0){
+				if (guid1.equals(guid2)) {
+					if (getState(newNode.getUserObject()) != ""){
+						//System.out.println(newNode + " " + getState(newNode.getUserObject()) + " " + actualNode + " "+ getState(actualNode.getUserObject()) );
 						ConcreteTaskDescriptor ctdactual = (ConcreteTaskDescriptor) actualNode.getUserObject();
 						ConcreteTaskDescriptor ctdnew = (ConcreteTaskDescriptor) newNode.getUserObject();
-						ctdactual.setState(ctdnew.getState());
-						treePanel.getTree().treeDidChange();
+						if(!(getState(newNode.getUserObject()).equals(getState(actualNode.getUserObject())))){
+							updateTreeVisualAndState(ctdactual, ctdnew.getState(),true);
+							treePanel.getTree().treeDidChange();
+						}
+						trtNode((WizardMutableTreeNode)newNode.getChildAt(i),(WizardMutableTreeNode)actualNode.getChildAt(i)) ;
+					}
+					else {
+						WizardMutableTreeNode tnew = (WizardMutableTreeNode) newNode.getChildAt(i);
+						WizardMutableTreeNode tactual = (WizardMutableTreeNode) actualNode.getChildAt(i);
+						trtNode(tnew,tactual) ;
+						//System.out.println(actualNode +" " + newNode);
 					}
 				}
 				else {
-					WizardMutableTreeNode tnew = (WizardMutableTreeNode) newNode.getChildAt(i);
-					WizardMutableTreeNode tactual = (WizardMutableTreeNode) actualNode.getChildAt(i);
-					trtNode(tnew,tactual) ;
-					//System.out.println(actualNode +" " + newNode);
+					int index = ((WizardMutableTreeNode)actualNode.getParent()).getIndex(actualNode);
+					//((DefaultMutableTreeNode)actualNode.getParent()).remove(actualNode);
+					((DefaultMutableTreeNode)actualNode.getParent()).insert(newNode, index);
+					treePanel.getTree().treeDidChange();
+//					manageDeletionSteps(actualNode);
+//					manageAdditionSteps(newNode);
+					finish = true ;
 				}
 			}
-			else {
-				actualNode = new WizardMutableTreeNode(newNode.getUserObject()) ;
-				treePanel.getTree().treeDidChange();
+		}
+//		if (!finish){
+//			if (i == actualNode.getChildCount() && actualNode.getChildCount() != newNode.getChildCount()){
+//				//System.out.println(actualNode + " " + i + " " + actualNode.getChildCount() + " " + newNode.getChildCount() + "JE PASSE 4");
+//				for ( ; i < newNode.getChildCount() ; i ++) {
+//					actualNode.add((WizardMutableTreeNode) newNode.getChildAt(i));
+//					manageAdditionSteps((DefaultMutableTreeNode) newNode.getChildAt(i));
+//				}
+//				treePanel.getTree().treeDidChange() ;
+//			}
+//			else if (i == newNode.getChildCount() && actualNode.getChildCount() != newNode.getChildCount()){
+//				for ( ; i < actualNode.getChildCount() ; i ++) {
+//					manageDeletionSteps((DefaultMutableTreeNode) actualNode.getChildAt(i));
+//					((DefaultMutableTreeNode)actualNode.getChildAt(i)).removeFromParent();
+//				}
+//				treePanel.getTree().treeDidChange() ;
+//			}
+//		}
+	}
+	
+	private void manageAdditionSteps (DefaultMutableTreeNode node){
+		if (node.getUserObject() instanceof Step) {
+			WizardStateMachine.getInstance().addStep((Step) node.getUserObject(),Integer.parseInt(((Step) node.getUserObject()).getGuid()));
+		}
+		if (node.getUserObject() instanceof ConcreteTaskDescriptor) {
+			ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) node.getUserObject() ;
+			for (Step s : ctd.getTaskDescriptor().getTaskDefinition().getSteps()){
+				WizardStateMachine.getInstance().addStep(s, Integer.parseInt(s.getGuid()));
 			}
 		}
-		
 	}
-
+	
+	private void manageDeletionSteps (DefaultMutableTreeNode node){
+		if (node.getUserObject() instanceof Step) {
+			WizardStateMachine.getInstance().deleteStep((Step) node.getUserObject());
+		}
+		if (node.getUserObject() instanceof ConcreteTaskDescriptor) {
+			ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) node.getUserObject() ;
+			for (Step s : ctd.getTaskDescriptor().getTaskDefinition().getSteps()){
+				WizardStateMachine.getInstance().deleteStep(s);
+			}
+		}
+	}
+	
 	public long getTimeToRefresh() {
 		// TODO Auto-generated method stub
 		return 5000;
@@ -321,7 +377,7 @@ public class WizardControler {
 	 */
 	public synchronized void startConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
 		if (ctd.getState() == Constantes.State.READY || ctd.getState() == Constantes.State.SUSPENDED ) {
-			RunnableTaskEvent traitement = new RunnableTaskEvent (RunnableTaskEvent.START,ctd.getId());
+			RunnableTaskEvent traitement = new RunnableTaskEvent (RunnableTaskEvent.START,ctd);
 			(new Thread (traitement)).start();
 		}
 	}
@@ -332,7 +388,7 @@ public class WizardControler {
 	 */	
 	public synchronized void pauseConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
 		if (ctd.getState() == Constantes.State.STARTED) {
-			RunnableTaskEvent traitement = new RunnableTaskEvent (RunnableTaskEvent.SUSPEND,ctd.getId());
+			RunnableTaskEvent traitement = new RunnableTaskEvent (RunnableTaskEvent.SUSPEND,ctd);
 			(new Thread (traitement)).start();
 		}
 	}
@@ -343,7 +399,7 @@ public class WizardControler {
 	 */
 	public synchronized void finishConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
 		if (ctd.getState() == Constantes.State.STARTED) {
-			RunnableTaskEvent traitement = new RunnableTaskEvent (RunnableTaskEvent.FINISH,ctd.getId());
+			RunnableTaskEvent traitement = new RunnableTaskEvent (RunnableTaskEvent.FINISH,ctd);
 			(new Thread (traitement)).start();
 		}
 	}
@@ -362,6 +418,107 @@ public class WizardControler {
 		initActions() ;
 		
 	}
+
+	private void updateTreeVisualAndState(ConcreteTaskDescriptor selectedTask,String state, boolean batch) {
+		if (state.equals(Constantes.State.STARTED)){
+			if (selectedTask.getTaskDescriptor().getTaskDefinition() != null){
+				for (Step s : selectedTask.getTaskDescriptor().getTaskDefinition().getSteps()){
+					if (WizardStateMachine.getInstance().getStepState(s) == WizardStateMachine.STATE_STEP_CREATED){
+						WizardStateMachine.getInstance().changeStepState(s, WizardStateMachine.STATE_STEP_READY);
+					}
+
+				}
+			}
+			selectedTask.setState(state);
+		}
+		else if (state.equals(Constantes.State.SUSPENDED)){
+			if (selectedTask.getTaskDescriptor().getTaskDefinition() != null){
+				for (Step s : selectedTask.getTaskDescriptor().getTaskDefinition().getSteps()){
+					if (WizardStateMachine.getInstance().getStepState(s) != WizardStateMachine.STATE_STEP_FINISHED){
+						WizardStateMachine.getInstance().changeStepState(s, WizardStateMachine.STATE_STEP_CREATED);
+					}
+				}
+			}
+			selectedTask.setState(state);
+		}
+		else if (state.equals(Constantes.State.FINISHED)){
+			if (selectedTask.getTaskDescriptor().getTaskDefinition() != null){
+				for (Step s : selectedTask.getTaskDescriptor().getTaskDefinition().getSteps()){
+					WizardStateMachine.getInstance().changeStepState(s, WizardStateMachine.STATE_TASK_FINISHED);
+				}
+			}
+			selectedTask.setState(state);
+		}
+		WizardControler.getInstance().changeHTMLViewerBehavior(!batch);
+		WizardStateMachine.getInstance().setFocusedObject(selectedTask,null);
+		treePanel.getTree().treeDidChange();
+	}
+	
+	private void playTask() {
+		DefaultMutableTreeNode dmt =  (DefaultMutableTreeNode)WizardControler.getInstance().getTreePanel().getTree().getLastSelectedPathComponent();
+		if(dmt != null) {
+			ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
+			// if(selectedTask.getId() != null) {
+			WizardControler.getInstance().startConcreteTaskDescriptor(selectedTask);
+			//WizardControler.getInstance().refreshParticipant();
+			//}					
+		}
+	}
+	
+	private void pauseTask() {
+		DefaultMutableTreeNode dmt =  (DefaultMutableTreeNode)WizardControler.getInstance().getTreePanel().getTree().getLastSelectedPathComponent();
+		if(dmt != null) {
+			ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
+			//if(selectedTask.getId() != null) {
+				WizardControler.getInstance().pauseConcreteTaskDescriptor(selectedTask);
+				//WizardControler.getInstance().refreshParticipant();
+			//}
+		}
+	}
+	
+	private void stopTask() {
+		DefaultMutableTreeNode dmt =  (DefaultMutableTreeNode)WizardControler.getInstance().getTreePanel().getTree().getLastSelectedPathComponent();
+		if(dmt != null) {
+			if (dmt.getUserObject() instanceof ConcreteTaskDescriptor){
+				ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
+				//if(selectedTask.getId() != null) {
+				WizardControler.getInstance().finishConcreteTaskDescriptor(selectedTask);
+				//}
+			}
+			else if (dmt.getUserObject() instanceof Step){
+				Step selectedStep = (Step)dmt.getUserObject();
+				// if(selectedTask.getId() != null) {
+				WizardControler.getInstance().changeHTMLViewerBehavior(true);
+				WizardStateMachine.getInstance().changeStepState(selectedStep, WizardStateMachine.STATE_STEP_FINISHED);
+				finishTaskIfNecessary((DefaultMutableTreeNode)dmt.getParent());
+				treePanel.getTree().treeDidChange();
+				//WizardControler.getInstance().refreshParticipant();
+				//}
+			}
+		}
+	}
+	
+	private void finishTaskIfNecessary(DefaultMutableTreeNode n){
+		if (n.getUserObject() instanceof ConcreteTaskDescriptor){
+			ConcreteTaskDescriptor parent = (ConcreteTaskDescriptor)n.getUserObject();
+			if (parent.getTaskDescriptor().getTaskDefinition() != null){
+				boolean ok = true ;
+				for (Step s : parent.getTaskDescriptor().getTaskDefinition().getSteps()){
+					ok = ok && (WizardStateMachine.getInstance().getStepState(s) == WizardStateMachine.STATE_STEP_FINISHED);
+				}
+				if (ok) {
+					if (parent.getState().equals(Constantes.State.STARTED)){
+						if(JOptionPane.showOptionDialog(treePanel, Bundle.getText("endstep.message"), Bundle.getText("endstep.title"), JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,null) == JOptionPane.YES_OPTION){
+							WizardControler.getInstance().changeHTMLViewerBehavior(true);
+							WizardControler.getInstance().finishConcreteTaskDescriptor(parent);
+							parent.setState(Constantes.State.FINISHED);
+							WizardStateMachine.getInstance().setFocusedObject(parent,null);
+						}
+					}
+				}
+			}
+		}
+	}
 	
 	/**
 	 * initActions init the actions for buttons play, pause, and finish
@@ -369,110 +526,21 @@ public class WizardControler {
 	private void initActions() {
 		ActionListener actionPlay = new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				DefaultMutableTreeNode dmt =  (DefaultMutableTreeNode)WizardControler.getInstance().getTreePanel().getTree().getLastSelectedPathComponent();
-				if(dmt != null) {
-					ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
-					// if(selectedTask.getId() != null) {
-					WizardControler.getInstance().changeHTMLViewerBehavior(true);
-					WizardControler.getInstance().startConcreteTaskDescriptor(selectedTask);
-					if (selectedTask.getTaskDescriptor().getTaskDefinition() != null){
-						for (Step s : selectedTask.getTaskDescriptor().getTaskDefinition().getSteps()){
-							if (WizardStateMachine.getInstance().getStepState(s) == WizardStateMachine.STATE_STEP_CREATED){
-								WizardStateMachine.getInstance().changeStepState(s, WizardStateMachine.STATE_STEP_READY);
-							}
-		
-						}
-					}
-					selectedTask.setState(Constantes.State.STARTED);
-					WizardStateMachine.getInstance().setFocusedObject(selectedTask,null);
-					treePanel.getTree().treeDidChange();
-					//WizardControler.getInstance().refreshParticipant();
-					//}					
-				}
+				playTask();
 				
-			}
+			}			
 		};
 		ActionListener actionPause = new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				DefaultMutableTreeNode dmt =  (DefaultMutableTreeNode)WizardControler.getInstance().getTreePanel().getTree().getLastSelectedPathComponent();
-				if(dmt != null) {
-					ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
-					//if(selectedTask.getId() != null) {
-						WizardControler.getInstance().changeHTMLViewerBehavior(true);
-						WizardControler.getInstance().pauseConcreteTaskDescriptor(selectedTask);
-						// if the task is suspended then the steps can't be finish so they are put in CREATED state
-						if (selectedTask.getTaskDescriptor().getTaskDefinition() != null){
-							for (Step s : selectedTask.getTaskDescriptor().getTaskDefinition().getSteps()){
-								if (WizardStateMachine.getInstance().getStepState(s) != WizardStateMachine.STATE_STEP_FINISHED){
-									WizardStateMachine.getInstance().changeStepState(s, WizardStateMachine.STATE_STEP_CREATED);
-								}
-							}
-						}
-						selectedTask.setState(Constantes.State.SUSPENDED);
-						WizardStateMachine.getInstance().setFocusedObject(selectedTask,null);
-						treePanel.getTree().treeDidChange();
-						//WizardControler.getInstance().refreshParticipant();
-					//}
-				}
+				pauseTask();
 				
 			}
 		};
 		ActionListener actionFinish = new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				DefaultMutableTreeNode dmt =  (DefaultMutableTreeNode)WizardControler.getInstance().getTreePanel().getTree().getLastSelectedPathComponent();
-				if(dmt != null) {
-					if (dmt.getUserObject() instanceof ConcreteTaskDescriptor){
-						ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
-						//if(selectedTask.getId() != null) {
-							WizardControler.getInstance().changeHTMLViewerBehavior(true);
-							WizardControler.getInstance().finishConcreteTaskDescriptor(selectedTask);
-							if (selectedTask.getTaskDescriptor().getTaskDefinition() != null){
-								for (Step s : selectedTask.getTaskDescriptor().getTaskDefinition().getSteps()){
-									WizardStateMachine.getInstance().changeStepState(s, WizardStateMachine.STATE_TASK_FINISHED);
-								}
-							}
-							selectedTask.setState(Constantes.State.FINISHED);
-							WizardStateMachine.getInstance().setFocusedObject(selectedTask,null);
-							treePanel.getTree().treeDidChange();//WizardControler.getInstance().refreshParticipant();
-						//}
-					}
-					else if (dmt.getUserObject() instanceof Step){
-						Step selectedStep = (Step)dmt.getUserObject();
-						// if(selectedTask.getId() != null) {
-						WizardControler.getInstance().changeHTMLViewerBehavior(true);
-						WizardStateMachine.getInstance().changeStepState(selectedStep, WizardStateMachine.STATE_STEP_FINISHED);
-						finishTaskIfNecessary((DefaultMutableTreeNode)dmt.getParent());
-						treePanel.getTree().treeDidChange();
-						//WizardControler.getInstance().refreshParticipant();
-						//}
-					}
-				}
-				
-			}
-			
-			private void finishTaskIfNecessary(DefaultMutableTreeNode n){
-				if (n.getUserObject() instanceof ConcreteTaskDescriptor){
-					ConcreteTaskDescriptor parent = (ConcreteTaskDescriptor)n.getUserObject();
-					if (parent.getTaskDescriptor().getTaskDefinition() != null){
-						boolean ok = true ;
-						for (Step s : parent.getTaskDescriptor().getTaskDefinition().getSteps()){
-							ok = ok && (WizardStateMachine.getInstance().getStepState(s) == WizardStateMachine.STATE_STEP_FINISHED);
-						}
-						if (ok) {
-							if (parent.getState().equals(Constantes.State.STARTED)){
-								if(JOptionPane.showOptionDialog(treePanel, Bundle.getText("endstep.message"), Bundle.getText("endstep.title"), JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,null) == JOptionPane.YES_OPTION){
-									WizardControler.getInstance().changeHTMLViewerBehavior(true);
-									WizardControler.getInstance().finishConcreteTaskDescriptor(parent);
-									parent.setState(Constantes.State.FINISHED);
-									WizardStateMachine.getInstance().setFocusedObject(parent,null);
-								}
-							}
-						}
-					}
-				}
+				stopTask();
 			}
 		};
-		
 		actionBar.getJButtonPlayTask().addActionListener(actionPlay);
 		menuContextuel.getJButtonPlayTask().addActionListener(actionPlay);
 		actionBar.getJButtonPauseTask().addActionListener(actionPause);
@@ -512,33 +580,49 @@ public class WizardControler {
 		this.lastCtd = o;
 	}
 	
+	private void interruptRefreshThread (){
+		if (currentRefreshThread != null){
+			currentRefreshThread.interrupt();
+			flagThread = 0 ;
+			disconnectToServer(currentRefreshRunnable);
+		}
+	}
+	
 	private class RunnableTaskEvent implements Runnable {
 		private static final int START = 0;
 		private static final int SUSPEND = 1;
 		private static final int FINISH = 2;
 		
 		private int type;
-		private String taskId;
+		private ConcreteTaskDescriptor taskId;
 		
-		public RunnableTaskEvent (int t, String id) {
+		public RunnableTaskEvent (int t, ConcreteTaskDescriptor ctd) {
 			type = t;
-			taskId = id;
+			taskId = ctd;
 		}
 		
 		public void run () {
-			WizardControler.getInstance().connectToServer(this);
-			switch (type)
-			{
-				case START:
-					WizardServicesProxy.startConcreteTaskDescriptor(taskId);
-					break;
-				case SUSPEND:
-					WizardServicesProxy.suspendConcreteTaskDescriptor(taskId);
-					break;
-				case FINISH:
-					WizardServicesProxy.stopConcreteTaskDescriptor(taskId);
+			interruptRefreshThread();
+			synchronized(taskId){
+				WizardControler.getInstance().connectToServer(this);
+				String state = "" ;
+				switch (type)
+				{
+					case START:
+						WizardServicesProxy.startConcreteTaskDescriptor(taskId.getId());
+						state = Constantes.State.STARTED ;
+						break;
+					case SUSPEND:
+						WizardServicesProxy.suspendConcreteTaskDescriptor(taskId.getId());
+						state = Constantes.State.SUSPENDED ;
+						break;
+					case FINISH:
+						WizardServicesProxy.stopConcreteTaskDescriptor(taskId.getId());
+						state = Constantes.State.FINISHED ;
+				}
+				WizardControler.this.updateTreeVisualAndState(taskId, state,false);
+				WizardControler.getInstance().disconnectToServer(this);
 			}
-			WizardControler.getInstance().disconnectToServer(this);
 		}
 	}
 }
