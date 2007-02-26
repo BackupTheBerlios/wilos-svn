@@ -417,7 +417,7 @@
 			<value>#{WebSessionService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>Woops2ProcessBean</managed-bean-name>
 		<managed-bean-class>wilos.presentation.web.expandabletable.ProcessBean</managed-bean-class>
@@ -427,7 +427,7 @@
 			<value>#{ProcessService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>ExpTableBean</managed-bean-name>
 		<managed-bean-class>wilos.presentation.web.expandabletable.ExpTableBean</managed-bean-class>
