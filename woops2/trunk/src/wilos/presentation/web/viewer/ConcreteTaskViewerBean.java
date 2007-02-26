@@ -57,6 +57,8 @@ public class ConcreteTaskViewerBean {
 	private boolean remainingTimeModifiable;
 	
 	private boolean visibleSaveButton;
+	
+	private boolean visiblePopup = false;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 	
@@ -152,9 +154,7 @@ public class ConcreteTaskViewerBean {
 	 * @return the visibleAffected
 	 */
 	public boolean getVisibleAffected() {
-
 		return (this.concreteTaskDescriptor.getState().equals(State.CREATED)&& this.visibleAffected());
-
 	}
 	/**
 	 * Methode for check if user can affected to a task
@@ -216,6 +216,17 @@ public class ConcreteTaskViewerBean {
 	}
 
 	public void stopActionListener(ActionEvent event) {
+		//Displays the modal popup. 
+		//The stop action will be applied or aborted according 
+		//to the user's choice through the 'Confirm' or 'Cancel' buttons
+		if(this.concreteTaskDescriptor.getRemainingTime()==0){
+			this.confirmStop();
+		}else{
+			this.visiblePopup = true;
+		}
+	}
+
+	public String confirmStop(){
 		this.concreteTaskDescriptorService
 				.finishConcreteTaskDescriptor(this.concreteTaskDescriptor);
 
@@ -224,8 +235,18 @@ public class ConcreteTaskViewerBean {
 		TreeBean treeBean = (TreeBean) context.getApplication()
 				.getVariableResolver().resolveVariable(context, "TreeBean");
 		treeBean.refreshProjectTree();
+		//once the treatment done, hide the popup
+		this.visiblePopup = false;
+		return "";
 	}
-
+	
+	public String cancelStop(){
+		this.visiblePopup = false;
+		return "";
+	}
+	
+	
+	
 	public void suspendedActionListener(ActionEvent event) {
 		this.concreteTaskDescriptorService
 				.suspendConcreteTaskDescriptor(this.concreteTaskDescriptor);
@@ -235,17 +256,6 @@ public class ConcreteTaskViewerBean {
 		TreeBean treeBean = (TreeBean) context.getApplication()
 				.getVariableResolver().resolveVariable(context, "TreeBean");
 		treeBean.refreshProjectTree();
-	}
-
-	/**
-	 * return the value of visible buton start
-	 *
-	 * @return
-	 */
-	public boolean getVisibleStart() {
-
-		return (this.concreteTaskDescriptor.getState().equals(State.READY));
-
 	}
 
 	public ConcreteTaskDescriptor getConcreteTaskDescriptor() {
@@ -425,6 +435,21 @@ public class ConcreteTaskViewerBean {
 
 	}
 
+	public void setVisibleSaveButton(boolean visibleSaveButton) {
+		this.visibleSaveButton = visibleSaveButton;
+	}
+
+	/**
+	 * return the value of visible buton start
+	 *
+	 * @return
+	 */
+	public boolean getVisibleStart() {
+	
+		return (this.concreteTaskDescriptor.getState().equals(State.READY));
+	
+	}
+
 	/**
 	 * Getter of visibleSaveButton.
 	 *
@@ -504,5 +529,13 @@ public class ConcreteTaskViewerBean {
 	 */
 	public void setTaskDescriptorService(TaskDescriptorService taskDescriptorService) {
 		this.taskDescriptorService = taskDescriptorService;
+	}
+
+	public boolean getVisiblePopup() {
+		return visiblePopup;
+	}
+
+	public void setVisiblePopup(boolean visiblePopup) {
+		this.visiblePopup = visiblePopup;
 	}
 }
