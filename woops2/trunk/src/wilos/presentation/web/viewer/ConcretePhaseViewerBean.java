@@ -114,11 +114,11 @@ public class ConcretePhaseViewerBean {
 	/* Getters & Setters */
 
 	public ConcretePhase getConcretePhase() {
-		return concretePhase;
+		return this.concretePhase;
 	}
 
-	public void setConcretePhase(ConcretePhase concretePhase) {
-		this.concretePhase = concretePhase;
+	public void setConcretePhase(ConcretePhase _concretePhase) {
+		this.concretePhase = _concretePhase;
 	}
 
 	/**
