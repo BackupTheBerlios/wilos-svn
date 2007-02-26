@@ -22,8 +22,9 @@ import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.role.RoleDescriptor;
-import wilos.presentation.web.tree.TreeBean;
 import wilos.model.spem2.task.TaskDescriptor;
+import wilos.presentation.web.project.ProjectAdvancementBean;
+import wilos.presentation.web.tree.TreeBean;
 import wilos.utils.Constantes.State;
 
 public class ConcreteTaskViewerBean {
@@ -155,6 +156,10 @@ public class ConcreteTaskViewerBean {
 		message.setSeverity(FacesMessage.SEVERITY_INFO);
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		facesContext.addMessage(null, message);
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		ProjectAdvancementBean pab = (ProjectAdvancementBean) context.getApplication().getVariableResolver().resolveVariable(context, "ProjectAdvancementBean");
+		pab.refreshProjectTable(); 
 
 	}
 
@@ -223,6 +228,9 @@ public class ConcreteTaskViewerBean {
 		TreeBean treeBean = (TreeBean) context.getApplication()
 				.getVariableResolver().resolveVariable(context, "TreeBean");
 		treeBean.refreshProjectTree();
+		
+		ProjectAdvancementBean pab = (ProjectAdvancementBean) context.getApplication().getVariableResolver().resolveVariable(context, "ProjectAdvancementBean");
+		pab.refreshProjectTable(); 
 	}
 
 	public void stopActionListener(ActionEvent event) {
@@ -247,6 +255,9 @@ public class ConcreteTaskViewerBean {
 		TreeBean treeBean = (TreeBean) context.getApplication()
 				.getVariableResolver().resolveVariable(context, "TreeBean");
 		treeBean.refreshProjectTree();
+		
+		ProjectAdvancementBean pab = (ProjectAdvancementBean) context.getApplication().getVariableResolver().resolveVariable(context, "ProjectAdvancementBean");
+		pab.refreshProjectTable(); 
 		// once the treatment done, hide the popup
 		this.visiblePopup = false;
 		return "";
@@ -266,6 +277,8 @@ public class ConcreteTaskViewerBean {
 		TreeBean treeBean = (TreeBean) context.getApplication()
 				.getVariableResolver().resolveVariable(context, "TreeBean");
 		treeBean.refreshProjectTree();
+		ProjectAdvancementBean pab = (ProjectAdvancementBean) context.getApplication().getVariableResolver().resolveVariable(context, "ProjectAdvancementBean");
+		pab.refreshProjectTable(); 
 	}
 
 	public ConcreteTaskDescriptor getConcreteTaskDescriptor() {
@@ -450,6 +463,9 @@ public class ConcreteTaskViewerBean {
 		message.setSeverity(FacesMessage.SEVERITY_INFO);
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		facesContext.addMessage(null, message);
+		
+		ProjectAdvancementBean pab = (ProjectAdvancementBean) facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "ProjectAdvancementBean");
+		pab.refreshProjectTable(); 
 
 	}
 

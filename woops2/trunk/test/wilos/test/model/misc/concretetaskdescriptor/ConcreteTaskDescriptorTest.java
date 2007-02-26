@@ -13,6 +13,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.utils.Constantes;
@@ -102,6 +103,16 @@ public class ConcreteTaskDescriptorTest {
 		this.concreteTaskDescriptor.removeTaskDescriptor(taskDescriptor);
 		assertNull(this.concreteTaskDescriptor.getTaskDescriptor());
 		assertTrue(taskDescriptor.getConcreteTaskDescriptors().size() == 0);
+	}
+	
+	@Test
+	public void testaddConcreteRoleDescriptor()
+	{
+		ConcreteRoleDescriptor crd = new ConcreteRoleDescriptor();
+		this.concreteTaskDescriptor.addConcreteRoleDescriptor(crd);
+		
+		assertTrue(this.concreteTaskDescriptor.getConcreteRoleDescriptor() == crd);
+		assertTrue(crd.getConcreteTaskDescriptors().size() == 1);
 	}
 
 }

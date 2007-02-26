@@ -35,6 +35,7 @@ public class ConcreteTaskDescriptorService {
 	private RoleDescriptorService roleDescriptorService;
 
 	private ConcreteRoleDescriptorService concreteRoleDescriptorService;
+	
 
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
@@ -93,7 +94,8 @@ public class ConcreteTaskDescriptorService {
 	public ConcreteTaskDescriptor affectedConcreteTaskDescriptor(
 			ConcreteTaskDescriptor _concreteTaskDescriptor, Participant _user) {
 		ConcreteRoleDescriptor concreteRoleDescriptor = new ConcreteRoleDescriptor();
-
+		
+		
 		TaskDescriptor tmp = _concreteTaskDescriptor.getTaskDescriptor();
 		RoleDescriptor tmpRoleDescriptor;
 		TaskDescriptor td = this.taskDescriptorService.getTaskDescriptorById(tmp.getId());
@@ -119,8 +121,7 @@ public class ConcreteTaskDescriptorService {
 		}
 		ConcreteRoleDescriptor crd = this.concreteRoleDescriptorService.getConcreteRoleDescriptorById(concreteRoleDescriptor.getId());
 		
-		this.getConcreteTaskDescriptor(_concreteTaskDescriptor.getId()).addConcreteRoleDescriptor(crd);
-
+		_concreteTaskDescriptor.addConcreteRoleDescriptor(crd);
 		return _concreteTaskDescriptor;
 	}
 
