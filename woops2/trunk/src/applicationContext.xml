@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:ws="http://jax-ws.dev.java.net/spring/core"
+    xmlns:wss="http://jax-ws.dev.java.net/spring/servlet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
-	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+	http://jax-ws.dev.java.net/spring/core http://jax-ws.dev.java.net/spring/core.xsd
+	http://jax-ws.dev.java.net/spring/servlet http://jax-ws.dev.java.net/spring/servlet.xsd"
 	default-lazy-init="true">
 
 	<!-- DataSource Definition -->
@@ -164,7 +168,26 @@
 	<!-- enable the configuration of transactional behavior based on annotations -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
+
+	<!-- Webservices Definition -->
+	<!-- <wss:bindings id="jax-ws.http">
+		<wss:bindings>
+			<wss:binding url="/WizardServices">
+				<wss:service>
+					<ws:service bean="#WizardServices" />
+				</wss:service>
+			</wss:binding>
+		</wss:bindings>
+	</wss:bindings> -->
+
 	<!-- ========================= Start of BEAN DEFINITIONS ========================= -->
+
+	<!-- ========================= Webservices Layer ========================= -->
+	<!-- <bean id="WizardServices"
+		class="wilos.business.webservices.WizardServices">
+		<property name="loginService" ref="LoginService" />
+		<property name="assistantService" ref="AssistantService" />
+	</bean> -->
 
 	<!-- ========================= DAO Layer ========================= -->
 
