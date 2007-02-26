@@ -15,6 +15,20 @@ public class ConnectViewBean {
     private WebSessionService webSessionService;
 
     /**
+	 * @return the webSessionService
+	 */
+	public WebSessionService getWebSessionService() {
+		return webSessionService;
+	}
+
+	/**
+	 * @param webSessionService the webSessionService to set
+	 */
+	public void setWebSessionService(WebSessionService webSessionService) {
+		this.webSessionService = webSessionService;
+	}
+
+	/**
      * Gets the currently selected content panel.
      *
      * @return currently selected content panel.
@@ -60,7 +74,7 @@ public class ConnectViewBean {
     		connectContent.setTemplateName("not_connected");
     		connectContent.setTemplateNameActions("none");
     		connectContent.setTemplateNameMenu("no_tree_group");
-    		this.webSessionService.cleanSesssion();
+    		//this.webSessionService.cleanSesssion();
     	}
     	connectContent.setNavigationSelection(this);
     	this.selectedPanel = connectContent;

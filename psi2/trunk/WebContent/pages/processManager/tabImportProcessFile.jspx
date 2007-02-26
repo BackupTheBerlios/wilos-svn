@@ -13,7 +13,10 @@
 							actionListener="#{XmlFileImportBean.uploadFileActionListener}"
 							uniqueFolder="false" file="#{XmlFileImportBean.file}"
 							immediate="true" />
-						<ice:outputProgress id="pro" value="#{XmlFileImportBean.percent}" />
+						<ice:outputProgress id="pro" 
+											indeterminate="true" 
+											value="#{XmlFileImportBean.percent}"  
+											styleClass=".iceOutputProgressIndeterminate"/>
 						
 					</ice:panelGroup>
 				</ice:panelGrid>
