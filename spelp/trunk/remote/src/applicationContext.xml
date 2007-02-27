@@ -355,7 +355,7 @@
 	</bean>
 	<bean id="CheckListService"
 		class="wilos.business.services.checklist.CheckListService">
-		<property name="checklistDao" ref="CheckListDao" />
+		<property name="checkListDao" ref="CheckListDao" />
 	</bean>
 	<bean id="SectionService"
 		class="wilos.business.services.section.SectionService">
