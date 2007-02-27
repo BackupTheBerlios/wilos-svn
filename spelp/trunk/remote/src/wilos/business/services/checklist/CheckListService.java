@@ -59,10 +59,6 @@ public class CheckListService {
 	 * @param _checklistDao
 	 *            The checklistDAO to set.
 	 */
-	public void setGuidanceDao(CheckListDao _checklistDao) {
-		this.checkListDao = _checklistDao ;
-	}
-
 	public void setCheckListDao(CheckListDao checkListDao) {
 		this.checkListDao = checkListDao;
 	}
