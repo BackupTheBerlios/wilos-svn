@@ -34,13 +34,13 @@
 			<value>org.gjt.mm.mysql.Driver</value>
 		</property>
 		<property name="url">
-			<value>jdbc:mysql://127.0.0.1/m1isb2</value>
+			<value>jdbc:mysql://127.0.0.1/wilos</value>
 		</property>
 		<property name="username">
-			<value>m1isb2</value>
+			<value>root</value>
 		</property>
 		<property name="password">
-			<value>5lmpcdtc</value>
+			<value></value>
 		</property>
 	</bean>
 	<!-- Hibernate SessionFactory Definition -->
