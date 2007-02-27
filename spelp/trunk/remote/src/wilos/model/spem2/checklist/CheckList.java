@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.section.Section;
@@ -44,9 +45,9 @@ public class CheckList extends Guidance{
 	}
 	
 	
-	/* public int hashCode() {
-		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).append(this.type).append(this.presentationName).append(this.attachment).toHashCode();
-	} */
+	 public int hashCode() {
+		return new HashCodeBuilder(17, 37).appendSuper(super.hashCode()).toHashCode();
+	} 
 
 	/**
 	 * @return the sections
