@@ -46,6 +46,11 @@ public class Element implements Cloneable {
 	private String keyConsiderations;
 	
 	/**
+	 * the insertion order of the element
+	 */
+	private int insertionOrder;
+	
+	/**
 	 * Constructor.
 	 * 
 	 */
@@ -221,6 +226,20 @@ public class Element implements Cloneable {
 	 */
 	public void setMainDescription(String _mainDescription) {
 		mainDescription = _mainDescription;
+	}
+
+	/**
+	 * @return the insertionOrder
+	 */
+	public int getInsertionOrder() {
+		return this.insertionOrder;
+	}
+
+	/**
+	 * @param _insertionOrder the insertionOrder to set
+	 */
+	public void setInsertionOrder(int _insertionOrder) {
+		this.insertionOrder = _insertionOrder;
 	}
 
 }

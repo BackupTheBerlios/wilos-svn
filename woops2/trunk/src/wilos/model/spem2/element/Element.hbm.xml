@@ -30,5 +30,8 @@
 		<property name="keyConsiderations" type="java.lang.String" column="keyconsiderations"
 			length="256" />
 			
+		<property name="insertionOrder" type="java.lang.Integer" column="insertionorder"
+			 />
+			
 	</class>
 </hibernate-mapping>
