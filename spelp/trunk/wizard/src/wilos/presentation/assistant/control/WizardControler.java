@@ -12,7 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
 
 import org.jdesktop.swingx.JXTree;
 
@@ -93,18 +94,51 @@ public class WizardControler {
 		currentRefreshThread.start();
 	}
 	
+	/**
+	 * updateTree get the tree updated from the server and modify the current
+	 *
+	 */
 	public void updateTree () {
-		// recuperation de l'arbre sur le serveur
+		// get the participant on the server
 		Participant p = WizardServicesProxy.getParticipant() ;
+		// creating the model from this participant 
 		WizardTreeModel newModel = new WizardTreeModel(p,false);
+		// getting the actual model
 		WizardTreeModel thisModel = (WizardTreeModel) treePanel.getTree().getModel() ;
 		DefaultMutableTreeNode newRoot = (DefaultMutableTreeNode)newModel.getRoot();
 		DefaultMutableTreeNode thisRoot = (DefaultMutableTreeNode)thisModel.getRoot();
+		// temporary nodes
+		WizardMutableTreeNode tmpActualNode = null ;
+		WizardMutableTreeNode tmpNewNode = null ;
 		int i = 0 ;
 		int j ;
 		boolean trouve = false ;
 		
-		// for each project on server
+		// managing if there is a deletion
+		if (flagThread != 0 && thisRoot.getChildCount() > newRoot.getChildCount()){
+			// check how many deletion
+			int diff = thisRoot.getChildCount() - newRoot.getChildCount();
+			int nbdiff = 0 ;
+			// for each nodeactual we search if it is present on the server
+			for ( ;  nbdiff < diff && i < thisRoot.getChildCount() ; i++){
+				j = 0 ;
+				tmpActualNode = (WizardMutableTreeNode) thisRoot.getChildAt(i);
+				trouve = false ;
+				for ( ; j < newRoot.getChildCount() ; j++){
+					tmpNewNode = (WizardMutableTreeNode) newRoot.getChildAt(j);
+					String id1,id2 ;
+					id1 = getId(tmpActualNode.getUserObject()) ;
+					id2 = getId(tmpNewNode.getUserObject()) ;
+					trouve = trouve || ((id1 != null) && id1.equals(id2));
+				}
+				// if it is not on server delete it
+				if (!trouve){
+					thisModel.removeNodeFromParent(tmpActualNode);
+					nbdiff++;
+				}
+			}
+		}
+		// for each project on server => check state modification or new branch
 		for ( ; i < newRoot.getChildCount() ; i++){
 			j = 0 ;
 			// we search if it exists on local
@@ -118,26 +152,9 @@ public class WizardControler {
 			}
 			// if it is not in memory we had to add it
 			else {
-				thisRoot.add((MutableTreeNode) newRoot.getChildAt(i));
+				thisModel.insertNodeInto((WizardMutableTreeNode)newRoot.getChildAt(i), thisRoot, i);
 			}
 		}
-//		 TODO : gestion des branches  en moins
-		
-//		for ( ; i < newRoot.getChildCount() && i < thisRoot.getChildCount() ; i ++) {
-//			trtNode((WizardMutableTreeNode)newRoot.getChildAt(i),(WizardMutableTreeNode)thisRoot.getChildAt(i)) ;
-//		}
-//		if (i == thisRoot.getChildCount() && thisRoot.getChildCount() != newRoot.getChildCount() ){
-//			for ( ; i < newRoot.getChildCount() ; i ++) {
-//				thisRoot.add((WizardMutableTreeNode) newRoot.getChildAt(i));
-//			}
-//			treePanel.getTree().treeDidChange() ;
-//		}
-//		else if (i == newRoot.getChildCount() && thisRoot.getChildCount() != newRoot.getChildCount()){
-//			for ( ; i < thisRoot.getChildCount() ; i ++) {
-//				thisRoot.remove(i);
-//			}
-//			treePanel.getTree().treeDidChange() ;
-//		}
 	}
 	
 	private String getId(Object userObject){
@@ -171,10 +188,33 @@ public class WizardControler {
 		boolean trouve = false ;
 		int i = 0 ;
 		int j ;
+		WizardTreeModel model = (WizardTreeModel) treePanel.getTree().getModel() ;
 		WizardMutableTreeNode tmpNewNode = null ;
 		WizardMutableTreeNode tmpActualNode = null ;
+		// managing if there is a deletion
+		if (flagThread != 0 && actualNode.getChildCount() > newNode.getChildCount()){
+			int diff = actualNode.getChildCount() - newNode.getChildCount();
+			int nbdiff = 0 ;
+			for ( ;  nbdiff < diff && i < actualNode.getChildCount() ; i++){
+				j = 0 ;
+				tmpActualNode = (WizardMutableTreeNode) actualNode.getChildAt(i);
+				trouve = false ;
+				for ( ; j < newNode.getChildCount() ; j++){
+					tmpNewNode = (WizardMutableTreeNode) newNode.getChildAt(j);
+					String id1,id2 ;
+					id1 = getId(tmpActualNode.getUserObject()) ;
+					id2 = getId(tmpNewNode.getUserObject()) ;
+					trouve = trouve || ((id1 != null) && id1.equals(id2));					
+				}
+				if (!trouve){
+					model.removeNodeFromParent(tmpActualNode);
+					nbdiff++;
+				}
+			}
+		}
+		//	for each project on server => check state modification or new branch
+		i = 0 ;
 		for ( ; i < newNode.getChildCount() ; i++){
-			//System.out.println("TRACE I : " + newNode.getChildAt(i));
 			j = 0 ;
 			tmpNewNode = (WizardMutableTreeNode) newNode.getChildAt(i);
 			for ( ; !trouve && j < actualNode.getChildCount() ; j++){
@@ -183,11 +223,10 @@ public class WizardControler {
 				id1 = getId(tmpNewNode.getUserObject()) ;
 				id2 = getId(tmpActualNode.getUserObject()) ;
 				trouve = (id1 != null) && id1.equals(id2);
-				//trouve = tmpNewNode.getUserObject().equals(tmpActualNode.getUserObject());
 			}
+			// if the node has been found
 			if (flagThread != 0 && trouve){
-				// manage the state and if the type is not concrete task descriptor go down
-				//System.out.println(newNode + " " + getState(newNode.getUserObject()) + " " + actualNode + " " + getState(actualNode.getUserObject()));
+				// manage the state
 				if (!(getState(tmpNewNode.getUserObject()).equals(getState(tmpActualNode.getUserObject())))){
 					if (tmpActualNode.getUserObject() instanceof ConcreteTaskDescriptor) {
 						ConcreteTaskDescriptor ctdactual = (ConcreteTaskDescriptor) tmpActualNode.getUserObject() ;
@@ -195,98 +234,20 @@ public class WizardControler {
 						updateTreeVisualAndState(ctdactual, ctdnew.getState(),true);
 					}
 				}
+				// recursive call for the children
 				trtNode(tmpNewNode,tmpActualNode);
 				trouve = false ;
 			}
+			// if the node is new we add it in the model
 			else if(!trouve){
-				WizardMutableTreeNode newChild = (WizardMutableTreeNode) newNode.getChildAt(i) ;
+				WizardMutableTreeNode newChild = new WizardMutableTreeNode(((WizardMutableTreeNode) newNode.getChildAt(i)).getUserObject()) ;
 				if (!(newChild.getUserObject() instanceof Step)){
-					actualNode.add(newChild);
+					model.insertNodeInto((WizardMutableTreeNode) newNode.getChildAt(i), actualNode, i);
 				}
-				
 			}
-			
 		}
+	}
 		
-		//System.out.println(newNode.getUserObject() + " " + actualNode.getUserObject());
-//		boolean finish = false ;
-//		String guid1 = getGuid(newNode.getUserObject()) ;
-//		String guid2 = getGuid(actualNode.getUserObject()) ;
-//		int i = 0 ;
-//		for ( ; !finish &&  i < newNode.getChildCount() && i < actualNode.getChildCount() ; i ++) {
-//			if (flagThread != 0){
-//				if (guid1.equals(guid2)) {
-//					if (getState(newNode.getUserObject()) != ""){
-//						//System.out.println(newNode + " " + getState(newNode.getUserObject()) + " " + actualNode + " "+ getState(actualNode.getUserObject()) );
-//						ConcreteTaskDescriptor ctdactual = (ConcreteTaskDescriptor) actualNode.getUserObject();
-//						ConcreteTaskDescriptor ctdnew = (ConcreteTaskDescriptor) newNode.getUserObject();
-//						if(!(getState(newNode.getUserObject()).equals(getState(actualNode.getUserObject())))){
-//							updateTreeVisualAndState(ctdactual, ctdnew.getState(),true);
-//							treePanel.getTree().treeDidChange();
-//						}
-//						trtNode((WizardMutableTreeNode)newNode.getChildAt(i),(WizardMutableTreeNode)actualNode.getChildAt(i)) ;
-//					}
-//					else {
-//						WizardMutableTreeNode tnew = (WizardMutableTreeNode) newNode.getChildAt(i);
-//						WizardMutableTreeNode tactual = (WizardMutableTreeNode) actualNode.getChildAt(i);
-//						trtNode(tnew,tactual) ;
-//						//System.out.println(actualNode +" " + newNode);
-//					}
-//				}
-//				else {
-//					int index = ((WizardMutableTreeNode)actualNode.getParent()).getIndex(actualNode);
-//					//((DefaultMutableTreeNode)actualNode.getParent()).remove(actualNode);
-//					((DefaultMutableTreeNode)actualNode.getParent()).insert(newNode, index);
-//					treePanel.getTree().treeDidChange();
-////					manageDeletionSteps(actualNode);
-////					manageAdditionSteps(newNode);
-//					finish = true ;
-//				}
-//			}
-//		}
-//		if (!finish){
-//			if (i == actualNode.getChildCount() && actualNode.getChildCount() != newNode.getChildCount()){
-//				//System.out.println(actualNode + " " + i + " " + actualNode.getChildCount() + " " + newNode.getChildCount() + "JE PASSE 4");
-//				for ( ; i < newNode.getChildCount() ; i ++) {
-//					actualNode.add((WizardMutableTreeNode) newNode.getChildAt(i));
-//					manageAdditionSteps((DefaultMutableTreeNode) newNode.getChildAt(i));
-//				}
-//				treePanel.getTree().treeDidChange() ;
-//			}
-//			else if (i == newNode.getChildCount() && actualNode.getChildCount() != newNode.getChildCount()){
-//				for ( ; i < actualNode.getChildCount() ; i ++) {
-//					manageDeletionSteps((DefaultMutableTreeNode) actualNode.getChildAt(i));
-//					((DefaultMutableTreeNode)actualNode.getChildAt(i)).removeFromParent();
-//				}
-//				treePanel.getTree().treeDidChange() ;
-//			}
-//		}
-	}
-	
-	private void manageAdditionSteps (DefaultMutableTreeNode node){
-		if (node.getUserObject() instanceof Step) {
-			WizardStateMachine.getInstance().addStep((Step) node.getUserObject(),Integer.parseInt(((Step) node.getUserObject()).getGuid()));
-		}
-		if (node.getUserObject() instanceof ConcreteTaskDescriptor) {
-			ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) node.getUserObject() ;
-			for (Step s : ctd.getTaskDescriptor().getTaskDefinition().getSteps()){
-				WizardStateMachine.getInstance().addStep(s, Integer.parseInt(s.getGuid()));
-			}
-		}
-	}
-	
-	private void manageDeletionSteps (DefaultMutableTreeNode node){
-		if (node.getUserObject() instanceof Step) {
-			WizardStateMachine.getInstance().deleteStep((Step) node.getUserObject());
-		}
-		if (node.getUserObject() instanceof ConcreteTaskDescriptor) {
-			ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) node.getUserObject() ;
-			for (Step s : ctd.getTaskDescriptor().getTaskDefinition().getSteps()){
-				WizardStateMachine.getInstance().deleteStep(s);
-			}
-		}
-	}
-	
 	public long getTimeToRefresh() {
 		// TODO Auto-generated method stub
 		return 10000;
