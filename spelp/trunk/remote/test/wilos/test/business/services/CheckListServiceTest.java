@@ -1,7 +1,6 @@
 package wilos.test.business.services;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import junit.framework.TestCase;
@@ -25,7 +24,7 @@ public class CheckListServiceTest extends TestCase {
 		super.setUp() ;
 
 		// Get the CheckListService Singleton for managing Guideline data
-		this.checklistService = (CheckListService) TestConfiguration.getInstance().getApplicationContext().getBean("checklistService") ;
+		this.checklistService = (CheckListService) TestConfiguration.getInstance().getApplicationContext().getBean("CheckListService") ;
 
 		// Create empty Checklist
 		this.checklist = new CheckList() ;
@@ -36,8 +35,8 @@ public class CheckListServiceTest extends TestCase {
 		super.tearDown();
 		// Delete the tmp checklist from the database.
 		this.checklistService.getCheckListDao().deleteCheckList(this.checklist) ;
-	}
-
+	}	
+	
 	public void testSaveCheckList() {
 		// Rk: the setUp method is called here.
 
@@ -70,5 +69,9 @@ public class CheckListServiceTest extends TestCase {
 		assertEquals(checklistTmp.getDescription(), description) ;
 
 		// Rk: the tearDown method is called here.
+	}
+	
+	public void testGetSection() {
+		
 	}
 }
