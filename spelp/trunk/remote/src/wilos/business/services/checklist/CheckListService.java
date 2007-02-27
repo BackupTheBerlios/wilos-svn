@@ -19,11 +19,12 @@ public class CheckListService {
 
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
+	@ Transactional (readOnly = true, propagation = Propagation.REQUIRED)
 	public Set<Section> getSections(CheckList _checklist) {
 		Set<Section> result = new HashSet<Section>();
 		for (Section s :checkListDao.getCheckList(_checklist.getId()).getSections()) {
 			result.add(s);
-		}		
+		}
 		return result;
 	}
 	
