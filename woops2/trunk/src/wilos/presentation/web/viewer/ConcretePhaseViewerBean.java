@@ -3,13 +3,10 @@ package wilos.presentation.web.viewer;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.context.FacesContext;
-
 import wilos.business.services.misc.concretephase.ConcretePhaseService;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
-import wilos.presentation.web.tree.TreeBean;
 
 public class ConcretePhaseViewerBean extends ViewerBean{
 
@@ -38,10 +35,7 @@ public class ConcretePhaseViewerBean extends ViewerBean{
 				.saveAllFirstSonsConcreteBreakdownElementsForConcreteActivity(this.concretePhase);
 
 		// Reload the treebean.
-		FacesContext context = FacesContext.getCurrentInstance();
-		TreeBean treeBean = (TreeBean) context.getApplication()
-				.getVariableResolver().resolveVariable(context, "TreeBean");
-		treeBean.refreshProjectTree();
+		super.refreshProjectTree();
 	}
 
 	/* Manage the concretename field editable. */
@@ -50,10 +44,7 @@ public class ConcretePhaseViewerBean extends ViewerBean{
 		this.concretePhaseService.saveConcretePhase(this.concretePhase);
 
 		// Refresh the treebean.
-		FacesContext context = FacesContext.getCurrentInstance();
-		TreeBean treeBean = (TreeBean) context.getApplication()
-				.getVariableResolver().resolveVariable(context, "TreeBean");
-		treeBean.refreshProjectTree();
+		super.refreshProjectTree();
 	}
 
 	/* Getters & Setters */

@@ -1,9 +1,12 @@
 package wilos.presentation.web.viewer;
 
+import javax.faces.context.FacesContext;
+
 import wilos.business.services.misc.concretebreakdownelement.ConcreteBreakdownElementService;
 import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.project.Project;
+import wilos.presentation.web.project.ProjectAdvancementBean;
 import wilos.presentation.web.tree.TreeBean;
 
 public class ViewerBean {
@@ -13,6 +16,21 @@ public class ViewerBean {
 	private ProjectService projectService;
 
 	private ConcreteBreakdownElementService concreteBreakdownElementService;
+
+	protected void refreshProjectTree() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		TreeBean treeBean = (TreeBean) context.getApplication()
+				.getVariableResolver().resolveVariable(context, "TreeBean");
+		treeBean.refreshProjectTree();
+	}
+
+	protected void refreshProjectTable() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ProjectAdvancementBean pab = (ProjectAdvancementBean) context
+				.getApplication().getVariableResolver().resolveVariable(
+						context, "ProjectAdvancementBean");
+		pab.refreshProjectTable();
+	}
 
 	public boolean getIsInputNameReadOnly() {
 		return (this.getChangeButtonIsDisabled());

@@ -3,12 +3,9 @@ package wilos.presentation.web.viewer;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.context.FacesContext;
-
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
 import wilos.model.misc.project.Project;
-import wilos.presentation.web.tree.TreeBean;
 
 public class ProjectViewerBean extends ViewerBean{
 
@@ -18,10 +15,7 @@ public class ProjectViewerBean extends ViewerBean{
 		super.getProjectService().saveProject(project);
 
 		// Refresh the treebean.
-		FacesContext context = FacesContext.getCurrentInstance();
-		TreeBean treeBean = (TreeBean) context.getApplication()
-				.getVariableResolver().resolveVariable(context, "TreeBean");
-		treeBean.refreshProjectTree();
+		super.refreshProjectTree();
 	}
 
 	public List<ConcreteBreakdownElement> getConcreteBreakdownElementsList() {
@@ -43,10 +37,7 @@ public class ProjectViewerBean extends ViewerBean{
 				.saveAllFirstSonsConcreteBreakdownElementsForConcreteActivity(this.project);
 
 		// Reload the treebean.
-		FacesContext context = FacesContext.getCurrentInstance();
-		TreeBean treeBean = (TreeBean) context.getApplication()
-				.getVariableResolver().resolveVariable(context, "TreeBean");
-		treeBean.refreshProjectTree();
+		super.refreshProjectTree();
 	}
 
 	public Project getProject() {

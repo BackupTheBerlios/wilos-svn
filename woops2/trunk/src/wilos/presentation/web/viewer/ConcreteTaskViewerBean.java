@@ -22,8 +22,6 @@ import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
-import wilos.presentation.web.project.ProjectAdvancementBean;
-import wilos.presentation.web.tree.TreeBean;
 import wilos.utils.Constantes.State;
 
 public class ConcreteTaskViewerBean extends ViewerBean {
@@ -121,10 +119,7 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 				.saveConcreteTaskDescriptor(this.concreteTaskDescriptor);
 
 		// Refresh the treebean.
-		FacesContext context = FacesContext.getCurrentInstance();
-		TreeBean treeBean = (TreeBean) context.getApplication()
-				.getVariableResolver().resolveVariable(context, "TreeBean");
-		treeBean.refreshProjectTree();
+		super.refreshProjectTree();
 	}
 
 	/**
@@ -152,12 +147,7 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		facesContext.addMessage(null, message);
 
-		FacesContext context = FacesContext.getCurrentInstance();
-		ProjectAdvancementBean pab = (ProjectAdvancementBean) context
-				.getApplication().getVariableResolver().resolveVariable(
-						context, "ProjectAdvancementBean");
-		pab.refreshProjectTable();
-
+		super.refreshProjectTable();
 	}
 
 	/**
@@ -221,15 +211,9 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 	public void startActionListener(ActionEvent event) {
 		this.concreteTaskDescriptorService
 				.startConcreteTaskDescriptor(this.concreteTaskDescriptor);
-		FacesContext context = FacesContext.getCurrentInstance();
-		TreeBean treeBean = (TreeBean) context.getApplication()
-				.getVariableResolver().resolveVariable(context, "TreeBean");
-		treeBean.refreshProjectTree();
 
-		ProjectAdvancementBean pab = (ProjectAdvancementBean) context
-				.getApplication().getVariableResolver().resolveVariable(
-						context, "ProjectAdvancementBean");
-		pab.refreshProjectTable();
+		super.refreshProjectTree();
+		super.refreshProjectTable();
 	}
 
 	public void stopActionListener(ActionEvent event) {
@@ -249,16 +233,10 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		this.concreteTaskDescriptorService
 				.finishConcreteTaskDescriptor(this.concreteTaskDescriptor);
 
-		// Refresh the treebean.
-		FacesContext context = FacesContext.getCurrentInstance();
-		TreeBean treeBean = (TreeBean) context.getApplication()
-				.getVariableResolver().resolveVariable(context, "TreeBean");
-		treeBean.refreshProjectTree();
+		// Refresh components.
+		super.refreshProjectTree();
+		super.refreshProjectTable();
 
-		ProjectAdvancementBean pab = (ProjectAdvancementBean) context
-				.getApplication().getVariableResolver().resolveVariable(
-						context, "ProjectAdvancementBean");
-		pab.refreshProjectTable();
 		// once the treatment done, hide the popup
 		this.visiblePopup = false;
 		return "";
@@ -273,15 +251,9 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		this.concreteTaskDescriptorService
 				.suspendConcreteTaskDescriptor(this.concreteTaskDescriptor);
 
-		// Refresh the treebean.
-		FacesContext context = FacesContext.getCurrentInstance();
-		TreeBean treeBean = (TreeBean) context.getApplication()
-				.getVariableResolver().resolveVariable(context, "TreeBean");
-		treeBean.refreshProjectTree();
-		ProjectAdvancementBean pab = (ProjectAdvancementBean) context
-				.getApplication().getVariableResolver().resolveVariable(
-						context, "ProjectAdvancementBean");
-		pab.refreshProjectTable();
+		// Refresh components.
+		super.refreshProjectTree();
+		super.refreshProjectTable();
 	}
 
 	public ConcreteTaskDescriptor getConcreteTaskDescriptor() {
@@ -450,15 +422,11 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		facesContext.addMessage(null, message);
 
-		ProjectAdvancementBean pab = (ProjectAdvancementBean) facesContext
-				.getApplication().getVariableResolver().resolveVariable(
-						facesContext, "ProjectAdvancementBean");
-		pab.refreshProjectTable();
-
+		super.refreshProjectTable();
 	}
 
-	public void setVisibleSaveButton(boolean visibleSaveButton) {
-		this.visibleSaveButton = visibleSaveButton;
+	public void setVisibleSaveButton(boolean _visibleSaveButton) {
+		this.visibleSaveButton = _visibleSaveButton;
 	}
 
 	/**
@@ -467,9 +435,7 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 	 * @return
 	 */
 	public boolean getVisibleStart() {
-
 		return (this.concreteTaskDescriptor.getState().equals(State.READY));
-
 	}
 
 	/**
@@ -478,7 +444,8 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 	 * @return the visibleSaveButton.
 	 */
 	public boolean getVisibleSaveButton() {
-		return (!accomplishedTimeModifiable || !remainingTimeModifiable);
+		this.visibleSaveButton = (!accomplishedTimeModifiable || !remainingTimeModifiable);
+		return this.visibleSaveButton;
 	}
 
 	/**
