@@ -28,7 +28,7 @@ public class SectionService {
 		this.sectionDao.saveOrUpdateSection(_section) ;
 	}
 
-	public void deleteGuidance(Section _section) {
+	public void deleteSection(Section _section) {
 		this.sectionDao.deleteSection(_section) ;
 	}
 
