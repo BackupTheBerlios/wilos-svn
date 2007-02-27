@@ -123,6 +123,8 @@ public class XMLParser {
 	protected static Set<Iteration> iterationsList;
 	protected static Set<Activity> activitiesList;
 
+	// data to manage the insertion order
+	private static int order ; 
 	
 	/**
 	 * Fills the Lists in memory
@@ -130,6 +132,7 @@ public class XMLParser {
 	 */
 	private static void fillAllElementsList() {
 		try {
+			order = 0 ;
 			initGuidancesTypesList();
 			
 			GuidancesList = fillGuidesList();
@@ -1202,6 +1205,9 @@ public class XMLParser {
 		return null;
 	}
 	
+	private static int getRank (){
+		return (++order) ;
+	}
 	
 	private class WorkProductDescriptorFake {
 		private String Guid;
