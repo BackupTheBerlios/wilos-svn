@@ -106,7 +106,15 @@
 				<value>
 					wilos/model/spem2/role/RoleDefinition.hbm.xml
 				</value>
-				<value>wilos/model/spem2/guide/Guidance.hbm.xml</value>
+				<value>
+					wilos/model/spem2/guide/Guidance.hbm.xml
+				</value>
+				<value>
+					wilos/model/spem2/checklist/CheckList.hbm.xml
+				</value>
+				<value>
+					wilos/model/spem2/section/Section.hbm.xml
+				</value>
 			</list>
 		</property>
 
@@ -170,7 +178,7 @@
 
 
 	<!-- Webservices Definition -->
-	<!-- <wss:bindings id="jax-ws.http">
+	<!--<wss:bindings id="jax-ws.http">
 		<wss:bindings>
 			<wss:binding url="/WizardServices">
 				<wss:service>
@@ -178,16 +186,16 @@
 				</wss:service>
 			</wss:binding>
 		</wss:bindings>
-	</wss:bindings> -->
+	</wss:bindings>-->
 
 	<!-- ========================= Start of BEAN DEFINITIONS ========================= -->
 
 	<!-- ========================= Webservices Layer ========================= -->
-	<!-- <bean id="WizardServices"
+	<!--<bean id="WizardServices"
 		class="wilos.business.webservices.WizardServices">
 		<property name="loginService" ref="LoginService" />
 		<property name="assistantService" ref="AssistantService" />
-	</bean> -->
+	</bean>-->
 
 	<!-- ========================= DAO Layer ========================= -->
 
@@ -198,7 +206,14 @@
 		class="wilos.hibernate.spem2.guide.GuidanceDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
-
+	<bean id="CheckListDao"
+		class="wilos.hibernate.spem2.checklist.CheckListDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	<bean id="SectionDao"
+		class="wilos.hibernate.spem2.section.SectionDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
 
 	<!-- =============================================================== -->
 	<!-- ========================= PSI2 DAO ============================ -->
@@ -345,6 +360,14 @@
 	<bean id="GuidanceService"
 		class="wilos.business.services.guide.GuidanceService">
 		<property name="guidanceDao" ref="GuidanceDao" />
+	</bean>
+	<bean id="CheckListService"
+		class="wilos.business.services.checklist.CheckListService">
+		<property name="checklistDao" ref="CheckListDao" />
+	</bean>
+	<bean id="SectionService"
+		class="wilos.business.services.section.SectionService">
+		<property name="sectionDao" ref="SectionDao" />
 	</bean>
 
 
