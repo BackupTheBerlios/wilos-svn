@@ -35,7 +35,6 @@ public class ExceptionManager {
 		
 		// Wilos' exceptions
 		if(classe.substring(0, 6).equals("wilos.")) {
-			System.out.println("wil");
 			if(msg.equalsIgnoreCase("le wilos user n'existe pas")) {
 				texte = Bundle.getText("exceptionManager.unknownUser");
 			}
