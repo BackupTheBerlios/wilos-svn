@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -109,6 +108,9 @@ public class ActivityService {
 	public Set<BreakdownElement> getBreakdownElements(Activity _act) {
 		
 		Set<BreakdownElement> tmp = new HashSet<BreakdownElement>();
+		
+		this.activityDao.getSessionFactory().getCurrentSession().saveOrUpdate(_act);
+		
 		for (BreakdownElement bde : _act.getBreakdownElements()) {
 			tmp.add(bde);
 		}

@@ -125,6 +125,7 @@ public class ProcessService {
 
 			logger.debug("### ProcessService ### spelpParsingXML PATH == "+path);
 			spelpProcess = XMLServices.getProcess(_file.getAbsolutePath(), path );
+			spelpProcess.setFolderPath(path);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

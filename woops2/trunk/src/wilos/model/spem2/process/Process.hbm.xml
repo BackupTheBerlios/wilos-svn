@@ -9,7 +9,9 @@
 		extends="wilos.model.spem2.activity.Activity" table="process"
 		lazy="true">
 		<key column="process_id"></key>
-
+		
+		<property name="folderPath" type="java.lang.String" column="folderpath" length="256" />
+		
 		<set name="projects" lazy="true">
 			<cache usage="read-write"/>
 			<key column="process_id" />

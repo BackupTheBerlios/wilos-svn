@@ -30,6 +30,8 @@ public class Process extends Activity implements Cloneable {
 	private Set<Project> projects;
 	
 	private ProcessManager processManager;
+	
+	private String folderPath;
 
 	/**
 	 * Default constructor
@@ -171,6 +173,14 @@ public class Process extends Activity implements Cloneable {
 
 	public void setProcessManager(ProcessManager processManager) {
 		this.processManager = processManager;
+	}
+
+	public String getFolderPath() {
+		return folderPath;
+	}
+
+	public void setFolderPath(String folderPath) {
+		this.folderPath = folderPath;
 	}
 
 	
