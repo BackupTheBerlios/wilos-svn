@@ -291,6 +291,26 @@
 	</managed-bean>
 
 	<managed-bean>
+		<managed-bean-name>ViewerBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.viewer.ViewerBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>concreteBreakdownElementService</property-name>
+			<value>#{ConcreteBreakdownElementService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
 		<managed-bean-name>ConcreteTaskViewerBean</managed-bean-name>
 		<managed-bean-class>
 			wilos.presentation.web.viewer.ConcreteTaskViewerBean
@@ -361,16 +381,16 @@
 			<value>#{ConcreteActivityService}</value>
 		</managed-property>
 		<managed-property>
-			<property-name>concreteBreakdownElementService</property-name>
-			<value>#{ConcreteBreakdownElementService}</value>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
 		</managed-property>
 		<managed-property>
 			<property-name>projectService</property-name>
 			<value>#{ProjectService}</value>
 		</managed-property>
 		<managed-property>
-			<property-name>webSessionService</property-name>
-			<value>#{WebSessionService}</value>
+			<property-name>concreteBreakdownElementService</property-name>
+			<value>#{ConcreteBreakdownElementService}</value>
 		</managed-property>
 	</managed-bean>
 
