@@ -2,9 +2,6 @@ package wilos.presentation.web.upload;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.EventObject;
 import java.util.ResourceBundle;
 
@@ -25,259 +22,214 @@ import com.icesoft.faces.webapp.xmlhttp.RenderingException;
 
 public class XmlFileImportBean {
 
-	private int percent = -1;
+        private int percent = -1;
 
-	private PersistentFacesState state = null;
+        private PersistentFacesState state = null;
 
-	private File file = null;
+        private File file = null;
 
-	private ProcessService processService;
+        private ProcessService processService;
 
-	protected final Log logger = LogFactory.getLog(this.getClass());
+        protected final Log logger = LogFactory.getLog(this.getClass());
 
-	private String fileName = "";
+        private String fileName = "";
 
-	private String contentType = "";
+        private String contentType = "";
 
-	private String uploadStatus = "" ;
+        private String uploadStatus = "" ;
 
-	public String getUploadStatus() {
-		return uploadStatus;
-	}
+        public String getUploadStatus() {
+                return uploadStatus;
+        }
 
-	public void setUploadStatus(String _uploadStatus) {
-		this.uploadStatus = _uploadStatus;
-	}
+        public void setUploadStatus(String _uploadStatus) {
+                this.uploadStatus = _uploadStatus;
+        }
 
-	public XmlFileImportBean() {
-		state = PersistentFacesState.getInstance();
-	}
+        public XmlFileImportBean() {
+                state = PersistentFacesState.getInstance();
+        }
 
-	public void setPercent(int percent) {
-		this.percent = percent;
-	}
+        public void setPercent(int percent) {
+                this.percent = percent;
+        }
 
-	public int getPercent() {
-		return percent;
-	}
+        public int getPercent() {
+                return percent;
+        }
 
-	public void setFile(File file) {
-		this.file = file;
-	}
+        public void setFile(File file) {
+                this.file = file;
+        }
 
-	public File getFile() {
-		return file;
-	}
+        public File getFile() {
+                return file;
+        }
 
-	public void uploadFileActionListener(ActionEvent event) {
-		
-		InputFile inputFile = (InputFile) event.getSource();
-		
-		if(inputFile.getFile() == null && file == null)
-		{
-			// stop the progress bar
+        public void uploadFileActionListener(ActionEvent event) {
+                
+                InputFile inputFile = (InputFile) event.getSource();
+                
+                if(inputFile.getFile() == null && file == null)
+                {
+                        // stop the progress bar
 			this.percent = -1;
-			ResourceBundle bundle = ResourceBundle.getBundle(
-					"wilos.resources.messages", FacesContext.getCurrentInstance()
-							.getApplication().getDefaultLocale());
-			FacesMessage message = new FacesMessage();
-			message
-					.setSummary(bundle
-							.getString("XmlFileImportBean.noFile"));
-			message.setSeverity(FacesMessage.SEVERITY_INFO);
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-			facesContext.addMessage(null, message);
-		}
-		else
-		{
-			if (inputFile.getStatus() == InputFile.SAVED) {
-				fileName = inputFile.getFileInfo().getFileName();
-				contentType = inputFile.getFileInfo().getContentType();
-				setFile(inputFile.getFile());
-			}
-	
-			if (! contentType.equalsIgnoreCase("application/zip")) {
-				if (! contentType.equalsIgnoreCase("text/xml")) {
-					ResourceBundle bundle = ResourceBundle.getBundle(
-							"wilos.resources.messages", FacesContext.getCurrentInstance()
-									.getApplication().getDefaultLocale());
-					FacesMessage message = new FacesMessage();
-					message
-							.setSummary(bundle
-									.getString("XmlFileImportBean.noGoodExtensionFile"));
-					message.setSeverity(FacesMessage.SEVERITY_INFO);
-					FacesContext facesContext = FacesContext.getCurrentInstance();
-					facesContext.addMessage(null, message);
-					file.delete() ;
-					return ;
-				}
-				else {
-					// xml upload ok
-					ResourceBundle bundle = ResourceBundle.getBundle(
-							"wilos.resources.messages", FacesContext.getCurrentInstance()
-									.getApplication().getDefaultLocale());
-					uploadStatus = bundle.getString("XmlFileImportBean.xmlFileUploadOk") ;
-				}
-			}
-			else {
-				// zip upload ok
-				ResourceBundle bundle = ResourceBundle.getBundle(
-						"wilos.resources.messages", FacesContext.getCurrentInstance()
-								.getApplication().getDefaultLocale());
-				uploadStatus = bundle.getString("XmlFileImportBean.zipFileUploadOk") ;
-			}
-	
-			if (inputFile.getStatus() == InputFile.INVALID) {
-				// stop the progress bar
+                        ResourceBundle bundle = ResourceBundle.getBundle(
+                                        "wilos.resources.messages", FacesContext.getCurrentInstance()
+                                                        .getApplication().getDefaultLocale());
+                        FacesMessage message = new FacesMessage();
+                        message
+                                        .setSummary(bundle
+                                                        .getString("XmlFileImportBean.noFile"));
+                        message.setSeverity(FacesMessage.SEVERITY_INFO);
+                        FacesContext facesContext = FacesContext.getCurrentInstance();
+                        facesContext.addMessage(null, message);
+                }
+                else
+                {
+                        if (inputFile.getStatus() == InputFile.SAVED) {
+                                fileName = inputFile.getFileInfo().getFileName();
+                                contentType = inputFile.getFileInfo().getContentType();
+                                setFile(inputFile.getFile());
+                        }
+        
+                        if (! contentType.equalsIgnoreCase("application/zip")) {
+                                if (! contentType.equalsIgnoreCase("text/xml")) {
+                                        ResourceBundle bundle = ResourceBundle.getBundle(
+                                                        "wilos.resources.messages", FacesContext.getCurrentInstance()
+                                                                        .getApplication().getDefaultLocale());
+                                        FacesMessage message = new FacesMessage();
+                                        message
+                                                        .setSummary(bundle
+                                                                        .getString("XmlFileImportBean.noGoodExtensionFile"));
+                                        message.setSeverity(FacesMessage.SEVERITY_INFO);
+                                        FacesContext facesContext = FacesContext.getCurrentInstance();
+                                        facesContext.addMessage(null, message);
+                                        file.delete() ;
+                                        return ;
+                                }
+                                else {
+                                        uploadStatus = "XML file successfully uploaded to server!" ;
+                                }
+                        }
+                        else {
+                                uploadStatus = "ZIP file successfully uploaded to server!" ;
+                        }
+        
+                        if (inputFile.getStatus() == InputFile.INVALID) {
+                                // stop the progress bar
 				this.percent = -1;
-				//inputFile.getFileInfo().getException().printStackTrace();
+                                //inputFile.getFileInfo().getException().printStackTrace();
 				ResourceBundle bundle = ResourceBundle.getBundle(
-						"wilos.resources.messages", FacesContext.getCurrentInstance()
-								.getApplication().getDefaultLocale());
-				FacesMessage message = new FacesMessage();
-				message
-						.setSummary(bundle
-								.getString("XmlFileImportBean.noFile"));
-				message.setSeverity(FacesMessage.SEVERITY_INFO);
-				FacesContext facesContext = FacesContext.getCurrentInstance();
-				facesContext.addMessage(null, message);
-			}
-			else
-			{
-	
-			if (inputFile.getStatus() == InputFile.SIZE_LIMIT_EXCEEDED) {
-				inputFile.getFileInfo().getException().printStackTrace();
-			}
-	
-			if (inputFile.getStatus() == InputFile.UNKNOWN_SIZE) {
-				inputFile.getFileInfo().getException().printStackTrace();
-			}
-			ExternalContext extCtx = FacesContext.getCurrentInstance()
-					.getExternalContext();
+                                                "wilos.resources.messages", FacesContext.getCurrentInstance()
+                                                                .getApplication().getDefaultLocale());
+                                FacesMessage message = new FacesMessage();
+                                message
+                                                .setSummary(bundle
+                                                                .getString("XmlFileImportBean.noFile"));
+                                message.setSeverity(FacesMessage.SEVERITY_INFO);
+                                FacesContext facesContext = FacesContext.getCurrentInstance();
+                                facesContext.addMessage(null, message);
+                        }
+                        else
+                        {
+        
+                        if (inputFile.getStatus() == InputFile.SIZE_LIMIT_EXCEEDED) {
+                                inputFile.getFileInfo().getException().printStackTrace();
+                        }
+        
+                        if (inputFile.getStatus() == InputFile.UNKNOWN_SIZE) {
+                                inputFile.getFileInfo().getException().printStackTrace();
+                        }
+                        ExternalContext extCtx = FacesContext.getCurrentInstance()
+                                        .getExternalContext();
+                        // File destFile = new File("/upload/"+file.getName());
 			logger.debug("### fichier uploade = " + file.getPath() + " => "
-					+ file.getName() + " ###");
-			try {
-				logger.debug("### getCanonicalPath = " + file.getCanonicalPath());
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-			logger.debug("### getAbsoluteFile = " + file.getAbsoluteFile());
-			logger.debug("### getRequestContextPath = "
-					+ extCtx.getRequestContextPath());
-			logger.debug("### getRequestPathInfo = " + extCtx.getRequestPathInfo());
-			extCtx.getResourceAsStream("");
-	
-			// generating current date for file's dedicated directory
-			Format formatter = new SimpleDateFormat("_yyyy.MM.dd.HH.mm.ss");
-		    String stringDateId = formatter.format(new Date());
-			logger.debug("### XmlFileImportBean ### date generation -> date="	
-													+stringDateId);
-			
-			try {
-				// creating new directory
-				File targetDirectoryForUploadedFile = 
-					new File(this.file.getAbsolutePath()
-							.substring(0, this.file.getAbsolutePath()
-														.lastIndexOf(File.separator))
-							+File.separator+this.file.getName()+stringDateId) ;
-				targetDirectoryForUploadedFile.mkdirs() ;
-				
-				if (targetDirectoryForUploadedFile.isDirectory()) {
-					logger.debug("### XmlFileImportBean ### target directory -> path="+
-									targetDirectoryForUploadedFile.getAbsolutePath());
-					
-					// moving uploaded file to dedicated directory
-					if (!this.file.renameTo(new File(targetDirectoryForUploadedFile.
-												getAbsolutePath()
-												+File.separator+this.fileName))) {
-						throw new Exception("failed to move file") ;
-					} else {
-						logger.debug("### XmlFileImportBean ### " +
-									"file moved successfully -> file path="+
-										this.file.getAbsolutePath());
-					}
-					
-				} else {
-					logger.error("### XmlFileImportBean ### target directory -> " +
-													"directory has not been created!");
-				}
-			}
-			catch (Exception e) {
-				logger.error("### XmlFileImportBean ### file move -> " + e);
-			}
-					
-			try {
-				Process p = processService.spelpParsingXML(file);
-				// save the process
+                                        + file.getName() + " ###");
+                        try {
+                                logger.debug("### getCanonicalPath = " + file.getCanonicalPath());
+                        } catch (IOException e1) {
+                                e1.printStackTrace();
+                        }
+                        logger.debug("### getAbsoluteFile = " + file.getAbsoluteFile());
+                        logger.debug("### getRequestContextPath = "
+                                        + extCtx.getRequestContextPath());
+                        logger.debug("### getRequestPathInfo = " + extCtx.getRequestPathInfo());
+                        extCtx.getResourceAsStream("");
+        
+        
+                        try {
+                                Process p = processService.spelpParsingXML(file);
+                                // save the process
 				logger.debug("### XmlFileImportBean ### action -> id=" + p.getId());
-				/* id = */
-				this.processService.saveProcess(p);
-				// stop the progress bar
+                                /* id = */
+                                this.processService.saveProcess(p);
+                                // stop the progress bar
 				this.percent = -1;
-				ResourceBundle bundle = ResourceBundle.getBundle(
-						"wilos.resources.messages", FacesContext.getCurrentInstance()
-								.getApplication().getDefaultLocale());
-				FacesMessage message = new FacesMessage();
-				message
-						.setSummary(bundle
-								.getString("XmlFileImportBean.processok"));
-				message.setSeverity(FacesMessage.SEVERITY_INFO);
-				FacesContext facesContext = FacesContext.getCurrentInstance();
-				facesContext.addMessage(null, message);
-			} catch (Exception e) {
-				logger.error("### XmlFileImportBean ### action -> " + e);
-			}
-			}
-			state = PersistentFacesState.getInstance();
-			
-		}
-	}
+                                ResourceBundle bundle = ResourceBundle.getBundle(
+                                                "wilos.resources.messages", FacesContext.getCurrentInstance()
+                                                                .getApplication().getDefaultLocale());
+                                FacesMessage message = new FacesMessage();
+                                message
+                                                .setSummary(bundle
+                                                                .getString("XmlFileImportBean.processok"));
+                                message.setSeverity(FacesMessage.SEVERITY_INFO);
+                                FacesContext facesContext = FacesContext.getCurrentInstance();
+                                facesContext.addMessage(null, message);
+                        } catch (Exception e) {
+                                logger.error("### XmlFileImportBean ### action -> " + e);
+                        }
+                        }
+                        state = PersistentFacesState.getInstance();
+                        
+                }
+        }
 
-	public void progressListener(EventObject event) {
-			// start the progress bar
+        public void progressListener(EventObject event) {
+                        // start the progress bar
 			this.percent = 1;
-			try {
-				if (state != null) {
-					state.render();
-				} else {
-					System.out.println("state is null");
-				}
-	
-			} catch (RenderingException ee) {
-				System.out.println(ee.getMessage());
-			}	
-	}
+                        try {
+                                if (state != null) {
+                                        state.render();
+                                } else {
+                                        System.out.println("state is null");
+                                }
+        
+                        } catch (RenderingException ee) {
+                                System.out.println(ee.getMessage());
+                        }	
+        }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+        public void setFileName(String fileName) {
+                this.fileName = fileName;
+        }
 
-	public String getFileName() {
-		return fileName;
-	}
+        public String getFileName() {
+                return fileName;
+        }
 
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
-	}
+        public void setContentType(String contentType) {
+                this.contentType = contentType;
+        }
 
-	public String getContentType() {
-		return contentType;
-	}
+        public String getContentType() {
+                return contentType;
+        }
 
-	private int status;
+        private int status;
 
-	public String callAction() {
-		if (status == InputFile.SAVED) {
-			return "saved";
-		}
-		return "";
-	}
+        public String callAction() {
+                if (status == InputFile.SAVED) {
+                        return "saved";
+                }
+                return "";
+        }
 
-	public ProcessService getProcessService() {
-		return processService;
-	}
+        public ProcessService getProcessService() {
+                return processService;
+        }
 
-	public void setProcessService(ProcessService processService) {
-		this.processService = processService;
-	}
+        public void setProcessService(ProcessService processService) {
+                this.processService = processService;
+        }
 }
