@@ -45,10 +45,10 @@ public class CheckListServiceTest extends TestCase {
 		this.checklist.setName(name);
 		this.checklist.setDescription(description);
 		
-		Section tmpSection = new Section();
+		/*Section tmpSection = new Section();
 		tmpSection.setName("name");
 		
-		this.sections.add(tmpSection);
+		this.sections.add(tmpSection);*/
 		
 		//this.checklist.setSections(this.sections);
 		
