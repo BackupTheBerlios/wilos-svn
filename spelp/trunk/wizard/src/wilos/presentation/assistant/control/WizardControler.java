@@ -12,8 +12,6 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
 
 import org.jdesktop.swingx.JXTree;
 
@@ -71,6 +69,7 @@ public class WizardControler {
 					WizardControler.getInstance().connectToServer(this);
 					WizardControler.this.flagThread = 1 ;
 					updateTree();
+					
 					WizardControler.getInstance().disconnectToServer(this);
 				}
 			}
@@ -139,6 +138,7 @@ public class WizardControler {
 			}
 		}
 		// for each project on server => check state modification or new branch
+		i = 0 ;
 		for ( ; i < newRoot.getChildCount() ; i++){
 			j = 0 ;
 			// we search if it exists on local
@@ -152,7 +152,8 @@ public class WizardControler {
 			}
 			// if it is not in memory we had to add it
 			else {
-				thisModel.insertNodeInto((WizardMutableTreeNode)newRoot.getChildAt(i), thisRoot, i);
+				WizardMutableTreeNode nodeToInsert = (WizardMutableTreeNode) ((WizardMutableTreeNode) newRoot.getChildAt(i)).clone() ;
+				thisModel.insertNodeInto(nodeToInsert, thisRoot, i);
 			}
 		}
 	}
@@ -242,7 +243,8 @@ public class WizardControler {
 			else if(!trouve){
 				WizardMutableTreeNode newChild = new WizardMutableTreeNode(((WizardMutableTreeNode) newNode.getChildAt(i)).getUserObject()) ;
 				if (!(newChild.getUserObject() instanceof Step)){
-					model.insertNodeInto((WizardMutableTreeNode) newNode.getChildAt(i), actualNode, i);
+					WizardMutableTreeNode nodeToInsert = (WizardMutableTreeNode) ((WizardMutableTreeNode) newNode.getChildAt(i)).clone() ;
+					model.insertNodeInto(nodeToInsert, actualNode, i);
 				}
 			}
 		}
@@ -592,10 +594,7 @@ public class WizardControler {
 	 * refreshParticipant reload from the server the data of the participant
 	 */
 	public void refreshParticipant() {
-		if (flagRefreshButton != 1){	
-			flagRefreshButton = 1 ;
 			launchRefreshTread() ;
-		}
 	}
 
 	public static WizardControler getWc() {

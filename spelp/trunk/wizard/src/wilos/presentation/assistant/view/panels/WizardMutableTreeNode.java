@@ -1,6 +1,7 @@
 package wilos.presentation.assistant.view.panels;
 
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.MutableTreeNode;
 
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.spem2.element.Element;
@@ -14,6 +15,20 @@ public class WizardMutableTreeNode extends DefaultMutableTreeNode {
 	public WizardMutableTreeNode(Object element) {
 		super();
 		this.userObject = element;
+	}
+
+	/* (non-Javadoc)
+	 * @see javax.swing.tree.DefaultMutableTreeNode#clone()
+	 */
+	@Override
+	public Object clone() {
+		// TODO Auto-generated method stub
+		WizardMutableTreeNode retour = (WizardMutableTreeNode) super.clone();
+		for(int i = 0 ; i < this.getChildCount() ; i++ ){
+			retour.add((WizardMutableTreeNode) ((WizardMutableTreeNode) this.getChildAt(i)).clone());
+		}
+		return retour ;
+		
 	}
 
 	public Object getUserObject() {
