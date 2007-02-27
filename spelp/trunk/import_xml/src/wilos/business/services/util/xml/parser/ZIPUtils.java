@@ -73,19 +73,30 @@ public class ZIPUtils
 	 * getXMLEntry return the entry corresponding at the ZIP file
 	 * @return e ZipEntry
 	 */
-	private ZipEntry getXMLEntry () {
+	public ZipEntry getXMLEntry () {
 		ZipEntry entry = null ;
+		ZipEntry retour = null ;
+		int sizePath = Integer.MAX_VALUE ; 
 		boolean trouve = false ;
 		// if the file is not empty
 		if (!isEmpty()){
 			Enumeration e = zipfile.entries();
 			// searching a xml file
-			while(e.hasMoreElements() && !trouve) {
+			while(e.hasMoreElements()) {
 				entry = (ZipEntry) e.nextElement();
+				
 				trouve = XMLUtils.isExtension(entry.getName(), "xml");
+				if (trouve){
+					String name =entry.getName() ; 
+					int pos = name.lastIndexOf("/") ;
+					if (pos < sizePath){
+						sizePath = pos ;
+						retour = entry ;
+					}
+				}
 			}
 		}
-		return entry ;
+		return retour ;
 	}
 	
 	

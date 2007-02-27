@@ -16,6 +16,7 @@ public class ZIPUtilsTest extends TestCase
 	public static File pathTestCorrompu = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "corrompu.zip");
 	public static File pathTest2XML = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "deuxXML.zip");
 	public static File pathTestArbre = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "arbre.zip");
+	public static File pathTest2XML2 = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "test2xml.zip");
 	
 	public void testIsEmpty (){
 		try {
@@ -92,6 +93,16 @@ public class ZIPUtilsTest extends TestCase
 		
 	}
 	
+	public void test2XML (){
+		try {
+			ZIPUtils monZip = new ZIPUtils(pathTest2XML2);
+			assertTrue("TEST 2 NIVEAUX",monZip.getXMLEntry().getName().endsWith("test.xml"));
+		}
+		catch (ZipException z){
+			assertTrue(false);
+		}
+	}
+	
 	public void testExtract () {
 		String dest = "." + File.separator  + "dest" + File.separator;
 		String dest2 = "." + File.separator  + "dest";
@@ -103,7 +114,7 @@ public class ZIPUtilsTest extends TestCase
 			// test avec file separator
 			 z = new ZIPUtils(pathMonTest);
 		
-			deleteFolder(f);
+			//deleteFolder(f);
 			if (!f.exists()){
 				f.mkdir();
 				System.out.println("IS DIRECTORY ? " + f.isDirectory());			
