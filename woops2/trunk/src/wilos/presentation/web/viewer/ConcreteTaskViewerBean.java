@@ -12,7 +12,6 @@ import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService;
 import wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService;
-import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.role.RoleDescriptorService;
@@ -27,11 +26,9 @@ import wilos.presentation.web.project.ProjectAdvancementBean;
 import wilos.presentation.web.tree.TreeBean;
 import wilos.utils.Constantes.State;
 
-public class ConcreteTaskViewerBean {
+public class ConcreteTaskViewerBean extends ViewerBean {
 
 	/* Services */
-
-	private WebSessionService webSessionService;
 
 	private ConcreteTaskDescriptorService concreteTaskDescriptorService;
 
@@ -42,8 +39,6 @@ public class ConcreteTaskViewerBean {
 	private RoleDescriptorService roleDescriptorService;
 
 	private ParticipantService participantService;
-
-	private ProjectService projectService;
 
 	/* Simple fields */
 
@@ -102,12 +97,12 @@ public class ConcreteTaskViewerBean {
 	}
 
 	public boolean getChangeButtonIsDisabled() {
-		String wilosUserId = (String) this.webSessionService
+		String wilosUserId = (String) super.getWebSessionService()
 				.getAttribute(WebSessionService.WILOS_USER_ID);
 
-		Project project = this.projectService
-				.getProject((String) this.webSessionService
-						.getAttribute(WebSessionService.PROJECT_ID));
+		Project project = super.getProjectService().getProject(
+				(String) super.getWebSessionService().getAttribute(
+						WebSessionService.PROJECT_ID));
 
 		if ((project.getProjectManager() != null)
 				&& (project.getProjectManager().getWilosuser_id()
@@ -136,7 +131,7 @@ public class ConcreteTaskViewerBean {
 	 * soosuske methodes for the buton affected
 	 */
 	public void affectedActionListener(ActionEvent event) {
-		String wilosUserId = (String) this.webSessionService
+		String wilosUserId = (String) super.getWebSessionService()
 				.getAttribute(WebSessionService.WILOS_USER_ID);
 		Participant participant = this.participantService
 				.getParticipant(wilosUserId);
@@ -156,10 +151,12 @@ public class ConcreteTaskViewerBean {
 		message.setSeverity(FacesMessage.SEVERITY_INFO);
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		facesContext.addMessage(null, message);
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
-		ProjectAdvancementBean pab = (ProjectAdvancementBean) context.getApplication().getVariableResolver().resolveVariable(context, "ProjectAdvancementBean");
-		pab.refreshProjectTable(); 
+		ProjectAdvancementBean pab = (ProjectAdvancementBean) context
+				.getApplication().getVariableResolver().resolveVariable(
+						context, "ProjectAdvancementBean");
+		pab.refreshProjectTable();
 
 	}
 
@@ -176,7 +173,7 @@ public class ConcreteTaskViewerBean {
 	 */
 	public boolean visibleAffected() {
 
-		String wilosUserId = (String) this.webSessionService
+		String wilosUserId = (String) super.getWebSessionService()
 				.getAttribute(WebSessionService.WILOS_USER_ID);
 		Participant participant = this.participantService
 				.getParticipant(wilosUserId);
@@ -228,9 +225,11 @@ public class ConcreteTaskViewerBean {
 		TreeBean treeBean = (TreeBean) context.getApplication()
 				.getVariableResolver().resolveVariable(context, "TreeBean");
 		treeBean.refreshProjectTree();
-		
-		ProjectAdvancementBean pab = (ProjectAdvancementBean) context.getApplication().getVariableResolver().resolveVariable(context, "ProjectAdvancementBean");
-		pab.refreshProjectTable(); 
+
+		ProjectAdvancementBean pab = (ProjectAdvancementBean) context
+				.getApplication().getVariableResolver().resolveVariable(
+						context, "ProjectAdvancementBean");
+		pab.refreshProjectTable();
 	}
 
 	public void stopActionListener(ActionEvent event) {
@@ -255,9 +254,11 @@ public class ConcreteTaskViewerBean {
 		TreeBean treeBean = (TreeBean) context.getApplication()
 				.getVariableResolver().resolveVariable(context, "TreeBean");
 		treeBean.refreshProjectTree();
-		
-		ProjectAdvancementBean pab = (ProjectAdvancementBean) context.getApplication().getVariableResolver().resolveVariable(context, "ProjectAdvancementBean");
-		pab.refreshProjectTable(); 
+
+		ProjectAdvancementBean pab = (ProjectAdvancementBean) context
+				.getApplication().getVariableResolver().resolveVariable(
+						context, "ProjectAdvancementBean");
+		pab.refreshProjectTable();
 		// once the treatment done, hide the popup
 		this.visiblePopup = false;
 		return "";
@@ -277,8 +278,10 @@ public class ConcreteTaskViewerBean {
 		TreeBean treeBean = (TreeBean) context.getApplication()
 				.getVariableResolver().resolveVariable(context, "TreeBean");
 		treeBean.refreshProjectTree();
-		ProjectAdvancementBean pab = (ProjectAdvancementBean) context.getApplication().getVariableResolver().resolveVariable(context, "ProjectAdvancementBean");
-		pab.refreshProjectTable(); 
+		ProjectAdvancementBean pab = (ProjectAdvancementBean) context
+				.getApplication().getVariableResolver().resolveVariable(
+						context, "ProjectAdvancementBean");
+		pab.refreshProjectTable();
 	}
 
 	public ConcreteTaskDescriptor getConcreteTaskDescriptor() {
@@ -297,23 +300,6 @@ public class ConcreteTaskViewerBean {
 	public void setConcreteTaskDescriptorService(
 			ConcreteTaskDescriptorService concreteTaskDescriptorService) {
 		this.concreteTaskDescriptorService = concreteTaskDescriptorService;
-	}
-
-	/**
-	 * @return the webSessionService
-	 */
-	public WebSessionService getWebSessionService() {
-		return webSessionService;
-	}
-
-	/**
-	 * Setter of webSessionService.
-	 *
-	 * @param webSessionService
-	 *            The webSessionService to set.
-	 */
-	public void setWebSessionService(WebSessionService webSessionService) {
-		this.webSessionService = webSessionService;
 	}
 
 	/**
@@ -463,9 +449,11 @@ public class ConcreteTaskViewerBean {
 		message.setSeverity(FacesMessage.SEVERITY_INFO);
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		facesContext.addMessage(null, message);
-		
-		ProjectAdvancementBean pab = (ProjectAdvancementBean) facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "ProjectAdvancementBean");
-		pab.refreshProjectTable(); 
+
+		ProjectAdvancementBean pab = (ProjectAdvancementBean) facesContext
+				.getApplication().getVariableResolver().resolveVariable(
+						facesContext, "ProjectAdvancementBean");
+		pab.refreshProjectTable();
 
 	}
 
@@ -512,14 +500,6 @@ public class ConcreteTaskViewerBean {
 	 */
 	public boolean getVisibleReprendre() {
 		return this.concreteTaskDescriptor.getState().equals(State.SUSPENDED);
-	}
-
-	public ProjectService getProjectService() {
-		return projectService;
-	}
-
-	public void setProjectService(ProjectService projectService) {
-		this.projectService = projectService;
 	}
 
 	/**
