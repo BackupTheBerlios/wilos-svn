@@ -20,10 +20,7 @@ public class ConcreteRoleDescriptorTO extends ConcreteRoleDescriptor implements 
     	this.setConcreteName(myConcreteRoleDescriptor.getConcreteName());
     	this.setRoleDescriptor(new RoleDescriptorTO(myConcreteRoleDescriptor.getRoleDescriptor()));
     	
-    	Set<ConcreteActivity> concreteActivitys = new HashSet<ConcreteActivity>();
-        for (ConcreteActivity cta : myConcreteRoleDescriptor.getSuperConcreteActivities()) {
-        	concreteActivitys.add(new ConcreteActivityTO(cta));
-        }
+    	Set<ConcreteActivity> concreteActivitys = ConcreteActivityTO.getConcreteActivities(myConcreteRoleDescriptor);
         this.setSuperConcreteActivities(concreteActivitys);
     	
         Set<ConcreteTaskDescriptor> concreteTaskDescriptors = new HashSet<ConcreteTaskDescriptor>();
