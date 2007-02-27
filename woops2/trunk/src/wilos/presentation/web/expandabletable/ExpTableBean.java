@@ -87,6 +87,7 @@ public class ExpTableBean {
 				}
 				hm.put("id", bde.getId());
 				hm.put("name", bde.getPresentationName());
+				hm.put("parentId", act.getId()) ;
 
 				lines.add(hm);
 			}
@@ -161,10 +162,10 @@ public class ExpTableBean {
 		for (Iterator iter = parentList.iterator(); iter.hasNext();) {
 			HashMap<String, Object> child = (HashMap<String, Object>) iter
 					.next();
-			/*if (child.get("parentId").equals(parentId)) {
+			if (child.get("parentId").equals(parentId)) {
 				this.expTableContent.remove(child);
 				deleteChildren((String) child.get("id"), parentList);
-			}*/
+			}
 			if (child.get("id").equals(parentId)) {
 				child.put("expansionImage",
 						ProjectAdvancementBean.CONTRACT_TABLE_ARROW);
