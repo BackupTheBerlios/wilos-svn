@@ -31,6 +31,7 @@ import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.control.ExceptionManager;
+import wilos.presentation.assistant.control.WizardControler;
 import wilos.utils.Constantes;
 
 import com.thoughtworks.xstream.XStream;
@@ -149,6 +150,8 @@ public class WizardServicesProxy {
         
         
         private static Participant getParticipantExample () {
+        	// cancel the background refresh thread for the sample  
+        	WizardControler.getInstance().cancelrefreshThread() ;
         	Participant p = new Participant();
             p.setName("testSansBD");
             

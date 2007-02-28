@@ -48,12 +48,12 @@ public class WizardControler {
 	private Object lastCtd;
 	private ArrayList<HTMLViewer> listHTML = new ArrayList<HTMLViewer>() ;
 	private Vector<Runnable> listThread = new Vector<Runnable>() ;
-	// TODO ajouter les attributs tps, langue + getters setters
+	// TODO ajouter les attributs langue + getters setters
+	private long timeToRefresh = 5 ;				// tps en secondes
 	private Thread currentRefreshThread = null ;
 	private Thread currentThread = null ;
 	private Runnable currentRefreshRunnable = null ;
-	private int flagThread = 0 ;
-	private int flagRefreshButton = 0 ;
+	private int flagThread ;
 	private Object MUTEX = new Object() ;
 	private WizardControler() {
 		
@@ -63,6 +63,7 @@ public class WizardControler {
 		return src ;
 	}
 	
+	
 	public synchronized void launchRefreshTread (){
 		currentThread = new Thread (new Runnable(){
 			public void run() {
@@ -70,7 +71,6 @@ public class WizardControler {
 					WizardControler.getInstance().connectToServer(this);
 					WizardControler.this.flagThread = 1 ;
 					updateTree(null,null);
-					
 					WizardControler.getInstance().disconnectToServer(this);
 				}
 			}
@@ -82,80 +82,20 @@ public class WizardControler {
 		currentRefreshThread = new Thread (new Runnable(){
 			public void run() {
 				currentRefreshRunnable = this ;
-				while (true){
+				while (WizardControler.getInstance().getTimeToRefresh() != 0){
 					try {
 						Thread.sleep(WizardControler.getInstance().getTimeToRefresh());
 						launchRefreshTread();
 						currentThread.join() ;
-					} catch (InterruptedException e) {}
+					} catch (InterruptedException e) {
+						timeToRefresh = 0 ;
+					}
 				}
 			}
 		});
 		currentRefreshThread.start();
 	}
-	
-	/**
-	 * updateTree get the tree updated from the server and modify the current
-	 *
-	 */
-//	public void updateTree () {
-//		// get the participant on the server
-//		Participant p = WizardServicesProxy.getParticipant() ;
-//		// creating the model from this participant 
-//		WizardTreeModel newModel = new WizardTreeModel(p,false);
-//		// getting the actual model
-//		WizardTreeModel thisModel = (WizardTreeModel) treePanel.getTree().getModel() ;
-//		DefaultMutableTreeNode newRoot = (DefaultMutableTreeNode)newModel.getRoot();
-//		DefaultMutableTreeNode thisRoot = (DefaultMutableTreeNode)thisModel.getRoot();
-		// temporary nodes
-//		WizardMutableTreeNode tmpActualNode = null ;
-//		WizardMutableTreeNode tmpNewNode = null ;
-//		boolean trouve = false ;
-//		// managing if there is a deletion
-//		if (flagThread != 0 && thisRoot.getChildCount() > newRoot.getChildCount()){
-//			// check how many deletion
-//			int diff = thisRoot.getChildCount() - newRoot.getChildCount();
-//			int nbdiff = 0 ;
-//			// for each nodeactual we search if it is present on the server
-//			for (Enumeration e = thisRoot.children() ; nbdiff < diff && e.hasMoreElements() ;) {
-//				tmpActualNode = (WizardMutableTreeNode) e.nextElement() ;
-//				trouve = false ;
-//				for (Enumeration e2 = newRoot.children() ; e2.hasMoreElements() ;){
-//					tmpNewNode = (WizardMutableTreeNode) e2.nextElement();
-//					String id1,id2 ;
-//					id1 = getId(tmpActualNode.getUserObject()) ;
-//					id2 = getId(tmpNewNode.getUserObject()) ;
-//					trouve = trouve || ((id1 != null) && id1.equals(id2));
-//				}
-//				// if it is not on server delete it
-//				if (!trouve){
-//					thisModel.removeNodeFromParent(tmpActualNode);
-//					nbdiff++;
-//				}
-//			}
-//		}
-//		// for each project on server => check state modification or new branch
-//		//for ( ; i < newRoot.getChildCount() ; i++){
-//		for (Enumeration e = newRoot.children() ; e.hasMoreElements() ;) {
-//			WizardMutableTreeNode thisChild = null ;
-//			WizardMutableTreeNode newChild = (WizardMutableTreeNode) e.nextElement();
-//			// we search if it exists on local
-//			for (Enumeration e2 = thisRoot.children() ; !trouve && e2.hasMoreElements() ;) {
-//				thisChild = (WizardMutableTreeNode) e2.nextElement() ;
-//				trouve = newChild.getUserObject().equals(thisChild.getUserObject());
-//			}
-//			if (trouve){
-//				trtNode(newChild,thisChild);
-//				trouve = false ;
-//			}
-//			// if it is not in memory we had to add it
-//			else {
-//				WizardMutableTreeNode nodeToInsert = (WizardMutableTreeNode) newChild.clone() ;
-//				thisModel.insertNodeInto(nodeToInsert, thisRoot, newRoot.getIndex(newChild));
-//			}
-//		}
-//	}
-	
+		
 	private String getId(Object userObject){
 		if (userObject instanceof ConcreteRoleDescriptor)
 			return ((ConcreteRoleDescriptor) userObject).getId();
@@ -183,9 +123,12 @@ public class WizardControler {
 		return "" ;
 	}
 
+	/**
+	 * updateTree get the tree updated from the server and modify the current
+	 *
+	 */
 	private void updateTree(DefaultMutableTreeNode newNode, DefaultMutableTreeNode actualNode) {
 		boolean trouve = false ;
-		boolean start = false ;
 		// getting the actual model
 		WizardTreeModel model = (WizardTreeModel) treePanel.getTree().getModel() ;
 		// if it is the first execution
@@ -194,10 +137,8 @@ public class WizardControler {
 			Participant p = WizardServicesProxy.getParticipant() ;
 			WizardTreeModel newModel = new WizardTreeModel(p,false);
 			// creating the model from this participant 
-			
 			newNode = (DefaultMutableTreeNode)newModel.getRoot();
 			actualNode = (DefaultMutableTreeNode)model.getRoot();
-			start = true ;
 		}
 		WizardMutableTreeNode tmpNewNode = null ;
 		WizardMutableTreeNode tmpActualNode = null ;
@@ -211,15 +152,12 @@ public class WizardControler {
 				trouve = false ;
 				for (Enumeration e2 = newNode.children() ; e2.hasMoreElements() ;){
 					tmpNewNode = (WizardMutableTreeNode) e2.nextElement();
-					if (start){
-						trouve = trouve || tmpNewNode.getUserObject().equals(tmpActualNode.getUserObject());
-					}
-					else {
+//					if (start){
+//						trouve = trouve || tmpNewNode.getUserObject().equals(tmpActualNode.getUserObject());
 						String id1,id2 ;
 						id1 = getId(tmpNewNode.getUserObject()) ;
 						id2 = getId(tmpActualNode.getUserObject()) ;
 						trouve = trouve || ((id1 != null) && id1.equals(id2));
-					}
 				}
 				if (!trouve){
 					model.removeNodeFromParent(tmpActualNode);
@@ -228,20 +166,15 @@ public class WizardControler {
 			}
 		}
 		//	for each project on server => check state modification or new branch
-		for (Enumeration e = newNode.children() ; e.hasMoreElements() ;){
+		for (Enumeration e = newNode.children() ; flagThread != 0 && e.hasMoreElements() ;){
 			tmpNewNode = (WizardMutableTreeNode) e.nextElement();
 			trouve = false ;
 			for (Enumeration e2 = actualNode.children() ; !trouve &&  e2.hasMoreElements() ;){
 				tmpActualNode = (WizardMutableTreeNode) e2.nextElement() ;
-				if (start){
-					trouve = tmpNewNode.getUserObject().equals(tmpActualNode.getUserObject());
-				}
-				else {
 					String id1,id2 ;
 					id1 = getId(tmpNewNode.getUserObject()) ;
 					id2 = getId(tmpActualNode.getUserObject()) ;
 					trouve = (id1 != null) && id1.equals(id2);
-				}
 			}
 			// if the node has been found
 			if (flagThread != 0 && trouve){
@@ -269,7 +202,11 @@ public class WizardControler {
 		
 	public long getTimeToRefresh() {
 		// TODO Auto-generated method stub
-		return 10000;
+		return timeToRefresh * 1000 ;
+	}
+	
+	public void setTimeToRefresh(long value){
+		timeToRefresh = value ;
 	}
 
 	/**
@@ -611,7 +548,7 @@ public class WizardControler {
 	 * refreshParticipant reload from the server the data of the participant
 	 */
 	public void refreshParticipant() {
-			launchRefreshTread() ;
+		launchRefreshTread() ;
 	}
 
 	public static WizardControler getWc() {
@@ -638,9 +575,15 @@ public class WizardControler {
 		this.lastCtd = o;
 	}
 	
+	public void cancelrefreshThread (){
+		if (currentRefreshThread != null){
+			currentRefreshThread.interrupt() ;
+			disconnectToServer(currentRefreshRunnable);
+		}
+	}
+	
 	private void interruptRefreshThread (){
 		if (currentRefreshThread != null){
-			currentRefreshThread.interrupt();
 			flagThread = 0 ;
 			disconnectToServer(currentRefreshRunnable);
 		}
