@@ -3,27 +3,34 @@
 		<ice:panelTabSet styleClass="componentPanelTabSetLayout">
 			<br />
 			<ice:panelTab label="#{msgs['concreteRoleViewer.tabtitle'] }">
-				<br />
-				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="3">
-				<ice:outputText value="#{msgs['viewer.concreteName']}" />
-								<ice:outputText value="#{ConcreteRoleViewerBean.concreteRoleDescriptor.concreteName}" />
-								<ice:outputText value="" />
-				</ice:panelGrid>
-				<ice:panelStack id="panelStack_affectedRole" selectedPanel="#{ConcreteRoleViewerBean.selectAffectedRoleView}">
-						<ice:panelGrid id="roleAffectedTo" styleClass="contentLayoutGridStyle" columns="3">
-								<ice:outputText value="#{msgs['concreteRoleViewer.affectedTo']}" />
-								<ice:outputText value="#{ConcreteRoleViewerBean.concreteRoleDescriptor.participant.name}" />
-								<ice:outputText value="" />
-						</ice:panelGrid>
-						<ice:panelGrid id="roleNotAffected" styleClass="contentLayoutGridStyle" columns="3">
-								<ice:outputText value="#{msgs['concreteRoleViewer.affectedTo']}" />
-								<ice:outputText value="#{msgs['concreteRoleViewer.notAffected']}" />
-								<ice:outputText value="" />
-								<ice:commandButton value="#{msgs['concreteRoleViewer.toAffect']}"
-										action="#{ConcreteRoleViewerBean.affectParticipantToARole}" styleClass="smallbutton"/>
-						</ice:panelGrid>
+				<ice:panelStack id="panelStack_affectedRole"
+					selectedPanel="#{ConcreteRoleViewerBean.selectAffectedRoleView}">
+					<ice:panelGrid id="roleAffectedTo"
+						styleClass="contentLayoutGridStyle" columns="2">
+						<ice:outputText value="#{msgs['viewer.concreteName']}" />
+						<ice:outputText
+							value="#{ConcreteRoleViewerBean.concreteRoleDescriptor.concreteName}" />
+
+						<ice:outputText value="#{msgs['concreteRoleViewer.affectedTo']}" />
+						<ice:outputText
+							value="#{ConcreteRoleViewerBean.concreteRoleDescriptor.participant.name}" />
+
+					</ice:panelGrid>
+					<ice:panelGrid id="roleNotAffected"
+						styleClass="contentLayoutGridStyle" columns="2">
+						<ice:outputText value="#{msgs['viewer.concreteName']}" />
+						<ice:outputText
+							value="#{ConcreteRoleViewerBean.concreteRoleDescriptor.concreteName}" />
+
+						<ice:outputText value="#{msgs['concreteRoleViewer.affectedTo']}" />
+						<ice:outputText value="#{msgs['concreteRoleViewer.notAffected']}" />
+
+						<ice:commandButton value="#{msgs['concreteRoleViewer.toAffect']}"
+							action="#{ConcreteRoleViewerBean.affectParticipantToARole}"
+							styleClass="smallbutton" />
+						<ice:outputText value="" />
+					</ice:panelGrid>
 				</ice:panelStack>
-					
 			</ice:panelTab>
 		</ice:panelTabSet>
 	</ice:panelGrid>

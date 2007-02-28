@@ -63,7 +63,7 @@
 						styleClass="contentLayoutGridStyle" columns="3">
 						<ice:dataTable value="#{ProjectAdvancementBean.displayContent}"
 							var="cbde" cellpadding="0"
-							columnWidths="30px,400px,200px,100px,100px">
+							columnWidths="30px,400px,150px,100px,130px,100px,100px">
 							<ice:column>
 								<f:facet name="header">
 									<ice:outputText value="" />
@@ -96,6 +96,20 @@
 										value="#{msgs['component.project.projectadvancement.column3']}" />
 								</f:facet>
 								<ice:outputText value="#{cbde.concreteState}" />
+							</ice:column>
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputText
+										value="#{msgs['component.project.projectadvancement.accomplishedTime']}" />
+								</f:facet>
+								<ice:outputText value="#{cbde.accomplishedTime}" />
+							</ice:column>
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputText
+										value="#{msgs['component.project.projectadvancement.remainingTime']}" />
+								</f:facet>
+								<ice:outputText value="#{cbde.remainingTime}" />
 							</ice:column>
 							<ice:column>
 								<f:facet name="header">
