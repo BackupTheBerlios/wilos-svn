@@ -14,9 +14,9 @@
 			column="taskdescriptor_id">
 		</many-to-one>
 
-		<many-to-one name="concreteRoleDescriptor"
+		<many-to-one name="mainConcreteRoleDescriptor"
 			class="wilos.model.misc.concreterole.ConcreteRoleDescriptor"
-			column="concreteroledescriptor_id">
+			column="mainconcreteroledescriptor_id">
 		</many-to-one>
 
 		<property name="state" type="java.lang.String" column="state"
