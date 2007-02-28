@@ -92,6 +92,7 @@ public class ExpTableBean {
 				}
 				hm.put("id", bde.getId());
 				hm.put("name", bde.getPresentationName());
+				hm.put("isEditable", act.getHasMultipleOccurrences() || act.getIsRepeatable()) ;
 				hm.put("parentId", act.getId()) ;
 
 				lines.add(hm);
