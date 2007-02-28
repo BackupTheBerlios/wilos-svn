@@ -14,7 +14,7 @@ public class ConcreteActivityService {
 	private ConcreteActivityDao concreteActivityDao;
 	
 	/**
-	 * 
+	 * Allows to save the concrete activity which passed in parameters
 	 * @param _concreteActivity
 	 */
 	public void saveConcreteActivity(ConcreteActivity _concreteActivity) {
@@ -22,7 +22,7 @@ public class ConcreteActivityService {
 	}
 	
 	/**
-	 * 
+	 * Allows to get the concrete activity which has the same id than the parameter
 	 * @param _concreteActivityId the id of the concreteActivity asked
 	 * @return the ConcreteActivity which has the same id
 	 */
@@ -31,7 +31,7 @@ public class ConcreteActivityService {
 	}
 
 	/**
-	 * 
+	 * Return the list of all the Concrete Activities
 	 * @return the list of all the concreteActivities
 	 */
 	public List<ConcreteActivity> getAllConcreteActivities() {
@@ -39,6 +39,7 @@ public class ConcreteActivityService {
 	}
 
 	/**
+	 * Return the concrete activity Dao
 	 * @return the concreteActivityDao
 	 */
 	public ConcreteActivityDao getConcreteActivityDao() {
@@ -46,6 +47,7 @@ public class ConcreteActivityService {
 	}
 
 	/**
+	 * Initialize the concreteActivityDao with the value in parameter 
 	 * @param concreteActivityDao the concreteActivityDao to set
 	 */
 	public void setConcreteActivityDao(ConcreteActivityDao concreteActivityDao) {

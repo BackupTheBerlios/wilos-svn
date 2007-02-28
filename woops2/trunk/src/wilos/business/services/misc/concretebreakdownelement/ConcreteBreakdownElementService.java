@@ -16,7 +16,7 @@ public class ConcreteBreakdownElementService {
 	ConcreteBreakdownElementDao concreteBreakdownElementDao;
 
 	/**
-	 * 
+	 * Return the list of Concrete Breakdown Elements which has the same projectId than the parameter
 	 * @param _projectId
 	 * @return list of Concrete Breakdown Elements which has the same projectId
 	 */
