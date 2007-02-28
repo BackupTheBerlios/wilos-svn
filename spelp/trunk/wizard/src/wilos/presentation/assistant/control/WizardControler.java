@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.MutableTreeNode;
 
 import org.jdesktop.swingx.JXTree;
 
@@ -116,6 +117,7 @@ public class WizardControler {
 		else return "" ;
 	}
 	
+
 	private String getState (Object userObject) {
 		if (userObject instanceof ConcreteTaskDescriptor){
 			return ((ConcreteTaskDescriptor) userObject).getState();
@@ -200,6 +202,33 @@ public class WizardControler {
 		}
 	}
 		
+	/**
+	 * updateTree get the tree updated from the server and modify the current
+	 *
+	 */
+	private void setAllTasksSuspended(MutableTreeNode node) {
+		// getting the actual model
+		WizardTreeModel model = (WizardTreeModel) treePanel.getTree().getModel() ;
+		// if it is the first execution
+		if (node == null) {
+			node = (MutableTreeNode) model.getRoot() ;
+		}
+		//	for each project on server => check state modification or new branch
+		for (Enumeration e = node.children() ; e.hasMoreElements() ;){
+			WizardMutableTreeNode tmpNode = (WizardMutableTreeNode) e.nextElement();
+			// if the node has been found
+			// manage the state
+			if (getState(tmpNode.getUserObject()).equals(Constantes.State.STARTED)){
+				if (tmpNode.getUserObject() instanceof ConcreteTaskDescriptor) {
+					ConcreteTaskDescriptor ctdactual = (ConcreteTaskDescriptor) tmpNode.getUserObject() ;
+					updateTreeVisualAndState(ctdactual, Constantes.State.SUSPENDED,true);
+				}
+			}
+			// recursive call for the children
+			setAllTasksSuspended(tmpNode);
+		}
+	}
+	
 	public long getTimeToRefresh() {
 		// TODO Auto-generated method stub
 		return timeToRefresh * 1000 ;
@@ -575,6 +604,7 @@ public class WizardControler {
 		this.lastCtd = o;
 	}
 	
+		
 	public void cancelrefreshThread (){
 		if (currentRefreshThread != null){
 			currentRefreshThread.interrupt() ;
@@ -625,5 +655,9 @@ public class WizardControler {
 				WizardControler.getInstance().disconnectToServer(this);
 			}
 		}
+	}
+	
+	public Object getLastCtd (){
+		return lastCtd ;
 	}
 }
