@@ -14,7 +14,7 @@ public class ConcreteTaskDescriptor extends ConcreteWorkBreakdownElement {
 
 	private TaskDescriptor taskDescriptor;
 
-	private ConcreteRoleDescriptor concreteRoleDescriptor;
+	private ConcreteRoleDescriptor mainConcreteRoleDescriptor;
 
 	private String state;
 
@@ -49,8 +49,8 @@ public class ConcreteTaskDescriptor extends ConcreteWorkBreakdownElement {
 	protected void copy(final ConcreteTaskDescriptor _concreteTaskDescriptor) {
 		super.copy(_concreteTaskDescriptor);
 		this.taskDescriptor = _concreteTaskDescriptor.getTaskDescriptor();
-		this.concreteRoleDescriptor = _concreteTaskDescriptor
-				.getConcreteRoleDescriptor();
+		this.mainConcreteRoleDescriptor = _concreteTaskDescriptor
+				.getMainConcreteRoleDescriptor();
 		this.accomplishedTime = _concreteTaskDescriptor
 				.getAccomplishedTime();
 		this.realFinishingDate = _concreteTaskDescriptor
@@ -78,8 +78,8 @@ public class ConcreteTaskDescriptor extends ConcreteWorkBreakdownElement {
 				this.accomplishedTime, concreteTaskDescriptor.accomplishedTime)
 				.append(this.taskDescriptor,
 						concreteTaskDescriptor.taskDescriptor).append(
-						this.concreteRoleDescriptor,
-						concreteTaskDescriptor.concreteRoleDescriptor).append(
+						this.mainConcreteRoleDescriptor,
+						concreteTaskDescriptor.mainConcreteRoleDescriptor).append(
 						this.realFinishingDate,
 						concreteTaskDescriptor.realFinishingDate).append(
 						this.realStartingDate,
@@ -98,7 +98,7 @@ public class ConcreteTaskDescriptor extends ConcreteWorkBreakdownElement {
 				.append(this.accomplishedTime)
 				.append(this.state)
 				.append(this.taskDescriptor)
-				.append(this.concreteRoleDescriptor)
+				.append(this.mainConcreteRoleDescriptor)
 				.append(this.realFinishingDate).append(this.realStartingDate)
 				.append(this.remainingTime).toHashCode();
 	}
@@ -110,14 +110,14 @@ public class ConcreteTaskDescriptor extends ConcreteWorkBreakdownElement {
 
 	public void addConcreteRoleDescriptor(
 			ConcreteRoleDescriptor _concreteRoleDescriptor) {
-		this.concreteRoleDescriptor = _concreteRoleDescriptor;
+		this.mainConcreteRoleDescriptor = _concreteRoleDescriptor;
 		_concreteRoleDescriptor.getConcreteTaskDescriptors().add(this);
 	}
 
 	public void removeConcreteRoleDescriptor(
 			ConcreteRoleDescriptor _concreteRoleDescriptor) {
 		_concreteRoleDescriptor.getConcreteTaskDescriptors().remove(this);
-		this.concreteRoleDescriptor = null;
+		this.mainConcreteRoleDescriptor = null;
 	}
 
 	/*
@@ -156,13 +156,13 @@ public class ConcreteTaskDescriptor extends ConcreteWorkBreakdownElement {
 		this.taskDescriptor = taskDescriptor;
 	}
 
-	public ConcreteRoleDescriptor getConcreteRoleDescriptor() {
-		return concreteRoleDescriptor;
+	public ConcreteRoleDescriptor getMainConcreteRoleDescriptor() {
+		return mainConcreteRoleDescriptor;
 	}
 
-	public void setConcreteRoleDescriptor(
-			ConcreteRoleDescriptor concreteRoleDescriptor) {
-		this.concreteRoleDescriptor = concreteRoleDescriptor;
+	public void setMainConcreteRoleDescriptor(
+			ConcreteRoleDescriptor _mainConcreteRoleDescriptor) {
+		this.mainConcreteRoleDescriptor = _mainConcreteRoleDescriptor;
 	}
 
 	public Date getRealFinishingDate() {

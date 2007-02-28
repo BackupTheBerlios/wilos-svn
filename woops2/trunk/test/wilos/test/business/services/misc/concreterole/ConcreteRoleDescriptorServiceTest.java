@@ -21,7 +21,7 @@ import wilos.test.TestConfiguration;
 
 public class ConcreteRoleDescriptorServiceTest {
 
-	private ConcreteRoleDescriptor concreteRoleDescriptor;
+	private ConcreteRoleDescriptor mainConcreteRoleDescriptor;
 
 	private ConcreteRoleDescriptorService concreteRoleDescriptorService = null;
 
@@ -50,8 +50,8 @@ public class ConcreteRoleDescriptorServiceTest {
 
 	@Before
 	public void setUp() {
-		this.concreteRoleDescriptor = new ConcreteRoleDescriptor();
-		this.concreteRoleDescriptor.setConcreteName(NAME);
+		this.mainConcreteRoleDescriptor = new ConcreteRoleDescriptor();
+		this.mainConcreteRoleDescriptor.setConcreteName(NAME);
 	}
 
 	@After
@@ -94,7 +94,7 @@ public class ConcreteRoleDescriptorServiceTest {
 		project2.setConcreteName("project2");
 		this.projectDao.saveOrUpdateProject(project2);
 
-		this.concreteRoleDescriptor.setProject(project);
+		this.mainConcreteRoleDescriptor.setProject(project);
 
 		ConcreteRoleDescriptor ctdTmp = new ConcreteRoleDescriptor();
 		ctdTmp.setConcreteName("pouet");
