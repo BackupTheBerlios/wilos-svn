@@ -229,13 +229,7 @@ public class ProcessService {
 
 		// saving of the attached guidances to the process
 		for (Guidance g : guid) {
-			if (g instanceof CheckList) {
-				CheckList cl = (CheckList) g;
-				this.parseCheckList(cl);
-			}	
-			else {
 				this.parseGuidance(g);
-			}	
 		}
 
 		// destroy the persistance of the collections
@@ -711,8 +705,14 @@ public class ProcessService {
 	 */
 	private void parseGuidance(Guidance _guidance) {
 
-		this.guidanceDao.saveOrUpdateGuidance(_guidance);
-		System.out.println("###Guidance sauve");
+		if (_guidance instanceof CheckList) {
+			CheckList cl = (CheckList) _guidance;
+			this.parseCheckList(cl);
+		}	
+		else {
+			this.guidanceDao.saveOrUpdateGuidance(_guidance);
+			System.out.println("###Guidance sauve");
+		}
 	}
 	
 	/**
@@ -720,7 +720,9 @@ public class ProcessService {
 	 * @param _checkList
 	 */
 	private void parseCheckList(CheckList _checkList) {
+		
 		CheckList clone = null;
+		
 		try {
 			clone = _checkList.clone();
 		} catch (CloneNotSupportedException e) {
