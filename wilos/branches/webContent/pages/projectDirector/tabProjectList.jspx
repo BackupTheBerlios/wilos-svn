@@ -48,11 +48,11 @@
 						<f:facet name="header">
 							<ice:outputText value="#{msgs['component.projectList.action']}" />
 						</f:facet>
-						<ice:commandLink value="" actionListener="#{ProjectBean.modifyProject}">
+						<ice:commandLink value="" actionListener="#{ProjectBean.modifyProject}" title="#{msgs['component.projectList.modifyTooltip']}">
 							<f:param name="projectId" value="#{project.id}" />
 							<ice:graphicImage value="images/modify.gif" style="border: 0px solid;" />
 						</ice:commandLink>
-						<ice:commandLink value="" actionListener="#{ProjectBean.deleteProject}">
+						<ice:commandLink value="" actionListener="#{ProjectBean.deleteProject}" title="#{msgs['component.projectList.deleteTooltip']}">
 							<f:param name="projectId" value="#{project.id}" />
 							<ice:graphicImage value="images/delete.gif" style="border: 0px solid;" />
 						</ice:commandLink>
