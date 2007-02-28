@@ -43,6 +43,8 @@ public class ExpTableBean {
 	private ActivityService activityService;
 
 	private boolean isVisible = true;
+	
+	private String viewedProcessId = "";
 
 	private String selectedProcessGuid = "default";
 	
@@ -58,9 +60,12 @@ public class ExpTableBean {
 		if (!this.selectedProcessGuid.equals("default")) {
 			Process process = this.processService
 					.getProcessFromGuid(this.selectedProcessGuid);
-			this.expTableContent.clear() ;
-			List<HashMap<String, Object>> lines = this.getExpTableLineContent(process);
-			this.expTableContent.addAll(lines);
+			if (!this.viewedProcessId.equals(process.getId())) {
+				this.viewedProcessId = process.getId();
+				this.expTableContent.clear() ;
+				List<HashMap<String, Object>> lines = this.getExpTableLineContent(process);
+				this.expTableContent.addAll(lines);
+			}
 		}
 		return this.expTableContent;
 	}
@@ -187,20 +192,23 @@ public class ExpTableBean {
 		// toggle expanded state
 		Boolean b = isExpanded.get(elementId);
 		if (b == null) {
-			isExpanded.put(elementId, false);
+			isExpanded.put(elementId, true);
 			b = isExpanded.get(elementId);
+		} else {
+			if (b) {
+				b = false;
+			} else {
+				b = true;
+			}
+			isExpanded.put(elementId, b);
 		}
-		b = !b;
-		isExpanded.put(elementId, b);
-
-		// add sub elements to list
+		
 		if (b) {
 			expandNodeAction();
-		}
-		// remove items from list
-		else {
+		} else {
 			contractNodeAction();
 		}
+		
 	}
 
 	/**
