@@ -173,7 +173,7 @@
 											value="#{msgs['component.exptable.header.column2']}" />
 									</f:facet>
 									<ice:inputText
-										value="1"
+										value="#{process.nbOccurences}"
 										readonly="#{process.isEditable}" />
 								</ice:column>
 							</ice:dataTable>
