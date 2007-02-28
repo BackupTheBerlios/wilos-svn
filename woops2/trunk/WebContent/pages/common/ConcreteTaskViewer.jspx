@@ -1,6 +1,6 @@
 <ice:form>
 	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1">
-		
+	
 		<ice:panelPopup 
 			draggable="false" visible="#{ConcreteTaskViewerBean.visiblePopup}"
 			rendered="true"	modal="true">
@@ -20,7 +20,8 @@
 				</ice:panelGrid>
 			</f:facet>
 		</ice:panelPopup>
-		
+	
+	
 		<ice:panelTabSet styleClass="componentPanelTabSetLayout">
 			<br />
 			<ice:panelTab label="#{msgs['taskviewer.tabtitle'] }">
@@ -72,8 +73,7 @@
 								value="#{msgs['taskviewer.affecter']}"
 								actionListener="#{ConcreteTaskViewerBean.affectedActionListener}"
 								visible="#{ConcreteTaskViewerBean.visibleAffected}"
-								styleClass="smallbutton"/>
-								<ice:commandButton
+								styleClass="smallbutton"/><ice:commandButton
 								value="#{msgs['taskviewer.start']}"
 								actionListener="#{ConcreteTaskViewerBean.startActionListener}"
 								visible="#{ConcreteTaskViewerBean.visibleStart}"
