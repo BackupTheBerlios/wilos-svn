@@ -8,6 +8,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.section.Section;
+import wilos.model.spem2.task.TaskDefinition;
 
 public class CheckList extends Guidance{
 	
@@ -62,4 +63,42 @@ public class CheckList extends Guidance{
 	public void setSections(Set<Section> _sections) {
 		this.sections = _sections;
 	}
+	
+	/**
+	 * addSection
+	 * @param _section
+	 */
+	public void addSection(Section _section) {
+		this.getSections().add(_section);
+	}
+	
+	/**
+	 * removeSection
+	 * @param _section
+	 */
+	public void removeSection(Section _section) {
+		this.getSections().remove(_section);
+	}
+	
+	/**
+	 * addAllSection
+	 * @param _sections
+	 */
+	public void addAllSection(Set<Section> _sections) {
+		for (Section s : _sections) {
+			s.addCheckList(this);
+		}
+	}
+	
+	/**
+	 * removeAllSection
+	 *
+	 */
+	public void removeAllSection() {
+		for (Section s : this.getSections()) {
+			s.removeCheckList(this);
+		}			
+		this.getSections().clear();
+	}
+	
 }

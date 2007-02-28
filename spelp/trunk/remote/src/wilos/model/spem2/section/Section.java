@@ -51,4 +51,20 @@ public class Section extends Element {
 		this.checklist = checklist;
 	}
 	
+	/**
+	 * addCheckList
+	 * @param _checklist
+	 */
+	public void addCheckList(CheckList _checklist) {
+		_checklist.getSections().add(this);		
+	}
+	
+	/**
+	 * removeCheckList
+	 * @param _checklist
+	 */
+	public void removeCheckList(CheckList _checklist) {
+		_checklist.getSections().remove(this);
+	}
+	
 }
