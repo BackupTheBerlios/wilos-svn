@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Locale;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -53,8 +54,8 @@ public class WizardControler {
 	private Object lastCtd;
 	private ArrayList<HTMLViewer> listHTML = new ArrayList<HTMLViewer>() ;
 	private Vector<Runnable> listThread = new Vector<Runnable>() ;
-	// TODO ajouter les attributs langue + getters setters
-	private long timeToRefresh = 5 ;				// tps en secondes
+	private Locale lang = Locale.getDefault();
+	private long timeToRefresh = 5;				// tps en secondes
 	private Thread currentRefreshThread = null ;
 	private Thread currentThread = null ;
 	private Runnable currentRefreshRunnable = null ;
@@ -718,5 +719,13 @@ public class WizardControler {
 	
 	public Object getLastCtd (){
 		return lastCtd ;
+	}
+
+	public Locale getLang() {
+		return lang;
+	}
+
+	public void setLang(Locale lang) {
+		this.lang = lang;
 	}
 }

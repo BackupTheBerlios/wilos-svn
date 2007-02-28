@@ -18,8 +18,10 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 import wilos.presentation.assistant.control.OptionsParser;
+import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.Bundle;
 
 public class OptionFrame extends JDialog {
@@ -31,12 +33,14 @@ public class OptionFrame extends JDialog {
 	private JButton ok = null;
 	private JButton cancel = null;
 	private JButton apply = null;
+	private OptionsParser op = null; 
 
 	/**
 	 * This is the default constructor
 	 */
 	public OptionFrame() {
 		super();
+		this.op = new OptionsParser();
 		initialize();
 	}
 	/**
@@ -47,11 +51,9 @@ public class OptionFrame extends JDialog {
 	private void initialize() {
 		int x = (int)(Toolkit.getDefaultToolkit().getScreenSize().width/2-(605/2));
 		int y = (int)(Toolkit.getDefaultToolkit().getScreenSize().height/2-(220/2)) ;
-		
-		//this.setSize(400, 300);
 		this.setTitle(Bundle.getText("optionFrame.title"));
 		this.setModal(true);
-		this.setBounds(x, y, 420, 200);
+		this.setBounds(x, y, 380, 180);
 		this.setResizable(false);
 		this.setContentPane(getOptionPane());
 		this.setVisible(true);
@@ -68,7 +70,7 @@ public class OptionFrame extends JDialog {
 			panneau.add(getLangText(), null);
 			panneau.add(getLang(), null);
 			panneau.add(getDelayText(), null);
-			//panneau.add(getDelay(), null);
+			panneau.add(getDelay(), null);
 			panneau.add(getOk(), null);
 			panneau.add(getCancel(), null);
 			panneau.add(getApply(), null);
@@ -83,19 +85,12 @@ public class OptionFrame extends JDialog {
 	 */
 	private JLabel getLangText()
 	{
-		if (langText ==null)
+		if (langText == null)
 		{
 			langText = new JLabel();
-			langText.setBounds(new Rectangle(50,20,80,20));
+			langText.setBounds(new Rectangle(20,20,250,20));
 			langText.setText(Bundle.getText("optionFrame.lang"));
-			/*
-			lang.addActionListener(new ActionListener()
-			{
-				public void actionPerformed(ActionEvent e) 
-    			{
-					dispose();
-    			}				
-			});*/
+			langText.setLabelFor(lang);
 		}
 		return langText;
 	}
@@ -129,7 +124,7 @@ public class OptionFrame extends JDialog {
 			
 			lang = new JComboBox(locs);
 			lang.setRenderer(new LocaleRenderer());
-			lang.setBounds(new Rectangle(250,20,80,20));
+			lang.setBounds(new Rectangle(280,20,80,20));
 			OptionsParser op = new OptionsParser ();
 			lang.setSelectedItem(new Locale(op.getLocale().getLanguage()));
 		}
@@ -153,20 +148,12 @@ public class OptionFrame extends JDialog {
 	 */
 	private JLabel getDelayText()
 	{
-		if (delayText ==null)
+		if (delayText == null)
 		{
 			delayText = new JLabel();
-			delayText.setBounds(new Rectangle(50,100,160,20));
+			delayText.setBounds(new Rectangle(20,60,250,40));
 			delayText.setText(Bundle.getText("optionFrame.delay"));
-//			delay.paramString(Bundle.getText("optionFrame.delay"));
-			/*
-			delay.addActionListener(new ActionListener()
-			{
-				public void actionPerformed(ActionEvent e) 
-    			{
-					dispose();
-    			}				
-			});*/
+			delayText.setLabelFor(delay);
 		}
 		return delayText;
 	}
@@ -178,16 +165,11 @@ public class OptionFrame extends JDialog {
 	 */
 	private JSpinner getDelay()
 	{
-		if (delay != null)
+		if (delay == null)
 		{		
-			delay = new JSpinner();
-/*
-			//Utilisation d un champ de saisie qui verifie et formate
-			delay.setInputVerifier(new Verifier());
-			delay.setHorizontalAlignment(SwingConstants.RIGHT);*/		
-			
-			delay.setBounds(new Rectangle(250,100,100,20));
-			
+			SpinnerNumberModel snp = new SpinnerNumberModel(this.op.getRefreshTime(),0,Integer.MAX_VALUE,1);
+			delay = new JSpinner(snp);
+			delay.setBounds(new Rectangle(280,60,80,20));
 		}	
 		return delay;
 	}
@@ -222,37 +204,15 @@ public class OptionFrame extends JDialog {
 		if (ok ==null)
 		{
 			ok = new JButton();
-			ok.setBounds(new Rectangle(50,140,100,20));
+			ok.setBounds(new Rectangle(20,120,100,20));
 			ok.setText(Bundle.getText("optionFrame.ok"));
-			/*ok.addActionListener(new ActionListener()
+			ok.addActionListener(new ActionListener()
 			{
-				/*public void actionPerformed(ActionEvent e) 
+				public void actionPerformed(ActionEvent e) 
     			{
-					//WizardOptions wo = new WizardOptions(lang.get);
-					JOptionPane opt1 = new JOptionPane();
-					
-					boolean valide = true;
-					
-					for (int i=0;i<servs.getRowCount()&&valide;i++)
-					{
-						if ((String)servs.getValueAt(i,1)==null)
-						{
-							valide = false;
-							opt1.showMessageDialog(opt1,Bundle.getText("serversFrame.error"),"Error",JOptionPane.ERROR_MESSAGE);
-							opt1.setVisible(true);
-						}
-						else
-						{
-							new_list_serv.add(new WizardServer((String)servs.getValueAt(i,0),(String)servs.getValueAt(i,1),i));
-						}
-					}
-					if (valide)
-					{
-						LoginPanel.list_serv.saveServersList(new_list_serv);
-						serverDialog.dispose();
-					}
+					dispose();
     			}			
-			});*/
+			});
 		}
 		return ok;
 	}
@@ -267,7 +227,7 @@ public class OptionFrame extends JDialog {
 		if (cancel ==null)
 		{
 			cancel = new JButton();
-			cancel.setBounds(new Rectangle(160,140,100,20));
+			cancel.setBounds(new Rectangle(140,120,100,20));
 			cancel.setText(Bundle.getText("optionFrame.cancel"));
 			cancel.addActionListener(new ActionListener()
 			{
@@ -290,16 +250,28 @@ public class OptionFrame extends JDialog {
 		if (apply ==null)
 		{
 			apply = new JButton();
-			apply.setBounds(new Rectangle(270,140,100,20));
+			apply.setBounds(new Rectangle(260,120,100,20));
 			apply.setText(Bundle.getText("optionFrame.apply"));
 			apply.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent e) 
     			{
-					dispose();
+					System.out.println(((Integer)delay.getValue())*1000);
+					System.out.println(WizardControler.getInstance().getTimeToRefresh());
+					if ((!lang.getSelectedItem().toString().equals(WizardControler.getInstance().getLang().getLanguage()))
+							|| (((Integer)delay.getValue()*1000)!=WizardControler.getInstance().getTimeToRefresh()))
+					{
+						System.out.println("save !");
+					}
+					
+					//	=> setrefreshtime
+					// si ancienneval == 0 && nouvelle non
+					// 	 controler.getinstance.launchBackgroundThreadForTree
+					// elseif val == 0 alors
+					// 	controler.getinstance.cancelrefreshthread
     			}				
 			});
 		}
 		return apply;
-	}	
+	}
 }

@@ -55,6 +55,10 @@ public class OptionsParser {
 				refreshTime = Integer.parseInt(node.getTextContent());
 			}
 		}
+		else
+		{
+			refreshTime = 0;
+		}
 		
 		return refreshTime;
 	}
