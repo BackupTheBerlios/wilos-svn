@@ -1,4 +1,4 @@
-<ice:panelTab id="panelTab_processManager" label="Process Manager" imageDir="images">
+<ice:panelTab id="panelTab_processManager" label="#{msgs['component.processmanagercreate.title']}" imageDir="images">
 
 				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
 					<ice:panelGroup id="processManagerCreateGroup" styleClass="contentIncludePanelGroup">
