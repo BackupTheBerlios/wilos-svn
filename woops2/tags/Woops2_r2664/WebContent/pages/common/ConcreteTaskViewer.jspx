@@ -1,0 +1,106 @@
+<ice:form>
+	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1">
+		
+		<ice:panelPopup 
+			draggable="false" visible="#{ConcreteTaskViewerBean.visiblePopup}"
+			rendered="true"	modal="true">
+			<f:facet name="header">
+				<ice:outputText value="/!\ Avertissement /!\" />
+			</f:facet>
+			<f:facet name="body">
+				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2">
+					<ice:outputText value="DEBUG: Si vous arrêtez la tâche, le temps restant sera mis à 0." />
+					<ice:outputText value=""/>
+					<ice:commandButton value="Confirmer"
+						styleClass="smallbutton"
+						action="#{ConcreteTaskViewerBean.confirmStop}"/>
+					<ice:commandButton value="Annuler"
+						styleClass="smallbutton"
+						action="#{ConcreteTaskViewerBean.cancelStop}"/>
+				</ice:panelGrid>
+			</f:facet>
+		</ice:panelPopup>
+		
+		<ice:panelTabSet styleClass="componentPanelTabSetLayout">
+			<br />
+			<ice:panelTab label="#{msgs['taskviewer.tabtitle'] }">
+				<br />
+				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="3">
+					<ice:outputText value="#{msgs['viewer.concreteName']}" />
+					<ice:inputText
+						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.concreteName}"
+						readonly="#{ConcreteTaskViewerBean.isInputNameReadOnly}"/>
+					<ice:commandButton value="#{msgs['button.changeconcretename']}"
+						action="#{ConcreteTaskViewerBean.changeConcreteName}"
+						disabled="#{ConcreteTaskViewerBean.changeButtonIsDisabled}"/>
+					<ice:outputText value="#{msgs['taskviewer.state']}" />
+					<ice:outputText
+						value="#{ConcreteTaskViewerBean.displayedState}" />
+					<ice:outputText value=""/>
+					<ice:outputText value="#{msgs['taskviewer.plannedstartingdate']}" />
+					<ice:outputText
+						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.plannedStartingDate}" />
+					<ice:outputText value=""/>
+					<ice:outputText value="#{msgs['taskviewer.plannedFinishingDate']}" />
+					<ice:outputText
+						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.plannedFinishingDate}" />
+					<ice:outputText value=""/>
+					<ice:outputText
+						value="#{msgs['taskviewer.accomplishedtime']}"
+						visible="#{ConcreteTaskViewerBean.accomplishedTimeVisible}"/>
+					<ice:inputText
+						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.accomplishedTime}"
+						visible="#{ConcreteTaskViewerBean.accomplishedTimeVisible}"
+						disabled="#{ConcreteTaskViewerBean.accomplishedTimeModifiable}">
+						<!--  <f:convertNumber pattern="#*0(.0)#" /> -->
+					</ice:inputText>
+					<ice:outputText value=""/>
+					<ice:outputText value="#{msgs['taskviewer.remainingtime']}"
+					visible="#{ConcreteTaskViewerBean.remainingTimeVisible}"/>
+					
+					<ice:inputText
+						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.remainingTime}"
+						visible="#{ConcreteTaskViewerBean.remainingTimeVisible}"
+						disabled="#{ConcreteTaskViewerBean.remainingTimeModifiable}">
+						<!-- <f:convertNumber pattern="#*0(.0)#" /> -->
+					</ice:inputText>
+
+					<ice:outputText value=""/>
+					<table>
+						<tr>
+							<td><ice:commandButton
+								value="#{msgs['taskviewer.affecter']}"
+								actionListener="#{ConcreteTaskViewerBean.affectedActionListener}"
+								visible="#{ConcreteTaskViewerBean.visibleAffected}"
+								styleClass="smallbutton"/>
+								<ice:commandButton
+								value="#{msgs['taskviewer.start']}"
+								actionListener="#{ConcreteTaskViewerBean.startActionListener}"
+								visible="#{ConcreteTaskViewerBean.visibleStart}"
+								styleClass="smallbutton"/>
+								<ice:commandButton
+								value="#{msgs['taskviewer.reprendre']}"
+								actionListener="#{ConcreteTaskViewerBean.startActionListener}"
+								visible="#{ConcreteTaskViewerBean.visibleReprendre}"
+								styleClass="smallbutton"/>
+								<ice:commandButton
+								value="#{msgs['concretetaskviewer.saveButton']}"
+								actionListener="#{ConcreteTaskViewerBean.updateActionListener}"
+								visible="#{ConcreteTaskViewerBean.visibleSaveButton}"
+								styleClass="smallbutton"/>
+								<ice:commandButton value="#{msgs['concretetaskviewer.stop']}"
+								actionListener="#{ConcreteTaskViewerBean.stopActionListener}"
+								visible="#{ConcreteTaskViewerBean.visibleStop}"
+								styleClass="smallbutton"/>
+								<ice:commandButton value="#{msgs['concretetaskviewer.suspended']}"
+								actionListener="#{ConcreteTaskViewerBean.suspendedActionListener}"
+								visible="#{ConcreteTaskViewerBean.visibleSuspended}"
+								styleClass="smallbutton"/>
+							</td>
+						</tr>
+					</table>
+				</ice:panelGrid>
+			</ice:panelTab>
+		</ice:panelTabSet>
+	</ice:panelGrid>
+</ice:form>

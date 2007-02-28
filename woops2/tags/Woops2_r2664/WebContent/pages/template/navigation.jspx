@@ -1,0 +1,43 @@
+<ice:form id="navigation">
+	<!-- ComboBox -->
+	<!-- The projects combobox -->
+	<ice:selectOneMenu id="combo" partialSubmit="true"
+		value="#{TreeBean.projectId}"
+		valueChangeListener="#{TreeBean.changeTreeActionListener}">
+		<f:selectItems value="#{TreeBean.projects}" />
+	</ice:selectOneMenu>
+	<br />
+
+	<!-- Select One Radio -->
+	<ice:panelGroup visible="#{TreeBean.hideRadio}">
+		<ice:selectOneRadio id="radio" partialSubmit="true"
+			value="#{TreeBean.selectedMode}"
+			valueChangeListener="#{TreeBean.changeModeActionListener}">
+			<f:selectItems value="#{TreeBean.modesList}" />
+		</ice:selectOneRadio>
+	</ice:panelGroup>
+	<br />
+
+	<!-- ScrollBar -->
+	<div class="navTree"><!-- Tree - The process tree with its taskDescriptors -->
+	<ice:tree id="tree" value="#{TreeBean.model}" var="item"
+		hideRootNode="#{TreeBean.loadTree}" hideNavigation="false"
+		imageDir="images/tree/">
+		<ice:treeNode>
+			<f:facet name="icon">
+				<ice:panelGroup style="display: inline">
+					<h:graphicImage value="#{item.userObject.icon}" />
+				</ice:panelGroup>
+			</f:facet>
+			<f:facet name="content">
+				<ice:panelGroup style="display: inline">
+					<ice:commandLink value="#{item.userObject.text}"
+						actionListener="#{TreeBean.selectNodeActionListener}">
+						<f:param name="nodeId" value="#{item.userObject.id}" />
+						<f:param name="pageId" value="#{item.userObject.pageId}" />
+					</ice:commandLink>
+				</ice:panelGroup>
+			</f:facet>
+		</ice:treeNode>
+	</ice:tree></div>
+</ice:form>

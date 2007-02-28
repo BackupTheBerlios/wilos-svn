@@ -1,0 +1,34 @@
+<ice:panelStack id="panelStack_connect"
+                        styleClass=""
+                        selectedPanel="#{connect.selectedPanel.templateName}">
+		<ice:panelGroup id="not_connected">
+			<f:subview id="not_connected_view" >
+				<ice:form id="connect_form">
+					<ice:panelGrid columns="2">			
+						<ice:outputLabel value="#{msgs['component.authentificationfield.login']}" style="iceInputtext"/>
+						<h:inputText size="15" immediate="true" value="#{LoginBean.login}" />
+						<ice:outputText value="#{msgs['component.authentificationfield.password']}"/>
+						<h:inputSecret size="15" value="#{LoginBean.password}" onkeydown="submitOnEnter(this);"/>
+					</ice:panelGrid>
+					<ice:panelGrid columns="2">
+						<h:commandButton type="submit" value="#{msgs['component.authentificationfield.connexion']}" action="#{LoginBean.authentificationAction}" styleClass="smallbutton"/>
+						<ice:commandButton immediate="true"  value="#{msgs['component.authentificationfield.inscription']}" action="#{menu.subscribe}" styleClass="smallbutton"/>
+					</ice:panelGrid>
+				</ice:form>	
+				
+			</f:subview>
+		</ice:panelGroup>
+		<ice:panelGroup id="connected">
+			<f:subview id="connected_view">
+				<ice:form id="connected_form" >
+					<ice:panelGrid columns="2">			
+						<ice:outputLabel value="#{msgs['component.constant.welcome']}"/>
+						<ice:outputLabel value="#{LoginBean.login}"/>
+					</ice:panelGrid>
+					<ice:panelGrid columns="1">
+						<ice:commandButton immediate="true" type="submit" value="#{msgs['component.constant.disconnect']}" action="#{LoginBean.logoutAction}" styleClass="smallbutton"/>
+					</ice:panelGrid>	
+				</ice:form>
+			</f:subview>
+		</ice:panelGroup>
+</ice:panelStack>

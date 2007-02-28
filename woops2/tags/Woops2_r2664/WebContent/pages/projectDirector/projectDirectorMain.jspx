@@ -1,0 +1,17 @@
+<ice:panelStack id="panelStack"
+                        styleClass="componentContentPanelStack"
+                        selectedPanel="#{menu.selectedPanel.templateNameForARole}">
+
+	<ice:panelGroup id="projectList" styleClass="contentIncludePanelGroup" >
+    	<f:subview id="projectList_view">
+			<jsp:directive.include file="./pages/projectDirector/tabProjectList.jspx"/>
+		</f:subview>
+	</ice:panelGroup>
+
+	<ice:panelGroup id="projectCreate" styleClass="contentIncludePanelGroup" >
+    	<f:subview id="projectCreate_view">
+			<jsp:directive.include file="./pages/projectDirector/tabProjectCreate.jspx"/>
+		</f:subview>
+	</ice:panelGroup>
+	
+</ice:panelStack>

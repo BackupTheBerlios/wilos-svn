@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping>
+
+	<joined-subclass
+		name="wilos.model.misc.concreteactivity.ConcreteActivity"
+		extends="wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement"
+		table="concreteactivity" lazy="false">
+		<key column="concreteactivity_id"></key>
+
+		<!-- Associations -->
+		<set name="concreteBreakdownElements" table="concretenesting" lazy="false" inverse="true">
+			<cache usage="read-write"/>
+			<key column="superconcreteactivity_id"></key>
+			<many-to-many class="wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement"
+				column="concretebreakdownelement_id">
+			</many-to-many>
+		</set>
+
+		<!-- link from conrete -->
+		<many-to-one name="activity"
+			class="wilos.model.spem2.activity.Activity"
+			column="activity_id">
+		</many-to-one>
+
+	</joined-subclass>
+
+</hibernate-mapping>
