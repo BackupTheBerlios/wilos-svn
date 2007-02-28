@@ -42,7 +42,7 @@ public class ProjectBean {
 	private WebSessionService webSessionService;
 
 	private ParticipantService participantService;
-	
+
 	private ProjectDirectorService projectDirectorService;
 
 	private Project project;
@@ -62,10 +62,10 @@ public class ProjectBean {
 	private List<Project> projectListWithProcess = new ArrayList<Project>();
 
 	public static final String MODIFY_ICON = "images/modify.gif";
-	
-	private static final String PROCESS_NULL = "projectProcesses_null" ;
 
-	private static final String PROCESS_NOT_NULL = "projectProcesses_not_null" ;
+	private static final String PROCESS_NULL = "projectProcesses_null";
+
+	private static final String PROCESS_NOT_NULL = "projectProcesses_not_null";
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -77,8 +77,8 @@ public class ProjectBean {
 	private String processName;
 
 	private String projectListView;
-	
-	private String processesListView ;
+
+	private String processesListView;
 
 	/**
 	 * Constructor.
@@ -98,9 +98,7 @@ public class ProjectBean {
 	 * @return
 	 */
 	public String saveProjectAction() {
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
+		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
 		String url = "";
 		boolean error = false;
 		FacesMessage message = new FacesMessage();
@@ -109,8 +107,7 @@ public class ProjectBean {
 
 		if (this.project.getConcreteName().trim().length() == 0) {
 			FacesMessage errName = new FacesMessage();
-			errName.setSummary(bundle
-					.getString("component.projectcreate.err.namerequired"));
+			errName.setSummary(bundle.getString("component.projectcreate.err.namerequired"));
 			errName.setSeverity(FacesMessage.SEVERITY_ERROR);
 			error = true;
 			facesContext.addMessage(null, errName);
@@ -118,36 +115,28 @@ public class ProjectBean {
 
 		if (this.project.getLaunchingDate() == null) {
 			FacesMessage errDate = new FacesMessage();
-			errDate
-					.setSummary(bundle
-							.getString("component.projectcreate.err.launchingdaterequired"));
+			errDate.setSummary(bundle.getString("component.projectcreate.err.launchingdaterequired"));
 			errDate.setSeverity(FacesMessage.SEVERITY_ERROR);
 			error = true;
 			facesContext.addMessage(null, errDate);
 		}
 		if (!this.projectModification) {
-			if (this.projectService.projectExist(this.project.getConcreteName()
-					.trim())) {
+			if (this.projectService.projectExist(this.project.getConcreteName().trim())) {
 
-				message
-						.setSummary(bundle
-								.getString("component.projectcreate.err.projectalreadyexists"));
+				message.setSummary(bundle.getString("component.projectcreate.err.projectalreadyexists"));
 				message.setSeverity(FacesMessage.SEVERITY_ERROR);
 				error = true;
 			}
 		}
 		if (!error) {
-			String user_id = (String)this.webSessionService.getAttribute(this.webSessionService.WILOS_USER_ID);
-			ProjectDirector pd = this.projectDirectorService.getProjectDirector(user_id) ;		
+			String user_id = (String) this.webSessionService.getAttribute(this.webSessionService.WILOS_USER_ID);
+			ProjectDirector pd = this.projectDirectorService.getProjectDirector(user_id);
 			this.project.setProjectDirector(pd);
 			this.projectService.saveProject(this.project);
 			if (this.projectModification) {
-				message
-						.setSummary(bundle
-								.getString("component.projectcreate.modificationSuccess"));
+				message.setSummary(bundle.getString("component.projectcreate.modificationSuccess"));
 			} else {
-				message.setSummary(bundle
-						.getString("component.projectcreate.success"));
+				message.setSummary(bundle.getString("component.projectcreate.success"));
 			}
 
 			message.setSeverity(FacesMessage.SEVERITY_INFO);
@@ -155,7 +144,13 @@ public class ProjectBean {
 		}
 		this.projectModification = false;
 		this.project = new Project();
-
+		
+		//return on the projectlist page
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map map = context.getExternalContext().getRequestParameterMap();
+		MenuBean mb = (MenuBean) context.getApplication().getVariableResolver().resolveVariable(context, "menu");
+		mb.getSelectedPanel().setTemplateNameForARole("projectList");
+		
 		return url;
 	}
 
@@ -165,28 +160,23 @@ public class ProjectBean {
 	 * @return nothing
 	 */
 	public String saveProjectProcessAffectation() {
-		String tmpProjId = (String) this.webSessionService
-				.getAttribute(WebSessionService.PROJECT_ID);
+		String tmpProjId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
 		if (tmpProjId != null) {
 			Project projTmp = projectService.getProject(tmpProjId);
 			if (projTmp != null) {
-				Process procTmp = processService.getProcessDao()
-						.getProcessFromGuid(selectedProcessGuid);
+				Process procTmp = processService.getProcessDao().getProcessFromGuid(selectedProcessGuid);
 				if (procTmp != null) {
-					projectService.saveProcessProjectAffectation(procTmp,
-							projTmp);
+					projectService.saveProcessProjectAffectation(procTmp, projTmp);
 				}
 			}
 		}
 		FacesContext context = FacesContext.getCurrentInstance();
-		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver()
-				.resolveVariable(context, "TreeBean");
+		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");
 		tb.refreshProjectTree();
-		
-		ProjectAdvancementBean pab = (ProjectAdvancementBean) context.getApplication().getVariableResolver()
-		.resolveVariable(context, "ProjectAdvancementBean");
+
+		ProjectAdvancementBean pab = (ProjectAdvancementBean) context.getApplication().getVariableResolver().resolveVariable(context, "ProjectAdvancementBean");
 		pab.refreshProjectTable();
-		
+
 		return "";
 	}
 
@@ -245,7 +235,7 @@ public class ProjectBean {
 	public List<Project> getProjectList() {
 		this.projectList = new ArrayList<Project>();
 		projectList.addAll(this.projectService.getAllProjects());
-		
+
 		//loading of the project director for the displayed list
 		for (Project p : projectList) {
 			p.setProjectDirector(this.projectDirectorService.getProjectDirector(p.getProjectDirector().getWilosuser_id()));
@@ -265,20 +255,17 @@ public class ProjectBean {
 
 	public List<Project> getProjectListWithoutProcess() {
 		this.projectListWithoutProcess = new ArrayList<Project>();
-		this.projectListWithoutProcess.addAll(this.projectService
-				.getAllProjectsWithNoProcess());
+		this.projectListWithoutProcess.addAll(this.projectService.getAllProjectsWithNoProcess());
 		return projectListWithoutProcess;
 	}
 
-	public void setProjectListWithoutProcess(
-			List<Project> projectListWithoutProcess) {
+	public void setProjectListWithoutProcess(List<Project> projectListWithoutProcess) {
 		this.projectListWithoutProcess = projectListWithoutProcess;
 	}
 
 	public List<Project> getProjectListWithProcess() {
 		this.projectListWithProcess = new ArrayList<Project>();
-		this.projectListWithProcess.addAll(this.projectService
-				.getAllProjectsWithProcess());
+		this.projectListWithProcess.addAll(this.projectService.getAllProjectsWithProcess());
 		return projectListWithProcess;
 	}
 
@@ -293,12 +280,10 @@ public class ProjectBean {
 	 */
 	public ArrayList<SelectItem> getProcessNamesList() {
 		ArrayList<SelectItem> tmpListNames = new ArrayList<SelectItem>();
-		ArrayList<wilos.model.spem2.process.Process> tmpListProcess = (ArrayList<wilos.model.spem2.process.Process>) this.processService
-				.getProcessesList();
+		ArrayList<wilos.model.spem2.process.Process> tmpListProcess = (ArrayList<wilos.model.spem2.process.Process>) this.processService.getProcessesList();
 
 		for (int i = 0; i < tmpListProcess.size(); i++) {
-			tmpListNames.add(new SelectItem(tmpListProcess.get(i).getGuid(),
-					tmpListProcess.get(i).getPresentationName()));
+			tmpListNames.add(new SelectItem(tmpListProcess.get(i).getGuid(), tmpListProcess.get(i).getPresentationName()));
 		}
 		processNamesList = tmpListNames;
 		return this.processNamesList;
@@ -340,8 +325,7 @@ public class ProjectBean {
 	 */
 	public String getSelectedProcessGuid() {
 		// Getting the current projet id from cession
-		String tmpProjId = (String) webSessionService
-				.getAttribute(WebSessionService.PROJECT_ID);
+		String tmpProjId = (String) webSessionService.getAttribute(WebSessionService.PROJECT_ID);
 		if (tmpProjId != null) {
 			Project projTmp = projectService.getProject(tmpProjId);
 			if (projTmp != null) {
@@ -368,18 +352,14 @@ public class ProjectBean {
 	 * @return the selectProcessAffectation
 	 */
 	public String getSelectProcessAffectation() {
-		String tmpProjId = (String) this.webSessionService
-				.getAttribute(WebSessionService.PROJECT_ID);
+		String tmpProjId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
 		Project currentProject = this.projectService.getProject(tmpProjId);
 
-		String participantId = (String) this.webSessionService
-				.getAttribute(WebSessionService.WILOS_USER_ID);
-		Participant participant = this.participantService
-				.getParticipant(participantId);
+		String participantId = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID);
+		Participant participant = this.participantService.getParticipant(participantId);
 		if (currentProject.getProcess() == null) {
 			if (currentProject.getProjectManager() != null) {
-				if (currentProject.getProjectManager().getWilosuser_id()
-						.equals(participant.getWilosuser_id())) {
+				if (currentProject.getProjectManager().getWilosuser_id().equals(participant.getWilosuser_id())) {
 					this.selectProcessAffectation = "process_affectation_view";
 				} else {
 					this.selectProcessAffectation = "no_process_affectation_view";
@@ -388,8 +368,7 @@ public class ProjectBean {
 				this.selectProcessAffectation = "no_process_affectation_view";
 			}
 		} else {
-			this.setProcessName(currentProject.getProcess()
-					.getPresentationName());
+			this.setProcessName(currentProject.getProcess().getPresentationName());
 			this.selectProcessAffectation = "selected_process_view";
 		}
 		return this.selectProcessAffectation;
@@ -409,34 +388,27 @@ public class ProjectBean {
 		this.project = this.projectService.getProject(projectId);
 		this.projectModification = true;
 
-		MenuBean mb = (MenuBean) context.getApplication().getVariableResolver()
-				.resolveVariable(context, "menu");
+		MenuBean mb = (MenuBean) context.getApplication().getVariableResolver().resolveVariable(context, "menu");
 		mb.getSelectedPanel().setTemplateNameForARole("projectCreate");
 	}
-	
+
 	/**
 	 * delete a participant selected
 	 * @param event
 	 */
-	public void deleteProject(ActionEvent event)
-	{
+	public void deleteProject(ActionEvent event) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map map = context.getExternalContext().getRequestParameterMap();
 		String projectId = (String) map.get("projectId");
-		
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
+
+		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
 		FacesMessage message = new FacesMessage();
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-		
-		if(this.projectService.deleteProject(projectId))
-		{
+
+		if (this.projectService.deleteProject(projectId)) {
 			message.setSummary(bundle.getString("component.projectcreate.deleteSuccess"));
 			message.setSeverity(FacesMessage.SEVERITY_INFO);
-		}
-		else
-		{
+		} else {
 			message.setSummary(bundle.getString("component.projectcreate.deleteError"));
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 		}
@@ -499,13 +471,12 @@ public class ProjectBean {
 	 * @return the projectListView.
 	 */
 	public String getProjectListView() {
-		if(this.getProjectList().size() == 0){
-			this.projectListView = "projectsListPanelGroup_null" ;
+		if (this.getProjectList().size() == 0) {
+			this.projectListView = "projectsListPanelGroup_null";
+		} else {
+			this.projectListView = "projectsListPanelGroup_not_null";
 		}
-		else{
-			this.projectListView = "projectsListPanelGroup_not_null" ;
-		}
-		return this.projectListView ;
+		return this.projectListView;
 	}
 
 	/**
@@ -551,20 +522,19 @@ public class ProjectBean {
 	public void setTreeBean(TreeBean _treeBean) {
 		this.treeBean = _treeBean;
 	}
-	
+
 	/**
 	 * Getter of processesListView.
 	 * 
 	 * @return the processesListView.
 	 */
 	public String getProcessesListView() {
-		if(this.getProcessNamesList().size() == 0){
-			this.processesListView = PROCESS_NULL ;
+		if (this.getProcessNamesList().size() == 0) {
+			this.processesListView = PROCESS_NULL;
+		} else {
+			this.processesListView = PROCESS_NOT_NULL;
 		}
-		else{
-			this.processesListView = PROCESS_NOT_NULL ;
-		}
-		return this.processesListView ;
+		return this.processesListView;
 	}
 
 	/**
@@ -574,7 +544,7 @@ public class ProjectBean {
 	 *            The processesListView to set.
 	 */
 	public void setProcessesListView(String _processesListView) {
-		this.processesListView = _processesListView ;
+		this.processesListView = _processesListView;
 	}
 
 	/**
@@ -587,8 +557,7 @@ public class ProjectBean {
 	/**
 	 * @param projectDirectorService the projectDirectorService to set
 	 */
-	public void setProjectDirectorService(
-			ProjectDirectorService projectDirectorService) {
+	public void setProjectDirectorService(ProjectDirectorService projectDirectorService) {
 		this.projectDirectorService = projectDirectorService;
 	}
 

@@ -6,11 +6,12 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService ;
-import wilos.business.services.misc.role.ConcreteRoleAffectationService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.wilosuser.Participant;
+import wilos.presentation.web.project.ProjectAdvancementBean;
+import wilos.presentation.web.tree.TreeBean;
 
 public class ConcreteRoleViewerBean {
 	private ConcreteRoleDescriptor concreteRoleDescriptor;
@@ -25,6 +26,10 @@ public class ConcreteRoleViewerBean {
 	
 	private String selectAffectedRoleView;
 
+	/**
+	 * TODO method description
+	 *
+	 */
 	public void buildConcreteRoleModel() {
 		this.concreteRoleDescriptor = new ConcreteRoleDescriptor();
 		if (!(concreteRoleDescriptorId.equals("")) || concreteRoleDescriptorId != null) {
@@ -32,9 +37,12 @@ public class ConcreteRoleViewerBean {
 		}
 	}
 	
+	/**
+	 * TODO method description
+	 *
+	 */
 	public void affectParticipantToARole()
 	{
-		
 		ResourceBundle bundle = ResourceBundle.getBundle(
 				"wilos.resources.messages", FacesContext.getCurrentInstance()
 						.getApplication().getDefaultLocale());
@@ -51,7 +59,13 @@ public class ConcreteRoleViewerBean {
 		this.concreteRoleDescriptor.setParticipant(user);
 		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao().saveOrUpdateConcreteRoleDescriptor(concreteRoleDescriptor);
 		
+		//refresh the tree
+		FacesContext context = FacesContext.getCurrentInstance();
+		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver()
+				.resolveVariable(context, "TreeBean");
+		tb.refreshProjectTree();
 	}
+	
 	public ConcreteRoleDescriptor getConcreteRoleDescriptor() {
 		return concreteRoleDescriptor;
 	}

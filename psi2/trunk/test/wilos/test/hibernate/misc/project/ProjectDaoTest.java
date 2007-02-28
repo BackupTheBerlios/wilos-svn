@@ -17,7 +17,7 @@ import wilos.test.configuration.TestConfiguration ;
  */
 public class ProjectDaoTest extends TestCase {
 
-	private ProjectDao pDao ;
+	private ProjectDao pDao = (ProjectDao) TestConfiguration.getInstance().getApplicationContext().getBean("ProjectDao") ;
 
 	private Project p ;
 
@@ -28,10 +28,10 @@ public class ProjectDaoTest extends TestCase {
 	 */
 	protected void setUp() throws Exception {
 		super.setUp() ;
-		this.pDao = (ProjectDao) TestConfiguration.getInstance().getApplicationContext().getBean("ProjectDao") ;
 		this.p = new Project() ;
-		this.p.setConcreteName("testProject") ;
-		this.p.setDescription("testDesc") ;
+		//this.p.setConcreteName("testProject") ;
+		//this.p.setDescription("testDesc") ;
+		
 		this.pDao.saveOrUpdateProject(p);
 	}
 
@@ -50,31 +50,23 @@ public class ProjectDaoTest extends TestCase {
 	 * {@link wilos.hibernate.misc.project.ProjectDao#saveOrUpdateProject(wilos.model.misc.project.Project)}.
 	 */
 	public void testSaveOrUpdateProject() {
-		this.pDao.saveOrUpdateProject(this.p) ;
-
-		Project pTmp = this.pDao.getProject("testProject") ;
-		assertNotNull(pTmp) ;
-		assertTrue(this.p.getConcreteName().equals(pTmp.getConcreteName())) ;
-		assertTrue(this.p.getDescription().equals(pTmp.getDescription())) ;
+		Project pTmp = new Project();
+		this.pDao.saveOrUpdateProject(pTmp);
+		assertNotNull(this.pDao.getProject(pTmp.getId()));
 	}
 
 	/**
-	 * Test method for {@link wilos.hibernate.misc.project.ProjectDao#getAllProject()}.
+	 * Test method for {@link wilos.hibernate.misc.project.ProjectDao#getAllProjects()}.
 	 */
-	public void testGetAllProject() {
-		this.pDao.saveOrUpdateProject(this.p) ;
-
-		Set<Project> setTmp = this.pDao.getAllProject() ;
-		assertNotNull(setTmp) ;
-		assertTrue(setTmp.size() >= 1) ;
+	public void testGetAllProjects() {
+		Set<Project> projects = this.pDao.getAllProjects() ;
+		assertNotNull(projects) ;
 	}
 
 	/**
 	 * Test method for {@link wilos.hibernate.misc.project.ProjectDao#getProject(java.lang.String)}.
 	 */
 	public void testGetProject() {
-		this.pDao.saveOrUpdateProject(this.p) ;
-
 		Project pTmp = this.pDao.getProject("testProject") ;
 		assertNotNull(pTmp) ;
 		assertEquals(pTmp.getConcreteName(), "testProject") ;
@@ -86,10 +78,12 @@ public class ProjectDaoTest extends TestCase {
 	 * {@link wilos.hibernate.misc.project.ProjectDao#deleteProject(wilos.model.misc.project.Project)}.
 	 */
 	public void testDeleteProject() {
-		this.pDao.saveOrUpdateProject(this.p) ;
-		this.pDao.deleteProject(this.p) ;
-
-		Project pTmp = this.pDao.getProject("testProject") ;
+		Project p1 = new Project() ;
+		p1.setConcreteName("testProjectToDelete") ;
+		p1.setDescription("testDesc") ;
+		this.pDao.saveOrUpdateProject(p1);
+		this.pDao.deleteProject(p1);
+		Project pTmp = this.pDao.getProject(p1.getId());
 		assertNull(pTmp) ;
 	}
 

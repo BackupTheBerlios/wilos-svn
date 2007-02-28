@@ -21,6 +21,7 @@ import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
 import wilos.model.misc.project.Project;
+import wilos.utils.Constantes.State;
 
 /**
  * @author SaKaMaKaK
@@ -48,21 +49,19 @@ public class ProjectAdvancementBean {
 
 	private ArrayList<HashMap<String, Object>> displayContent;
 
-	private HashMap<String, Double> advancementTimes;
-
 	private HashMap<String, String> indentationContent;
 
 	private boolean needIndentation = false;
 
 	protected HashMap<String, Boolean> isExpanded = new HashMap<String, Boolean>();
 
-	protected final Log logger = LogFactory.getLog(this.getClass());
-
 	private boolean selected_projectAdvancement_view;
 
 	private boolean projectModified;
 
 	private String projectInstanciated;
+	
+	protected final Log logger = LogFactory.getLog(this.getClass());
 
 	/**
 	 * Constructor.
@@ -72,7 +71,6 @@ public class ProjectAdvancementBean {
 		this.project = new Project();
 		this.displayContent = new ArrayList<HashMap<String, Object>>();
 		this.indentationContent = new HashMap<String, String>();
-		this.advancementTimes = new HashMap<String, Double>();
 	}
 
 	/**
@@ -146,6 +144,130 @@ public class ProjectAdvancementBean {
 	}
 
 	/**
+	 * Utility method to remove all child nodes from the parent dataTable list.
+	 */
+	private void contractNodeAction() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map map = context.getExternalContext().getRequestParameterMap();
+		String elementId = (String) map.get("elementId");
+	
+		ArrayList<HashMap<String, Object>> parentList = new ArrayList<HashMap<String, Object>>();
+		parentList.addAll(this.displayContent);
+	
+		/* Removes element which we want to contract from the parent list */
+		for (HashMap<String, Object> currentElement : this.displayContent) {
+	
+			if (currentElement.get("id").equals(elementId) && currentElement.get("nodeType").equals("node")) {
+				currentElement.put("expansionImage", ProjectAdvancementBean.CONTRACT_TABLE_ARROW);
+				parentList.remove(currentElement);
+			}
+		}
+		this.deleteChildren(elementId, parentList);
+	}
+
+	/**
+	 * TODO Method description
+	 * 
+	 * @param elementId
+	 * @param tmp
+	 */
+	@SuppressWarnings("unchecked")
+	private void deleteChildren(String parentId, ArrayList<HashMap<String, Object>> parentList) {
+		for (Iterator iter = parentList.iterator(); iter.hasNext();) {
+			HashMap<String, Object> child = (HashMap<String, Object>) iter.next();
+			if (child.get("parentId").equals(parentId)) {
+				this.displayContent.remove(child);
+				deleteChildren((String) child.get("id"), parentList);
+			}
+			if (child.get("id").equals(parentId)) {
+				child.put("expansionImage", ProjectAdvancementBean.CONTRACT_TABLE_ARROW);
+				this.isExpanded.put((String) child.get("id"), false);
+			}
+		}
+	}
+
+	/**
+	 * Recursive method returning a hashmap data model which contains the
+	 * elements required to display the project advancement table Give a
+	 * ConcreteActivity to this method, return its firs hierarchical childs
+	 * described into the hashmap
+	 * 
+	 */
+	private List<HashMap<String, Object>> retrieveHierarchicalItems(ConcreteActivity _concreteActivity) {
+		Double currentAdvancedTime;
+		String indentationString = "";
+		List<HashMap<String, Object>> subConcretesContent = new ArrayList<HashMap<String, Object>>();
+		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
+	
+		//for every child of the activity
+		for (ConcreteBreakdownElement concreteBreakdownElement : _concreteActivity.getConcreteBreakdownElements()) {
+			HashMap<String, Object> hm = new HashMap<String, Object>();
+			if (concreteBreakdownElement instanceof ConcreteWorkBreakdownElement)
+			{
+				// if this is a task -> display a leaf
+				if (concreteBreakdownElement instanceof ConcreteTaskDescriptor)
+				{
+					hm.put("nodeType", "leaf");
+					hm.put("expansionImage", TABLE_LEAF);
+	
+					hm.put("concreteState", this.getDisplayedState(((ConcreteTaskDescriptor) concreteBreakdownElement)));
+					hm.put("accomplishedTime", ((ConcreteTaskDescriptor) concreteBreakdownElement).getAccomplishedTime());
+					hm.put("remainingTime", ((ConcreteTaskDescriptor) concreteBreakdownElement).getRemainingTime());					
+					//if the task is affected to a role
+					if (((ConcreteTaskDescriptor) concreteBreakdownElement).getConcreteRoleDescriptor() != null)
+					{
+						//if the role is already affected to a participant
+						if (((ConcreteTaskDescriptor) concreteBreakdownElement).getConcreteRoleDescriptor().getParticipant() != null)
+						{
+							hm.put("participant", ((ConcreteTaskDescriptor) concreteBreakdownElement).getConcreteRoleDescriptor().getParticipant().getFirstname() +" "+ ((ConcreteTaskDescriptor) concreteBreakdownElement).getConcreteRoleDescriptor().getParticipant().getName());
+						}
+						else
+						{
+							hm.put("participant", bundle.getString("component.project.projectadvancement.nobody"));
+						}
+					}
+					else
+					{
+						hm.put("participant", bundle.getString("component.project.projectadvancement.nobody"));
+					}
+				}
+				// if this is not a task -> display a leaf
+				else
+				{
+					hm.put("nodeType", "node");
+					hm.put("expansionImage", CONTRACT_TABLE_ARROW);
+					hm.put("concreteState", "");
+					hm.put("accomplishedTime", "");
+					hm.put("remainingTime", "");
+					hm.put("participant", "");
+				}
+	
+				// advancement consolidation time calculation
+				currentAdvancedTime = ProjectAdvancementBean.activityAdvancementCalculation(concreteBreakdownElement);
+				if (currentAdvancedTime == null) {
+					hm.put("advancementTime", 0);
+				} else {
+					hm.put("advancementTime", Math.round(currentAdvancedTime));
+				}
+	
+				hm.put("id", concreteBreakdownElement.getId());
+				hm.put("concreteName", concreteBreakdownElement.getConcreteName());
+				hm.put("parentId", _concreteActivity.getId());
+				subConcretesContent.add(hm);
+	
+				// if this is not the root node -> needIndentation == true
+				if (needIndentation) {
+					if (this.indentationContent.get(_concreteActivity.getId()) != null) {
+						indentationString = this.indentationContent.get(_concreteActivity.getId());
+					}
+					this.indentationContent.put((String) hm.get("id"), indentationString.concat(ProjectAdvancementBean.INDENTATION_STRING));
+				}
+			}
+		}
+		return subConcretesContent;
+	}
+
+	/**
 	 * Return the advancement in percents of a Concrete breakdown element
 	 * 
 	 * @param cbe
@@ -203,112 +325,50 @@ public class ProjectAdvancementBean {
 		}
 		return couple;
 	}
-
+	
 	/**
-	 * Utility method to remove all child nodes from the parent dataTable list.
-	 */
-	private void contractNodeAction() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		Map map = context.getExternalContext().getRequestParameterMap();
-		String elementId = (String) map.get("elementId");
-
-		ArrayList<HashMap<String, Object>> parentList = new ArrayList<HashMap<String, Object>>();
-		parentList.addAll(this.displayContent);
-
-		/* Removes element which we want to contract from the parent list */
-		for (HashMap<String, Object> currentElement : this.displayContent) {
-
-			if (currentElement.get("id").equals(elementId) && currentElement.get("nodeType").equals("node")) {
-				currentElement.put("expansionImage", ProjectAdvancementBean.CONTRACT_TABLE_ARROW);
-				parentList.remove(currentElement);
-			}
-		}
-		this.deleteChildren(elementId, parentList);
-	}
-
-	/**
-	 * TODO Method description
 	 * 
-	 * @param elementId
-	 * @param tmp
+	 * @param ctd
+	 * @return
 	 */
-	@SuppressWarnings("unchecked")
-	private void deleteChildren(String parentId, ArrayList<HashMap<String, Object>> parentList) {
-		for (Iterator iter = parentList.iterator(); iter.hasNext();) {
-			HashMap<String, Object> child = (HashMap<String, Object>) iter.next();
-			if (child.get("parentId").equals(parentId)) {
-				this.displayContent.remove(child);
-				deleteChildren((String) child.get("id"), parentList);
-			}
-			if (child.get("id").equals(parentId)) {
-				child.put("expansionImage", ProjectAdvancementBean.CONTRACT_TABLE_ARROW);
-				this.isExpanded.put((String) child.get("id"), false);
-			}
+	public String getDisplayedState(ConcreteTaskDescriptor ctd) {
+		String _state = "";
+		if (ctd.getState().equals(State.CREATED)) {
+			_state = ResourceBundle.getBundle(
+					"wilos.resources.messages",
+					FacesContext.getCurrentInstance().getApplication()
+							.getDefaultLocale()).getString(
+					"constantes.state.created");
+		} else if (ctd.getState().equals(State.READY)) {
+			_state = ResourceBundle.getBundle(
+					"wilos.resources.messages",
+					FacesContext.getCurrentInstance().getApplication()
+							.getDefaultLocale()).getString(
+					"constantes.state.ready");
+		} else if (ctd.getState().equals(State.STARTED)) {
+			_state = ResourceBundle.getBundle(
+					"wilos.resources.messages",
+					FacesContext.getCurrentInstance().getApplication()
+							.getDefaultLocale()).getString(
+					"constantes.state.started");
+		} else if (ctd.getState().equals(
+				State.SUSPENDED)) {
+			_state = ResourceBundle.getBundle(
+					"wilos.resources.messages",
+					FacesContext.getCurrentInstance().getApplication()
+							.getDefaultLocale()).getString(
+					"constantes.state.suspended");
+		} else if (ctd.getState()
+				.equals(State.FINISHED)) {
+			_state = ResourceBundle.getBundle(
+					"wilos.resources.messages",
+					FacesContext.getCurrentInstance().getApplication()
+							.getDefaultLocale()).getString(
+					"constantes.state.finished");
 		}
+		return _state;
 	}
-
-	/**
-	 * Recursive method returning a hashmap data model which contains the
-	 * elements required to display the project advancement table Give a
-	 * ConcreteActivity to this method, return its firs hierarchical childs
-	 * described into the hashmap
-	 * 
-	 */
-	private List<HashMap<String, Object>> retrieveHierarchicalItems(ConcreteActivity _concreteActivity) {
-		Double currentAdvancedTime;
-		String indentationString = "";
-		List<HashMap<String, Object>> subConcretesContent = new ArrayList<HashMap<String, Object>>();
-		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
-
-		for (ConcreteBreakdownElement concreteBreakdownElement : _concreteActivity.getConcreteBreakdownElements()) {
-			HashMap<String, Object> hm = new HashMap<String, Object>();
-			if (concreteBreakdownElement instanceof ConcreteWorkBreakdownElement) {
-
-				// if this is a task -> display a leaf
-				if (concreteBreakdownElement instanceof ConcreteTaskDescriptor) {
-					hm.put("nodeType", "leaf");
-					hm.put("expansionImage", TABLE_LEAF);
-
-					hm.put("concreteState", ((ConcreteTaskDescriptor) concreteBreakdownElement).getState());
-					if (((ConcreteTaskDescriptor) concreteBreakdownElement).getConcreteRoleDescriptor() != null) {
-						hm.put("participant", ((ConcreteTaskDescriptor) concreteBreakdownElement).getConcreteRoleDescriptor().getParticipant().getFirstname() + " "
-								+ ((ConcreteTaskDescriptor) concreteBreakdownElement).getConcreteRoleDescriptor().getParticipant().getName());
-					} else {
-						hm.put("participant", bundle.getString("component.project.projectadvancement.nobody"));
-					}
-				}
-				// if this is not a task -> display a leaf
-				else {
-					hm.put("nodeType", "node");
-					hm.put("expansionImage", CONTRACT_TABLE_ARROW);
-					hm.put("concreteState", "");
-					hm.put("participant", "");
-				}
-
-				// advancement consolidation time calculation
-				currentAdvancedTime = ProjectAdvancementBean.activityAdvancementCalculation(concreteBreakdownElement);
-				if (currentAdvancedTime == null) {
-					hm.put("advancementTime", 0);
-				} else {
-					hm.put("advancementTime", Math.round(currentAdvancedTime));
-				}
-
-				hm.put("id", concreteBreakdownElement.getId());
-				hm.put("concreteName", concreteBreakdownElement.getConcreteName());
-				hm.put("parentId", _concreteActivity.getId());
-				subConcretesContent.add(hm);
-
-				// if this is not the root node -> needIndentation == true
-				if (needIndentation) {
-					if (this.indentationContent.get(_concreteActivity.getId()) != null) {
-						indentationString = this.indentationContent.get(_concreteActivity.getId());
-					}
-					this.indentationContent.put((String) hm.get("id"), indentationString.concat(ProjectAdvancementBean.INDENTATION_STRING));
-				}
-			}
-		}
-		return subConcretesContent;
-	}
+	
 
 	/**
 	 * Getter of displayContent.
@@ -322,10 +382,12 @@ public class ProjectAdvancementBean {
 		// if the project is another then the last selected or if it has been
 		// modified
 		if (this.projectViewedId == null || projectViewedId != projectId || this.projectModified) {
+
 			// reseting the table parameters
 			projectViewedId = projectId;
 			this.displayContent.clear();
 			this.indentationContent.clear();
+			this.isExpanded.clear();
 			this.needIndentation = false;
 			this.displayContent.addAll(this.retrieveHierarchicalItems(this.project));
 		}
@@ -443,23 +505,6 @@ public class ProjectAdvancementBean {
 	 */
 	public void setIndentationContent(HashMap<String, String> _indentationContent) {
 		this.indentationContent = _indentationContent;
-	}
-
-	/**
-	 * @return the advancementTimes
-	 */
-	public HashMap<String, Double> getAdvancementTimes() {
-		return this.advancementTimes;
-	}
-
-	/**
-	 * Setter of advancementTimes.
-	 * 
-	 * @param _advancementTimes
-	 *            The advancementTimes to set.
-	 */
-	public void setAdvancementTimes(HashMap<String, Double> _advancementTimes) {
-		this.advancementTimes = _advancementTimes;
 	}
 
 	/**

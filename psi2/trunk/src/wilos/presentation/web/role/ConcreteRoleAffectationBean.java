@@ -4,26 +4,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
-import javax.faces.validator.ValidatorException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService;
 import wilos.business.services.misc.role.ConcreteRoleAffectationService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
 import wilos.business.services.presentation.web.WebSessionService;
-import wilos.model.misc.concreteactivity.ConcreteActivity;
-import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
+import wilos.presentation.web.project.ProjectAdvancementBean;
+import wilos.presentation.web.tree.TreeBean;
 
 /**
  * Managed-Bean link to participant_logging.jsp
@@ -167,6 +161,18 @@ public class ConcreteRoleAffectationBean {
 		message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 		FacesContext facesContext = FacesContext.getCurrentInstance() ;
 		facesContext.addMessage(null, message) ;
+		
+		//refresh the tree 
+		FacesContext context = FacesContext.getCurrentInstance();
+		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver()
+				.resolveVariable(context, "TreeBean");
+		tb.refreshProjectTree();
+		
+		//refresh the project advancement table
+		ProjectAdvancementBean pab = (ProjectAdvancementBean) context.getApplication().getVariableResolver()
+		.resolveVariable(context, "ProjectAdvancementBean");
+		pab.refreshProjectTable();
+
 		return "";
 	}
 
