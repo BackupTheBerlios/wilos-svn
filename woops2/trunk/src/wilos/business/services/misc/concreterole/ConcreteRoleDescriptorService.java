@@ -34,10 +34,20 @@ public class ConcreteRoleDescriptorService {
 			return this.getConcreteRoleDescriptorDao().getAllConcreteRoleDescriptorsForProject(_projectId);
 		}
 
+		/**
+		 * 
+		 * @param _concreteRoleDescriptor
+		 * @return
+		 */
 		public List<ConcreteTaskDescriptor> getAllConcreteTaskDescriptorsForConcreteRoleDescriptor(ConcreteRoleDescriptor _concreteRoleDescriptor) {
 			return this.concreteRoleDescriptorDao.getAllConcreteTaskDescriptorsForConcreteRoleDescriptor(_concreteRoleDescriptor.getId());
 		}
 
+		/**
+		 * 
+		 * @param _crdid
+		 * @return
+		 */
 		public List<ConcreteActivity> getSuperConcreteActivities(String _crdid) {
 			ConcreteRoleDescriptor crd = this.getConcreteRoleDescriptorById(_crdid);
 			List<ConcreteActivity> listTmp = this.concretActivityService.getAllConcreteActivities();
@@ -52,14 +62,27 @@ public class ConcreteRoleDescriptorService {
 			return listToReturn;
 		}
 
+		/**
+		 * 
+		 * @param _id
+		 * @return
+		 */
 		public ConcreteRoleDescriptor getConcreteRoleDescriptorById(String _id){
 			return this.concreteRoleDescriptorDao.getConcreteRoleDescriptor(_id);
 		}
 
+		/**
+		 * 
+		 * @return
+		 */
 		public ConcreteRoleDescriptorDao getConcreteRoleDescriptorDao() {
 			return concreteRoleDescriptorDao;
 		}
 
+		/**
+		 * 
+		 * @param _concreteRoleDescriptorDao
+		 */
 		public void setConcreteRoleDescriptorDao(
 				ConcreteRoleDescriptorDao _concreteRoleDescriptorDao) {
 			this.concreteRoleDescriptorDao = _concreteRoleDescriptorDao;
@@ -80,6 +103,11 @@ public class ConcreteRoleDescriptorService {
 			this.concretActivityService = _concretActivityService;
 		}
 
+		/**
+		 * 
+		 * @param _roleDescriptorId
+		 * @return
+		 */
 		public List<ConcreteRoleDescriptor> getAllConcreteRoleDescriptorForARoleDescriptor(
 				String _roleDescriptorId) {
 			return this.concreteRoleDescriptorDao.getAllConcreteRoleDescriptorsForARoleDescriptor(_roleDescriptorId);

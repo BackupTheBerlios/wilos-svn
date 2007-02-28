@@ -106,7 +106,7 @@ public class ConcreteRoleDescriptorServiceTest {
 
 		this.concreteRoleDescriptorService
 				.getConcreteRoleDescriptorDao()
-				.saveOrUpdateConcreteRoleDescriptor(this.concreteRoleDescriptor);
+				.saveOrUpdateConcreteRoleDescriptor(this.mainConcreteRoleDescriptor);
 		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao()
 				.saveOrUpdateConcreteRoleDescriptor(ctdTmp);
 		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao()
@@ -120,7 +120,7 @@ public class ConcreteRoleDescriptorServiceTest {
 
 		// clean.
 		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao()
-				.deleteConcreteRoleDescriptor(this.concreteRoleDescriptor);
+				.deleteConcreteRoleDescriptor(this.mainConcreteRoleDescriptor);
 		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao()
 				.deleteConcreteRoleDescriptor(ctdTmp);
 		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao()
@@ -150,15 +150,15 @@ public class ConcreteRoleDescriptorServiceTest {
 		this.concreteTaskDescriptorDao
 				.saveOrUpdateConcreteTaskDescriptor(ctdTmp3);
 
-		this.concreteRoleDescriptor.addConcreteTaskDescriptor(ctdTmp);
-		this.concreteRoleDescriptor.addConcreteTaskDescriptor(ctdTmp2);
+		this.mainConcreteRoleDescriptor.addConcreteTaskDescriptor(ctdTmp);
+		this.mainConcreteRoleDescriptor.addConcreteTaskDescriptor(ctdTmp2);
 
 		this.concreteRoleDescriptorService
 				.getConcreteRoleDescriptorDao()
-				.saveOrUpdateConcreteRoleDescriptor(this.concreteRoleDescriptor);
+				.saveOrUpdateConcreteRoleDescriptor(this.mainConcreteRoleDescriptor);
 
 		List<ConcreteTaskDescriptor> list = this.concreteRoleDescriptorService
-				.getAllConcreteTaskDescriptorsForConcreteRoleDescriptor(this.concreteRoleDescriptor);
+				.getAllConcreteTaskDescriptorsForConcreteRoleDescriptor(this.mainConcreteRoleDescriptor);
 
 		assertNotNull(list);
 		assertTrue(list.size() == 2);
@@ -168,7 +168,7 @@ public class ConcreteRoleDescriptorServiceTest {
 		this.concreteTaskDescriptorDao.deleteConcreteTaskDescriptor(ctdTmp2);
 		this.concreteTaskDescriptorDao.deleteConcreteTaskDescriptor(ctdTmp3);
 		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao()
-				.deleteConcreteRoleDescriptor(this.concreteRoleDescriptor);
+				.deleteConcreteRoleDescriptor(this.mainConcreteRoleDescriptor);
 		// Rk: the tearDown method is called here.
 	}
 }

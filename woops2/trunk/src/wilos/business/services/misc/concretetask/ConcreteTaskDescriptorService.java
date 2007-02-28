@@ -52,6 +52,11 @@ public class ConcreteTaskDescriptorService {
 				.getAllConcreteTaskDescriptorsForProject(_projectId);
 	}
 
+	/**
+	 * 
+	 * @param _concreteTaskDescriptorId
+	 * @return
+	 */
 	public ConcreteTaskDescriptor getConcreteTaskDescriptor(
 			String _concreteTaskDescriptorId) {
 		return this.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(
@@ -125,6 +130,10 @@ public class ConcreteTaskDescriptorService {
 		return _concreteTaskDescriptor;
 	}
 
+	/**
+	 * 
+	 * @param _concreteTaskDescriptor
+	 */
 	public void affectedState(ConcreteTaskDescriptor _concreteTaskDescriptor)
 	{
 		_concreteTaskDescriptor.setState(State.READY);
@@ -166,6 +175,10 @@ public class ConcreteTaskDescriptorService {
 				.saveOrUpdateConcreteTaskDescriptor(_concreteTaskDescriptor);
 	}
 
+	/**
+	 * 
+	 * @param _concreteTaskDescriptor
+	 */
 	public void saveConcreteTaskDescriptor(ConcreteTaskDescriptor _concreteTaskDescriptor) {
 		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(_concreteTaskDescriptor);
 	}
@@ -191,19 +204,35 @@ public class ConcreteTaskDescriptorService {
 		this.concreteTaskDescriptorDao = _concreteTaskDescriptorDao;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public RoleDescriptorService getRoleDescriptorService() {
 		return roleDescriptorService;
 	}
 
+	/**
+	 * 
+	 * @param roleDescriptorService
+	 */
 	public void setRoleDescriptorService(
 			RoleDescriptorService roleDescriptorService) {
 		this.roleDescriptorService = roleDescriptorService;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public TaskDescriptorService getTaskDescriptorService() {
 		return taskDescriptorService;
 	}
 
+	/**
+	 * 
+	 * @param taskDescriptorService
+	 */
 	public void setTaskDescriptorService(
 			TaskDescriptorService taskDescriptorService) {
 		this.taskDescriptorService = taskDescriptorService;

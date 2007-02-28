@@ -184,7 +184,7 @@ public static final String CONCRETENAME = "concreteName";
 		assertTrue(this.concreteRoleDescriptor.getConcreteTaskDescriptors().size() == 1);
 		assertTrue(this.concreteRoleDescriptor.getConcreteTaskDescriptors().contains(concreteTaskDescriptor));
 
-		assertEquals(concreteTaskDescriptor.getConcreteRoleDescriptor(), this.concreteRoleDescriptor);
+		assertEquals(concreteTaskDescriptor.getMainConcreteRoleDescriptor(), this.concreteRoleDescriptor);
 
 		// Rk: the tearDown method is called here.
 	}
@@ -198,12 +198,12 @@ public static final String CONCRETENAME = "concreteName";
 		this.concreteRoleDescriptor.addConcreteTaskDescriptor(concreteTaskDescriptor);
 		assertNotNull(this.concreteRoleDescriptor.getConcreteTaskDescriptors());
 		assertNotNull(this.concreteRoleDescriptor.getConcreteTaskDescriptors().contains(concreteTaskDescriptor));
-		assertEquals(concreteTaskDescriptor.getConcreteRoleDescriptor(), this.concreteRoleDescriptor);
+		assertEquals(concreteTaskDescriptor.getMainConcreteRoleDescriptor(), this.concreteRoleDescriptor);
 
 		this.concreteRoleDescriptor.removeConcreteTaskDescriptor(concreteTaskDescriptor);
 		assertTrue(this.concreteRoleDescriptor.getConcreteTaskDescriptors().size() == 0);
 
-		assertNull(concreteTaskDescriptor.getConcreteRoleDescriptor());
+		assertNull(concreteTaskDescriptor.getMainConcreteRoleDescriptor());
 
 		// Rk: the tearDown method is called here.
 	}
@@ -230,10 +230,10 @@ public static final String CONCRETENAME = "concreteName";
 		assertTrue(this.concreteRoleDescriptor.getConcreteTaskDescriptors().contains(ctd1)) ;
 		assertTrue(this.concreteRoleDescriptor.getConcreteTaskDescriptors().contains(ctd2)) ;
 
-		assertNotNull(ctd1.getConcreteRoleDescriptor()) ;
-		assertEquals(ctd1.getConcreteRoleDescriptor(), this.concreteRoleDescriptor) ;
-		assertNotNull(ctd2.getConcreteRoleDescriptor()) ;
-		assertEquals(ctd2.getConcreteRoleDescriptor(), this.concreteRoleDescriptor) ;
+		assertNotNull(ctd1.getMainConcreteRoleDescriptor()) ;
+		assertEquals(ctd1.getMainConcreteRoleDescriptor(), this.concreteRoleDescriptor) ;
+		assertNotNull(ctd2.getMainConcreteRoleDescriptor()) ;
+		assertEquals(ctd2.getMainConcreteRoleDescriptor(), this.concreteRoleDescriptor) ;
 
 		// Rk: the tearDown method is called here.
 	}
@@ -258,8 +258,8 @@ public static final String CONCRETENAME = "concreteName";
 
 		this.concreteRoleDescriptor.removeAllConcreteTaskDescriptors() ;
 
-		assertNull(ctd1.getConcreteRoleDescriptor()) ;
-		assertNull(ctd2.getConcreteRoleDescriptor()) ;
+		assertNull(ctd1.getMainConcreteRoleDescriptor()) ;
+		assertNull(ctd2.getMainConcreteRoleDescriptor()) ;
 		assertTrue(this.concreteRoleDescriptor.getConcreteTaskDescriptors().size() == 0) ;
 
 		// Rk: the tearDown method is called here.

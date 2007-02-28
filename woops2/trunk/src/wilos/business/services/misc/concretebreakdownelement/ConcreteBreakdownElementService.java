@@ -6,14 +6,28 @@ import wilos.hibernate.misc.concretebreakdownelement.ConcreteBreakdownElementDao
 import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 
+/**
+ * 
+ * @author Padawan
+ *
+ */
 public class ConcreteBreakdownElementService {
 
 	ConcreteBreakdownElementDao concreteBreakdownElementDao;
 
+	/**
+	 * 
+	 * @param _projectId
+	 * @return list of Concrete Breakdown Elements which has the same projectId
+	 */
 	public List<ConcreteBreakdownElement> getAllConcreteBreakdownElementsFromProject(String _projectId) {
 		return this.concreteBreakdownElementDao.getAllConcreteBreakdownElements();
 	}
 
+	/**
+	 * 
+	 * @param _concreteActivity
+	 */
 	public void saveAllFirstSonsConcreteBreakdownElementsForConcreteActivity(ConcreteActivity _concreteActivity){
 		for(ConcreteBreakdownElement cbde : _concreteActivity.getConcreteBreakdownElements()){
 			this.concreteBreakdownElementDao.saveOrUpdateConcreteBreakdownElement(cbde);

@@ -217,7 +217,7 @@ public class ConcreteTaskDescriptorServiceTest {
 		
 		this.concreteTaskDescriptorService.affectedConcreteTaskDescriptor(concreteTaskDescriptor, monpar);
 		
-		ConcreteRoleDescriptor res = concreteTaskDescriptor.getConcreteRoleDescriptor();
+		ConcreteRoleDescriptor res = concreteTaskDescriptor.getMainConcreteRoleDescriptor();
 		assertTrue(res.equals(concreteRoleDescriptor));
 		assertTrue(concreteTaskDescriptor.getState().equals("Ready"));
 		
