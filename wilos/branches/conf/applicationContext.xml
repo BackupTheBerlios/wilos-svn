@@ -440,16 +440,21 @@
 			ref="RoleDescriptorService" />
 		<property name="roleDefinitionService"
 			ref="RoleDefinitionService" />
+		<property name="checkListService" ref="CheckListService" />
 		<property name="taskDefinitionDao" ref="TaskDefinitionDao" />
 		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
 		<property name="taskDescriptorService"
 			ref="TaskDescriptorService" />
 		<property name="taskDefinitionService"
 			ref="TaskDefinitionService" />
+		<property name="webSessionService" ref="WebSessionService" />
+		<property name="processManagerService" ref="ProcessManagerService" />
 		<property name="elementDao" ref="ElementDao" />
 		<property name="projectDao" ref="ProjectDao" />
 		<property name="stepDao" ref="StepDao" />
 		<property name="guidanceDao" ref="GuidanceDao" />
+		<property name="checkListDao" ref="CheckListDao" />
+		<property name="sectionDao" ref="SectionDao" />
 		<property name="concreteBreakdownElementService"
 			ref="ConcreteBreakdownElementService" />
 	</bean>
