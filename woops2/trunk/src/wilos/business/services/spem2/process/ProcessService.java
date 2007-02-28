@@ -229,16 +229,13 @@ public class ProcessService {
 
 		// saving of the attached guidances to the process
 		for (Guidance g : guid) {
-			//System.out.println(g.getType());
-//			if (g instanceof CheckList) {
-//				System.out.println("type checklist");
-//				CheckList cl = (CheckList) g;
-//				this.parseCheckList(cl);
-//			}	
-//			else {
-//				System.out.println("type guidance");
+			if (g instanceof CheckList) {
+				CheckList cl = (CheckList) g;
+				this.parseCheckList(cl);
+			}	
+			else {
 				this.parseGuidance(g);
-			//}	
+			}	
 		}
 
 		// destroy the persistance of the collections
