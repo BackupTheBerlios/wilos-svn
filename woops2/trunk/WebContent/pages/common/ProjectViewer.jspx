@@ -197,7 +197,9 @@
 										<ice:outputText
 											value="#{msgs['component.exptable.header.column2']}" />
 									</f:facet>
-									<!--<ice:outputText value="#{cbde.participant}" />-->
+									<ice:inputText
+										value="1"
+										readonly="#{process.isEditable}" />
 								</ice:column>
 							</ice:dataTable>
 						</ice:panelGroup>
