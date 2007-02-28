@@ -117,7 +117,31 @@ public class WizardControler {
 		else return "" ;
 	}
 	
-
+	private String getGuidForDisplaying(Object userObject){
+		if (userObject instanceof ConcreteRoleDescriptor)
+			return ((ConcreteRoleDescriptor) userObject).getRoleDescriptor().getRoleDefinition().getGuid();
+		else if (userObject instanceof ConcreteIteration)
+			return ((ConcreteIteration) userObject).getIteration().getGuid();
+		else if (userObject instanceof ConcretePhase)
+			return ((ConcretePhase) userObject).getPhase().getGuid();
+		else if (userObject instanceof ConcreteActivity)
+			return ((ConcreteActivity) userObject).getActivity().getGuid();
+		else if (userObject instanceof ConcreteTaskDescriptor) {
+			ConcreteTaskDescriptor ctd = ((ConcreteTaskDescriptor) userObject);
+			if (ctd.getTaskDescriptor().getTaskDefinition() != null){
+				return ctd.getTaskDescriptor().getTaskDefinition().getGuid();
+			}
+			else {
+				return null ;
+			}
+		}
+		else if (userObject instanceof ConcreteBreakdownElement)
+			return ((ConcreteBreakdownElement) userObject).getBreakdownElement().getGuid();
+		else if (userObject instanceof Element)
+			return ((Element)userObject).getId();
+		else return "" ;
+	}
+	
 	private String getState (Object userObject) {
 		if (userObject instanceof ConcreteTaskDescriptor){
 			return ((ConcreteTaskDescriptor) userObject).getState();
@@ -202,6 +226,33 @@ public class WizardControler {
 		}
 	}
 		
+	public Object getElementByGuid(String guid,MutableTreeNode node) {
+		// getting the actual model
+		boolean trouve = false ; 
+		WizardTreeModel model = (WizardTreeModel) treePanel.getTree().getModel() ;
+		Object retour = null;
+		// if it is the first execution
+		if (node == null) {
+			node = (MutableTreeNode) model.getRoot() ;
+		}
+		//	for each project on server => check state modification or new branch
+		for (Enumeration e = node.children() ; !trouve && e.hasMoreElements() ;){
+			WizardMutableTreeNode tmpNode = (WizardMutableTreeNode) e.nextElement();
+			// if the node has been found
+			// manage the state
+			String guidNode = getGuidForDisplaying(tmpNode.getUserObject());
+			if (guidNode != null && guidNode.equals(guid)){
+				retour = tmpNode.getUserObject() ;
+				trouve = (retour != null) ;
+			}
+			if (!trouve) {
+				retour = getElementByGuid(guid,tmpNode);
+				trouve = (retour != null) ;
+			}
+		}
+		return retour;
+	}
+	
 	/**
 	 * updateTree get the tree updated from the server and modify the current
 	 *
@@ -292,6 +343,13 @@ public class WizardControler {
 		return (h) ;
 	}
 	
+	public Point positionHTMLShifted (){
+		Point p = listHTML.get(listHTML.size()-1).getLocation();
+		p.y += listHTML.get(listHTML.size()-1).getHeightToolbar() * 2 ;
+		p.x += listHTML.get(listHTML.size()-1).getHeightToolbar() ;
+		return p ;
+	}
+	
 	/**
 	 * getNewHTMLAction initialize the actions for the opening of HTMLViewer
 	 * @return the ActionListener created
@@ -300,15 +358,13 @@ public class WizardControler {
 		ActionListener al = new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				// get the position of the last htmlviewer
-				Point p = listHTML.get(listHTML.size()-1).getLocation();
-				p.y += listHTML.get(listHTML.size()-1).getHeightToolbar() * 2 ;
-				p.x += listHTML.get(listHTML.size()-1).getHeightToolbar() ;
-				HTMLViewer newHTMLViewer = WizardControler.getInstance().addHTMLViewer(p);
+				
+				HTMLViewer newHTMLViewer = WizardControler.getInstance().addHTMLViewer(positionHTMLShifted());
 				// 2 case if the action is from a JList we have to delete the panel with the jlist
 				// if it is from a node we have to take an element from a node
 				if (src instanceof JList){
 					WizardStateMachine.getInstance().setFocusedObject(getDefaultHTML(null).getJList().getSelectedValue(),newHTMLViewer);
-					newHTMLViewer.trtGuides(null);
+					//newHTMLViewer.trtGuides(null);
 				}
 				else if (src instanceof JXTree) {
 					DefaultMutableTreeNode dmt =  (DefaultMutableTreeNode)WizardControler.getInstance().getTreePanel().getTree().getLastSelectedPathComponent();
