@@ -231,10 +231,16 @@ public class HTMLViewer extends JFrame {
 		}
 		
 		/* Affichage de la description (ancienne methode setMessage) */
+		// *************************************************************
+		// REMPLACER CE CODE PAR UNE FONCTION QUI AFFICHE TOUS LES ELEMENTS
+		// *************************************************************
 		String description = e.getDescription();
 		this.HTMLCode = description;
 		
 		this.myEditorPane.setText(this.HTMLCode);
+		// *************************************************************
+		
+		
 		
 		if(description.length() != 0){
 			this.myEditorPane.setCaretPosition(1); // revient au debut du texte
