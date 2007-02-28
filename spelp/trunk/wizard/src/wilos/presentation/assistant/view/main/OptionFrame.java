@@ -14,6 +14,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -38,8 +39,8 @@ public class OptionFrame extends JDialog {
 	/**
 	 * This is the default constructor
 	 */
-	public OptionFrame() {
-		super();
+	public OptionFrame(JFrame parent) {
+		super(parent);
 		this.op = new OptionsParser();
 		initialize();
 	}
@@ -210,6 +211,7 @@ public class OptionFrame extends JDialog {
 			{
 				public void actionPerformed(ActionEvent e) 
     			{
+					OptionFrame.this.appliquer();
 					dispose();
     			}			
 			});
@@ -256,22 +258,26 @@ public class OptionFrame extends JDialog {
 			{
 				public void actionPerformed(ActionEvent e) 
     			{
-					System.out.println(((Integer)delay.getValue())*1000);
-					System.out.println(WizardControler.getInstance().getTimeToRefresh());
-					if ((!lang.getSelectedItem().toString().equals(WizardControler.getInstance().getLang().getLanguage()))
-							|| (((Integer)delay.getValue()*1000)!=WizardControler.getInstance().getTimeToRefresh()))
-					{
-						System.out.println("save !");
-					}
-					
-					//	=> setrefreshtime
-					// si ancienneval == 0 && nouvelle non
-					// 	 controler.getinstance.launchBackgroundThreadForTree
-					// elseif val == 0 alors
-					// 	controler.getinstance.cancelrefreshthread
+					OptionFrame.this.appliquer();
     			}				
 			});
 		}
 		return apply;
+	}
+	private void appliquer()
+	{
+		System.out.println(((Integer)delay.getValue())*1000);
+		System.out.println(WizardControler.getInstance().getTimeToRefresh());
+		if ((!lang.getSelectedItem().toString().equals(WizardControler.getInstance().getLang().getLanguage()))
+				|| (((Integer)delay.getValue()*1000)!=WizardControler.getInstance().getTimeToRefresh()))
+		{
+			System.out.println("save !");
+		}
+		
+		//		=> setrefreshtime
+		// si ancienneval == 0 && nouvelle non
+		// 	 controler.getinstance.launchBackgroundThreadForTree
+		// elseif val == 0 alors
+		// 	controler.getinstance.cancelrefreshthread
 	}
 }

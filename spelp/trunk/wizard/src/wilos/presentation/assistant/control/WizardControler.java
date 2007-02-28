@@ -55,7 +55,7 @@ public class WizardControler {
 	private ArrayList<HTMLViewer> listHTML = new ArrayList<HTMLViewer>() ;
 	private Vector<Runnable> listThread = new Vector<Runnable>() ;
 	private Locale lang = Locale.getDefault();
-	private long timeToRefresh = 5;				// tps en secondes
+	private long timeToRefresh;				// tps en secondes
 	private Thread currentRefreshThread = null ;
 	private Thread currentThread = null ;
 	private Runnable currentRefreshRunnable = null ;

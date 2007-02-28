@@ -203,7 +203,7 @@ public class WizardMainFrame extends JFrame {
 			jMenuItemOptions.setText(Bundle.getText("wizardMainFrame.menuBar.tools.options"));
 			jMenuItemOptions.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					new OptionFrame();
+					new OptionFrame(WizardMainFrame.this);
 				}
 			});
 		}
@@ -221,7 +221,7 @@ public class WizardMainFrame extends JFrame {
 			jMenuItemServers.setText(Bundle.getText("wizardMainFrame.menuBar.tools.servers"));
 			jMenuItemServers.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					new ServersFrame();
+					new ServersFrame(WizardMainFrame.this);
 				}
 			});
 		}

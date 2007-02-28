@@ -1,7 +1,6 @@
 package wilos.presentation.assistant.view.main;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -12,6 +11,7 @@ import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -43,12 +43,12 @@ public class ServersFrame {
 	 * 	
 	 * @return javax.swing.JFrame	
 	 */
-	private JDialog getServerDialog() {
+	private JDialog getServerDialog(JFrame parent) {
 		if (serverDialog == null) {
 	        int x = (int)(Toolkit.getDefaultToolkit().getScreenSize().width/2-(605/2));
 			int y = (int)(Toolkit.getDefaultToolkit().getScreenSize().height/2-(220/2)) ; 
 			
-			serverDialog = new JDialog();
+			serverDialog = new JDialog(parent);
 			serverDialog.setModal(true);
 			serverDialog.setBounds(x, y, 605, 220);
 			serverDialog.setResizable(false);
@@ -260,9 +260,9 @@ public class ServersFrame {
 		return valider;
 	}
 
-	public ServersFrame()
+	public ServersFrame(JFrame parent)
 	{
-		getServerDialog();
+		getServerDialog(parent);
 	}
 	/**
 	 * This method initializes servs	

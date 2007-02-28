@@ -1,78 +1,50 @@
 package wilos.presentation.assistant.view.panels;
 import java.awt.BorderLayout;
-import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import wilos.business.util.Security;
 
+import wilos.business.util.Security;
 import wilos.model.misc.wilosuser.Participant;
-import wilos.model.spem2.role.RoleDescriptor;
 import wilos.presentation.assistant.control.ServersListParser;
 import wilos.presentation.assistant.model.WizardServer;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
-import wilos.presentation.assistant.ressources.ProfileReader;
-import wilos.presentation.assistant.view.dialogs.ErrorDialog;
 import wilos.presentation.assistant.view.main.MainFrame;
 import wilos.presentation.assistant.view.main.ServersFrame;
 import wilos.presentation.assistant.view.main.WizardMainFrame;
 import wilos.presentation.assistant.webservices.WizardServicesProxy;
 
 public class LoginPanel extends JPanel {
-
 	private static final long serialVersionUID = 1L;
-        
-    private static String path_file = "wilos/presentation/assistant/ressources/wizard_setting.ini";
-        
+	private static String path_file = "wilos/presentation/assistant/ressources/wizard_setting.ini";
 	private JLabel introLabel = null;
-
 	private JPanel buttonsPanel = null;
-
 	private JPanel fieldsPanel = null;
-
-	private JButton connectionButton = null;	
-
+	private JButton connectionButton = null;
 	private JTextField loginTextField = null;
-
 	private JPasswordField passwordPasswordField = null;
-
 	private JLabel loginLabel = null;
-
 	private JLabel passwordLabel = null;
-
 	private JLabel adressLabel = null;
-
 	public JComboBox adressTextField = null;
-        
-    private MainFrame mframe = null;
-        
-    private MainPanel mTaskPanel = null;
-        
-    private ImagePanel iconPanel = null;
-    
-    public static ServersListParser list_serv = null;
+	private MainFrame mframe = null;
+	private MainPanel mTaskPanel = null;
+	private ImagePanel iconPanel = null;
+	public static ServersListParser list_serv = null;
 
 	/**
 	 * @param owner
@@ -176,7 +148,7 @@ public class LoginPanel extends JPanel {
     				if (adressTextField.getItemCount()!=0&&adressTextField.getSelectedItem().equals(Bundle.getText("loginPanel.ajouter")))
     				{
     					adressTextField.setSelectedIndex(0);
-    					new ServersFrame();
+    					new ServersFrame(LoginPanel.this.mframe);
     				}
     			}
     		});
@@ -293,7 +265,7 @@ public class LoginPanel extends JPanel {
 	 */
 	public JComboBox getAdressTextField() {
 		if (adressTextField == null) {
-			adressTextField = new JComboBox();			
+			adressTextField = new JComboBox();
 		}
 		return adressTextField;
 	}
