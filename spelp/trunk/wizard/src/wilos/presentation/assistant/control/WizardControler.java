@@ -5,15 +5,19 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Vector;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreePath;
 
 import org.jdesktop.swingx.JXTree;
 
@@ -420,7 +424,6 @@ public class WizardControler {
 		else {
 			menuContextuel.show(arg0.getComponent(),arg0.getX(),arg0.getY());
 		}
-		
 	}
 	
 	/**

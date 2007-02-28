@@ -45,6 +45,13 @@ public class WizardMainFrame extends JFrame {
 	public WizardMainFrame() {
 		super();
 		initialize();
+		launchFirstThread();
+		
+	}
+
+	private void launchFirstThread() {
+		WizardControler.getInstance().launchBackgroundThreadForTree();
+		/*thread launch*/
 	}
 
 	/**
@@ -62,7 +69,6 @@ public class WizardMainFrame extends JFrame {
 		
 		// init of controler
 		WizardControler.getInstance().initUIElements(actionToolBar,jTree,menu);
-		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.moveHTML();
 		this.addComponentListener(new ComponentListener(){
@@ -260,7 +266,9 @@ public class WizardMainFrame extends JFrame {
 			jPanel.setLayout(new BorderLayout());
 			
 			jPanel.add(getJTree(), BorderLayout.CENTER);
-			jPanel.add(new InfoPanel(), BorderLayout.SOUTH);
+			InfoPanel info = new InfoPanel();
+			WizardStateMachine.getInstance().addObserver(info);
+			jPanel.add(info, BorderLayout.SOUTH);
 			
 		}
 		return jPanel;

@@ -1,17 +1,41 @@
 package wilos.presentation.assistant.view.panels;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXTaskPane;
 
+import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.Bundle;
 
-public class InfoPanel extends JXPanel {
+public class InfoPanel extends JXPanel implements Observer {
 	private JXTaskPane tasks = null ;
 	private JLabel editor = null;
+	private JPanel infos = null;
+	private JButton modify;
+	private JLabel info1;
+	private JLabel info1_label;
+	private JLabel info2;
+	private JLabel info2_label;
+	private JLabel tps_label;
+	private JLabel tps_restant_label;
+	private JTextField tps_restant;
+	private JLabel tps;
+	//private JLabel non_started;
+
 	public InfoPanel () {
 		initialize();
 	}
@@ -20,25 +44,93 @@ public class InfoPanel extends JXPanel {
 	 * This method initializes this
 	 */
 	private void initialize() {
+		infos = new JPanel();
+		infos.setLayout(new GridLayout(4,2));
+		info1 = new JLabel();
+		info2 = new JLabel();
+		info1_label = new JLabel();
+		info2_label = new JLabel();
+		tps_restant = new JTextField();
+		tps_restant_label = new JLabel();
+		tps = new JLabel();
+		tps_label = new JLabel();
+
+		infos.add(info1);
+		infos.add(info1_label);
+		infos.add(info2);
+		infos.add(info2_label);
+		infos.add(tps_restant_label);
+		infos.add(tps_restant);
+		infos.add(tps_label);
+		infos.add(tps);		
+		
 		this.setLayout(new BorderLayout());
 		this.add(getTasks(),BorderLayout.CENTER);
+		
+	
 	}
-
 
 	public JXTaskPane getTasks (){
 		if (tasks == null){
 			tasks = new JXTaskPane();
+			//tasks.setLayout(new BorderLayout());
 			tasks.setTitle(Bundle.getText("infoPanel.informations"));
 			tasks.setExpanded(false);
 			editor = new JLabel(Bundle.getText("infoPanel.no_informations"));
-			tasks.add(editor);
-			//tasks.add(new JLabel("essai2"));
+			modify = new JButton("Appliquer");
+			modify.setBounds(50, 50, 50, 50);
+			modify.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e) 
+				{
+					new InfoTpsPanel();
+				}				
+			});
+			tasks.add(infos);
 			
+			tasks.add(modify);
+			modify.setVisible(false);
 		}
 		return tasks ;
 	}
 	
 	public void setInfo(String i){
 		editor.setText(i);
+	}
+	
+	public void update(Observable arg0, Object arg1) {
+		if (WizardControler.getInstance().getLastCtd() instanceof ConcreteTaskDescriptor)
+		{
+			tasks.setExpanded(true);
+			ConcreteTaskDescriptor c =(ConcreteTaskDescriptor)WizardControler.getInstance().getLastCtd();
+			if (c.getState()=="Started")
+			{
+				modify.setVisible(true);
+				info1.setText("Date début:");
+				info2.setText("Date fin:");
+				info1_label.setText(String.valueOf(c.getPlannedStartingDate()));
+				info2_label.setText(String.valueOf(c.getPlannedFinishingDate()));
+				tps_restant_label.setText("Temps restant:");
+				tps_restant.setText(String.valueOf(c.getRemainingTime()));
+				tps_label.setText("Temps effectué:");
+				tps.setText(String.valueOf(c.getAccomplishedTime()));
+				infos.setVisible(true);
+			}
+			else
+			{
+				modify.setVisible(false);
+				info1.setText("Tache non démarrée");
+				infos.setVisible(false);
+
+			}
+		}
+		else
+		{
+			tasks.setExpanded(false);
+			infos.setVisible(false);
+			modify.setVisible(false);
+			
+		}
+		
 	}
 }

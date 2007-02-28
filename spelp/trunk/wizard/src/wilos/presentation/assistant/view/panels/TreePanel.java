@@ -39,11 +39,12 @@ import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.ImagesService;
 import wilos.utils.Constantes;
+import javax.swing.JLabel;
 
 public class TreePanel extends JScrollPane implements TreeSelectionListener {
 		
 	private JXTree tree = null ;
-	
+	private int valeur;
 	public TreePanel(){
 		super();
 		this.setLayout(new ScrollPaneLayout());
@@ -56,19 +57,17 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 		t.setCellRenderer(new WizardTreeRenderer());
 		this.setViewportView(t);
 		tree.addTreeSelectionListener(this); 
+		
 		tree.addMouseListener(new MouseListener(){
 
 			public void mouseClicked(MouseEvent arg0) {
-				
 			}
 
 			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				
 			}
 
 			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				
 			}
 			
@@ -76,6 +75,13 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 				// selection with right button
 				if (SwingUtilities.isRightMouseButton(arg0)){
 					TreePanel.this.tree.setSelectionRow(TreePanel.this.tree.getRowForLocation(arg0.getX(), arg0.getY()));
+				}
+				else
+				{
+					 JXTree a = (JXTree)arg0.getSource();
+					 //System.out.println(a.);
+					//valeur = TreePanel.this.tree.getRowForLocation(arg0.getX(), arg0.getY());
+					//System.out.println(+TreePanel.valeur);
 				}
 			}
 
@@ -97,7 +103,10 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 		//DefaultTreeCellRenderer df;
 		//df.getTreeCellRendererComponent(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
 	}
-	
+	public int getValeur()
+	{
+		return this.valeur;
+	}
 	public JXTree getTree (){
 		return tree;
 	}	
@@ -145,7 +154,7 @@ public class TreePanel extends JScrollPane implements TreeSelectionListener {
 	public void setParticipant(Participant participant) {
 		WizardTreeModel wtm = new WizardTreeModel(participant,true);
 		tree.setModel(wtm);
-		WizardControler.getInstance().launchBackgroundThreadForTree();
+		
 	}
 
 	public void valueChanged(TreeSelectionEvent e) {
