@@ -214,12 +214,12 @@ public class ProjectAdvancementBean {
 					hm.put("accomplishedTime", ((ConcreteTaskDescriptor) concreteBreakdownElement).getAccomplishedTime());
 					hm.put("remainingTime", ((ConcreteTaskDescriptor) concreteBreakdownElement).getRemainingTime());					
 					//if the task is affected to a role
-					if (((ConcreteTaskDescriptor) concreteBreakdownElement).getConcreteRoleDescriptor() != null)
+					if (((ConcreteTaskDescriptor) concreteBreakdownElement).getMainConcreteRoleDescriptor() != null)
 					{
 						//if the role is already affected to a participant
-						if (((ConcreteTaskDescriptor) concreteBreakdownElement).getConcreteRoleDescriptor().getParticipant() != null)
+						if (((ConcreteTaskDescriptor) concreteBreakdownElement).getMainConcreteRoleDescriptor().getParticipant() != null)
 						{
-							hm.put("participant", ((ConcreteTaskDescriptor) concreteBreakdownElement).getConcreteRoleDescriptor().getParticipant().getFirstname() +" "+ ((ConcreteTaskDescriptor) concreteBreakdownElement).getConcreteRoleDescriptor().getParticipant().getName());
+							hm.put("participant", ((ConcreteTaskDescriptor) concreteBreakdownElement).getMainConcreteRoleDescriptor().getParticipant().getFirstname() +" "+ ((ConcreteTaskDescriptor) concreteBreakdownElement).getMainConcreteRoleDescriptor().getParticipant().getName());
 						}
 						else
 						{
