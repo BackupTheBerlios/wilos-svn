@@ -232,7 +232,7 @@ public class HTMLViewer extends JFrame {
 		
 		/* Affichage de la description (ancienne methode setMessage) */
 		// *************************************************************
-		// REMPLACER CE CODE PAR UNE FONCTION QUI AFFICHE TOUS LES ELEMENTS
+		// TODO REMPLACER CE CODE PAR UNE FONCTION QUI AFFICHE TOUS LES ELEMENTS
 		// *************************************************************
 		String description = e.getDescription();
 		this.HTMLCode = description;
