@@ -24,6 +24,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -50,7 +52,6 @@ import wilos.presentation.assistant.ressources.ImagesService;
 public class HTMLViewer extends JFrame {
 	private static HTMLViewer instance = null;
 	private String HTMLCode; // Le code HTML affich
-	
 	private JList guidesList = null  ;
 	
 	private JScrollPane myScrollPane;
@@ -132,7 +133,16 @@ public class HTMLViewer extends JFrame {
 		this.myEditorPane.setEditable(false);
 
 		this.myEditorPane.setFocusable(true);
-		
+		this.myEditorPane.addHyperlinkListener(new HyperlinkListener(){
+
+			public void hyperlinkUpdate(HyperlinkEvent e) {
+				if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+			            String description = e.getDescription() ;
+			            String retour = description.substring(description.lastIndexOf(",")+1,description.lastIndexOf("."));
+			            displayLinkedElement(retour);
+				}
+			}
+		});
 		this.myScrollPane = new JScrollPane(this.myEditorPane);
 		
 		/* ----- SOUTH PANEL -----*/
@@ -197,6 +207,14 @@ public class HTMLViewer extends JFrame {
 		this.getContentPane().add(this.southPanel, BorderLayout.SOUTH);
 	}
 	
+	public void displayLinkedElement (String guid){
+		Object e = WizardControler.getInstance().getElementByGuid(guid, null);
+		if (e != null){
+			HTMLViewer viewer = WizardControler.getInstance().addHTMLViewer(WizardControler.getInstance().positionHTMLShifted());
+			viewer.viewObject(e);
+		}
+	}
+	
 	/**
 	 * Modifie le texte affich par le HTMLViewer
 	 * @deprecated
@@ -239,8 +257,6 @@ public class HTMLViewer extends JFrame {
 		
 		this.myEditorPane.setText(this.HTMLCode);
 		// *************************************************************
-		
-		
 		
 		if(description.length() != 0){
 			this.myEditorPane.setCaretPosition(1); // revient au debut du texte
@@ -357,15 +373,14 @@ public class HTMLViewer extends JFrame {
 		if (td.getTaskDefinition() != null) {
 			guides = td.getTaskDefinition().getGuidances();
 		}
-		
 		trtGuides(guides);
 		
 		return td ;
 	}
 	
 	public void trtGuides (Set<Guidance>guides){
-		if (this == WizardControler.getInstance().getDefaultHTML(null)) 
-		{
+//		if (this == WizardControler.getInstance().getDefaultHTML(null)) 
+//		{
 			Vector <Guidance> vectGuides = new Vector<Guidance>();
 			vectGuides.addAll(guides);
 			
@@ -380,10 +395,10 @@ public class HTMLViewer extends JFrame {
 			else {
 				this.southPanel.setExpanded(false);
 			}
-		}
-		else {
-			this.southPanel.setVisible(false);
-		}
+//		}
+//		else {
+//			this.southPanel.setVisible(false);
+//		}
 	}
 	
 	/**
