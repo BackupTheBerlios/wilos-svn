@@ -22,11 +22,13 @@ import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.activity.Activity;
+import wilos.model.spem2.checklist.CheckList;
 import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.role.RoleDefinition;
 import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.section.Section;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
@@ -293,10 +295,33 @@ public class WizardServicesProxy {
             
             // guide
             
-            Guidance g1 = new Guidance();
-            g1.setName("guide 1");
-            g1.setDescription("description du guide 1");
+            CheckList g1 = new CheckList();
+            g1.setName("good_requirements");
             g1.setType(Guidance.checklist);
+
+            Section s1 = new Section();
+            s1.setName("Correct");
+            s1.setDescription("Does the requirement correctly specify a true need, desire, or obligation?");
+            
+            Section s2 = new Section();
+            s2.setName("Complete");
+            s2.setDescription("Is the requirement stated as a complete sentence?");
+            
+            Section s3 = new Section();
+            s3.setName("Clear");
+            s3.setDescription("Is the requirement unambiguous and not confusing?");
+            
+            Section s4 = new Section();
+            s4.setName("Consistent");
+            s4.setDescription("Is the requirement in conflict with other requirements?");
+            
+            Set<Section> setSect = new HashSet<Section>();
+            setSect.add(s1);
+            setSect.add(s2);
+            setSect.add(s3);
+            setSect.add(s4);
+            
+            g1.setSections(setSect);
             
             Guidance g2 = new Guidance();
             g2.setName("guide 2");

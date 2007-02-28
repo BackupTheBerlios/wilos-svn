@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.Stack;
 import java.util.Vector;
@@ -38,11 +39,13 @@ import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.checklist.CheckList;
 import wilos.model.spem2.element.Element;
 import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.section.Section;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.control.WizardControler;
@@ -133,6 +136,7 @@ public class HTMLViewer extends JFrame {
 		this.myEditorPane.setEditable(false);
 
 		this.myEditorPane.setFocusable(true);
+		
 		this.myEditorPane.addHyperlinkListener(new HyperlinkListener(){
 
 			public void hyperlinkUpdate(HyperlinkEvent e) {
@@ -252,13 +256,27 @@ public class HTMLViewer extends JFrame {
 		// *************************************************************
 		// TODO REMPLACER CE CODE PAR UNE FONCTION QUI AFFICHE TOUS LES ELEMENTS
 		// *************************************************************
-		String description = e.getDescription();
-		this.HTMLCode = description;
+		if (e instanceof CheckList) {
+			String description = "<TABLE WIDTH=\"95%\" VALIGN=top>";
+			CheckList c = (CheckList) e;
+			Set<Section> sections = new HashSet<Section>();
+			sections = c.getSections();
+			for(Iterator it = sections.iterator() ; it.hasNext() ; ) {
+				Section s = (Section)it.next();
+				description += "<TR><TD><INPUT type=\"checkbox\"></TD><TD nowrap><B>" + s.getName() + "</B> :</TD><TD>" + s.getDescription() + "</TD></TR>";
+			}
+			description += "</TABLE>";
+			this.HTMLCode = description;
+		}
+		else {
+			String description = e.getDescription();
+			this.HTMLCode = description;
+		}
 		
 		this.myEditorPane.setText(this.HTMLCode);
 		// *************************************************************
 		
-		if(description.length() != 0){
+		if(this.HTMLCode.length() != 0){
 			this.myEditorPane.setCaretPosition(1); // revient au debut du texte
 		}
 			
