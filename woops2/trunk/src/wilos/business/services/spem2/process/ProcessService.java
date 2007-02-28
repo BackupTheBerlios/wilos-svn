@@ -11,7 +11,10 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import wilos.business.services.checklist.CheckListService;
 import wilos.business.services.misc.concretebreakdownelement.ConcreteBreakdownElementService;
+import wilos.business.services.misc.wilosuser.ProcessManagerService;
+import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.activity.ActivityService;
 import wilos.business.services.spem2.breakdownelement.BreakdownElementService;
 import wilos.business.services.spem2.iteration.IterationService;
@@ -25,6 +28,7 @@ import wilos.business.services.util.xml.parser.XMLServices;
 import wilos.hibernate.misc.project.ProjectDao;
 import wilos.hibernate.spem2.activity.ActivityDao;
 import wilos.hibernate.spem2.breakdownelement.BreakdownElementDao;
+import wilos.hibernate.spem2.checklist.CheckListDao;
 import wilos.hibernate.spem2.element.ElementDao;
 import wilos.hibernate.spem2.guide.GuidanceDao;
 import wilos.hibernate.spem2.iteration.IterationDao;
@@ -32,6 +36,7 @@ import wilos.hibernate.spem2.phase.PhaseDao;
 import wilos.hibernate.spem2.process.ProcessDao;
 import wilos.hibernate.spem2.role.RoleDefinitionDao;
 import wilos.hibernate.spem2.role.RoleDescriptorDao;
+import wilos.hibernate.spem2.section.SectionDao;
 import wilos.hibernate.spem2.task.StepDao;
 import wilos.hibernate.spem2.task.TaskDefinitionDao;
 import wilos.hibernate.spem2.task.TaskDescriptorDao;
@@ -40,12 +45,14 @@ import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.checklist.CheckList;
 import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.process.Process;
 import wilos.model.spem2.role.RoleDefinition;
 import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.section.Section;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
@@ -59,6 +66,7 @@ import wilos.model.spem2.task.TaskDescriptor;
  * @author soosuske
  * @author Sebastien
  * @author deder
+ * @author almiriad
  */
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class ProcessService {
@@ -82,6 +90,12 @@ public class ProcessService {
 	private RoleDescriptorService roleDescriptorService;
 
 	private RoleDefinitionService roleDefinitionService;
+	
+	private WebSessionService webSessionService;
+	
+	private ProcessManagerService processManagerService;
+	
+	private CheckListService checkListService;
 
 	private ActivityDao activityDao;
 
@@ -110,6 +124,10 @@ public class ProcessService {
 	private ProjectDao projectDao;
 
 	private GuidanceDao guidanceDao;
+	
+	private CheckListDao checkListDao;
+	
+	private SectionDao sectionDao;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -211,7 +229,16 @@ public class ProcessService {
 
 		// saving of the attached guidances to the process
 		for (Guidance g : guid) {
-			this.parseGuidance(g);
+			//System.out.println(g.getType());
+//			if (g instanceof CheckList) {
+//				System.out.println("type checklist");
+//				CheckList cl = (CheckList) g;
+//				this.parseCheckList(cl);
+//			}	
+//			else {
+//				System.out.println("type guidance");
+				this.parseGuidance(g);
+			//}	
 		}
 
 		// destroy the persistance of the collections
@@ -225,7 +252,13 @@ public class ProcessService {
 		_process.addAllPredecessors(clone.getPredecessors());
 		_process.addAllSuccessors(clone.getSuccessors());
 		_process.addAllSuperActivities(clone.getSuperActivities());
-
+		
+		
+		String managerId = (String) this.webSessionService
+			.getAttribute(WebSessionService.WILOS_USER_ID);	
+		
+		_process.addProcessManager(this.processManagerService.getProcessManager(managerId));
+		
 		// update of the project
 		this.processDao.saveOrUpdateProcess(_process);
 		System.out.println("###Process sauve");
@@ -684,7 +717,47 @@ public class ProcessService {
 		this.guidanceDao.saveOrUpdateGuidance(_guidance);
 		System.out.println("###Guidance sauve");
 	}
+	
+	/**
+	 * Method to parse a CheckList
+	 * @param _checkList
+	 */
+	private void parseCheckList(CheckList _checkList) {
+		CheckList clone = null;
+		try {
+			clone = _checkList.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		
+		List<Section> sections = new ArrayList<Section>();
+		sections.addAll(_checkList.getSections());
+		
+		_checkList.getSections().clear();
+		
+		this.checkListDao.saveOrUpdateCheckList(_checkList);
+		System.out.println("###CheckList vide sauvee");
+		
+		for (Section section : sections) {
+			this.parseSection(section);			
+		}
+		
+		_checkList.setSections(this.checkListService.getSections(_checkList));
 
+		_checkList.addAllSection(clone.getSections());
+		
+		this.checkListDao.saveOrUpdateCheckList(_checkList);
+		System.out.println("###CheckList sauvee");
+	}
+	/**
+	 * Method to parse a section
+	 * @param _section
+	 */
+	private void parseSection(Section _section) {
+		this.sectionDao.saveOrUpdateSection(_section);		
+		System.out.println("###Section sauvee");
+	}
+	
 	/**
 	 * Return processes list
 	 *
@@ -1092,5 +1165,46 @@ public class ProcessService {
 	public void setTaskDefinitionService(
 			TaskDefinitionService _taskDefinitionService) {
 		this.taskDefinitionService = _taskDefinitionService;
+	}
+
+
+	public WebSessionService getWebSessionService() {
+		return webSessionService;
+	}
+
+	public void setWebSessionService(WebSessionService _webSessionService) {
+		this.webSessionService = _webSessionService;
+	}
+
+	public ProcessManagerService getProcessManagerService() {
+		return processManagerService;
+	}
+
+	public void setProcessManagerService(ProcessManagerService _processManagerService) {
+		this.processManagerService = _processManagerService;
+	}
+	
+	public CheckListDao getCheckListDao() {
+		return checkListDao;
+	}
+
+	public void setCheckListDao(CheckListDao _checkListDao) {
+		this.checkListDao = _checkListDao;
+	}
+
+	public CheckListService getCheckListService() {
+		return checkListService;
+	}
+
+	public void setCheckListService(CheckListService _checkListService) {
+		this.checkListService = _checkListService;
+	}
+
+	public SectionDao getSectionDao() {
+		return sectionDao;
+	}
+
+	public void setSectionDao(SectionDao _sectionDao) {
+		this.sectionDao = _sectionDao;
 	}
 }
