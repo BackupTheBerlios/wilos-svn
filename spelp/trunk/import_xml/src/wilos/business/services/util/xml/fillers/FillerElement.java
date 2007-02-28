@@ -13,7 +13,13 @@ public class FillerElement {
 	private static String AttributeId = "id" ;
 	private static String AttributeName = "name" ;
 	private static String AttributeDescription = "briefDescription" ;
-		
+	//	 data to manage the insertion order
+	private static int order ; 	
+	
+	public static void initializeOrder() {
+		order = 0 ;
+	}
+	
 	public FillerElement (Element _e, Node _aNode) {
 		try {
 			myElement = _e.clone() ;
@@ -31,6 +37,8 @@ public class FillerElement {
 		myElement.setName(myNode.getAttributes().getNamedItem(AttributeName).getNodeValue());
 		// setting the description
 		myElement.setDescription(EncodingProcessor.cleanString(myNode.getAttributes().getNamedItem(AttributeDescription).getNodeValue()));
+		// setting the order
+		myElement.setInsertionOrder(++order);
 	}
 	
 	public Element getFilledElement(){
