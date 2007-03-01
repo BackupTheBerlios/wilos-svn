@@ -164,7 +164,7 @@
 						</f:subview>
 						<ice:panelGroup visible="#{Woops2ProcessBean.isVisibleExpTable}">
 							<ice:dataTable value="#{ExpTableBean.expTableContent}"
-								var="process" cellpadding="0" columnWidths="30px,600px,200px">
+								var="process" cellpadding="0" columnWidths="30px,650px,150px">
 								<ice:column>
 									<ice:commandLink value=""
 										actionListener="#{ExpTableBean.toggleSubGroupAction}">
@@ -188,7 +188,10 @@
 									</f:facet>
 									<ice:inputText
 										value="#{process.nbOccurences}"
-										readonly="#{process.isEditable}" />
+										readonly="#{process.isEditable}"
+										maxlength="3"
+										size="3"
+										style="align: middle; text-align: right;" />
 								</ice:column>
 							</ice:dataTable>
 						</ice:panelGroup>
