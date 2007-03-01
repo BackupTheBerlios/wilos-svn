@@ -2,26 +2,20 @@ package wilos.business.services.misc.role;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
-
-import javax.faces.context.FacesContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService;
 import wilos.hibernate.misc.wilosuser.ParticipantDao;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.wilosuser.Participant;
-import wilos.model.spem2.role.RoleDescriptor;
 
 /**
  * The services associated to the Role

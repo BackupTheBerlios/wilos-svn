@@ -1,7 +1,5 @@
 package wilos.presentation.web.template;
 
-import javax.faces.context.FacesContext;
-
 import wilos.business.services.presentation.web.WebSessionService;
 
 
@@ -57,7 +55,6 @@ public class ConnectViewBean {
      */
     public String connected(boolean _connected, String _applicationRole){
     	ConnectContentBean connectContent = new ConnectContentBean();
-    	FacesContext context = FacesContext.getCurrentInstance();
     	
     	if(_connected)
     	{
@@ -74,7 +71,6 @@ public class ConnectViewBean {
     		connectContent.setTemplateName("not_connected");
     		connectContent.setTemplateNameActions("none");
     		connectContent.setTemplateNameMenu("no_tree_group");
-    		//this.webSessionService.cleanSesssion();
     	}
     	connectContent.setNavigationSelection(this);
     	this.selectedPanel = connectContent;

@@ -129,7 +129,7 @@ public class ProjectBean {
 			}
 		}
 		if (!error) {
-			String user_id = (String) this.webSessionService.getAttribute(this.webSessionService.WILOS_USER_ID);
+			String user_id = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID);
 			ProjectDirector pd = this.projectDirectorService.getProjectDirector(user_id);
 			this.project.setProjectDirector(pd);
 			this.projectService.saveProject(this.project);
@@ -147,7 +147,6 @@ public class ProjectBean {
 		
 		//return on the projectlist page
 		FacesContext context = FacesContext.getCurrentInstance();
-		Map map = context.getExternalContext().getRequestParameterMap();
 		MenuBean mb = (MenuBean) context.getApplication().getVariableResolver().resolveVariable(context, "menu");
 		mb.getSelectedPanel().setTemplateNameForARole("projectList");
 		

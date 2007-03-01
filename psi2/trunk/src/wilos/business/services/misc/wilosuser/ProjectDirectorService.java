@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import wilos.business.util.Security;
 import wilos.hibernate.misc.wilosuser.ProjectDirectorDao;
-import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.ProjectDirector;
 
 /**

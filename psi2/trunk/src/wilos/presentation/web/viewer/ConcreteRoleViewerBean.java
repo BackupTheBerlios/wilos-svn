@@ -10,7 +10,6 @@ import wilos.business.services.misc.wilosuser.ParticipantService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.wilosuser.Participant;
-import wilos.presentation.web.project.ProjectAdvancementBean;
 import wilos.presentation.web.tree.TreeBean;
 
 public class ConcreteRoleViewerBean {

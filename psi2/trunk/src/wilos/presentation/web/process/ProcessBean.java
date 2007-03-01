@@ -5,7 +5,6 @@ import java.util.ArrayList ;
 import java.util.HashMap ;
 import java.util.Iterator ;
 import java.util.List ;
-import java.util.Map ;
 import java.util.ResourceBundle ;
 
 import javax.faces.application.FacesMessage ;
@@ -18,7 +17,6 @@ import org.apache.commons.logging.LogFactory ;
 import wilos.business.services.misc.project.ProjectService ;
 import wilos.business.services.spem2.process.ProcessManagementService ;
 import wilos.business.services.spem2.process.ProcessService ;
-import wilos.model.misc.project.Project ;
 import wilos.model.spem2.process.Process ;
 
 /**
