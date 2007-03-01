@@ -5,16 +5,16 @@
 			draggable="false" visible="#{ConcreteTaskViewerBean.visiblePopup}"
 			rendered="true"	modal="true">
 			<f:facet name="header">
-				<ice:outputText value="/!\ Avertissement /!\" />
+				<ice:outputText value="#{msgs['concretetaskviewer.popupHeaderMessage']}" />
 			</f:facet>
 			<f:facet name="body">
 				<ice:panelGrid styleClass="popupModalBody" columns="2">
-					<ice:outputText value="DEBUG: Si vous arrêtez la tâche, le temps restant sera mis à 0." />
+					<ice:outputText value="#{msgs['concretetaskviewer.popupMessage']}" />
 					<ice:outputText value=""/>
-					<ice:commandButton value="Confirmer"
+					<ice:commandButton value="#{msgs['concretetaskviewer.popupConfirmButton']}"
 						styleClass="smallbutton"
 						action="#{ConcreteTaskViewerBean.confirmStop}" style="z-index:2;"/>
-					<ice:commandButton value="Annuler"
+					<ice:commandButton value="#{msgs['concretetaskviewer.popupCancelButton']}"
 						styleClass="smallbutton"
 						action="#{ConcreteTaskViewerBean.cancelStop}" style="z-index:2;"/>
 				</ice:panelGrid>
@@ -24,7 +24,7 @@
 	
 		<ice:panelTabSet styleClass="componentPanelTabSetLayout">
 			<br />
-			<ice:panelTab label="#{msgs['taskviewer.tabtitle'] }">
+			<ice:panelTab label="#{msgs['concretetaskviewer.tabtitle'] }">
 				<br />
 				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="3">
 					<ice:outputText value="#{msgs['viewer.concreteName']}" />
@@ -34,20 +34,20 @@
 					<ice:commandButton value="#{msgs['button.changeconcretename']}"
 						action="#{ConcreteTaskViewerBean.changeConcreteName}"
 						disabled="#{ConcreteTaskViewerBean.changeButtonIsDisabled}"/>
-					<ice:outputText value="#{msgs['taskviewer.state']}" />
+					<ice:outputText value="#{msgs['concretetaskviewer.state']}" />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.displayedState}" />
 					<ice:outputText value=""/>
-					<ice:outputText value="#{msgs['taskviewer.plannedstartingdate']}" />
+					<ice:outputText value="#{msgs['concretetaskviewer.plannedstartingdate']}" />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.plannedStartingDate}" />
 					<ice:outputText value=""/>
-					<ice:outputText value="#{msgs['taskviewer.plannedFinishingDate']}" />
+					<ice:outputText value="#{msgs['concretetaskviewer.plannedFinishingDate']}" />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.plannedFinishingDate}" />
 					<ice:outputText value=""/>
 					<ice:outputText
-						value="#{msgs['taskviewer.accomplishedtime']}"
+						value="#{msgs['concretetaskviewer.accomplishedtime']}"
 						visible="#{ConcreteTaskViewerBean.accomplishedTimeVisible}"/>
 					<ice:inputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.accomplishedTime}"
@@ -56,7 +56,7 @@
 						<!--  <f:convertNumber pattern="#*0(.0)#" /> -->
 					</ice:inputText>
 					<ice:outputText value=""/>
-					<ice:outputText value="#{msgs['taskviewer.remainingtime']}"
+					<ice:outputText value="#{msgs['concretetaskviewer.remainingtime']}"
 					visible="#{ConcreteTaskViewerBean.remainingTimeVisible}"/>
 					
 					<ice:inputText
@@ -70,16 +70,16 @@
 					<table>
 						<tr>
 							<td><ice:commandButton
-								value="#{msgs['taskviewer.affecter']}"
+								value="#{msgs['concretetaskviewer.affecter']}"
 								actionListener="#{ConcreteTaskViewerBean.affectedActionListener}"
 								visible="#{ConcreteTaskViewerBean.visibleAffected}"
 								styleClass="smallbutton"/><ice:commandButton
-								value="#{msgs['taskviewer.start']}"
+								value="#{msgs['concretetaskviewer.start']}"
 								actionListener="#{ConcreteTaskViewerBean.startActionListener}"
 								visible="#{ConcreteTaskViewerBean.visibleStart}"
 								styleClass="smallbutton"/>
 								<ice:commandButton
-								value="#{msgs['taskviewer.reprendre']}"
+								value="#{msgs['concretetaskviewer.reprendre']}"
 								actionListener="#{ConcreteTaskViewerBean.startActionListener}"
 								visible="#{ConcreteTaskViewerBean.visibleReprendre}"
 								styleClass="smallbutton"/>
