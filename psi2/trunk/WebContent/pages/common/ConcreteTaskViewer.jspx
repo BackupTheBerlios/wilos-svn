@@ -8,15 +8,15 @@
 				<ice:outputText value="/!\ Avertissement /!\" />
 			</f:facet>
 			<f:facet name="body">
-				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="2">
+				<ice:panelGrid styleClass="popupModalBody" columns="2">
 					<ice:outputText value="DEBUG: Si vous arrêtez la tâche, le temps restant sera mis à 0." />
 					<ice:outputText value=""/>
 					<ice:commandButton value="Confirmer"
 						styleClass="smallbutton"
-						action="#{ConcreteTaskViewerBean.confirmStop}"/>
+						action="#{ConcreteTaskViewerBean.confirmStop}" style="z-index:2;"/>
 					<ice:commandButton value="Annuler"
 						styleClass="smallbutton"
-						action="#{ConcreteTaskViewerBean.cancelStop}"/>
+						action="#{ConcreteTaskViewerBean.cancelStop}" style="z-index:2;"/>
 				</ice:panelGrid>
 			</f:facet>
 		</ice:panelPopup>

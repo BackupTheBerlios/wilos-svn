@@ -1792,18 +1792,19 @@ background-image:url("../images/xpwilos/tab-over.gif");
     border-top: 1px solid #ABABAB;
     border-left: 1px solid #ABABAB;
     border-bottom: 2px solid #ABABAB;
-    width: auto;
-    background-color: #DDDDDD;
+    background-color: #CAC0D6;
     padding: 0px;
     z-index: 1000;
+    width:400px;
+    height:150px;
 }
 
 .icePanelPopupHeader {
-    background-color: #DEDEDE;
-    background-image: url( "../images/xpwilos/window_top.gif" );
-    background-position: top;
+    background-color: #A89FB7;
+    background-image: url( "../images/xpwilos/popup_header.gif" );
+    background-position: bottom;
     background-repeat: repeat-x;
-    height: 2.0em;
+    height: 2.5em;
 }
 
 .icePanelPopupBody {
