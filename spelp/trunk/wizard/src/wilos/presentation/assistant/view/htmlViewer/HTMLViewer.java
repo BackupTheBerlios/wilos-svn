@@ -18,9 +18,11 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
@@ -252,6 +254,15 @@ public class HTMLViewer extends JFrame {
 			this.myElementLabel.setText(e.getName()) ;
 		}
 		
+		// -----------TO DOWNLOAD THE ASSOCIATED FILE----------------
+		if (e instanceof Guidance) {
+			// download the associated file of the current guidance if exist 
+			if (((Guidance) e).getAttachment() != "") {
+				downloadAssociatedFileFromRemote();
+			}
+			
+		}
+		
 		/* Affichage de la description (ancienne methode setMessage) */
 		// *************************************************************
 		// TODO REMPLACER CE CODE PAR UNE FONCTION QUI AFFICHE TOUS LES ELEMENTS
@@ -280,7 +291,34 @@ public class HTMLViewer extends JFrame {
 			this.myEditorPane.setCaretPosition(1); // revient au debut du texte
 		}
 			
-		this.setVisible(true);
+		this.setVisible(true);		
+		
+	}
+
+	/**
+	 * downloadAssociatedFileFromRemote
+	 *
+	 */
+	private void downloadAssociatedFileFromRemote() {
+		// creation and display the message dialog
+		int choice = JOptionPane.showConfirmDialog(this, "Un document associe a ce guide est disponible. " +
+									"Voulez-vous le telecharger ?", "Information", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+		
+		if (choice == JOptionPane.YES_OPTION) {
+			// JFileChooser creation to download the file on the remote
+			JFileChooser fileChooser = new JFileChooser("../");
+			// display the JFileChooser
+			int selected = fileChooser.showOpenDialog(this);
+			if (selected == JFileChooser.APPROVE_OPTION) {
+				// TODO: Traitement : appel des webServices pour recuperer le fichier sur le serveur
+				
+				// Afficher une fenetre de telechargement type mozilla avec progressBar
+				
+				// Gestion d'un thread pour cette fenetre pour ne pas etre bloquant sur le reste de l'application
+				// pendant le telechargement
+				
+			}
+		}
 		
 	}
 
@@ -353,6 +391,7 @@ public class HTMLViewer extends JFrame {
 			displayElement(e);
 			ok = true ;
 		}
+		
 		// if ok = true then object is an element
 //		if (ok) {
 //				Element e = (Element)o;
@@ -545,7 +584,7 @@ public class HTMLViewer extends JFrame {
 	
 	private class GuidesRenderer extends DefaultListCellRenderer {
 		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-			Guidance g = (Guidance)value;
+			Guidance g = (Guidance)value;			
 			String guideValue = g.getName() + " [" + g.getType() + "]";
 			super.getListCellRendererComponent(list, guideValue, index, isSelected, cellHasFocus);
 			this.setIcon(getGuideTypeIcon(g.getType()));
