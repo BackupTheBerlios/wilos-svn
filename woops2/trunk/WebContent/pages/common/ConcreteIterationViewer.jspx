@@ -14,6 +14,7 @@
 						disabled="#{ConcreteIterationViewerBean.changeButtonIsDisabled}" />
 					<ice:outputText value="#{msgs['viewer.description'] }" />
 					<ice:outputText value="#{ConcreteIterationViewerBean.concreteIteration.iteration.description}"/>
+					<ice:outputText value="" />
 					<ice:panelGroup
 						visible="#{ConcreteIterationViewerBean.treeMaskIsAvailable}">
 						<ice:outputText styleClass="propertyLabel" value="#{msgs['viewer.elementsvisible']}" />

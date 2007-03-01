@@ -164,7 +164,7 @@
 						</f:subview>
 						<ice:panelGroup visible="#{Woops2ProcessBean.isVisibleExpTable}">
 							<ice:dataTable value="#{ExpTableBean.expTableContent}"
-								var="process" cellpadding="0" columnWidths="30px,650px,150px">
+								var="process" cellpadding="0" columnWidths="30px,600px,200px">
 								<ice:column>
 									<ice:commandLink value=""
 										actionListener="#{ExpTableBean.toggleSubGroupAction}">
@@ -188,10 +188,7 @@
 									</f:facet>
 									<ice:inputText
 										value="#{process.nbOccurences}"
-										readonly="#{process.isEditable}"
-										maxlength="3"
-										size="3"
-										style="align: middle; text-align: right;" />
+										readonly="#{process.isEditable}" />
 								</ice:column>
 							</ice:dataTable>
 						</ice:panelGroup>
@@ -204,6 +201,39 @@
 				</ice:panelStack>-->
 			</ice:panelTab>
 			<!-- #################################################################################################### -->
+			
+			
+			
+			
+			
+			<ice:panelTab id="panelTab_processRoleInstanciation" label="Instancier vos Rôles">
+				<ice:panelGrid styleClass="contentLayoutGridStyle" id="rolepanelGroup">
+					<ice:dataTable value="#{RolesInstanciationBean.displayContent}" var="processRole" cellpadding="0" columnWidths="30px,600px,150px">
+						<ice:column>
+							<ice:commandLink value="" actionListener="#{RolesInstanciationBean.toggleSubGroupAction}">
+								<f:param name="roleId" value="#{processRole.id}" />
+								<ice:graphicImage value="#{processRole.expansionImage}"	style="border: 0px solid;" />
+							</ice:commandLink>
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+								<ice:outputText	value="#{msgs['component.project.rolesinstanciation.rolescolumn']}" />
+							</f:facet>
+							<ice:outputText value="#{RolesInstanciationBean.indentationContent[processRole.id]} #{processRole.name}" />
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+								<ice:outputText	value="#{msgs['component.project.rolesinstanciation.instancescolumn']}" />
+							</f:facet>
+							<ice:inputText value="#{processRole.nbOccurences}" 
+									readonly="#{processRole.isEditable}" visible="#{processRole.isVisible}"
+									style="font-size:10px; height:10px; width:150px;"/>
+						</ice:column>
+					</ice:dataTable>
+				</ice:panelGrid>
+			</ice:panelTab>
+		
+		
 		</ice:panelTabSet>
 	</ice:panelGrid>
 </ice:form>

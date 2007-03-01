@@ -1,7 +1,7 @@
 <ice:form id="participant_form">
 	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
 		<ice:panelTabSet id="panelTabSet_participant" styleClass="componentPanelTabSetLayout">
-			<ice:panelTab label="Import Process File">
+			<ice:panelTab label="#{msgs['welcomeProcessManager.mainTable.title']}">
 				<ice:panelGrid styleClass="componentLayoutRootTable" columns="1">
 					<ice:panelGroup styleClass="formBorderHighlight"
 						style="text-align:left">
@@ -17,7 +17,6 @@
 											indeterminate="true" 
 											value="#{XmlFileImportBean.percent}"  
 											styleClass=".iceOutputProgressIndeterminate"/>
-						
 					</ice:panelGroup>
 				</ice:panelGrid>
 			</ice:panelTab>
