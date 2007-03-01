@@ -9,12 +9,13 @@
 	<!-- Configure the context path for this application -->
 	<property name="project.name" value="WilosAssistant" />
 	<property name="build.dir" value="${basedir}/tmp" />
+    <property name="ant.dir" value="${basedir}" />
 	<property name="src.dir" value="${basedir}/src" />
 	<property name="src.java.dir" value="${src.dir}" />
 	<property name="lib.dir" value="${basedir}/lib" />
 	<property name="dist.dir" value="${basedir}/dist" />
 	<property name="jar.main-class" value="wilos.presentation.assistant.view.main.MainFrame" />
-	<property name="jar.classpath" value="lib/activation.jar lib/commons-lang-2.1.jar lib/FastInfoset.jar lib/http.jar lib/jaxb-api.jar lib/jaxb-impl.jar lib/jaxb-xjc.jar lib/jaxws-api.jar lib/jaxws-rt.jar lib/jaxws-tools.jar lib/jsr173_api.jar lib/jsr181-api.jar lib/jsr250-api.jar lib/PSI2-core-services.jar lib/saaj-api.jar lib/saaj-impl.jar lib/sjsxp.jar lib/Spelp-client-generated.jar lib/swingx-2006_10_27.jar lib/Woops2-core-services.jar lib/xpp3_min-1.1.3.4.O.jar lib/xstream-1.2.1.jar lib/Spelp-core-services.jar lib/jdom-1.0.jar"/>
+	<property name="jar.classpath" value="lib/activation.jar lib/commons-lang-2.1.jar lib/FastInfoset.jar lib/http.jar lib/jaxb-api.jar lib/jaxb-impl.jar lib/jaxb-xjc.jar lib/jaxws-api.jar lib/jaxws-rt.jar lib/jaxws-tools.jar lib/jsr173_api.jar lib/jsr181-api.jar lib/jsr250-api.jar lib/PSI2-core-services.jar lib/saaj-api.jar lib/saaj-impl.jar lib/sjsxp.jar lib/Spelp-client-generated.jar lib/swingx-2007_02_25.jar lib/Woops2-core-services.jar lib/xpp3_min-1.1.3.4.O.jar lib/xstream-1.2.1.jar lib/Spelp-core-services.jar lib/jdom-1.0.jar"/>
 	
 	<path id="classpath">
 		<fileset dir="${lib.dir}">
