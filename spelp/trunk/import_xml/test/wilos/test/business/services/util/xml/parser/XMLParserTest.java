@@ -1376,6 +1376,33 @@ public class XMLParserTest extends TestCase {
 		assertEquals("C'est le représentant du \"métier\" dans le projet. ", theRoleDef.getDescription());
 	}
 	
+	// test to resolve we check the order of the 4 phases of openUP
+	public void testOpenUPOrderisInceptionElabrorationConstructionTransition(){
+		Process openUpProcess = XMLParser.getProcess(pathOPenUP);
+		Activity IterationAct = null;
+		
+		// First Step, Stop on Inception Iteration
+		Iterator<BreakdownElement> itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
+		int num = 0 ;
+		while (itTopLevelAct.hasNext()) {
+			BreakdownElement tmpBde = itTopLevelAct.next();
+			IterationAct = (Activity) tmpBde;
+			if (IterationAct.getPresentationName().equals("Inception Iteration [1..n]")){
+				assertTrue("INCEPTION IS FIRST",num == 0);
+			}
+			else if (IterationAct.getPresentationName().equals("Elaboration Iteration [1..n]")){
+				assertTrue("ELABORATION IS SECOND",num == 1);
+			}
+			else if (IterationAct.getPresentationName().equals("Construction Iteration [1..n]")){
+				assertTrue("CONSTRUCTION IS THIRD",num == 2);
+			}
+			else if (IterationAct.getPresentationName().equals("Transition Iteration [1..n]")){
+				assertTrue("TRANSITION IS FOURTH",num == 3);
+			}
+			num ++ ;
+		}
+	}
+	
 	/*
 	public void testGetProcess(){
 		Process p;		
