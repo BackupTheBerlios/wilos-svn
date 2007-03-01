@@ -409,6 +409,26 @@
 		<property name="participantDao" ref="ParticipantDao" />
 		<property name="concreteRoleDescriptorService" ref="ConcreteRoleDescriptorService" />
 	</bean>
+	
+	<bean id="ProcessManagementService"
+		class="wilos.business.services.spem2.process.ProcessManagementService">
+		<property name="processDao" ref="ProcessDao" />
+		<property name="activityDao" ref="ActivityDao" />
+		<property name="breakdownElementDao" ref="BreakdownElementDao" />
+		<property name="workBreakdownElementDao" ref="WorkBreakdownElementDao" />
+		<property name="phaseDao" ref="PhaseDao" />
+		<property name="iterationDao" ref="IterationDao" />
+		<property name="roleDefinitionDao" ref="RoleDefinitionDao" />
+		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
+		<property name="taskDefinitionDao" ref="TaskDefinitionDao" />
+		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
+		<property name="elementDao" ref="ElementDao" />
+		<property name="projectDao" ref="ProjectDao" />
+		<property name="stepDao" ref="StepDao" />
+		<property name="guidanceDao" ref="GuidanceDao" />
+		<property name="checkListDao" ref="CheckListDao" />
+		<property name="sectionDao" ref="SectionDao" />
+	</bean>
 
 	<!-- =============================================================== -->
 	<!-- ====================== WOOPS2 Service ========================= -->
