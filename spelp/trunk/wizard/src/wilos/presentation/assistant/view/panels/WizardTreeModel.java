@@ -47,7 +47,6 @@ public class WizardTreeModel extends DefaultTreeModel {
 			WizardStateMachine.getInstance().deleteAllStep() ;
 		}
 		HashMap<ConcreteActivity, WizardMutableTreeNode> mapActivity = new HashMap<ConcreteActivity, WizardMutableTreeNode>();
-		int idStep = 0 ;
 		this.root = new DefaultMutableTreeNode(participant.getName());
 		ArrayList<Step> tmp = new ArrayList<Step>();
 		Set<ConcreteRoleDescriptor> roles = participant.getConcreteRoleDescriptors();
@@ -103,8 +102,7 @@ public class WizardTreeModel extends DefaultTreeModel {
 						try {
 							// creating the clone and store them in a list
 							Step sCloned = s.clone();
-							sCloned.setGuid(String.valueOf(idStep));
-							idStep++;
+							sCloned.setGuid(String.valueOf(WizardStateMachine.getIdForStep()));
 							tmp.add(sCloned);
 							
 						} catch (CloneNotSupportedException e) {

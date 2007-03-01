@@ -30,6 +30,8 @@ public class WizardStateMachine extends Observable{
 	public static final Color COLOR_FINISHED = Color.decode("#FF0000") ;
 	public static final Color COLOR_CREATED = Color.black ;
 	
+	private static int idSteps = 0 ;
+		
 	private int currentState = 0;
 	
 	private HashMap<String,Integer> stepState = new HashMap<String,Integer> ();
@@ -38,6 +40,14 @@ public class WizardStateMachine extends Observable{
 			
 	private WizardStateMachine() {
 		
+	}
+	
+	/**
+	 * give an id for the steps
+	 * @return the id
+	 */
+	public static int getIdForStep () {
+		return ++ idSteps  ;
 	}
 	
 	/**
