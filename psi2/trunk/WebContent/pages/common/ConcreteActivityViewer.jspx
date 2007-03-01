@@ -14,6 +14,7 @@
 						disabled="#{ConcreteActivityViewerBean.changeButtonIsDisabled}" />
 					<ice:outputText value="#{msgs['viewer.description'] }" />
 					<ice:outputText value="#{ConcreteActivityViewerBean.concreteActivity.activity.description}" />
+					<ice:outputText value="" />
 					<ice:panelGroup
 						visible="#{ConcreteActivityViewerBean.treeMaskIsAvailable}">
 						<ice:outputText styleClass="propertyLabel" value="#{msgs['viewer.elementsvisible']}" />

@@ -200,6 +200,29 @@
 			<value>#{ParticipantService}</value>
 		</managed-property>
 	</managed-bean>
+	
+		<managed-bean>
+		<managed-bean-name>RolesInstanciationBean</managed-bean-name>
+		<managed-bean-class>wilos.presentation.web.role.RolesInstanciationBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>processService</property-name>
+			<value>#{ProcessService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>activityService</property-name>
+			<value>#{ActivityService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+	</managed-bean>
+	
 
 	<!-- =============================================================== -->
 	<!-- ========================= PSI2 Bean =========================== -->
