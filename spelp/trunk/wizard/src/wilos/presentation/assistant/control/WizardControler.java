@@ -31,6 +31,7 @@ import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.element.Element;
+import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.task.Step;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
@@ -292,6 +293,17 @@ public class WizardControler {
 				retour = tmpNode.getUserObject() ;
 				trouve = (retour != null) ;
 			}
+			// if it is not found maybe it is a guidance
+			else if (tmpNode.getUserObject() instanceof ConcreteTaskDescriptor) {
+				ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor)tmpNode.getUserObject();
+				for (Guidance g : ctd.getTaskDescriptor().getTaskDefinition().getGuidances()){
+					guidNode = g.getGuid() ;
+					if (guidNode != null && guidNode.equals(guid)){
+						retour = g ;
+						trouve = (retour != null) ;
+					}
+				}
+			}
 			if (!trouve) {
 				retour = getElementByGuid(guid,tmpNode);
 				trouve = (retour != null) ;
@@ -319,6 +331,7 @@ public class WizardControler {
 			if (getState(tmpNode.getUserObject()).equals(Constantes.State.STARTED)){
 				if (tmpNode.getUserObject() instanceof ConcreteTaskDescriptor) {
 					ConcreteTaskDescriptor ctdactual = (ConcreteTaskDescriptor) tmpNode.getUserObject() ;
+					pauseConcreteTaskDescriptor(ctdactual);
 					updateTreeVisualAndState(ctdactual, Constantes.State.SUSPENDED,true);
 				}
 			}
