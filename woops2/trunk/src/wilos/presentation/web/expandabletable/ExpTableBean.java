@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.SortedSet;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -78,7 +78,7 @@ public class ExpTableBean {
 
 		List<HashMap<String, Object>> lines = new ArrayList<HashMap<String, Object>>();
 		Activity act = this.activityService.getActivity(_act.getId()) ;
-		Set<BreakdownElement> set = this.activityService.getBreakdownElements(act);
+		SortedSet<BreakdownElement> set = this.activityService.getBreakdownElements(act);
 		act.setBreakdownElements(set);
 		for (BreakdownElement bde : act.getBreakdownElements()) {
 			if (bde instanceof WorkBreakdownElement) {
