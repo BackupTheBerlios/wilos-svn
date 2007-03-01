@@ -630,7 +630,7 @@ body, table {
 }
 
 /* set the common attributes for the column classes */
-.column1, .column2, .column3, .column4, .column5 {
+.column1, .column2, .column3, .column4, .column5, .column6, .column7, .column8 {
     color: #000000;
     padding-left: 5px;
     padding-right: 5px;
@@ -641,10 +641,11 @@ body, table {
     /*text-align: center;*/
 }
 
-/* now you can add or override any attributes for the specific columns */
+/* now you can add or override any attributes for the specific columns 
 .column1 {
     text-align: center;
 }
+*/
 
 .iceTblFooter {
 
