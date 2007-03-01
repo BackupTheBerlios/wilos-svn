@@ -110,18 +110,25 @@ public class TreeBean {
 		this.buildTreeModel();
 	}
 
+	public void rebuildProjectTree() {
+		String prId = (String) this.webSessionService
+				.getAttribute(WebSessionService.PROJECT_ID);
+		this.project = this.projectService.getProject(prId);
+		this.buildTreeModel();
+	}
+
 	private void buildTreeModel() {
 		if (this.projectId != null
 				&& !this.projectId.equals(DEFAULT_PROJECT_ID)) {
 			ProjectNode projectNode;
 			if (this.selectedMode.equals(TASKS_MODE)) {
 				projectNode = new ProjectNode(this.project, true, treeMap);
-				this.webSessionService.setAttribute(WebSessionService.TREE_MODE,
-						TASKS_MODE);
+				this.webSessionService.setAttribute(
+						WebSessionService.TREE_MODE, TASKS_MODE);
 			} else {
 				projectNode = new ProjectNode(this.project, false, treeMap);
-				this.webSessionService.setAttribute(WebSessionService.TREE_MODE,
-						ROLES_MODE);
+				this.webSessionService.setAttribute(
+						WebSessionService.TREE_MODE, ROLES_MODE);
 			}
 			this.model = new DefaultTreeModel(projectNode);
 		} else {
@@ -172,9 +179,10 @@ public class TreeBean {
 
 		this.selectNodeToShow(nodeId, pageId);
 		/*
-		logger.debug("### TreeBean ### HIBERNATE STATS :: \n"
-				+ this.getProcessService().getActivityDao().getSessionFactory()
-						.getStatistics());*/
+		 * logger.debug("### TreeBean ### HIBERNATE STATS :: \n" +
+		 * this.getProcessService().getActivityDao().getSessionFactory()
+		 * .getStatistics());
+		 */
 	}
 
 	/* Manage the select one radio */
@@ -233,7 +241,7 @@ public class TreeBean {
 	/**
 	 * Inserts the SelectItem _si representing a project into the list used by
 	 * the combo
-	 *
+	 * 
 	 * @param _projectsList
 	 *            the projectsList
 	 * @param _si
@@ -255,7 +263,7 @@ public class TreeBean {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param _objectId
 	 * @param _pageId
 	 *            node selection function
