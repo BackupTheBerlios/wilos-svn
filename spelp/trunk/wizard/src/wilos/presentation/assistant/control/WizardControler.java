@@ -71,6 +71,15 @@ public class WizardControler {
 		return src ;
 	}
 	
+	/**
+	 * method to launch the thread at the application start
+	 * used in loginpanel
+	 */
+	public void launchFirstThread() {
+		WizardControler.getInstance().setAllTasksSuspended(null);
+		WizardControler.getInstance().launchBackgroundThreadForTree();
+		/*thread launch*/
+	}
 	
 	public synchronized void launchRefreshTread (){
 		currentThread = new Thread (new Runnable(){
@@ -295,7 +304,7 @@ public class WizardControler {
 	 * updateTree get the tree updated from the server and modify the current
 	 *
 	 */
-	private void setAllTasksSuspended(MutableTreeNode node) {
+	public void setAllTasksSuspended(MutableTreeNode node) {
 		// getting the actual model
 		WizardTreeModel model = (WizardTreeModel) treePanel.getTree().getModel() ;
 		// if it is the first execution

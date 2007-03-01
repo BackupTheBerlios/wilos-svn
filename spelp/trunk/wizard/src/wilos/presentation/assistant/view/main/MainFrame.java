@@ -13,6 +13,8 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 
+import sun.misc.Launcher;
+
 import wilos.presentation.assistant.control.ExceptionManager;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.Bundle;
@@ -84,6 +86,7 @@ public class MainFrame extends JFrame{
 	public static void main(String[] args) 
 	{
 		MainFrame f = new MainFrame();
+		
 	}
 	
 	public MainFrame () 
@@ -122,6 +125,7 @@ public class MainFrame extends JFrame{
 		Point p = getHTMLLocation();
 		WizardControler.getInstance().getDefaultHTML(p);
 	}
+	
 	
 }  
 

@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import wilos.business.util.Security;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.presentation.assistant.control.ServersListParser;
+import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.model.WizardServer;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
@@ -332,6 +333,7 @@ public class LoginPanel extends JPanel {
 
 			WizardMainFrame wmf = new WizardMainFrame();
 			wmf.setParticipant(p);
+			WizardControler.getInstance().launchFirstThread() ;
 			wmf.setVisible(true);
     	
 			mframe.setVisible(false);

@@ -45,14 +45,10 @@ public class WizardMainFrame extends JFrame {
 	public WizardMainFrame() {
 		super();
 		initialize();
-		launchFirstThread();
 		
 	}
 
-	private void launchFirstThread() {
-		WizardControler.getInstance().launchBackgroundThreadForTree();
-		/*thread launch*/
-	}
+	
 
 	/**
 	 * This method initializes this
