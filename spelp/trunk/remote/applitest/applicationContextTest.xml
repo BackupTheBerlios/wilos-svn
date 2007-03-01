@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ws="http://jax-ws.dev.java.net/spring/core"
+	xmlns:ws="http://jax-ws.dev.java.net/spring/core"
     xmlns:wss="http://jax-ws.dev.java.net/spring/servlet" 	
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="
@@ -11,20 +11,8 @@
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
 	http://jax-ws.dev.java.net/spring/core http://jax-ws.dev.java.net/spring/core.xsd 
-	http://jax-ws.dev.java.net/spring/servlet http://jax-ws.dev.java.net/spring/servlet.xsd
-	"
+	http://jax-ws.dev.java.net/spring/servlet http://jax-ws.dev.java.net/spring/servlet.xsd"
 	default-lazy-init="true">
-	
-	<!-- Webservices Definition -->
-	<wss:bindings id="jax-ws.http">
-		<wss:bindings>
-			<wss:binding url="/WizardServices">
-				<wss:service>
-					<ws:service bean="#WizardServices" />
-				</wss:service>
-			</wss:binding>
-		</wss:bindings>
-	</wss:bindings>
 
 	<!-- DataSource Definition -->
 	<bean id="dataSource"
@@ -43,6 +31,7 @@
 			<value></value>
 		</property>
 	</bean>
+
 	<!-- Hibernate SessionFactory Definition -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
@@ -125,7 +114,7 @@
 				</value>	
 				<value>
 					wilos/model/spem2/section/Section.hbm.xml
-				</value>							
+				</value>				
 			</list>
 		</property>
 
@@ -136,12 +125,21 @@
 				</prop>
 				<!-- Mise a false pour eviter les affichages des requetes SQL -->
 				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.generate_statistics">true</prop>
 				<prop key="hibernate.cglib.use_reflection_optimizer">
 					true
 				</prop>
-				<prop key="hibernate.cache.provider_class">
-					org.hibernate.cache.EhCacheProvider
-				</prop>
+				<prop key="hibernate.c3p0.min_size">5</prop>
+				<prop key="hibernate.c3p0.max_size">20</prop>
+				<prop key="hibernate.c3p0.timeout">1800</prop>
+				<prop key="hibernate.c3p0.max_statement">50</prop>
+
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+				<prop key="hibernate.cache.use_minimal_puts">true</prop>
+
+				<prop key="hibernate.default_batch_fetch_size">16</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>
 		</property>
@@ -177,9 +175,21 @@
 
 	<!-- enable the configuration of transactional behavior based on annotations -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+		
+	<!-- Webservices Definition -->
+	<wss:bindings id="jax-ws.http">
+		<wss:bindings>
+			<wss:binding url="/WizardServices">
+				<wss:service>
+					<ws:service bean="#WizardServices" />
+				</wss:service>
+			</wss:binding>
+		</wss:bindings>
+	</wss:bindings>
 
 	<!-- ========================= Start of BEAN DEFINITIONS ========================= -->
-	
+
 	<!-- ========================= Webservices Layer ========================= -->
 	<bean id="WizardServices"
 		class="wilos.business.webservices.WizardServices">
@@ -187,7 +197,6 @@
 		<property name="assistantService" ref="AssistantService" />
 	</bean>
 	
-
 	<!-- ========================= DAO Layer ========================= -->
 
 	<!-- =============================================================== -->
@@ -204,8 +213,7 @@
 	<bean id="SectionDao"
 		class="wilos.hibernate.spem2.section.SectionDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
-	</bean>		
-
+	</bean>
 
 	<!-- =============================================================== -->
 	<!-- ========================= PSI2 DAO ============================ -->
@@ -362,6 +370,7 @@
 		<property name="sectionDao" ref="SectionDao" />
 	</bean>	
 
+
 	<!-- =============================================================== -->
 	<!-- ======================= PSI2 Service ========================= -->
 	<!-- =============================================================== -->
@@ -370,7 +379,7 @@
 		<property name="participantDao" ref="ParticipantDao" />
 		<property name="projectService" ref="ProjectService" />
 		<property name="concreteRoleDescriptorService" ref="ConcreteRoleDescriptorService" />
-		
+
 	</bean>
 
 	<bean id="ProcessManagerService"
@@ -394,11 +403,31 @@
 		<property name="participantDao" ref="ParticipantDao" />
 		<property name="processService" ref="ProcessService" />
 	</bean>
-	
+
 	<bean id="ConcreteRoleAffectationService"
 		class="wilos.business.services.misc.role.ConcreteRoleAffectationService">
 		<property name="participantDao" ref="ParticipantDao" />
 		<property name="concreteRoleDescriptorService" ref="ConcreteRoleDescriptorService" />
+	</bean>
+	
+	<bean id="ProcessManagementService"
+		class="wilos.business.services.spem2.process.ProcessManagementService">
+		<property name="processDao" ref="ProcessDao" />
+		<property name="activityDao" ref="ActivityDao" />
+		<property name="breakdownElementDao" ref="BreakdownElementDao" />
+		<property name="workBreakdownElementDao" ref="WorkBreakdownElementDao" />
+		<property name="phaseDao" ref="PhaseDao" />
+		<property name="iterationDao" ref="IterationDao" />
+		<property name="roleDefinitionDao" ref="RoleDefinitionDao" />
+		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
+		<property name="taskDefinitionDao" ref="TaskDefinitionDao" />
+		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
+		<property name="elementDao" ref="ElementDao" />
+		<property name="projectDao" ref="ProjectDao" />
+		<property name="stepDao" ref="StepDao" />
+		<property name="guidanceDao" ref="GuidanceDao" />
+		<property name="checkListDao" ref="CheckListDao" />
+		<property name="sectionDao" ref="SectionDao" />
 	</bean>
 
 	<!-- =============================================================== -->
@@ -431,18 +460,21 @@
 			ref="RoleDescriptorService" />
 		<property name="roleDefinitionService"
 			ref="RoleDefinitionService" />
+		<property name="checkListService" ref="CheckListService" />
 		<property name="taskDefinitionDao" ref="TaskDefinitionDao" />
 		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
 		<property name="taskDescriptorService"
 			ref="TaskDescriptorService" />
 		<property name="taskDefinitionService"
 			ref="TaskDefinitionService" />
+		<property name="webSessionService" ref="WebSessionService" />
+		<property name="processManagerService" ref="ProcessManagerService" />
 		<property name="elementDao" ref="ElementDao" />
 		<property name="projectDao" ref="ProjectDao" />
 		<property name="stepDao" ref="StepDao" />
 		<property name="guidanceDao" ref="GuidanceDao" />
-		<!-- <property name="checklistDao" ref="CheckListDao" /> -->
-		<!-- <property name="sectionDao" ref="SectionDao" /> -->
+		<property name="checkListDao" ref="CheckListDao" />
+		<property name="sectionDao" ref="SectionDao" />
 		<property name="concreteBreakdownElementService"
 			ref="ConcreteBreakdownElementService" />
 	</bean>
@@ -452,7 +484,7 @@
 		<property name="concreteBreakdownElementDao"
 			ref="ConcreteBreakdownElementDao" />
 	</bean>
-	
+
 	<bean id="WorkBreakdownElementService"
 		class="wilos.business.services.spem2.workbreakdownelement.WorkBreakdownElementService">
 		<property name="concreteWorkBreakdownElementDao"
@@ -475,7 +507,7 @@
 			ref="ConcreteRoleDescriptorDao" />
 		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
 	</bean>
-	
+
 	<bean id="RoleDefinitionService"
 		class="wilos.business.services.spem2.role.RoleDefinitionService">
 		<property name="roleDefinitionDao" ref="RoleDefinitionDao" />
@@ -487,7 +519,7 @@
 			ref="ConcreteTaskDescriptorDao" />
 		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
 	</bean>
-	
+
 	<bean id="TaskDefinitionService"
 		class="wilos.business.services.spem2.task.TaskDefinitionService">
 		<property name="taskDefinitionDao" ref="TaskDefinitionDao" />
@@ -549,7 +581,6 @@
 		class="wilos.business.services.misc.concretebreakdownelement.ConcreteBreakdownElementService">
 		<property name="concreteBreakdownElementDao" ref="ConcreteBreakdownElementDao" />
 	</bean>
-
 
 	<!-- Service de test -->
 	<bean id="InitAppliService"
