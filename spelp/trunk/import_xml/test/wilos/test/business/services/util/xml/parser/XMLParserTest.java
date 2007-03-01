@@ -1402,6 +1402,72 @@ public class XMLParserTest extends TestCase {
 		}
 	}
 	
+	public void testScrumPreparationPhaseContainsRightMainDescriptionAndKeyConsiderations () {
+		Process theProcess;
+		theProcess = XMLParser.getProcess(pathScrum);
+		Phase thePhase = null;
+		String expectedMainDescription = "<p>\n" +
+			"    Scrum ne prend pas en compte tous les aspects de préparation d'un projet. Seules sont présentées les taches spécifiques\n" +
+			"    de Scrum plus une qui regroupe tous les travaux pouvant etre réalisés\n" +
+			"</p>";
+
+		for (BreakdownElement bde : theProcess.getBreakdownElements()) {
+			if (bde.getName().equals("Preparation Phase")) {
+				thePhase = (Phase) bde;
+				break;
+			}
+		}
+		
+		assertEquals(thePhase.getMainDescription(), expectedMainDescription);
+		assertEquals(thePhase.getKeyConsiderations(), "");
+	}
+		
+	public void testScrumRDContainsRightMainDescriptionAndKeyConsiderations () {
+		Process theProcess;
+		theProcess = XMLParser.getProcess(pathScrum);
+		Activity thePhase = null;
+		RoleDescriptor theRoleDesc = null;
+		RoleDefinition theRoleDef;
+		String expectedMainDescription = "<p>\n" +
+				"    Le <b>Directeur de produit</b> (<i>Product Owner</i>) est le représentant des clients et utilisateurs. Il agit comme un\n" +
+				"    \"proxy\" du \"métier\" au sein de l'équipe Scrum.\n" +
+				"</p>\n" +
+				"<p>\n" +
+				"    Le terme <i>Directeur</i> n'est pas à prendre au sens hiérarchique du terme, mais dans le sens de l'<i>orientation</i>.\n" +
+				"</p>\n" +
+				"<p>\n" +
+				"    Il détermine les caractéristiques du produit et définit le contenu en termes d'exigences. C'est lui qui définit\n" +
+				"    l'<b>ordre</b> dans lequel les exigences seront développées et qui prend les décisions importantes concernant\n" +
+				"    l'orientation du projet. Il veille à la rentabilité du produit (ROI).\n" +
+				"</p>\n" +
+				"<p>\n" +
+				"    Il est souhaitable qu'il spécifie&nbsp;les tests fonctionnels (acceptance tests), voire qu'il les passe s'ils ne sont\n" +
+				"    pas automatisés.\n" +
+				"</p>";
+		String expectedKeyConsiderations = "<p>\n" +
+				"    L'implication dans le projet doit être importante pour assurer son succès\n" +
+				"</p>";
+
+		for (BreakdownElement bde : theProcess.getBreakdownElements()) {
+			if (bde.getName().equals("Preparation Phase")) {
+				thePhase = (Activity) bde;
+				break;
+			}
+		}
+		
+		for (BreakdownElement bde : thePhase.getBreakdownElements()) {
+			if (bde.getName().equals("Product Owner")) {
+				theRoleDesc = (RoleDescriptor) bde;
+				break;
+			}
+		}
+		
+		theRoleDef = theRoleDesc.getRoleDefinition();
+		
+		assertEquals(theRoleDef.getMainDescription(), expectedMainDescription);
+		assertEquals(theRoleDef.getKeyConsiderations(), expectedKeyConsiderations);
+	}
+	
 	/*
 	public void testGetProcess(){
 		Process p;		
