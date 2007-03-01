@@ -19,7 +19,7 @@ import wilos.model.spem2.element.Element;
  * @author deder
  *
  */
-public class BreakdownElement extends Element implements Cloneable {
+public class BreakdownElement extends Element implements Cloneable, Comparable {
 
 	private String presentationName;
 
@@ -179,6 +179,14 @@ public class BreakdownElement extends Element implements Cloneable {
 		for(Activity activity : this.getSuperActivities())
 			activity.getBreakdownElements().remove(this) ;
 		this.getSuperActivities().clear() ;
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(Object _arg0) {
+		return (this.getInsertionOrder()
+					- ((BreakdownElement) _arg0).getInsertionOrder()) ;
 	}
 
 	/**

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -105,9 +107,9 @@ public class ActivityService {
 	 * @param _act
 	 * @return
 	 */
-	public Set<BreakdownElement> getBreakdownElements(Activity _act) {
+	public SortedSet<BreakdownElement> getBreakdownElements(Activity _act) {
 		
-		Set<BreakdownElement> tmp = new HashSet<BreakdownElement>();
+		SortedSet<BreakdownElement> tmp = new TreeSet<BreakdownElement>();
 		
 		this.activityDao.getSessionFactory().getCurrentSession().saveOrUpdate(_act);
 		

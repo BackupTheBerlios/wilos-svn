@@ -3,6 +3,8 @@ package wilos.model.spem2.activity ;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -25,7 +27,7 @@ import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
  */
 public class Activity extends WorkBreakdownElement implements Cloneable {
 
-	private Set<BreakdownElement> breakdownElements ;
+	private SortedSet<BreakdownElement> breakdownElements ;
 
 	private Set<ConcreteActivity> concreteActivities;
 
@@ -43,7 +45,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 */
 	public Activity() {
 		super() ;
-		this.breakdownElements = new HashSet<BreakdownElement>() ;
+		this.breakdownElements = new TreeSet<BreakdownElement>() ;
 		this.concreteActivities = new HashSet<ConcreteActivity>();
 		this.guidances = new HashSet<Guidance>();
 		this.howToStaff = "";
@@ -217,7 +219,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 * @param _breakDownElements
 	 *            The breakDownElements to set.
 	 */
-	public void setBreakdownElements(Set<BreakdownElement> _breakDownElements) {
+	public void setBreakdownElements(SortedSet<BreakdownElement> _breakDownElements) {
 		//this.breakdownElements.addAll(_breakDownElements);
 		this.breakdownElements = _breakDownElements;
 	}
