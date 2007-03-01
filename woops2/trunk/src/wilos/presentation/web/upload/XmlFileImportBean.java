@@ -16,6 +16,7 @@ import javax.faces.event.ActionEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.spem2.process.Process;
 
@@ -32,6 +33,8 @@ public class XmlFileImportBean {
 	private File file = null;
 
 	private ProcessService processService;
+	
+	private WebSessionService webSessionService;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -215,7 +218,9 @@ public class XmlFileImportBean {
 				// save the process
 				logger.debug("### XmlFileImportBean ### action -> id=" + p.getId());
 				/* id = */
-				this.processService.saveProcess(p);
+				String managerId = (String) this.webSessionService
+				.getAttribute(WebSessionService.WILOS_USER_ID);
+				this.processService.saveProcess(p, managerId);
 				// stop the progress bar
 				this.percent = -1;
 				ResourceBundle bundle = ResourceBundle.getBundle(
@@ -283,5 +288,19 @@ public class XmlFileImportBean {
 
 	public void setProcessService(ProcessService processService) {
 		this.processService = processService;
+	}
+
+	/**
+	 * @return the webSessionService
+	 */
+	public WebSessionService getWebSessionService() {
+		return this.webSessionService;
+	}
+
+	/**
+	 * @param _webSessionService the webSessionService to set
+	 */
+	public void setWebSessionService(WebSessionService _webSessionService) {
+		this.webSessionService = _webSessionService;
 	}
 }

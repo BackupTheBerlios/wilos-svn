@@ -172,7 +172,7 @@ public class ProcessService {
 	 *
 	 * @param _process
 	 */
-	public void saveProcess(Process _process) {
+	public void saveProcess(Process _process, String _processManagerId) {
 
 		Process clone = null;
 
@@ -244,11 +244,7 @@ public class ProcessService {
 		_process.addAllSuccessors(clone.getSuccessors());
 		_process.addAllSuperActivities(clone.getSuperActivities());
 		
-		
-		String managerId = (String) this.webSessionService
-			.getAttribute(WebSessionService.WILOS_USER_ID);	
-		
-		_process.addProcessManager(this.processManagerService.getProcessManager(managerId));
+		_process.addProcessManager(this.processManagerService.getProcessManager(_processManagerId));
 		
 		// update of the project
 		this.processDao.saveOrUpdateProcess(_process);
@@ -707,7 +703,7 @@ public class ProcessService {
 
 		if (_guidance instanceof CheckList) {
 			CheckList cl = (CheckList) _guidance;
-			this.parseCheckList(cl);
+			this.parseCheckList(cl);			
 		}	
 		else {
 			this.guidanceDao.saveOrUpdateGuidance(_guidance);

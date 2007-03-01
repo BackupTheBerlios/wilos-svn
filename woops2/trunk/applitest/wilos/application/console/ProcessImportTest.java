@@ -15,10 +15,10 @@ public class ProcessImportTest {
 		
 		ProcessService am = (ProcessService) ctx.getBean("ProcessService");
 		Process scrum = am.spelpParsingXML(new File("applitest/wilos/application/console/scrum.xml"));
-		am.saveProcess(scrum);
+		//am.saveProcess(scrum);
 		
 		Process openup = am.spelpParsingXML(new File("applitest/wilos/application/console/openUP.xml"));
 		//Process openup = am.spelpParsingXML(new File("applitest/wilos/application/console/openup.zip"));
-		am.saveProcess(openup);
+		//am.saveProcess(openup);
 		}
 }

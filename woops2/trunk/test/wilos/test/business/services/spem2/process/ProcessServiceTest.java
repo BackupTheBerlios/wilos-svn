@@ -45,7 +45,8 @@ public class ProcessServiceTest {
 		// Rk: the setUp method is called here.
 
 		// Save the activity.
-		this.processService.saveProcess(this.process);
+		//FIXME rajouter le wilosuserid en param de saveProcess
+		//this.processService.saveProcess(this.process);
 
 		// Look if this activity is also into the database and look if the size
 		// of the set is >= 1.
@@ -61,7 +62,8 @@ public class ProcessServiceTest {
 		// Rk: the setUp method is called here.
 
 		// Save the activity.
-		this.processService.saveProcess(this.process);
+		//FIXME rajouter le wilosuserid en param de saveProcess
+		//this.processService.saveProcess(this.process);
 
 		// Rk: the tearDown method is called here.
 	}
