@@ -171,10 +171,11 @@ public class ProjectBean {
 		}
 		FacesContext context = FacesContext.getCurrentInstance();
 		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");
-		tb.refreshProjectTree();
+		tb.rebuildProjectTree();
 
 		ProjectAdvancementBean pab = (ProjectAdvancementBean) context.getApplication().getVariableResolver().resolveVariable(context, "ProjectAdvancementBean");
 		pab.refreshProjectTable();
+		
 
 		return "";
 	}
