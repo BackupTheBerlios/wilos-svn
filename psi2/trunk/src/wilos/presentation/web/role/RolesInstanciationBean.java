@@ -109,7 +109,7 @@ public class RolesInstanciationBean {
 		String indentationString = "";
 		
 		Activity act = this.activityService.getActivity(_act.getId());
-		Set<BreakdownElement> set = this.activityService.getBreakdownElements(act);
+		SortedSet<BreakdownElement> set = this.activityService.getBreakdownElements(act);
 		act.setBreakdownElements(set);
 		for (BreakdownElement bde : act.getBreakdownElements())
 		{
