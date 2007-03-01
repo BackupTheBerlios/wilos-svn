@@ -45,6 +45,8 @@ import wilos.presentation.assistant.webservices.WizardServicesProxy;
 import wilos.utils.Constantes;
 
 public class WizardControler {
+	private static final int DELETION = 0;
+	private static final int ADDITION = 1;
 	private static WizardControler wc = null;
 	private ActionBar actionBar = null;
 	private TreePanel treePanel = null ;
@@ -191,6 +193,7 @@ public class WizardControler {
 						trouve = trouve || ((id1 != null) && id1.equals(id2));
 				}
 				if (!trouve){
+					manageStatesStep(tmpActualNode, DELETION);
 					model.removeNodeFromParent(tmpActualNode);
 					nbdiff++;
 				}
@@ -225,12 +228,42 @@ public class WizardControler {
 			else if(!trouve){
 				if (!(tmpNewNode.getUserObject() instanceof Step)){
 					WizardMutableTreeNode nodeToInsert = (WizardMutableTreeNode) tmpNewNode.clone() ;
+					manageStatesStep(nodeToInsert, ADDITION);
 					model.insertNodeInto(nodeToInsert,actualNode, newNode.getIndex(tmpNewNode));
 				}
 			}
 		}
 	}
 		
+	private void manageStatesStep (WizardMutableTreeNode node, int type) {
+		for (Enumeration<WizardMutableTreeNode> e = node.children() ; e.hasMoreElements();){
+			WizardMutableTreeNode child = e.nextElement() ;
+			if (child.getUserObject() instanceof Step){
+				Step s = (Step)child.getUserObject();
+				switch (type){
+					case DELETION :
+							WizardStateMachine.getInstance().deleteStep(s);
+						break;
+					case ADDITION :
+						ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) ((WizardMutableTreeNode)child.getParent()).getUserObject() ;
+						if (ctd.getState().equals(Constantes.State.STARTED)){
+							WizardStateMachine.getInstance().addStep(s,WizardStateMachine.STATE_STEP_READY ) ;
+						}
+						else if (ctd.getState().equals(Constantes.State.FINISHED)){
+							WizardStateMachine.getInstance().addStep(s,WizardStateMachine.STATE_STEP_FINISHED ) ;
+						}
+						else {
+							WizardStateMachine.getInstance().addStep(s,WizardStateMachine.STATE_STEP_CREATED ) ;
+						}
+						break ;
+				}
+			}
+			else {
+				manageStatesStep(child, type);
+			}
+		}
+	}
+	
 	public Object getElementByGuid(String guid,MutableTreeNode node) {
 		// getting the actual model
 		boolean trouve = false ; 
