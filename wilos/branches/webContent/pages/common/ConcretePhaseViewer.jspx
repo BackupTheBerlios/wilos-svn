@@ -14,6 +14,7 @@
 						disabled="#{ConcretePhaseViewerBean.changeButtonIsDisabled}" />
 					<ice:outputText value="#{msgs['viewer.description'] }" />
 					<ice:outputText value="#{ConcretePhaseViewerBean.concretePhase.phase.description}" />
+					<ice:outputText value="" />
 					<ice:panelGroup
 						visible="#{ConcretePhaseViewerBean.treeMaskIsAvailable}">
 						<ice:outputText styleClass="propertyLabel" value="#{msgs['viewer.elementsvisible']}" />
