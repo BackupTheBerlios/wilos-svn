@@ -1,1 +1,0 @@
-update concretetaskdescriptor set state="Ready";
