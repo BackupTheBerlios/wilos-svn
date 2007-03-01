@@ -1138,9 +1138,9 @@ public class XMLParserTest extends TestCase {
 		int nbCheckList = 0;
 		while (itGuidance.hasNext()) {
 			Guidance tmpGuidance = itGuidance.next();			
-			if (tmpGuidance.getType().equals(Guidance.checklist)) {
-				nbCheckList++;
-				if (tmpGuidance instanceof CheckList) {				
+				if (tmpGuidance instanceof CheckList) {
+					nbCheckList++;
+					
 					// test if the checklist is good requirement
 					if (tmpGuidance.getName().equals("good_requirements")) {
 						// check the different sections of this checklist
@@ -1161,7 +1161,6 @@ public class XMLParserTest extends TestCase {
 						}	
 						assertTrue(nbSectionsVision == 10);
 					}
-				}
 			}
 		}
 		assertTrue(nbCheckList == 2);
