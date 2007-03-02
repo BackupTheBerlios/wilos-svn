@@ -14,6 +14,7 @@ import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -65,6 +66,7 @@ public class WizardControler {
 	private int flagThread ;
 	private Integer nbTasksTaskStarted =  new Integer(0) ;
 	private Object MUTEX = new Object() ;
+	private TimeThread currentTask = new TimeThread();
 	private Object MUTEX_REFRESH_TIME = new Object() ;
 	private WizardControler() {
 		
@@ -704,6 +706,21 @@ public class WizardControler {
 		ActionListener actionPlay = new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				playTask();
+			    ConcreteTaskDescriptor c =(ConcreteTaskDescriptor)WizardControler.getInstance().getLastCtd();
+		        currentTask.demarrer();
+		        long val1=0;
+				float val2;
+				String res;
+				Float a = new Float(c.getAccomplishedTime());
+				val1 = a.intValue();
+				val2 = a.floatValue()-( (float)a.intValue()); 
+				res = String.valueOf(val2);
+				res = res.substring(2);
+				System.out.println(a.floatValue());
+				System.out.println(res);
+				
+				//currentTask.init(val1*100);
+				currentTask.run();
 				
 			}			
 		};
@@ -711,6 +728,7 @@ public class WizardControler {
 			public void actionPerformed(ActionEvent e) {
 				pauseTask();
 				
+				//System.out.println(c.getConcreteName());	
 			}
 		};
 		ActionListener actionFinish = new ActionListener(){
