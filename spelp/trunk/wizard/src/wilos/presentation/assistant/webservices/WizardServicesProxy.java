@@ -8,6 +8,7 @@ import java.net.URL;
 import java.text.Format;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Set;
 
@@ -149,7 +150,36 @@ public class WizardServicesProxy {
             }
         }
     
+
         
+        public static void setRemainingTimeByTask(String taskGuid,int newTime) {
+            try { 
+            	if (!login.equalsIgnoreCase(testIHMLoginString)) {
+            		WizardServicesService service = new WizardServicesService(new URL(address+ENDPOINT), new QName(URLWebService, nameWebService));            	
+                    WizardServices port = service.getWizardServicesPort();
+                    port.setRemainingTimeByTask(login, password, taskGuid, newTime);
+            	}
+            }
+            catch (java.lang.Exception e) {
+                e.printStackTrace();
+                new ExceptionManager(e);
+            }
+        }
+
+        public static void setAccomplishedTimeByTask(String taskGuid,int newTime) {
+            try { 
+            	if (!login.equalsIgnoreCase(testIHMLoginString)) {
+            		WizardServicesService service = new WizardServicesService(new URL(address+ENDPOINT), new QName(URLWebService, nameWebService));            	
+                    WizardServices port = service.getWizardServicesPort();
+                    port.setAccomplishedTimeByTask(login, password, taskGuid, newTime);
+            	}
+            }
+            catch (java.lang.Exception e) {
+                e.printStackTrace();
+                new ExceptionManager(e);
+            }
+        }
+        	
         
         private static Participant getParticipantExample () {
         	// cancel the background refresh thread for the sample  

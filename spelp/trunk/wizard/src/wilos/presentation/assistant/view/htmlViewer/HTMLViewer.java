@@ -260,9 +260,9 @@ public class HTMLViewer extends JFrame {
 		// -----------TO DOWNLOAD THE ASSOCIATED FILE----------------
 		if (e instanceof Guidance) {
 			// download the associated file of the current guidance if exist 
-			//if (((Guidance) e).getAttachment() != "") {
+			if (((Guidance) e).getAttachment() != "") {
 				downloadAssociatedFileFromRemote();
-			//}
+			}
 		}
 		
 	
