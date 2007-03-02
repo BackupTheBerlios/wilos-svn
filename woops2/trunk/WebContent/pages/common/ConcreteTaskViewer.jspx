@@ -100,6 +100,11 @@
 								actionListener="#{ConcreteTaskViewerBean.removeActionListener}"
 								visible="#{ConcreteTaskViewerBean.visibleRemove}"
 								styleClass="smallbutton"/>
+								<ice:commandButton value="#{msgs['concretetaskviewer.dissociateButton']}"
+								visible="#{ConcreteTaskViewerBean.dissociateButtonIsVisible}"
+								action="#{ConcreteTaskViewerBean.dissociateTask}"
+								styleClass="smallbutton" />
+								
 							</td>
 						</tr>
 					</table>
