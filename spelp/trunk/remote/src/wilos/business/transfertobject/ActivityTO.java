@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import wilos.model.spem2.activity.Activity;
+import wilos.model.spem2.checklist.CheckList;
 import wilos.model.spem2.guide.Guidance;
 
 public class ActivityTO extends Activity implements Serializable {
@@ -20,7 +21,10 @@ public class ActivityTO extends Activity implements Serializable {
 			
 			Set<Guidance> guidances = new HashSet<Guidance>();
 	        for (Guidance g : _activity.getGuidances()) {
-	        	guidances.add(new GuidanceTO(g));	        	
+	        	if (g instanceof CheckList)
+	        		guidances.add(new CheckListTO((CheckList)g));	
+	        	else
+	        		guidances.add(new GuidanceTO(g));	        	
 	        }
 	        this.setGuidances(guidances);
 		}
