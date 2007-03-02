@@ -271,13 +271,13 @@ public class HTMLViewer extends JFrame {
 		// TODO REMPLACER CE CODE PAR UNE FONCTION QUI AFFICHE TOUS LES ELEMENTS
 		// *************************************************************
 		if (e instanceof CheckList) {
-			String description = "<TABLE WIDTH=\"95%\" VALIGN=top>";
+			String description = "<TABLE BORDER=1>";
 			CheckList c = (CheckList) e;
 			Set<Section> sections = new HashSet<Section>();
 			sections = c.getSections();
 			for(Iterator it = sections.iterator() ; it.hasNext() ; ) {
 				Section s = (Section)it.next();
-				description += "<TR><TD><INPUT type=\"checkbox\"></TD><TD nowrap><B>" + s.getName() + "</B> :</TD><TD>" + s.getDescription() + "</TD></TR>";
+				description += "<TR><TD><INPUT type=\"checkbox\"></TD><TD><B>" + s.getName() + "</B> :</TD><TD>" + s.getDescription() + "</TD></TR>";
 			}
 			description += "</TABLE>";
 			this.HTMLCode = description;

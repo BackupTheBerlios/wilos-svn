@@ -136,7 +136,7 @@ public class LoginPanel extends JPanel {
         	        	        	 
         	for (int i=0;i<list.size();i++)
         	{
-        		aliasAdress = list.get(i).getAlias();
+        		aliasAdress = list.get(i).getAlias() + " => " + list.get(i).getAddress();
 //        		this.adressTextField.addItem(list.get(i).getAddress());
         		this.adressTextField.addItem(aliasAdress);
         	}
