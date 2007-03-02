@@ -254,10 +254,6 @@ public class OptionFrame extends JDialog {
 			}
 			if (((Integer)delay.getValue()*1000)!=WizardControler.getInstance().getTimeToRefresh())
 			{
-				System.out.print("old :");
-				System.out.println((WizardControler.getInstance().getTimeToRefresh()));
-				System.out.print("new :");
-				System.out.println((Integer)delay.getValue());
 				if ((WizardControler.getInstance().getTimeToRefresh() == 0)&&((Integer)delay.getValue() != 0))
 				{
 					WizardControler.getInstance().setTimeToRefresh((Integer)delay.getValue());
