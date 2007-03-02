@@ -786,37 +786,32 @@ public class ProcessService {
 		Process p = this.processDao.getProcess(_project.getProcess().getId());
 
 		// elements of collection getting
-		//List<BreakdownElement> forInstanciation = new ArrayList<BreakdownElement>();
 		Set<BreakdownElement> forInstanciation = this.activityService.getInstanciableBreakdownElements(p);
-
-		Set<ConcreteBreakdownElement> tmp = new HashSet<ConcreteBreakdownElement>();
 
 		for (BreakdownElement bde : forInstanciation) {
 			if (bde instanceof Phase) {
 				Phase ph = (Phase) bde;
-				tmp.add(this.phaseService.phaseInstanciation(_project, ph));
+				this.phaseService.phaseInstanciation(_project, ph, _project);
 			} else {
 				if (bde instanceof Iteration) {
 					Iteration it = (Iteration) bde;
-					tmp.add(this.iterationService.iterationInstanciation(_project, it));
+					this.iterationService.iterationInstanciation(_project, it, _project);
 				} else {
 					if (bde instanceof Activity) {
 						Activity act = (Activity) bde;
-						tmp.add(this.activityService.activityInstanciation(_project, act));
+						this.activityService.activityInstanciation(_project, act, _project);
 					} else {
 						if (bde instanceof RoleDescriptor) {
 							RoleDescriptor rd = (RoleDescriptor) bde;
-							this.roleDescriptorService.roleDescriptorInstanciation(_project, rd);
+							this.roleDescriptorService.roleDescriptorInstanciation(_project, rd, _project);
 						} else {
 							TaskDescriptor td = (TaskDescriptor) bde;
-							this.taskDescriptorService.taskDescriptorInstanciation(_project, td);
+							this.taskDescriptorService.taskDescriptorInstanciation(_project, td, _project);
 						}
 					}
 				}
 			}
 		}
-
-		_project.addAllConcreteBreakdownElements(tmp);
 
 		this.projectDao.saveOrUpdateProject(_project);
 		System.out.println("### Project update");

@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import wilos.hibernate.misc.concretetask.ConcreteTaskDescriptorDao;
 import wilos.hibernate.spem2.task.TaskDescriptorDao;
-import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
+import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.role.RoleDescriptor;
@@ -26,7 +26,7 @@ public class TaskDescriptorService {
 
 	private TaskDescriptorDao taskDescriptorDao;
 
-	public ConcreteBreakdownElement taskDescriptorInstanciation (Project _project, TaskDescriptor _td) {
+	public void taskDescriptorInstanciation (Project _project, TaskDescriptor _td, ConcreteActivity _cact) {
 
 		ConcreteTaskDescriptor ctd = new ConcreteTaskDescriptor();
 
@@ -37,11 +37,11 @@ public class TaskDescriptorService {
 
 		ctd.addTaskDescriptor(_td);
 		ctd.setProject(_project);
+		ctd.addSuperConcreteActivity(_cact);
 
 		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(ctd);
 		System.out.println("### ConcreteTaskDescriptor sauve");
-		
-		return ctd;
+
 	}
 	
 	/**

@@ -1,9 +1,7 @@
 package wilos.business.services.spem2.phase;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +11,7 @@ import wilos.business.services.spem2.iteration.IterationService;
 import wilos.business.services.spem2.role.RoleDescriptorService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.hibernate.misc.concretephase.ConcretePhaseDao;
-import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
+import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
@@ -44,14 +42,12 @@ public class PhaseService {
 	 * @param _project project for which the Phase shall be instanciated
 	 * @param _phase phase to instanciates
 	 */
-	public ConcretePhase phaseInstanciation (Project _project, Phase _phase) {
+	public void phaseInstanciation (Project _project, Phase _phase, ConcreteActivity _cact) {
 
 		ConcretePhase cp = new ConcretePhase();
 		
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 		bdes.addAll(_phase.getBreakdownElements());
-		
-		Set<ConcreteBreakdownElement> tmp = new HashSet<ConcreteBreakdownElement>();
 
 		if (_phase.getPresentationName() == null)
 			cp.setConcreteName(_phase.getName()) ;
@@ -60,6 +56,7 @@ public class PhaseService {
 
 		cp.addPhase(_phase);
 		cp.setProject(_project);
+		cp.addSuperConcreteActivity(_cact);
 
 		this.concretePhaseDao.saveOrUpdateConcretePhase(cp);
 		System.out.println("### ConcretePhase vide sauve");
@@ -67,34 +64,31 @@ public class PhaseService {
 		for (BreakdownElement bde : bdes ) {
 			if (bde instanceof Phase) {
 				Phase ph = (Phase) bde;
-				tmp.add(this.phaseInstanciation(_project, ph));
+				this.phaseInstanciation(_project, ph, cp);
 			} else {
 				if (bde instanceof Iteration) {
 					Iteration it = (Iteration) bde;
-					tmp.add(this.iterationService.iterationInstanciation(_project, it));
+					this.iterationService.iterationInstanciation(_project, it, cp);
 				} else {
 					if (bde instanceof Activity) {
 						Activity act = (Activity) bde;
-						tmp.add(this.activityService.activityInstanciation(_project, act));
+						this.activityService.activityInstanciation(_project, act, cp);
 					} else {
 						if (bde instanceof RoleDescriptor) {
 							RoleDescriptor rd = (RoleDescriptor) bde;
-							tmp.add(this.roleDescriptorService.roleDescriptorInstanciation(_project, rd));
+							this.roleDescriptorService.roleDescriptorInstanciation(_project, rd, cp);
 						} else {
 							TaskDescriptor td = (TaskDescriptor) bde;
-							tmp.add(this.taskDescriptorService.taskDescriptorInstanciation(_project, td));
+							this.taskDescriptorService.taskDescriptorInstanciation(_project, td, cp);
 						}
 					}
 				}
 			}
 		}
 		
-		cp.addAllConcreteBreakdownElements(tmp);
-		
 		this.concretePhaseDao.saveOrUpdateConcretePhase(cp);
 		System.out.println("### ConcretePhase update");
 		
-		return cp;
 	}
 
 	/**

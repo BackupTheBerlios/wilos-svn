@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import wilos.hibernate.misc.concreterole.ConcreteRoleDescriptorDao;
 import wilos.hibernate.spem2.role.RoleDescriptorDao;
-import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
+import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.role.RoleDescriptor;
@@ -74,7 +74,7 @@ public class RoleDescriptorService {
 	 * @param _project
 	 * @param _rd
 	 */
-	public ConcreteBreakdownElement roleDescriptorInstanciation (Project _project, RoleDescriptor _rd) {
+	public void roleDescriptorInstanciation (Project _project, RoleDescriptor _rd, ConcreteActivity _cact) {
 
 		ConcreteRoleDescriptor crd = new ConcreteRoleDescriptor();
 
@@ -85,11 +85,11 @@ public class RoleDescriptorService {
 
 		crd.addRoleDescriptor(_rd);
 		crd.setProject(_project);
+		crd.addSuperConcreteActivity(_cact);
 
 		this.concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(crd);
 		System.out.println("### ConcreteRoleDescriptor sauve");
 
-		return crd;
 	}
 
 	public RoleDescriptor getRoleDescriptorById(String _id)

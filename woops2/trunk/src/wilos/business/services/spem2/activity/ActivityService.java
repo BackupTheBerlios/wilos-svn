@@ -15,7 +15,6 @@ import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.hibernate.misc.concreteactivity.ConcreteActivityDao;
 import wilos.hibernate.spem2.activity.ActivityDao;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
-import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
@@ -50,14 +49,12 @@ public class ActivityService {
 	 * @param _project project for which the activity shall be instanciated
 	 * @param _phase activity to instanciate
 	 */
-	public ConcreteActivity activityInstanciation(Project _project, Activity _activity) {
+	public void activityInstanciation(Project _project, Activity _activity, ConcreteActivity _cact) {
 
 		ConcreteActivity cact = new ConcreteActivity();
 
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 		bdes.addAll(_activity.getBreakdownElements());
-
-		Set<ConcreteBreakdownElement> tmp = new HashSet<ConcreteBreakdownElement>();
 
 		if (_activity.getPresentationName() == null)
 			cact.setConcreteName(_activity.getName());
@@ -66,6 +63,7 @@ public class ActivityService {
 
 		cact.addActivity(_activity);
 		cact.setProject(_project);
+		cact.addSuperConcreteActivity(_cact);
 
 		this.concreteActivityDao.saveOrUpdateConcreteActivity(cact);
 		System.out.println("### ConcreteActivity vide sauve");
@@ -81,25 +79,23 @@ public class ActivityService {
 				} else {
 					*/if (bde instanceof Activity) {
 						Activity act = (Activity) bde;
-						tmp.add(this.activityInstanciation(_project, act));
+						this.activityInstanciation(_project, act, cact);
 					} else {
 						if (bde instanceof RoleDescriptor) {
 							RoleDescriptor rd = (RoleDescriptor) bde;
-							tmp.add(this.roleDescriptorService.roleDescriptorInstanciation(_project, rd));
+							this.roleDescriptorService.roleDescriptorInstanciation(_project, rd, cact);
 						} else {
 							TaskDescriptor td = (TaskDescriptor) bde;
-							tmp.add(this.taskDescriptorService.taskDescriptorInstanciation(_project, td));
+							this.taskDescriptorService.taskDescriptorInstanciation(_project, td, cact);
 						}
 					//}
 				//}
 			}
 		}
-		cact.addAllConcreteBreakdownElements(tmp);
 
 		this.concreteActivityDao.saveOrUpdateConcreteActivity(cact);
 		System.out.println("### Activity update");
 
-		return cact;
 	}
 	
 	/**
