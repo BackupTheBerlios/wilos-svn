@@ -106,20 +106,36 @@ public class InfoPanel extends JXPanel implements Observer {
 			if (c.getState()=="Started")
 			{
 				modify.setVisible(true);
-				info1.setText("Date début:");
+				info1.setText("Date debut:");
 				info2.setText("Date fin:");
-				info1_label.setText(String.valueOf(c.getPlannedStartingDate()));
-				info2_label.setText(String.valueOf(c.getPlannedFinishingDate()));
+				String dateD;
+				if (c.getPlannedStartingDate()==null)
+				{
+					dateD = "Non renseignee";
+				}else
+				{
+					dateD = String.valueOf(c.getPlannedStartingDate());
+				}
+				String dateF;
+				if (c.getPlannedFinishingDate()==null)
+				{
+					dateF = "Non renseignee";
+				}else
+				{
+					dateF = String.valueOf(c.getPlannedFinishingDate());
+				}
+				info1_label.setText(dateD);
+				info2_label.setText(dateF);
 				tps_restant_label.setText("Temps restant:");
 				tps_restant.setText(String.valueOf(c.getRemainingTime()));
-				tps_label.setText("Temps effectué:");
+				tps_label.setText("Temps effectue");
 				tps.setText(String.valueOf(c.getAccomplishedTime()));
 				infos.setVisible(true);
 			}
 			else
 			{
 				modify.setVisible(false);
-				info1.setText("Tache non démarrée");
+				info1.setText("Tache non demarree");
 				infos.setVisible(false);
 
 			}
@@ -133,4 +149,21 @@ public class InfoPanel extends JXPanel implements Observer {
 		}
 		
 	}
-}
+
+	public JLabel getTps_label() {
+		return tps_label;
+	}
+
+	public void setTps_label(JLabel tps_label) {
+		this.tps_label = tps_label;
+	}
+
+	public JLabel getTps() {
+		return tps;
+	}
+
+	public void setTps(JLabel tps) {
+		this.tps = tps;
+	}
+	
+}	
