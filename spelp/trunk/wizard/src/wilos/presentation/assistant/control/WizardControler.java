@@ -63,10 +63,12 @@ public class WizardControler {
 	private Thread currentThread = null ;
 	private Runnable currentRefreshRunnable = null ;
 	private int flagThread ;
+	private Integer nbTasksTaskStarted =  new Integer(0) ;
 	private Object MUTEX = new Object() ;
 	private WizardControler() {
 		
 	}
+	
 	
 	public Component getSrc () {
 		return src ;
@@ -734,6 +736,12 @@ public class WizardControler {
 		}
 	}
 	
+	public int getNbThreadStarted (){
+		synchronized (nbTasksTaskStarted){
+			return nbTasksTaskStarted.intValue() ;
+		}
+	}
+	
 	private class RunnableTaskEvent implements Runnable {
 		private static final int START = 0;
 		private static final int SUSPEND = 1;
@@ -755,16 +763,31 @@ public class WizardControler {
 				switch (type)
 				{
 					case START:
-						WizardServicesProxy.startConcreteTaskDescriptor(taskId.getId());
-						state = Constantes.State.STARTED ;
+						synchronized (nbTasksTaskStarted) {
+							if (nbTasksTaskStarted.intValue() == 0) {
+								WizardServicesProxy.startConcreteTaskDescriptor(taskId.getId());
+								nbTasksTaskStarted = new Integer(1);
+								state = Constantes.State.STARTED ;
+							}
+						}
 						break;
 					case SUSPEND:
-						WizardServicesProxy.suspendConcreteTaskDescriptor(taskId.getId());
-						state = Constantes.State.SUSPENDED ;
+						synchronized (nbTasksTaskStarted) {
+							if (nbTasksTaskStarted.intValue() == 1){
+								WizardServicesProxy.suspendConcreteTaskDescriptor(taskId.getId());
+								nbTasksTaskStarted = new Integer(0);
+								state = Constantes.State.SUSPENDED ;
+							}
+						}
 						break;
 					case FINISH:
 						WizardServicesProxy.stopConcreteTaskDescriptor(taskId.getId());
 						state = Constantes.State.FINISHED ;
+						synchronized (nbTasksTaskStarted) {
+							if (nbTasksTaskStarted.intValue() == 1){
+								nbTasksTaskStarted = new Integer(0);
+							}
+						}
 				}
 				WizardControler.this.updateTreeVisualAndState(taskId, state,false);
 				WizardControler.getInstance().disconnectToServer(this);
