@@ -2,10 +2,10 @@ package wilos.business.services.util.xml.parser;
 
 
 import java.io.File;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.Vector;
 
 import javax.xml.xpath.XPathConstants;
@@ -88,7 +88,7 @@ public class XMLParser {
 	public static final String description = "Description";
 	
 	
-	private static Set<String> guidancesTypes = new LinkedHashSet<String>();
+	private static TreeSet<String> guidancesTypes = new TreeSet<String>();
 
 	
 	// Types
@@ -117,11 +117,11 @@ public class XMLParser {
 	
 	
 	// this variables contain all the Elements that concern them
-	protected static Set<RoleDescriptor> roleDescriptorsList ;
-	protected static Set<TaskDescriptor> taskDescriptorsList ;
-	protected static Set<Phase> phasesList;
-	protected static Set<Iteration> iterationsList;
-	protected static Set<Activity> activitiesList;
+	protected static TreeSet<RoleDescriptor> roleDescriptorsList ;
+	protected static TreeSet<TaskDescriptor> taskDescriptorsList ;
+	protected static TreeSet<Phase> phasesList;
+	protected static TreeSet<Iteration> iterationsList;
+	protected static TreeSet<Activity> activitiesList;
 	
 	/**
 	 * Fills the Lists in memory
@@ -344,8 +344,8 @@ public class XMLParser {
 	 * getAllActivities
 	 * @return the Set of all activity
 	 */
-	private static Set<Activity> fillActivitiesList() {
-		Set<Activity> activitiesList = new LinkedHashSet<Activity>();
+	private static TreeSet<Activity> fillActivitiesList() {
+		TreeSet<Activity> activitiesList = new TreeSet<Activity>();
 		
 		/* evaluate the XPAth request and return the nodeList*/
 		NodeList activities = (NodeList)XMLUtils.evaluate(xpath_activity,XPathConstants.NODESET);
@@ -576,9 +576,9 @@ public class XMLParser {
 	 * @return all the tasks descriptors
 	 * @throws Exception when no tasks descriptor are found
 	 */
-	private static Set<TaskDescriptor> fillTaskDescriptorsList(Set<RoleDescriptor> allRoles) {
+	private static TreeSet<TaskDescriptor> fillTaskDescriptorsList(Set<RoleDescriptor> allRoles) {
 		// List of the taskDescriptor to be return
-		HashSet<TaskDescriptor> taskList = new HashSet<TaskDescriptor>();
+		TreeSet<TaskDescriptor> taskList = new TreeSet<TaskDescriptor>();
 		// XPath Request to get all TaskDescriptor nodes  
 		NodeList taskDescriptors = (NodeList)XMLUtils.evaluate(xpath_taskDescriptor,XPathConstants.NODESET);
 		
@@ -934,8 +934,8 @@ public class XMLParser {
 	 * getAllIterations
 	 * @return Set
 	 */
-	private static Set<Iteration> fillIterationsList() {
-		LinkedHashSet<Iteration> iterationList = new LinkedHashSet<Iteration>();
+	private static TreeSet<Iteration> fillIterationsList() {
+		TreeSet<Iteration> iterationList = new TreeSet<Iteration>();
 		// evaluate the XPAth request and return the nodeList
 		NodeList iterations = (NodeList)XMLUtils.evaluate(xpath_iteration,XPathConstants.NODESET);
 		if (iterations == null){
@@ -964,8 +964,8 @@ public class XMLParser {
 	 * getAllPhases
 	 * @return Set
 	 */
-	private static Set<Phase> fillPhasesList() {
-		LinkedHashSet<Phase> phaseList = new LinkedHashSet<Phase>();
+	private static TreeSet<Phase> fillPhasesList() {
+		TreeSet<Phase> phaseList = new TreeSet<Phase>();
 		/* evaluate the XPAth request and return the nodeList*/
 		NodeList phases = (NodeList)XMLUtils.evaluate(xpath_phase,XPathConstants.NODESET);
 
@@ -994,8 +994,8 @@ public class XMLParser {
 	 * @return all the tasks descriptors
 	 * @throws Exception when no tasks descriptor are found
 	 */
-	private static Set<RoleDescriptor> fillRoleDescriptorsList() {
-		LinkedHashSet<RoleDescriptor> roleList = new LinkedHashSet<RoleDescriptor>();		
+	private static TreeSet<RoleDescriptor> fillRoleDescriptorsList() {
+		TreeSet<RoleDescriptor> roleList = new TreeSet<RoleDescriptor>();		
 		
 		// get list of nodes by the XPath expression
 		NodeList roleDescriptors = (NodeList)XMLUtils.evaluate(xpath_roleDescriptor,XPathConstants.NODESET);
@@ -1208,7 +1208,7 @@ public class XMLParser {
 		private Set<Guidance> templatesAndExamples;
 
 		public WorkProductDescriptorFake() {
-			templatesAndExamples = new HashSet<Guidance>();
+			templatesAndExamples = new LinkedHashSet<Guidance>();
 		}
 		
 		public Set<Guidance> getTemplatesAndExamples() {

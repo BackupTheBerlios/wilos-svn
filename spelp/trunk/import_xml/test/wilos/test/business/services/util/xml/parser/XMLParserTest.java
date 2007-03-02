@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.TreeSet;
 
 import junit.framework.TestCase;
 import wilos.business.services.util.xml.parser.XMLParser;
@@ -523,7 +524,7 @@ public class XMLParserTest extends TestCase {
 	 */
 	public void testPhase2IterationFromScrumWithArteContainsAllExpected() {
 		Iterator<BreakdownElement> itAct;
-		HashSet<BreakdownElement> secondPhaseActivities;
+		TreeSet<BreakdownElement> secondPhaseActivities;
 		Iterator<BreakdownElement> secondPhaseActivitiesIterator;
 		
 		// The Names of the expectedElements
@@ -557,7 +558,7 @@ public class XMLParserTest extends TestCase {
 		
 		Phase secondPhase = (Phase) tmpAct;
 		// We get the set of activities of the second Phase
-		secondPhaseActivities = (HashSet<BreakdownElement>) secondPhase.getBreakdownElements();
+		secondPhaseActivities = (TreeSet<BreakdownElement>) secondPhase.getBreakdownElements();
 		// And an iterator on it
 		secondPhaseActivitiesIterator = secondPhaseActivities.iterator();
 		
@@ -711,7 +712,7 @@ public class XMLParserTest extends TestCase {
 							// la taskDescriptor Design the solution
 							
 							assertTrue(((WorkBreakdownElement)tmpBde).getPredecessors().size() == 1);
-							listPredecessor = new HashSet<WorkBreakdownElement>();
+							listPredecessor = new TreeSet<WorkBreakdownElement>();
 							for (WorkOrder wo: ((WorkBreakdownElement)tmpBde).getPredecessors()) {
 								listPredecessor.add(wo.getSuccessor());
 								assertTrue(wo.getLinkType().equals("finishToStart"));
@@ -747,7 +748,7 @@ public class XMLParserTest extends TestCase {
 		BreakdownElement tmpBde = null;
 		
 		WorkBreakdownElement tmpWBde = null;
-		Set<WorkBreakdownElement> listSuccessor = null;
+		TreeSet<WorkBreakdownElement> listSuccessor = null;
 		
 		Iterator<WorkBreakdownElement> itSuccessor;
 		
@@ -792,7 +793,7 @@ public class XMLParserTest extends TestCase {
 								// la taskDescriptor Design the solution
 								
 								assertTrue(((WorkBreakdownElement)tmpBde).getSuccessors().size() == 1);
-								listSuccessor = new HashSet<WorkBreakdownElement>();
+								listSuccessor = new TreeSet<WorkBreakdownElement>();
 								for (WorkOrder wo: ((WorkBreakdownElement)tmpBde).getSuccessors()) {
 									listSuccessor.add(wo.getSuccessor());
 									assertTrue(wo.getLinkType().equals("finishToFinish"));
@@ -825,7 +826,7 @@ public class XMLParserTest extends TestCase {
 		int nbSuccessor = 0;
 		
 		WorkBreakdownElement tmpWBde = null;
-		Set<WorkBreakdownElement> listSuccessor = null;
+		TreeSet<WorkBreakdownElement> listSuccessor = null;
 		
 		Iterator<WorkBreakdownElement> itSuccessor;
 		
@@ -855,7 +856,7 @@ public class XMLParserTest extends TestCase {
 					
 					assertTrue(((WorkBreakdownElement)secondLevelActivity).getSuccessors().size() == 2);
 
-					listSuccessor = new HashSet<WorkBreakdownElement>();
+					listSuccessor = new TreeSet<WorkBreakdownElement>();
 					// For each successor of the Initiate Project 
 					for (WorkOrder wo: ((WorkBreakdownElement)secondLevelActivity).getSuccessors()) {
 						listSuccessor.add(wo.getSuccessor());
@@ -1402,6 +1403,97 @@ public class XMLParserTest extends TestCase {
 		}
 	}
 	
+	// test to resolve we check the order of the activity in Elaboration phase
+	public void testOpenUPElaborationOrder(){
+		Process openUpProcess = XMLParser.getProcess(pathOPenUP);
+		Activity IterationAct = null;
+		Activity initiateProject = null ;
+		boolean trouve = false ;
+		// First Step, Stop on Inception Iteration
+		Iterator<BreakdownElement> itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
+		int num = 0 ;
+		while (!trouve && itTopLevelAct.hasNext()) {
+			BreakdownElement tmpBde = itTopLevelAct.next();
+			IterationAct = (Activity) tmpBde;
+			trouve = (IterationAct.getPresentationName().equals("Elaboration Iteration [1..n]"));
+		}
+		assertTrue(trouve);
+		
+		//	get the Activity Initiate Project
+		Iterator<BreakdownElement> itSecondLevelAct = IterationAct.getBreakdownElements().iterator();
+		while (itSecondLevelAct.hasNext()) {
+			BreakdownElement tmpBde = itSecondLevelAct.next();
+			System.out.println(tmpBde.getPresentationName());
+			if (tmpBde.getPresentationName().equals("Manage Iteration")) {
+				assertTrue(num == 0);
+			}
+			else if (tmpBde.getPresentationName().equals("Manage Requirements")){
+				assertTrue(num == 1);
+			}
+			else if (tmpBde.getPresentationName().equals("Define the Architecture")){
+				assertTrue(num == 2);
+			}
+			else if (tmpBde.getPresentationName().equals("Develop Solution (for requirement) (within context)")){
+				assertTrue(num == 3);
+			}
+			else if (tmpBde.getPresentationName().equals("Validate Build")){
+				assertTrue(num == 4);
+			}
+			else if (tmpBde.getPresentationName().equals("Ongoing Tasks")){
+				assertTrue(num == 5);
+			}
+			if (tmpBde instanceof Activity){
+				num ++ ;
+			}
+		}
+		
+	}
+	
+	//	 test to resolve we check the order of the tasks in the activity Manage iteration
+	public void testOpenUPElaborationManageIterationOrder(){
+		Process openUpProcess = XMLParser.getProcess(pathOPenUP);
+		Activity IterationAct = null;
+		boolean trouve = false ;
+		// First Step, Stop on Inception Iteration
+		Iterator<BreakdownElement> itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
+		
+		while (!trouve && itTopLevelAct.hasNext()) {
+			BreakdownElement tmpBde = itTopLevelAct.next();
+			IterationAct = (Activity) tmpBde;
+			trouve = (IterationAct.getPresentationName().equals("Elaboration Iteration [1..n]"));
+		}
+		assertTrue(trouve);
+		trouve= false ;
+		//	get the Activity Initiate Project
+		Iterator<BreakdownElement> itSecondLevelAct = IterationAct.getBreakdownElements().iterator();
+		BreakdownElement tmpBde = null ;
+		while (!trouve && itSecondLevelAct.hasNext()) {
+			tmpBde = itSecondLevelAct.next();
+			trouve = (tmpBde.getPresentationName().equals("Manage Iteration"));
+		}
+		assertTrue(trouve);
+		Activity manageRequirements = (Activity)tmpBde ;
+		
+		Iterator<BreakdownElement> itTask = manageRequirements.getBreakdownElements().iterator();
+		int num = 0 ;
+		while (itTask.hasNext()){
+			BreakdownElement tmptask = itTask.next() ;
+			System.out.println(tmptask.getPresentationName());
+			if (tmptask.getPresentationName().equals("Plan Iteration")){
+				assertTrue(num == 0);
+			}
+			else if (tmptask.getPresentationName().equals("Manage Iteration")){
+				assertTrue(num == 1);
+			}
+			else if (tmptask.getPresentationName().equals("Assess Results")){
+				assertTrue(num == 2);
+			} 
+			if (tmptask instanceof TaskDescriptor){
+				num ++ ;
+			}
+		}
+	}
+			
 	public void testScrumPreparationPhaseContainsRightMainDescriptionAndKeyConsiderations () {
 		Process theProcess;
 		theProcess = XMLParser.getProcess(pathScrum);
