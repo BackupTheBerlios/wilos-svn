@@ -144,20 +144,22 @@ public class WizardControler {
 	}
 		
 	private String getId(Object userObject){
-		if (userObject instanceof ConcreteRoleDescriptor)
-			return ((ConcreteRoleDescriptor) userObject).getId();
-		else if (userObject instanceof Project)
-			return ((Project) userObject).getId();
-		else if (userObject instanceof ConcreteIteration)
-			return ((ConcreteIteration) userObject).getId();
-		else if (userObject instanceof ConcretePhase)
-			return ((ConcretePhase) userObject).getId();
-		else if (userObject instanceof ConcreteActivity)
-			return ((ConcreteActivity) userObject).getId();
-		else if (userObject instanceof ConcreteTaskDescriptor) 
-			return ((ConcreteTaskDescriptor) userObject).getId();
-		else if (userObject instanceof ConcreteBreakdownElement)
-			return ((ConcreteBreakdownElement) userObject).getId();
+//		if (userObject instanceof ConcreteRoleDescriptor)
+//			return ((ConcreteRoleDescriptor) userObject).getId();
+//		else if (userObject instanceof Project)
+//			return ((Project) userObject).getId();
+//		else if (userObject instanceof ConcreteIteration)
+//			return ((ConcreteIteration) userObject).getId();
+//		else if (userObject instanceof ConcretePhase)
+//			return ((ConcretePhase) userObject).getId();
+//		else if (userObject instanceof ConcreteActivity)
+//			return ((ConcreteActivity) userObject).getId();
+//		else if (userObject instanceof ConcreteTaskDescriptor) 
+//			return ((ConcreteTaskDescriptor) userObject).getId();
+//		else if (userObject instanceof ConcreteBreakdownElement)
+//			return ((ConcreteBreakdownElement) userObject).getId();
+		if (userObject instanceof ConcreteBreakdownElement)
+			return ((ConcreteBreakdownElement)userObject).getId();
 		else if (userObject instanceof Element)
 			return ((Element)userObject).getId();
 		else return "" ;
@@ -201,6 +203,7 @@ public class WizardControler {
 	 */
 	private void updateTree(DefaultMutableTreeNode newNode, DefaultMutableTreeNode actualNode) {	
 		boolean trouve = false ;
+		String id1= "" ,id2 = "";
 		// getting the actual model
 		WizardTreeModel model = (WizardTreeModel) treePanel.getTree().getModel() ;
 		// if it is the first execution
@@ -226,7 +229,6 @@ public class WizardControler {
 					tmpNewNode = (WizardMutableTreeNode) e2.nextElement();
 //					if (start){
 //						trouve = trouve || tmpNewNode.getUserObject().equals(tmpActualNode.getUserObject());
-						String id1,id2 ;
 						id1 = getId(tmpNewNode.getUserObject()) ;
 						id2 = getId(tmpActualNode.getUserObject()) ;
 						trouve = trouve || ((id1 != null) && id1.equals(id2));
@@ -244,13 +246,14 @@ public class WizardControler {
 			trouve = false ;
 			for (Enumeration e2 = actualNode.children() ; !trouve &&  e2.hasMoreElements() ;){
 				tmpActualNode = (WizardMutableTreeNode) e2.nextElement() ;
-					String id1,id2 ;
+					
 					id1 = getId(tmpNewNode.getUserObject()) ;
 					id2 = getId(tmpActualNode.getUserObject()) ;
 					trouve = (id1 != null) && id1.equals(id2);
 			}
 			// if the node has been found
 			if (flagThread != 0 && trouve){
+				System.out.println(tmpNewNode + " "  + id1 + " " + tmpActualNode + " " + id2);
 				// manage the state
 				if (!(getState(tmpNewNode.getUserObject()).equals(getState(tmpActualNode.getUserObject())))){
 					if (tmpActualNode.getUserObject() instanceof ConcreteTaskDescriptor) {
@@ -266,6 +269,7 @@ public class WizardControler {
 			// if the node is new we add it in the model
 			else if(!trouve){
 				if (!(tmpNewNode.getUserObject() instanceof Step)){
+					System.err.println(tmpNewNode + " "  + id1 + " " + tmpActualNode + " " + id2);
 					WizardMutableTreeNode nodeToInsert = (WizardMutableTreeNode) tmpNewNode.clone() ;
 					manageStatesStep(nodeToInsert, ADDITION);
 					model.insertNodeInto(nodeToInsert,actualNode, newNode.getIndex(tmpNewNode));
