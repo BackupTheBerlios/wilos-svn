@@ -252,9 +252,26 @@ public class OptionFrame extends JDialog {
 				WizardControler.getInstance().setLang(loc);
 				JOptionPane.showMessageDialog(this, Bundle.getText("optionFrame.langWarningMessage"), Bundle.getText("optionFrame.langWarningTitle"), JOptionPane.NO_OPTION);
 			}
-			System.out.println((((Integer)delay.getValue()*1000)));
-			System.out.println(WizardControler.getInstance().getTimeToRefresh());
-			WizardControler.getInstance().setTimeToRefresh((Integer)delay.getValue());
+			if (((Integer)delay.getValue()*1000)!=WizardControler.getInstance().getTimeToRefresh())
+			{
+				System.out.print("old :");
+				System.out.println((WizardControler.getInstance().getTimeToRefresh()));
+				System.out.print("new :");
+				System.out.println((Integer)delay.getValue());
+				if ((WizardControler.getInstance().getTimeToRefresh() == 0)&&((Integer)delay.getValue() != 0))
+				{
+					WizardControler.getInstance().setTimeToRefresh((Integer)delay.getValue());
+					WizardControler.getInstance().launchBackgroundThreadForTree();
+				}
+				else if ((Integer)delay.getValue() == 0)
+				{
+					WizardControler.getInstance().setTimeToRefresh((Integer)delay.getValue());
+					WizardControler.getInstance().cancelrefreshThread();
+				}
+				else {
+					WizardControler.getInstance().setTimeToRefresh((Integer)delay.getValue());
+				}
+			}
 			op.saveOptions(new WizardOptions(loc, (Integer)delay.getValue()));
 		}
 		

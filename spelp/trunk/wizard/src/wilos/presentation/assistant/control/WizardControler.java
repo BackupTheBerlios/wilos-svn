@@ -65,6 +65,7 @@ public class WizardControler {
 	private int flagThread ;
 	private Integer nbTasksTaskStarted =  new Integer(0) ;
 	private Object MUTEX = new Object() ;
+	private Object MUTEX_REFRESH_TIME = new Object() ;
 	private WizardControler() {
 		
 	}
@@ -81,7 +82,7 @@ public class WizardControler {
 	public void launchFirstThread() {
 		WizardControler.getInstance().setAllTasksSuspended(null);
 		OptionsParser op = new OptionsParser();
-		timeToRefresh = op.getRefreshTime();
+		setTimeToRefresh(op.getRefreshTime()) ;
 		WizardControler.getInstance().launchBackgroundThreadForTree();
 		/*thread launch*/
 	}
@@ -129,11 +130,12 @@ public class WizardControler {
 				currentRefreshRunnable = this ;
 				while (WizardControler.getInstance().getTimeToRefresh() != 0){
 					try {
-						Thread.sleep(WizardControler.getInstance().getTimeToRefresh());
+						Thread.sleep(getTimeToRefresh());
 						launchRefreshTread();
 						currentThread.join() ;
 					} catch (InterruptedException e) {
-						timeToRefresh = 0 ;
+						
+						///timeToRefresh = 0 ;
 					}
 				}
 			}
@@ -197,7 +199,7 @@ public class WizardControler {
 	 * updateTree get the tree updated from the server and modify the current
 	 *
 	 */
-	private void updateTree(DefaultMutableTreeNode newNode, DefaultMutableTreeNode actualNode) {
+	private void updateTree(DefaultMutableTreeNode newNode, DefaultMutableTreeNode actualNode) {	
 		boolean trouve = false ;
 		// getting the actual model
 		WizardTreeModel model = (WizardTreeModel) treePanel.getTree().getModel() ;
@@ -369,11 +371,18 @@ public class WizardControler {
 	
 	public long getTimeToRefresh() {
 		// TODO Auto-generated method stub
-		return timeToRefresh * 1000 ;
+		int retour = 0 ;
+		synchronized (MUTEX_REFRESH_TIME) {
+			retour = (int) (timeToRefresh) ;
+		}
+		return retour ;
 	}
 	
 	public void setTimeToRefresh(long value){
-		timeToRefresh = value ;
+		synchronized (MUTEX_REFRESH_TIME) {
+			timeToRefresh = value * 1000 ;
+		}
+		
 	}
 
 	/**
