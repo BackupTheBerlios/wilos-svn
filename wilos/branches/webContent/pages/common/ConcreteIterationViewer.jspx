@@ -11,7 +11,8 @@
 						readonly="#{ConcreteIterationViewerBean.isInputNameReadOnly}" />
 					<ice:commandButton value="#{msgs['button.changeconcretename']}"
 						action="#{ConcreteIterationViewerBean.changeConcreteName}"
-						disabled="#{ConcreteIterationViewerBean.changeButtonIsDisabled}" />
+						disabled="#{ConcreteIterationViewerBean.changeButtonIsDisabled}" 
+						styleClass="smallbutton" />
 					<ice:outputText value="#{msgs['viewer.description'] }" />
 					<ice:outputText value="#{ConcreteIterationViewerBean.concreteIteration.iteration.description}"/>
 					<ice:outputText value="" />

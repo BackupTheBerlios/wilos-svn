@@ -13,7 +13,8 @@
 						readonly="#{ProjectViewerBean.isInputNameReadOnly}" />
 					<ice:commandButton value="#{msgs['button.changeconcretename']}"
 						action="#{ProjectViewerBean.changeConcreteName}"
-						disabled="#{ProjectViewerBean.changeButtonIsDisabled}" />
+						disabled="#{ProjectViewerBean.changeButtonIsDisabled}" 
+						styleClass="smallbutton"  />
 					<ice:outputText value="#{msgs['projectviewer.creationdate']}" />
 					<ice:outputText value="#{ProjectViewerBean.project.creationDate}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
@@ -186,9 +187,14 @@
 										<ice:outputText
 											value="#{msgs['component.exptable.header.column2']}" />
 									</f:facet>
+									<center>
 									<ice:inputText
 										value="#{process.nbOccurences}"
-										readonly="#{process.isEditable}" />
+										readonly="#{process.isEditable}"
+										size="3" 
+										maxlength="3"
+										style="align: center; text-align:right" />
+									</center>
 								</ice:column>
 							</ice:dataTable>
 						</ice:panelGroup>
