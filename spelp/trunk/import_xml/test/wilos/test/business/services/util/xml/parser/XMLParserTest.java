@@ -28,6 +28,7 @@ public class XMLParserTest extends TestCase {
 	public static File pathScrum = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "scrum.xml"); 
 	public static File pathOPenUP =new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "sortieEPF.xml");
 	public static File pathMonTest =new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "monTest.xml");
+	public static File pathScrumFillerTest =new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "scrum_FillerTest.xml");
 	public static File pathFileError = new File("noFile");
 	public static File pathScrumWithArte = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "scrum_with_ArteF.xml"); 
 	public static File pathEmptyFile = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "emptyFile.xml"); 
@@ -1558,6 +1559,73 @@ public class XMLParserTest extends TestCase {
 		
 		assertEquals(theRoleDef.getMainDescription(), expectedMainDescription);
 		assertEquals(theRoleDef.getKeyConsiderations(), expectedKeyConsiderations);
+	}
+	
+	public void testScrumSprintPhasePlanSprintTaskContainsRightAlternativesAndPurpose () {
+		Process theProcess;
+		theProcess = XMLParser.getProcess(pathScrum);
+		Phase thePhase = null;
+		Iteration anIteration = null;
+		TaskDescriptor taskDescriptor = null;
+		String expectedAlternatives = "";
+		String expectedPurpose = "Le but est de planifier&nbsp;le sprint&nbsp;qui va commencer";
+
+		for (BreakdownElement bde : theProcess.getBreakdownElements()) {
+			if (bde.getName().equals("Sprint Phase")) {
+				thePhase = (Phase) bde;
+				break;
+			}
+		}
+		
+		for (BreakdownElement bde : thePhase.getBreakdownElements()) {
+			System.out.println("ici ! ("+bde.getName()+")");
+			if (bde.getName().equals("Sprint (n)")) {
+				anIteration = (Iteration) bde;
+				break;
+			}
+		}
+		
+		for (BreakdownElement bde : anIteration.getBreakdownElements()) {
+			if (bde.getName().equals("Plan sprint")) {
+				taskDescriptor = (TaskDescriptor) bde;
+				break;
+			}
+		}
+		
+		assertEquals(taskDescriptor.getTaskDefinition().getAlternatives(), expectedAlternatives);
+		assertEquals(taskDescriptor.getTaskDefinition().getPurpose(), expectedPurpose);
+	}
+
+	public void testSortieEPFInceptionPhaseIterationContainsRight_Alternatives_HowToStaff_Purpose () {
+		Process theProcess;
+		theProcess = XMLParser.getProcess(pathOPenUP);
+		Activity anActivity = null;
+		String expectedAlternatives = "";
+		String expectedHowToStaff = "";
+		String expectedPurpose = "";
+
+		for (BreakdownElement bde : theProcess.getBreakdownElements()) {
+			if (bde.getName().equals("inception_phase_iteration")) {
+				anActivity = (Activity) bde;
+				break;
+			}
+		}
+		
+		assertEquals(anActivity.getAlternatives(), expectedAlternatives);
+		assertEquals(anActivity.getHowToStaff(), expectedHowToStaff);
+		assertEquals(anActivity.getPurpose(), expectedPurpose);
+	}
+	
+	public void testScrumFillerTestProcessContainsRight_Alternatives_HowToStaff_Purpose () {
+		Process theProcess;
+		theProcess = XMLParser.getProcess(pathScrumFillerTest);
+		String expectedAlternatives = "Et sinon ?";
+		String expectedHowToStaff = "Une équipe Scrum est composée de 3 à 10 personnes.";
+		String expectedPurpose = "Le but du jeux est de faire mieux que monsieur propre GO !";
+		
+		assertEquals(theProcess.getAlternatives(), expectedAlternatives);
+		assertEquals(theProcess.getHowToStaff(), expectedHowToStaff);
+		assertEquals(theProcess.getPurpose(), expectedPurpose);
 	}
 	
 	/*

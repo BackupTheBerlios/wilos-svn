@@ -19,7 +19,7 @@ public class FillerTask extends FillerElement
 	
 	public void fill()
 	{
-		// searching and setting the MainDescription and KeyConsiderations
+		// searching and setting the Alternatives and Purpose
 		NodeList myNodeList = myNode.getChildNodes();
 		NodeList nodePresentationList = null;
 		Node nodePresentation = null;
@@ -35,11 +35,11 @@ public class FillerTask extends FillerElement
 			// If the presentation node has been founded
 			nodePresentationList = nodePresentation.getChildNodes();
 			for (int i = 0 ; i < nodePresentationList.getLength() && (alternatives.equals("") || purposes.equals("")); i++) {
-				// Search for the MainDescription node
+				// Search for the Alternatives node
 				if (nodePresentationList.item(i).getNodeName().equals(NodeAlternatives)) {
 					alternatives = nodePresentationList.item(i).getTextContent();
 				}
-				// Search for the KeyConsiderations node
+				// Search for the Purpose node
 				if (nodePresentationList.item(i).getNodeName().equals(NodePurpose)) {
 					purposes = nodePresentationList.item(i).getTextContent();
 				}
