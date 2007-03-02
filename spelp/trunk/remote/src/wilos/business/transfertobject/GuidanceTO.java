@@ -24,5 +24,7 @@ public class GuidanceTO extends Guidance implements Serializable{
         this.setPresentationName(myGuidance.getPresentationName());
         this.setAttachment(myGuidance.getAttachment());
      
+        this.setMainDescription(myGuidance.getMainDescription());
+        this.setKeyConsiderations(myGuidance.getKeyConsiderations());
     }
 }

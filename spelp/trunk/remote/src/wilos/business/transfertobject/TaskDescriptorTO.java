@@ -33,7 +33,11 @@ public class TaskDescriptorTO extends TaskDescriptor implements Serializable{
         this.setPrefix(myTaskDescriptor.getPrefix());
         this.setGuid(myTaskDescriptor.getGuid());
         this.setDescription(myTaskDescriptor.getDescription());
-        this.setPresentationName(myTaskDescriptor.getPresentationName());       
+        this.setPresentationName(myTaskDescriptor.getPresentationName()); 
+        
+        this.setMainDescription(myTaskDescriptor.getMainDescription());
+        this.setKeyConsiderations(myTaskDescriptor.getKeyConsiderations());
+        
         if(myTaskDescriptor.getTaskDefinition() != null) this.setTaskDefinition(new TaskDefinitionTO(myTaskDescriptor.getTaskDefinition()));
         if(this.getTaskDefinition() != null && this.getDescription().length()==0)  this.setDescription(this.getTaskDefinition().getDescription());        
     

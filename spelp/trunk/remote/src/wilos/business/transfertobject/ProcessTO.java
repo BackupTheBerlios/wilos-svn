@@ -18,6 +18,9 @@ public class ProcessTO extends Process implements Serializable {
 			this.setGuid(_process.getGuid());
 			this.setPresentationName(_process.getPresentationName());
 			
+			this.setMainDescription(_process.getMainDescription());
+	        this.setKeyConsiderations(_process.getKeyConsiderations());
+			
 			Set<Guidance> guidances = new HashSet<Guidance>();
 	        for (Guidance g : _process.getGuidances()) {
 	        	guidances.add(new GuidanceTO(g));	        	

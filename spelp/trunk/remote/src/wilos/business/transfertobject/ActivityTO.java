@@ -19,6 +19,13 @@ public class ActivityTO extends Activity implements Serializable {
 			this.setGuid(_activity.getGuid());
 			this.setPresentationName(_activity.getPresentationName());
 			
+			this.setAlternatives(_activity.getAlternatives());
+			this.setHowToStaff(_activity.getHowToStaff());
+			this.setPurpose(_activity.getPurpose());
+			
+			this.setMainDescription(_activity.getMainDescription());
+	        this.setKeyConsiderations(_activity.getKeyConsiderations());
+			
 			Set<Guidance> guidances = new HashSet<Guidance>();
 	        for (Guidance g : _activity.getGuidances()) {
 	        	if (g instanceof CheckList)

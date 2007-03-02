@@ -19,6 +19,9 @@ public class PhaseTO extends Phase implements Serializable {
 			this.setGuid(_phase.getGuid());
 			this.setPresentationName(_phase.getPresentationName());
 			
+			this.setMainDescription(_phase.getMainDescription());
+	        this.setKeyConsiderations(_phase.getKeyConsiderations());
+			
 			Set<Guidance> guidances = new HashSet<Guidance>();
 	        for (Guidance g : _phase.getGuidances()) {
 	        	if (g instanceof CheckList)

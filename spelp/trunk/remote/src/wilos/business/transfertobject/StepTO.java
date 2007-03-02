@@ -33,7 +33,9 @@ public class StepTO extends Step implements Serializable{
         this.setName(myStep.getName());
         this.setGuid(myStep.getGuid());
         this.setDescription(myStep.getDescription());    
-        
+     
+        this.setMainDescription(myStep.getMainDescription());
+        this.setKeyConsiderations(myStep.getKeyConsiderations());
     }
   
 

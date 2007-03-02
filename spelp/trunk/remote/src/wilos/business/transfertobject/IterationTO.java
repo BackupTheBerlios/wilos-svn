@@ -19,6 +19,11 @@ public class IterationTO extends Iteration implements Serializable {
 			this.setGuid(_iteration.getGuid());
 			this.setPresentationName(_iteration.getPresentationName());
 			
+			this.setMainDescription(_iteration.getMainDescription());
+	        this.setKeyConsiderations(_iteration.getKeyConsiderations());
+			
+			
+			
 			Set<Guidance> guidances = new HashSet<Guidance>();
 	        for (Guidance g : _iteration.getGuidances()) {
 	        	if (g instanceof CheckList)

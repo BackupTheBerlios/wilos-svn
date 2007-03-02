@@ -25,6 +25,9 @@ public class CheckListTO extends CheckList implements Serializable {
         this.setPresentationName(myCheckList.getPresentationName());
         this.setAttachment(myCheckList.getAttachment());
         
+        this.setMainDescription(myCheckList.getMainDescription());
+        this.setKeyConsiderations(myCheckList.getKeyConsiderations());
+        
         // set the sections 
 		Set<Section> sections = new HashSet<Section>();
         for (Section s : myCheckList.getSections()) {

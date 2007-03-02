@@ -35,7 +35,13 @@ public class TaskDefinitionTO extends TaskDefinition implements Serializable {
     public TaskDefinitionTO(TaskDefinition myTD) {
         this.setName(myTD.getName());
         this.setGuid(myTD.getGuid());
-        this.setDescription(myTD.getDescription());         
+        this.setDescription(myTD.getDescription());
+        
+        this.setAlternatives(myTD.getAlternatives());
+        this.setPurpose(myTD.getPurpose());
+        
+        this.setMainDescription(myTD.getMainDescription());
+        this.setKeyConsiderations(myTD.getKeyConsiderations());
               
         SortedSet<Step> steps = new TreeSet<Step>();
         for (Step s : myTD.getSteps()) {
