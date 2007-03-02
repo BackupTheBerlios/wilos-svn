@@ -57,7 +57,7 @@ public class AssistantService {
 
 	public void resumeConcreteTaskDescriptor (String id) {
 		ConcreteTaskDescriptor ct = concreteTaskDescriptorService.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(id);
-// TODO JF : décommenter apres implémentation de la fonct° par woops		concreteTaskDescriptorService.resumeConcreteTaskDescriptor(ct);
+// TODO JF : dï¿½commenter apres implï¿½mentation de la fonctï¿½ par woops		concreteTaskDescriptorService.resumeConcreteTaskDescriptor(ct);
 		concreteTaskDescriptorService.startConcreteTaskDescriptor(ct);
 	}
 
@@ -74,4 +74,15 @@ public class AssistantService {
 			ConcreteTaskDescriptorService concreteTaskDescriptorService) {
 		this.concreteTaskDescriptorService = concreteTaskDescriptorService;
 	}
+
+    public void setAccomplishedTimeByTask(String taskGuid,int newTime) {
+		ConcreteTaskDescriptor ct = concreteTaskDescriptorService.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(taskGuid);
+		ct.setAccomplishedTime(newTime);
+    }
+
+    public void setRemainingTimeByTask(String taskGuid,int newTime) {
+		ConcreteTaskDescriptor ct = concreteTaskDescriptorService.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(taskGuid);
+		ct.setRemainingTime(newTime);
+	}
+
 }

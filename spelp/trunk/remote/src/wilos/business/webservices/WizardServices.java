@@ -98,6 +98,24 @@ public class WizardServices {
     	}
     }
     
+    @WebMethod
+    public void setAccomplishedTimeByTask(@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="taskGuid") String taskGuid,@WebParam(name="newTime") int newTime) throws Exception {
+		System.out.println("APPEL DE METHODE : setAccomplishedTimeByTask");
+    	if (getAuthentifiedParticipant (login, password)!=null) {
+    		System.out.println("le Participant est logg�");
+    		assistantService.setAccomplishedTimeByTask(taskGuid, newTime);
+    	}
+    }
+
+    @WebMethod
+    public void setRemainingTimeByTask(@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="taskGuid") String taskGuid,@WebParam(name="newTime") int newTime) throws Exception {
+		System.out.println("APPEL DE METHODE : setRemainingTimeByTask");
+    	if (getAuthentifiedParticipant (login, password)!=null) {
+    		System.out.println("le Participant est logg�");
+    		assistantService.setRemainingTimeByTask(taskGuid, newTime);
+    	}
+    }
+
     private Participant getAuthentifiedParticipant (String login,  String password) throws Exception {
     	Participant result = null;
         WilosUser tmpwu = loginService.getAuthentifiedUser(login,password);
