@@ -244,7 +244,7 @@ public class HTMLViewer extends JFrame {
 	 * displayElement : display in the html area the description of an element
 	 * @param e
 	 */
-	private void displayElement(Element e) {
+	private void displayElement(Element e, ImageIcon icon) {
 		//guidesList.setVisible(e instanceof Guidance || e instanceof TaskDescriptor);
 			
 		/* Affichage du nom */
@@ -255,6 +255,7 @@ public class HTMLViewer extends JFrame {
 		else {
 			this.myElementLabel.setText(e.getName()) ;
 		}
+		this.myElementLabel.setIcon(icon);
 		
 		// -----------TO DOWNLOAD THE ASSOCIATED FILE----------------
 		if (e instanceof Guidance) {
@@ -262,9 +263,9 @@ public class HTMLViewer extends JFrame {
 			//if (((Guidance) e).getAttachment() != "") {
 				downloadAssociatedFileFromRemote();
 			//}
-			
 		}
 		
+	
 		/* Affichage de la description (ancienne methode setMessage) */
 		// *************************************************************
 		// TODO REMPLACER CE CODE PAR UNE FONCTION QUI AFFICHE TOUS LES ELEMENTS
@@ -375,54 +376,62 @@ public class HTMLViewer extends JFrame {
 	 */
 	public void viewObject (Object o) {
 		boolean ok = false ;
+		ImageIcon icon = null;
 		if(o instanceof ConcreteTaskDescriptor){
 			ConcreteTaskDescriptor t = (ConcreteTaskDescriptor)o;
 			o = getConcreteTaskDescriptorAndDisplay(t);
 			Element tmp = (Element)o;
-			displayElement(tmp);
+			icon = ImagesService.getImageIcon("iconTaskDescriptor.gif");
+			displayElement(tmp,icon);
 			ok = true ;
 		}
 		else if (o instanceof ConcreteIteration){
 			ConcreteIteration r = (ConcreteIteration)o;
-			displayElement(r.getIteration());
 			o = getConcreteIterationAndDisplay(r);
 			Element tmp = (Element)o;
-			displayElement(tmp);		
+			icon = ImagesService.getImageIcon("iconIteration.gif");
+			displayElement(tmp,icon);
 			ok = true ;
 		}
 		else if (o instanceof ConcretePhase){
 			ConcretePhase r = (ConcretePhase)o;
-			displayElement(r.getPhase());
 			o = getConcretePhaseAndDisplay(r);
 			Element tmp = (Element)o;
-			displayElement(tmp);		
+			icon = ImagesService.getImageIcon("iconPhase.gif");
+			displayElement(tmp,icon);
 			ok = true ;
 		}
 		else if (o instanceof ConcreteActivity){
 			ConcreteActivity r = (ConcreteActivity)o;
-			displayElement(r.getActivity());
 			o = getConcreteActivityAndDisplay(r);
 			Element tmp = (Element)o;
-			displayElement(tmp);		
+			icon = ImagesService.getImageIcon("iconActivity.gif");
+			displayElement(tmp,icon);
 			ok = true ;
 		}
 		else if (o instanceof ConcreteRoleDescriptor){
 			ConcreteRoleDescriptor r = (ConcreteRoleDescriptor)o;
-			displayElement(r.getRoleDescriptor());
 			o = getConcreteRoleAndDisplay(r);
 			Element tmp = (Element)o;
-			displayElement(tmp);		
+			icon = ImagesService.getImageIcon("iconRole.gif");
+			displayElement(tmp,icon);
 			ok = true ;
 		}
 		else if (o instanceof Step){
 			Step e = (Step)o;
-			displayElement(e);
+			icon = ImagesService.getImageIcon("iconStep.gif");
+			displayElement(e,icon);
 			this.southPanel.setExpanded(false);
+			ok = true ;
+		}
+		else if (o instanceof Guidance){
+			Guidance e = (Guidance)o;
+			displayElement(e,getGuideTypeIcon(e.getType()));
 			ok = true ;
 		}
 		else if (o instanceof Element){
 			Element e = (Element)o;
-			displayElement(e);
+			displayElement(e,icon);
 			ok = true ;
 		}
 		
