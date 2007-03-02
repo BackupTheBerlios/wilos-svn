@@ -1,14 +1,14 @@
 <ice:form id="admin_actions_form">
 	<ice:panelGrid columns="3">			
-		<ice:commandLink immediate="true" type="submit" value="#{msgs['action.link.manageParticipants']}" action="" styleClass="button" actionListener="#{ActionBean.selectNodeActionListener}">
+		<ice:commandLink immediate="true" type="submit" value="#{msgs['action.link.manageParticipants']}" title="#{msgs['action.link.manageParticipantstip']}" action="" styleClass="button" actionListener="#{ActionBean.selectNodeActionListener}">
 			<f:param name="mainPage" value="#{ActionBean.adminMain }" />
 			<f:param name="pageToShow" value="#{ActionBean.manageParticipants}" />
 		</ice:commandLink>
-		<ice:commandLink immediate="true" type="submit" value="#{msgs['action.link.manageProjectDirectors']}" action="" styleClass="button" actionListener="#{ActionBean.selectNodeActionListener}">
+		<ice:commandLink immediate="true" type="submit" value="#{msgs['action.link.manageProjectDirectors']}" title="#{msgs['action.link.manageProjectDirectorstip']}" action="" styleClass="button" actionListener="#{ActionBean.selectNodeActionListener}">
 			<f:param name="mainPage" value="#{ActionBean.adminMain }" />
 			<f:param name="pageToShow" value="#{ActionBean.manageProjectDirectors}" />
 		</ice:commandLink>
-		<ice:commandLink immediate="true" type="submit" value="#{msgs['action.link.manageProcessManagers']}" action="" styleClass="button" actionListener="#{ActionBean.selectNodeActionListener}">
+		<ice:commandLink immediate="true" type="submit" value="#{msgs['action.link.manageProcessManagers']}" action="" styleClass="button" actionListener="#{ActionBean.selectNodeActionListener}" title="#{msgs['action.link.manageProcessManagerstip']}">
 			<f:param name="mainPage" value="#{ActionBean.adminMain }" />
 			<f:param name="pageToShow" value="#{ActionBean.manageProcessManagers}" />
 		</ice:commandLink>

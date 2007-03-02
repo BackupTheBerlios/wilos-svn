@@ -90,8 +90,14 @@ public class TreeBean {
 	public TreeBean() {
 		this.model = new DefaultTreeModel(this.getDefaultTree());
 	}
-
+	
 	/* Manage the tree. */
+	
+	/**
+	 * Sets PROJECT_ID attribute to DEFAULT_PROJECT_ID and cleans tree and node
+	 * to show Must be called at participant logout
+	 */
+	
 
 	public DefaultMutableTreeNode getDefaultTree() {
 		DefaultMutableTreeNode defaultTree = new DefaultMutableTreeNode();
@@ -114,6 +120,13 @@ public class TreeBean {
 		String prId = (String) this.webSessionService
 				.getAttribute(WebSessionService.PROJECT_ID);
 		this.project = this.projectService.getProject(prId);
+		this.buildTreeModel();
+	}
+	
+	public void cleanTreeDisplay() {
+		this.webSessionService.setAttribute(WebSessionService.PROJECT_ID,
+				DEFAULT_PROJECT_ID);
+		this.projectId = DEFAULT_PROJECT_ID;
 		this.buildTreeModel();
 	}
 
@@ -158,16 +171,6 @@ public class TreeBean {
 		if (this.projectId.length() > 0)
 			this.selectNodeToShow(this.projectId, nodeTypeToShow);
 
-	}
-
-	/**
-	 * Sets PROJECT_ID attribute to DEFAULT_PROJECT_ID and cleans tree and node
-	 * to show Must be called at participant logout
-	 */
-	public void cleanTreeDisplay() {
-		this.webSessionService.setAttribute(WebSessionService.PROJECT_ID,
-				DEFAULT_PROJECT_ID);
-		this.buildTreeModel();
 	}
 
 	public void selectNodeActionListener(ActionEvent evt) {
