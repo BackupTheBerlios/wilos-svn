@@ -95,6 +95,8 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 	}
 
 	public boolean getChangeButtonIsDisabled() {
+		
+		FacesContext.getCurrentInstance();
 		String wilosUserId = (String) super.getWebSessionService()
 				.getAttribute(WebSessionService.WILOS_USER_ID);
 
@@ -102,8 +104,10 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 				(String) super.getWebSessionService().getAttribute(
 						WebSessionService.PROJECT_ID));
 
-		if ((project.getProjectManager() != null)
-				&& (project.getProjectManager().getWilosuser_id()
+		
+		if ((project != null) 
+				&& (project.getProjectManager() != null)
+					&& (project.getProjectManager().getWilosuser_id()
 						.equals(wilosUserId)))
 			return false;
 		else
