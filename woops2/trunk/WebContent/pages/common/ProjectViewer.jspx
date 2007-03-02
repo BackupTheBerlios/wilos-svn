@@ -181,14 +181,17 @@
 									<ice:outputText
 										value="#{process.name}" />
 								</ice:column>
-								<ice:column>
+								<ice:column style="align: center">
 									<f:facet name="header">
 										<ice:outputText
 											value="#{msgs['component.exptable.header.column2']}" />
 									</f:facet>
 									<ice:inputText
 										value="#{process.nbOccurences}"
-										readonly="#{process.isEditable}" />
+										readonly="#{process.isEditable}"
+										size="3" 
+										maxlength="3"
+										style="align: center; text-align:right" />
 								</ice:column>
 							</ice:dataTable>
 						</ice:panelGroup>
