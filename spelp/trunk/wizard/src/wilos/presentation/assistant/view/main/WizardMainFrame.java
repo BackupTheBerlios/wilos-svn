@@ -38,7 +38,7 @@ public class WizardMainFrame extends JFrame {
 	private JMenuItem jMenuItemHelp = null;
 	private JPanel jPanel = null;
 	private TreePanel jTree = null;
-
+	private InfoPanel infoPanel = null ;
 	/**
 	 * This is the default constructor
 	 */
@@ -64,7 +64,7 @@ public class WizardMainFrame extends JFrame {
 		ContextualMenu menu = new ContextualMenu();
 		
 		// init of controler
-		WizardControler.getInstance().initUIElements(actionToolBar,jTree,menu);
+		WizardControler.getInstance().initUIElements(actionToolBar,jTree,menu,infoPanel);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.moveHTML();
 		this.addComponentListener(new ComponentListener(){
@@ -262,9 +262,9 @@ public class WizardMainFrame extends JFrame {
 			jPanel.setLayout(new BorderLayout());
 			
 			jPanel.add(getJTree(), BorderLayout.CENTER);
-			InfoPanel info = new InfoPanel();
-			WizardStateMachine.getInstance().addObserver(info);
-			jPanel.add(info, BorderLayout.SOUTH);
+			infoPanel = new InfoPanel();
+			WizardStateMachine.getInstance().addObserver(infoPanel);
+			jPanel.add(infoPanel, BorderLayout.SOUTH);
 			
 		}
 		return jPanel;
