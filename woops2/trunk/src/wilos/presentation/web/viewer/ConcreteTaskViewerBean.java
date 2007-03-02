@@ -158,8 +158,7 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 	 * @return the visibleAffected
 	 */
 	public boolean getVisibleAffected() {
-		return (this.concreteTaskDescriptor.getState().equals(State.CREATED) && this
-				.visibleAffected());
+		return (this.concreteTaskDescriptor.getState().equals(State.CREATED) && this.visibleAffected());
 	}
 
 	/**
@@ -317,7 +316,8 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 				&& !this.concreteTaskDescriptor.getState().equals(
 						State.SUSPENDED)
 				&& !this.concreteTaskDescriptor.getState().equals(
-						State.FINISHED)) {
+						State.FINISHED)
+				&& this.visibleAffected()) {
 			this.accomplishedTimeModifiable = false;
 		} else {
 			this.accomplishedTimeModifiable = true;
@@ -346,7 +346,8 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		if (!this.getVisibleAffected()
 				&& !this.concreteTaskDescriptor.getState()
 						.equals(State.CREATED)
-				&& !this.concreteTaskDescriptor.getState().equals(State.READY)) {
+				&& !this.concreteTaskDescriptor.getState().equals(State.READY)
+				&& this.visibleAffected()) {
 			this.accomplishedTimeVisible = true;
 		} else {
 			this.accomplishedTimeVisible = false;
@@ -400,7 +401,7 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 				&& !this.concreteTaskDescriptor.getState()
 						.equals(State.CREATED)
 				&& !this.concreteTaskDescriptor.getState().equals(
-						State.FINISHED)) {
+						State.FINISHED) && this.visibleAffected()) {
 			this.remainingTimeVisible = true;
 		} else {
 			this.remainingTimeVisible = false;
@@ -450,7 +451,7 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 	 * @return
 	 */
 	public boolean getVisibleStart() {
-		return (this.concreteTaskDescriptor.getState().equals(State.READY));
+		return (this.concreteTaskDescriptor.getState().equals(State.READY)&& this.visibleAffected() );
 	}
 
 	/**
@@ -459,7 +460,7 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 	 * @return the visibleSaveButton.
 	 */
 	public boolean getVisibleSaveButton() {
-		this.visibleSaveButton = (!accomplishedTimeModifiable || !remainingTimeModifiable);
+		this.visibleSaveButton = (!accomplishedTimeModifiable || !remainingTimeModifiable) && this.visibleAffected();
 		return this.visibleSaveButton;
 	}
 
@@ -467,14 +468,14 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 	 * @return the visibleStop
 	 */
 	public boolean getVisibleStop() {
-		return this.concreteTaskDescriptor.getState().equals(State.STARTED);
+		return (this.concreteTaskDescriptor.getState().equals(State.STARTED) && this.visibleAffected() );
 	}
 
 	/**
 	 * @return the visibleSuspended
 	 */
 	public boolean getVisibleSuspended() {
-		return this.concreteTaskDescriptor.getState().equals(State.STARTED);
+		return (this.concreteTaskDescriptor.getState().equals(State.STARTED)&& this.visibleAffected());
 	}
 
 	/**
@@ -488,7 +489,7 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 	 * @return the visibleReprendre
 	 */
 	public boolean getVisibleReprendre() {
-		return this.concreteTaskDescriptor.getState().equals(State.SUSPENDED);
+		return (this.concreteTaskDescriptor.getState().equals(State.SUSPENDED) && this.visibleAffected());
 	}
 
 	/**
