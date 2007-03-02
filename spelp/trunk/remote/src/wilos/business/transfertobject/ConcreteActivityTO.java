@@ -8,6 +8,7 @@ import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.model.misc.concretephase.ConcretePhase;
+import wilos.model.misc.project.Project;
 
 public class ConcreteActivityTO extends ConcreteActivity implements Serializable{
 	
@@ -44,7 +45,12 @@ public class ConcreteActivityTO extends ConcreteActivity implements Serializable
 	        		concreteActivities.add(new ConcretePhaseTO((ConcretePhase)cta));
         			//concreteActivities.add(new ConcreteActivityTO((ConcretePhase)cta));
         		} else {
-	        		concreteActivities.add(new ConcreteActivityTO(cta));
+        			if (cta instanceof Project) {
+    	        		concreteActivities.add(new ProjectTO((Project)cta));
+            			//concreteActivities.add(new ConcreteActivityTO((ConcretePhase)cta));
+            		} else {
+            			concreteActivities.add(new ConcreteActivityTO(cta));
+            		}
         		}
         	}
         }
