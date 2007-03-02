@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import wilos.model.spem2.checklist.CheckList;
 import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;
@@ -47,7 +48,10 @@ public class TaskDefinitionTO extends TaskDefinition implements Serializable {
 
         Set<Guidance> guidances = new HashSet<Guidance>();
         for (Guidance g : myTD.getGuidances()) {
-        	guidances.add(new GuidanceTO(g));	        	
+        	if (g instanceof CheckList)
+        		guidances.add(new CheckListTO((CheckList)g));	
+        	else
+        		guidances.add(new GuidanceTO(g));	        	
         }
         this.setGuidances(guidances);
     }
