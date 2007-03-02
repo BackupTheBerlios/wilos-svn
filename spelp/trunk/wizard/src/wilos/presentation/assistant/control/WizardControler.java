@@ -100,6 +100,29 @@ public class WizardControler {
 		currentThread.start();
 	}
 	
+	/**
+	 * downloadTread
+	 * @return
+	 */
+	public synchronized Thread downloadTread (){
+		Thread monThread = new Thread (new Runnable(){
+			public void run() {
+				synchronized (MUTEX) {
+					WizardControler.getInstance().connectToServer(this);
+					
+					// Code: appel de la webService pour telecharger
+					// affichage d une fenetre de telechargement
+					//DownLoadFrame df = new DownLoadFrame();
+					
+					WizardControler.getInstance().disconnectToServer(this);
+				}
+			}
+		});
+		currentThread.start();
+		
+		return monThread;
+	}
+	
 	public synchronized void launchBackgroundThreadForTree(){
 		currentRefreshThread = new Thread (new Runnable(){
 			public void run() {
