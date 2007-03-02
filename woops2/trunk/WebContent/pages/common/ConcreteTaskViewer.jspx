@@ -33,7 +33,8 @@
 						readonly="#{ConcreteTaskViewerBean.isInputNameReadOnly}"/>
 					<ice:commandButton value="#{msgs['button.changeconcretename']}"
 						action="#{ConcreteTaskViewerBean.changeConcreteName}"
-						styleClass="smallbutton" />
+						styleClass="smallbutton"
+						title="#{msgs['concretetaskviewer.changeName.Bubble'] }" />
 					<ice:outputText value="#{msgs['concretetaskviewer.state']}" />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.displayedState}" />
