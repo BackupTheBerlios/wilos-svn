@@ -11,7 +11,8 @@
 						readonly="#{ConcretePhaseViewerBean.isInputNameReadOnly}" />
 					<ice:commandButton value="#{msgs['button.changeconcretename']}"
 						action="#{ConcretePhaseViewerBean.changeConcreteName}"
-						styleClass="smallbutton"  />
+						styleClass="smallbutton"
+						title="#{msgs['phaseViewer.changeName.Bubble'] }"  />
 					<ice:outputText value="#{msgs['viewer.description'] }" />
 					<ice:outputText value="#{ConcretePhaseViewerBean.concretePhase.phase.description}" />
 					<ice:outputText value="" />
@@ -33,7 +34,8 @@
 						</ice:dataTable>
 						<ice:commandButton value="#{msgs['viewer.buttonlabel']}"
 							action="#{ConcretePhaseViewerBean.savePhase}"
-							styleClass="smallbutton" />
+							styleClass="smallbutton"
+							title="#{msgs['viewer.buttonlabel.Bubble'] }" />
 					</ice:panelGroup>
 				</ice:panelGrid>
 			</ice:panelTab>
