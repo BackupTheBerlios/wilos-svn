@@ -46,7 +46,7 @@ public class WizardTreeModel extends DefaultTreeModel {
 		if (principal){
 			WizardStateMachine.getInstance().deleteAllStep() ;
 		}
-		HashMap<String, WizardMutableTreeNode> mapActivity = new HashMap<String, WizardMutableTreeNode>();
+		HashMap<ConcreteActivity, WizardMutableTreeNode> mapActivity = new HashMap<ConcreteActivity, WizardMutableTreeNode>();
 		this.root = new DefaultMutableTreeNode(participant.getName());
 		ArrayList<Step> tmp = new ArrayList<Step>();
 		Set<ConcreteRoleDescriptor> roles = participant.getConcreteRoleDescriptors();
@@ -68,12 +68,12 @@ public class WizardTreeModel extends DefaultTreeModel {
 				// we have to add them to the root or to an other super activity
 				while (ca != null){
 					// search if the activity is already treated as a node
-					if (!mapActivity.containsKey(ca.getId())){
+					if (!mapActivity.containsKey(ca)){
 						nodeAct = new WizardMutableTreeNode(ca);
-						mapActivity.put(ca.getId(), nodeAct);
+						mapActivity.put(ca, nodeAct);
 					}
 					else {
-						nodeAct = mapActivity.get(ca.getId());
+						nodeAct = mapActivity.get(ca);
 					}
 					if (precedent == null){
 						// if precedent == null we are at the first round 

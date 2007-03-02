@@ -253,7 +253,6 @@ public class WizardControler {
 			}
 			// if the node has been found
 			if (flagThread != 0 && trouve){
-				System.out.println(tmpNewNode + " "  + id1 + " " + tmpActualNode + " " + id2);
 				// manage the state
 				if (!(getState(tmpNewNode.getUserObject()).equals(getState(tmpActualNode.getUserObject())))){
 					if (tmpActualNode.getUserObject() instanceof ConcreteTaskDescriptor) {
@@ -269,7 +268,6 @@ public class WizardControler {
 			// if the node is new we add it in the model
 			else if(!trouve){
 				if (!(tmpNewNode.getUserObject() instanceof Step)){
-					System.err.println(tmpNewNode + " "  + id1 + " " + tmpActualNode + " " + id2);
 					WizardMutableTreeNode nodeToInsert = (WizardMutableTreeNode) tmpNewNode.clone() ;
 					manageStatesStep(nodeToInsert, ADDITION);
 					model.insertNodeInto(nodeToInsert,actualNode, newNode.getIndex(tmpNewNode));
@@ -364,7 +362,7 @@ public class WizardControler {
 			if (getState(tmpNode.getUserObject()).equals(Constantes.State.STARTED)){
 				if (tmpNode.getUserObject() instanceof ConcreteTaskDescriptor) {
 					ConcreteTaskDescriptor ctdactual = (ConcreteTaskDescriptor) tmpNode.getUserObject() ;
-					pauseConcreteTaskDescriptor(ctdactual);
+					pauseConcreteTaskDescriptor(ctdactual,true);
 					updateTreeVisualAndState(ctdactual, Constantes.State.SUSPENDED,true);
 				}
 			}
@@ -552,9 +550,9 @@ public class WizardControler {
 	 * Start a concrete task descriptor
 	 * @param ctd
 	 */
-	public synchronized void startConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
+	public synchronized void startConcreteTaskDescriptor(ConcreteTaskDescriptor ctd,boolean batch) {
 		if (ctd.getState() == Constantes.State.READY || ctd.getState() == Constantes.State.SUSPENDED ) {
-			RunnableTaskEvent traitement = new RunnableTaskEvent (RunnableTaskEvent.START,ctd);
+			RunnableTaskEvent traitement = new RunnableTaskEvent (RunnableTaskEvent.START,ctd,batch);
 			(new Thread (traitement)).start();
 		}
 	}
@@ -563,9 +561,9 @@ public class WizardControler {
 	 * Suspend a concrete task descriptor
 	 * @param ctd
 	 */	
-	public synchronized void pauseConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
+	public synchronized void pauseConcreteTaskDescriptor(ConcreteTaskDescriptor ctd,boolean batch) {
 		if (ctd.getState() == Constantes.State.STARTED) {
-			RunnableTaskEvent traitement = new RunnableTaskEvent (RunnableTaskEvent.SUSPEND,ctd);
+			RunnableTaskEvent traitement = new RunnableTaskEvent (RunnableTaskEvent.SUSPEND,ctd,batch);
 			(new Thread (traitement)).start();
 		}
 	}
@@ -574,9 +572,9 @@ public class WizardControler {
 	 * Finish  a concrete task descriptor and finish all of its step if they exist
 	 * @param ctd
 	 */
-	public synchronized void finishConcreteTaskDescriptor(ConcreteTaskDescriptor ctd) {
+	public synchronized void finishConcreteTaskDescriptor(ConcreteTaskDescriptor ctd,boolean batch) {
 		if (ctd.getState() == Constantes.State.STARTED) {
-			RunnableTaskEvent traitement = new RunnableTaskEvent (RunnableTaskEvent.FINISH,ctd);
+			RunnableTaskEvent traitement = new RunnableTaskEvent (RunnableTaskEvent.FINISH,ctd,batch);
 			(new Thread (traitement)).start();
 		}
 	}
@@ -638,7 +636,7 @@ public class WizardControler {
 		if(dmt != null) {
 			ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
 			// if(selectedTask.getId() != null) {
-			WizardControler.getInstance().startConcreteTaskDescriptor(selectedTask);
+			WizardControler.getInstance().startConcreteTaskDescriptor(selectedTask,false);
 			//WizardControler.getInstance().refreshParticipant();
 			//}					
 		}
@@ -649,7 +647,7 @@ public class WizardControler {
 		if(dmt != null) {
 			ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
 			//if(selectedTask.getId() != null) {
-				WizardControler.getInstance().pauseConcreteTaskDescriptor(selectedTask);
+				WizardControler.getInstance().pauseConcreteTaskDescriptor(selectedTask,false);
 				//WizardControler.getInstance().refreshParticipant();
 			//}
 		}
@@ -661,7 +659,7 @@ public class WizardControler {
 			if (dmt.getUserObject() instanceof ConcreteTaskDescriptor){
 				ConcreteTaskDescriptor selectedTask = (ConcreteTaskDescriptor)dmt.getUserObject();
 				//if(selectedTask.getId() != null) {
-				WizardControler.getInstance().finishConcreteTaskDescriptor(selectedTask);
+				WizardControler.getInstance().finishConcreteTaskDescriptor(selectedTask,false);
 				//}
 			}
 			else if (dmt.getUserObject() instanceof Step){
@@ -689,7 +687,7 @@ public class WizardControler {
 					if (parent.getState().equals(Constantes.State.STARTED)){
 						if(JOptionPane.showOptionDialog(treePanel, Bundle.getText("endstep.message"), Bundle.getText("endstep.title"), JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,null,null) == JOptionPane.YES_OPTION){
 							WizardControler.getInstance().changeHTMLViewerBehavior(true);
-							WizardControler.getInstance().finishConcreteTaskDescriptor(parent);
+							WizardControler.getInstance().finishConcreteTaskDescriptor(parent,true);
 							parent.setState(Constantes.State.FINISHED);
 							WizardStateMachine.getInstance().setFocusedObject(parent,null);
 						}
@@ -786,11 +784,13 @@ public class WizardControler {
 		private static final int FINISH = 2;
 		
 		private int type;
+		private boolean batch ;
 		private ConcreteTaskDescriptor taskId;
 		
-		public RunnableTaskEvent (int t, ConcreteTaskDescriptor ctd) {
+		public RunnableTaskEvent (int t, ConcreteTaskDescriptor ctd,boolean batchMode) {
 			type = t;
 			taskId = ctd;
+			batch = batchMode ;
 		}
 		
 		public void run () {
@@ -827,7 +827,7 @@ public class WizardControler {
 							}
 						}
 				}
-				WizardControler.this.updateTreeVisualAndState(taskId, state,false);
+				WizardControler.this.updateTreeVisualAndState(taskId, state,batch);
 				WizardControler.getInstance().disconnectToServer(this);
 			}
 		}
