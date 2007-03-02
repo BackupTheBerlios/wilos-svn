@@ -33,7 +33,7 @@
 						readonly="#{ConcreteTaskViewerBean.isInputNameReadOnly}"/>
 					<ice:commandButton value="#{msgs['button.changeconcretename']}"
 						action="#{ConcreteTaskViewerBean.changeConcreteName}"
-						disabled="#{ConcreteTaskViewerBean.changeButtonIsDisabled}"/>
+						styleClass="smallbutton" />
 					<ice:outputText value="#{msgs['concretetaskviewer.state']}" />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.displayedState}" />
@@ -96,6 +96,15 @@
 								actionListener="#{ConcreteTaskViewerBean.suspendedActionListener}"
 								visible="#{ConcreteTaskViewerBean.visibleSuspended}"
 								styleClass="smallbutton"/>
+								<ice:commandButton value="#{msgs['concretetaskviewer.remove']}"
+								actionListener="#{ConcreteTaskViewerBean.removeActionListener}"
+								visible="#{ConcreteTaskViewerBean.visibleRemove}"
+								styleClass="smallbutton"/>
+								<ice:commandButton value="#{msgs['concretetaskviewer.dissociateButton']}"
+								visible="#{ConcreteTaskViewerBean.dissociateButtonIsVisible}"
+								action="#{ConcreteTaskViewerBean.dissociateTask}"
+								styleClass="smallbutton" />
+								
 							</td>
 						</tr>
 					</table>
