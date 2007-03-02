@@ -260,6 +260,17 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		super.refreshProjectTable();
 	}
 
+	public void removeActionListener(ActionEvent event) {
+		if (!this.getChangeButtonIsDisabled() && (this.concreteTaskDescriptor.getState().equals(State.CREATED) || this.concreteTaskDescriptor.getState().equals(State.READY)));
+		{this.concreteTaskDescriptorService
+				.removeConcreteTaskDescriptor(this.concreteTaskDescriptor);
+
+		// Refresh components.
+		super.refreshProjectTree();
+		// afficher la page du projet
+		}
+	}
+	
 	public ConcreteTaskDescriptor getConcreteTaskDescriptor() {
 		return concreteTaskDescriptor;
 	}
@@ -466,6 +477,13 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		return this.concreteTaskDescriptor.getState().equals(State.STARTED);
 	}
 
+	/**
+	 * @return the visibleSuspended
+	 */
+	public boolean getVisibleRemove() {
+		return (!this.getChangeButtonIsDisabled() && (this.concreteTaskDescriptor.getState().equals(State.CREATED) || this.concreteTaskDescriptor.getState().equals(State.READY)));
+	}
+	
 	/**
 	 * @return the visibleReprendre
 	 */
