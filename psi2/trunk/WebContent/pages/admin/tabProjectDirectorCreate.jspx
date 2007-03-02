@@ -27,7 +27,7 @@
 									
 								</ice:panelGrid>
 								<ice:panelGrid columns="2">
-									<ice:commandButton value="#{msgs['component.projectdirectorcreate.register']}" action="#{ProjectDirectorBean.saveProjectDirectorAction}"  styleClass="smallbutton"/>
+									<ice:commandButton value="#{msgs['component.projectdirectorcreate.register']}" action="#{ProjectDirectorBean.saveProjectDirectorAction}" title="#{msgs['component.projectdirectorcreate.registertip']}"  styleClass="smallbutton"/>
 								</ice:panelGrid>
 						</ice:panelGroup>
 				</ice:panelGrid>
