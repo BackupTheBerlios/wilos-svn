@@ -13,7 +13,8 @@
 						readonly="#{ProjectViewerBean.isInputNameReadOnly}" />
 					<ice:commandButton value="#{msgs['button.changeconcretename']}"
 						action="#{ProjectViewerBean.changeConcreteName}"
-						styleClass="smallbutton"  />
+						styleClass="smallbutton"
+						title="#{msgs['projectviewer.changeName.Bubble'] }"  />
 					<ice:outputText value="#{msgs['projectviewer.creationdate']}" />
 					<ice:outputText value="#{ProjectViewerBean.project.creationDate}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
