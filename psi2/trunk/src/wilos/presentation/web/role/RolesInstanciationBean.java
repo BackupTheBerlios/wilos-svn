@@ -17,6 +17,7 @@ import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.activity.ActivityService;
 import wilos.business.services.spem2.process.ProcessService;
+import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
@@ -25,7 +26,7 @@ import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 import wilos.presentation.web.project.ProjectAdvancementBean;
-
+import wilos.business.services.misc.role.ConcreteRoleInstanciationService;
 /**
  * @author Sakamakak
  * 
@@ -55,6 +56,8 @@ public class RolesInstanciationBean {
 	private ProcessService processService;
 
 	private ActivityService activityService;
+	
+	private ConcreteRoleInstanciationService concreteRoleInstanciationService;
 
 	private WebSessionService webSessionService;
 
@@ -67,6 +70,7 @@ public class RolesInstanciationBean {
 	public RolesInstanciationBean() {
 		this.displayContent = new ArrayList<HashMap<String, Object>>();
 		this.indentationContent = new HashMap<String, String>();
+		this.concreteRoleInstanciationService= new ConcreteRoleInstanciationService();
 	}
 
 	/**
@@ -98,6 +102,42 @@ public class RolesInstanciationBean {
 		}
 		return this.displayContent;
 	}
+
+	public void instanciateConcreteRole()
+	{
+		List<HashMap<String, Object>> tmp=this.displayContent;
+		List<HashMap<String, String>> res=new ArrayList<HashMap<String, String>>();
+		String intTemp;
+		String occursTemp;
+		
+		
+		for (Iterator iter = tmp.iterator(); iter.hasNext();) {
+			HashMap<String, String> tmp2=new HashMap<String, String>();
+			HashMap<String, Object> hm = new HashMap<String, Object>();
+			System.out.println("##################################################### YYAHAHHHA");
+			hm = (HashMap<String, Object>) iter.next();
+			System.out.println("##################################################### YYAHAHHHA2");	
+			intTemp=hm.get("id").toString();
+			System.out.println(intTemp);
+			occursTemp=hm.get("nbOccurences").toString();
+			System.out.println(occursTemp);
+			tmp2.put("id", intTemp);
+			tmp2.put("nbOccurences", occursTemp.toString());
+			res.add(tmp2);
+			System.out.println("##################################################### YYAHAHHHA3");
+			
+		}
+		System.out.println("##################################################### YYAHAHHHA32");
+		
+		System.out.println("##################################################### YYAHAHHHA35");
+			
+		this.concreteRoleInstanciationService.saveInstanciateConcreteRole(res);	
+			
+			
+	}
+		
+		
+	
 
 	/**
 	 * @param _process
@@ -368,6 +408,15 @@ public class RolesInstanciationBean {
 	 */
 	public void setIndentationContent(HashMap<String, String> indentationContent) {
 		this.indentationContent = indentationContent;
+	}
+
+	public ConcreteRoleInstanciationService getConcreteRoleInstanciationService() {
+		return concreteRoleInstanciationService;
+	}
+
+	public void setConcreteRoleInstanciationService(
+			ConcreteRoleInstanciationService concreteRoleInstanciationService) {
+		this.concreteRoleInstanciationService = concreteRoleInstanciationService;
 	}
 
 }

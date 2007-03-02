@@ -204,7 +204,9 @@
 			
 			
 			
-			
+			<!-- ####################################################################################################
+			PSI2 ONGLET de l'instanciation d'un nouveau concrete role
+			#################################################################################################### -->
 			
 			<ice:panelTab id="panelTab_processRoleInstanciation" label="Instancier vos Rôles">
 				<ice:panelGrid styleClass="contentLayoutGridStyle" id="rolepanelGroup">
@@ -230,6 +232,7 @@
 									style="font-size:10px; height:10px; width:150px;"/>
 						</ice:column>
 					</ice:dataTable>
+					<ice:commandButton value="test instancier" action="#{RolesInstanciationBean.instanciateConcreteRole}" />
 				</ice:panelGrid>
 			</ice:panelTab>
 		
