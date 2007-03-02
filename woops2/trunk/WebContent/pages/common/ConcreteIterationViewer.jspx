@@ -10,9 +10,9 @@
 						value="#{ConcreteIterationViewerBean.concreteIteration.concreteName}"
 						readonly="#{ConcreteIterationViewerBean.isInputNameReadOnly}" />
 					<ice:commandButton value="#{msgs['button.changeconcretename']}"
-							action="#{ConcreteIterationViewerBean.changeConcreteName}"
-							styleClass="smallbutton"
-							title="#{msgs['iterationViewer.changeName.Bubble']}" />
+						action="#{ConcreteIterationViewerBean.changeConcreteName}"
+						disabled="#{ConcreteIterationViewerBean.changeButtonIsDisabled}" 
+						styleClass="smallbutton" />
 					<ice:outputText value="#{msgs['viewer.description'] }" />
 					<ice:outputText value="#{ConcreteIterationViewerBean.concreteIteration.iteration.description}"/>
 					<ice:outputText value="" />
@@ -34,8 +34,7 @@
 						</ice:dataTable>
 						<ice:commandButton value="#{msgs['viewer.buttonlabel']}"
 							action="#{ConcreteIterationViewerBean.saveIteration}"
-							styleClass="smallbutton"
-							title="#{msgs['viewer.buttonlabel.Bubble'] }" />
+							styleClass="smallbutton" />
 					</ice:panelGroup>
 				</ice:panelGrid>
 			</ice:panelTab>

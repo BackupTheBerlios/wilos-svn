@@ -11,8 +11,8 @@
 						readonly="#{ConcreteActivityViewerBean.isInputNameReadOnly}" />
 					<ice:commandButton value="#{msgs['button.changeconcretename']}"
 						action="#{ConcreteActivityViewerBean.changeConcreteName}"
-						styleClass="smallbutton"
-						title="#{msgs['activityViewer.changeName.Bubble'] }" />
+						disabled="#{ConcreteActivityViewerBean.changeButtonIsDisabled}" 
+						styleClass="smallbutton" />
 					<ice:outputText value="#{msgs['viewer.description'] }" />
 					<ice:outputText value="#{ConcreteActivityViewerBean.concreteActivity.activity.description}" />
 					<ice:outputText value="" />
@@ -34,8 +34,7 @@
 						</ice:dataTable>
 						<ice:commandButton value="#{msgs['viewer.buttonlabel']}"
 							action="#{ConcreteActivityViewerBean.saveIteration}"
-							styleClass="smallbutton"
-							title="#{msgs['viewer.buttonlabel.Bubble'] }" />
+							styleClass="smallbutton" />
 					</ice:panelGroup>
 				</ice:panelGrid>
 			</ice:panelTab>

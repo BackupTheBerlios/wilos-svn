@@ -13,8 +13,8 @@
 						readonly="#{ProjectViewerBean.isInputNameReadOnly}" />
 					<ice:commandButton value="#{msgs['button.changeconcretename']}"
 						action="#{ProjectViewerBean.changeConcreteName}"
-						styleClass="smallbutton"
-						title="#{msgs['projectviewer.changeName.Bubble'] }"  />
+						disabled="#{ProjectViewerBean.changeButtonIsDisabled}" 
+						styleClass="smallbutton"  />
 					<ice:outputText value="#{msgs['projectviewer.creationdate']}" />
 					<ice:outputText value="#{ProjectViewerBean.project.creationDate}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
@@ -215,7 +215,7 @@
 			#################################################################################################### -->
 			
 			<ice:panelTab id="panelTab_processRoleInstanciation" label="Instancier vos Rôles">
-				<ice:panelGroup styleClass="contentLayoutGridStyle" id="rolepanelGroup">
+				<ice:panelGrid styleClass="contentLayoutGridStyle" id="rolepanelGroup">
 					<ice:dataTable value="#{RolesInstanciationBean.displayContent}" var="processRole" cellpadding="0" columnWidths="30px,600px,150px">
 						<ice:column>
 							<ice:commandLink value="" actionListener="#{RolesInstanciationBean.toggleSubGroupAction}">
@@ -239,7 +239,7 @@
 						</ice:column>
 					</ice:dataTable>
 					<ice:commandButton value="test instancier" action="#{RolesInstanciationBean.instanciateConcreteRole}" />
-				</ice:panelGroup>
+				</ice:panelGrid>
 			</ice:panelTab>
 		
 		

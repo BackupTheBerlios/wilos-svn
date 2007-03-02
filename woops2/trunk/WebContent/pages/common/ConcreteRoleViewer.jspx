@@ -27,8 +27,7 @@
 
 						<ice:commandButton value="#{msgs['concreteRoleViewer.toAffect']}"
 							action="#{ConcreteRoleViewerBean.affectParticipantToARole}"
-							styleClass="smallbutton"
-							title="#{msgs['concreteRoleViewer.toAffect.Bubble'] }" />
+							styleClass="smallbutton" />
 						<ice:outputText value="" />
 					</ice:panelGrid>
 				</ice:panelStack>

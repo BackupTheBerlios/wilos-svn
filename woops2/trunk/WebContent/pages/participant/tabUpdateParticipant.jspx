@@ -1,0 +1,50 @@
+<ice:form id="participant_form">	
+	<ice:inputHidden value="#{ParticipantBean.isSetParticipantFromSession}"/>
+		<ice:panelTabSet id="panelTabSet_participant_subscribe"
+			styleClass="componentPanelTabSetLayout">
+			
+			<ice:panelTab id="panelTab_participant_roles" label="#{msgs['component.participantUpdate.tabTitle']}" imageDir="images">
+			<ice:panelGrid columns="2">			
+				<ice:outputText value="#{msgs['component.forminscription.lastname']}" />					
+				<ice:inputText id="nom" title="Nom"
+					value="#{ParticipantBean.participant.name}" required="false" />
+	
+				<ice:outputText
+					value="#{msgs['component.forminscription.firstname']}" />
+				<ice:inputText id="prenom"
+					value="#{ParticipantBean.participant.firstname}" required="false" />
+	
+				<ice:outputText value="#{msgs['component.forminscription.email']}" />
+				<ice:inputText id="email"
+					value="#{ParticipantBean.participant.emailAddress}"
+					validator="#{ParticipantBean.emailValidation}" required="false">
+				</ice:inputText>
+				
+				<br/><br/>
+				
+				<ice:outputText value="#{msgs['component.participantUpdate.password']}"/>
+				<ice:inputSecret id="equal1"
+					value="#{ParticipantBean.participant.password}" required="false"/>
+	
+				<ice:outputText
+					value="#{msgs['component.participantUpdate.confirmPassword']}"/>
+				<ice:inputSecret id="equal2"
+					value="#{ParticipantBean.passwordConfirmation}"
+					validator="#{ParticipantBean.passwordEqualValidation}"
+					required="false">
+					<f:param name="forPassword"
+						value="#{ParticipantBean.participant.password}" />
+				</ice:inputSecret>		
+			</ice:panelGrid>
+			<ice:panelGrid columns="1">
+				<ice:outputText
+					value="#{msgs['component.participantUpdate.infoPassword']}"/>
+				<br/>
+				<ice:commandButton
+					value="#{msgs['component.participantUpdate.validationButton']}"
+					action="#{ParticipantBean.updateParticipantAction}"
+					styleClass="smallbutton" />
+			</ice:panelGrid>
+			</ice:panelTab>
+		</ice:panelTabSet>	
+</ice:form>
