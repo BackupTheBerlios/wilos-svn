@@ -39,6 +39,7 @@ import wilos.presentation.assistant.ressources.ImagesService;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 import wilos.presentation.assistant.view.main.ActionBar;
 import wilos.presentation.assistant.view.main.ContextualMenu;
+import wilos.presentation.assistant.view.panels.InfoPanel;
 import wilos.presentation.assistant.view.panels.TreePanel;
 import wilos.presentation.assistant.view.panels.WizardMutableTreeNode;
 import wilos.presentation.assistant.view.panels.WizardStateMachine;
@@ -52,6 +53,7 @@ public class WizardControler {
 	private static WizardControler wc = null;
 	private ActionBar actionBar = null;
 	private TreePanel treePanel = null ;
+	private InfoPanel infoPanel = null ;
 	private ContextualMenu menuContextuel = null ;
 	private boolean showInfo = true ;
 	private Component src = null ;
@@ -587,10 +589,11 @@ public class WizardControler {
 	 * @param theTreePanel
 	 * @param menu
 	 */
-	public void initUIElements(ActionBar theActionToolBar,TreePanel theTreePanel, ContextualMenu menu) {;
+	public void initUIElements(ActionBar theActionToolBar,TreePanel theTreePanel, ContextualMenu menu,InfoPanel info) {;
 		actionBar = theActionToolBar ;
 		treePanel = theTreePanel;
 		menuContextuel = menu ;
+		infoPanel = info ;
 		showInfo = true;
 		initActions() ;
 		
@@ -707,7 +710,8 @@ public class WizardControler {
 			public void actionPerformed(ActionEvent e) {
 				playTask();
 			    ConcreteTaskDescriptor c =(ConcreteTaskDescriptor)WizardControler.getInstance().getLastCtd();
-		        currentTask.demarrer();
+		        Thread unThread = new Thread(new TimeThread());
+		        unThread.start();
 		        long val1=0;
 				float val2;
 				String res;
@@ -720,7 +724,7 @@ public class WizardControler {
 				System.out.println(res);
 				
 				//currentTask.init(val1*100);
-				currentTask.run();
+				//currentTask.run();
 				
 			}			
 		};
@@ -847,6 +851,61 @@ public class WizardControler {
 				}
 				WizardControler.this.updateTreeVisualAndState(taskId, state,batch);
 				WizardControler.getInstance().disconnectToServer(this);
+			}
+		}
+	}
+	
+	private class TimeThread implements Runnable
+	{
+		private Thread monThread;
+		private boolean continuer = false;
+		private long debut;
+			
+		public TimeThread() {
+		// TODO Auto-generated constructor stub
+		
+		{
+			
+			continuer = true;
+							
+			}
+		}
+//		public void init(long d)
+//		{
+//			debut += d;		
+//		}
+		public void arreter()
+		{
+			if (monThread.isAlive())
+			{
+				continuer = false;
+			}
+		}
+//		public long getDebut()
+//		{
+//			return debut;
+//		}
+		
+		public void raz()
+		{
+			debut = 0;
+			monThread = null;
+		}
+		public void run()
+		{
+			debut = System.currentTimeMillis();		
+			
+			while( continuer)
+			{
+					try
+					{
+						monThread.sleep(1000);
+						infoPanel.getTps().setText(String.valueOf(System.currentTimeMillis() - debut));
+					}
+					catch(InterruptedException e)
+					{
+						System.out.println(e.toString());
+					}
 			}
 		}
 	}
