@@ -11,6 +11,7 @@ import wilos.business.util.Security ;
 import wilos.model.misc.wilosuser.WilosUser ;
 import wilos.presentation.web.template.ConnectViewBean ;
 import wilos.presentation.web.template.MenuBean ;
+import wilos.presentation.web.tree.TreeBean;
 
 /**
  * Managed-Bean link to participantSubscribe.jspx
@@ -180,7 +181,14 @@ public class LoginBean {
 		String url = "wilos" ;
 		changeContentPage(url) ;
 		changeConnectView(false, "none") ;
+		
+		
 		this.webSessionService.cleanSesssion();
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");
+		tb.cleanTreeDisplay();
+		
 		return url ;
 	}
 
