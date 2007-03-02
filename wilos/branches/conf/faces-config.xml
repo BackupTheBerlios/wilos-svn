@@ -183,6 +183,10 @@
 			<property-name>processManagementService</property-name>
 			<value>#{ProcessManagementService}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>processManagerService</property-name>
+			<value>#{ProcessManagerService}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -225,6 +229,7 @@
 			<property-name>projectService</property-name>
 			<value>#{ProjectService}</value>
 		</managed-property>
+		
 	</managed-bean>
 	
 

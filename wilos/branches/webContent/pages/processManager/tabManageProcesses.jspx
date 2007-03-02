@@ -1,6 +1,6 @@
 <ice:form id="processes_management_form" partialSubmit="true">
 	<ice:panelTabSet id="panelTabSet_processes" styleClass="componentPanelTabSetLayout">
-		<ice:panelTab id="panelTab_processes_management" label="#{msgs['component.process.management.tabtitle']}" imageDir="images">
+		<ice:panelTab id="panelTab_processes_management" label="#{msgs['component.process.management.tabtitle']}" imageDir="images" >
 			<ice:panelStack id="panelStack_processes_management" selectedPanel="#{ProcessBean.processesListView}">			
 				<ice:panelGroup id="processesManagementPanelGroup_not_null" styleClass="contentIncludePanelGroup">
 					<ice:dataTable value="#{ProcessBean.processesList}" columnWidths="400px,250px,30px" border="0" var="process">
@@ -26,15 +26,15 @@
 							<f:facet name="header">
 								<ice:outputText value="#{msgs['component.process.management.actions']}" />
 							</f:facet>						
-							<ice:commandLink value="" actionListener="#{ProcessBean.editName}" rendered="#{!process.isEditable}">
+							<ice:commandLink value="" actionListener="#{ProcessBean.editName}" rendered="#{!process.isEditable}" title="#{msgs['component.processList.editnameprocesstip']}">
 								<f:param name="processEditId" value="#{process.id}"/>
 								<ice:graphicImage value="images/modify.gif" style="border: 0px solid;" />
 							</ice:commandLink>
-							<ice:commandLink value="" actionListener="#{ProcessBean.saveName}" rendered="#{process.isEditable}">
+							<ice:commandLink value="" actionListener="#{ProcessBean.saveName}" rendered="#{process.isEditable}" title="#{msgs['component.processList.savenameprocesstip']}">
 								<f:param name="processSaveId" value="#{process.id}"/>
 								<ice:graphicImage value="images/save.gif" style="border: 0px solid;" />
 							</ice:commandLink>
-							  <ice:commandLink value="" actionListener="#{ProcessBean.deleteProcess}">
+							  <ice:commandLink value="" actionListener="#{ProcessBean.deleteProcess}" title="#{msgs['component.processList.deleteprocesstip']}">
 								<f:param name="processId" value="#{process.id}"/>
 								<ice:graphicImage value="images/delete.gif" style="border: 0px solid;" />
 							</ice:commandLink>

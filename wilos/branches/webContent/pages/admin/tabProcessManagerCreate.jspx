@@ -28,7 +28,7 @@
 						</ice:panelGrid>
 				
 						<ice:panelGrid columns="2">
-							<ice:commandButton value="#{msgs['component.processmanagercreate.register']}" action="#{ProcessManagerBean.saveProcessManagerAction}" styleClass="smallbutton"/>
+							<ice:commandButton value="#{msgs['component.processmanagercreate.register']}" action="#{ProcessManagerBean.saveProcessManagerAction}" styleClass="smallbutton" title="#{msgs['component.processmanagercreate.registertip']}"/>
 						</ice:panelGrid>	
 				
 					</ice:panelGroup>
