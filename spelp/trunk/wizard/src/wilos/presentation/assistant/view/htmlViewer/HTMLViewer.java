@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -31,6 +32,7 @@ import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileFilter;
 
 import org.jdesktop.swingx.JXTaskPane;
 
@@ -257,9 +259,9 @@ public class HTMLViewer extends JFrame {
 		// -----------TO DOWNLOAD THE ASSOCIATED FILE----------------
 		if (e instanceof Guidance) {
 			// download the associated file of the current guidance if exist 
-			if (((Guidance) e).getAttachment() != "") {
+			//if (((Guidance) e).getAttachment() != "") {
 				downloadAssociatedFileFromRemote();
-			}
+			//}
 			
 		}
 		
@@ -307,8 +309,23 @@ public class HTMLViewer extends JFrame {
 		if (choice == JOptionPane.YES_OPTION) {
 			// JFileChooser creation to download the file on the remote
 			JFileChooser fileChooser = new JFileChooser("../");
+			fileChooser.setFileFilter(new FileFilter(){
+
+				@Override
+				public boolean accept(File f) {
+					// TODO Auto-generated method stub
+					return f.isDirectory();
+				}
+
+				@Override
+				public String getDescription() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+				
+			});
 			// display the JFileChooser
-			int selected = fileChooser.showOpenDialog(this);
+			int selected = fileChooser.showSaveDialog(this);
 			if (selected == JFileChooser.APPROVE_OPTION) {
 				// TODO: Traitement : appel des webServices pour recuperer le fichier sur le serveur
 				
@@ -316,6 +333,23 @@ public class HTMLViewer extends JFrame {
 				
 				// Gestion d'un thread pour cette fenetre pour ne pas etre bloquant sur le reste de l'application
 				// pendant le telechargement
+				
+				
+				// TODO
+				/*Thread currentThread = WizardControler.getInstance().downloadTread();
+				
+				
+				try {
+					// rendre la main a l application pendant le traitement du thread
+					currentThread.wait();
+				} catch (InterruptedException e) {					
+					e.printStackTrace();
+				}
+				
+				currentThread.notify(); */
+				
+				
+				
 				
 			}
 		}
