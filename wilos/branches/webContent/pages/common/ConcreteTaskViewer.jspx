@@ -98,10 +98,10 @@
 								actionListener="#{ConcreteTaskViewerBean.suspendedActionListener}"
 								visible="#{ConcreteTaskViewerBean.visibleSuspended}"
 								styleClass="smallbutton"/>
-								<ice:commandButton value="#{msgs['concretetaskviewer.remove']}"
+								<!--<ice:commandButton value="#{msgs['concretetaskviewer.remove']}"
 								actionListener="#{ConcreteTaskViewerBean.removeActionListener}"
 								visible="#{ConcreteTaskViewerBean.visibleRemove}"
-								styleClass="smallbutton"/>
+								styleClass="smallbutton"/>-->
 								<!--<ice:commandButton value="#{msgs['concretetaskviewer.dissociateButton']}"
 								visible="#{ConcreteTaskViewerBean.dissociateButtonIsVisible}"
 								action="#{ConcreteTaskViewerBean.dissociateTask}"
