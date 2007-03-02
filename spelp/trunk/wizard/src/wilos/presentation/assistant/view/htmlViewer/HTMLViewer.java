@@ -241,68 +241,10 @@ public class HTMLViewer extends JFrame {
 	}
 	
 	/**
-	 * displayElement : display in the html area the description of an element
-	 * @param e
-	 */
-	private void displayElement(Element e, ImageIcon icon) {
-		//guidesList.setVisible(e instanceof Guidance || e instanceof TaskDescriptor);
-			
-		/* Affichage du nom */
-		if (e instanceof BreakdownElement) {
-			BreakdownElement bde = (BreakdownElement)e ;
-			this.myElementLabel.setText(bde.getPresentationName()) ;
-		}
-		else {
-			this.myElementLabel.setText(e.getName()) ;
-		}
-		this.myElementLabel.setIcon(icon);
-		
-		// -----------TO DOWNLOAD THE ASSOCIATED FILE----------------
-		if (e instanceof Guidance) {
-			// download the associated file of the current guidance if exist 
-			if (((Guidance) e).getAttachment() != "") {
-				downloadAssociatedFileFromRemote();
-			}
-		}
-		
-	
-		/* Affichage de la description (ancienne methode setMessage) */
-		// *************************************************************
-		// TODO REMPLACER CE CODE PAR UNE FONCTION QUI AFFICHE TOUS LES ELEMENTS
-		// *************************************************************
-		if (e instanceof CheckList) {
-			String description = "<TABLE BORDER=1>";
-			CheckList c = (CheckList) e;
-			Set<Section> sections = new HashSet<Section>();
-			sections = c.getSections();
-			for(Iterator it = sections.iterator() ; it.hasNext() ; ) {
-				Section s = (Section)it.next();
-				description += "<TR><TD><INPUT type=\"checkbox\"></TD><TD><B>" + s.getName() + "</B> :</TD><TD>" + s.getDescription() + "</TD></TR>";
-			}
-			description += "</TABLE>";
-			this.HTMLCode = description;
-		}
-		else {
-			String description = e.getDescription();
-			this.HTMLCode = description;
-		}
-		
-		this.myEditorPane.setText(this.HTMLCode);
-		// *************************************************************
-		
-		if(this.HTMLCode.length() != 0){
-			this.myEditorPane.setCaretPosition(1); // revient au debut du texte
-		}
-			
-		this.setVisible(true);		
-		
-	}
-
-	/**
 	 * downloadAssociatedFileFromRemote
 	 *
 	 */
-	private void downloadAssociatedFileFromRemote() {
+	private synchronized void downloadAssociatedFileFromRemote() {
 		// creation and display the message dialog
 		int choice = JOptionPane.showConfirmDialog(this, "Un document associe a ce guide est disponible. " +
 									"Voulez-vous le telecharger ?", "Information", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
@@ -337,26 +279,73 @@ public class HTMLViewer extends JFrame {
 				
 				
 				// TODO
-				/*Thread currentThread = WizardControler.getInstance().downloadTread();
-				
-				
-				try {
-					// rendre la main a l application pendant le traitement du thread
-					currentThread.wait();
-				} catch (InterruptedException e) {					
-					e.printStackTrace();
-				}
-				
-				currentThread.notify(); */
-				
-				
-				
-				
+				Thread currentThread = WizardControler.getInstance().downloadThread();			
 			}
 		}
 		
 	}
+	
+	/**
+	 * displayElement : display in the html area the description of an element
+	 * @param e
+	 */
+	private void displayElement(Element e, ImageIcon icon) {
+		//guidesList.setVisible(e instanceof Guidance || e instanceof TaskDescriptor);
+			
+		/* Affichage du nom */
+		if (e instanceof BreakdownElement) {
+			BreakdownElement bde = (BreakdownElement)e ;
+			this.myElementLabel.setText(bde.getPresentationName()) ;
+		}
+		else {
+			this.myElementLabel.setText(e.getName()) ;
+		}
+		this.myElementLabel.setIcon(icon);
+		
+//		 -----------TO DOWNLOAD THE ASSOCIATED FILE----------------
+		if (e instanceof Guidance) {
+			// download the associated file of the current guidance if exist 
+			if (((Guidance) e).getAttachment() != "") {
+				downloadAssociatedFileFromRemote();
+			}
+			
+		}
+		
+		
+	
+		/* Affichage de la description (ancienne methode setMessage) */
+		// *************************************************************
+		// TODO REMPLACER CE CODE PAR UNE FONCTION QUI AFFICHE TOUS LES ELEMENTS
+		// *************************************************************
+		if (e instanceof CheckList) {
+			String description = "<TABLE BORDER=1>";
+			CheckList c = (CheckList) e;
+			Set<Section> sections = new HashSet<Section>();
+			sections = c.getSections();
+			for(Iterator it = sections.iterator() ; it.hasNext() ; ) {
+				Section s = (Section)it.next();
+				description += "<TR><TD><INPUT type=\"checkbox\"></TD><TD><B>" + s.getName() + "</B> :</TD><TD>" + s.getDescription() + "</TD></TR>";
+			}
+			description += "</TABLE>";
+			this.HTMLCode = description;
+		}
+		else {
+			String description = e.getDescription();
+			this.HTMLCode = description;
+		}
+		
+		this.myEditorPane.setText(this.HTMLCode);
+		// *************************************************************
+		
+		if(this.HTMLCode.length() != 0){
+			this.myEditorPane.setCaretPosition(1); // revient au debut du texte
+		}
+			
+		this.setVisible(true);		
+		
+	}
 
+	
 	private void manageArrows() {
 		/* Activation/Desactivation des boutons d'historique */
 		if(this.cursorStack < 1)

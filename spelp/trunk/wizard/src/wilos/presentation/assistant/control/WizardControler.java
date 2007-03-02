@@ -39,6 +39,7 @@ import wilos.presentation.assistant.ressources.ImagesService;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 import wilos.presentation.assistant.view.main.ActionBar;
 import wilos.presentation.assistant.view.main.ContextualMenu;
+import wilos.presentation.assistant.view.main.DownLoadFrame;
 import wilos.presentation.assistant.view.panels.InfoPanel;
 import wilos.presentation.assistant.view.panels.TreePanel;
 import wilos.presentation.assistant.view.panels.WizardMutableTreeNode;
@@ -105,28 +106,29 @@ public class WizardControler {
 		currentThread.start();
 	}
 	
+	
 	/**
 	 * downloadTread
 	 * @return
 	 */
-	public synchronized Thread downloadTread (){
+	public synchronized Thread downloadThread (){
 		Thread monThread = new Thread (new Runnable(){
 			public void run() {
-				synchronized (MUTEX) {
 					WizardControler.getInstance().connectToServer(this);
 					
 					// Code: appel de la webService pour telecharger
 					// affichage d une fenetre de telechargement
-					//DownLoadFrame df = new DownLoadFrame();
+					DownLoadFrame df = new DownLoadFrame();
+					
+					
 					
 					WizardControler.getInstance().disconnectToServer(this);
-				}
 			}
 		});
-		currentThread.start();
-		
+		monThread.start();
 		return monThread;
 	}
+	
 	
 	public synchronized void launchBackgroundThreadForTree(){
 		currentRefreshThread = new Thread (new Runnable(){
