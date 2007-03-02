@@ -15,6 +15,7 @@ import org.apache.commons.logging.Log ;
 import org.apache.commons.logging.LogFactory ;
 
 import wilos.business.services.misc.project.ProjectService ;
+import wilos.business.services.misc.wilosuser.ProcessManagerService;
 import wilos.business.services.spem2.process.ProcessManagementService ;
 import wilos.business.services.spem2.process.ProcessService ;
 import wilos.model.spem2.process.Process ;
@@ -30,6 +31,8 @@ public class ProcessBean {
 	private ProcessService processService ;
 
 	private ProjectService projectService ;
+	
+	private ProcessManagerService processManagerService;
 
 	private List<HashMap<String, Object>> processesList ;
 
@@ -87,6 +90,13 @@ public class ProcessBean {
 				processDescription.put("presentationName", process.getPresentationName()) ;
 				processDescription.put("id", process.getId()) ;
 				processDescription.put("isEditable", new Boolean(false)) ;
+				
+				if (process.getProcessManager() != null)
+				{
+					process.setProcessManager(this.processManagerService.getProcessManager(process.getProcessManager().getWilosuser_id()));
+					processDescription.put("owner", process.getProcessManager().getFirstname()+" "+process.getProcessManager().getName()) ;
+				}
+				
 				this.processesList.add(processDescription) ;
 			}
 			return this.processesList ;
@@ -207,6 +217,14 @@ public class ProcessBean {
 
 	public void setProcessManagementService(ProcessManagementService processManagementService) {
 		this.processManagementService = processManagementService ;
+	}
+
+	public ProcessManagerService getProcessManagerService() {
+		return processManagerService;
+	}
+
+	public void setProcessManagerService(ProcessManagerService processManagerService) {
+		this.processManagerService = processManagerService;
 	}
 
 }
