@@ -37,7 +37,7 @@ public class FillerActivity extends FillerWorkBreakDownElement {
 		if (nodePresentation != null) {
 			// If the presentation node has been founded
 			nodePresentationList = nodePresentation.getChildNodes();
-			for (int i = 0 ; i < nodePresentationList.getLength() && (alternatives.equals("") || purposes.equals("")); i++) {
+			for (int i = 0 ; i < nodePresentationList.getLength() && (alternatives.equals("") || howToStaff.equals("") || purposes.equals("")); i++) {
 				// Search for the Alternatives node
 				if (nodePresentationList.item(i).getNodeName().equals(NodeAlternatives)) {
 					alternatives = nodePresentationList.item(i).getTextContent();

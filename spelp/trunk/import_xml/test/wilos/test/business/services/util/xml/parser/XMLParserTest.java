@@ -1479,7 +1479,6 @@ public class XMLParserTest extends TestCase {
 		int num = 0 ;
 		while (itTask.hasNext()){
 			BreakdownElement tmptask = itTask.next() ;
-			System.out.println(tmptask.getPresentationName());
 			if (tmptask.getPresentationName().equals("Plan Iteration")){
 				assertTrue(num == 0);
 			}
@@ -1518,7 +1517,7 @@ public class XMLParserTest extends TestCase {
 	public void testScrumRDContainsRightMainDescriptionAndKeyConsiderations () {
 		Process theProcess;
 		theProcess = XMLParser.getProcess(pathScrum);
-		Activity thePhase = null;
+		Activity theActivity = null;
 		RoleDescriptor theRoleDesc = null;
 		RoleDefinition theRoleDef;
 		String expectedMainDescription = "<p>\n" +
@@ -1543,12 +1542,12 @@ public class XMLParserTest extends TestCase {
 
 		for (BreakdownElement bde : theProcess.getBreakdownElements()) {
 			if (bde.getName().equals("Preparation Phase")) {
-				thePhase = (Activity) bde;
+				theActivity = (Activity) bde;
 				break;
 			}
 		}
 		
-		for (BreakdownElement bde : thePhase.getBreakdownElements()) {
+		for (BreakdownElement bde : theActivity.getBreakdownElements()) {
 			if (bde.getName().equals("Product Owner")) {
 				theRoleDesc = (RoleDescriptor) bde;
 				break;
@@ -1578,7 +1577,6 @@ public class XMLParserTest extends TestCase {
 		}
 		
 		for (BreakdownElement bde : thePhase.getBreakdownElements()) {
-			System.out.println("ici ! ("+bde.getName()+")");
 			if (bde.getName().equals("Sprint (n)")) {
 				anIteration = (Iteration) bde;
 				break;
@@ -1626,6 +1624,45 @@ public class XMLParserTest extends TestCase {
 		assertEquals(theProcess.getAlternatives(), expectedAlternatives);
 		assertEquals(theProcess.getHowToStaff(), expectedHowToStaff);
 		assertEquals(theProcess.getPurpose(), expectedPurpose);
+	}
+	
+	public void testScrumFillerTestPreparationPhaseContainsProductOwnerWithRight_assignmentApproaches_skills_synonyms () {
+		Process theProcess;
+		theProcess = XMLParser.getProcess(pathScrumFillerTest);
+		Phase thePhase = null;
+		RoleDescriptor theRoleDesc = null;
+		RoleDefinition theRoleDef;
+		String expectedAssignmentApproaches = "<p>\r\n" +
+				"    Il n'y a qu'une seule personne qui joue ce rôle. Cette personne doit être affectée au projet (dans l'idéal le Directeur\r\n"+
+				"    de produit fait partie de l'équipe, mais ce n'est pas toujours possible dans la réalité). Le travail nécessite une\r\n"+
+				"    affectation à plein temps ou presque.\r\n"+
+				"</p>\r\n"+
+				"<p>\r\n"+
+				"    Il est&nbsp;important qu'il reste très disponible pour répondre aux questions de l'équipe, pour définir les tests\r\n"+
+				"    fonctionnels et&nbsp;donner son avis sur divers aspects du logiciel (interface par exemple).\r\n"+
+				"</p>";
+		String expectedSkills = "Bonne connaissance du domaine métier.";
+		String expectedSynonyms = "Propriétaire de produit (product owner en anglais), Analyste métier (business analyst), Client (dans XP)";
+
+		for (BreakdownElement bde : theProcess.getBreakdownElements()) {
+			if (bde.getName().equals("Preparation Phase")) {
+				thePhase = (Phase) bde;
+				break;
+			}
+		}
+		
+		for (BreakdownElement bde : thePhase.getBreakdownElements()) {
+			if (bde.getName().equals("Product Owner")) {
+				theRoleDesc = (RoleDescriptor) bde;
+				break;
+			}
+		}
+		
+		theRoleDef = theRoleDesc.getRoleDefinition();
+		
+		assertEquals(expectedAssignmentApproaches, theRoleDef.getAssignmentApproaches());
+		assertEquals(expectedSkills, theRoleDef.getSkills());
+		assertEquals(expectedSynonyms, theRoleDef.getSynonyms());
 	}
 	
 	/*
