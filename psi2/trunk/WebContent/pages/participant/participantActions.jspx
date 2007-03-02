@@ -8,5 +8,9 @@
 			<f:param name="mainPage" value="#{ActionBean.participantMain }" />
 			<f:param name="pageToShow" value="#{ActionBean.affectProjectAsManager}" />
 		</ice:commandLink>
+		<ice:commandLink immediate="true" type="submit" value="#{msgs['action.link.updateParticipant']}" action="" styleClass="button" actionListener="#{ActionBean.selectNodeActionListener}">
+			<f:param name="mainPage" value="#{ActionBean.participantMain }" />
+			<f:param name="pageToShow" value="#{ActionBean.updateParticipant}" />
+		</ice:commandLink>
 	</ice:panelGrid>		
 </ice:form>

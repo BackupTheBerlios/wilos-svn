@@ -1,12 +1,12 @@
 
 package wilos.presentation.web.wilosuser ;
 
-import java.text.SimpleDateFormat;
+import java.text.SimpleDateFormat ;
 import java.util.ArrayList ;
 import java.util.HashMap ;
 import java.util.Iterator ;
 import java.util.Map ;
-import java.util.ResourceBundle;
+import java.util.ResourceBundle ;
 
 import java.util.List ;
 import java.util.regex.Matcher ;
@@ -15,6 +15,7 @@ import java.util.regex.Pattern ;
 import javax.faces.application.FacesMessage ;
 import javax.faces.component.UIComponent ;
 import javax.faces.context.FacesContext ;
+import javax.faces.event.ActionEvent;
 import javax.faces.validator.ValidatorException ;
 
 import org.apache.commons.logging.Log ;
@@ -22,7 +23,7 @@ import org.apache.commons.logging.LogFactory ;
 import wilos.business.services.misc.project.ProjectService ;
 import wilos.business.services.misc.wilosuser.LoginService ;
 import wilos.business.services.misc.wilosuser.ParticipantService ;
-import wilos.business.services.presentation.web.WebSessionService;
+import wilos.business.services.presentation.web.WebSessionService ;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor ;
 import wilos.model.misc.project.Project ;
 import wilos.model.misc.wilosuser.Participant ;
@@ -37,11 +38,11 @@ import wilos.presentation.web.template.MenuBean ;
  */
 public class ParticipantBean {
 
-	private List<String> concreteRoleDescriptorHeaders;
-	
-	private List<ConcreteRoleDescriptor> concreteRoleDescriptors;
-	
-	private HashMap<String,Boolean> concreteRoleDescriptorsMap;
+	private List<String> concreteRoleDescriptorHeaders ;
+
+	private List<ConcreteRoleDescriptor> concreteRoleDescriptors ;
+
+	private HashMap<String, Boolean> concreteRoleDescriptorsMap ;
 
 	private ParticipantService participantService ;
 
@@ -60,14 +61,18 @@ public class ParticipantBean {
 	private List<HashMap<String, Object>> manageableProjectsList ;
 
 	private String selectManageableProjectView ;
+
+	private String selectAffectedProjectView ;
+
+	private SimpleDateFormat formatter ;
+
+	private String participantView ;
+
+	private WebSessionService webSessionService ;
 	
-	private String selectAffectedProjectView;
+	private String isSetParticipantFromSession ;
 	
-	private SimpleDateFormat formatter ; 
-	
-	private String participantView;
-	
-	private WebSessionService webSessionService;
+	private String cleanBean ;
 	
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
@@ -79,8 +84,8 @@ public class ParticipantBean {
 		this.participant = new Participant() ;
 		this.affectedProjectsList = new ArrayList<HashMap<String, String>>() ;
 		this.manageableProjectsList = new ArrayList<HashMap<String, Object>>() ;
-		this.selectManageableProjectView = new String();
-		this.formatter = new SimpleDateFormat("dd/MM/yyyy");
+		this.selectManageableProjectView = new String() ;
+		this.formatter = new SimpleDateFormat("dd/MM/yyyy") ;
 	}
 
 	/**
@@ -106,15 +111,14 @@ public class ParticipantBean {
 	 * @return
 	 */
 	public String saveParticipantAction() {
-		
+
 		FacesContext facesContext = FacesContext.getCurrentInstance() ;
-		ResourceBundle bundle = ResourceBundle.getBundle(
-		"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
-		
+		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale()) ;
+
 		String url = "" ;
 		boolean error = false ;
 		FacesMessage message = new FacesMessage() ;
-		
+
 		// test if the fields are correctly completed
 		if(this.participant.getName().trim().length() == 0){
 			FacesMessage errName = new FacesMessage() ;
@@ -181,6 +185,69 @@ public class ParticipantBean {
 	}
 
 	/**
+	 * Method for updating participant data from form
+	 * 
+	 * @return
+	 */
+	public String updateParticipantAction() {
+
+		FacesContext facesContext = FacesContext.getCurrentInstance() ;
+		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale()) ;
+
+		String url = "" ;
+		boolean error = false ;
+		FacesMessage message = new FacesMessage() ;
+
+		// test if the fields are correctly completed
+		if(this.participant.getName().trim().length() == 0){
+			FacesMessage errName = new FacesMessage() ;
+			errName.setSummary(bundle.getString("component.forminscription.err.lastnameRequired")) ;
+			errName.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			error = true ;
+			facesContext.addMessage(null, errName) ;
+		}
+
+		if(this.participant.getFirstname().trim().length() == 0){
+			FacesMessage errFirstName = new FacesMessage() ;
+			errFirstName.setSummary(bundle.getString("component.forminscription.err.firstnameRequired")) ;
+			errFirstName.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			error = true ;
+			facesContext.addMessage(null, errFirstName) ;
+		}
+		if(this.participant.getEmailAddress().trim().length() == 0){
+			FacesMessage errMail = new FacesMessage() ;
+			errMail.setSummary(bundle.getString("component.forminscription.err.emailRequired")) ;
+			errMail.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			error = true ;
+			facesContext.addMessage(null, errMail) ;
+		}
+		if(this.participant.getLogin().trim().length() == 0){
+			FacesMessage errLogin = new FacesMessage() ;
+			errLogin.setSummary(bundle.getString("component.forminscription.err.loginRequired")) ;
+			errLogin.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			error = true ;
+			facesContext.addMessage(null, errLogin) ;
+		}
+
+		if(!error){
+			if (this.participant.getPassword().length() == 0) {
+				this.participant.setPassword(this.getParticipantFromSession().getPassword()) ;
+				this.participantService.saveParticipantWithoutEncryption(this.participant) ;
+			}
+			else {
+				this.participantService.saveParticipant(this.participant) ;
+			}			
+			message.setSummary(bundle.getString("component.participantUpdate.success")) ;
+			message.setSeverity(FacesMessage.SEVERITY_INFO) ;
+			facesContext.addMessage(null, message) ;
+			url = "wilos" ; // TODO :Passer eventuellement sur une page de confirmation
+			changeContentPage(url) ;
+		}
+
+		return "" ;
+	}
+
+	/**
 	 * 
 	 * methode qui controle que les deux mots de passes sont identiques
 	 * 
@@ -190,8 +257,7 @@ public class ParticipantBean {
 	 * @throws ValidatorException
 	 */
 	public void emailValidation(FacesContext _context, UIComponent _toValidate, Object _value) throws ValidatorException {
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
+		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale()) ;
 		String enteredEmail = (String) _value ;
 		// Set the email pattern string
 		Pattern p = Pattern.compile(".+@.+\\.[a-z]+") ;
@@ -208,18 +274,20 @@ public class ParticipantBean {
 	}
 
 	/**
-	 * Getter of rolesList.
-	 * TODO method description + test
+	 * Getter of rolesList. TODO method description + test
+	 * 
 	 * @return the rolesList.
 	 */
 	public List<ConcreteRoleDescriptor> getConcreteRoleDescriptors() {
 		this.concreteRoleDescriptors = new ArrayList<ConcreteRoleDescriptor>() ;
-		//concreteRoleDescriptors.addAll(this.participantService.getConcreteRoleDescriptorsForAParticipantAndForAProject(_projectId, _login);
+		// concreteRoleDescriptors.addAll(this.participantService.getConcreteRoleDescriptorsForAParticipantAndForAProject(_projectId,
+		// _login);
 		return this.concreteRoleDescriptors ;
 	}
 
 	/**
 	 * Setter of rolesList.
+	 * 
 	 * @param _rolesList
 	 *            The rolesList to set.
 	 */
@@ -238,15 +306,14 @@ public class ParticipantBean {
 	 */
 	public void passwordEqualValidation(FacesContext _context, UIComponent _toValidate, Object _value) throws ValidatorException {
 		String passConfirm = (String) _value ;
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
+		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale()) ;
 		// TODO : recuperer le nom de l autre champs de password via une f:param
 		/*
 		 * ExternalContext ec = (ExternalContext)_context.getExternalContext(); HashMap hm = new
 		 * HashMap(ec.getRequestParameterMap()); String passName = (String)hm.get("forPassword");
 		 * UIComponent passcomponent = _toValidate.findComponent(passName) ;
 		 */
-		
+
 		UIComponent passcomponent = _toValidate.findComponent("equal1") ;
 		String passValue = (String) passcomponent.getAttributes().get("value") ;
 
@@ -257,14 +324,18 @@ public class ParticipantBean {
 			throw new ValidatorException(message) ;
 		}
 	}
-	
-	
+
 	/**
 	 * Getter of participant.
 	 * 
 	 * @return the participant.
 	 */
 	public Participant getParticipant() {
+		/*
+		 * userID =
+		 * (String)this.webSessionService.getAttribute(this.webSessionService.WILOS_USER_ID); if
+		 * (userID != null) { this.participant = this.participantService.getParticipant(userID) ; }
+		 */
 		return this.participant ;
 	}
 
@@ -387,7 +458,7 @@ public class ParticipantBean {
 			for(Iterator iter = plist.keySet().iterator(); iter.hasNext();){
 
 				HashMap<String, String> ligne = new HashMap<String, String>() ;
-				
+
 				currentProject = (Project) iter.next() ;
 
 				ligne.put("project_id", currentProject.getId()) ;
@@ -408,8 +479,7 @@ public class ParticipantBean {
 	}
 
 	public void saveProjectsAffectation() {
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
+		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale()) ;
 		// getting the participant stored into the session
 		Participant user = getParticipantFromSession() ;
 
@@ -441,60 +511,55 @@ public class ParticipantBean {
 	 * @return
 	 */
 	public List<HashMap<String, Object>> getManageableProjectsList() {
-		
+
 		Participant user = getParticipantFromSession() ;
-		
-		ResourceBundle bundle = ResourceBundle.getBundle(
-		"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
-		
-		if(user instanceof Participant)
-		{
+
+		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale()) ;
+
+		if(user instanceof Participant){
 			this.manageableProjectsList = new ArrayList<HashMap<String, Object>>() ;
 			HashMap<Project, Participant> manageableProjects = (HashMap<Project, Participant>) this.participantService
 					.getManageableProjectsForAParticipant(user) ;
-				
-				Project currentProject = new Project() ;
-				for(Iterator iter = manageableProjects.keySet().iterator(); iter.hasNext();){
-					
-					currentProject = (Project) iter.next() ;
-					Participant projectManager = manageableProjects.get(currentProject);
-	
-					HashMap<String, Object> ligne = new HashMap<String, Object>() ;
-					
-					ligne.put("project_id", currentProject.getId()) ;
-					ligne.put("name", currentProject.getConcreteName()) ;
-					ligne.put("creationDate", formatter.format(currentProject.getCreationDate())) ;
-					ligne.put("launchingDate", formatter.format(currentProject.getLaunchingDate())) ;
-					ligne.put("description", currentProject.getDescription()) ;
-					
-					if(projectManager == null){
 
-						ligne.put("projectManagerName", bundle.getString("component.table1participantprojectManager.noAffectation")) ;
-						ligne.put("projectManager_id", "") ;
-						ligne.put("affected", (new Boolean(false)).toString()) ;
+			Project currentProject = new Project() ;
+			for(Iterator iter = manageableProjects.keySet().iterator(); iter.hasNext();){
+
+				currentProject = (Project) iter.next() ;
+				Participant projectManager = manageableProjects.get(currentProject) ;
+
+				HashMap<String, Object> ligne = new HashMap<String, Object>() ;
+
+				ligne.put("project_id", currentProject.getId()) ;
+				ligne.put("name", currentProject.getConcreteName()) ;
+				ligne.put("creationDate", formatter.format(currentProject.getCreationDate())) ;
+				ligne.put("launchingDate", formatter.format(currentProject.getLaunchingDate())) ;
+				ligne.put("description", currentProject.getDescription()) ;
+
+				if(projectManager == null){
+
+					ligne.put("projectManagerName", bundle.getString("component.table1participantprojectManager.noAffectation")) ;
+					ligne.put("projectManager_id", "") ;
+					ligne.put("affected", (new Boolean(false)).toString()) ;
+					ligne.put("hasOtherManager", new Boolean(false)) ;
+
+					this.manageableProjectsList.add(ligne) ;
+				}
+				else{
+					String projectManagerName = projectManager.getName().concat(" " + projectManager.getFirstname()) ;
+					ligne.put("projectManager_id", projectManager.getWilosuser_id()) ;
+					ligne.put("projectManagerName", projectManagerName) ;
+					if(projectManager.getWilosuser_id().equals(user.getWilosuser_id())){
+						ligne.put("affected", (new Boolean(true)).toString()) ;
 						ligne.put("hasOtherManager", new Boolean(false)) ;
-						
 						this.manageableProjectsList.add(ligne) ;
 					}
-					else
-					{
-						String projectManagerName = projectManager.getName().concat(" " +projectManager.getFirstname()) ;
-						ligne.put("projectManager_id", projectManager.getWilosuser_id()) ;
-						ligne.put("projectManagerName", projectManagerName) ;
-						if(projectManager.getWilosuser_id().equals(user.getWilosuser_id()))
-						{
-							ligne.put("affected", (new Boolean(true)).toString()) ;
-							ligne.put("hasOtherManager", new Boolean(false)) ;
-							this.manageableProjectsList.add(ligne) ;
-						}
-						else
-						{
-							ligne.put("affected", (new Boolean(true)).toString()) ;
-							ligne.put("hasOtherManager", new Boolean(true)) ;
-							this.manageableProjectsList.add(ligne) ;
-						}
+					else{
+						ligne.put("affected", (new Boolean(true)).toString()) ;
+						ligne.put("hasOtherManager", new Boolean(true)) ;
+						this.manageableProjectsList.add(ligne) ;
 					}
 				}
+			}
 		}
 		return this.manageableProjectsList ;
 	}
@@ -503,29 +568,25 @@ public class ParticipantBean {
 		this.manageableProjectsList = manageableProjectsList ;
 	}
 
-
 	/**
 	 * 
 	 * This method allows to save a project manager affectation
-	 *
+	 * 
 	 */
 	public void saveProjectManagerAffectation() {
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
+		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale()) ;
 		Participant user = getParticipantFromSession() ;
 		Map<String, Boolean> affectedManagedProjects = new HashMap<String, Boolean>() ;
 		for(HashMap ligne : this.manageableProjectsList){
-			//if the current project is not already managed by an other participant
-			if (! ((Boolean) ligne.get("hasOtherManager")) )
-			{
+			// if the current project is not already managed by an other participant
+			if(! ((Boolean) ligne.get("hasOtherManager"))){
 				Boolean testAffectation = (Boolean) ligne.get("affected") ;
 				String project_id = (String) ligne.get("project_id") ;
 				affectedManagedProjects.put(project_id, testAffectation) ;
 			}
 		}
 		this.participantService.saveManagedProjectsForAParticipant(user, affectedManagedProjects) ;
-		if (affectedManagedProjects.size() > 0)
-		{
+		if(affectedManagedProjects.size() > 0){
 			FacesMessage saveAffectationMessage = new FacesMessage() ;
 			saveAffectationMessage.setSummary(bundle.getString("component.table1participantprojectManager.success")) ;
 			saveAffectationMessage.setSeverity(FacesMessage.SEVERITY_ERROR) ;
@@ -534,88 +595,106 @@ public class ParticipantBean {
 	}
 
 	/**
-	 * method which permits the getting of the object Participant 
-	 * 	which is stored into the session
-	 *
-	 * @return the participant stored into the session 
+	 * method which permits the getting of the object Participant which is stored into the session
+	 * 
+	 * @return the participant stored into the session
 	 */
 	private Participant getParticipantFromSession() {
-		String userId = (String)this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID);
-		Participant user = this.participantService.getParticipant(userId);
+		String userId = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID) ;
+		Participant user = this.participantService.getParticipant(userId) ;
 		return user ;
 	}
 
+	/**
+	 * Set the participant of the participantBean to the participant which is stored into the session
+	 *
+	 * @return
+	 */
+	public String getIsSetParticipantFromSession() {
+		Participant user = this.getParticipantFromSession() ;
+		if (user != null) {
+			this.participant = user ;
+			this.participant.setPassword("") ;
+			this.isSetParticipantFromSession = "ok" ;
+		}
+		else {
+			this.isSetParticipantFromSession = "null" ;
+		}
+		return this.isSetParticipantFromSession ;
+	}
+	
+	public void setIsSetParticipantFromSession(String _msg) {
+		this.isSetParticipantFromSession = _msg ;
+	}
+
 	public String getSelectManageableProjectView() {
-		if (this.getManageableProjectsList().size()==0 )
-		{
-			this.selectManageableProjectView  = "manageable_no_records_view";
+		if(this.getManageableProjectsList().size() == 0){
+			this.selectManageableProjectView = "manageable_no_records_view" ;
 		}
-		else
-		{
-			this.selectManageableProjectView ="manageable_records_view";
+		else{
+			this.selectManageableProjectView = "manageable_records_view" ;
 		}
-		return selectManageableProjectView;
+		return selectManageableProjectView ;
 	}
 
 	public void setSelectManageableProjectView(String selectManageableProjectView) {
-		this.selectManageableProjectView = selectManageableProjectView;
+		this.selectManageableProjectView = selectManageableProjectView ;
 	}
 
 	public SimpleDateFormat getFormatter() {
-		return formatter;
+		return formatter ;
 	}
 
 	public void setFormatter(SimpleDateFormat formatter) {
-		this.formatter = formatter;
+		this.formatter = formatter ;
 	}
 
 	/**
 	 * Getter of concreteRoleDescriptorHeaders.
-	 *
+	 * 
 	 * @return the concreteRoleDescriptorHeaders.
 	 */
 	public List<String> getConcreteRoleDescriptorHeaders() {
-		this.concreteRoleDescriptorHeaders.addAll(this.getConcreteRoleDescriptorsMap().keySet());
+		this.concreteRoleDescriptorHeaders.addAll(this.getConcreteRoleDescriptorsMap().keySet()) ;
 		return this.concreteRoleDescriptorHeaders ;
 	}
-	
 
 	/**
 	 * Setter of concreteRoleDescriptorHeaders.
-	 *
-	 * @param _concreteRoleDescriptorHeaders The concreteRoleDescriptorHeaders to set.
+	 * 
+	 * @param _concreteRoleDescriptorHeaders
+	 *            The concreteRoleDescriptorHeaders to set.
 	 */
 	public void setConcreteRoleDescriptorHeaders(List<String> _concreteRoleDescriptorHeaders) {
 		this.concreteRoleDescriptorHeaders = _concreteRoleDescriptorHeaders ;
 	}
-	
-	
 
 	/**
 	 * Getter of concreteRoleDescriptorsMap.
-	 *
+	 * 
 	 * @return the concreteRoleDescriptorsMap.
 	 */
 	public HashMap<String, Boolean> getConcreteRoleDescriptorsMap() {
-		//participantService.getConcreteRoleDescriptorsForAProject(String _project_id, String _participant_id);
-		this.concreteRoleDescriptorsMap = new HashMap<String, Boolean>();
-		List<ConcreteRoleDescriptor> concreteRoleDescriptorsForAParticipant  = new ArrayList<ConcreteRoleDescriptor>();
-		//concreteRoleDescriptorsForAParticipant.addAll(this.participantService.getConcreteRoleDescriptorsForAParticipant(this.getParticipantFromSession().getLogin()));
-		//Ajouter les CRD ki ne sont pas affectés au participant
-		//a recup direct ds le CRDService :D
+		// participantService.getConcreteRoleDescriptorsForAProject(String _project_id, String
+		// _participant_id);
+		this.concreteRoleDescriptorsMap = new HashMap<String, Boolean>() ;
+		List<ConcreteRoleDescriptor> concreteRoleDescriptorsForAParticipant = new ArrayList<ConcreteRoleDescriptor>() ;
+		// concreteRoleDescriptorsForAParticipant.addAll(this.participantService.getConcreteRoleDescriptorsForAParticipant(this.getParticipantFromSession().getLogin()));
+		// Ajouter les CRD ki ne sont pas affectés au participant
+		// a recup direct ds le CRDService :D
 		for(Iterator iter = concreteRoleDescriptorsForAParticipant.iterator(); iter.hasNext();){
 			ConcreteRoleDescriptor currentCRD = (ConcreteRoleDescriptor) iter.next() ;
-			this.concreteRoleDescriptorsMap.put(currentCRD.getConcreteName(), true);
-			
+			this.concreteRoleDescriptorsMap.put(currentCRD.getConcreteName(), true) ;
+
 		}
 		return this.concreteRoleDescriptorsMap ;
 	}
-	
 
 	/**
 	 * Setter of concreteRoleDescriptorsMap.
-	 *
-	 * @param _concreteRoleDescriptorsMap The concreteRoleDescriptorsMap to set.
+	 * 
+	 * @param _concreteRoleDescriptorsMap
+	 *            The concreteRoleDescriptorsMap to set.
 	 */
 	public void setConcreteRoleDescriptorsMap(HashMap<String, Boolean> _concreteRoleDescriptorsMap) {
 		this.concreteRoleDescriptorsMap = _concreteRoleDescriptorsMap ;
@@ -623,52 +702,49 @@ public class ParticipantBean {
 
 	/**
 	 * Getter of selectAffectedProjectView.
-	 *
+	 * 
 	 * @return the selectAffectedProjectView.
 	 */
 	public String getSelectAffectedProjectView() {
-		if (this.getAffectedProjectsList().size()==0 )
-		{
-			this.selectAffectedProjectView  = "affected_no_records_view";
+		if(this.getAffectedProjectsList().size() == 0){
+			this.selectAffectedProjectView = "affected_no_records_view" ;
 		}
-		else
-		{
-			this.selectAffectedProjectView ="affected_records_view";
+		else{
+			this.selectAffectedProjectView = "affected_records_view" ;
 		}
-		return this.selectAffectedProjectView;
+		return this.selectAffectedProjectView ;
 	}
 
 	/**
 	 * Setter of selectAffectedProjectView.
-	 *
-	 * @param _selectAffectedProjectView The selectAffectedProjectView to set.
+	 * 
+	 * @param _selectAffectedProjectView
+	 *            The selectAffectedProjectView to set.
 	 */
 	public void setSelectAffectedProjectView(String _selectAffectedProjectView) {
 		this.selectAffectedProjectView = _selectAffectedProjectView ;
 	}
-	
-	
+
 	/**
 	 * Getter of selectAffectedProjectView.
-	 *
+	 * 
 	 * @return the selectAffectedProjectView.
 	 */
 	public String getParticipantView() {
-		if (this.getParticipantsList().size()==0 )
-		{
-			this.participantView  = "participantView_null";
+		if(this.getParticipantsList().size() == 0){
+			this.participantView = "participantView_null" ;
 		}
-		else
-		{
-			this.participantView ="participantView_not_null";
+		else{
+			this.participantView = "participantView_not_null" ;
 		}
-		return this.participantView;
+		return this.participantView ;
 	}
 
 	/**
 	 * Setter of selectAffectedProjectView.
-	 *
-	 * @param _ParticipantView The selectAffectedProjectView to set.
+	 * 
+	 * @param _ParticipantView
+	 *            The selectAffectedProjectView to set.
 	 */
 	public void setParticipantView(String _participantView) {
 		this.participantView = _participantView ;
@@ -683,13 +759,31 @@ public class ParticipantBean {
 
 	/**
 	 * Setter of webSessionService.
-	 *
-	 * @param _webSessionService The webSessionService to set.
+	 * 
+	 * @param _webSessionService
+	 *            The webSessionService to set.
 	 */
 	public void setWebSessionService(WebSessionService _webSessionService) {
 		this.webSessionService = _webSessionService ;
 	}
-	
-	
 
+	/**
+	 * Getter of cleanBean.
+	 *
+	 * @return the cleanBean.
+	 */
+	public String getCleanBean() {
+		this.participant = new Participant() ;
+		this.cleanBean = "ok" ;
+		return this.cleanBean ;
+	}
+
+	/**
+	 * Setter of cleanBean.
+	 *
+	 * @param _cleanBean The cleanBean to set.
+	 */
+	public void setCleanBean(String _cleanBean) {
+		this.cleanBean = _cleanBean ;
+	}
 }

@@ -12,4 +12,10 @@
 			<jsp:directive.include file="./pages/participant/tabAffectProjectAsManager.jspx" />
 		</f:subview>
 	</ice:panelGroup>			
+	
+	<ice:panelGroup id="updateParticipant" styleClass="contentIncludePanelGroup" >
+	   	<f:subview id="updateParticipant_view">
+			<jsp:directive.include file="./pages/participant/tabUpdateParticipant.jspx" />
+		</f:subview>
+	</ice:panelGroup>	
 </ice:panelStack>

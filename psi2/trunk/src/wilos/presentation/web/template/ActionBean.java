@@ -20,6 +20,7 @@ public class ActionBean {
 	
 	private String affectProject = "affectProject";
 	private String affectProjectAsManager = "affectProjectAsManager";
+	private String updateParticipant = "updateParticipant" ;
 	
 	private String importProcessFile = "importProcessFile";
 	private String manageProcesses = "manageProcesses";
@@ -276,5 +277,23 @@ public class ActionBean {
 	 */
 	public void setManageProcesses(String _manageProcesses) {
 		this.manageProcesses = _manageProcesses ;
+	}
+
+	/**
+	 * Getter of updateParticipant.
+	 *
+	 * @return the updateParticipant.
+	 */
+	public String getUpdateParticipant() {
+		return this.updateParticipant ;
+	}
+
+	/**
+	 * Setter of updateParticipant.
+	 *
+	 * @param _updateParticipant The updateParticipant to set.
+	 */
+	public void setUpdateParticipant(String _updateParticipant) {
+		this.updateParticipant = _updateParticipant ;
 	}
 }

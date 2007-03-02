@@ -1,4 +1,5 @@
 <ice:form id="form">
+	<ice:inputHidden value="#{ParticipantBean.cleanBean}"/>
 	<ice:panelTabSet id="panelTabSet_participant_subscribe"
 		styleClass="componentPanelTabSetLayout">
 		

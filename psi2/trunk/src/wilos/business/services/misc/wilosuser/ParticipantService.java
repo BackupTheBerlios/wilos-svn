@@ -145,6 +145,16 @@ public class ParticipantService {
 	}
 	
 	/**
+	 * Save participant without encryption of the password
+	 * 
+	 * @param _participant
+	 */
+	@Transactional(readOnly = false)
+	public void saveParticipantWithoutEncryption(Participant _participant) {
+		participantDao.saveOrUpdateParticipant(_participant) ;
+	}
+	
+	/**
 	 * delete a participant
 	 * @param participantId
 	 */
