@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import wilos.model.spem2.checklist.CheckList;
 import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.role.RoleDefinition;
 
@@ -19,7 +20,10 @@ public class RoleDefinitionTO extends RoleDefinition implements Serializable{
       
         Set<Guidance> guidances = new HashSet<Guidance>();
         for (Guidance g : myRoleDefinition.getGuidances()) {
-        	guidances.add(new GuidanceTO(g));	        	
+        	if (g instanceof CheckList)
+        		guidances.add(new CheckListTO((CheckList)g));	
+        	else
+        		guidances.add(new GuidanceTO(g));	        	
         }
         this.setGuidances(guidances);
 
