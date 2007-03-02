@@ -11,7 +11,7 @@
 						readonly="#{ConcreteActivityViewerBean.isInputNameReadOnly}" />
 					<ice:commandButton value="#{msgs['button.changeconcretename']}"
 						action="#{ConcreteActivityViewerBean.changeConcreteName}"
-						styleClass="smallbutton" />
+						disabled="#{ConcreteActivityViewerBean.changeButtonIsDisabled}" />
 					<ice:outputText value="#{msgs['viewer.description'] }" />
 					<ice:outputText value="#{ConcreteActivityViewerBean.concreteActivity.activity.description}" />
 					<ice:outputText value="" />
