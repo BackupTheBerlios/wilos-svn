@@ -17,12 +17,14 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
 import wilos.presentation.assistant.control.OptionsParser;
 import wilos.presentation.assistant.control.WizardControler;
+import wilos.presentation.assistant.model.WizardOptions;
 import wilos.presentation.assistant.ressources.Bundle;
 
 public class OptionFrame extends JDialog {
@@ -105,16 +107,12 @@ public class OptionFrame extends JDialog {
 	{
 		if (lang == null)
 		{
-			//Locale[] locs = Locale.getAvailableLocales();
-			
 			Vector<Locale> locs = new Vector<Locale>();
 			
 			File locsDir = new File("src/wilos/presentation/assistant/ressources");
 			File [] ficLocs = locsDir.listFiles(new FileFilter(){
-
 				public boolean accept (File file){
 			      String nomFichier = file.getName().toLowerCase(); 
-
 			      return nomFichier.endsWith(".properties");
 				}
 			});
@@ -122,7 +120,6 @@ public class OptionFrame extends JDialog {
 			{
 				locs.add (new Locale (f.getName().substring(6,8)));
 			}
-			
 			lang = new JComboBox(locs);
 			lang.setRenderer(new LocaleRenderer());
 			lang.setBounds(new Rectangle(280,20,80,20));
@@ -174,26 +171,6 @@ public class OptionFrame extends JDialog {
 		}	
 		return delay;
 	}
-	/*
-	class Verifier extends InputVerifier{
-		public boolean verify (JComponent input){
-			if (input instanceof JFormattedTextField)
-				JFormattedTextField ftf = (JFormattedTextField) input;
-				JFormattedTextField.AbstractFormatter = ftf.getFormatter();
-				if (formater != null){
-						String text = ftf.getText();
-					try{
-						formatter.stringToValue(text);
-						return true;
-					}
-					catch (ParseException pe){
-						return false;
-					}
-				}
-			}
-			return true;
-		}
-	}*/
 	
 	/**
 	 * this method creates the ok button
@@ -249,7 +226,7 @@ public class OptionFrame extends JDialog {
 	 */
 	private JButton getApply()
 	{
-		if (apply ==null)
+		if (apply == null)
 		{
 			apply = new JButton();
 			apply.setBounds(new Rectangle(260,120,100,20));
@@ -266,17 +243,24 @@ public class OptionFrame extends JDialog {
 	}
 	private void appliquer()
 	{
-		System.out.println(((Integer)delay.getValue())*1000);
-		System.out.println(WizardControler.getInstance().getTimeToRefresh());
+		Locale loc = new Locale(lang.getSelectedItem().toString());
 		if ((!lang.getSelectedItem().toString().equals(WizardControler.getInstance().getLang().getLanguage()))
 				|| (((Integer)delay.getValue()*1000)!=WizardControler.getInstance().getTimeToRefresh()))
 		{
-			System.out.println("save !");
+			if (!lang.getSelectedItem().toString().equals(WizardControler.getInstance().getLang().getLanguage()))
+			{
+				WizardControler.getInstance().setLang(loc);
+				JOptionPane.showMessageDialog(this, Bundle.getText("optionFrame.langWarningMessage"), Bundle.getText("optionFrame.langWarningTitle"), JOptionPane.NO_OPTION);
+			}
+			System.out.println((((Integer)delay.getValue()*1000)));
+			System.out.println(WizardControler.getInstance().getTimeToRefresh());
+			WizardControler.getInstance().setTimeToRefresh((Integer)delay.getValue());
+			op.saveOptions(new WizardOptions(loc, (Integer)delay.getValue()));
 		}
 		
-		//		=> setrefreshtime
+		//=> setrefreshtime
 		// si ancienneval == 0 && nouvelle non
-		// 	 controler.getinstance.launchBackgroundThreadForTree
+		// 	controler.getinstance.launchBackgroundThreadForTree
 		// elseif val == 0 alors
 		// 	controler.getinstance.cancelrefreshthread
 	}

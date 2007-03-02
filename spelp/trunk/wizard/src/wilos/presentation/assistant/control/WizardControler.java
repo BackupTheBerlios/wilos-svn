@@ -80,6 +80,8 @@ public class WizardControler {
 	 */
 	public void launchFirstThread() {
 		WizardControler.getInstance().setAllTasksSuspended(null);
+		OptionsParser op = new OptionsParser();
+		timeToRefresh = op.getRefreshTime();
 		WizardControler.getInstance().launchBackgroundThreadForTree();
 		/*thread launch*/
 	}

@@ -20,7 +20,7 @@ public class OptionsParser {
 	
 	private static final String fic = "options.xml";
 	private File XML_File;
-	private int refreshTime = 5;
+	private int refreshTime;
 	private Locale locale = Locale.getDefault();
 	private static final String xpath_locale ="//Locale";
 	private static final String xpath_refreshtime ="//RefreshTime";

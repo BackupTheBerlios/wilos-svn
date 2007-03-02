@@ -16,6 +16,7 @@ import javax.swing.JMenuItem;
 import sun.misc.Launcher;
 
 import wilos.presentation.assistant.control.ExceptionManager;
+import wilos.presentation.assistant.control.OptionsParser;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
@@ -85,8 +86,9 @@ public class MainFrame extends JFrame{
 	 */
 	public static void main(String[] args) 
 	{
+		OptionsParser op = new OptionsParser ();
+		Bundle.setCurrentLocale(op.getLocale());
 		MainFrame f = new MainFrame();
-		
 	}
 	
 	public MainFrame () 
