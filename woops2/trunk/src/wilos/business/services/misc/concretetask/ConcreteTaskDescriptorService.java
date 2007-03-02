@@ -12,6 +12,7 @@ import wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService;
 import wilos.business.services.spem2.role.RoleDescriptorService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.hibernate.misc.concretetask.ConcreteTaskDescriptorDao;
+import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.wilosuser.Participant;
@@ -88,6 +89,30 @@ public class ConcreteTaskDescriptorService {
 		// save changings.
 		this.concreteTaskDescriptorDao
 				.saveOrUpdateConcreteTaskDescriptor(_concreteTaskDescriptor);
+	}
+	
+	/**
+	 * 
+	 */
+	public void removeConcreteTaskDescriptor(
+			ConcreteTaskDescriptor _concreteTaskDescriptor) {
+		
+		Set <ConcreteActivity> superConcreteActivities = _concreteTaskDescriptor.getSuperConcreteActivities() ;
+		TaskDescriptor taskDescriptor = _concreteTaskDescriptor.getTaskDescriptor() ;
+		
+		TaskDescriptor td2 = this.taskDescriptorService.getTaskDescriptorById(taskDescriptor.getId()) ;
+		
+		ConcreteRoleDescriptor concreteRoleDescriptor = _concreteTaskDescriptor.getMainConcreteRoleDescriptor() ;
+		
+		ConcreteRoleDescriptor crd2 = this.concreteRoleDescriptorService.getConcreteRoleDescriptorById(concreteRoleDescriptor.getId()) ;
+		
+		for (ConcreteActivity sca : superConcreteActivities) {
+			sca.removeConcreteBreakdownElement(_concreteTaskDescriptor) ;
+		}
+		
+		crd2.removeConcreteTaskDescriptor(_concreteTaskDescriptor) ;
+		
+		td2.removeConcreteTaskDescriptor(_concreteTaskDescriptor) ;
 	}
 
 	/**
