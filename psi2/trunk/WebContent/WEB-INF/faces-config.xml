@@ -272,6 +272,10 @@
 			<property-name>processService</property-name>
 			<value>#{ProcessService}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
 	</managed-bean>
 
 	<validator>
