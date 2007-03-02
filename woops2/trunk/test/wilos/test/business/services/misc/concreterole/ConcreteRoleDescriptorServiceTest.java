@@ -1,5 +1,6 @@
 package wilos.test.business.services.misc.concreterole;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -170,5 +171,32 @@ public class ConcreteRoleDescriptorServiceTest {
 		this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao()
 				.deleteConcreteRoleDescriptor(this.mainConcreteRoleDescriptor);
 		// Rk: the tearDown method is called here.
+	}
+	
+	@Test
+	public void testSaveConcreteRoleDescriptor() {
+		ConcreteTaskDescriptor ctdTmp = new ConcreteTaskDescriptor();
+		ctdTmp.setConcreteName("pouet");
+		this.concreteTaskDescriptorDao
+				.saveOrUpdateConcreteTaskDescriptor(ctdTmp);
+
+		ConcreteTaskDescriptor ctdTmp2 = new ConcreteTaskDescriptor();
+		ctdTmp2.setConcreteName("pouet2");
+		this.concreteTaskDescriptorDao
+				.saveOrUpdateConcreteTaskDescriptor(ctdTmp2);
+
+		this.mainConcreteRoleDescriptor.addConcreteTaskDescriptor(ctdTmp);
+		this.mainConcreteRoleDescriptor.addConcreteTaskDescriptor(ctdTmp2);
+		
+		this.concreteRoleDescriptorService
+				.saveConcreteRoleDescriptor(this.mainConcreteRoleDescriptor);
+		
+		String id = this.mainConcreteRoleDescriptor.getId();
+		
+		ConcreteRoleDescriptor crdtmp = this.concreteRoleDescriptorService
+											.getConcreteRoleDescriptorDao().getConcreteRoleDescriptor(id);
+		
+		assertNotNull(crdtmp);
+		assertNotNull(crdtmp.getConcreteTaskDescriptors());
 	}
 }
