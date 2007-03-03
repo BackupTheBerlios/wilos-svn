@@ -9,28 +9,35 @@ import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 /**
  * 
  * @author Padawan
- *
+ * 
  */
 public class ConcreteBreakdownElementService {
 
 	ConcreteBreakdownElementDao concreteBreakdownElementDao;
 
 	/**
-	 * Return the list of Concrete Breakdown Elements which has the same projectId than the parameter
+	 * Return the list of Concrete Breakdown Elements which has the same
+	 * projectId than the parameter
+	 * 
 	 * @param _projectId
 	 * @return list of Concrete Breakdown Elements which has the same projectId
 	 */
-	public List<ConcreteBreakdownElement> getAllConcreteBreakdownElementsFromProject(String _projectId) {
-		return this.concreteBreakdownElementDao.getAllConcreteBreakdownElements();
+	public List<ConcreteBreakdownElement> getAllConcreteBreakdownElementsFromProject(
+			String _projectId) {
+		return this.concreteBreakdownElementDao
+				.getAllConcreteBreakdownElements();
 	}
 
 	/**
 	 * 
 	 * @param _concreteActivity
 	 */
-	public void saveAllFirstSonsConcreteBreakdownElementsForConcreteActivity(ConcreteActivity _concreteActivity){
-		for(ConcreteBreakdownElement cbde : _concreteActivity.getConcreteBreakdownElements()){
-			this.concreteBreakdownElementDao.saveOrUpdateConcreteBreakdownElement(cbde);
+	public void saveAllFirstSonsConcreteBreakdownElementsForConcreteActivity(
+			ConcreteActivity _concreteActivity) {
+		for (ConcreteBreakdownElement cbde : _concreteActivity
+				.getConcreteBreakdownElements()) {
+			this.concreteBreakdownElementDao
+					.saveOrUpdateConcreteBreakdownElement(cbde);
 		}
 	}
 
@@ -38,15 +45,17 @@ public class ConcreteBreakdownElementService {
 	 * @return the concreteBreakdownElementDao
 	 */
 	public ConcreteBreakdownElementDao getConcreteBreakdownElementDao() {
-		return concreteBreakdownElementDao ;
+		return concreteBreakdownElementDao;
 	}
 
 	/**
 	 * Setter of concreteBreakdownElementDao.
-	 *
-	 * @param concreteBreakdownElementDao The concreteBreakdownElementDao to set.
+	 * 
+	 * @param concreteBreakdownElementDao
+	 *            The concreteBreakdownElementDao to set.
 	 */
-	public void setConcreteBreakdownElementDao(ConcreteBreakdownElementDao concreteBreakdownElementDao) {
-		this.concreteBreakdownElementDao = concreteBreakdownElementDao ;
+	public void setConcreteBreakdownElementDao(
+			ConcreteBreakdownElementDao concreteBreakdownElementDao) {
+		this.concreteBreakdownElementDao = concreteBreakdownElementDao;
 	}
 }

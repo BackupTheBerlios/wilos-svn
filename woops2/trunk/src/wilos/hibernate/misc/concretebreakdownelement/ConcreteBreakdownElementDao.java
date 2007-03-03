@@ -1,5 +1,4 @@
-
-package wilos.hibernate.misc.concretebreakdownelement ;
+package wilos.hibernate.misc.concretebreakdownelement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,8 @@ import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.utils.ExceptionManager;
 
 /**
- * ConcreteBreakdownElementDao manages requests from the system to store ConcreteBreakdownElement to the database.
+ * ConcreteBreakdownElementDao manages requests from the system to store
+ * ConcreteBreakdownElement to the database.
  * 
  * @author nanawel
  */
@@ -24,15 +24,19 @@ public class ConcreteBreakdownElementDao extends HibernateDaoSupport {
 	 * 
 	 * @param _cbde
 	 */
-	public void saveOrUpdateConcreteBreakdownElement(ConcreteBreakdownElement _cbde) {
-		try{
-			this.getHibernateTemplate().saveOrUpdate(_cbde) ;
-		}
-		catch(DataIntegrityViolationException _e){
-			ExceptionManager.getInstance().manageDataIntegrityViolationException(this.getClass().getName(), "saveOrUpdateConcreteBreakdownElement", _e);
-		}
-		catch(ConstraintViolationException _ex){
-			ExceptionManager.getInstance().manageConstraintViolationException(this.getClass().getName(), "saveOrUpdateConcreteBreakdownElement", _ex);
+	public void saveOrUpdateConcreteBreakdownElement(
+			ConcreteBreakdownElement _cbde) {
+		try {
+			this.getHibernateTemplate().saveOrUpdate(_cbde);
+		} catch (DataIntegrityViolationException _e) {
+			ExceptionManager.getInstance()
+					.manageDataIntegrityViolationException(
+							this.getClass().getName(),
+							"saveOrUpdateConcreteBreakdownElement", _e);
+		} catch (ConstraintViolationException _ex) {
+			ExceptionManager.getInstance().manageConstraintViolationException(
+					this.getClass().getName(),
+					"saveOrUpdateConcreteBreakdownElement", _ex);
 		}
 	}
 
@@ -41,16 +45,18 @@ public class ConcreteBreakdownElementDao extends HibernateDaoSupport {
 	 * 
 	 * @return
 	 */
-	@ SuppressWarnings ("unchecked")
+	@SuppressWarnings("unchecked")
 	public List<ConcreteBreakdownElement> getAllConcreteBreakdownElements() {
-		List<ConcreteBreakdownElement> loadAll = new ArrayList<ConcreteBreakdownElement>() ;
-		try{
-			loadAll.addAll(this.getHibernateTemplate().loadAll(ConcreteBreakdownElement.class)) ;
+		List<ConcreteBreakdownElement> loadAll = new ArrayList<ConcreteBreakdownElement>();
+		try {
+			loadAll.addAll(this.getHibernateTemplate().loadAll(
+					ConcreteBreakdownElement.class));
+		} catch (DataAccessException _e) {
+			ExceptionManager.getInstance().manageDataAccessException(
+					this.getClass().getName(),
+					"getAllConcreteBreakdownElements", _e);
 		}
-		catch(DataAccessException _e){
-			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "getAllConcreteBreakdownElements", _e);
-		}
-		return loadAll ;
+		return loadAll;
 	}
 
 	/**
@@ -60,7 +66,8 @@ public class ConcreteBreakdownElementDao extends HibernateDaoSupport {
 	 * @return
 	 */
 	public ConcreteBreakdownElement getConcreteBreakdownElement(String _id) {
-		return (ConcreteBreakdownElement) this.getHibernateTemplate().get(ConcreteBreakdownElement.class, _id) ;
+		return (ConcreteBreakdownElement) this.getHibernateTemplate().get(
+				ConcreteBreakdownElement.class, _id);
 	}
 
 	/**
@@ -69,11 +76,12 @@ public class ConcreteBreakdownElementDao extends HibernateDaoSupport {
 	 * @param _cbde
 	 */
 	public void deleteConcreteBreakdownElement(ConcreteBreakdownElement _cbde) {
-		try{
-			this.getHibernateTemplate().delete(_cbde) ;
-		}
-		catch(DataAccessException _e){
-			ExceptionManager.getInstance().manageDataAccessException(this.getClass().getName(), "deleteConcreteBreakdownElement", _e);
+		try {
+			this.getHibernateTemplate().delete(_cbde);
+		} catch (DataAccessException _e) {
+			ExceptionManager.getInstance().manageDataAccessException(
+					this.getClass().getName(),
+					"deleteConcreteBreakdownElement", _e);
 		}
 	}
 }
