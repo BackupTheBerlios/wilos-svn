@@ -15,7 +15,6 @@ import java.util.regex.Pattern ;
 import javax.faces.application.FacesMessage ;
 import javax.faces.component.UIComponent ;
 import javax.faces.context.FacesContext ;
-import javax.faces.event.ActionEvent;
 import javax.faces.validator.ValidatorException ;
 
 import org.apache.commons.logging.Log ;
@@ -545,7 +544,7 @@ public class ParticipantBean {
 					this.manageableProjectsList.add(ligne) ;
 				}
 				else{
-					String projectManagerName = projectManager.getName().concat(" " + projectManager.getFirstname()) ;
+					String projectManagerName = projectManager.getFirstname().concat(" "+projectManager.getName()) ;
 					ligne.put("projectManager_id", projectManager.getWilosuser_id()) ;
 					ligne.put("projectManagerName", projectManagerName) ;
 					if(projectManager.getWilosuser_id().equals(user.getWilosuser_id())){

@@ -17,7 +17,6 @@ import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.activity.ActivityService;
 import wilos.business.services.spem2.process.ProcessService;
-import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
@@ -27,6 +26,7 @@ import wilos.model.spem2.task.TaskDescriptor;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 import wilos.presentation.web.project.ProjectAdvancementBean;
 import wilos.business.services.misc.role.ConcreteRoleInstanciationService;
+
 /**
  * @author Sakamakak
  * 
@@ -103,41 +103,32 @@ public class RolesInstanciationBean {
 		return this.displayContent;
 	}
 
+	
+	/**
+	 * methode called when the instanciation is required from the role instanciation page
+	 *
+	 */
 	public void instanciateConcreteRole()
 	{
-		List<HashMap<String, Object>> tmp=this.displayContent;
-		List<HashMap<String, String>> res=new ArrayList<HashMap<String, String>>();
+		List<HashMap<String, Object>> tmp = this.displayContent;
+		List<HashMap<String, Object>> resultat = new ArrayList<HashMap<String, Object>>();
 		String intTemp;
 		String occursTemp;
-		
-		
-		for (Iterator iter = tmp.iterator(); iter.hasNext();) {
-			HashMap<String, String> tmp2=new HashMap<String, String>();
-			HashMap<String, Object> hm = new HashMap<String, Object>();
-			System.out.println("##################################################### YYAHAHHHA");
-			hm = (HashMap<String, Object>) iter.next();
-			System.out.println("##################################################### YYAHAHHHA2");	
-			intTemp=hm.get("id").toString();
-			System.out.println(intTemp);
-			occursTemp=hm.get("nbOccurences").toString();
-			System.out.println(occursTemp);
-			tmp2.put("id", intTemp);
-			tmp2.put("nbOccurences", occursTemp.toString());
-			res.add(tmp2);
-			System.out.println("##################################################### YYAHAHHHA3");
-			
+		for (Iterator iter = this.displayContent.iterator(); iter.hasNext();)
+		{
+			HashMap<String, Object> hm = (HashMap<String, Object>) iter.next();
+			if (hm.get("nodeType").equals("leaf"))
+			{
+				HashMap<String, Object> tmpHm = new HashMap<String, Object>();
+				tmpHm.put("id", hm.get("id"));
+				tmpHm.put("nbOccurences", hm.get("nbOccurences"));
+				
+				this.logger.debug("### Role : "+hm.get("name")+" / Nb occurences : "+hm.get("nbOccurences")+" ###");
+				resultat.add(tmpHm);
+			}
 		}
-		System.out.println("##################################################### YYAHAHHHA32");
-		
-		System.out.println("##################################################### YYAHAHHHA35");
-			
-		this.concreteRoleInstanciationService.saveInstanciateConcreteRole(res);	
-			
-			
+		this.concreteRoleInstanciationService.saveInstanciateConcreteRole(resultat);
 	}
-		
-		
-	
 
 	/**
 	 * @param _process
@@ -301,6 +292,13 @@ public class RolesInstanciationBean {
 	}
 
 	/**
+	 * @param displayContent the displayContent to set
+	 */
+	public void setDisplayContent(List<HashMap<String, Object>> displayContent) {
+		this.displayContent = displayContent;
+	}
+
+	/**
 	 * @param _expTableContent
 	 *            the expTableContent to set
 	 */
@@ -410,13 +408,19 @@ public class RolesInstanciationBean {
 		this.indentationContent = indentationContent;
 	}
 
+	/**
+	 * @return the concreteRoleInstanciationService
+	 */
 	public ConcreteRoleInstanciationService getConcreteRoleInstanciationService() {
 		return concreteRoleInstanciationService;
 	}
 
-	public void setConcreteRoleInstanciationService(
-			ConcreteRoleInstanciationService concreteRoleInstanciationService) {
+	/**
+	 * @param concreteRoleInstanciationService the concreteRoleInstanciationService to set
+	 */
+	public void setConcreteRoleInstanciationService(ConcreteRoleInstanciationService concreteRoleInstanciationService) {
 		this.concreteRoleInstanciationService = concreteRoleInstanciationService;
 	}
+
 
 }

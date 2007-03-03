@@ -1,16 +1,15 @@
+package wilos.presentation.web.wilosuser;
 
-package wilos.presentation.web.wilosuser ;
+import java.util.ResourceBundle;
 
-import java.util.ResourceBundle ;
-
-import javax.faces.application.FacesMessage ;
-import javax.faces.context.FacesContext ;
-import wilos.business.services.misc.wilosuser.LoginService ;
-import wilos.business.services.presentation.web.WebSessionService ;
-import wilos.business.util.Security ;
-import wilos.model.misc.wilosuser.WilosUser ;
-import wilos.presentation.web.template.ConnectViewBean ;
-import wilos.presentation.web.template.MenuBean ;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import wilos.business.services.misc.wilosuser.LoginService;
+import wilos.business.services.presentation.web.WebSessionService;
+import wilos.business.util.Security;
+import wilos.model.misc.wilosuser.WilosUser;
+import wilos.presentation.web.template.ConnectViewBean;
+import wilos.presentation.web.template.MenuBean;
 import wilos.presentation.web.tree.TreeBean;
 
 /**
@@ -20,13 +19,14 @@ import wilos.presentation.web.tree.TreeBean;
  * @author Sakamakak
  */
 public class LoginBean {
-	private String login ;
 
-	private String password ;
+	private String login;
 
-	private LoginService loginService ;
+	private String password;
 
-	private WebSessionService webSessionService ;
+	private LoginService loginService;
+
+	private WebSessionService webSessionService;
 
 	/**
 	 * Getter of login.
@@ -34,7 +34,7 @@ public class LoginBean {
 	 * @return the login.
 	 */
 	public String getLogin() {
-		return this.login ;
+		return this.login;
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class LoginBean {
 	 *            The login to set.
 	 */
 	public void setLogin(String _login) {
-		this.login = _login ;
+		this.login = _login;
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class LoginBean {
 	 * @return the loginService.
 	 */
 	public LoginService getLoginService() {
-		return this.loginService ;
+		return this.loginService;
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class LoginBean {
 	 *            The loginService to set.
 	 */
 	public void setLoginService(LoginService _loginService) {
-		this.loginService = _loginService ;
+		this.loginService = _loginService;
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class LoginBean {
 	 * @return the password.
 	 */
 	public String getPassword() {
-		return this.password ;
+		return this.password;
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class LoginBean {
 	 *            The password to set.
 	 */
 	public void setPassword(String _password) {
-		this.password = _password ;
+		this.password = _password;
 	}
 
 	/**
@@ -92,13 +92,13 @@ public class LoginBean {
 	 */
 	public String authentificationAction() {
 
-		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale()) ;
+		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
 
-		String url = "" ;
-		String applicationRole = "" ;
-		WilosUser user = this.loginService.getAuthentifiedUser(this.login, Security.encode(this.password)) ;
-		if(user != null){
-			this.webSessionService.setAttribute(WebSessionService.WILOS_USER_ID, user.getWilosuser_id()) ;
+		String url = "";
+		String applicationRole = "";
+		WilosUser user = this.loginService.getAuthentifiedUser(this.login, Security.encode(this.password));
+		if (user != null) {
+			this.webSessionService.setAttribute(WebSessionService.WILOS_USER_ID, user.getWilosuser_id());
 			/*
 			 * HttpServletRequest req = (HttpServletRequest)
 			 * FacesContext.getCurrentInstance().getExternalContext().getRequest() ; HttpSession
@@ -106,41 +106,37 @@ public class LoginBean {
 			 */
 
 			// if(user instanceof Participant){
-			if(this.loginService.isParticipant(user)){
-				this.webSessionService.setAttribute(WebSessionService.ROLE_TYPE, "participant") ;
-				url = "participant_main" ;
-				applicationRole = "participant_role" ;
-			}
-			else if(this.loginService.isProcessManager(user)){
-				this.webSessionService.setAttribute(WebSessionService.ROLE_TYPE, "processManager") ;
-				url = "process_manager_main" ;
-				applicationRole = "processManager_role" ;
-			}
-			else if(this.loginService.isProjectDirector(user)){
-				this.webSessionService.setAttribute(WebSessionService.ROLE_TYPE, "projectDirector") ;
-				url = "project_director_main" ;
-				applicationRole = "projectDirector_role" ;
-			}
-			else if(this.loginService.isAdministrator(user)){
-				this.webSessionService.setAttribute(WebSessionService.ROLE_TYPE, "admin") ;
-				url = "admin_main" ;
-				applicationRole = "admin_role" ;
+			if (this.loginService.isParticipant(user)) {
+				this.webSessionService.setAttribute(WebSessionService.ROLE_TYPE, "participant");
+				url = "participant_main";
+				applicationRole = "participant_role";
+			} else if (this.loginService.isProcessManager(user)) {
+				this.webSessionService.setAttribute(WebSessionService.ROLE_TYPE, "processManager");
+				url = "process_manager_main";
+				applicationRole = "processManager_role";
+			} else if (this.loginService.isProjectDirector(user)) {
+				this.webSessionService.setAttribute(WebSessionService.ROLE_TYPE, "projectDirector");
+				url = "project_director_main";
+				applicationRole = "projectDirector_role";
+			} else if (this.loginService.isAdministrator(user)) {
+				this.webSessionService.setAttribute(WebSessionService.ROLE_TYPE, "admin");
+				url = "admin_main";
+				applicationRole = "admin_role";
 			}
 			/* Test de la navigation */
-			changeContentPage(url) ;
-			changeConnectView(true, applicationRole) ;
-		}
-		else{
-			FacesMessage message = new FacesMessage() ;
-			message.setSummary(bundle.getString("component.authentificationerror.loginError")) ;
-			message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
+			changeContentPage(url);
+			changeConnectView(true, applicationRole);
+		} else {
+			FacesMessage message = new FacesMessage();
+			message.setSummary(bundle.getString("component.authentificationerror.loginError"));
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 
-			FacesContext facesContext = FacesContext.getCurrentInstance() ;
-			facesContext.addMessage(null, message) ;
-			url = "connect" ;
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			facesContext.addMessage(null, message);
+			url = "connect";
 		}
 		// return url;
-		return "" ;
+		return "";
 	}
 
 	/**
@@ -149,11 +145,11 @@ public class LoginBean {
 	 * @param b
 	 */
 	public void changeConnectView(boolean _b, String _applicationRole) {
-		FacesContext facesContext = FacesContext.getCurrentInstance() ;
-		Object connectObject = facesContext.getApplication().createValueBinding("#{connect}").getValue(facesContext) ;
-		if(connectObject != null && connectObject instanceof ConnectViewBean){
-			ConnectViewBean connectBean = (ConnectViewBean) connectObject ;
-			connectBean.connected(_b, _applicationRole) ;
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		Object connectObject = facesContext.getApplication().createValueBinding("#{connect}").getValue(facesContext);
+		if (connectObject != null && connectObject instanceof ConnectViewBean) {
+			ConnectViewBean connectBean = (ConnectViewBean) connectObject;
+			connectBean.connected(_b, _applicationRole);
 		}
 	}
 
@@ -163,12 +159,12 @@ public class LoginBean {
 	 * @param url
 	 */
 	public void changeContentPage(String url) {
-		FacesContext facesContext = FacesContext.getCurrentInstance() ;
-		Object menuObject = facesContext.getApplication().createValueBinding("#{menu}").getValue(facesContext) ;
-		if(menuObject != null && menuObject instanceof MenuBean){
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		Object menuObject = facesContext.getApplication().createValueBinding("#{menu}").getValue(facesContext);
+		if (menuObject != null && menuObject instanceof MenuBean) {
 
-			MenuBean menuBean = (MenuBean) menuObject ;
-			menuBean.changePage(url) ;
+			MenuBean menuBean = (MenuBean) menuObject;
+			menuBean.changePage(url);
 		}
 	}
 
@@ -178,25 +174,24 @@ public class LoginBean {
 	 * @return
 	 */
 	public String logoutAction() {
-		String url = "wilos" ;
-		changeContentPage(url) ;
-		changeConnectView(false, "none") ;
-		
-		
+		String url = "wilos";
+		changeContentPage(url);
+		changeConnectView(false, "none");
+
 		this.webSessionService.cleanSesssion();
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");
 		tb.cleanTreeDisplay();
-		
-		return url ;
+
+		return url;
 	}
 
 	/**
 	 * @return the webSessionService
 	 */
 	public WebSessionService getWebSessionService() {
-		return this.webSessionService ;
+		return this.webSessionService;
 	}
 
 	/**
@@ -205,6 +200,6 @@ public class LoginBean {
 	 * @param _webSessionService The webSessionService to set.
 	 */
 	public void setWebSessionService(WebSessionService _webSessionService) {
-		this.webSessionService = _webSessionService ;
+		this.webSessionService = _webSessionService;
 	}
 }
