@@ -409,18 +409,7 @@
 		<property name="participantDao" ref="ParticipantDao" />
 		<property name="concreteRoleDescriptorService" ref="ConcreteRoleDescriptorService" />
 	</bean>
-	
-	<bean id="ConcreteRoleInstanciationService"
-		class="wilos.business.services.misc.role.ConcreteRoleInstanciationService">
-		<property name="concreteRoleDescriptorService" ref="ConcreteRoleDescriptorService" />
-		<property name="concreteRoleDescriptorDao" ref="ConcreteRoleDescriptorDao" />
-		<property name="projectService" ref="ProjectService" />
-		<property name="webSessionService" ref="WebSessionService" />
-		<property name="roleDescriptorService" ref="RoleDescriptorService" />
-		
-	</bean>
 
-	
 	<bean id="ProcessManagementService"
 		class="wilos.business.services.spem2.process.ProcessManagementService">
 		<property name="processDao" ref="ProcessDao" />
@@ -439,6 +428,18 @@
 		<property name="guidanceDao" ref="GuidanceDao" />
 		<property name="checkListDao" ref="CheckListDao" />
 		<property name="sectionDao" ref="SectionDao" />
+	</bean>
+	
+	<bean id="ConcreteRoleInstanciationService"
+		class="wilos.business.services.misc.role.ConcreteRoleInstanciationService">
+		<property name="roleDescriptorService" ref="RoleDescriptorService" />
+		<property name="activityService" ref="ActivityService" />
+		<property name="breakdownElementService" ref="BreakdownElementService" />
+		<property name="concreteRoleDescriptorService" ref="ConcreteRoleDescriptorService" />
+		<property name="concreteRoleDescriptorDao" ref="ConcreteRoleDescriptorDao" />
+		<property name="concreteActivityService" ref="ConcreteActivityService" />
+		<property name="concreteBreakdownElementService" ref="ConcreteBreakdownElementService" />
+		<property name="projectService" ref="ProjectService" />
 	</bean>
 
 	<!-- =============================================================== -->

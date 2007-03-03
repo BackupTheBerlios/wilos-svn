@@ -212,7 +212,7 @@
 		<managed-bean>
 		<managed-bean-name>RolesInstanciationBean</managed-bean-name>
 		<managed-bean-class>wilos.presentation.web.role.RolesInstanciationBean</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
+		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
 			<property-name>processService</property-name>
 			<value>#{ProcessService}</value>
@@ -229,7 +229,10 @@
 			<property-name>projectService</property-name>
 			<value>#{ProjectService}</value>
 		</managed-property>
-		
+		<managed-property>
+			<property-name>concreteRoleInstanciationService</property-name>
+			<value>#{ConcreteRoleInstanciationService}</value>
+		</managed-property>
 	</managed-bean>
 	
 

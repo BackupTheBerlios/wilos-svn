@@ -8,15 +8,18 @@
 				<ice:outputText value="#{msgs['concretetaskviewer.popupHeaderMessage']}" />
 			</f:facet>
 			<f:facet name="body">
-				<ice:panelGrid styleClass="popupModalBody" columns="2">
-					<ice:outputText value="#{msgs['concretetaskviewer.popupMessage']}" />
-					<ice:outputText value=""/>
-					<ice:commandButton value="#{msgs['concretetaskviewer.popupConfirmButton']}"
-						styleClass="smallbutton"
-						action="#{ConcreteTaskViewerBean.confirmStop}" style="z-index:2;"/>
-					<ice:commandButton value="#{msgs['concretetaskviewer.popupCancelButton']}"
-						styleClass="smallbutton"
-						action="#{ConcreteTaskViewerBean.cancelStop}" style="z-index:2;"/>
+				<ice:panelGrid id="pGrdPopup">
+					<ice:graphicImage value="images/xpwilos/warning.gif"
+										style="border: 0px solid;" />
+					<ice:outputText value="#{msgs['concretetaskviewer.popupMessage']}" />				
+					<ice:panelGrid styleClass="pGrdPopupButtons" columns="2">
+						<ice:commandButton value="#{msgs['concretetaskviewer.popupConfirmButton']}"
+							styleClass="smallbutton"
+							action="#{ConcreteTaskViewerBean.confirmStop}"/>
+						<ice:commandButton value="#{msgs['concretetaskviewer.popupCancelButton']}"
+							styleClass="smallbutton"
+							action="#{ConcreteTaskViewerBean.cancelStop}"/>
+					</ice:panelGrid>
 				</ice:panelGrid>
 			</f:facet>
 		</ice:panelPopup>
@@ -40,6 +43,7 @@
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.displayedState}" />
 					<ice:outputText value=""/>
+					<!-- INFORMATIONS INUTILISEES
 					<ice:outputText value="#{msgs['concretetaskviewer.plannedstartingdate']}" />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.plannedStartingDate}" />
@@ -48,6 +52,7 @@
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.plannedFinishingDate}" />
 					<ice:outputText value=""/>
+					-->
 					<ice:outputText
 						value="#{msgs['concretetaskviewer.accomplishedtime']}"
 						visible="#{ConcreteTaskViewerBean.accomplishedTimeVisible}"/>
