@@ -78,7 +78,5 @@
 }
 
 .pGrdPopupButtons {
-    width: 100%; /* fixed height of content demos*/
-    height: 200px;
-    border:0px;
+    left:30%;
 }
