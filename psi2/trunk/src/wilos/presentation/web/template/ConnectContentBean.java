@@ -17,6 +17,7 @@ public class ConnectContentBean extends IceUserObject {
     private String templateName = "";
     private String templateNameActions = "";
     private String templateNameMenu = "";
+    private String templateNameSelection ="";
 
     // True indicates that there is content associated with link and as a
     // result templateName and contentPanelName can be used
@@ -161,5 +162,23 @@ public class ConnectContentBean extends IceUserObject {
 	 */
 	public void setTemplateNameMenu(String _templateNameMenu) {
 		this.templateNameMenu = _templateNameMenu ;
+	}
+
+	/**
+	 * Getter of templateNameSelection.
+	 *
+	 * @return the templateNameSelection.
+	 */
+	public String getTemplateNameSelection() {
+		return this.templateNameSelection ;
+	}
+
+	/**
+	 * Setter of templateNameSelection.
+	 *
+	 * @param _templateNameSelection The templateNameSelection to set.
+	 */
+	public void setTemplateNameSelection(String _templateNameSelection) {
+		this.templateNameSelection = _templateNameSelection ;
 	}
 }

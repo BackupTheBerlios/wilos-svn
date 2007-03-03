@@ -61,16 +61,22 @@ public class ConnectViewBean {
     		
     		connectContent.setTemplateName("connected");
     		connectContent.setTemplateNameActions(_applicationRole);
-    		if(_applicationRole == "participant_role")
+    		if(_applicationRole == "participant_role"){
     			connectContent.setTemplateNameMenu("tree_group");
-    		else
+    			connectContent.setTemplateNameSelection("selection_group");
+    		}
+    		else{
     			connectContent.setTemplateNameMenu("no_tree_group");
+    			connectContent.setTemplateNameSelection("no_selection_group");
+    		}
+    			
     	}
     	else
     	{
     		connectContent.setTemplateName("not_connected");
     		connectContent.setTemplateNameActions("none");
     		connectContent.setTemplateNameMenu("no_tree_group");
+    		connectContent.setTemplateNameSelection("no_selection_group");
     	}
     	connectContent.setNavigationSelection(this);
     	this.selectedPanel = connectContent;

@@ -15,7 +15,6 @@
 	<link href="css/wilos.css" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
-
 	<ice:panelBorder layout="hide east" border="0" cellpadding="0"
 		cellspacing="0" styleClass="mainBorderLayout">
 
@@ -32,7 +31,11 @@
 				id="pnGleftmenu">
 				<div id="connection"><jsp:directive.include
 					file="./pages/template/connect.jspx" /></div>
-				<div id="menu"><jsp:directive.include
+				<div id="selection">
+					<jsp:directive.include
+					file="./pages/template/selection.jspx" />
+				</div>
+				<div id="tree"><jsp:directive.include
 					file="./pages/template/Menu.jspx" /></div>
 			</ice:panelGroup>
 		</f:facet>
@@ -217,7 +220,8 @@
             'images/xpwilos/tbot-on-left-bot.gif',
             'images/xpwilos/tbot-on-mid-bot.gif',
             'images/xpwilos/tbot-on-right-bot.gif',
-            'images/xpwilos/popup_header.gif'
+            'images/xpwilos/popup_header.gif',
+            'images/xpwilos/warning.gif'
 
 
     );

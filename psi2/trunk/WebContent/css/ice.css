@@ -277,9 +277,7 @@ em {
 }
 
 .contentLayoutGridStyle {
-    width: 100%; /* fixed height of content demos*/
-    height: 200px;
-    border:0px;
+    left:30%;
 }
 
 .contentLayoutGridStyle td {
@@ -1797,6 +1795,8 @@ background-image:url("../images/xpwilos/tab-over.gif");
     z-index: 1000;
     width:400px;
     height:150px;
+    top:40%;
+    left:40%;
 }
 
 .icePanelPopupHeader {
@@ -1804,7 +1804,8 @@ background-image:url("../images/xpwilos/tab-over.gif");
     background-image: url( "../images/xpwilos/popup_header.gif" );
     background-position: bottom;
     background-repeat: repeat-x;
-    height: 2.5em;
+    height: 2.0em;
+    font: bold 10pt Verdana;
 }
 
 .icePanelPopupBody {
