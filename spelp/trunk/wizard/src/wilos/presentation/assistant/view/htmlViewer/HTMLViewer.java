@@ -352,32 +352,32 @@ public class HTMLViewer extends JFrame {
 		if (e instanceof RoleDescriptor) {
 			RoleDefinition theRoleDefinition = ((RoleDescriptor) e).getRoleDefinition();
 			
-			if (! theRoleDefinition.getAssignmentApproaches().equals("")) {
-				content.append("<b>" + Bundle.getText("htmlViewer.assignmentApproaches") + "</b> <br>");
-				content.append(theRoleDefinition.getAssignmentApproaches());
-				content.append("<br><br>");
-			}
+//			if (! theRoleDefinition.getAssignmentApproaches().equals("")) {
+//				content.append("<b>" + Bundle.getText("htmlViewer.assignmentApproaches") + "</b> <br>");
+//				content.append(theRoleDefinition.getAssignmentApproaches());
+//				content.append("<br><br>");
+//			}
 			
-			if (! theRoleDefinition.getSkills().equals("")) {
-				content.append("<b>" + Bundle.getText("htmlViewer.skills") + "</b> <br>");
-				content.append(theRoleDefinition.getSkills());
-				content.append("<br><br>");
-			}
+//			if (! theRoleDefinition.getSkills().equals("")) {
+//				content.append("<b>" + Bundle.getText("htmlViewer.skills") + "</b> <br>");
+//				content.append(theRoleDefinition.getSkills());
+//				content.append("<br><br>");
+//			}
 			
-			if (! theRoleDefinition.getSynonyms().equals("")) {
-				content.append("<b>" + Bundle.getText("htmlViewer.synonyms") + "</b> <br>");
-				content.append(theRoleDefinition.getSynonyms());
-				content.append("<br><br>");
-			}
+//			if (! theRoleDefinition.getSynonyms().equals("")) {
+//				content.append("<b>" + Bundle.getText("htmlViewer.synonyms") + "</b> <br>");
+//				content.append(theRoleDefinition.getSynonyms());
+//				content.append("<br><br>");
+//			}
 		}
 		else if (e instanceof Activity) {
 			Activity theActivity = (Activity) e;
 			
-			if (! theActivity.getAlternatives().equals("")) {
-				content.append("<b>" + Bundle.getText("htmlViewer.alternatives") + "</b> <br>");
-				content.append(theActivity.getAlternatives());
-				content.append("<br><br>");
-			}
+//			if (! theActivity.getAlternatives().equals("")) {
+//				content.append("<b>" + Bundle.getText("htmlViewer.alternatives") + "</b> <br>");
+//				content.append(theActivity.getAlternatives());
+//				content.append("<br><br>");
+//			}
 			
 			if (! theActivity.getHowToStaff().equals("")) {
 				content.append("<b>" + Bundle.getText("htmlViewer.howToStaff") + "</b> <br>");
@@ -394,29 +394,28 @@ public class HTMLViewer extends JFrame {
 		else if (e instanceof TaskDescriptor) {
 			TaskDefinition theRoleDefinition = ((TaskDescriptor) e).getTaskDefinition();
 			
-			if (! theRoleDefinition.getAlternatives().equals("")) {
-				content.append("<b>" + Bundle.getText("htmlViewer.alternatives") + "</b> <br>");
-				content.append(theRoleDefinition.getAlternatives());
-				content.append("<br><br>");
-			}
+//			if (! theRoleDefinition.getAlternatives().equals("")) {
+//				content.append("<b>" + Bundle.getText("htmlViewer.alternatives") + "</b> <br>");
+//				content.append(theRoleDefinition.getAlternatives());
+//				content.append("<br><br>");
+//			}
 			
-			if (! theRoleDefinition.getPurpose().equals("")) {
-				content.append("<b>" + Bundle.getText("htmlViewer.purpose") + "</b> <br>");
-				content.append(theRoleDefinition.getPurpose());
-				content.append("<br><br>");
-			}				
+//			if (! theRoleDefinition.getPurpose().equals("")) {
+//				content.append("<b>" + Bundle.getText("htmlViewer.purpose") + "</b> <br>");
+//				content.append(theRoleDefinition.getPurpose());
+//				content.append("<br><br>");
+//			}				
 		}
 		else if (e instanceof CheckList) {
-			String description = "<TABLE BORDER=1>";
+			content.append("<TABLE BORDER=1>");
 			CheckList c = (CheckList) e;
 			Set<Section> sections = new HashSet<Section>();
 			sections = c.getSections();
 			for(Iterator it = sections.iterator() ; it.hasNext() ; ) {
 				Section s = (Section)it.next();
-				description += "<TR><TD><INPUT type=\"checkbox\"></TD><TD><B>" + s.getName() + "</B> :</TD><TD>" + s.getDescription() + "</TD></TR>";
+				content.append("<TR><TD><INPUT type=\"checkbox\"></TD><TD><B>" + s.getName() + "</B> :</TD><TD>" + s.getDescription() + "</TD></TR>");
 			}
-			description += "</TABLE>";
-			this.HTMLCode = description;
+			content.append("</TABLE>");
 		}
 		
 		this.HTMLCode = content.toString();
