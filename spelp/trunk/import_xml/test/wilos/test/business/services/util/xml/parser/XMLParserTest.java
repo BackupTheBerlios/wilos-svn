@@ -9,6 +9,7 @@ import java.util.TreeSet;
 
 import junit.framework.TestCase;
 import wilos.business.services.util.xml.parser.XMLParser;
+import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.checklist.CheckList;
@@ -1377,7 +1378,121 @@ public class XMLParserTest extends TestCase {
 		assertEquals("C'est le représentant du \"métier\" dans le projet. ", theRoleDef.getDescription());
 	}
 	
-	// test to resolve we check the order of the 4 phases of openUP
+	public void testOpenUpDetermineArchitecturalFeasibilityHasOneRoleDescriptor() {
+		Process openUpProcess = XMLParser.getProcess(pathOPenUP);
+		Activity inceptionIterationAct = null;
+		Activity determineArchitecturalFeasibility = null;
+		
+		// First Step, Stop on Inception Iteration
+		Iterator<BreakdownElement> itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
+		while (itTopLevelAct.hasNext()) {
+			BreakdownElement tmpBde = itTopLevelAct.next();
+			if (tmpBde.getPresentationName().equals("Inception Iteration [1..n]")) {
+				inceptionIterationAct = (Activity) tmpBde;
+			}
+		}
+		
+		assertTrue(inceptionIterationAct != null);
+		
+		// get the Activity Initiate Project
+		Iterator<BreakdownElement> itSecondLevelAct = inceptionIterationAct.getBreakdownElements().iterator();
+		while (itSecondLevelAct.hasNext()) {
+			BreakdownElement tmpBde = itSecondLevelAct.next();
+			if (tmpBde.getPresentationName().equals("Determine Architectural Feasibility")) {
+				determineArchitecturalFeasibility = (Activity) tmpBde;
+			}
+		}
+		
+		assertTrue(determineArchitecturalFeasibility != null);
+		
+		int nbRoleDescriptors = 0;
+		for (BreakdownElement bde : determineArchitecturalFeasibility.getBreakdownElements()) {
+			if (bde instanceof RoleDescriptor) {
+				nbRoleDescriptors++;
+			}
+		}
+		assertTrue(nbRoleDescriptors == 2);
+	}
+	
+	public void testOpenUpInceptionManageRequirementsAnalystHas2TaskDescriptors() {
+		Process openUpProcess = XMLParser.getProcess(pathOPenUP);
+		Activity inceptionIterationAct = null;
+		Activity manageRequirements = null;
+		RoleDescriptor analyst = null;
+		
+		// First Step, Stop on Inception Iteration
+		Iterator<BreakdownElement> itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
+		while (itTopLevelAct.hasNext()) {
+			BreakdownElement tmpBde = itTopLevelAct.next();
+			if (tmpBde.getPresentationName().equals("Inception Iteration [1..n]")) {
+				inceptionIterationAct = (Activity) tmpBde;
+			}
+		}
+		
+		assertTrue(inceptionIterationAct != null);
+		
+		// get the Activity Initiate Project
+		Iterator<BreakdownElement> itSecondLevelAct = inceptionIterationAct.getBreakdownElements().iterator();
+		while (itSecondLevelAct.hasNext()) {
+			BreakdownElement tmpBde = itSecondLevelAct.next();
+			if (tmpBde.getPresentationName().equals("Manage Requirements")) {
+				manageRequirements = (Activity) tmpBde;
+			}
+		}
+		
+		assertTrue(manageRequirements != null);
+		
+		for (BreakdownElement bde : manageRequirements.getBreakdownElements()) {
+			if (bde instanceof RoleDescriptor && bde.getPresentationName().equals("Analyst")) {
+				analyst = (RoleDescriptor) bde;
+			}
+		}
+		
+		assertTrue(analyst != null);
+		
+		assertEquals(analyst.getPrimaryTasks().size(), 2);
+	}
+	
+	public void testOpenUpInceptionManageRequirementsHas3TaskDescriptors() {
+		Process openUpProcess = XMLParser.getProcess(pathOPenUP);
+		Activity inceptionIterationAct = null;
+		Activity manageRequirements = null;
+		RoleDescriptor analyst = null;
+		
+		// First Step, Stop on Inception Iteration
+		Iterator<BreakdownElement> itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
+		while (itTopLevelAct.hasNext()) {
+			BreakdownElement tmpBde = itTopLevelAct.next();
+			if (tmpBde.getPresentationName().equals("Inception Iteration [1..n]")) {
+				inceptionIterationAct = (Activity) tmpBde;
+			}
+		}
+		
+		assertTrue(inceptionIterationAct != null);
+		
+		// get the Activity Initiate Project
+		Iterator<BreakdownElement> itSecondLevelAct = inceptionIterationAct.getBreakdownElements().iterator();
+		while (itSecondLevelAct.hasNext()) {
+			BreakdownElement tmpBde = itSecondLevelAct.next();
+			if (tmpBde.getPresentationName().equals("Manage Requirements")) {
+				manageRequirements = (Activity) tmpBde;
+			}
+		}
+		
+		assertTrue(manageRequirements != null);
+		
+		int nbTaskDescriptors = 0;
+		for (BreakdownElement bde : manageRequirements.getBreakdownElements()) {
+			if (bde instanceof TaskDescriptor) {
+				nbTaskDescriptors++;
+			}
+		}
+		
+		assertEquals(nbTaskDescriptors, 3);
+	}
+	
+	
+		// test to resolve we check the order of the 4 phases of openUP
 	public void testOpenUPOrderisInceptionElabrorationConstructionTransition(){
 		Process openUpProcess = XMLParser.getProcess(pathOPenUP);
 		Activity IterationAct = null;
@@ -1424,7 +1539,6 @@ public class XMLParserTest extends TestCase {
 		Iterator<BreakdownElement> itSecondLevelAct = IterationAct.getBreakdownElements().iterator();
 		while (itSecondLevelAct.hasNext()) {
 			BreakdownElement tmpBde = itSecondLevelAct.next();
-			System.out.println(tmpBde.getPresentationName());
 			if (tmpBde.getPresentationName().equals("Manage Iteration")) {
 				assertTrue(num == 0);
 			}
@@ -1664,6 +1778,7 @@ public class XMLParserTest extends TestCase {
 		assertEquals(expectedSkills, theRoleDef.getSkills());
 		assertEquals(expectedSynonyms, theRoleDef.getSynonyms());
 	}
+	
 	
 	/*
 	public void testGetProcess(){

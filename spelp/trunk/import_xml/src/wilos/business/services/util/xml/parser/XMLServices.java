@@ -14,7 +14,7 @@ public class XMLServices {
 	 * @param XMLPath : can be a XML File or a ZIP File
 	 * @return a Process Object
 	 */
-	public static Process getProcess (String XMLPath,String pathToExtract){
+	public static Process getProcess (String XMLPath, String pathToExtract){
 		Process p = null ;
 		File f = new File(XMLPath);
 		if (XMLUtils.isExtension(XMLPath,"zip")){
