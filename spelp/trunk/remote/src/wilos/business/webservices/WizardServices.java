@@ -29,16 +29,6 @@ public class WizardServices {
 	LoginService loginService;
 	AssistantService assistantService;
 	
-	/*public WizardServices() {
-       // Getback the application context from the spring configuration file
-       ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-       // Show what is in the factory
-       System.out.println("factory => "+ctx);
-       // Get the LoginService Singleton for managing Activity data  
-       loginService = (LoginService) ctx.getBean("LoginService");
-       assistantService = (AssistantService) ctx.getBean("AssistantService");
-	}*/
-	
     @WebMethod
     public String getParticipant(@WebParam(name="login") String login, @WebParam(name="password")  String password) throws Exception
     {
@@ -75,7 +65,7 @@ public class WizardServices {
     public void suspendConcreteTaskDescriptor (@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="id") String id) throws Exception {
 		System.out.println("APPEL DE METHODE : suspendConcreteTaskDescriptor");
     	if (getAuthentifiedParticipant (login, password)!=null) {
-    		System.out.println("le Participant est logg�");
+    		System.out.println("le Participant est logge");
     		assistantService.suspendConcreteTaskDescriptor(id);
     	}
     }
@@ -84,7 +74,7 @@ public class WizardServices {
     public void resumeConcreteTaskDescriptor (@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="id") String id) throws Exception {
 		System.out.println("APPEL DE METHODE : resumeConcreteTaskDescriptor");
     	if (getAuthentifiedParticipant (login, password)!=null) {
-    		System.out.println("le Participant est logg�");
+    		System.out.println("le Participant est logge");
     		assistantService.resumeConcreteTaskDescriptor(id);
     	}
     }
@@ -93,7 +83,7 @@ public class WizardServices {
     public void stopConcreteTaskDescriptor (@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="id") String id) throws Exception {
 		System.out.println("APPEL DE METHODE : stopConcreteTaskDescriptor");
     	if (getAuthentifiedParticipant (login, password)!=null) {
-    		System.out.println("le Participant est logg�");
+    		System.out.println("le Participant est logge");
     		assistantService.finishConcreteTaskDescriptor(id);
     	}
     }
@@ -102,7 +92,7 @@ public class WizardServices {
     public void setAccomplishedTimeByTask(@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="taskGuid") String taskGuid,@WebParam(name="newTime") int newTime) throws Exception {
 		System.out.println("APPEL DE METHODE : setAccomplishedTimeByTask");
     	if (getAuthentifiedParticipant (login, password)!=null) {
-    		System.out.println("le Participant est logg�");
+    		System.out.println("le Participant est logge");
     		assistantService.setAccomplishedTimeByTask(taskGuid, newTime);
     	}
     }
@@ -111,7 +101,7 @@ public class WizardServices {
     public void setRemainingTimeByTask(@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="taskGuid") String taskGuid,@WebParam(name="newTime") int newTime) throws Exception {
 		System.out.println("APPEL DE METHODE : setRemainingTimeByTask");
     	if (getAuthentifiedParticipant (login, password)!=null) {
-    		System.out.println("le Participant est logg�");
+    		System.out.println("le Participant est logge");
     		assistantService.setRemainingTimeByTask(taskGuid, newTime);
     	}
     }
