@@ -46,7 +46,7 @@ public class WizardServicesTest extends TestCase {
 		ps = (ParticipantService) TestConfiguration.getInstance().getApplicationContext().getBean("ParticipantService");
 		cts = (ConcreteTaskDescriptorService) TestConfiguration.getInstance().getApplicationContext().getBean("ConcreteTaskDescriptorService");
 		
-		instance = new WizardServices();     
+		instance = (WizardServices) TestConfiguration.getInstance().getApplicationContext().getBean("WizardServices");
 	 
 	 	ct = new ConcreteTaskDescriptor();
 		ct.setConcreteName("ConcreteTest");
@@ -56,11 +56,11 @@ public class WizardServicesTest extends TestCase {
 		
 		p = new Participant();
 		
-		p.setLogin("test");
-	    p.setPassword(Security.encode("testtest"));
-	    p.setName("test");
+		p.setLogin("testJunit");
+	    p.setPassword(Security.encode("testJunit"));
+	    p.setName("testJunit");
 	    p.setEmailAddress("test@test.com");
-	    p.setFirstname("test");
+	    p.setFirstname("testJunit");
 	    ps.getParticipantDao().saveOrUpdateParticipant(p);
     }
 
