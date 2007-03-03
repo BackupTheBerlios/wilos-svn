@@ -46,7 +46,8 @@
 						</ice:columns>
 					</ice:dataTable>
 					<ice:commandButton value="#{msgs['viewer.buttonlabel']}"
-						action="#{ProjectViewerBean.saveProject}" styleClass="smallbutton" />
+						action="#{ProjectViewerBean.saveProject}" styleClass="smallbutton"
+						title="#{msgs['viewer.buttonlabel.Bubble'] }" />
 				</ice:panelGroup>
 
 			</ice:panelTab>
