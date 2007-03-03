@@ -8,7 +8,7 @@ import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
 
-public class ConcreteIterationViewerBean extends ViewerBean{
+public class ConcreteIterationViewerBean extends ViewerBean {
 
 	private ConcreteIteration concreteIteration;
 
@@ -32,7 +32,8 @@ public class ConcreteIterationViewerBean extends ViewerBean{
 
 	public void saveIteration() {
 		super.getConcreteBreakdownElementService()
-				.saveAllFirstSonsConcreteBreakdownElementsForConcreteActivity(this.concreteIteration);
+				.saveAllFirstSonsConcreteBreakdownElementsForConcreteActivity(
+						this.concreteIteration);
 
 		// Reload the treebean.
 		super.refreshProjectTree();

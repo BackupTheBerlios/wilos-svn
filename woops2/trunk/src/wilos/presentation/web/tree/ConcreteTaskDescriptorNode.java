@@ -33,8 +33,10 @@ public class ConcreteTaskDescriptorNode extends DefaultMutableTreeNode {
 			iceUserObject.setLeafIcon("images/tree/icon_task_pause.gif");
 		else if (_concreteTaskDescriptor.getState().equals(State.FINISHED))
 			iceUserObject.setLeafIcon("images/tree/icon_task_over.gif");
+		else if(_concreteTaskDescriptor.getMainConcreteRoleDescriptor() != null)
+			iceUserObject.setLeafIcon("images/tree/icon_task_busy.gif");
 		else
-			iceUserObject.setLeafIcon("images/tree/icon_taskdescriptor.gif");
+			iceUserObject.setLeafIcon("images/tree/icon_task_free.gif");
 
 		// node information
 		iceUserObject.setId(_concreteTaskDescriptor.getId());

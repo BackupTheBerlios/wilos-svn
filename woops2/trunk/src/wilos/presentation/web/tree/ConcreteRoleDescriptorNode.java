@@ -28,9 +28,9 @@ public class ConcreteRoleDescriptorNode extends DefaultMutableTreeNode {
 
 		// manage icon.
 		if (_concreteRoleDescriptor.getParticipant() == null)
-			iceUserObject.setLeafIcon("images/tree/icon_roledescriptor.gif");
+			iceUserObject.setLeafIcon("images/tree/icon_role_free.gif");
 		else
-			iceUserObject.setLeafIcon("images/tree/icon_roledescriptor_locked.gif");
+			iceUserObject.setLeafIcon("images/tree/icon_role_busy.gif");
 
 		// node information
 		iceUserObject.setId(_concreteRoleDescriptor.getId());

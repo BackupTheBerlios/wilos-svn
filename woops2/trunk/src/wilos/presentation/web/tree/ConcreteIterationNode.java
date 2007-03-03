@@ -24,7 +24,7 @@ public class ConcreteIterationNode extends DefaultMutableTreeNode {
 		WilosObjectNode iceUserObject = new WilosObjectNode(this);
 		this.setUserObject(iceUserObject);
 
-		iceUserObject.setExpanded(true);
+		iceUserObject.setExpanded(false);
 		iceUserObject.setText(this.concreteIteration.getConcreteName());
 		iceUserObject.setLeaf(false);
 		iceUserObject.setBranchContractedIcon("images/tree/icon_iteration.gif");
