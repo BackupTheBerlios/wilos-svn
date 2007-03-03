@@ -25,7 +25,7 @@ public class ConcretePhaseNode extends DefaultMutableTreeNode {
 		WilosObjectNode iceUserObject = new WilosObjectNode(this);
 		this.setUserObject(iceUserObject);
 
-		iceUserObject.setExpanded(false);
+		iceUserObject.setExpanded(true);
 		iceUserObject.setText(this.concretePhase.getConcreteName());
 		iceUserObject.setLeaf(false);
 		iceUserObject.setBranchContractedIcon("images/tree/icon_phase.gif");

@@ -18,7 +18,6 @@ import wilos.business.services.spem2.role.RoleDescriptorService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
-import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
@@ -94,30 +93,6 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		return _state;
 	}
 
-	public boolean getChangeButtonIsDisabled() {
-		
-		FacesContext.getCurrentInstance();
-		String wilosUserId = (String) super.getWebSessionService()
-				.getAttribute(WebSessionService.WILOS_USER_ID);
-
-		Project project = super.getProjectService().getProject(
-				(String) super.getWebSessionService().getAttribute(
-						WebSessionService.PROJECT_ID));
-
-		
-		if ((project != null) 
-				&& (project.getProjectManager() != null)
-					&& (project.getProjectManager().getWilosuser_id()
-						.equals(wilosUserId)))
-			return false;
-		else
-			return true;
-	}
-
-	public boolean getIsInputNameReadOnly() {
-		return (this.getChangeButtonIsDisabled());
-	}
-
 	public void changeConcreteName() {
 		this.concreteTaskDescriptorService
 				.saveConcreteTaskDescriptor(this.concreteTaskDescriptor);
@@ -152,6 +127,7 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		facesContext.addMessage(null, message);
 
 		super.refreshProjectTable();
+		super.refreshProjectTree();
 	}
 
 	/**

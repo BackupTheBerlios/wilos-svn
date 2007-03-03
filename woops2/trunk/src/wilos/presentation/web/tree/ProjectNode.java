@@ -31,7 +31,7 @@ public class ProjectNode extends DefaultMutableTreeNode {
 		WilosObjectNode iceUserObject = new WilosObjectNode(this);
 		this.setUserObject(iceUserObject);
 
-		iceUserObject.setExpanded(false);
+		iceUserObject.setExpanded(true);
 		iceUserObject.setText(this.project.getConcreteName());
 		iceUserObject.setLeaf(false);
 		iceUserObject.setBranchContractedIcon("images/tree/icon_process.gif");

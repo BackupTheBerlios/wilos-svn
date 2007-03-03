@@ -44,9 +44,9 @@ public class ViewerBean {
 				.getProject((String) this.webSessionService
 						.getAttribute(WebSessionService.PROJECT_ID));
 
-		if ((project.getProjectManager() != null)
+		if ((project != null)&&((project.getProjectManager() != null)
 				&& (project.getProjectManager().getWilosuser_id()
-						.equals(wilosUserId)))
+						.equals(wilosUserId))))
 			return false;
 		else
 			return true;

@@ -23,7 +23,7 @@ public class ConcreteActivityNode extends DefaultMutableTreeNode {
 		WilosObjectNode iceUserObject = new WilosObjectNode(this);
 		this.setUserObject(iceUserObject);
 
-		iceUserObject.setExpanded(false);
+		iceUserObject.setExpanded(true);
 		iceUserObject.setText(this.concreteActivity.getConcreteName());
 		iceUserObject.setLeaf(false);
 		iceUserObject.setBranchContractedIcon("images/tree/icon_activity.gif");
