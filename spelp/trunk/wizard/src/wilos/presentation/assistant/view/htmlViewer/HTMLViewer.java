@@ -48,9 +48,11 @@ import wilos.model.spem2.element.Element;
 import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
+import wilos.model.spem2.role.RoleDefinition;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.section.Section;
 import wilos.model.spem2.task.Step;
+import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.Bundle;
@@ -317,7 +319,94 @@ public class HTMLViewer extends JFrame {
 		// *************************************************************
 		// TODO REMPLACER CE CODE PAR UNE FONCTION QUI AFFICHE TOUS LES ELEMENTS
 		// *************************************************************
-		if (e instanceof CheckList) {
+		printCompleteInformation(e);
+		// *************************************************************
+		
+		if(this.HTMLCode.length() != 0){
+			this.myEditorPane.setCaretPosition(1); // revient au debut du texte
+		}
+			
+		this.setVisible(true);		
+		
+	}
+
+	private void printCompleteInformation(Element e) {
+		StringBuffer content = new StringBuffer("");
+		
+		if (! e.getDescription().equals("")) {
+			content.append("<b>" + Bundle.getText("htmlViewer.description") + "</b> <br>");
+			content.append(e.getDescription());
+			content.append("<br><br>");
+		}
+		if (! e.getMainDescription().equals("")) {
+			content.append("<b>" + Bundle.getText("htmlViewer.mainDescription") + "</b> <br>");
+			content.append(e.getMainDescription());
+			content.append("<br><br>");
+		}
+		if (! e.getKeyConsiderations().equals("")) {
+			content.append("<b>" + Bundle.getText("htmlViewer.keyConsiderations") + "</b> <br>");
+			content.append(e.getKeyConsiderations());
+			content.append("<br><br>");
+		}
+		
+		if (e instanceof RoleDescriptor) {
+			RoleDefinition theRoleDefinition = ((RoleDescriptor) e).getRoleDefinition();
+			
+			if (! theRoleDefinition.getAssignmentApproaches().equals("")) {
+				content.append("<b>" + Bundle.getText("htmlViewer.assignmentApproaches") + "</b> <br>");
+				content.append(theRoleDefinition.getAssignmentApproaches());
+				content.append("<br><br>");
+			}
+			
+			if (! theRoleDefinition.getSkills().equals("")) {
+				content.append("<b>" + Bundle.getText("htmlViewer.skills") + "</b> <br>");
+				content.append(theRoleDefinition.getSkills());
+				content.append("<br><br>");
+			}
+			
+			if (! theRoleDefinition.getSynonyms().equals("")) {
+				content.append("<b>" + Bundle.getText("htmlViewer.synonyms") + "</b> <br>");
+				content.append(theRoleDefinition.getSynonyms());
+				content.append("<br><br>");
+			}
+		}
+		else if (e instanceof Activity) {
+			Activity theActivity = (Activity) e;
+			
+			if (! theActivity.getAlternatives().equals("")) {
+				content.append("<b>" + Bundle.getText("htmlViewer.alternatives") + "</b> <br>");
+				content.append(theActivity.getAlternatives());
+				content.append("<br><br>");
+			}
+			
+			if (! theActivity.getHowToStaff().equals("")) {
+				content.append("<b>" + Bundle.getText("htmlViewer.howToStaff") + "</b> <br>");
+				content.append(theActivity.getHowToStaff());
+				content.append("<br><br>");
+			}
+			
+			if (! theActivity.getPurpose().equals("")) {
+				content.append("<b>" + Bundle.getText("htmlViewer.purpose") + "</b> <br>");
+				content.append(theActivity.getPurpose());
+				content.append("<br><br>");
+			}				
+		}
+		else if (e instanceof TaskDescriptor) {
+			TaskDefinition theRoleDefinition = ((TaskDescriptor) e).getTaskDefinition();
+			
+			if (! theRoleDefinition.getAlternatives().equals("")) {
+				content.append("<b>" + Bundle.getText("htmlViewer.alternatives") + "</b> <br>");
+				content.append(theRoleDefinition.getAlternatives());
+				content.append("<br><br>");
+			}
+			
+			if (! theRoleDefinition.getPurpose().equals("")) {
+				content.append("<b>" + Bundle.getText("htmlViewer.purpose") + "</b> <br>");
+				content.append(theRoleDefinition.getPurpose());
+				content.append("<br><br>");
+			}				
+		}
+		else if (e instanceof CheckList) {
 			String description = "<TABLE BORDER=1>";
 			CheckList c = (CheckList) e;
 			Set<Section> sections = new HashSet<Section>();
@@ -329,20 +418,9 @@ public class HTMLViewer extends JFrame {
 			description += "</TABLE>";
 			this.HTMLCode = description;
 		}
-		else {
-			String description = e.getDescription();
-			this.HTMLCode = description;
-		}
 		
+		this.HTMLCode = content.toString();
 		this.myEditorPane.setText(this.HTMLCode);
-		// *************************************************************
-		
-		if(this.HTMLCode.length() != 0){
-			this.myEditorPane.setCaretPosition(1); // revient au debut du texte
-		}
-			
-		this.setVisible(true);		
-		
 	}
 
 	
