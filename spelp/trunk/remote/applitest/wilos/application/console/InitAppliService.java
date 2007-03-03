@@ -34,6 +34,29 @@ public class InitAppliService {
 	protected final Log logger = LogFactory.getLog(this.getClass());
 	
 	@Transactional(readOnly = false)
+	public void projectInstanciation() {	
+		String s = processService.getProcessDao().getProcessFromGuid("_9llsAQAvEdubGMceRDupFQ").getId();
+		Process scrum = processDao.getProcess(s);
+
+		Project project = new Project();
+		project.setConcreteName("Wilos");
+		project.addProcess(scrum);
+		projectDao.saveOrUpdateProject(project);
+
+		processService.projectInstanciation(project);
+
+		String s2 = processService.getProcessDao().getProcessFromGuid("_0uyGoMlgEdmt3adZL5Dmdw").getId();
+		Process openup = processDao.getProcess(s2);
+
+		Project project2 = new Project();
+		project2.setConcreteName("IceOpenUP");
+		project2.addProcess(openup);
+		projectDao.saveOrUpdateProject(project2);
+
+		processService.projectInstanciation(project2);
+	}
+	
+	@Transactional(readOnly = false)
 	public void initAppli() {	
 		
 		// creation du participant 	

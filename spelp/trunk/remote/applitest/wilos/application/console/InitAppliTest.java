@@ -37,40 +37,18 @@ public class InitAppliTest {
 		Process scrum = am.spelpParsingXML(new File("applitest/wilos/application/console/scrum.xml"));
 		am.saveProcess(scrum,wu.getWilosuser_id());
 		
-		/*Process openup = am.spelpParsingXML(new File("applitest/wilos/application/console/openUP.xml"));
+		Process openup = am.spelpParsingXML(new File("applitest/wilos/application/console/openUP.xml"));
 		//Process openup = am.spelpParsingXML(new File("applitest/wilos/application/console/openup.zip"));
-		am.saveProcess(openup);*/
+		am.saveProcess(openup,wu.getWilosuser_id());
 		
 	}
 	
 	private static void instanciation() {		
-//		 Getback the application context from the spring configuration file
-		ApplicationContext ctx = new ClassPathXmlApplicationContext(
-				"applicationContext.xml");
-
-		ProjectDao pm = (ProjectDao) ctx.getBean("ProjectDao");
-		ProcessDao p = (ProcessDao) ctx.getBean("ProcessDao");
-		ProcessService am = (ProcessService) ctx.getBean("ProcessService");
-
-		String s = am.getProcessDao().getProcessFromGuid("_9llsAQAvEdubGMceRDupFQ").getId();
-		Process scrum = p.getProcess(s);
-
-		Project project = new Project();
-		project.setConcreteName("Wilos");
-		project.setProcess(scrum);
-		pm.saveOrUpdateProject(project);
-
-		am.projectInstanciation(project);
-
-		String s2 = am.getProcessDao().getProcessFromGuid("_0uyGoMlgEdmt3adZL5Dmdw").getId();
-		Process openup = p.getProcess(s2);
-
-		Project project2 = new Project();
-		project2.setConcreteName("IceOpenUP");
-		project2.setProcess(openup);
-		pm.saveOrUpdateProject(project2);
-
-		am.projectInstanciation(project2);
+//		 Notre fabrique SPRING permettant l'acc�s aux beans d�clar�s
+		ApplicationContext factory = new ClassPathXmlApplicationContext("applicationContextTest.xml");
+		// import des processus
+		InitAppliService am = (InitAppliService) factory.getBean("InitAppliService");
+		am.projectInstanciation();
 	}
 	
 	private static void affectation () {
