@@ -243,7 +243,7 @@ public class ProjectAdvancementBean {
 				}
 	
 				// advancement consolidation time calculation
-				currentAdvancedTime = ProjectAdvancementBean.activityAdvancementCalculation(concreteBreakdownElement);
+				currentAdvancedTime = this.activityAdvancementCalculation(concreteBreakdownElement);
 				if (currentAdvancedTime == null) {
 					hm.put("advancementTime", 0);
 				} else {
@@ -273,13 +273,14 @@ public class ProjectAdvancementBean {
 	 * @param cbe
 	 * @return
 	 */
-	public static Double activityAdvancementCalculation(ConcreteBreakdownElement cbe) {
+	public Double activityAdvancementCalculation(ConcreteBreakdownElement cbe) {
 		Double result = 0.0;
 		double remainingTimes = 0.0;
 		double accomplishedTimes = 0.0;
-		HashMap<String, Double> couple = ProjectAdvancementBean.taskAdvancementCalculation(cbe);
+		HashMap<String, Double> couple = this.taskAdvancementCalculation(cbe);
 		remainingTimes = couple.get("remainingTime");
 		accomplishedTimes = couple.get("accomplishedTime");
+		this.logger.debug("### CBD : "+cbe.getConcreteName()+ "/ CP : "+accomplishedTimes+" / RAF : "+remainingTimes);
 		if ((remainingTimes + accomplishedTimes) > 0) {
 			result = accomplishedTimes / (remainingTimes + accomplishedTimes);
 			result = result * 100;
@@ -296,7 +297,7 @@ public class ProjectAdvancementBean {
 	 * @param ctd
 	 * @return
 	 */
-	private static HashMap<String, Double> taskAdvancementCalculation(ConcreteBreakdownElement cbe) {
+	private HashMap<String, Double> taskAdvancementCalculation(ConcreteBreakdownElement cbe) {
 		HashMap<String, Double> coupletmp = new HashMap<String, Double>();
 		HashMap<String, Double> couple = new HashMap<String, Double>();
 		couple.put("remainingTime", 0.0);
@@ -308,7 +309,7 @@ public class ProjectAdvancementBean {
 			ConcreteActivity ca = (ConcreteActivity) cbe;
 			for (Iterator iter = ca.getConcreteBreakdownElements().iterator(); iter.hasNext();) {
 				ConcreteBreakdownElement element = (ConcreteBreakdownElement) iter.next();
-				coupletmp = ProjectAdvancementBean.taskAdvancementCalculation(element);
+				coupletmp = this.taskAdvancementCalculation(element);
 				couple.put("remainingTime", couple.get("remainingTime") + coupletmp.get("remainingTime"));
 				couple.put("accomplishedTime", couple.get("accomplishedTime") + coupletmp.get("accomplishedTime"));
 			}
@@ -317,7 +318,7 @@ public class ProjectAdvancementBean {
 		else {
 			if (cbe instanceof ConcreteTaskDescriptor) {
 				ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) cbe;
-				if (ctd.getRemainingTime() != 0 && ctd.getAccomplishedTime() != 0) {
+				if (ctd.getRemainingTime() != 0 || ctd.getAccomplishedTime() != 0) {
 					couple.put("remainingTime", (double) ctd.getRemainingTime());
 					couple.put("accomplishedTime", (double) ctd.getAccomplishedTime());
 				}

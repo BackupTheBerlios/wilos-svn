@@ -25,6 +25,7 @@ import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 import wilos.presentation.web.project.ProjectAdvancementBean;
+import wilos.presentation.web.tree.TreeBean;
 import wilos.business.services.misc.role.ConcreteRoleInstanciationService;
 
 /**
@@ -112,8 +113,9 @@ public class RolesInstanciationBean {
 	{
 		List<HashMap<String, Object>> tmp = this.displayContent;
 		List<HashMap<String, Object>> resultat = new ArrayList<HashMap<String, Object>>();
-		String intTemp;
-		String occursTemp;
+
+		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
+
 		for (Iterator iter = this.displayContent.iterator(); iter.hasNext();)
 		{
 			HashMap<String, Object> hm = (HashMap<String, Object>) iter.next();
@@ -122,12 +124,18 @@ public class RolesInstanciationBean {
 				HashMap<String, Object> tmpHm = new HashMap<String, Object>();
 				tmpHm.put("id", hm.get("id"));
 				tmpHm.put("nbOccurences", hm.get("nbOccurences"));
+				tmpHm.put("parentId", hm.get("parentId"));
 				
 				this.logger.debug("### Role : "+hm.get("name")+" / Nb occurences : "+hm.get("nbOccurences")+" ###");
 				resultat.add(tmpHm);
 			}
 		}
-		this.concreteRoleInstanciationService.saveInstanciateConcreteRole(resultat);
+		this.concreteRoleInstanciationService.saveInstanciateConcreteRole(resultat, projectId);
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");
+		//tb.rebuildProjectTree();
+		tb.refreshProjectTree();
 	}
 
 	/**
