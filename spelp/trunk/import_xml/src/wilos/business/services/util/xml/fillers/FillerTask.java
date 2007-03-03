@@ -3,7 +3,6 @@ package wilos.business.services.util.xml.fillers;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import wilos.business.services.util.xml.parser.EncodingProcessor;
 import wilos.model.spem2.task.TaskDefinition;
 
 public class FillerTask extends FillerElement

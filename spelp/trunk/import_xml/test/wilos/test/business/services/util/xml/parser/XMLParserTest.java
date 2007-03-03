@@ -9,7 +9,6 @@ import java.util.TreeSet;
 
 import junit.framework.TestCase;
 import wilos.business.services.util.xml.parser.XMLParser;
-import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.checklist.CheckList;
@@ -1457,7 +1456,6 @@ public class XMLParserTest extends TestCase {
 		Process openUpProcess = XMLParser.getProcess(pathOPenUP);
 		Activity inceptionIterationAct = null;
 		Activity manageRequirements = null;
-		RoleDescriptor analyst = null;
 		
 		// First Step, Stop on Inception Iteration
 		Iterator<BreakdownElement> itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
@@ -1523,7 +1521,6 @@ public class XMLParserTest extends TestCase {
 	public void testOpenUPElaborationOrder(){
 		Process openUpProcess = XMLParser.getProcess(pathOPenUP);
 		Activity IterationAct = null;
-		Activity initiateProject = null ;
 		boolean trouve = false ;
 		// First Step, Stop on Inception Iteration
 		Iterator<BreakdownElement> itTopLevelAct = openUpProcess.getBreakdownElements().iterator();

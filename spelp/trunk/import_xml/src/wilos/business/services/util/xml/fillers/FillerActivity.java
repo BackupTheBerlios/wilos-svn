@@ -4,9 +4,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import wilos.model.spem2.activity.Activity;
-import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.element.Element;
-import wilos.model.spem2.task.TaskDefinition;
 
 public class FillerActivity extends FillerWorkBreakDownElement {
 	private static String NodePresentation = "Presentation";

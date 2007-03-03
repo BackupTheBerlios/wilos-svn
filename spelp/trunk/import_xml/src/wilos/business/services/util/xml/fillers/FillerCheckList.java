@@ -9,7 +9,6 @@ import org.w3c.dom.NodeList;
 import wilos.business.services.util.xml.parser.EncodingProcessor;
 import wilos.business.services.util.xml.parser.XMLParser;
 import wilos.model.spem2.checklist.CheckList;
-import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.section.Section;
 
 public class FillerCheckList extends FillerGuidance {

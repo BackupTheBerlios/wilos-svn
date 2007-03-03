@@ -16,14 +16,8 @@ public class XMLParserTestAnalyst extends TestCase {
 	public static File pathOPenUP =new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "sortieEPF.xml");
 	
 	public void testOpenUPInitiateProjectContainsExpectedRoleDescriptors() {
-		HashSet<Process> processes;
-		Iterator<Process> itProc;
 		Iterator<BreakdownElement> itTopLevelAct;
-		Iterator<BreakdownElement> itSecondLevelAct;
-		Activity topLevelActivity;
 		Activity secondLevelActivity;
-		boolean rentreDansInitiateProject;
-		int nbRoleDescriptors;
 		Iterator<BreakdownElement> BdeIterator;
 		BreakdownElement tmpBde;
 		
@@ -44,9 +38,7 @@ public class XMLParserTestAnalyst extends TestCase {
 			while (itTopLevelAct.hasNext()) {
 				secondLevelActivity = (Activity) itTopLevelAct.next();
 				
-				rentreDansInitiateProject = true;
 				BdeIterator = secondLevelActivity.getBreakdownElements().iterator();
-				nbRoleDescriptors = 0;
 				while (BdeIterator.hasNext()) {
 					tmpBde = BdeIterator.next();
 					if (tmpBde instanceof Activity) {

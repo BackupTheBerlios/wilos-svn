@@ -12,11 +12,6 @@ import javax.xml.xpath.XPathFactory;
 
 import org.xml.sax.InputSource;
 
-import sun.io.CharacterEncoding;
-import sun.misc.CharacterEncoder;
-
-import wilos.model.spem2.process.Process;
-
 public class XMLUtils {
 	
 	

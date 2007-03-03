@@ -17,7 +17,7 @@ public class ZIPUtils
 	static final String prefix = "test_" ;
 	
 	private ZipFile zipfile ;
-	private File file ;
+	//private File file ;
 	
 	/**
 	 * ZIPUtils : Object containing an archive
@@ -27,7 +27,7 @@ public class ZIPUtils
 	public ZIPUtils(File file) throws ZipException {
 			try {
 				zipfile = new ZipFile (file);
-				this.file = file ;
+				//this.file = file ;
 			} catch (ZipException e) {
 				zipfile = null ;
 				if (!file.exists() || !e.getMessage().equals("error in opening zip file")){
@@ -112,7 +112,7 @@ public class ZIPUtils
 		BufferedInputStream is = null;
 		if (entry != null){
 			try {
-				String path = zipfile.getName().substring(0,zipfile.getName().lastIndexOf(file.separator)+1)+ prefix + entry.getName();
+				String path = zipfile.getName().substring(0,zipfile.getName().lastIndexOf(File.separator)+1)+ prefix + entry.getName();
 				fileReturned = new File(path);
 			
 				fileReturned.deleteOnExit();

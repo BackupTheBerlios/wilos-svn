@@ -3,7 +3,6 @@ package wilos.business.services.util.xml.fillers;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.role.RoleDefinition;
 
 public class FillerRole extends FillerElement {
