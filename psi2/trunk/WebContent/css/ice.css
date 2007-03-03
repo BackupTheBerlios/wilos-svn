@@ -277,7 +277,9 @@ em {
 }
 
 .contentLayoutGridStyle {
-    left:30%;
+  	width: 100%; /* fixed height of content demos*/
+    height: 200px;
+    border:0px;
 }
 
 .contentLayoutGridStyle td {
