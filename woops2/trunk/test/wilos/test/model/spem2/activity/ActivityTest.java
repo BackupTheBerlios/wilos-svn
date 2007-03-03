@@ -1,9 +1,16 @@
 package wilos.test.model.spem2.activity;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.junit.After;
 import org.junit.Before;
@@ -144,7 +151,7 @@ public class ActivityTest {
 		tmp.setIsPlanned(false);
 		tmp.setHasMultipleOccurrences(false);
 
-		Set<BreakdownElement> set = new HashSet<BreakdownElement>();
+		SortedSet<BreakdownElement> set = new TreeSet<BreakdownElement>();
 		set.add(breakdownElement);
 		set.add(tmp);
 
@@ -200,7 +207,7 @@ public class ActivityTest {
 		tmp.setIsPlanned(false);
 		tmp.setHasMultipleOccurrences(false);
 
-		Set<BreakdownElement> set = new HashSet<BreakdownElement>();
+		SortedSet<BreakdownElement> set = new TreeSet<BreakdownElement>();
 		set.add(breakdownElement);
 		set.add(tmp);
 

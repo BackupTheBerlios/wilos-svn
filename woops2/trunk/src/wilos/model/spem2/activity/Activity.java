@@ -122,7 +122,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 * @param _breakdownElements
 	 *            The set of BreakdownElement to add.
 	 */
-	public void addAllBreakdownElements(Set<BreakdownElement> _breakdownElements) {
+	public void addAllBreakdownElements(SortedSet<BreakdownElement> _breakdownElements) {
 		for(BreakdownElement bde : _breakdownElements){
 			bde.addSuperActivity(this) ;
 		}
@@ -179,7 +179,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 	 *
 	 * @return the breakDownElements.
 	 */
-	public Set<BreakdownElement> getBreakdownElements() {
+	public SortedSet<BreakdownElement> getBreakdownElements() {
 		return this.breakdownElements ;
 	}
 
