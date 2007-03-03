@@ -52,11 +52,17 @@
 	line-height:25px;
 }
 
-#menu { 
+#tree { 
 	width:256px;
 	height:400px;
 	border-right: 2px solid #FFFFFF;  
 	overflow:auto;
+}
+
+#selection{
+	width : 256px;
+	border-right: 2px solid #FFFFFF;
+	overflow:hidden;
 }
 
 #wilos_messages{
@@ -69,4 +75,8 @@
 
 #li{
   list-style-image: url("../images/arrow_messages.gif");
+}
+
+.pGrdPopupButtons {
+    left:30%;
 }

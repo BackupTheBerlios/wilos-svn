@@ -234,8 +234,8 @@
 								<ice:outputText	value="#{msgs['component.project.rolesinstanciation.instancescolumn']}" />
 							</f:facet>
 							<ice:inputText value="#{processRole.nbOccurences}" 
-									readonly="#{processRole.isEditable}" visible="#{processRole.isVisible}"
-									style="font-size:10px; height:10px; width:150px;"/>
+									disabled="#{processRole.isEditable}" visible="#{processRole.isVisible}"
+									style="font-size:10px; height:10px; width:150px; align: center; text-align:right;"/>
 						</ice:column>
 					</ice:dataTable>
 					<ice:commandButton value="test instancier" action="#{RolesInstanciationBean.instanciateConcreteRole}" />
