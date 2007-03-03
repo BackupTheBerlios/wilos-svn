@@ -1,6 +1,5 @@
 package wilos.business.services.misc.role;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -27,7 +26,6 @@ import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.project.Project;
-import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.role.RoleDescriptor;
 
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)

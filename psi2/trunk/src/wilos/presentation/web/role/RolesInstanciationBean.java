@@ -134,7 +134,7 @@ public class RolesInstanciationBean {
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");
-		//tb.rebuildProjectTree();
+		tb.rebuildProjectTree();
 		tb.refreshProjectTree();
 	}
 
@@ -174,7 +174,7 @@ public class RolesInstanciationBean {
 				hm.put("id", bde.getId());
 				hm.put("name", bde.getPresentationName());
 				hm.put("isEditable", act.getHasMultipleOccurrences());
-				hm.put("nbOccurences", new Integer(1));
+				hm.put("nbOccurences", new Integer(0));
 				hm.put("parentId", act.getId());
 				lines.add(hm);
 					
