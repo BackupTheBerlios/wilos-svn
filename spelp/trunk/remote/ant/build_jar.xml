@@ -4,7 +4,7 @@
 	A.GIULIANI
 -->
 <!-- Script for building jar application (without lib)-->
-<project name="Woops2 Core Services Jar Builder (no libs)" default="build.jar" basedir="../">
+<project name="Spelp Core Services Jar Builder (no libs)" default="build.jar" basedir="../">
 
 	<!-- Configure the context path for this application -->
 	<property name="project.name" value="Spelp-core-services" />
