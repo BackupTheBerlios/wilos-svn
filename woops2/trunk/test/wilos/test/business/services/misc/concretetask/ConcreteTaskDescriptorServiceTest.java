@@ -3,6 +3,8 @@ package wilos.test.business.services.misc.concretetask;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
@@ -17,6 +19,7 @@ import wilos.hibernate.misc.project.ProjectDao;
 import wilos.hibernate.misc.wilosuser.ParticipantDao;
 import wilos.hibernate.spem2.role.RoleDescriptorDao;
 import wilos.hibernate.spem2.task.TaskDescriptorDao;
+import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
@@ -214,7 +217,10 @@ public class ConcreteTaskDescriptorServiceTest {
 
 		this.taskDescriptor.addMainRole(roleDescriptor);
 		this.concreteTaskDescriptor.addTaskDescriptor(this.taskDescriptor);
+		this.concreteTaskDescriptor.addConcreteRoleDescriptor(concreteRoleDescriptor) ;
+		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(concreteTaskDescriptor) ;
 		
+		// FIXME NullPointerException
 		this.concreteTaskDescriptorService.affectedConcreteTaskDescriptor(concreteTaskDescriptor, monpar);
 		
 		ConcreteRoleDescriptor res = concreteTaskDescriptor.getMainConcreteRoleDescriptor();
@@ -227,5 +233,42 @@ public class ConcreteTaskDescriptorServiceTest {
 		this.roleDescriptordao.deleteRoleDescriptor(roleDescriptor);
 		this.concreteRoleDescriptorDao.deleteConcreteRoleDescriptor(concreteRoleDescriptor);
 		
+	}
+	
+	@Test
+	public void testRemoveConcreteTaskDescriptor()
+	{
+		Participant monpar = new Participant();
+		this.participantdao.saveOrUpdateParticipant(monpar);
+		
+		this.taskDescriptor = new TaskDescriptor();
+		this.taskDescriptordao.saveOrUpdateTaskDescriptor(this.taskDescriptor);
+		
+		RoleDescriptor roleDescriptor = new RoleDescriptor();
+		this.roleDescriptordao.saveOrUpdateRoleDescriptor(roleDescriptor);
+		
+		ConcreteRoleDescriptor concreteRoleDescriptor = new ConcreteRoleDescriptor();
+		this.concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(concreteRoleDescriptor);
+		
+		concreteRoleDescriptor.addParticipant(monpar);
+		concreteRoleDescriptor.addRoleDescriptor(roleDescriptor);
+
+		this.taskDescriptor.addMainRole(roleDescriptor);
+		this.concreteTaskDescriptor.addTaskDescriptor(this.taskDescriptor);
+		
+		ConcreteActivity superConcreteActivity = new ConcreteActivity() ;
+		this.concreteTaskDescriptor.addSuperConcreteActivity(superConcreteActivity) ;
+		
+		this.concreteTaskDescriptor.addConcreteRoleDescriptor(concreteRoleDescriptor) ;
+		
+		assertTrue(this.taskDescriptor.getConcreteTaskDescriptors().contains(this.concreteTaskDescriptor)) ;
+		assertTrue(concreteRoleDescriptor.getConcreteTaskDescriptors().contains(this.concreteTaskDescriptor)) ;
+		assertNotNull(superConcreteActivity.getActivity()) ;
+		
+		this.concreteTaskDescriptorService.removeConcreteTaskDescriptor(this.concreteTaskDescriptor) ;	
+		
+		assertFalse(this.taskDescriptor.getConcreteTaskDescriptors().contains(this.concreteTaskDescriptor)) ;
+		assertFalse(concreteRoleDescriptor.getConcreteTaskDescriptors().contains(this.concreteTaskDescriptor)) ;
+		assertNull(superConcreteActivity.getActivity()) ;
 	}
 }
