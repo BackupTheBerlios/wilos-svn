@@ -215,9 +215,12 @@
 			PSI2 ONGLET de l'instanciation d'un nouveau concrete role
 			#################################################################################################### -->
 			
-			<ice:panelTab id="panelTab_processRoleInstanciation" label="Instancier vos Rôles">
+			<ice:panelTab id="panelTab_processRoleInstanciation" label="#{msgs['component.project.rolesinstanciation.tabTitle']}">
 				<ice:panelGrid styleClass="contentLayoutGridStyle" id="rolepanelGroup">
-					<ice:dataTable value="#{RolesInstanciationBean.displayContent}" var="processRole" cellpadding="0" columnWidths="30px,600px,150px">
+					<ice:outputText value="#{msgs['component.project.rolesinstanciation.explanation']}"/>
+					<ice:outputText styleClass="propertyLabel" value="#{msgs['component.project.rolesinstanciation.subTitle']}" />
+					
+					<ice:dataTable value="#{RolesInstanciationBean.displayContent}" var="processRole" cellpadding="0" columnWidths="30px,600px,200px">
 						<ice:column>
 							<ice:commandLink value="" actionListener="#{RolesInstanciationBean.toggleSubGroupAction}">
 								<f:param name="roleId" value="#{processRole.id}" />
@@ -239,7 +242,9 @@
 									style="font-size:10px; height:10px; width:150px; align: center; text-align:right;"/>
 						</ice:column>
 					</ice:dataTable>
-					<ice:commandButton value="test instancier" action="#{RolesInstanciationBean.instanciateConcreteRole}" />
+					<ice:commandButton value="#{msgs['component.project.rolesinstanciation.instanciationButton']}" 
+							title="#{msgs['component.project.rolesinstanciation.instanciationButtonTip']}" 
+							action="#{RolesInstanciationBean.instanciateConcreteRole}" />
 				</ice:panelGrid>
 			</ice:panelTab>
 		

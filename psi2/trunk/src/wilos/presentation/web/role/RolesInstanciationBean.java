@@ -98,7 +98,6 @@ public class RolesInstanciationBean {
 				this.indentationContent.clear();
 				this.isExpanded.clear();
 				this.needIndentation = false;
-				
 				List<HashMap<String, Object>> lines = this.retrieveHierarchicalItems(process);
 				this.displayContent.addAll(lines);
 			}
@@ -139,9 +138,15 @@ public class RolesInstanciationBean {
 		
 		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
 		FacesMessage message = new FacesMessage();
-		message.setSummary("OK ROLE");
+		message.setSummary(bundle.getString("component.project.rolesinstanciation.validationMessage"));
 		message.setSeverity(FacesMessage.SEVERITY_ERROR);
 		context.addMessage(null, message);
+		
+		//remise a 0 des nombres d'occurences
+		for (HashMap<String, Object> map : this.displayContent)
+		{
+			map.put("nbOccurences", new Integer(0));
+		}
 	}
 
 	/**
