@@ -246,7 +246,8 @@ public class HTMLViewer extends JFrame {
 	 * downloadAssociatedFileFromRemote
 	 *
 	 */
-	private synchronized void downloadAssociatedFileFromRemote() {
+	private synchronized void downloadAssociatedFileFromRemote(String downloadFile) {
+		String pathToDownload = "";
 		// creation and display the message dialog
 		int choice = JOptionPane.showConfirmDialog(this, "Un document associe a ce guide est disponible. " +
 									"Voulez-vous le telecharger ?", "Information", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
@@ -279,9 +280,10 @@ public class HTMLViewer extends JFrame {
 				// Gestion d'un thread pour cette fenetre pour ne pas etre bloquant sur le reste de l'application
 				// pendant le telechargement
 				
+				pathToDownload = fileChooser.getCurrentDirectory().getName();
 				
 				// TODO
-				Thread currentThread = WizardControler.getInstance().downloadThread();			
+				Thread currentThread = WizardControler.getInstance().downloadThread(downloadFile, pathToDownload);			
 			}
 		}
 		
@@ -308,7 +310,7 @@ public class HTMLViewer extends JFrame {
 		if (e instanceof Guidance) {
 			// download the associated file of the current guidance if exist 
 			if (((Guidance) e).getAttachment() != "") {
-				downloadAssociatedFileFromRemote();
+				downloadAssociatedFileFromRemote(((Guidance) e).getAttachment());
 			}
 			
 		}

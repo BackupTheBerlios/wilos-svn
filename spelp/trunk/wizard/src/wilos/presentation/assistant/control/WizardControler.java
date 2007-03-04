@@ -111,14 +111,14 @@ public class WizardControler {
 	 * downloadTread
 	 * @return
 	 */
-	public synchronized Thread downloadThread (){
+	public synchronized Thread downloadThread (final String file, final String pathFileToDownload){
 		Thread monThread = new Thread (new Runnable(){
 			public void run() {
 					WizardControler.getInstance().connectToServer(this);
 					
 					// Code: appel de la webService pour telecharger
 					// affichage d une fenetre de telechargement
-					DownLoadFrame df = new DownLoadFrame();
+					DownLoadFrame df = new DownLoadFrame(file, pathFileToDownload);
 					
 					
 					
