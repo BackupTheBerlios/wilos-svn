@@ -1,6 +1,7 @@
 package wilos.business.services.spem2.activity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,6 +11,7 @@ import java.util.TreeSet;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import wilos.business.services.misc.concreteactivity.ConcreteActivityService;
 import wilos.business.services.spem2.role.RoleDescriptorService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.hibernate.misc.concreteactivity.ConcreteActivityDao;
@@ -19,7 +21,6 @@ import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.guide.Guidance;
-import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
 
 /**
@@ -39,6 +40,8 @@ public class ActivityService {
 	/*private PhaseService phaseService;
 
 	private IterationService iterationService;*/
+	
+	private ConcreteActivityService concreteActivityService;
 
 	private RoleDescriptorService roleDescriptorService;
 
@@ -49,53 +52,87 @@ public class ActivityService {
 	 * @param _project project for which the activity shall be instanciated
 	 * @param _phase activity to instanciate
 	 */
-	public void activityInstanciation(Project _project, Activity _activity, ConcreteActivity _cact) {
+	public void activityInstanciation(Project _project, Activity _activity, ConcreteActivity _cact, List<HashMap<String, Object>> _list, int _occ) {
 
-		ConcreteActivity cact = new ConcreteActivity();
-
-		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
-		bdes.addAll(_activity.getBreakdownElements());
-
-		if (_activity.getPresentationName() == null)
-			cact.setConcreteName(_activity.getName());
-		else
-			cact.setConcreteName(_activity.getPresentationName());
-
-		cact.addActivity(_activity);
-		cact.setProject(_project);
-		cact.addSuperConcreteActivity(_cact);
-
-		this.concreteActivityDao.saveOrUpdateConcreteActivity(cact);
-		System.out.println("### ConcreteActivity vide sauve");
-
-		for (BreakdownElement bde : bdes ) {
-			/*if (bde instanceof Phase) {
-				Phase ph = (Phase) bde;
-				tmp.add(this.phaseService.phaseInstanciation(_project, ph));
-			} else {
-				if (bde instanceof Iteration) {
-					Iteration it = (Iteration) bde;
-					tmp.add(this.iterationService.iterationInstanciation(_project, it));
+		if (_occ > 0) {
+			for (int i = 1;i <= _occ;i++) {
+				
+				ConcreteActivity cact = new ConcreteActivity();
+		
+				List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
+				bdes.addAll(this.getInstanciableBreakdownElements(_activity));
+		
+				if (_occ > 1) {
+					if (_activity.getPresentationName() == null)
+						cact.setConcreteName(_activity.getName() + "_" + (new Integer(i)).toString());
+					else
+						cact.setConcreteName(_activity.getPresentationName() + "_" + (new Integer(i)).toString());
 				} else {
-					*/if (bde instanceof Activity) {
-						Activity act = (Activity) bde;
-						this.activityInstanciation(_project, act, cact);
+					if (_activity.getPresentationName() == null)
+						cact.setConcreteName(_activity.getName());
+					else
+						cact.setConcreteName(_activity.getPresentationName());
+				}
+		
+				cact.addActivity(_activity);
+				cact.setProject(_project);
+				_cact.setConcreteBreakdownElements(this.concreteActivityService.getConcreteBreakdownElements(_cact));
+				cact.addSuperConcreteActivity(_cact);
+		
+				this.concreteActivityDao.saveOrUpdateConcreteActivity(cact);
+				System.out.println("### ConcreteActivity vide sauve");
+		
+				for (BreakdownElement bde : bdes ) {
+					/*if (bde instanceof Phase) {
+						Phase ph = (Phase) bde;
+						tmp.add(this.phaseService.phaseInstanciation(_project, ph));
 					} else {
-						if (bde instanceof RoleDescriptor) {
-							RoleDescriptor rd = (RoleDescriptor) bde;
-							this.roleDescriptorService.roleDescriptorInstanciation(_project, rd, cact);
+						if (bde instanceof Iteration) {
+							Iteration it = (Iteration) bde;
+							tmp.add(this.iterationService.iterationInstanciation(_project, it));
 						} else {
-							TaskDescriptor td = (TaskDescriptor) bde;
-							this.taskDescriptorService.taskDescriptorInstanciation(_project, td, cact);
-						}
+							*/if (bde instanceof Activity) {
+								Activity act = (Activity) bde;
+								int occ = this.giveNbOccurences(act.getId(), _list);
+								this.activityInstanciation(_project, act, cact, _list, occ);
+							} else {
+								if (bde instanceof TaskDescriptor) {
+									TaskDescriptor td = (TaskDescriptor) bde;
+									int occ = this.giveNbOccurences(td.getId(), _list);
+									this.taskDescriptorService.taskDescriptorInstanciation(_project, td, cact, occ);
+								}/* else {
+									RoleDescriptor rd = (RoleDescriptor) bde;
+									int occ = this.giveNbOccurences(rd.getId(), _list);
+									this.roleDescriptorService.roleDescriptorInstanciation(_project, rd, cact, occ);
+								}*/
+							}
+						//}
 					//}
-				//}
+				}
+		
+				this.concreteActivityDao.saveOrUpdateConcreteActivity(cact);
+				System.out.println("### Activity update");
 			}
 		}
-
-		this.concreteActivityDao.saveOrUpdateConcreteActivity(cact);
-		System.out.println("### Activity update");
-
+	}
+	
+	/**
+	 * 
+	 * @param _id
+	 * @param list
+	 * @return
+	 */
+	private int giveNbOccurences(String _id, List<HashMap<String, Object>> list) {
+		
+		int nb = 1;
+		
+		for (HashMap<String, Object> hashMap : list) {
+			if (((String) hashMap.get("id")).equals(_id)) {
+				nb = ((Integer) hashMap.get("nbOccurences")).intValue();
+				break;
+			}
+		}
+		return nb;
 	}
 	
 	/**
@@ -278,5 +315,20 @@ public class ActivityService {
 	 */
 	public void setTaskDescriptorService(TaskDescriptorService taskDescriptorService) {
 		this.taskDescriptorService = taskDescriptorService;
+	}
+
+	/**
+	 * @return the concreteActivityService
+	 */
+	public ConcreteActivityService getConcreteActivityService() {
+		return this.concreteActivityService;
+	}
+
+	/**
+	 * @param _concreteActivityService the concreteActivityService to set
+	 */
+	public void setConcreteActivityService(
+			ConcreteActivityService _concreteActivityService) {
+		this.concreteActivityService = _concreteActivityService;
 	}
 }

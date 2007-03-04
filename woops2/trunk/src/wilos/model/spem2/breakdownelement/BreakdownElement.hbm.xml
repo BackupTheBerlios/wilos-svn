@@ -8,7 +8,7 @@
 	<joined-subclass
 		name="wilos.model.spem2.breakdownelement.BreakdownElement"
 		extends="wilos.model.spem2.element.Element"
-		table="breakdownelement" lazy="true">
+		table="breakdownelement" lazy="false">
 		
 		<key column="breakdownelement_id"></key>
 
@@ -34,7 +34,7 @@
 		</set>
 
 		<!-- Associations -->
-		<set name="superActivities" table="nesting" lazy="true">
+		<set name="superActivities" table="nesting" lazy="false">
 			<cache usage="read-write"/>
 			<key column="breakdownelement_id"></key>
 			<many-to-many class="wilos.model.spem2.activity.Activity"

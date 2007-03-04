@@ -13,14 +13,18 @@ import java.util.SortedSet;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
+import wilos.business.services.misc.project.ProjectService;
+import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.activity.ActivityService;
 import wilos.business.services.spem2.process.ProcessService;
+import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.process.Process;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 import wilos.presentation.web.project.ProjectAdvancementBean;
+import wilos.presentation.web.tree.TreeBean;
 
 /**
  * @author Sebastien
@@ -39,8 +43,12 @@ public class ExpTableBean {
 	protected HashMap<String, Boolean> isExpanded = new HashMap<String, Boolean>();
 
 	private ProcessService processService;
+	
+	private ProjectService projectService;
 
 	private ActivityService activityService;
+	
+	private WebSessionService webSessionService;
 
 	private boolean isVisible = true;
 	
@@ -50,6 +58,24 @@ public class ExpTableBean {
 	
 	public ExpTableBean() {
 		this.expTableContent = new ArrayList<HashMap<String, Object>>();
+	}
+	
+	public void saveProjectInstanciation() {
+		
+		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
+		if (projectId != null) {
+			Project project = projectService.getProject(projectId);
+			if (project != null) {
+				Process process = processService.getProcessDao().getProcessFromGuid(selectedProcessGuid);
+				if (process != null) {
+					processService.projectInstanciation(project, process, expTableContent);
+				}
+			}
+		}
+		FacesContext context = FacesContext.getCurrentInstance();
+		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");
+		tb.rebuildProjectTree();
+
 	}
 
 	/**
@@ -253,6 +279,20 @@ public class ExpTableBean {
 	}
 
 	/**
+	 * @return the webSessionService
+	 */
+	public WebSessionService getWebSessionService() {
+		return this.webSessionService;
+	}
+
+	/**
+	 * @param _webSessionService the webSessionService to set
+	 */
+	public void setWebSessionService(WebSessionService _webSessionService) {
+		this.webSessionService = _webSessionService;
+	}
+
+	/**
 	 * @return the processService
 	 */
 	public ProcessService getProcessService() {
@@ -265,6 +305,20 @@ public class ExpTableBean {
 	 */
 	public void setProcessService(ProcessService _processService) {
 		this.processService = _processService;
+	}
+
+	/**
+	 * @return the projectService
+	 */
+	public ProjectService getProjectService() {
+		return this.projectService;
+	}
+
+	/**
+	 * @param _projectService the projectService to set
+	 */
+	public void setProjectService(ProjectService _projectService) {
+		this.projectService = _projectService;
 	}
 
 	/**

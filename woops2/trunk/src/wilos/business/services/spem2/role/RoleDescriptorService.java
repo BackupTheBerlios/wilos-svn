@@ -74,22 +74,33 @@ public class RoleDescriptorService {
 	 * @param _project
 	 * @param _rd
 	 */
-	public void roleDescriptorInstanciation (Project _project, RoleDescriptor _rd, ConcreteActivity _cact) {
+	public void roleDescriptorInstanciation (Project _project, RoleDescriptor _rd, ConcreteActivity _cact, int _occ) {
 
-		ConcreteRoleDescriptor crd = new ConcreteRoleDescriptor();
-
-		if (_rd.getPresentationName() == null)
-			crd.setConcreteName(_rd.getName()) ;
-		else
-			crd.setConcreteName(_rd.getPresentationName());
-
-		crd.addRoleDescriptor(_rd);
-		crd.setProject(_project);
-		crd.addSuperConcreteActivity(_cact);
-
-		this.concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(crd);
-		System.out.println("### ConcreteRoleDescriptor sauve");
-
+		if (_occ > 0) {
+			for (int i = 1;i <= _occ;i++) {
+				
+				ConcreteRoleDescriptor crd = new ConcreteRoleDescriptor();
+		
+				if (_occ > 1) {
+					if (_rd.getPresentationName() == null)
+						crd.setConcreteName(_rd.getName() + "_" + (new Integer(i)).toString());
+					else
+						crd.setConcreteName(_rd.getPresentationName() + "_" + (new Integer(i)).toString());
+				} else {
+					if (_rd.getPresentationName() == null)
+						crd.setConcreteName(_rd.getName());
+					else
+						crd.setConcreteName(_rd.getPresentationName());
+				}
+		
+				crd.addRoleDescriptor(_rd);
+				crd.setProject(_project);
+				crd.addSuperConcreteActivity(_cact);
+		
+				this.concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(crd);
+				System.out.println("### ConcreteRoleDescriptor sauve");
+			}
+		}
 	}
 
 	public RoleDescriptor getRoleDescriptorById(String _id)

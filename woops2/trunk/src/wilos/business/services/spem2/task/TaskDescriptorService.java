@@ -26,21 +26,40 @@ public class TaskDescriptorService {
 
 	private TaskDescriptorDao taskDescriptorDao;
 
-	public void taskDescriptorInstanciation (Project _project, TaskDescriptor _td, ConcreteActivity _cact) {
+	/**
+	 * 
+	 * @param _project
+	 * @param _td
+	 * @param _cact
+	 * @param _occ
+	 */
+	public void taskDescriptorInstanciation (Project _project, TaskDescriptor _td, ConcreteActivity _cact, int _occ) {
 
-		ConcreteTaskDescriptor ctd = new ConcreteTaskDescriptor();
-
-		if (_td.getPresentationName() == null)
-			ctd.setConcreteName(_td.getName()) ;
-		else
-			ctd.setConcreteName(_td.getPresentationName());
-
-		ctd.addTaskDescriptor(_td);
-		ctd.setProject(_project);
-		ctd.addSuperConcreteActivity(_cact);
-
-		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(ctd);
-		System.out.println("### ConcreteTaskDescriptor sauve");
+		if (_occ > 0) {
+			for (int i = 1;i <= _occ;i++) {
+				
+				ConcreteTaskDescriptor ctd = new ConcreteTaskDescriptor();
+		
+				if (_occ > 1) {
+					if (_td.getPresentationName() == null)
+						ctd.setConcreteName(_td.getName() + "_" + (new Integer(i)).toString());
+					else
+						ctd.setConcreteName(_td.getPresentationName() + "_" + (new Integer(i)).toString());
+				} else {
+					if (_td.getPresentationName() == null)
+						ctd.setConcreteName(_td.getName());
+					else
+						ctd.setConcreteName(_td.getPresentationName());
+				}
+		
+				ctd.addTaskDescriptor(_td);
+				ctd.setProject(_project);
+				ctd.addSuperConcreteActivity(_cact);
+		
+				this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(ctd);
+				System.out.println("### ConcreteTaskDescriptor sauve");
+			}
+		}
 
 	}
 	

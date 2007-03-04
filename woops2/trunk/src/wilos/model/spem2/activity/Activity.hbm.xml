@@ -12,7 +12,7 @@
 		<key column="activity_id"></key>
 		
 		<!-- Associations -->
-		<set name="breakdownElements" sort="natural" table="nesting" lazy="true"
+		<set name="breakdownElements" sort="natural" table="nesting" lazy="false"
 				inverse="true">
 			<cache usage="read-write"/>
 			<key column="superactivity_id"></key>
@@ -22,7 +22,7 @@
 		</set>
 		
 		<!-- ConcreteActivities -->
-		<set name="concreteActivities" lazy="true">
+		<set name="concreteActivities" lazy="false">
 			<cache usage="read-write"/>
 			<key column="activity_id"></key>
 			<one-to-many class="wilos.model.misc.concreteactivity.ConcreteActivity" />

@@ -2,6 +2,7 @@ package wilos.business.services.spem2.process;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -781,40 +782,67 @@ public class ProcessService {
 	 * @param id_process
 	 * @param id_project
 	 */
-	public void projectInstanciation(Project _project) {
+	public void projectInstanciation(Project _project, Process _process, List<HashMap<String, Object>> list) {
 
-		Process p = this.processDao.getProcess(_project.getProcess().getId());
+		//Process p = this.processDao.getProcess(_project.getProcess().getId());
 
 		// elements of collection getting
-		Set<BreakdownElement> forInstanciation = this.activityService.getInstanciableBreakdownElements(p);
+		Set<BreakdownElement> forInstanciation = this.activityService.getInstanciableBreakdownElements(_process);
 
 		for (BreakdownElement bde : forInstanciation) {
 			if (bde instanceof Phase) {
 				Phase ph = (Phase) bde;
-				this.phaseService.phaseInstanciation(_project, ph, _project);
+				int occ = this.giveNbOccurences(ph.getId(), list);
+				this.phaseService.phaseInstanciation(_project, ph, _project, list, occ);
 			} else {
 				if (bde instanceof Iteration) {
 					Iteration it = (Iteration) bde;
-					this.iterationService.iterationInstanciation(_project, it, _project);
+					int occ = this.giveNbOccurences(it.getId(), list);
+					this.iterationService.iterationInstanciation(_project, it, _project, list, occ);
 				} else {
 					if (bde instanceof Activity) {
 						Activity act = (Activity) bde;
-						this.activityService.activityInstanciation(_project, act, _project);
+						int occ = this.giveNbOccurences(act.getId(), list);
+						this.activityService.activityInstanciation(_project, act, _project, list, occ);
 					} else {
-						if (bde instanceof RoleDescriptor) {
-							RoleDescriptor rd = (RoleDescriptor) bde;
-							this.roleDescriptorService.roleDescriptorInstanciation(_project, rd, _project);
-						} else {
+						if (bde instanceof TaskDescriptor) {
 							TaskDescriptor td = (TaskDescriptor) bde;
-							this.taskDescriptorService.taskDescriptorInstanciation(_project, td, _project);
-						}
+							int occ = this.giveNbOccurences(td.getId(), list);
+							this.taskDescriptorService.taskDescriptorInstanciation(_project, td, _project, occ);
+						}/* else {
+							RoleDescriptor rd = (RoleDescriptor) bde;
+							int occ = this.giveNbOccurences(rd.getId(), list);
+							this.roleDescriptorService.roleDescriptorInstanciation(_project, rd, _project, occ);
+						}*/
 					}
 				}
 			}
 		}
+		
+		_project.setProcess(_process);
 
 		this.projectDao.saveOrUpdateProject(_project);
 		System.out.println("### Project update");
+	}
+	
+	/**
+	 * 
+	 * @param _id
+	 * @param list
+	 * @return
+	 */
+	private int giveNbOccurences(String _id, List<HashMap<String, Object>> list) {
+		
+		int nb = 1;
+		
+		for (HashMap<String, Object> hashMap : list) {
+			if (((String) hashMap.get("id")).equals(_id)) {
+				nb = ((Integer) hashMap.get("nbOccurences")).intValue();
+				break;
+			}
+		}
+		
+		return nb;
 	}
 
 	/**

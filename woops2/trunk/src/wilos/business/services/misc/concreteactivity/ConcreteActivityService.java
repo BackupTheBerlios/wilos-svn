@@ -1,17 +1,41 @@
 package wilos.business.services.misc.concreteactivity;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import wilos.hibernate.misc.concreteactivity.ConcreteActivityDao;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 /**
  * 
  * 	@author Padawan
  *	
  */
+@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class ConcreteActivityService {
 
 	private ConcreteActivityDao concreteActivityDao;
+	
+	/**
+	 *
+	 * @param _act
+	 * @return
+	 */
+	public Set<ConcreteBreakdownElement> getConcreteBreakdownElements(ConcreteActivity _cact) {
+		
+		Set<ConcreteBreakdownElement> tmp = new HashSet<ConcreteBreakdownElement>();
+		
+		this.concreteActivityDao.getSessionFactory().getCurrentSession().saveOrUpdate(_cact);
+		
+		for (ConcreteBreakdownElement cbde : _cact.getConcreteBreakdownElements()) {
+			tmp.add(cbde);
+		}
+		return tmp;
+	}
 	
 	/**
 	 * Allows to save the concrete activity which passed in parameters

@@ -28,7 +28,7 @@
 		</many-to-one>
 
 		<!-- Associations -->
-		<set name="superConcreteActivities" table="concretenesting" lazy="true">
+		<set name="superConcreteActivities" table="concretenesting" lazy="false">
 			<cache usage="read-write"/>
 			<key column="concretebreakdownelement_id"></key>
 			<many-to-many class="wilos.model.misc.concreteactivity.ConcreteActivity"

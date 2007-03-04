@@ -11,7 +11,7 @@
 		table="iteration" lazy="true">
 		<key column="iteration_id"></key>
 		
-		<set name="concreteIterations" lazy="true">
+		<set name="concreteIterations" lazy="false">
 			<cache usage="read-write"/>
 			<key column="iteration_id" />
 			<one-to-many class="wilos.model.misc.concreteiteration.ConcreteIteration"></one-to-many>
