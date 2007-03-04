@@ -174,11 +174,11 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 			ConcreteRoleDescriptor crd = this.concreteRoleDescriptorService
 					.getConcreteRoleDescriptorById(tmpListeRd.getId());
 			if (crd.getParticipant() == null) {
-				return false;
+				afficher = false;
 			} else {
 				if (crd.getParticipant().getWilosuser_id().equals(
 						participant.getWilosuser_id())) {
-					afficher = true;
+					return true;
 				}
 			}
 

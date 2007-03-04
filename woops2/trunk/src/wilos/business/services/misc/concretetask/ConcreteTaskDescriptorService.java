@@ -142,12 +142,14 @@ public class ConcreteTaskDescriptorService {
 		for (ConcreteRoleDescriptor tmpListeRd : listeRd) {
 
 			ConcreteRoleDescriptor crd = this.concreteRoleDescriptorService.getConcreteRoleDescriptorById(tmpListeRd.getId());
-			logger.debug("idddddddd "+crd.getParticipant().getWilosuser_id());
-			if(crd.getParticipant().getWilosuser_id().equals(_user.getWilosuser_id()))
+			//logger.debug("idddddddd "+crd.getParticipant().getWilosuser_id());
+			if(crd.getParticipant() != null)
 			{
-				concreteRoleDescriptor = tmpListeRd;
+				if(crd.getParticipant().getWilosuser_id().equals(_user.getWilosuser_id()))
+				{
+					concreteRoleDescriptor = tmpListeRd;
+				}
 			}
-
 		}
 		ConcreteRoleDescriptor crd = this.concreteRoleDescriptorService.getConcreteRoleDescriptorById(concreteRoleDescriptor.getId());
 		
