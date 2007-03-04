@@ -1452,6 +1452,24 @@ background-image:url("../images/xpwilos/tab-over.gif");
 }
 
 /*
+   Classes for the output progress bar indeterminate
+*/
+
+.iceOutputProgressIndeterminateActiveClass {
+    background-color: #EFEFEF;
+    background-image: url( ../images/xpwilos/in_progress.gif );
+    background-position: center;
+    background-repeat: repeat-x;
+}
+
+.iceOutputProgressIndeterminateInactiveClass {
+    background-color: #EFEFEF;
+    background-image: url( ../images/xpwilos/in_progress_inactive.gif );
+    background-position: center;
+    background-repeat: repeat-x;
+}
+
+/*
 --------------- autoComplete classes ------
 */
 
@@ -1819,26 +1837,6 @@ background-image:url("../images/xpwilos/tab-over.gif");
     height: auto;
     background-color: #DDDDDD;
 }
-
-/*
-   Classes for the output progress bar
-*/
-
-.iceOutputProgressIndeterminateActiveClass {
-    background-color: #EFEFEF;
-    background-image: url( css-images/in_progress.gif );
-    background-position: center;
-    background-repeat: repeat-x;
-}
-
-.iceOutputProgressIndeterminateInactiveClass {
-    background-color: #EFEFEF;
-    background-image: url( css-images/in_progress_inactive.gif );
-    background-position: center;
-    background-repeat: repeat-x;
-}
-
-
 
 /* XP Disabled styles CSS Document  v1.0 mar 31 2006 */
 

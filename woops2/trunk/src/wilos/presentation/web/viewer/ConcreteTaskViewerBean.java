@@ -1,6 +1,5 @@
 package wilos.presentation.web.viewer;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -19,12 +18,9 @@ import wilos.business.services.spem2.role.RoleDescriptorService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
-import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
-import wilos.presentation.web.template.MenuBean;
-import wilos.presentation.web.tree.WilosObjectNode;
 import wilos.utils.Constantes.State;
 
 public class ConcreteTaskViewerBean extends ViewerBean {
