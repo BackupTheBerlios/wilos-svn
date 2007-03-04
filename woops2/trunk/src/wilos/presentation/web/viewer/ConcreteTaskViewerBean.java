@@ -1,5 +1,6 @@
 package wilos.presentation.web.viewer;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -18,9 +19,12 @@ import wilos.business.services.spem2.role.RoleDescriptorService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
+import wilos.presentation.web.template.MenuBean;
+import wilos.presentation.web.tree.WilosObjectNode;
 import wilos.utils.Constantes.State;
 
 public class ConcreteTaskViewerBean extends ViewerBean {
@@ -235,16 +239,36 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		super.refreshProjectTable();
 	}
 
-	public void removeActionListener(ActionEvent event) {
+/*	public void removeActionListener(ActionEvent event) {
 		if (!this.getChangeButtonIsDisabled() && (this.concreteTaskDescriptor.getState().equals(State.CREATED) || this.concreteTaskDescriptor.getState().equals(State.READY)));
-		{this.concreteTaskDescriptorService
+		{
+			this.concreteTaskDescriptorService
 				.removeConcreteTaskDescriptor(this.concreteTaskDescriptor);
 
-		// Refresh components.
-		super.refreshProjectTree();
-		// afficher la page du projet
+			// Refresh components.
+			super.refreshProjectTree();
+			
+			// afficher la page du projet
+			FacesContext context = FacesContext.getCurrentInstance();
+			MenuBean mb = (MenuBean) context.getApplication().getVariableResolver()
+					.resolveVariable(context, "menu");
+			
+			HashMap<String, Object> treeMap = new HashMap<String, Object>();
+			
+			ProjectViewerBean p = (ProjectViewerBean) context
+			.getApplication().getVariableResolver()
+			.resolveVariable(context,
+					WilosObjectNode.PROJECTNODE + "Bean");
+
+			// recover the object in the HashMap for the viewer
+			Project proj = (Project) treeMap.get(
+					super.getWebSessionService()
+					.getAttribute(WebSessionService.PROJECT_ID));
+			p.setProject(proj);
+
+			mb.changePage(WilosObjectNode.PROJECTNODE);
 		}
-	}
+	}*/
 	
 	public ConcreteTaskDescriptor getConcreteTaskDescriptor() {
 		return concreteTaskDescriptor;
