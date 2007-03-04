@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.SortedSet;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
@@ -125,8 +127,6 @@ public class RolesInstanciationBean {
 				tmpHm.put("id", hm.get("id"));
 				tmpHm.put("nbOccurences", hm.get("nbOccurences"));
 				tmpHm.put("parentId", hm.get("parentId"));
-				
-				this.logger.debug("### Role : "+hm.get("name")+" / Nb occurences : "+hm.get("nbOccurences")+" ###");
 				resultat.add(tmpHm);
 			}
 		}
@@ -136,6 +136,12 @@ public class RolesInstanciationBean {
 		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");
 		tb.rebuildProjectTree();
 		tb.refreshProjectTree();
+		
+		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
+		FacesMessage message = new FacesMessage();
+		message.setSummary("OK ROLE");
+		message.setSeverity(FacesMessage.SEVERITY_ERROR);
+		context.addMessage(null, message);
 	}
 
 	/**

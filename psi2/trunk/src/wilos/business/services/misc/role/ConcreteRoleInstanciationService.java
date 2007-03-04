@@ -29,85 +29,75 @@ import wilos.model.misc.project.Project;
 import wilos.model.spem2.role.RoleDescriptor;
 
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-public class ConcreteRoleInstanciationService
-{
+public class ConcreteRoleInstanciationService {
+	
 	//PROCESS SERVICES
 	private RoleDescriptorService roleDescriptorService;
+
 	private ActivityService activityService;
+
 	private BreakdownElementService breakdownElementService;
-	
+
 	//CONCRETE SERVICES
 	private ConcreteRoleDescriptorService concreteRoleDescriptorService;
+
 	private ConcreteRoleDescriptorDao concreteRoleDescriptorDao;
+
 	private ConcreteActivityService concreteActivityService;
+
 	private ConcreteBreakdownElementService concreteBreakdownElementService;
+
 	private ProjectService projectService;
 
 	//OTHERS
 	private WebSessionService webSessionService;
+
 	private ConcreteRoleDescriptor concreteRoleDescriptor;
-	
-	public final Log logger = LogFactory.getLog(this.getClass()) ;
-	
+
+	public final Log logger = LogFactory.getLog(this.getClass());
+
 	/**
 	 * Constructor 
 	 *
 	 */
-	public ConcreteRoleInstanciationService()
-	{
-		this.concreteRoleDescriptor=new ConcreteRoleDescriptor();
+	public ConcreteRoleInstanciationService() {
+		this.concreteRoleDescriptor = new ConcreteRoleDescriptor();
 	}
-	
+
 	/**
 	 * 
 	 * @param liste
 	 */
-	/*
-	OK- Recupere le parent id de la hashMap
-	- je v cherché ds concrete activity service la concrete qui reference ce parentId
-	- donc j'ai le concrete qu'il faut
-	- je fais setSuperConcreteActivitues(set(maConcreteActivity))
-	*/
-	@ Transactional (readOnly = false)
+	@Transactional(readOnly = false)
 	@SuppressWarnings("unchecked")
-	public void saveInstanciateConcreteRole(List<HashMap<String, Object>> roleDescriptorsToInstanciate, String projectId)
-	{
+	public void saveInstanciateConcreteRole(List<HashMap<String, Object>> roleDescriptorsToInstanciate, String projectId) {
 		Project project = this.projectService.getProject(projectId);
-		//this.logger.debug("### Projet : "+project.getConcreteName()+" "+project.getId());
 
-		for (Iterator iter = roleDescriptorsToInstanciate.iterator(); iter.hasNext();)
-		{
+		for (Iterator iter = roleDescriptorsToInstanciate.iterator(); iter.hasNext();) {
 			HashMap<String, Object> hm = (HashMap<String, Object>) iter.next();
 
-			String parentActivityId = (String)hm.get("parentId");
-			int nbOccurence = (Integer)hm.get("nbOccurences");
-			
-			//creation de ls liste des concrete activity ou il faudra ajouter le role
+			String parentActivityId = (String) hm.get("parentId");
+			int nbOccurence = (Integer) hm.get("nbOccurences");
+
+			//creation de ls liste des concrete activity ou il faudra ajouter le nouveau role
 			Set<ConcreteBreakdownElement> concretesActivitiesToModifiy = getConcreteActivitiesToModify(project, parentActivityId);
-			for (ConcreteBreakdownElement element : concretesActivitiesToModifiy)
-			{
-				for (int i=0; i<nbOccurence; i++)
-				{
-					this.logger.debug("### roleId : "+hm.get("id")+" / Activité ou il faut l'insérer : "+element.getConcreteName());
+			for (ConcreteBreakdownElement element : concretesActivitiesToModifiy) {
+				for (int i = 0; i < nbOccurence; i++) {
 					this.concreteRoleDescriptor = new ConcreteRoleDescriptor();
-					
-					RoleDescriptor r = this.roleDescriptorService.getRoleDescriptorById((String)hm.get("id"));
-					/*Set<Activity> set = this.breakdownElementService.getSuperActivities(r);
-					for (Activity activity : set) {
-						this.logger.debug("### RoleDescriptor : "+r.getPresentationName()+" / SuperActivity : "+activity.getPresentationName()+" ###");
-					}*/
+					RoleDescriptor r = this.roleDescriptorService.getRoleDescriptorById((String) hm.get("id"));
+
 					this.concreteRoleDescriptor.setParticipant(null);
 					this.concreteRoleDescriptor.setProject(project);
 					this.concreteRoleDescriptor.setConcreteName(r.getPresentationName());
 					this.concreteRoleDescriptor.setRoleDescriptor(r);
-					//this.concreteRoleDescriptor.setConcreteTaskDescriptors(arg0)
-					
-					HashSet<ConcreteActivity> superConcreteActivities = new HashSet<ConcreteActivity>();
-					superConcreteActivities.add((ConcreteActivity)element);
-					this.concreteRoleDescriptor.setSuperConcreteActivities(superConcreteActivities);
-					
+					this.concreteRoleDescriptor.addSuperConcreteActivity((ConcreteActivity) element);
 					this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao().saveOrUpdateConcreteRoleDescriptor(this.concreteRoleDescriptor);
-					this.logger.debug("Nouveau Role : "+this.concreteRoleDescriptor.getConcreteName()+"/ ID : "+this.concreteRoleDescriptor.getId());
+
+					ConcreteActivity concreteactivity = this.concreteActivityService.getConcreteActivity(element.getId());
+					concreteactivity.addConcreteBreakdownElement(this.concreteRoleDescriptor);
+					this.concreteActivityService.saveConcreteActivity(concreteactivity);
+
+					this.logger.debug("Nouveau Role : " + this.concreteRoleDescriptor.getConcreteName() + "/ Dans l'activité : " + concreteactivity.getConcreteName());
 				}
 			}
 		}
@@ -140,11 +130,20 @@ public class ConcreteRoleInstanciationService
 							}
 						}
 					} else {
-						ConcreteActivity concreteActivity = (ConcreteActivity) concreteBreakdownElement;
+						if (concreteBreakdownElement instanceof Project) {
+							Project concreteProcess = (Project) concreteBreakdownElement;
+							if (concreteProcess.getProcess() != null) {
+								if (concreteProcess.getProcess().getId().equals(parentActivityId)) {
+									concretesActivitiesToModifiy.add(concreteProcess);
+								}
+							}
+						} else {
+							ConcreteActivity concreteActivity = (ConcreteActivity) concreteBreakdownElement;
 
-						if (concreteActivity.getActivity() != null) {
-							if (concreteActivity.getActivity().getId().equals(parentActivityId)) {
-								concretesActivitiesToModifiy.add(concreteActivity);
+							if (concreteActivity.getActivity() != null) {
+								if (concreteActivity.getActivity().getId().equals(parentActivityId)) {
+									concretesActivitiesToModifiy.add(concreteActivity);
+								}
 							}
 						}
 
@@ -294,6 +293,5 @@ public class ConcreteRoleInstanciationService
 	public void setConcreteBreakdownElementService(ConcreteBreakdownElementService concreteBreakdownElementService) {
 		this.concreteBreakdownElementService = concreteBreakdownElementService;
 	}
-
 
 }

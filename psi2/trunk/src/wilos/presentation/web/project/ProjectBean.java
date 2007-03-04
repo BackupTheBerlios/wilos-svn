@@ -138,18 +138,17 @@ public class ProjectBean {
 			} else {
 				message.setSummary(bundle.getString("component.projectcreate.success"));
 			}
-
 			message.setSeverity(FacesMessage.SEVERITY_INFO);
-			facesContext.addMessage(null, message);
+			
+			//return on the projectlist page
+			FacesContext context = FacesContext.getCurrentInstance();
+			MenuBean mb = (MenuBean) context.getApplication().getVariableResolver().resolveVariable(context, "menu");
+			mb.getSelectedPanel().setTemplateNameForARole("projectList");
+			
 		}
+		facesContext.addMessage(null, message);
 		this.projectModification = false;
 		this.project = new Project();
-		
-		//return on the projectlist page
-		FacesContext context = FacesContext.getCurrentInstance();
-		MenuBean mb = (MenuBean) context.getApplication().getVariableResolver().resolveVariable(context, "menu");
-		mb.getSelectedPanel().setTemplateNameForARole("projectList");
-		
 		return url;
 	}
 
