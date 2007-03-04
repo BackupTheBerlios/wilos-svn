@@ -127,7 +127,6 @@ public class ProcessBean {
 		
 		if (project.getProcess() == null) {
 			this.readOnly = false;
-			this.selectedProcessGuid = "default";
 		} else {
 			this.readOnly = true;
 			this.isVisibleExpTable = true;
