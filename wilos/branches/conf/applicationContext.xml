@@ -507,6 +507,7 @@
 		class="wilos.business.services.spem2.activity.ActivityService">
 		<property name="activityDao" ref="ActivityDao" />
 		<property name="concreteActivityDao" ref="ConcreteActivityDao" />
+		<property name="concreteActivityService" ref="ConcreteActivityService" />
 		<!-- <property name="phaseService" ref="PhaseService" />
 		<property name="iterationService" ref="IterationService" />-->
 		<property name="roleDescriptorService" ref="RoleDescriptorService" />
@@ -541,6 +542,7 @@
 		class="wilos.business.services.spem2.phase.PhaseService">
 		<property name="concretePhaseDao" ref="ConcretePhaseDao" />
 		<property name="activityService" ref="ActivityService" />
+		<property name="concreteActivityService" ref="ConcreteActivityService" />
 		<property name="iterationService" ref="IterationService" />
 		<property name="roleDescriptorService" ref="RoleDescriptorService" />
 		<property name="taskDescriptorService" ref="TaskDescriptorService" />
@@ -550,6 +552,7 @@
 		class="wilos.business.services.spem2.iteration.IterationService">
 		<property name="concreteIterationDao" ref="ConcreteIterationDao" />
 		<property name="activityService" ref="ActivityService" />
+		<property name="concreteActivityService" ref="ConcreteActivityService" />
 		<!-- <property name="phaseService" ref="PhaseService" />-->
 		<property name="roleDescriptorService" ref="RoleDescriptorService" />
 		<property name="taskDescriptorService" ref="TaskDescriptorService" />
