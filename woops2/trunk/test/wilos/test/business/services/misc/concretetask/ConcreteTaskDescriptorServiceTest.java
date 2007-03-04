@@ -271,4 +271,28 @@ public class ConcreteTaskDescriptorServiceTest {
 		assertFalse(concreteRoleDescriptor.getConcreteTaskDescriptors().contains(this.concreteTaskDescriptor)) ;
 		assertNull(superConcreteActivity.getActivity()) ;
 	}
+	
+	@Test
+	public void testDissociateConcreteTaskDescriptor() {
+		Participant parti = new Participant();
+		parti.setName("bob");
+		this.participantdao.saveOrUpdateParticipant(parti);
+		
+		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
+		
+		ConcreteRoleDescriptor crd = new ConcreteRoleDescriptor();
+		crd.addConcreteTaskDescriptor(this.concreteTaskDescriptor);
+		crd.addParticipant(parti);
+		this.concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(crd);
+		
+		parti.addConcreteRoleDescriptor(crd);
+		this.participantdao.saveOrUpdateParticipant(parti);
+		
+		this.concreteTaskDescriptor.setMainConcreteRoleDescriptor(crd);
+		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(this.concreteTaskDescriptor);
+		
+		this.concreteTaskDescriptorService.dissociateConcreteTaskDescriptor(this.concreteTaskDescriptor);
+		
+		assertTrue(crd.getConcreteTaskDescriptors().size() == 0);
+	}
 }
