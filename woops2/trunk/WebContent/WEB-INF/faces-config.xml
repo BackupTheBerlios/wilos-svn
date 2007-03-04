@@ -496,8 +496,16 @@
 			<value>#{ProcessService}</value>
 		</managed-property>
 		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+		<managed-property>
 			<property-name>activityService</property-name>
 			<value>#{ActivityService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
 		</managed-property>
 	</managed-bean>
 
