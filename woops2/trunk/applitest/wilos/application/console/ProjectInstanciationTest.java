@@ -27,7 +27,7 @@ public class ProjectInstanciationTest {
 		project.setProcess(scrum);
 		pm.saveOrUpdateProject(project);
 
-		am.projectInstanciation(project);
+		//am.projectInstanciation(project);
 
 		String s2 = am.getProcessDao().getProcessFromGuid("_0uyGoMlgEdmt3adZL5Dmdw").getId();
 		Process openup = p.getProcess(s2);
@@ -37,6 +37,6 @@ public class ProjectInstanciationTest {
 		project2.setProcess(openup);
 		pm.saveOrUpdateProject(project2);
 
-		am.projectInstanciation(project2);
+		//am.projectInstanciation(project2);
 		}
 }

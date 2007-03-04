@@ -8,7 +8,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
+import wilos.business.services.misc.project.ProjectService;
+import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.process.ProcessService;
+import wilos.model.misc.project.Project;
 import wilos.model.spem2.process.Process;
 
 /**
@@ -18,8 +21,14 @@ import wilos.model.spem2.process.Process;
 public class ProcessBean {
 
 	private ProcessService processService;
+	
+	private WebSessionService webSessionService;
+	
+	private ProjectService projectService;
 
 	private String selectedProcessGuid = "default";
+	
+	private boolean readOnly = false;
 	
 	private boolean isVisibleExpTable = false;
 
@@ -106,5 +115,60 @@ public class ProcessBean {
 	 */
 	public void setVisibleExpTable(boolean _isVisibleExpTable) {
 		this.isVisibleExpTable = _isVisibleExpTable;
+	}
+
+	/**
+	 * @return the readOnly
+	 */
+	public boolean getReadOnly() {
+		
+		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
+		Project project = this.projectService.getProject(projectId);
+		
+		if (project.getProcess() == null) {
+			this.readOnly = false;
+			this.selectedProcessGuid = "default";
+		} else {
+			this.readOnly = true;
+			this.isVisibleExpTable = true;
+			this.selectedProcessGuid = project.getProcess().getGuid();
+		}
+		
+		return this.readOnly;
+	}
+
+	/**
+	 * @param _readOnly the readOnly to set
+	 */
+	public void setReadOnly(boolean _readOnly) {
+		this.readOnly = _readOnly;
+	}
+
+	/**
+	 * @return the webSessionService
+	 */
+	public WebSessionService getWebSessionService() {
+		return this.webSessionService;
+	}
+
+	/**
+	 * @param _webSessionService the webSessionService to set
+	 */
+	public void setWebSessionService(WebSessionService _webSessionService) {
+		this.webSessionService = _webSessionService;
+	}
+
+	/**
+	 * @return the projectService
+	 */
+	public ProjectService getProjectService() {
+		return this.projectService;
+	}
+
+	/**
+	 * @param _projectService the projectService to set
+	 */
+	public void setProjectService(ProjectService _projectService) {
+		this.projectService = _projectService;
 	}
 }

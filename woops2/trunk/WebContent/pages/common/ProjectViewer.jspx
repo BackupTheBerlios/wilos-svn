@@ -142,7 +142,7 @@
 				
 						<f:subview id="process_affectation_view">
 							<ice:panelGroup id="projectProcessPanelGroup" styleClass="contentIncludePanelGroup">
-								<ice:selectOneMenu readonly="#{Woops2ProcessBean.readOnly}" partialSubmit="true" value="#{ProjectBean.selectedProcessGuid}" valueChangeListener="#{Woops2ProcessBean.changeProcessSelectionListener}">
+								<ice:selectOneMenu disabled="#{Woops2ProcessBean.readOnly}" partialSubmit="true" value="#{Woops2ProcessBean.selectedProcessGuid}" valueChangeListener="#{Woops2ProcessBean.changeProcessSelectionListener}">
 									<f:selectItems value="#{Woops2ProcessBean.processes}" />
 								</ice:selectOneMenu>
 								<ice:commandButton visible="#{Woops2ProcessBean.isVisibleExpTable}" value="#{msgs['component.instanciation.button']}" action="#{ExpTableBean.saveProjectInstanciation}" />

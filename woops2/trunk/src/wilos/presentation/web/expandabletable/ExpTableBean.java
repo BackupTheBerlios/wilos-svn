@@ -23,7 +23,6 @@ import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.process.Process;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
-import wilos.presentation.web.project.ProjectAdvancementBean;
 import wilos.presentation.web.tree.TreeBean;
 
 /**
@@ -72,9 +71,20 @@ public class ExpTableBean {
 				}
 			}
 		}
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");
 		tb.rebuildProjectTree();
+		
+		// clear occurences number of each object of expTableContent 
+		for (HashMap<String, Object> map : this.expTableContent) {
+			map.put("nbOccurences", new Integer(0));
+		}
+		
+		// lock the combobox
+		ProcessBean processBean = (ProcessBean) context.getApplication().getVariableResolver()
+		.resolveVariable(context, "Woops2ProcessBean");
+		processBean.setReadOnly(true);
 
 	}
 
@@ -175,8 +185,7 @@ public class ExpTableBean {
 
 			if (currentElement.get("id").equals(elementId)
 					&& currentElement.get("nodeType").equals("node")) {
-				currentElement.put("expansionImage",
-						ProjectAdvancementBean.CONTRACT_TABLE_ARROW);
+				currentElement.put("expansionImage", CONTRACT_TABLE_ARROW);
 				parentList.remove(currentElement);
 			}
 		}
@@ -200,8 +209,7 @@ public class ExpTableBean {
 				deleteChildren((String) child.get("id"), parentList);
 			}
 			if (child.get("id").equals(parentId)) {
-				child.put("expansionImage",
-						ProjectAdvancementBean.CONTRACT_TABLE_ARROW);
+				child.put("expansionImage", CONTRACT_TABLE_ARROW);
 				this.isExpanded.put((String) child.get("id"), false);
 			}
 		}
