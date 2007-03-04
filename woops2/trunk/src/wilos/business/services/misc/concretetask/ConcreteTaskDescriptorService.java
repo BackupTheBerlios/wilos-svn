@@ -211,6 +211,21 @@ public class ConcreteTaskDescriptorService {
 	}
 
 	/**
+	 * Dissociates a participant from a ConcreteTask
+	 * 
+	 * @param _concreteTaskDescriptor the ConcreteTaskDescriptor to be dissociated
+	 * @param _participant the Participant to dissociate
+	 */
+	public void dissociateConcreteTaskDescriptor(ConcreteTaskDescriptor _concreteTaskDescriptor) {
+		ConcreteRoleDescriptor cmrd = _concreteTaskDescriptor.getMainConcreteRoleDescriptor();
+		
+		cmrd.removeConcreteTaskDescriptor(_concreteTaskDescriptor);
+		_concreteTaskDescriptor.setState(State.CREATED);
+		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(_concreteTaskDescriptor);
+		this.concreteRoleDescriptorService.saveConcreteRoleDescriptor(cmrd);
+	}
+	
+	/**
 	 * Getter of taskDescriptorDao.
 	 *
 	 * @return the taskDescriptorDao.

@@ -92,6 +92,34 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		}
 		return _state;
 	}
+	
+	public boolean getDissociateButtonIsVisible() {
+		String state = this.concreteTaskDescriptor.getState();
+		
+		String wilosUserId = (String) super.getWebSessionService()
+			.getAttribute(WebSessionService.WILOS_USER_ID);
+		
+		Participant participant = this.participantService.getParticipant(wilosUserId);
+		ConcreteRoleDescriptor mcrd =  this.concreteTaskDescriptor.getMainConcreteRoleDescriptor();
+		
+		if ((mcrd != null)
+				&& ((state == State.CREATED) 
+					|| (state == State.READY))
+						/*&& participant.getConcreteRoleDescriptors().contains(mcrd)*/) { 
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public void dissociateTask() {	
+		this.concreteTaskDescriptorService
+			.dissociateConcreteTaskDescriptor(this.concreteTaskDescriptor);
+		
+		super.refreshProjectTable();
+		super.refreshProjectTree();
+	}
 
 	public void changeConcreteName() {
 		this.concreteTaskDescriptorService
@@ -397,7 +425,8 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 				&& !this.concreteTaskDescriptor.getState()
 						.equals(State.CREATED)
 				&& !this.concreteTaskDescriptor.getState().equals(
-						State.FINISHED) && this.visibleAffected()) {
+						State.FINISHED)
+				&& this.visibleAffected()) {
 			this.remainingTimeVisible = true;
 		} else {
 			this.remainingTimeVisible = false;
@@ -456,7 +485,8 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 	 * @return the visibleSaveButton.
 	 */
 	public boolean getVisibleSaveButton() {
-		this.visibleSaveButton = (!accomplishedTimeModifiable || !remainingTimeModifiable) && this.visibleAffected();
+		this.visibleSaveButton = (!accomplishedTimeModifiable || !remainingTimeModifiable) 
+									&& this.visibleAffected();
 		return this.visibleSaveButton;
 	}
 
