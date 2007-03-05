@@ -148,7 +148,7 @@
 								<ice:commandButton disabled="#{Woops2ProcessBean.readOnly}" visible="#{Woops2ProcessBean.isVisibleExpTable}" value="#{msgs['component.instanciation.button']}" action="#{ExpTableBean.saveProjectInstanciation}" />
 							</ice:panelGroup>
 						</f:subview>
-						<ice:panelGroup visible="#{Woops2ProcessBean.isVisibleExpTable}">
+						<ice:panelGrid visible="#{Woops2ProcessBean.isVisibleExpTable}" styleClass="contentLayoutGridStyle">
 							<ice:dataTable value="#{ExpTableBean.expTableContent}"
 								var="process" cellpadding="0" columnWidths="30px,600px,200px">
 								<ice:column>
@@ -175,14 +175,14 @@
 									<center>
 									<ice:inputText
 										value="#{process.nbOccurences}"
-										disabled="#{process.isEditable}"
+										readonly="#{process.isEditable}"
 										size="3" 
 										maxlength="3"
-										style="font-size:10px; height:10px; width:150px; align: center; text-align:right;" />
+										style="font-size:10px; height:10px; align: center; text-align:right;" />
 									</center>
 								</ice:column>
 							</ice:dataTable>
-						</ice:panelGroup>
+						</ice:panelGrid>
 					<!--</ice:panelGroup>
 				
 					<ice:panelGroup id="projectProcesses_null">
@@ -222,9 +222,9 @@
 								<f:facet name="header">
 									<ice:outputText	value="#{msgs['component.project.rolesinstanciation.instancescolumn']}" />
 								</f:facet>
-								<ice:inputText value="#{processRole.nbOccurences}" 
-										disabled="#{processRole.isEditable}" visible="#{processRole.isVisible}"
-										style="font-size:10px; height:10px; width:150px; align: center; text-align:right;"/>
+								<ice:inputText value="#{processRole.nbOccurences}" size="3" maxlength="3"
+										disabled="#{processRole.isEditable}" visible="#{processRole.isVisible}" 
+										style="font-size:10px; height:10px; align: center; text-align:right;"/>
 							</ice:column>
 						</ice:dataTable>
 						<ice:commandButton value="#{msgs['component.project.rolesinstanciation.instanciationButton']}" 

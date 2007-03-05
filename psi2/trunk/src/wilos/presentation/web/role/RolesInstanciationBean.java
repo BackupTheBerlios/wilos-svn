@@ -75,6 +75,8 @@ public class RolesInstanciationBean {
 
 	private String projectTasksInstanciated;
 
+	private boolean projectModified;
+
 	public RolesInstanciationBean() {
 		this.displayContent = new ArrayList<HashMap<String, Object>>();
 		this.indentationContent = new HashMap<String, String>();
@@ -90,7 +92,7 @@ public class RolesInstanciationBean {
 		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
 		Project project = this.projectService.getProject(projectId);
 
-		if (this.projectViewedId == null || !(this.projectViewedId.equals(projectId))) {
+		if (this.projectViewedId == null || !(this.projectViewedId.equals(projectId)) || this.projectModified) {
 			
 			this.projectViewedId = projectId;
 			if (project.getProcess() != null) {
@@ -104,8 +106,20 @@ public class RolesInstanciationBean {
 				this.displayContent.addAll(lines);
 			}
 		}
+		this.projectModified = false;
 		return this.displayContent;
 	}
+	
+	/**
+	 * put the attribut project modified to true which force the project table
+	 * to be recalculated
+	 * 
+	 */
+	public void refreshProcessTable() {
+		this.projectModified = true;
+	}
+	
+	
 
 	/**
 	 * methode called when the instanciation is required from the role instanciation page
