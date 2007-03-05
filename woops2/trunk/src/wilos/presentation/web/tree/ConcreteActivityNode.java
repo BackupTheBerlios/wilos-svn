@@ -55,10 +55,10 @@ public class ConcreteActivityNode extends DefaultMutableTreeNode {
 				if (concreteBreakdownElement instanceof ConcreteRoleDescriptor) {
 					ConcreteRoleDescriptor crd = (ConcreteRoleDescriptor) concreteBreakdownElement;
 					// Filter to mask the additional roles.
-					if ((crd.getConcreteTaskDescriptors() != null)
-							&& (crd.getConcreteTaskDescriptors().size() > 0)) {
+					//if ((crd.getConcreteTaskDescriptors() != null)
+							//&& (crd.getConcreteTaskDescriptors().size() > 0)) {
 						this.add(new ConcreteRoleDescriptorNode(crd, _treeMap));
-					}
+					//}
 				}
 			}
 		}
