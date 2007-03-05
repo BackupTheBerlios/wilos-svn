@@ -215,24 +215,42 @@ public class XmlFileImportBean {
 					
 			try {
 				Process p = processService.spelpParsingXML(file);
-				// save the process
-				logger.debug("### XmlFileImportBean ### action -> id=" + p.getId());
-				/* id = */
-				String managerId = (String) this.webSessionService
-				.getAttribute(WebSessionService.WILOS_USER_ID);
-				this.processService.saveProcess(p, managerId);
-				// stop the progress bar
-				this.percent = -1;
-				ResourceBundle bundle = ResourceBundle.getBundle(
-						"wilos.resources.messages", FacesContext.getCurrentInstance()
-								.getApplication().getDefaultLocale());
-				FacesMessage message = new FacesMessage();
-				message
-						.setSummary(bundle
-								.getString("XmlFileImportBean.processok"));
-				message.setSeverity(FacesMessage.SEVERITY_INFO);
-				FacesContext facesContext = FacesContext.getCurrentInstance();
-				facesContext.addMessage(null, message);
+				//mise en place du controle du process
+				if(p != null)
+				{
+					// save the process
+					logger.debug("### XmlFileImportBean ### action -> id=" + p.getId());
+					/* id = */
+					String managerId = (String) this.webSessionService
+					.getAttribute(WebSessionService.WILOS_USER_ID);
+					this.processService.saveProcess(p, managerId);
+					// stop the progress bar
+					this.percent = -1;
+					ResourceBundle bundle = ResourceBundle.getBundle(
+							"wilos.resources.messages", FacesContext.getCurrentInstance()
+									.getApplication().getDefaultLocale());
+					FacesMessage message = new FacesMessage();
+					message
+							.setSummary(bundle
+									.getString("XmlFileImportBean.processok"));
+					message.setSeverity(FacesMessage.SEVERITY_INFO);
+					FacesContext facesContext = FacesContext.getCurrentInstance();
+					facesContext.addMessage(null, message);
+				}
+				else
+				{
+					this.percent = -1;
+					ResourceBundle bundle = ResourceBundle.getBundle(
+							"wilos.resources.messages", FacesContext.getCurrentInstance()
+									.getApplication().getDefaultLocale());
+					FacesMessage message = new FacesMessage();
+					message
+							.setSummary(bundle
+									.getString("XmlFileImportBean.processNull"));
+					message.setSeverity(FacesMessage.SEVERITY_INFO);
+					FacesContext facesContext = FacesContext.getCurrentInstance();
+					facesContext.addMessage(null, message);
+				}
 			} catch (Exception e) {
 				logger.error("### XmlFileImportBean ### action -> " + e);
 			}
