@@ -30,7 +30,11 @@ public class ProcessBean {
 	
 	private boolean readOnly = false;
 	
+	private Project project;
+	
 	private boolean isVisibleExpTable = false;
+	
+	private boolean isProjectManager = false;
 
 	/**
 	 * Give all the processes save in the database
@@ -113,7 +117,7 @@ public class ProcessBean {
 	/**
 	 * @param _isVisibleExpTable the isVisibleExpTable to set
 	 */
-	public void setVisibleExpTable(boolean _isVisibleExpTable) {
+	public void setIsVisibleExpTable(boolean _isVisibleExpTable) {
 		this.isVisibleExpTable = _isVisibleExpTable;
 	}
 
@@ -169,5 +173,29 @@ public class ProcessBean {
 	 */
 	public void setProjectService(ProjectService _projectService) {
 		this.projectService = _projectService;
+	}
+
+	/**
+	 * @return the isProjectManager
+	 */
+	public boolean getIsProjectManager() {
+		
+		String user_id = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID);
+		this.project = this.projectService.getProject((String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID));
+		this.isProjectManager = false;
+		if (this.project.getProjectManager() != null) {
+			if (this.project.getProjectManager().getWilosuser_id().equals(user_id)) {
+				this.isProjectManager = true;
+			}
+		}
+		
+		return this.isProjectManager;
+	}
+
+	/**
+	 * @param _isProjectManager the isProjectManager to set
+	 */
+	public void setIsProjectManager(boolean _isProjectManager) {
+		this.isProjectManager = _isProjectManager;
 	}
 }

@@ -42,48 +42,53 @@ public class ExpTableBean {
 	protected HashMap<String, Boolean> isExpanded = new HashMap<String, Boolean>();
 
 	private ProcessService processService;
-	
+
 	private ProjectService projectService;
 
 	private ActivityService activityService;
-	
+
 	private WebSessionService webSessionService;
 
 	private boolean isVisible = true;
-	
+
 	private String viewedProcessId = "";
 
 	private String selectedProcessGuid = "default";
-	
+
 	public ExpTableBean() {
 		this.expTableContent = new ArrayList<HashMap<String, Object>>();
 	}
-	
+
 	public void saveProjectInstanciation() {
-		
-		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
+
+		String projectId = (String) this.webSessionService
+				.getAttribute(WebSessionService.PROJECT_ID);
 		if (projectId != null) {
 			Project project = projectService.getProject(projectId);
 			if (project != null) {
-				Process process = processService.getProcessDao().getProcessFromGuid(selectedProcessGuid);
+				Process process = processService.getProcessDao()
+						.getProcessFromGuid(selectedProcessGuid);
 				if (process != null) {
-					processService.projectInstanciation(project, process, expTableContent);
+					processService.projectInstanciation(project, process,
+							expTableContent);
 				}
 			}
 		}
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
-		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");
+		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver()
+				.resolveVariable(context, "TreeBean");
 		tb.rebuildProjectTree();
-		
-		// clear occurences number of each object of expTableContent 
+
+		// clear occurences number of each object of expTableContent
 		for (HashMap<String, Object> map : this.expTableContent) {
 			map.put("nbOccurences", new Integer(0));
 		}
-		
+
 		// lock the combobox
-		ProcessBean processBean = (ProcessBean) context.getApplication().getVariableResolver()
-		.resolveVariable(context, "Woops2ProcessBean");
+		ProcessBean processBean = (ProcessBean) context.getApplication()
+				.getVariableResolver().resolveVariable(context,
+						"Woops2ProcessBean");
 		processBean.setReadOnly(true);
 
 	}
@@ -98,8 +103,9 @@ public class ExpTableBean {
 					.getProcessFromGuid(this.selectedProcessGuid);
 			if (!this.viewedProcessId.equals(process.getId())) {
 				this.viewedProcessId = process.getId();
-				this.expTableContent.clear() ;
-				List<HashMap<String, Object>> lines = this.getExpTableLineContent(process);
+				this.expTableContent.clear();
+				List<HashMap<String, Object>> lines = this
+						.getExpTableLineContent(process);
 				this.expTableContent.addAll(lines);
 			}
 		}
@@ -113,8 +119,9 @@ public class ExpTableBean {
 	private List<HashMap<String, Object>> getExpTableLineContent(Activity _act) {
 
 		List<HashMap<String, Object>> lines = new ArrayList<HashMap<String, Object>>();
-		Activity act = this.activityService.getActivity(_act.getId()) ;
-		SortedSet<BreakdownElement> set = this.activityService.getBreakdownElements(act);
+		Activity act = this.activityService.getActivity(_act.getId());
+		SortedSet<BreakdownElement> set = this.activityService
+				.getBreakdownElements(act);
 		act.setBreakdownElements(set);
 		for (BreakdownElement bde : act.getBreakdownElements()) {
 			if (bde instanceof WorkBreakdownElement) {
@@ -128,9 +135,10 @@ public class ExpTableBean {
 				}
 				hm.put("id", bde.getId());
 				hm.put("name", bde.getPresentationName());
-				hm.put("isEditable", act.getHasMultipleOccurrences() || act.getIsRepeatable()) ;
-				hm.put("nbOccurences", new Integer(1)) ;
-				hm.put("parentId", act.getId()) ;
+				hm.put("isEditable", act.getHasMultipleOccurrences()
+						|| act.getIsRepeatable());
+				hm.put("nbOccurences", new Integer(1));
+				hm.put("parentId", act.getId());
 
 				lines.add(hm);
 			}
@@ -238,13 +246,13 @@ public class ExpTableBean {
 			}
 			isExpanded.put(elementId, b);
 		}
-		
+
 		if (b) {
 			expandNodeAction();
 		} else {
 			contractNodeAction();
 		}
-		
+
 	}
 
 	/**
@@ -294,7 +302,8 @@ public class ExpTableBean {
 	}
 
 	/**
-	 * @param _webSessionService the webSessionService to set
+	 * @param _webSessionService
+	 *            the webSessionService to set
 	 */
 	public void setWebSessionService(WebSessionService _webSessionService) {
 		this.webSessionService = _webSessionService;
@@ -323,7 +332,8 @@ public class ExpTableBean {
 	}
 
 	/**
-	 * @param _projectService the projectService to set
+	 * @param _projectService
+	 *            the projectService to set
 	 */
 	public void setProjectService(ProjectService _projectService) {
 		this.projectService = _projectService;

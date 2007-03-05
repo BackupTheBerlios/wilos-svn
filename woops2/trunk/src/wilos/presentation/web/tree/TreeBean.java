@@ -28,6 +28,7 @@ import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
+import wilos.presentation.web.expandabletable.ProcessBean;
 import wilos.presentation.web.template.MenuBean;
 import wilos.presentation.web.viewer.ConcreteActivityViewerBean;
 import wilos.presentation.web.viewer.ConcreteIterationViewerBean;
@@ -90,14 +91,13 @@ public class TreeBean {
 	public TreeBean() {
 		this.model = new DefaultTreeModel(this.getDefaultTree());
 	}
-	
+
 	/* Manage the tree. */
-	
+
 	/**
 	 * Sets PROJECT_ID attribute to DEFAULT_PROJECT_ID and cleans tree and node
 	 * to show Must be called at participant logout
 	 */
-	
 
 	public DefaultMutableTreeNode getDefaultTree() {
 		DefaultMutableTreeNode defaultTree = new DefaultMutableTreeNode();
@@ -122,7 +122,7 @@ public class TreeBean {
 		this.project = this.projectService.getProject(prId);
 		this.buildTreeModel();
 	}
-	
+
 	public void cleanTreeDisplay() {
 		this.webSessionService.setAttribute(WebSessionService.PROJECT_ID,
 				DEFAULT_PROJECT_ID);
@@ -164,6 +164,22 @@ public class TreeBean {
 			this.project = this.projectService.getProject(this.projectId);
 
 			nodeTypeToShow = WilosObjectNode.PROJECTNODE;
+
+			// masquage de la exptable d'instanciation
+			String projectId = (String) this.webSessionService
+					.getAttribute(WebSessionService.PROJECT_ID);
+			Project project = this.projectService.getProject(projectId);
+
+			FacesContext context = FacesContext.getCurrentInstance();
+
+			ProcessBean processBean = (ProcessBean) context.getApplication()
+					.getVariableResolver().resolveVariable(context,
+							"Woops2ProcessBean");
+
+			if (project.getProcess() == null) {
+				processBean.setSelectedProcessGuid("default");
+				processBean.setIsVisibleExpTable(false);
+			}
 		}
 
 		this.buildTreeModel();
