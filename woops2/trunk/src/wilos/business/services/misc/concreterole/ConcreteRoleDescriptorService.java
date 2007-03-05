@@ -31,6 +31,10 @@ public class ConcreteRoleDescriptorService {
 		public List<ConcreteRoleDescriptor> getAllConcreteRoleDescriptors() {
 			return this.getConcreteRoleDescriptorDao().getAllConcreteRoleDescriptors();
 		}
+		
+		public List<ConcreteTaskDescriptor> getPrimaryConcreteTaskDescriptors(String _concreteRoleId){
+			return this.concreteRoleDescriptorDao.getPrimaryConcreteTaskDescriptors(_concreteRoleId);
+		}
 
 		/**
 		 * Return concreteRoleDescriptor for a project list
