@@ -112,7 +112,7 @@ public class ConcreteTaskDescriptorTest {
 		this.concreteTaskDescriptor.addConcreteRoleDescriptor(crd);
 		
 		assertTrue(this.concreteTaskDescriptor.getMainConcreteRoleDescriptor() == crd);
-		assertTrue(crd.getConcreteTaskDescriptors().size() == 1);
+		assertTrue(crd.getPrimaryConcreteTaskDescriptors().size() == 1);
 	}
 
 }
