@@ -20,6 +20,7 @@ import org.jdesktop.swingx.JXTaskPane;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.Bundle;
+import wilos.utils.Constantes;
 
 public class InfoPanel extends JXPanel implements Observer {
 	private JXTaskPane tasks = null ;
@@ -103,7 +104,7 @@ public class InfoPanel extends JXPanel implements Observer {
 		{
 			tasks.setExpanded(true);
 			ConcreteTaskDescriptor c =(ConcreteTaskDescriptor)WizardControler.getInstance().getLastCtd();
-			if (c.getState()=="Started")
+			if (c.getState().equals(Constantes.State.STARTED))
 			{
 				modify.setVisible(true);
 				info1.setText("Date debut:");
