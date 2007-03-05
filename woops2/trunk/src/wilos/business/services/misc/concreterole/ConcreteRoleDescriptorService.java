@@ -27,6 +27,10 @@ public class ConcreteRoleDescriptorService {
 		public void saveConcreteRoleDescriptor(ConcreteRoleDescriptor _concreteRoleDescriptor) {
 			this.concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(_concreteRoleDescriptor);
 		}
+		
+		public List<ConcreteRoleDescriptor> getAllConcreteRoleDescriptors() {
+			return this.getConcreteRoleDescriptorDao().getAllConcreteRoleDescriptors();
+		}
 
 		/**
 		 * Return concreteRoleDescriptor for a project list
