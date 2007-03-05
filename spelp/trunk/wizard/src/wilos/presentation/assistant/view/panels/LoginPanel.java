@@ -1,5 +1,6 @@
 package wilos.presentation.assistant.view.panels;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -10,15 +11,18 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import wilos.business.util.Security;
 import wilos.model.misc.wilosuser.Participant;
+import wilos.model.spem2.guide.Guidance;
 import wilos.presentation.assistant.control.ServersListParser;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.model.WizardServer;
@@ -128,25 +132,22 @@ public class LoginPanel extends JPanel {
                     ex.printStackTrace();
                 }*/
        
-    		String aliasAdress = "";
-    			
     		if (this.adressTextField.getItemCount()!=0)this.adressTextField.removeAllItems();
         	
         	ArrayList<WizardServer> list = list_serv.getServersList();
         	        	        	 
         	for (int i=0;i<list.size();i++)
         	{
-        		aliasAdress = list.get(i).getAlias() + " => " + list.get(i).getAddress();
-//        		this.adressTextField.addItem(list.get(i).getAddress());
-        		this.adressTextField.addItem(aliasAdress);
+        		this.adressTextField.addItem(list.get(i));
         	}
-        	this.adressTextField.addItem(Bundle.getText("loginPanel.ajouter"));
+        	this.adressTextField.addItem(new WizardServer(Bundle.getText("loginPanel.ajouter"),"",0));
+        	this.adressTextField.setRenderer(new AliasRenderer());
         	
         	this.adressTextField.addActionListener(new ActionListener() 
         	{
     			public void actionPerformed(ActionEvent e) 
     			{
-    				if (adressTextField.getItemCount()!=0&&adressTextField.getSelectedItem().equals(Bundle.getText("loginPanel.ajouter")))
+    				if (adressTextField.getItemCount()!=0&&((WizardServer)adressTextField.getSelectedItem()).getAlias().equals(Bundle.getText("loginPanel.ajouter")))
     				{
     					adressTextField.setSelectedIndex(0);
     					new ServersFrame(LoginPanel.this.mframe);
@@ -155,6 +156,16 @@ public class LoginPanel extends JPanel {
     		});
 
         }
+
+        private class AliasRenderer extends DefaultListCellRenderer {
+        	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+        		WizardServer s = (WizardServer)value;
+        		String aliasAdress = s.getAlias();
+        		super.getListCellRendererComponent(list, aliasAdress, index, isSelected, cellHasFocus);
+        		return this;
+        	}
+        }
+
 
 	/**
 	 * This method initializes fieldsPanel	
@@ -226,13 +237,10 @@ public class LoginPanel extends JPanel {
 	{
 		// before : <alias> => <adress>
 		// after : <adress>
-		String serverAdress = (String)adressTextField.getSelectedItem();
-		int begin = serverAdress.indexOf(" => ",0) + 4;
-		serverAdress = serverAdress.substring(begin);
-		/* */
+		String serverAdress = ((WizardServer)adressTextField.getSelectedItem()).getAddress();
 
 		/*check if there is a server selected and not "Ajouter"*/
-		if (!String.valueOf(adressTextField.getSelectedItem()).equals(Bundle.getText("loginPanel.ajouter")))
+		if (!((WizardServer)adressTextField.getSelectedItem()).getAlias().equals(Bundle.getText("loginPanel.ajouter")))
 		{
 			String passcript =  Security.encode(new String(passwordPasswordField.getPassword()));
 			WizardServicesProxy.setIdentificationParamaters(loginTextField.getText(),passcript, serverAdress);
