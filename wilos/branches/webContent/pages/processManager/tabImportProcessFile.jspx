@@ -2,11 +2,11 @@
 	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1" border="0">
 		<ice:panelTabSet id="panelTabSet_participant" styleClass="componentPanelTabSetLayout">
 			<ice:panelTab label="#{msgs['welcomeProcessManager.mainTable.title']}">
-				<ice:panelGrid styleClass="componentLayoutRootTable" columns="1">
+				<ice:panelGrid styleClass="contentIncludePanelGroup" columns="1">
 					<ice:panelGroup styleClass="formBorderHighlight"
 						style="text-align:left">
 						<br />
-						<ice:outputText value="#{msgs['welcomeProcessManager.mainTable.textFieldTitle']}" />
+						<h3><ice:outputText value="#{msgs['welcomeProcessManager.mainTable.textFieldTitle']}" /></h3>
 						<br />
 						<ice:inputFile style="overflow:hidden; border:none; width:400px; height:70px;"
 							progressListener="#{XmlFileImportBean.progressListener}"
