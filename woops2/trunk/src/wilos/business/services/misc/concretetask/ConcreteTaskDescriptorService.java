@@ -97,14 +97,19 @@ public class ConcreteTaskDescriptorService {
 	public void removeConcreteTaskDescriptor(
 			ConcreteTaskDescriptor _concreteTaskDescriptor) {
 		
-		Set <ConcreteActivity> superConcreteActivities = _concreteTaskDescriptor.getSuperConcreteActivities() ;
+		Set <ConcreteActivity> superConcreteActivities =
+						_concreteTaskDescriptor.getSuperConcreteActivities() ;
 		TaskDescriptor taskDescriptor = _concreteTaskDescriptor.getTaskDescriptor() ;
 		
-		TaskDescriptor td2 = this.taskDescriptorService.getTaskDescriptorById(taskDescriptor.getId()) ;
+		TaskDescriptor td2 =
+			this.taskDescriptorService.getTaskDescriptorById(taskDescriptor.getId()) ;
 		
-		ConcreteRoleDescriptor concreteRoleDescriptor = _concreteTaskDescriptor.getMainConcreteRoleDescriptor() ;
+		ConcreteRoleDescriptor concreteRoleDescriptor =
+						_concreteTaskDescriptor.getMainConcreteRoleDescriptor() ;
 		
-		ConcreteRoleDescriptor crd2 = this.concreteRoleDescriptorService.getConcreteRoleDescriptorById(concreteRoleDescriptor.getId()) ;
+		ConcreteRoleDescriptor crd2 =
+			this.concreteRoleDescriptorService
+					.getConcreteRoleDescriptorById(concreteRoleDescriptor.getId()) ;
 		
 		for (ConcreteActivity sca : superConcreteActivities) {
 			sca.removeConcreteBreakdownElement(_concreteTaskDescriptor) ;
