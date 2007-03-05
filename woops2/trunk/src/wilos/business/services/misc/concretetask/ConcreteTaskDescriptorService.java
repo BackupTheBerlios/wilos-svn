@@ -115,7 +115,7 @@ public class ConcreteTaskDescriptorService {
 			sca.removeConcreteBreakdownElement(_concreteTaskDescriptor) ;
 		}
 		
-		crd2.removeConcreteTaskDescriptor(_concreteTaskDescriptor) ;
+		crd2.removePrimaryConcreteTaskDescriptor(_concreteTaskDescriptor) ;
 		
 		td2.removeConcreteTaskDescriptor(_concreteTaskDescriptor) ;
 	}
@@ -224,7 +224,7 @@ public class ConcreteTaskDescriptorService {
 	public void dissociateConcreteTaskDescriptor(ConcreteTaskDescriptor _concreteTaskDescriptor) {
 		ConcreteRoleDescriptor cmrd = _concreteTaskDescriptor.getMainConcreteRoleDescriptor();
 		
-		cmrd.removeConcreteTaskDescriptor(_concreteTaskDescriptor);
+		cmrd.removePrimaryConcreteTaskDescriptor(_concreteTaskDescriptor);
 		_concreteTaskDescriptor.setState(State.CREATED);
 		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(_concreteTaskDescriptor);
 		this.concreteRoleDescriptorService.saveConcreteRoleDescriptor(cmrd);
