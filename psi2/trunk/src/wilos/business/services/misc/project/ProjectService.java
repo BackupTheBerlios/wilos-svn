@@ -263,6 +263,6 @@ public class ProjectService {
 		Process loadedProcess = this.processService.getProcessDao().getProcessFromGuid(_process.getGuid()) ;
 		loadedProject.addProcess(loadedProcess) ;
 		this.projectDao.saveOrUpdateProject(loadedProject) ;
-		this.processService.projectInstanciation(loadedProject) ;
+		//this.processService.projectInstanciation(loadedProject, loadedProcess, arg2)loadedProject) ;
 	}
 }
