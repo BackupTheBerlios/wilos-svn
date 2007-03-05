@@ -2,7 +2,6 @@ package wilos.business.services.util.xml.parser;
  
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 
 import javax.xml.namespace.QName;
 import javax.xml.xpath.XPath;
@@ -70,10 +69,16 @@ public class XMLUtils {
 				XPathExpression exp = xpath.compile(expression);
 				resultat = exp.evaluate(source,retour);
 			}
-		}catch(XPathExpressionException xpee){
-			xpee.printStackTrace();
-		}catch(IOException  ioe){
-			ioe.printStackTrace();	
+		}
+//		catch(XPathExpressionException xpee){
+//			//xpee.printStackTrace();
+//		}catch(IOException  ioe){
+//			//ioe.printStackTrace();	
+//		}
+		catch(Exception e) {
+			System.out.println("*** THE XML FILE " + document.getName() +" IS WRONG ***");
+			//e.printStackTrace();
+			return null;
 		}
 		return resultat;
 	}

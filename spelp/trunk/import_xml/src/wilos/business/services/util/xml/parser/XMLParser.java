@@ -151,7 +151,7 @@ public class XMLParser {
 			setAllActivitiesDependencies(activitiesList);
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	
@@ -169,6 +169,7 @@ public class XMLParser {
 		// For each node...
 		Node aNode;
 		// Through the Artifacts...
+		if (nodeReturned != null) {
 		for(int i=0;i<nodeReturned.getLength();i++){
 			aNode = nodeReturned.item(i);
 			
@@ -249,7 +250,8 @@ public class XMLParser {
 					}
 				}
 			}
-		}	
+		}
+	}
 		return WorkProductDescriptorFakesList;
 	}
 
@@ -285,7 +287,7 @@ public class XMLParser {
 		
 		// gets all the nodes containing all guidances
 		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_guidance,XPathConstants.NODESET);
-		if (nodeReturned.getLength() != 0) {
+		if (nodeReturned != null && nodeReturned.getLength() != 0) {
 			// For each node...
 			Node aNode;
 			for(int i=0;i<nodeReturned.getLength();i++){
@@ -311,33 +313,6 @@ public class XMLParser {
 			}	
 		}
 		return theGuidanceList;
-		
-		
-		/* ------------------------------------------------------------ */
-		
-		/*Vector<Guidance> theGuidanceList; // the return of the function
-		
-		// initializes the List
-		theGuidanceList = new Vector<Guidance>();
-		theGuidanceList.clear();
-		
-		// gets all the nodes containing all guidances
-		NodeList nodeReturned = (NodeList)XMLUtils.evaluate(xpath_guidance,XPathConstants.NODESET);
-		if (nodeReturned.getLength() != 0) {
-			// For each node...
-			Node aNode;
-			for(int i=0;i<nodeReturned.getLength();i++){
-				aNode = nodeReturned.item(i);
-				
-				// Fills the Guidance from the node
-				Guidance  aGuidance = new Guidance();
-				FillerGuidance aFiller = new FillerGuidance(aGuidance,aNode);	
-				aGuidance = (Guidance)aFiller.getFilledElement();
-				// add the guidance in the list
-				theGuidanceList.add(aGuidance);
-			}	
-		}
-		return theGuidanceList;*/
 	}
 
 	/**
@@ -482,20 +457,22 @@ public class XMLParser {
 		
 		// For each node...
 		Node aNode;
-		for (int i = 0; i < nodeReturned.getLength(); i++) {
-			aNode = nodeReturned.item(i);
-			
-			// Fills the TaskDefinition from the node
-			TaskDefinition aTaskDefinition = new TaskDefinition();
-			FillerTask aFiller = new FillerTask(aTaskDefinition, aNode);	
-			aTaskDefinition = (TaskDefinition)aFiller.getFilledElement();
-			// affect the additional steps to the current task 
-			setStepsByTaskDefinition(aTaskDefinition, aNode);
-			// affect the additional guidances to the current task 			
-			setGuidanceByTaskDefinition(aTaskDefinition, aNode);
-			// add the current task to the list to be return			
-			theTaskDefinitionsList.add(aTaskDefinition);
-		}		
+		if (nodeReturned != null) {
+			for (int i = 0; i < nodeReturned.getLength(); i++) {
+				aNode = nodeReturned.item(i);
+				
+				// Fills the TaskDefinition from the node
+				TaskDefinition aTaskDefinition = new TaskDefinition();
+				FillerTask aFiller = new FillerTask(aTaskDefinition, aNode);	
+				aTaskDefinition = (TaskDefinition)aFiller.getFilledElement();
+				// affect the additional steps to the current task 
+				setStepsByTaskDefinition(aTaskDefinition, aNode);
+				// affect the additional guidances to the current task 			
+				setGuidanceByTaskDefinition(aTaskDefinition, aNode);
+				// add the current task to the list to be return			
+				theTaskDefinitionsList.add(aTaskDefinition);
+			}	
+		}
 		return theTaskDefinitionsList;
 	}
 	
@@ -517,18 +494,20 @@ public class XMLParser {
 		
 		// For each node...
 		Node aNode;
-		for(int i=0;i<nodeReturned.getLength();i++){
-			aNode = nodeReturned.item(i);
-			
-			// Fills the RoleDefinition from the node
-			RoleDefinition  aRoleDefinition = new RoleDefinition();
-			FillerRole aFiller = new FillerRole(aRoleDefinition,aNode);	
-			aRoleDefinition = (RoleDefinition)aFiller.getFilledElement();
-			// affect the additional guidance to the current role 
-			setGuidanceByRoleDefinition(aRoleDefinition, aNode);
-			// add the filled RoleDefinition in the list to be return
-			theRoleDefinitionsList.add(aRoleDefinition);
-		}	
+		if (nodeReturned != null) {
+			for(int i=0;i<nodeReturned.getLength();i++){
+				aNode = nodeReturned.item(i);
+				
+				// Fills the RoleDefinition from the node
+				RoleDefinition  aRoleDefinition = new RoleDefinition();
+				FillerRole aFiller = new FillerRole(aRoleDefinition,aNode);	
+				aRoleDefinition = (RoleDefinition)aFiller.getFilledElement();
+				// affect the additional guidance to the current role 
+				setGuidanceByRoleDefinition(aRoleDefinition, aNode);
+				// add the filled RoleDefinition in the list to be return
+				theRoleDefinitionsList.add(aRoleDefinition);
+			}	
+		}
 		return theRoleDefinitionsList;
 	}
 	
@@ -552,20 +531,25 @@ public class XMLParser {
 			// fills the elements sets
 			fillAllElementsList(); 
 			
-			// We get the List of all the nodes containing Processes
-			NodeList processesNodeList = (NodeList)XMLUtils.evaluate(xpath_deliveryProcess,XPathConstants.NODESET);
-			
-			Node aNode;
-			// If the file contains a process
-			if ( processesNodeList.getLength() != 0 ) {
-				theProcess = new Process();
-				// We get the Node corresponding to the process
-				aNode = processesNodeList.item(0);
+			try {
+				// We get the List of all the nodes containing Processes
+				NodeList processesNodeList = (NodeList)XMLUtils.evaluate(xpath_deliveryProcess,XPathConstants.NODESET);
 				
-				if (aNode != null) {
-					// We get the process from this recursive function
-					theProcess = (Process) getBreakDownElementsFromNode(aNode);
-				}				
+				Node aNode;
+				// If the file contains a process
+				if ( processesNodeList.getLength() != 0 ) {
+					theProcess = new Process();
+					// We get the Node corresponding to the process
+					aNode = processesNodeList.item(0);
+					
+					if (aNode != null) {
+						// We get the process from this recursive function
+						theProcess = (Process) getBreakDownElementsFromNode(aNode);
+					}				
+				}
+			}
+			catch (Exception e) {
+				//e.printStackTrace();
 			}
 		}
 		return theProcess;
@@ -584,23 +568,25 @@ public class XMLParser {
 		
 		Node aNode;
 		// for each node
-		for(int i=0;i<taskDescriptors.getLength();i++){
-			aNode = taskDescriptors.item(i);
-			// Fills the TaskDescriptor by the node
-			TaskDescriptor aTaskDescriptor = new TaskDescriptor();
-			FillerTaskDescriptor aFiller = new FillerTaskDescriptor(aTaskDescriptor,aNode);	
-			TaskDescriptor taskDescriptorfilled = (TaskDescriptor)aFiller.getFilledElement();
-			
-			// affect the task definition to the task descriptor
-			setTaskByTaskDescriptor(taskDescriptorfilled,aNode);
-			
-			// affect the main role to the current task
-			setMainRoleByTaskDescriptor(taskDescriptorfilled, aNode, allRoles);
-			
-			// affect the additional roles to the current task 
-			setAddiotionalRoleByTaskDescriptor(taskDescriptorfilled, aNode, allRoles);
-			// add the filled taskDescriptor in the list to be return
-			taskList.add(taskDescriptorfilled);
+		if (taskDescriptors != null) {
+			for(int i=0;i<taskDescriptors.getLength();i++){
+				aNode = taskDescriptors.item(i);
+				// Fills the TaskDescriptor by the node
+				TaskDescriptor aTaskDescriptor = new TaskDescriptor();
+				FillerTaskDescriptor aFiller = new FillerTaskDescriptor(aTaskDescriptor,aNode);	
+				TaskDescriptor taskDescriptorfilled = (TaskDescriptor)aFiller.getFilledElement();
+				
+				// affect the task definition to the task descriptor
+				setTaskByTaskDescriptor(taskDescriptorfilled,aNode);
+				
+				// affect the main role to the current task
+				setMainRoleByTaskDescriptor(taskDescriptorfilled, aNode, allRoles);
+				
+				// affect the additional roles to the current task 
+				setAddiotionalRoleByTaskDescriptor(taskDescriptorfilled, aNode, allRoles);
+				// add the filled taskDescriptor in the list to be return
+				taskList.add(taskDescriptorfilled);
+			}
 		}
 		return taskList;
 	}
@@ -1002,17 +988,19 @@ public class XMLParser {
 		
 		Node aNode;
 		// for each node
-		for(int i=0;i<roleDescriptors.getLength();i++) {
-			aNode = roleDescriptors.item(i);
-			// Fills the RoleDescriptor
-			RoleDescriptor aRoleDescriptor = new RoleDescriptor();
-			FillerRoleDescriptor aFiller = new FillerRoleDescriptor(aRoleDescriptor,aNode);	
-			RoleDescriptor roleDescriptorfilled = (RoleDescriptor)aFiller.getFilledElement();
-			// affect the additionnal Role in the Descriptor
-			setRoleByRoleDescriptor(roleDescriptorfilled,aNode);
-			// add the current RoleDescriptor Object in the list to be return				
-			roleList.add(roleDescriptorfilled) ;
-		}		
+		if (roleDescriptors != null) {
+			for(int i=0;i<roleDescriptors.getLength();i++) {
+				aNode = roleDescriptors.item(i);
+				// Fills the RoleDescriptor
+				RoleDescriptor aRoleDescriptor = new RoleDescriptor();
+				FillerRoleDescriptor aFiller = new FillerRoleDescriptor(aRoleDescriptor,aNode);	
+				RoleDescriptor roleDescriptorfilled = (RoleDescriptor)aFiller.getFilledElement();
+				// affect the additionnal Role in the Descriptor
+				setRoleByRoleDescriptor(roleDescriptorfilled,aNode);
+				// add the current RoleDescriptor Object in the list to be return				
+				roleList.add(roleDescriptorfilled) ;
+			}		
+		}
 		return roleList;
 	}
 	

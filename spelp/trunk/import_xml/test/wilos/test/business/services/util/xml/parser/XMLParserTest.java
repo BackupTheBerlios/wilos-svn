@@ -34,6 +34,9 @@ public class XMLParserTest extends TestCase {
 	public static File pathEmptyFile = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "emptyFile.xml"); 
 	public static File pathItil = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "itil.xml");
 	public static File crashingScrum = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "crashingScrum.xml");
+	public static File pathXP = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "xp.xml");
+	public static File pathWrongFile = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "WrongFile.xml");
+	
 	
 	/**
 	 * Checks that the ProcessReturned is null if the file doesnt exist
@@ -1774,6 +1777,25 @@ public class XMLParserTest extends TestCase {
 		assertEquals(expectedAssignmentApproaches, theRoleDef.getAssignmentApproaches());
 		assertEquals(expectedSkills, theRoleDef.getSkills());
 		assertEquals(expectedSynonyms, theRoleDef.getSynonyms());
+	}
+	
+	public void testThatXpProcessIsNull() {
+		Process theProcess;
+		theProcess = XMLParser.getProcess(pathXP);
+		
+		assertNull(theProcess);
+	}
+	
+	public void testThatProcessFromWrongFileIsNull() {
+		Process theProcess;
+		
+		// Errors are Printed on the Console : IT'S NORMAL
+		theProcess = XMLParser.getProcess(pathWrongFile);
+		
+		assertNull(theProcess);
+		
+		// IT'S DONE TO AVOID SEEING ERRORS ON THE CONSOLE
+		for (int i=0; i<160; ++i) System.out.println();
 	}
 	
 	
