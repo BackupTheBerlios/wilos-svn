@@ -333,11 +333,13 @@ public class WizardControler {
 			// if it is not found maybe it is a guidance
 			else if (tmpNode.getUserObject() instanceof ConcreteTaskDescriptor) {
 				ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor)tmpNode.getUserObject();
-				for (Guidance g : ctd.getTaskDescriptor().getTaskDefinition().getGuidances()){
-					guidNode = g.getGuid() ;
-					if (guidNode != null && guidNode.equals(guid)){
-						retour = g ;
-						trouve = (retour != null) ;
+				if (ctd.getTaskDescriptor().getTaskDefinition() != null && ctd.getTaskDescriptor().getTaskDefinition().getGuidances() != null){
+					for (Guidance g : ctd.getTaskDescriptor().getTaskDefinition().getGuidances()){
+						guidNode = g.getGuid() ;
+						if (guidNode != null && guidNode.equals(guid)){
+							retour = g ;
+							trouve = (retour != null) ;
+						}
 					}
 				}
 			}
