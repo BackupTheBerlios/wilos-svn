@@ -142,7 +142,8 @@ h6 {
 }
 
 .propertyLabel {
-    font-weight: bold; /*font-size:0.9em;*/
+    font:bold 1em Verdana;
+    color: #766491;
 }
 
 .componentPropertySelection td label {
@@ -278,7 +279,7 @@ em {
 
 .contentLayoutGridStyle {
   	width: 100%; /* fixed height of content demos*/
-    height: 200px;
+    height: 70px;
     border:0px;
 }
 
@@ -302,7 +303,7 @@ em {
 .formBorderHighlight, .treeNodeControlButtonsBorder, .effectsControlsBorder {
     vertical-align: top; /*width: 100%;*/
     border: 1px solid #CCCCCC;
-    padding: 10px;
+    padding: 5px;
 }
 
 .calBorderHighlight {
@@ -1437,7 +1438,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
 .iceOutputProgressBackground {
     border: 1px solid #ABABAB;
     width: 300px;
-    height: 13px;
+    height: 14px;
 }
 
 .iceOutputProgressFill {
@@ -1449,6 +1450,25 @@ background-image:url("../images/xpwilos/tab-over.gif");
 
 .iceOutputProgressText {
     color: black;
+    font:bold 1em Verdana;
+}
+
+/*
+   Classes for the output progress bar indeterminate
+*/
+
+.iceOutputProgressIndeterminateActiveClass {
+    background-color: #EFEFEF;
+    background-image: url( ../images/xpwilos/in_progress.gif );
+    background-position: center;
+    background-repeat: repeat-x;
+}
+
+.iceOutputProgressIndeterminateInactiveClass {
+    background-color: #EFEFEF;
+    background-image: url( ../images/xpwilos/in_progress_inactive.gif );
+    background-position: center;
+    background-repeat: repeat-x;
 }
 
 /*
@@ -1820,26 +1840,6 @@ background-image:url("../images/xpwilos/tab-over.gif");
     background-color: #DDDDDD;
 }
 
-/*
-   Classes for the output progress bar
-*/
-
-.iceOutputProgressIndeterminateActiveClass {
-    background-color: #EFEFEF;
-    background-image: url( css-images/in_progress.gif );
-    background-position: center;
-    background-repeat: repeat-x;
-}
-
-.iceOutputProgressIndeterminateInactiveClass {
-    background-color: #EFEFEF;
-    background-image: url( css-images/in_progress_inactive.gif );
-    background-position: center;
-    background-repeat: repeat-x;
-}
-
-
-
 /* XP Disabled styles CSS Document  v1.0 mar 31 2006 */
 
 .iceBtn-dis {
@@ -1863,7 +1863,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
     font-family: Arial, Helvetica, sans-serif;
     font-size: .95em;
     color: #ABABAB;
-    border: 1px dotted #CCCCCC;
+    border: 1px solid #BEB4DC;
     cursor: default;
     margin: 2px;
     padding: 2px;
@@ -1895,7 +1895,7 @@ background-image:url("../images/xpwilos/tab-over.gif");
     padding: 2px;
     font-size: .95em;
     cursor: default;
-    border: none;
+    border: 1px solid #BEB4DC;
 }
 
 .iceRadioBtn-dis {

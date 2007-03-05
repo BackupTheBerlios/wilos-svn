@@ -15,9 +15,10 @@
 						styleClass="smallbutton" />
 					<ice:outputText value="#{msgs['viewer.description'] }" />
 					<ice:outputText value="#{ConcreteIterationViewerBean.concreteIteration.iteration.description}"/>
-					<ice:outputText value="" />
+					<br />
+					</ice:panelGrid>
 					<ice:panelGroup
-						visible="#{ConcreteIterationViewerBean.treeMaskIsAvailable}">
+						visible="#{ConcreteIterationViewerBean.treeMaskIsAvailable}" styleClass="panelGroupTopMargin">
 						<ice:outputText styleClass="propertyLabel" value="#{msgs['viewer.elementsvisible']}" />
 						<ice:dataTable value="" var="">
 							<ice:columns
@@ -36,7 +37,6 @@
 							action="#{ConcreteIterationViewerBean.saveIteration}"
 							styleClass="smallbutton" />
 					</ice:panelGroup>
-				</ice:panelGrid>
 			</ice:panelTab>
 		</ice:panelTabSet>
 	</ice:panelGrid>

@@ -15,9 +15,10 @@
 						styleClass="smallbutton"  />
 					<ice:outputText value="#{msgs['viewer.description'] }" />
 					<ice:outputText value="#{ConcretePhaseViewerBean.concretePhase.phase.description}" />
-					<ice:outputText value="" />
+					<br />
+					</ice:panelGrid>
 					<ice:panelGroup
-						visible="#{ConcretePhaseViewerBean.treeMaskIsAvailable}">
+						visible="#{ConcretePhaseViewerBean.treeMaskIsAvailable}" styleClass="panelGroupTopMargin">
 						<ice:outputText styleClass="propertyLabel" value="#{msgs['viewer.elementsvisible']}" />
 						<ice:dataTable var="" value="">
 							<ice:columns
@@ -36,7 +37,6 @@
 							action="#{ConcretePhaseViewerBean.savePhase}"
 							styleClass="smallbutton" />
 					</ice:panelGroup>
-				</ice:panelGrid>
 			</ice:panelTab>
 		</ice:panelTabSet>
 	</ice:panelGrid>
