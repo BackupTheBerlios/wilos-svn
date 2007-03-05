@@ -178,11 +178,11 @@ public static final String CONCRETENAME = "concreteName";
 		// Rk: the setUp method is called here.
 
 		ConcreteTaskDescriptor concreteTaskDescriptor = new ConcreteTaskDescriptor();
-		this.concreteRoleDescriptor.addConcreteTaskDescriptor(concreteTaskDescriptor);
+		this.concreteRoleDescriptor.addPrimaryConcreteTaskDescriptor(concreteTaskDescriptor);
 
-		assertNotNull(this.concreteRoleDescriptor.getConcreteTaskDescriptors());
-		assertTrue(this.concreteRoleDescriptor.getConcreteTaskDescriptors().size() == 1);
-		assertTrue(this.concreteRoleDescriptor.getConcreteTaskDescriptors().contains(concreteTaskDescriptor));
+		assertNotNull(this.concreteRoleDescriptor.getPrimaryConcreteTaskDescriptors());
+		assertTrue(this.concreteRoleDescriptor.getPrimaryConcreteTaskDescriptors().size() == 1);
+		assertTrue(this.concreteRoleDescriptor.getPrimaryConcreteTaskDescriptors().contains(concreteTaskDescriptor));
 
 		assertEquals(concreteTaskDescriptor.getMainConcreteRoleDescriptor(), this.concreteRoleDescriptor);
 
@@ -195,13 +195,13 @@ public static final String CONCRETENAME = "concreteName";
 
 		ConcreteTaskDescriptor concreteTaskDescriptor = new ConcreteTaskDescriptor();
 
-		this.concreteRoleDescriptor.addConcreteTaskDescriptor(concreteTaskDescriptor);
-		assertNotNull(this.concreteRoleDescriptor.getConcreteTaskDescriptors());
-		assertNotNull(this.concreteRoleDescriptor.getConcreteTaskDescriptors().contains(concreteTaskDescriptor));
+		this.concreteRoleDescriptor.addPrimaryConcreteTaskDescriptor(concreteTaskDescriptor);
+		assertNotNull(this.concreteRoleDescriptor.getPrimaryConcreteTaskDescriptors());
+		assertNotNull(this.concreteRoleDescriptor.getPrimaryConcreteTaskDescriptors().contains(concreteTaskDescriptor));
 		assertEquals(concreteTaskDescriptor.getMainConcreteRoleDescriptor(), this.concreteRoleDescriptor);
 
-		this.concreteRoleDescriptor.removeConcreteTaskDescriptor(concreteTaskDescriptor);
-		assertTrue(this.concreteRoleDescriptor.getConcreteTaskDescriptors().size() == 0);
+		this.concreteRoleDescriptor.removePrimaryConcreteTaskDescriptor(concreteTaskDescriptor);
+		assertTrue(this.concreteRoleDescriptor.getPrimaryConcreteTaskDescriptors().size() == 0);
 
 		assertNull(concreteTaskDescriptor.getMainConcreteRoleDescriptor());
 
@@ -223,12 +223,12 @@ public static final String CONCRETENAME = "concreteName";
 			ctd.addConcreteRoleDescriptor(this.concreteRoleDescriptor);
 		}
 
-		this.concreteRoleDescriptor.addAllConcreteTaskDescriptors(concreteTaskDescriptors) ;
+		this.concreteRoleDescriptor.addAllPrimaryConcreteTaskDescriptors(concreteTaskDescriptors) ;
 
-		assertNotNull(this.concreteRoleDescriptor.getConcreteTaskDescriptors()) ;
-		assertTrue(this.concreteRoleDescriptor.getConcreteTaskDescriptors().size() == 2) ;
-		assertTrue(this.concreteRoleDescriptor.getConcreteTaskDescriptors().contains(ctd1)) ;
-		assertTrue(this.concreteRoleDescriptor.getConcreteTaskDescriptors().contains(ctd2)) ;
+		assertNotNull(this.concreteRoleDescriptor.getPrimaryConcreteTaskDescriptors()) ;
+		assertTrue(this.concreteRoleDescriptor.getPrimaryConcreteTaskDescriptors().size() == 2) ;
+		assertTrue(this.concreteRoleDescriptor.getPrimaryConcreteTaskDescriptors().contains(ctd1)) ;
+		assertTrue(this.concreteRoleDescriptor.getPrimaryConcreteTaskDescriptors().contains(ctd2)) ;
 
 		assertNotNull(ctd1.getMainConcreteRoleDescriptor()) ;
 		assertEquals(ctd1.getMainConcreteRoleDescriptor(), this.concreteRoleDescriptor) ;
@@ -254,13 +254,13 @@ public static final String CONCRETENAME = "concreteName";
 		}
 
 		// see above for tests checking addAllConcreteTaskDescriptors
-		this.concreteRoleDescriptor.addAllConcreteTaskDescriptors(concreteTaskDescriptors) ;
+		this.concreteRoleDescriptor.addAllPrimaryConcreteTaskDescriptors(concreteTaskDescriptors) ;
 
-		this.concreteRoleDescriptor.removeAllConcreteTaskDescriptors() ;
+		this.concreteRoleDescriptor.removeAllPrimaryConcreteTaskDescriptors() ;
 
 		assertNull(ctd1.getMainConcreteRoleDescriptor()) ;
 		assertNull(ctd2.getMainConcreteRoleDescriptor()) ;
-		assertTrue(this.concreteRoleDescriptor.getConcreteTaskDescriptors().size() == 0) ;
+		assertTrue(this.concreteRoleDescriptor.getPrimaryConcreteTaskDescriptors().size() == 0) ;
 
 		// Rk: the tearDown method is called here.
 	}
