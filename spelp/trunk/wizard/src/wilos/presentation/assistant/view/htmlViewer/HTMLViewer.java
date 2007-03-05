@@ -415,7 +415,7 @@ public class HTMLViewer extends JFrame {
 			sections = c.getSections();
 			for(Iterator it = sections.iterator() ; it.hasNext() ; ) {
 				Section s = (Section)it.next();
-				content.append("<TR><TD><INPUT type=\"checkbox\"></TD><TD><B>" + s.getName() + "</B> :</TD><TD>" + s.getDescription() + "</TD></TR>");
+				content.append("<TR><TD><INPUT type=\"checkbox\"></TD><TD><B>" + s.getName() + "</B></TD><TD>" + s.getDescription() + "</TD></TR>");
 			}
 			content.append("</TABLE>");
 		}
