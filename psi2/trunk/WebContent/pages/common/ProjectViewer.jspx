@@ -175,10 +175,10 @@
 									<center>
 									<ice:inputText
 										value="#{process.nbOccurences}"
-										readonly="#{process.isEditable}"
+										disabled="#{process.isEditable}"
 										size="3" 
 										maxlength="3"
-										style="align: center; text-align:right" />
+										style="font-size:10px; height:10px; width:150px; align: center; text-align:right;" />
 									</center>
 								</ice:column>
 							</ice:dataTable>

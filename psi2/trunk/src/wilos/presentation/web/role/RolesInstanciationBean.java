@@ -19,6 +19,7 @@ import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.activity.ActivityService;
 import wilos.business.services.spem2.process.ProcessService;
+import wilos.business.services.spem2.role.RoleDescriptorService;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
@@ -50,13 +51,15 @@ public class RolesInstanciationBean {
 
 	private List<HashMap<String, Object>> displayContent;
 
-	private String projectViewedId;
+	private String projectViewedId = null;
 
 	protected HashMap<String, Boolean> isExpanded = new HashMap<String, Boolean>();
 
 	private ProcessService processService;
 
 	private ActivityService activityService;
+	
+	private RoleDescriptorService roleDescriptorService;
 
 	private ConcreteRoleInstanciationService concreteRoleInstanciationService;
 
@@ -164,6 +167,7 @@ public class RolesInstanciationBean {
 					hm.put("isVisible", false);
 				} else {
 					if (bde instanceof RoleDescriptor) {
+						//this.logger.debug("### Role : "+bde.getPresentationName()+" / Nb primary tasks : "+this.roleDescriptorService.getPrimaryTasks((RoleDescriptor)bde).size());
 						hm.put("nodeType", "leaf");
 						hm.put("expansionImage", TABLE_LEAF);
 						hm.put("isVisible", true);
@@ -469,6 +473,20 @@ public class RolesInstanciationBean {
 	 */
 	public void setProjectTasksInstanciated(String projectTasksInstanciated) {
 		this.projectTasksInstanciated = projectTasksInstanciated;
+	}
+
+	/**
+	 * @return the roleDescriptorService
+	 */
+	public RoleDescriptorService getRoleDescriptorService() {
+		return roleDescriptorService;
+	}
+
+	/**
+	 * @param roleDescriptorService the roleDescriptorService to set
+	 */
+	public void setRoleDescriptorService(RoleDescriptorService roleDescriptorService) {
+		this.roleDescriptorService = roleDescriptorService;
 	}
 
 }
