@@ -23,6 +23,7 @@ import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.process.Process;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
+import wilos.presentation.web.role.RolesInstanciationBean;
 import wilos.presentation.web.tree.TreeBean;
 
 /**
@@ -36,20 +37,28 @@ public class ExpTableBean {
 	public static final String CONTRACT_TABLE_ARROW = "images/expandableTable/contract.gif";
 
 	public static final String TABLE_LEAF = "images/expandableTable/leaf.gif";
+	
+	public static final String INDENTATION_STRING = "- - - ";
 
 	private List<HashMap<String, Object>> expTableContent;
 
 	protected HashMap<String, Boolean> isExpanded = new HashMap<String, Boolean>();
+	
+	private HashMap<String, String> indentationContent = new HashMap<String, String>();;
 
 	private ProcessService processService;
 
 	private ProjectService projectService;
 
 	private ActivityService activityService;
+	
+	private boolean needIndentation = false;
 
 	private WebSessionService webSessionService;
 
 	private boolean isVisible = true;
+
+	private boolean isInstanciedProject = false;
 
 	private String viewedProcessId = "";
 
@@ -57,6 +66,10 @@ public class ExpTableBean {
 
 	public ExpTableBean() {
 		this.expTableContent = new ArrayList<HashMap<String, Object>>();
+	}
+
+	public void refreshExpTable() {
+		this.isInstanciedProject = true;
 	}
 
 	public void saveProjectInstanciation() {
@@ -91,6 +104,12 @@ public class ExpTableBean {
 						"Woops2ProcessBean");
 		processBean.setReadOnly(true);
 
+		// refresh de la table d'avancement
+		RolesInstanciationBean rib = (RolesInstanciationBean) context
+				.getApplication().getVariableResolver().resolveVariable(
+						context, "RolesInstanciationBean");
+		rib.refreshProcessTable();
+
 	}
 
 	/**
@@ -99,11 +118,12 @@ public class ExpTableBean {
 	public List<HashMap<String, Object>> getExpTableContent() {
 
 		if (!this.selectedProcessGuid.equals("default")) {
-			Process process = this.processService
-					.getProcessFromGuid(this.selectedProcessGuid);
-			if (!this.viewedProcessId.equals(process.getId())) {
+			Process process = this.processService.getProcessFromGuid(this.selectedProcessGuid);
+			if (!this.viewedProcessId.equals(process.getId()) || this.isInstanciedProject) {
 				this.viewedProcessId = process.getId();
 				this.expTableContent.clear();
+				this.indentationContent.clear();
+				this.needIndentation = false;
 				List<HashMap<String, Object>> lines = this
 						.getExpTableLineContent(process);
 				this.expTableContent.addAll(lines);
@@ -119,6 +139,7 @@ public class ExpTableBean {
 	private List<HashMap<String, Object>> getExpTableLineContent(Activity _act) {
 
 		List<HashMap<String, Object>> lines = new ArrayList<HashMap<String, Object>>();
+		String indentationString = "";
 		Activity act = this.activityService.getActivity(_act.getId());
 		SortedSet<BreakdownElement> set = this.activityService
 				.getBreakdownElements(act);
@@ -137,10 +158,21 @@ public class ExpTableBean {
 				hm.put("name", bde.getPresentationName());
 				hm.put("isEditable", act.getHasMultipleOccurrences()
 						|| act.getIsRepeatable());
-				hm.put("nbOccurences", new Integer(1));
+				if (this.isInstanciedProject) {
+					hm.put("nbOccurences", new Integer(0));
+				} else {
+					hm.put("nbOccurences", new Integer(1));
+				}
 				hm.put("parentId", act.getId());
 
 				lines.add(hm);
+				
+				if (needIndentation) {
+					if (this.indentationContent.get(act.getId()) != null) {
+						indentationString = this.indentationContent.get(act.getId());
+					}
+					this.indentationContent.put((String) hm.get("id"), indentationString.concat(INDENTATION_STRING));
+				}
 			}
 		}
 		return lines;
@@ -155,6 +187,8 @@ public class ExpTableBean {
 		Map map = context.getExternalContext().getRequestParameterMap();
 		String elementId = (String) map.get("elementId");
 
+		this.needIndentation = true;
+		
 		ArrayList<Object> tmp = new ArrayList<Object>();
 		tmp.addAll(this.expTableContent);
 		int index;
@@ -367,6 +401,35 @@ public class ExpTableBean {
 	 */
 	public void setSelectedProcessGuid(String _selectedProcessGuid) {
 		this.selectedProcessGuid = _selectedProcessGuid;
+	}
+
+	/**
+	 * @return the isInstanciedProject
+	 */
+	public boolean getIsInstanciedProject() {
+		return this.isInstanciedProject;
+	}
+
+	/**
+	 * @param _isInstanciedProject
+	 *            the isInstanciedProject to set
+	 */
+	public void setIsInstanciedProject(boolean _isInstanciedProject) {
+		this.isInstanciedProject = _isInstanciedProject;
+	}
+
+	/**
+	 * @return the indentationContent
+	 */
+	public HashMap<String, String> getIndentationContent() {
+		return this.indentationContent;
+	}
+
+	/**
+	 * @param _indentationContent the indentationContent to set
+	 */
+	public void setIndentationContent(HashMap<String, String> _indentationContent) {
+		this.indentationContent = _indentationContent;
 	}
 
 }
