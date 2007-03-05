@@ -41,17 +41,17 @@ public class RolesInstanciationBean {
 	public static final String CONTRACT_TABLE_ARROW = "images/expandableTable/contract.gif";
 
 	public static final String TABLE_LEAF = "images/expandableTable/leaf.gif";
-	
+
 	public static final String INDENTATION_STRING = "- - - ";
-	
+
 	private HashMap<String, String> indentationContent;
-	
+
 	private boolean needIndentation = false;
 
 	private List<HashMap<String, Object>> displayContent;
-	
+
 	private String processViewedId = null;
-	
+
 	private String projectViewedId = null;
 
 	protected HashMap<String, Boolean> isExpanded = new HashMap<String, Boolean>();
@@ -59,7 +59,7 @@ public class RolesInstanciationBean {
 	private ProcessService processService;
 
 	private ActivityService activityService;
-	
+
 	private ConcreteRoleInstanciationService concreteRoleInstanciationService;
 
 	private WebSessionService webSessionService;
@@ -67,32 +67,30 @@ public class RolesInstanciationBean {
 	private ProjectService projectService;
 
 	private boolean isVisible = true;
-	
+
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
 	public RolesInstanciationBean() {
 		this.displayContent = new ArrayList<HashMap<String, Object>>();
 		this.indentationContent = new HashMap<String, String>();
-		this.concreteRoleInstanciationService= new ConcreteRoleInstanciationService();
+		this.concreteRoleInstanciationService = new ConcreteRoleInstanciationService();
 	}
 
 	/**
 	 * @return the displayContent
 	 */
-	@SuppressWarnings({ "unchecked", "static-access" })
+	@SuppressWarnings( { "unchecked", "static-access" })
 	public List<HashMap<String, Object>> getDisplayContent() {
 
 		String projectId = (String) this.webSessionService.getAttribute(this.webSessionService.PROJECT_ID);
 		Project project = this.projectService.getProject(projectId);
 
-		if (this.processViewedId == null || this.projectViewedId != projectId)
-		{
-			projectViewedId = projectId;
-			if(project.getProcess() != null)
-			{
+		if (this.processViewedId == null || this.projectViewedId != projectId) {
+			this.projectViewedId = projectId;
+			if (project.getProcess() != null) {
 				Process process = project.getProcess();
 				process = this.processService.getProcessFromGuid(process.getGuid());
-				
+
 				processViewedId = process.getId();
 				this.displayContent.clear();
 				this.indentationContent.clear();
@@ -105,23 +103,19 @@ public class RolesInstanciationBean {
 		return this.displayContent;
 	}
 
-	
 	/**
 	 * methode called when the instanciation is required from the role instanciation page
 	 *
 	 */
-	public void instanciateConcreteRole()
-	{
+	public void instanciateConcreteRole() {
 		List<HashMap<String, Object>> tmp = this.displayContent;
 		List<HashMap<String, Object>> resultat = new ArrayList<HashMap<String, Object>>();
 
 		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
 
-		for (Iterator iter = this.displayContent.iterator(); iter.hasNext();)
-		{
+		for (Iterator iter = this.displayContent.iterator(); iter.hasNext();) {
 			HashMap<String, Object> hm = (HashMap<String, Object>) iter.next();
-			if (hm.get("nodeType").equals("leaf"))
-			{
+			if (hm.get("nodeType").equals("leaf")) {
 				HashMap<String, Object> tmpHm = new HashMap<String, Object>();
 				tmpHm.put("id", hm.get("id"));
 				tmpHm.put("nbOccurences", hm.get("nbOccurences"));
@@ -130,21 +124,20 @@ public class RolesInstanciationBean {
 			}
 		}
 		this.concreteRoleInstanciationService.saveInstanciateConcreteRole(resultat, projectId);
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");
 		tb.rebuildProjectTree();
 		tb.refreshProjectTree();
-		
+
 		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
 		FacesMessage message = new FacesMessage();
 		message.setSummary(bundle.getString("component.project.rolesinstanciation.validationMessage"));
 		message.setSeverity(FacesMessage.SEVERITY_ERROR);
 		context.addMessage(null, message);
-		
+
 		//remise a 0 des nombres d'occurences
-		for (HashMap<String, Object> map : this.displayContent)
-		{
+		for (HashMap<String, Object> map : this.displayContent) {
 			map.put("nbOccurences", new Integer(0));
 		}
 	}
@@ -157,26 +150,19 @@ public class RolesInstanciationBean {
 
 		List<HashMap<String, Object>> lines = new ArrayList<HashMap<String, Object>>();
 		String indentationString = "";
-		
 		Activity act = this.activityService.getActivity(_act.getId());
 		SortedSet<BreakdownElement> set = this.activityService.getBreakdownElements(act);
 		act.setBreakdownElements(set);
-		for (BreakdownElement bde : act.getBreakdownElements())
-		{
-			
+		for (BreakdownElement bde : act.getBreakdownElements()) {
+
 			HashMap<String, Object> hm = new HashMap<String, Object>();
-			if (!(bde instanceof TaskDescriptor))
-			{
-				if (bde instanceof WorkBreakdownElement)
-				{
+			if (!(bde instanceof TaskDescriptor)) {
+				if (bde instanceof WorkBreakdownElement) {
 					hm.put("nodeType", "node");
 					hm.put("expansionImage", CONTRACT_TABLE_ARROW);
 					hm.put("isVisible", false);
-				}
-				else
-				{
-					if (bde instanceof RoleDescriptor)
-					{
+				} else {
+					if (bde instanceof RoleDescriptor) {
 						hm.put("nodeType", "leaf");
 						hm.put("expansionImage", TABLE_LEAF);
 						hm.put("isVisible", true);
@@ -188,7 +174,7 @@ public class RolesInstanciationBean {
 				hm.put("nbOccurences", new Integer(0));
 				hm.put("parentId", act.getId());
 				lines.add(hm);
-					
+
 				// if this is not the root node -> needIndentation == true
 				if (needIndentation) {
 					if (this.indentationContent.get(act.getId()) != null) {
@@ -213,18 +199,15 @@ public class RolesInstanciationBean {
 		ArrayList<HashMap<String, Object>> tmp = new ArrayList<HashMap<String, Object>>();
 		tmp.addAll(this.displayContent);
 		int index;
-		
+
 		this.needIndentation = true;
 
-		for (Iterator iter = tmp.iterator(); iter.hasNext();)
-		{
+		for (Iterator iter = tmp.iterator(); iter.hasNext();) {
 			HashMap<String, Object> hm = new HashMap<String, Object>();
 			hm = (HashMap<String, Object>) iter.next();
 
-			if (hm.get("id").equals(elementId))
-			{
-				if (hm.get("nodeType").equals("node"))
-				{
+			if (hm.get("id").equals(elementId)) {
+				if (hm.get("nodeType").equals("node")) {
 					hm.put("expansionImage", EXPAND_TABLE_ARROW);
 					Activity act = this.activityService.getActivityDao().getActivity((String) hm.get("id"));
 					index = this.displayContent.indexOf(hm);
@@ -440,6 +423,5 @@ public class RolesInstanciationBean {
 	public void setConcreteRoleInstanciationService(ConcreteRoleInstanciationService concreteRoleInstanciationService) {
 		this.concreteRoleInstanciationService = concreteRoleInstanciationService;
 	}
-
 
 }
