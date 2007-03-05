@@ -1,6 +1,5 @@
 package wilos.test.business.services.misc.concreterole;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -151,8 +150,8 @@ public class ConcreteRoleDescriptorServiceTest {
 		this.concreteTaskDescriptorDao
 				.saveOrUpdateConcreteTaskDescriptor(ctdTmp3);
 
-		this.mainConcreteRoleDescriptor.addConcreteTaskDescriptor(ctdTmp);
-		this.mainConcreteRoleDescriptor.addConcreteTaskDescriptor(ctdTmp2);
+		this.mainConcreteRoleDescriptor.addPrimaryConcreteTaskDescriptor(ctdTmp);
+		this.mainConcreteRoleDescriptor.addPrimaryConcreteTaskDescriptor(ctdTmp2);
 
 		this.concreteRoleDescriptorService
 				.getConcreteRoleDescriptorDao()
@@ -185,8 +184,8 @@ public class ConcreteRoleDescriptorServiceTest {
 		this.concreteTaskDescriptorDao
 				.saveOrUpdateConcreteTaskDescriptor(ctdTmp2);
 
-		this.mainConcreteRoleDescriptor.addConcreteTaskDescriptor(ctdTmp);
-		this.mainConcreteRoleDescriptor.addConcreteTaskDescriptor(ctdTmp2);
+		this.mainConcreteRoleDescriptor.addPrimaryConcreteTaskDescriptor(ctdTmp);
+		this.mainConcreteRoleDescriptor.addPrimaryConcreteTaskDescriptor(ctdTmp2);
 		
 		this.concreteRoleDescriptorService
 				.saveConcreteRoleDescriptor(this.mainConcreteRoleDescriptor);
@@ -197,6 +196,6 @@ public class ConcreteRoleDescriptorServiceTest {
 											.getConcreteRoleDescriptorDao().getConcreteRoleDescriptor(id);
 		
 		assertNotNull(crdtmp);
-		assertNotNull(crdtmp.getConcreteTaskDescriptors());
+		assertNotNull(crdtmp.getPrimaryConcreteTaskDescriptors());
 	}
 }
