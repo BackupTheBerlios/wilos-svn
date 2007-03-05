@@ -60,8 +60,11 @@ public class ConcretePhaseNode extends DefaultMutableTreeNode {
 				}
 			} else {
 				if (concreteBreakdownElement instanceof ConcreteRoleDescriptor) {
-					this.add(new ConcreteRoleDescriptorNode(
-									(ConcreteRoleDescriptor) concreteBreakdownElement, _treeMap));
+					ConcreteRoleDescriptor crd = (ConcreteRoleDescriptor) concreteBreakdownElement;
+					// Filter to mask the additional roles.
+					if ((crd.getConcreteTaskDescriptors() != null)&&(crd.getConcreteTaskDescriptors().size() > 0)) {
+						this.add(new ConcreteRoleDescriptorNode(crd, _treeMap));
+					}
 				}
 			}
 		}

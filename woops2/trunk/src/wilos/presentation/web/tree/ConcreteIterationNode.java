@@ -17,7 +17,8 @@ public class ConcreteIterationNode extends DefaultMutableTreeNode {
 	private ConcreteIteration concreteIteration;
 
 	public ConcreteIterationNode(ConcreteIteration _concreteIteration,
-			boolean _isConcreteTaskDescriptorsTree, HashMap<String, Object> _treeMap) {
+			boolean _isConcreteTaskDescriptorsTree,
+			HashMap<String, Object> _treeMap) {
 		super();
 		this.concreteIteration = _concreteIteration;
 
@@ -35,7 +36,7 @@ public class ConcreteIterationNode extends DefaultMutableTreeNode {
 
 		// add the concreteIteration object with his id in the treeMap
 		_treeMap.put(iceUserObject.getId(), _concreteIteration);
-		
+
 		for (ConcreteBreakdownElement concreteBreakdownElement : this.concreteIteration
 				.getConcreteBreakdownElements()) {
 			if (concreteBreakdownElement instanceof ConcreteActivity) {
@@ -53,8 +54,12 @@ public class ConcreteIterationNode extends DefaultMutableTreeNode {
 				}
 			} else {
 				if (concreteBreakdownElement instanceof ConcreteRoleDescriptor) {
-					this.add(new ConcreteRoleDescriptorNode(
-									(ConcreteRoleDescriptor) concreteBreakdownElement, _treeMap));
+					ConcreteRoleDescriptor crd = (ConcreteRoleDescriptor) concreteBreakdownElement;
+					// Filter to mask the additional roles.
+					if ((crd.getConcreteTaskDescriptors() != null)
+							&& (crd.getConcreteTaskDescriptors().size() > 0)) {
+						this.add(new ConcreteRoleDescriptorNode(crd, _treeMap));
+					}
 				}
 			}
 		}

@@ -19,15 +19,17 @@ import wilos.model.misc.project.Project;
 public class ProjectNode extends DefaultMutableTreeNode {
 
 	private static final long serialVersionUID = -9148715541110574441L;
-	
+
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
 	private Project project;
 
-	public ProjectNode(Project _project, boolean _isConcreteTaskDescriptorsTree, HashMap<String, Object> _treeMap) {
+	public ProjectNode(Project _project,
+			boolean _isConcreteTaskDescriptorsTree,
+			HashMap<String, Object> _treeMap) {
 		super();
 		this.project = _project;
-		
+
 		WilosObjectNode iceUserObject = new WilosObjectNode(this);
 		this.setUserObject(iceUserObject);
 
@@ -42,7 +44,7 @@ public class ProjectNode extends DefaultMutableTreeNode {
 
 		// add the project object with his id in the treeMap
 		_treeMap.put(iceUserObject.getId(), _project);
-		
+
 		if (this.project.getProcess() != null) {
 			iceUserObject.setText(this.project.getConcreteName() + " ("
 					+ this.project.getProcess().getPresentationName() + ")");
@@ -52,9 +54,9 @@ public class ProjectNode extends DefaultMutableTreeNode {
 					.getConcreteBreakdownElements()) {
 				if (concreteBreakdownElement instanceof ConcretePhase) {
 					ConcretePhase cp = (ConcretePhase) concreteBreakdownElement;
-					
 					if (cp.getIsInUsed()) {
-						this.add(new ConcretePhaseNode(cp, _isConcreteTaskDescriptorsTree, _treeMap));
+						this.add(new ConcretePhaseNode(cp,
+								_isConcreteTaskDescriptorsTree, _treeMap));
 					}
 				} else if (concreteBreakdownElement instanceof ConcreteIteration) {
 					ConcreteIteration ci = (ConcreteIteration) concreteBreakdownElement;
@@ -72,20 +74,27 @@ public class ProjectNode extends DefaultMutableTreeNode {
 					if (concreteBreakdownElement instanceof ConcreteTaskDescriptor) {
 						ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) concreteBreakdownElement;
 						if (ctd.getIsInUsed()) {
-							this.add(new ConcreteTaskDescriptorNode(ctd, _treeMap));
+							this.add(new ConcreteTaskDescriptorNode(ctd,
+									_treeMap));
 						}
 					}
 				} else {
 					if (concreteBreakdownElement instanceof ConcreteRoleDescriptor) {
-						this.add(new ConcreteRoleDescriptorNode((ConcreteRoleDescriptor) concreteBreakdownElement, _treeMap));
+						ConcreteRoleDescriptor crd = (ConcreteRoleDescriptor) concreteBreakdownElement;
+						// Filter to mask the additional roles.
+						if ((crd.getConcreteTaskDescriptors() != null)
+								&& (crd.getConcreteTaskDescriptors().size() > 0)) {
+							this.add(new ConcreteRoleDescriptorNode(crd,
+									_treeMap));
+						}
 					}
 				}
 			}
 		}
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver()
-			.resolveVariable(context, "TreeBean");
+				.resolveVariable(context, "TreeBean");
 		tb.setTreeMap(_treeMap);
 	}
 }
