@@ -50,9 +50,7 @@ public class RolesInstanciationBean {
 
 	private List<HashMap<String, Object>> displayContent;
 
-	private String processViewedId = null;
-
-	private String projectViewedId = null;
+	private String projectViewedId;
 
 	protected HashMap<String, Boolean> isExpanded = new HashMap<String, Boolean>();
 
@@ -70,6 +68,10 @@ public class RolesInstanciationBean {
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
+	private boolean selected_projectManager_view;
+
+	private String projectTasksInstanciated;
+
 	public RolesInstanciationBean() {
 		this.displayContent = new ArrayList<HashMap<String, Object>>();
 		this.indentationContent = new HashMap<String, String>();
@@ -82,16 +84,15 @@ public class RolesInstanciationBean {
 	@SuppressWarnings( { "unchecked", "static-access" })
 	public List<HashMap<String, Object>> getDisplayContent() {
 
-		String projectId = (String) this.webSessionService.getAttribute(this.webSessionService.PROJECT_ID);
+		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
 		Project project = this.projectService.getProject(projectId);
 
-		if (this.processViewedId == null || this.projectViewedId != projectId) {
+		if (this.projectViewedId == null || !(this.projectViewedId.equals(projectId))) {
+			
 			this.projectViewedId = projectId;
 			if (project.getProcess() != null) {
 				Process process = project.getProcess();
 				process = this.processService.getProcessFromGuid(process.getGuid());
-
-				processViewedId = process.getId();
 				this.displayContent.clear();
 				this.indentationContent.clear();
 				this.isExpanded.clear();
@@ -171,7 +172,7 @@ public class RolesInstanciationBean {
 				hm.put("id", bde.getId());
 				hm.put("name", bde.getPresentationName());
 				hm.put("isEditable", act.getHasMultipleOccurrences());
-				hm.put("nbOccurences", new Integer(0));
+				hm.put("nbOccurences", new Integer(1));
 				hm.put("parentId", act.getId());
 				lines.add(hm);
 
@@ -291,6 +292,38 @@ public class RolesInstanciationBean {
 			contractNodeAction();
 		}
 
+	}
+	
+	/**
+	 * TODO method description
+	 * 
+	 * @return
+	 */
+	public String getProjectTasksInstanciated() {
+		String user_id = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID);
+		Project project = this.projectService.getProject((String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID));
+		if (project.getProcess() == null) {
+			this.projectTasksInstanciated = "projectTasksNotInstanciated";
+		} else {
+			this.projectTasksInstanciated = "projectTasksInstanciated";
+		}
+		return this.projectTasksInstanciated;
+	}
+	
+	
+	/**
+	 * @return the selected_projectAdvancement_view
+	 */
+	public boolean getSelected_projectManager_view() {
+		String user_id = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID);
+		Project project = this.projectService.getProject((String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID));
+		this.selected_projectManager_view = false;
+		if (project.getProjectManager() != null) {
+			if (project.getProjectManager().getWilosuser_id().equals(user_id)) {
+				this.selected_projectManager_view = true;
+			}
+		}
+		return this.selected_projectManager_view;
 	}
 
 	/**
@@ -422,6 +455,20 @@ public class RolesInstanciationBean {
 	 */
 	public void setConcreteRoleInstanciationService(ConcreteRoleInstanciationService concreteRoleInstanciationService) {
 		this.concreteRoleInstanciationService = concreteRoleInstanciationService;
+	}
+
+	/**
+	 * @param selected_projectManager_view the selected_projectManager_view to set
+	 */
+	public void setSelected_projectManager_view(boolean selected_projectManager_view) {
+		this.selected_projectManager_view = selected_projectManager_view;
+	}
+
+	/**
+	 * @param projectTasksInstanciated the projectTasksInstanciated to set
+	 */
+	public void setProjectTasksInstanciated(String projectTasksInstanciated) {
+		this.projectTasksInstanciated = projectTasksInstanciated;
 	}
 
 }

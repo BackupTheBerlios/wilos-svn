@@ -101,7 +101,6 @@ public class ConcreteRoleInstanciationService {
 
 		Set<ConcreteBreakdownElement> concretesActivitiesToModifiy = new HashSet<ConcreteBreakdownElement>();
 		for (ConcreteBreakdownElement concreteBreakdownElement : this.concreteBreakdownElementService.getAllConcreteBreakdownElementsFromProject(project.getId())) {
-			this.logger.debug("## CA du projet : "+concreteBreakdownElement.getConcreteName());
 			if (concreteBreakdownElement instanceof ConcreteActivity) {
 				if (concreteBreakdownElement instanceof ConcretePhase) {
 					ConcretePhase concretePhase = (ConcretePhase) concreteBreakdownElement;

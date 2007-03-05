@@ -74,6 +74,29 @@ public class ProjectAdvancementBean {
 	}
 
 	/**
+	 * Getter of displayContent.
+	 * 
+	 * @return the displayContent.
+	 */
+	public ArrayList<HashMap<String, Object>> getDisplayContent() {
+		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
+		this.project = this.projectService.getProject(projectId);
+	
+		// if the project is another then the last selected or if it has been modified
+		if (this.projectViewedId == null || !(this.projectViewedId.equals(projectId)) || this.projectModified) {
+			// reseting the table parameters
+			projectViewedId = projectId;
+			this.displayContent.clear();
+			this.indentationContent.clear();
+			this.isExpanded.clear();
+			this.needIndentation = false;
+			this.displayContent.addAll(this.retrieveHierarchicalItems(this.project));
+		}
+		this.projectModified = false;
+		return this.displayContent;
+	}
+
+	/**
 	 * put the attribut project modified to true which force the project table
 	 * to be recalculated
 	 * 
@@ -280,7 +303,6 @@ public class ProjectAdvancementBean {
 		HashMap<String, Double> couple = this.taskAdvancementCalculation(cbe);
 		remainingTimes = couple.get("remainingTime");
 		accomplishedTimes = couple.get("accomplishedTime");
-		this.logger.debug("### CBD : "+cbe.getConcreteName()+ "/ CP : "+accomplishedTimes+" / RAF : "+remainingTimes);
 		if ((remainingTimes + accomplishedTimes) > 0) {
 			result = accomplishedTimes / (remainingTimes + accomplishedTimes);
 			result = result * 100;
@@ -370,31 +392,6 @@ public class ProjectAdvancementBean {
 		return _state;
 	}
 	
-
-	/**
-	 * Getter of displayContent.
-	 * 
-	 * @return the displayContent.
-	 */
-	public ArrayList<HashMap<String, Object>> getDisplayContent() {
-		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
-		this.project = this.projectService.getProject(projectId);
-
-		// if the project is another then the last selected or if it has been
-		// modified
-		if (this.projectViewedId == null || projectViewedId != projectId || this.projectModified) {
-
-			// reseting the table parameters
-			projectViewedId = projectId;
-			this.displayContent.clear();
-			this.indentationContent.clear();
-			this.isExpanded.clear();
-			this.needIndentation = false;
-			this.displayContent.addAll(this.retrieveHierarchicalItems(this.project));
-		}
-		this.projectModified = false;
-		return this.displayContent;
-	}
 
 	/**
 	 * Setter of displayContent.
