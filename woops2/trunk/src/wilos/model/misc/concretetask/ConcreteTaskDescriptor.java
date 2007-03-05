@@ -111,12 +111,12 @@ public class ConcreteTaskDescriptor extends ConcreteWorkBreakdownElement {
 	public void addConcreteRoleDescriptor(
 			ConcreteRoleDescriptor _concreteRoleDescriptor) {
 		this.mainConcreteRoleDescriptor = _concreteRoleDescriptor;
-		_concreteRoleDescriptor.getConcreteTaskDescriptors().add(this);
+		_concreteRoleDescriptor.getPrimaryConcreteTaskDescriptors().add(this);
 	}
 
 	public void removeConcreteRoleDescriptor(
 			ConcreteRoleDescriptor _concreteRoleDescriptor) {
-		_concreteRoleDescriptor.getConcreteTaskDescriptors().remove(this);
+		_concreteRoleDescriptor.getPrimaryConcreteTaskDescriptors().remove(this);
 		this.mainConcreteRoleDescriptor = null;
 	}
 

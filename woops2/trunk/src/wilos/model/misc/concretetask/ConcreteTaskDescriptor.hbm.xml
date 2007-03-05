@@ -16,7 +16,7 @@
 
 		<many-to-one name="mainConcreteRoleDescriptor"
 			class="wilos.model.misc.concreterole.ConcreteRoleDescriptor"
-			column="mainconcreteroledescriptor_id">
+			column="concreteroledescriptor_id">
 		</many-to-one>
 
 		<property name="state" type="java.lang.String" column="state"
