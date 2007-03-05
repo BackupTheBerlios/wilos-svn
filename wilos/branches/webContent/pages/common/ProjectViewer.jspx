@@ -134,7 +134,7 @@
 			<!-- ####################################################################################################
 			Woops2 ONGLET de l'instanciation d'un process
 			#################################################################################################### -->
-			<ice:panelTab id="panelTab_processInstanciation" label="#{msgs['component.tab.processinstanciation.title']}">
+			<ice:panelTab id="panelTab_processInstanciation" label="#{msgs['component.tab.processinstanciation.title']}" rendered="#{Woops2ProcessBean.isProjectManager}">
 				<!-- <ice:outputText styleClass="propertyLabel" value="#{msgs['component.tableparticipantProcessProject.processList']}" />
 				
 				<ice:panelStack id="panelStack_projectProcess" selectedPanel="#{ProjectBean.processesListView}">
@@ -165,7 +165,7 @@
 											value="#{msgs['component.exptable.header.column1']}" />
 									</f:facet>
 									<ice:outputText
-										value="#{process.name}" />
+										value="#{ExpTableBean.indentationContent[process.id]}#{process.name}" />
 								</ice:column>
 								<ice:column>
 									<f:facet name="header">
