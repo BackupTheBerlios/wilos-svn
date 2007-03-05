@@ -17,10 +17,10 @@ public class ConcreteRoleDescriptor extends ConcreteBreakdownElement {
 
 	private Participant participant;
 
-	private Set<ConcreteTaskDescriptor> concreteTaskDescriptors;
+	private Set<ConcreteTaskDescriptor> primaryConcreteTaskDescriptors;
 
 	public ConcreteRoleDescriptor() {
-		this.concreteTaskDescriptors = new HashSet<ConcreteTaskDescriptor>();
+		this.primaryConcreteTaskDescriptors = new HashSet<ConcreteTaskDescriptor>();
 	}
 
 	/*
@@ -42,8 +42,8 @@ public class ConcreteRoleDescriptor extends ConcreteBreakdownElement {
 		super.copy(_concreteRoleDescriptor);
 		this.participant = _concreteRoleDescriptor.getParticipant();
 		this.roleDescriptor = _concreteRoleDescriptor.getRoleDescriptor();
-		this.concreteTaskDescriptors.addAll(_concreteRoleDescriptor
-				.getConcreteTaskDescriptors());
+		this.primaryConcreteTaskDescriptors.addAll(_concreteRoleDescriptor
+				.getPrimaryConcreteTaskDescriptors());
 	}
 
 	/*
@@ -59,7 +59,7 @@ public class ConcreteRoleDescriptor extends ConcreteBreakdownElement {
 		}
 		ConcreteRoleDescriptor concreteRoleDescriptor = (ConcreteRoleDescriptor) obj;
 		return new EqualsBuilder().appendSuper(super.equals(concreteRoleDescriptor))
-								  .append(this.concreteTaskDescriptors,concreteRoleDescriptor.concreteTaskDescriptors)
+								  .append(this.primaryConcreteTaskDescriptors,concreteRoleDescriptor.primaryConcreteTaskDescriptors)
 								  .append(this.participant, concreteRoleDescriptor.participant)
 								  .append(this.roleDescriptor, concreteRoleDescriptor.roleDescriptor)
 								  .isEquals();
@@ -114,31 +114,31 @@ public class ConcreteRoleDescriptor extends ConcreteBreakdownElement {
 	 *
 	 */
 
-	public void addConcreteTaskDescriptor(
+	public void addPrimaryConcreteTaskDescriptor(
 			ConcreteTaskDescriptor _concreteTaskDescriptor) {
-		this.concreteTaskDescriptors.add(_concreteTaskDescriptor);
+		this.primaryConcreteTaskDescriptors.add(_concreteTaskDescriptor);
 		_concreteTaskDescriptor.setMainConcreteRoleDescriptor(this);
 	}
 
-	public void removeConcreteTaskDescriptor(
+	public void removePrimaryConcreteTaskDescriptor(
 			ConcreteTaskDescriptor _concreteTaskDescriptor) {
 		_concreteTaskDescriptor.setMainConcreteRoleDescriptor(null);
-		this.concreteTaskDescriptors.remove(_concreteTaskDescriptor);
+		this.primaryConcreteTaskDescriptors.remove(_concreteTaskDescriptor);
 	}
 
-	public void addAllConcreteTaskDescriptors(
+	public void addAllPrimaryConcreteTaskDescriptors(
 			Set<ConcreteTaskDescriptor> _concreteTaskDescriptors) {
-		this.concreteTaskDescriptors.addAll(_concreteTaskDescriptors);
+		this.primaryConcreteTaskDescriptors.addAll(_concreteTaskDescriptors);
 
 		for (ConcreteTaskDescriptor ctd : _concreteTaskDescriptors) {
 			ctd.addConcreteRoleDescriptor(this);
 		}
 	}
 
-	public void removeAllConcreteTaskDescriptors() {
-		for (ConcreteTaskDescriptor ctd : this.getConcreteTaskDescriptors())
+	public void removeAllPrimaryConcreteTaskDescriptors() {
+		for (ConcreteTaskDescriptor ctd : this.getPrimaryConcreteTaskDescriptors())
 			ctd.setMainConcreteRoleDescriptor(null);
-		this.getConcreteTaskDescriptors().clear();
+		this.getPrimaryConcreteTaskDescriptors().clear();
 	}
 
 	/*
@@ -154,13 +154,13 @@ public class ConcreteRoleDescriptor extends ConcreteBreakdownElement {
 		this.roleDescriptor = _roleDescriptor;
 	}
 
-	public Set<ConcreteTaskDescriptor> getConcreteTaskDescriptors() {
-		return concreteTaskDescriptors;
+	public Set<ConcreteTaskDescriptor> getPrimaryConcreteTaskDescriptors() {
+		return primaryConcreteTaskDescriptors;
 	}
 
-	public void setConcreteTaskDescriptors(
+	public void setPrimaryConcreteTaskDescriptors(
 			Set<ConcreteTaskDescriptor> concreteTaskDescriptors) {
-		this.concreteTaskDescriptors = concreteTaskDescriptors;
+		this.primaryConcreteTaskDescriptors = concreteTaskDescriptors;
 	}
 
 	public Participant getParticipant() {

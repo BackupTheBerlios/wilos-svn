@@ -9,7 +9,7 @@
 		table="concreteroledescriptor" lazy="true">
 		<key column="concreteroledescriptor_id"></key>
 
-		<set name="concreteTaskDescriptors" lazy="true">
+		<set name="primaryConcreteTaskDescriptors" lazy="true">
 			<cache usage="read-write"/>
 			<key column="concreteroledescriptor_id" />
 			<one-to-many class="wilos.model.misc.concretetask.ConcreteTaskDescriptor"></one-to-many>
