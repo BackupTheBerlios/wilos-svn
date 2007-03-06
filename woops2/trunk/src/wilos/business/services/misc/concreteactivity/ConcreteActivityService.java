@@ -20,6 +20,11 @@ import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 public class ConcreteActivityService {
 
 	private ConcreteActivityDao concreteActivityDao;
+	
+	public List<ConcreteActivity> getAllConcreteActivities(
+			String _activityId, String _projectId) {
+		return this.concreteActivityDao.getAllConcreteActivities(_activityId, _projectId);
+	}
 
 	/**
 	 * 

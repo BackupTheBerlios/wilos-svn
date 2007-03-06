@@ -98,7 +98,7 @@ public class ConcreteActivityDao extends HibernateDaoSupport {
 		}
 	}
 	
-	public List<ConcreteActivity> getConcreteBreakdownElementsFromConcreteActivity(
+	public List<ConcreteActivity> getAllConcreteActivities(
 			String _activityId, String _projectId) {
 		List concretebdes = this
 				.getHibernateTemplate()
