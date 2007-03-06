@@ -210,6 +210,11 @@ public class WizardServicesProxy {
             anIteration.setGuid("1");
             anIteration.setPresentationName("Iteration 1");
             anIteration.setDescription("Le projet test");
+            anIteration.setAlternatives("Ce sont les Alternatives");
+            anIteration.setMainDescription("Ceci est la Main Description");
+            anIteration.setPurpose("Voici le purpose");
+            anIteration.setHowToStaff("Voici le How To Staff");
+            
             aConcreteIteration.setConcreteName(anIteration.getPresentationName());
             aConcreteIteration.setIteration(anIteration);
             ConcreteIteration aConcreteIteration2 = new ConcreteIteration () ;
@@ -217,6 +222,10 @@ public class WizardServicesProxy {
             anIteration2.setGuid("2");
             anIteration2.setPresentationName("Iteraton 2");
             anIteration2.setDescription("Une iteration temporaire");
+            anIteration2.setAlternatives("Ce sont les Alternatives");
+            anIteration2.setMainDescription("Ceci est la Main Description");
+            anIteration2.setPurpose("Voici le purpose");
+            anIteration2.setHowToStaff("Voici le How To Staff");
             aConcreteIteration2.setConcreteName(anIteration2.getPresentationName());
             aConcreteIteration2.setIteration(anIteration2);
             
@@ -249,11 +258,19 @@ public class WizardServicesProxy {
             
             anActivity.setPresentationName("Activite de developpement");
             anActivity.setDescription("Tout le processus de developpement");
+            anActivity.setAlternatives("Ce sont les Alternatives");
+            anActivity.setMainDescription("Ceci est la Main Description");
+            anActivity.setPurpose("Voici le purpose");
+            anActivity.setHowToStaff("Voici le How To Staff");
             aConcreteActivity.setConcreteName(anActivity.getPresentationName());
             aConcreteActivity.setActivity(anActivity);
             
             aPhase.setPresentationName("Phase de fin de projet");
             aPhase.setDescription("Tout ce qu'on fait apres le projet");
+            aPhase.setAlternatives("Ce sont les Alternatives");
+            aPhase.setMainDescription("Ceci est la Main Description");
+            aPhase.setPurpose("Voici le purpose");
+            aPhase.setHowToStaff("Voici le How To Staff");
             aConcretePhase.setConcreteName(aPhase.getPresentationName());
             aConcretePhase.setPhase(aPhase);
             
