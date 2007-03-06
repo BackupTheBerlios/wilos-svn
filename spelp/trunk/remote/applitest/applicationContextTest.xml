@@ -25,12 +25,13 @@
 			<value>jdbc:mysql://127.0.0.1/wilos</value>
 		</property>
 		<property name="username">
-			<value>root</value>
+			<value>wilos</value>
 		</property>
 		<property name="password">
 			<value></value>
 		</property>
 	</bean>
+
 
 	<!-- Hibernate SessionFactory Definition -->
 	<bean id="sessionFactory"
@@ -194,7 +195,7 @@
 	<bean id="WizardServices"
 		class="wilos.business.webservices.WizardServices">
 		<property name="loginService" ref="LoginService" />		
-		<property name="assistantService" ref="AssistantService" />
+		<property name="assistantService" ref="AssistantService" />	
 	</bean>
 	
 	<!-- ========================= DAO Layer ========================= -->
@@ -355,6 +356,10 @@
 		<property name="participantDao" ref="ParticipantDao" />
 		<property name="concreteTaskDescriptorService"
 			ref="ConcreteTaskDescriptorService" />
+		<property name="guidanceService"
+			ref="GuidanceService" />
+		<property name="processService"
+			ref="ProcessService" />
 	</bean>
 
 	<bean id="GuidanceService"
@@ -581,17 +586,5 @@
 		class="wilos.business.services.misc.concretebreakdownelement.ConcreteBreakdownElementService">
 		<property name="concreteBreakdownElementDao" ref="ConcreteBreakdownElementDao" />
 	</bean>
-
-	<!-- Service de test -->
-	<bean id="InitAppliService"
-		class="wilos.application.console.InitAppliService">
-		<property name="processService" ref="ProcessService" />
-		<property name="projectDao" ref ="ProjectDao" />
-		<property name="processDao" ref ="ProcessDao" />
-		<property name="participantDao" ref ="ParticipantDao" />
-		<property name="concreteRoleDescriptorDao" ref ="ConcreteRoleDescriptorDao" />
-		<property name="concreteTaskDescriptorDao" ref ="ConcreteTaskDescriptorDao" />
-		<property name="concreteTaskDescriptorService" ref ="ConcreteTaskDescriptorService" />
-	</bean>
-
+	
 </beans>
