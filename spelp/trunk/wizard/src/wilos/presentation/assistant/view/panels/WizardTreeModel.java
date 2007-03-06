@@ -91,7 +91,7 @@ public class WizardTreeModel extends DefaultTreeModel {
 				}				
 			}
 			// brows all the concrete tasks
-			for(ConcreteTaskDescriptor ctd : crd.getConcreteTaskDescriptors()) {
+			for(ConcreteTaskDescriptor ctd : crd.getPrimaryConcreteTaskDescriptors()) {
 				
 				WizardMutableTreeNode ctdWmt = new WizardMutableTreeNode(ctd);
 				rdWmt.add(ctdWmt);

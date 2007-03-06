@@ -301,7 +301,7 @@ public class WizardServicesProxy {
             aTmpTask.addTaskDefinition(aTmpTaskDef);
             
             aTmpRole.addPrimaryTask(aTmpTask);
-            aTmpConcreteRole.addConcreteTaskDescriptor(aTmpConcrete);
+            aTmpConcreteRole.addPrimaryConcreteTaskDescriptor(aTmpConcrete);
             p.addConcreteRoleDescriptor(aTmpConcreteRole);
             
             // --------- nouveau
@@ -397,7 +397,7 @@ public class WizardServicesProxy {
             aTmpTask.addConcreteTaskDescriptor(aTmpConcrete);
             
             aTmpRole.addPrimaryTask(aTmpTask);
-            aTmpConcreteRole.addConcreteTaskDescriptor(aTmpConcrete);
+            aTmpConcreteRole.addPrimaryConcreteTaskDescriptor(aTmpConcrete);
         
             
             // ------- nouveau
@@ -419,7 +419,7 @@ public class WizardServicesProxy {
             aTmpConcrete.setRemainingTime(12);
                    
             aTmpRole.addPrimaryTask(aTmpTask);
-            aTmpConcreteRole.addConcreteTaskDescriptor(aTmpConcrete);
+            aTmpConcreteRole.addPrimaryConcreteTaskDescriptor(aTmpConcrete);
             aTmpTask.addConcreteTaskDescriptor(aTmpConcrete);
             
             // affectation du role dans l activty
@@ -484,7 +484,7 @@ public class WizardServicesProxy {
             
             aTmpTask.setDescription("Un grand moment de solitude");
             aTmpRole.addPrimaryTask(aTmpTask);
-            aTmpConcreteRole.addConcreteTaskDescriptor(aTmpConcrete);
+            aTmpConcreteRole.addPrimaryConcreteTaskDescriptor(aTmpConcrete);
             
             // ---------- nouveau
             
@@ -540,7 +540,7 @@ public class WizardServicesProxy {
             aTmpRole.addPrimaryTask(aTmpTask);
             aTmpConcrete.setTaskDescriptor(aTmpTask);
             aTmpConcrete.setConcreteName(aTmpTask.getPresentationName());
-            aTmpConcreteRole.addConcreteTaskDescriptor(aTmpConcrete);
+            aTmpConcreteRole.addPrimaryConcreteTaskDescriptor(aTmpConcrete);
             
             aTmpTask = new TaskDescriptor();
             aTmpTask.setGuid("43");
@@ -550,7 +550,7 @@ public class WizardServicesProxy {
             aTmpRole.addPrimaryTask(aTmpTask);
             aTmpConcrete.setTaskDescriptor(aTmpTask);
             aTmpConcrete.setConcreteName(aTmpTask.getPresentationName());
-            aTmpConcreteRole.addConcreteTaskDescriptor(aTmpConcrete);
+            aTmpConcreteRole.addPrimaryConcreteTaskDescriptor(aTmpConcrete);
             
             aTmpTask = new TaskDescriptor();
             aTmpTask.setGuid("44");
@@ -560,7 +560,7 @@ public class WizardServicesProxy {
             aTmpRole.addPrimaryTask(aTmpTask);
             aTmpConcrete.setTaskDescriptor(aTmpTask);
             aTmpConcrete.setConcreteName(aTmpTask.getPresentationName());
-            aTmpConcreteRole.addConcreteTaskDescriptor(aTmpConcrete);
+            aTmpConcreteRole.addPrimaryConcreteTaskDescriptor(aTmpConcrete);
             p.addConcreteRoleDescriptor(aTmpConcreteRole);
             
             // affectation du role dans l activty
@@ -594,7 +594,7 @@ public class WizardServicesProxy {
             
             aTmpConcrete.setTaskDescriptor(aTmpTask);
             aTmpConcrete.setConcreteName(aTmpTask.getPresentationName());
-            aTmpConcreteRole.addConcreteTaskDescriptor(aTmpConcrete);
+            aTmpConcreteRole.addPrimaryConcreteTaskDescriptor(aTmpConcrete);
             
             
             p.addConcreteRoleDescriptor(aTmpConcreteRole);
