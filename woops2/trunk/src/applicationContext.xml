@@ -555,6 +555,7 @@
 	<bean id="IterationService"
 		class="wilos.business.services.spem2.iteration.IterationService">
 		<property name="concreteIterationDao" ref="ConcreteIterationDao" />
+		<property name="iterationDao" ref="IterationDao" />
 		<property name="activityService" ref="ActivityService" />
 		<property name="concreteActivityService" ref="ConcreteActivityService" />
 		<!-- <property name="phaseService" ref="PhaseService" />-->

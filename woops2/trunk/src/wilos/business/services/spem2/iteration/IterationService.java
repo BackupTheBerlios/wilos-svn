@@ -2,7 +2,9 @@ package wilos.business.services.spem2.iteration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +15,7 @@ import wilos.business.services.spem2.breakdownelement.BreakdownElementService;
 import wilos.business.services.spem2.role.RoleDescriptorService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.hibernate.misc.concreteiteration.ConcreteIterationDao;
+import wilos.hibernate.spem2.iteration.IterationDao;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.model.misc.project.Project;
@@ -29,6 +32,8 @@ import wilos.model.spem2.task.TaskDescriptor;
 public class IterationService {
 
 	private ConcreteIterationDao concreteIterationDao;
+	
+	private IterationDao iterationDao;
 
 	private BreakdownElementService breakdownElementService;
 
@@ -41,6 +46,16 @@ public class IterationService {
 	private RoleDescriptorService roleDescriptorService;
 
 	private TaskDescriptorService taskDescriptorService;
+	
+	public Set<ConcreteIteration> getAllConcreteIterations(Iteration _iteration) {
+		Set<ConcreteIteration> tmp = new HashSet<ConcreteIteration>();
+		this.iterationDao.getSessionFactory().getCurrentSession().saveOrUpdate(
+				_iteration);
+		for (ConcreteIteration bde : _iteration.getConcreteIterations()) {
+			tmp.add(bde);
+		}
+		return tmp;
+	}
 
 	/**
 	 * Instanciates an iteration for a project
@@ -234,6 +249,20 @@ public class IterationService {
 	 */
 	public void setTaskDescriptorService(TaskDescriptorService taskDescriptorService) {
 		this.taskDescriptorService = taskDescriptorService;
+	}
+
+	/**
+	 * @return the iterationDao
+	 */
+	public IterationDao getIterationDao() {
+		return iterationDao;
+	}
+
+	/**
+	 * @param iterationDao the iterationDao to set
+	 */
+	public void setIterationDao(IterationDao iterationDao) {
+		this.iterationDao = iterationDao;
 	}
 
 

@@ -14,6 +14,7 @@ import wilos.business.services.spem2.iteration.IterationService;
 import wilos.business.services.spem2.role.RoleDescriptorService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.hibernate.misc.concretephase.ConcretePhaseDao;
+import wilos.hibernate.spem2.phase.PhaseDao;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.project.Project;
@@ -31,6 +32,8 @@ public class PhaseService {
 
 	private ConcretePhaseDao concretePhaseDao;
 	
+	private PhaseDao phaseDao;
+	
 	private IterationService iterationService;
 	
 	private ActivityService activityService;
@@ -41,6 +44,16 @@ public class PhaseService {
 	
 	private TaskDescriptorService taskDescriptorService;
 
+	public Set<ConcretePhase> getAllConcretePhases(Phase _phase) {
+		Set<ConcretePhase> tmp = new HashSet<ConcretePhase>();
+		this.phaseDao.getSessionFactory().getCurrentSession().saveOrUpdate(
+				_phase);
+		for (ConcretePhase bde : _phase.getConcretePhases()) {
+			tmp.add(bde);
+		}
+		return tmp;
+	}
+	
 	/**
 	 * Instanciates a phase for a project
 	 * @param _project project for which the Phase shall be instanciated
@@ -221,5 +234,19 @@ public class PhaseService {
 	public void setConcreteActivityService(
 			ConcreteActivityService _concreteActivityService) {
 		this.concreteActivityService = _concreteActivityService;
+	}
+
+	/**
+	 * @return the phaseDao
+	 */
+	public PhaseDao getPhaseDao() {
+		return phaseDao;
+	}
+
+	/**
+	 * @param phaseDao the phaseDao to set
+	 */
+	public void setPhaseDao(PhaseDao phaseDao) {
+		this.phaseDao = phaseDao;
 	}
 }
