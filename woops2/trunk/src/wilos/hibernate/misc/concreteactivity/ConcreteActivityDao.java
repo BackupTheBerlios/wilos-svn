@@ -98,25 +98,6 @@ public class ConcreteActivityDao extends HibernateDaoSupport {
 		}
 	}
 	
-	public List<ConcreteActivity> getAllConcreteActivities(
-			String _activityId, String _projectId) {
-		List concretebdes = this
-				.getHibernateTemplate()
-				.find(
-						"from ConcreteActivity ca join ca.Activity a where a.id=?",
-						_activityId);//to do with the projectId too !
-		List<ConcreteActivity> listCa = new ArrayList<ConcreteActivity>();
-		if (concretebdes.get(0) instanceof List) {
-			for (Object o : (ArrayList) concretebdes.get(0)) {
-				if (o instanceof ConcreteActivity) {
-					ConcreteActivity ca = (ConcreteActivity) o;
-					listCa.add(ca);
-				}
-			}
-		}
-		return listCa;
-	}
-
 	public List<ConcreteBreakdownElement> getConcreteBreakdownElementsFromConcreteActivity(
 			String _concreteactivityId) {
 		List concretebdes = this
