@@ -36,7 +36,7 @@ public class ParticipantTO extends Participant implements Serializable {
         this.setPassword(myParticipant.getPassword());
         this.setFirstname(myParticipant.getFirstname());
         this.setEmailAddress(myParticipant.getEmailAddress());  
-        
+
         Set<ConcreteRoleDescriptor> concreteRoleDescriptors = new HashSet<ConcreteRoleDescriptor>();
         for (ConcreteRoleDescriptor crd : myParticipant.getConcreteRoleDescriptors()) {
         	concreteRoleDescriptors.add(new ConcreteRoleDescriptorTO(crd));
