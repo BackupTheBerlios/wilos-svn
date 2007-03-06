@@ -355,6 +355,10 @@
 		<property name="participantDao" ref="ParticipantDao" />
 		<property name="concreteTaskDescriptorService"
 			ref="ConcreteTaskDescriptorService" />
+		<property name="guidanceService"
+			ref="GuidanceService" />
+		<property name="processService"
+			ref="ProcessService" />
 	</bean>
 
 	<bean id="GuidanceService"
