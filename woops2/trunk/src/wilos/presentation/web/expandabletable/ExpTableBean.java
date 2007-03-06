@@ -24,6 +24,7 @@ import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.process.Process;
 import wilos.model.spem2.task.TaskDescriptor;
 import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
+import wilos.presentation.web.project.ProjectAdvancementBean;
 import wilos.presentation.web.role.RolesInstanciationBean;
 import wilos.presentation.web.tree.TreeBean;
 
@@ -107,12 +108,17 @@ public class ExpTableBean {
 						"Woops2ProcessBean");
 		processBean.setReadOnly(true);
 
-		// refresh de la table d'avancement
+		// refresh de la table des roles.
 		RolesInstanciationBean rib = (RolesInstanciationBean) context
 				.getApplication().getVariableResolver().resolveVariable(
 						context, "RolesInstanciationBean");
 		rib.refreshProcessTable();
 
+		// refresh de la table d'avancement.
+		ProjectAdvancementBean pab = (ProjectAdvancementBean) context
+				.getApplication().getVariableResolver().resolveVariable(
+						context, "ProjectAdvancementBean");
+		pab.refreshProjectTable();
 	}
 
 	/**
