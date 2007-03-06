@@ -168,7 +168,7 @@ public class WizardServicesProxy {
     
 
         
-        public static void setRemainingTimeByTask(String taskGuid,int newTime) {
+        public static void setRemainingTimeByTask(String taskGuid,float newTime) {
             try { 
             	if (!login.equalsIgnoreCase(testIHMLoginString)) {
             		WizardServicesService service = new WizardServicesService(new URL(address+ENDPOINT), new QName(URLWebService, nameWebService));            	
@@ -182,7 +182,7 @@ public class WizardServicesProxy {
             }
         }
 
-        public static void setAccomplishedTimeByTask(String taskGuid,int newTime) {
+        public static void setAccomplishedTimeByTask(String taskGuid,float newTime) {
             try { 
             	if (!login.equalsIgnoreCase(testIHMLoginString)) {
             		WizardServicesService service = new WizardServicesService(new URL(address+ENDPOINT), new QName(URLWebService, nameWebService));            	
