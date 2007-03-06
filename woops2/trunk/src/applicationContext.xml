@@ -572,6 +572,8 @@
 			ref="RoleDescriptorService" />
 		<property name="concreteRoleDescriptorService"
 			ref="ConcreteRoleDescriptorService" />
+		<property name="concreteActivityDao"
+			ref="ConcreteActivityDao" />
 	</bean>
 
 	<bean id="ConcreteRoleDescriptorService"

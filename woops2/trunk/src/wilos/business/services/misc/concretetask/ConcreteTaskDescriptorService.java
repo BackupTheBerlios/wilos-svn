@@ -5,12 +5,14 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.classic.Session;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService;
 import wilos.business.services.spem2.role.RoleDescriptorService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
+import wilos.hibernate.misc.concreteactivity.ConcreteActivityDao;
 import wilos.hibernate.misc.concretetask.ConcreteTaskDescriptorDao;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
@@ -30,6 +32,8 @@ import wilos.utils.Constantes.State;
 public class ConcreteTaskDescriptorService {
 
 	private ConcreteTaskDescriptorDao concreteTaskDescriptorDao;
+	
+	private ConcreteActivityDao concreteActivityDao;
 
 	private TaskDescriptorService taskDescriptorService;
 
@@ -98,28 +102,34 @@ public class ConcreteTaskDescriptorService {
 			ConcreteTaskDescriptor _concreteTaskDescriptor) {
 		
 		Set <ConcreteActivity> superConcreteActivities =
-						_concreteTaskDescriptor.getSuperConcreteActivities() ;
+			_concreteTaskDescriptor.getSuperConcreteActivities() ;
 		TaskDescriptor taskDescriptor = _concreteTaskDescriptor.getTaskDescriptor() ;
 		
 		TaskDescriptor td2 =
 			this.taskDescriptorService.getTaskDescriptorById(taskDescriptor.getId()) ;
 		
-		ConcreteRoleDescriptor concreteRoleDescriptor =
-						_concreteTaskDescriptor.getMainConcreteRoleDescriptor() ;
+		ConcreteTaskDescriptor ctd = this.getConcreteTaskDescriptor(_concreteTaskDescriptor.getId());
 		
-		ConcreteRoleDescriptor crd2 =
-			this.concreteRoleDescriptorService
-					.getConcreteRoleDescriptorById(concreteRoleDescriptor.getId()) ;
+		ConcreteRoleDescriptor concreteRoleDescriptor =
+			ctd.getMainConcreteRoleDescriptor() ;
 		
 		for (ConcreteActivity sca : superConcreteActivities) {
 			sca.removeConcreteBreakdownElement(_concreteTaskDescriptor) ;
 		}
+		if(concreteRoleDescriptor != null)
+		{
+			ConcreteRoleDescriptor crd2 =
+				this.concreteRoleDescriptorService
+						.getConcreteRoleDescriptorById(concreteRoleDescriptor.getId()) ;
+			crd2.removePrimaryConcreteTaskDescriptor(_concreteTaskDescriptor) ;
+			
+		}
 		
-		crd2.removePrimaryConcreteTaskDescriptor(_concreteTaskDescriptor) ;
-		
+		_concreteTaskDescriptor.removeAllSuperConcreteActivities();
 		td2.removeConcreteTaskDescriptor(_concreteTaskDescriptor) ;
-	}
-
+		
+		}
+	
 	/**
 	 * When the user click on the button affected.
 	 *
@@ -298,5 +308,19 @@ public class ConcreteTaskDescriptorService {
 	public void setConcreteRoleDescriptorService(
 			ConcreteRoleDescriptorService concreteRoleDescriptorService) {
 		this.concreteRoleDescriptorService = concreteRoleDescriptorService;
+	}
+
+	/**
+	 * @return the concreteActivityDao
+	 */
+	public ConcreteActivityDao getConcreteActivityDao() {
+		return concreteActivityDao;
+	}
+
+	/**
+	 * @param concreteActivityDao the concreteActivityDao to set
+	 */
+	public void setConcreteActivityDao(ConcreteActivityDao concreteActivityDao) {
+		this.concreteActivityDao = concreteActivityDao;
 	}
 }

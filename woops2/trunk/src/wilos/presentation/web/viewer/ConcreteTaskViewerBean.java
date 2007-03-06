@@ -270,7 +270,6 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		{
 			this.concreteTaskDescriptorService
 				.removeConcreteTaskDescriptor(this.concreteTaskDescriptor);
-
 			// Refresh components.
 			super.refreshProjectTree();
 			
