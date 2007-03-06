@@ -637,7 +637,7 @@ public class ProcessService {
 		}
 
 		// To decomment when you want to manage additionalRoles
-		// _td.setAdditionalRoles(this.taskDescriptorService.getAdditionalRoles(_td));
+		_td.setAdditionalRoles(this.taskDescriptorService.getAdditionalRoles(_td));
 		_td.setPredecessors(this.workBreakdownElementService
 				.getPredecessors(_td));
 		_td.setSuccessors(this.workBreakdownElementService.getSuccessors(_td));
@@ -645,8 +645,7 @@ public class ProcessService {
 				.getSuperActivities(_td));
 
 		// clone dependencies getting
-		// To decomment when you want to manage additionalRoles
-		// _td.addAllAdditionalRoles(clone.getAdditionalRoles());
+		_td.addAllAdditionalRoles(clone.getAdditionalRoles());
 		_td.addAllPredecessors(clone.getPredecessors());
 		_td.addAllSuccessors(clone.getSuccessors());
 		_td.addAllSuperActivities(clone.getSuperActivities());
