@@ -119,7 +119,7 @@ public class ExpTableBean {
 
 		if (!this.selectedProcessGuid.equals("default")) {
 			Process process = this.processService.getProcessFromGuid(this.selectedProcessGuid);
-			if (!this.viewedProcessId.equals(process.getId()) || this.isInstanciedProject) {
+			if (!this.viewedProcessId.equals(process.getId())) {
 				this.viewedProcessId = process.getId();
 				this.expTableContent.clear();
 				this.indentationContent.clear();
