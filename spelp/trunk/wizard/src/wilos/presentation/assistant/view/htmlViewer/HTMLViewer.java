@@ -41,6 +41,7 @@ import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.checklist.CheckList;
@@ -48,6 +49,7 @@ import wilos.model.spem2.element.Element;
 import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
+import wilos.model.spem2.process.Process;
 import wilos.model.spem2.role.RoleDefinition;
 import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.section.Section;
@@ -469,6 +471,14 @@ public class HTMLViewer extends JFrame {
 			displayElement(tmp,icon);
 			ok = true ;
 		}
+		else if (o instanceof Project){
+			Project p = (Project) o;
+			o = getProjectAndDisplay(p);
+			Element tmp = (Element)o;
+			icon = ImagesService.getImageIcon("iconActivity.gif");
+			displayElement(tmp,icon);
+			ok = true ;
+		}
 		else if (o instanceof ConcreteActivity){
 			ConcreteActivity r = (ConcreteActivity)o;
 			o = getConcreteActivityAndDisplay(r);
@@ -567,6 +577,25 @@ public class HTMLViewer extends JFrame {
 //		else {
 //			this.southPanel.setVisible(false);
 //		}
+	}
+	
+	/**
+	 * Affiche les informations de l'element
+	 * et recupere les guides
+	 * @param Project p
+	 */
+	public Process getProjectAndDisplay(Project p) {
+		Process pr = p.getProcess();
+		
+		/* Affichage des guides */
+		Set<Guidance> guides = new HashSet<Guidance>(); 
+		
+		if (pr.getGuidances() != null){
+			guides = pr.getGuidances();
+		}
+		trtGuides(guides);
+		
+		return pr ;
 	}
 	
 	/**
