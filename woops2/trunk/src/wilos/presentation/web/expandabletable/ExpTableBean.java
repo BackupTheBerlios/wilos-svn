@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.SortedSet;
 
 import javax.faces.context.FacesContext;
@@ -37,13 +38,13 @@ public class ExpTableBean {
 	public static final String CONTRACT_TABLE_ARROW = "images/expandableTable/contract.gif";
 
 	public static final String TABLE_LEAF = "images/expandableTable/leaf.gif";
-	
+
 	public static final String INDENTATION_STRING = "- - - ";
 
 	private List<HashMap<String, Object>> expTableContent;
 
 	protected HashMap<String, Boolean> isExpanded = new HashMap<String, Boolean>();
-	
+
 	private HashMap<String, String> indentationContent = new HashMap<String, String>();;
 
 	private ProcessService processService;
@@ -51,7 +52,7 @@ public class ExpTableBean {
 	private ProjectService projectService;
 
 	private ActivityService activityService;
-	
+
 	private boolean needIndentation = false;
 
 	private WebSessionService webSessionService;
@@ -63,6 +64,8 @@ public class ExpTableBean {
 	private String viewedProcessId = "";
 
 	private String selectedProcessGuid = "default";
+
+	private String instanciationBtName;
 
 	public ExpTableBean() {
 		this.expTableContent = new ArrayList<HashMap<String, Object>>();
@@ -118,7 +121,8 @@ public class ExpTableBean {
 	public List<HashMap<String, Object>> getExpTableContent() {
 
 		if (!this.selectedProcessGuid.equals("default")) {
-			Process process = this.processService.getProcessFromGuid(this.selectedProcessGuid);
+			Process process = this.processService
+					.getProcessFromGuid(this.selectedProcessGuid);
 			if (!this.viewedProcessId.equals(process.getId())) {
 				this.viewedProcessId = process.getId();
 				this.expTableContent.clear();
@@ -166,12 +170,14 @@ public class ExpTableBean {
 				hm.put("parentId", act.getId());
 
 				lines.add(hm);
-				
+
 				if (needIndentation) {
 					if (this.indentationContent.get(act.getId()) != null) {
-						indentationString = this.indentationContent.get(act.getId());
+						indentationString = this.indentationContent.get(act
+								.getId());
 					}
-					this.indentationContent.put((String) hm.get("id"), indentationString.concat(INDENTATION_STRING));
+					this.indentationContent.put((String) hm.get("id"),
+							indentationString.concat(INDENTATION_STRING));
 				}
 			}
 		}
@@ -188,7 +194,7 @@ public class ExpTableBean {
 		String elementId = (String) map.get("elementId");
 
 		this.needIndentation = true;
-		
+
 		ArrayList<Object> tmp = new ArrayList<Object>();
 		tmp.addAll(this.expTableContent);
 		int index;
@@ -426,10 +432,36 @@ public class ExpTableBean {
 	}
 
 	/**
-	 * @param _indentationContent the indentationContent to set
+	 * @param _indentationContent
+	 *            the indentationContent to set
 	 */
-	public void setIndentationContent(HashMap<String, String> _indentationContent) {
+	public void setIndentationContent(
+			HashMap<String, String> _indentationContent) {
 		this.indentationContent = _indentationContent;
+	}
+
+	/**
+	 * @return the instanciationBtName
+	 */
+	public String getInstanciationBtName() {
+		ResourceBundle bundle = ResourceBundle.getBundle(
+				"wilos.resources.messages", FacesContext.getCurrentInstance()
+						.getApplication().getDefaultLocale());
+
+		if (!this.isInstanciedProject) {
+			this.instanciationBtName =  bundle.getString("component.instanciation.button.ins");
+		} else {
+			this.instanciationBtName =  bundle.getString("component.instanciation.button.up");
+		}
+		return this.instanciationBtName;
+	}
+
+	/**
+	 * @param _instanciationBtName
+	 *            the instanciationBtName to set
+	 */
+	public void setInstanciationBtName(String _instanciationBtName) {
+		this.instanciationBtName = _instanciationBtName;
 	}
 
 }
