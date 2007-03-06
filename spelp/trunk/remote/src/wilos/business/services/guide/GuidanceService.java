@@ -36,6 +36,10 @@ public class GuidanceService {
 	public void deleteGuidance(Guidance _guidance) {
 		this.guidanceDao.deleteGuidance(_guidance) ;
 	}
+	
+	public Guidance getGuidanceFromGuid(String _guid) {
+		return this.guidanceDao.getGuidanceFromGuid(_guid);
+	}
 
 	/**
 	 * Getter of guidelineDao.

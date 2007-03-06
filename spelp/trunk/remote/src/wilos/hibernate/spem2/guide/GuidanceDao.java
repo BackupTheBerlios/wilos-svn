@@ -9,6 +9,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import wilos.model.spem2.guide.Guidance;
+import wilos.model.spem2.process.Process;
 import wilos.utils.ExceptionManager;
 
 public class GuidanceDao extends HibernateDaoSupport {
@@ -30,6 +31,21 @@ public class GuidanceDao extends HibernateDaoSupport {
 		}
 	}
 
+	/**
+	 * Return a guidance  with the given guid If there are many process with
+	 * the same guid, it returns the first
+	 * 
+	 * @param _guid
+	 * @return
+	 */
+	public Guidance getGuidanceFromGuid(String _guid) {
+		List guidances = this.getHibernateTemplate().find("from Guidance g where g.guid=?", _guid) ;
+		if(guidances.size() > 0)
+			return (Guidance) guidances.get(0) ;
+		else
+			return null ;
+	}
+	
 	/**
 	 * Get List of all step object
 	 * 

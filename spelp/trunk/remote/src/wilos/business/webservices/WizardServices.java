@@ -9,14 +9,23 @@
 
 package wilos.business.webservices;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
 import wilos.business.services.assistant.AssistantService;
+import wilos.business.services.guide.GuidanceService;
 import wilos.business.services.misc.wilosuser.LoginService;
+import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
+import wilos.model.spem2.guide.Guidance;
+import wilos.model.spem2.process.Process;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -50,6 +59,51 @@ public class WizardServices {
        out.println(result);*/
        
        return result;
+    }
+    
+    @WebMethod
+    public  byte []  getGuidanceAttachment(@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="idGuidance") String idGuidance) throws Exception
+    {
+       String filePath = "";
+       Participant wu = new Participant();
+       byte [] contenuFichier = null;
+       
+       System.out.println("APPEL DE LA METHODE getGuidanceAttachment");
+       
+       wu =  getAuthentifiedParticipant(login,password);
+       if (wu != null) {
+    	   System.out.println("Le user "+wu.getName()+" est logge");
+    	   
+    	   filePath = assistantService.getAttachmentFilePath(idGuidance);
+    	   
+    	   // serialisation du fichier
+    		   
+		   File myfile = new File(filePath);
+		   
+		   // ouverture du fichier
+		   try {
+		      // Ouverture du fichier passé en paramètre dans la ligne de commande
+		      InputStream fluxFichier = new FileInputStream (filePath);
+		 
+		      // Lecture des n premiers octets du fichier. n est passé en paramètre
+		       contenuFichier  = new byte [(int) myfile.length()];
+		      fluxFichier.read (contenuFichier);
+		     
+		      // Fermeture du fichier
+		      fluxFichier.close ();
+		      
+		    }
+		    catch (IOException e) {
+		      // Exception déclenchée si un problème survient pendant l'accès au fichier
+		      System.out.println (e);
+		    }
+       }
+       
+       /*File xstreamFile = new File ("xstream.xml");
+       PrintStream out = new PrintStream(new FileOutputStream(xstreamFile), false, "UTF-8");
+       out.println(result);*/
+       
+       return contenuFichier;
     }
     
     @WebMethod
@@ -141,5 +195,5 @@ public class WizardServices {
 
 	public void setLoginService(LoginService loginService) {
 		this.loginService = loginService;
-	}   
+	}
 }

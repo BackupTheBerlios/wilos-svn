@@ -1,18 +1,19 @@
 package wilos.business.services.assistant;
 
-import java.util.Iterator;
-
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
+import java.io.File;
 
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import wilos.business.services.guide.GuidanceService;
 import wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService;
+import wilos.business.services.spem2.process.ProcessService;
 import wilos.business.transfertobject.ParticipantTO;
 import wilos.hibernate.misc.wilosuser.ParticipantDao;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
-import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.breakdownelement.BreakdownElement;
+import wilos.model.spem2.guide.Guidance;
+import wilos.model.spem2.process.Process;
 
 /**
  * The services dedicated to the Assistant
@@ -24,6 +25,8 @@ import wilos.model.spem2.role.RoleDescriptor;
 public class AssistantService {
 	private ParticipantDao participantDao;
 	private ConcreteTaskDescriptorService concreteTaskDescriptorService;
+	private ProcessService processService;
+	private GuidanceService guidanceService;
 	
 	
 	/**
@@ -84,5 +87,63 @@ public class AssistantService {
 		ConcreteTaskDescriptor ct = concreteTaskDescriptorService.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(taskGuid);
 		ct.setRemainingTime(newTime);
 	}
+    
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    public String getAttachmentFilePath(String idGuidance) {
+    	String filePathToBeReturn = "";
+    	String folder = "";
+    	String attachment = "";
+    	Guidance g = null;
+    	String guidCurrentProcess = null;
+    	
+    	System.out.println("Id : "+idGuidance);
+    	
+    	g = guidanceService.getGuidanceFromGuid(idGuidance);
+    	
+    	BreakdownElement bde = null;
+    	
+    	if (g.getTaskDefinitions().size() != 0)
+			bde = g.getTaskDefinitions().iterator().next().getTaskDescriptors().iterator().next();
+		if (g.getRoleDefinitions().size() != 0)
+			bde = g.getRoleDefinitions().iterator().next().getRoleDescriptors().iterator().next();
+		if (g.getActivities().size() != 0)
+			bde = g.getActivities().iterator().next();
+		Thread monThread = null;
+		if (bde != null) {
+			while (bde.getSuperActivities().size() != 0) {
+				bde = bde.getSuperActivities().iterator().next();
+			}
+			if (bde instanceof Process) {
+				guidCurrentProcess = bde.getGuid();
+			}
+		}
+		
+    	
+    	if (g != null && guidCurrentProcess != null) {
+    		attachment = g.getAttachment();
+    		
+    		folder = processService.getProcessFromGuid(guidCurrentProcess).getFolderPath();
+    		filePathToBeReturn = folder+ File.separator + guidCurrentProcess + File.separator + attachment;
+    		System.out.println("FOLDER+ATTCH: " + filePathToBeReturn);
+    	}
+    	return filePathToBeReturn;
+    }
+
+	public GuidanceService getGuidanceService() {
+		return guidanceService;
+	}
+
+	public void setGuidanceService(GuidanceService guidanceService) {
+		this.guidanceService = guidanceService;
+	}
+
+	public ProcessService getProcessService() {
+		return processService;
+	}
+
+	public void setProcessService(ProcessService processService) {
+		this.processService = processService;
+	}
+
 
 }
