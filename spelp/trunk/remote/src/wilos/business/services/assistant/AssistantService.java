@@ -78,12 +78,12 @@ public class AssistantService {
 		this.concreteTaskDescriptorService = concreteTaskDescriptorService;
 	}
 
-    public void setAccomplishedTimeByTask(String taskGuid,int newTime) {
+    public void setAccomplishedTimeByTask(String taskGuid,float newTime) {
 		ConcreteTaskDescriptor ct = concreteTaskDescriptorService.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(taskGuid);
 		ct.setAccomplishedTime(newTime);
     }
 
-    public void setRemainingTimeByTask(String taskGuid,int newTime) {
+    public void setRemainingTimeByTask(String taskGuid,float newTime) {
 		ConcreteTaskDescriptor ct = concreteTaskDescriptorService.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(taskGuid);
 		ct.setRemainingTime(newTime);
 	}

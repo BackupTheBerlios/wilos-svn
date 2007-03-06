@@ -143,7 +143,7 @@ public class WizardServices {
     }
     
     @WebMethod
-    public void setAccomplishedTimeByTask(@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="taskGuid") String taskGuid,@WebParam(name="newTime") int newTime) throws Exception {
+    public void setAccomplishedTimeByTask(@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="taskGuid") String taskGuid,@WebParam(name="newTime") float newTime) throws Exception {
 		System.out.println("APPEL DE METHODE : setAccomplishedTimeByTask");
     	if (getAuthentifiedParticipant (login, password)!=null) {
     		System.out.println("le Participant est logge");
@@ -152,7 +152,7 @@ public class WizardServices {
     }
 
     @WebMethod
-    public void setRemainingTimeByTask(@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="taskGuid") String taskGuid,@WebParam(name="newTime") int newTime) throws Exception {
+    public void setRemainingTimeByTask(@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="taskGuid") String taskGuid,@WebParam(name="newTime") float newTime) throws Exception {
 		System.out.println("APPEL DE METHODE : setRemainingTimeByTask");
     	if (getAuthentifiedParticipant (login, password)!=null) {
     		System.out.println("le Participant est logge");
