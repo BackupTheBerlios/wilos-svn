@@ -24,10 +24,10 @@ public class ConcreteRoleDescriptorTO extends ConcreteRoleDescriptor implements 
         this.setSuperConcreteActivities(concreteActivitys);
     	
         Set<ConcreteTaskDescriptor> concreteTaskDescriptors = new HashSet<ConcreteTaskDescriptor>();
-        for (ConcreteTaskDescriptor ctd : myConcreteRoleDescriptor.getConcreteTaskDescriptors()) {
+        for (ConcreteTaskDescriptor ctd : myConcreteRoleDescriptor.getPrimaryConcreteTaskDescriptors()) {
         	concreteTaskDescriptors.add(new ConcreteTaskDescriptorTO(ctd));
         }
-        this.setConcreteTaskDescriptors(concreteTaskDescriptors);
+        this.setPrimaryConcreteTaskDescriptors(concreteTaskDescriptors);
 
     }
 }

@@ -43,7 +43,7 @@ public class InitAppliService {
 		project.addProcess(scrum);
 		projectDao.saveOrUpdateProject(project);
 
-		processService.projectInstanciation(project);
+		//processService.projectInstanciation(project);
 
 		String s2 = processService.getProcessDao().getProcessFromGuid("_0uyGoMlgEdmt3adZL5Dmdw").getId();
 		Process openup = processDao.getProcess(s2);
@@ -53,7 +53,7 @@ public class InitAppliService {
 		project2.addProcess(openup);
 		projectDao.saveOrUpdateProject(project2);
 
-		processService.projectInstanciation(project2);
+	//	processService.projectInstanciation(project2);
 	}
 	
 	@Transactional(readOnly = false)
