@@ -145,8 +145,13 @@ public class WizardControler {
 						FileOutputStream f;
 						try {
 							f = new FileOutputStream(pathFileToDownload);
+							File aFile = new File(pathFileToDownload);
+							if (aFile.exists()){
+								aFile.delete() ;
+							}
 							try {
 								f.write(file);
+								f.close();
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -156,9 +161,10 @@ public class WizardControler {
 							e1.printStackTrace();
 						}
 						
-						System.out.println(pathFileToDownload + " " + new File(pathFileToDownload).exists());
-						
+						System.out.println("FIN TREATMENT");
+						df.endOfTreatment() ;
 						WizardControler.getInstance().disconnectToServer(this);
+						
 				}
 			});
 		monThread.start();

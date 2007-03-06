@@ -274,6 +274,8 @@ public class HTMLViewer extends JFrame {
 				
 			});
 			// display the JFileChooser
+			fileChooser.setSelectedFile(new File(downloadFile));
+			System.out.println(downloadFile);
 			int selected = fileChooser.showSaveDialog(this);
 			if (selected == JFileChooser.APPROVE_OPTION) {
 				// TODO: Traitement : appel des webServices pour recuperer le fichier sur le serveur
@@ -283,13 +285,22 @@ public class HTMLViewer extends JFrame {
 				// Gestion d'un thread pour cette fenetre pour ne pas etre bloquant sur le reste de l'application
 				// pendant le telechargement
 				
-				pathToDownload = fileChooser.getCurrentDirectory().getName();
+				pathToDownload = fileChooser.getSelectedFile().getAbsolutePath();
 				
 				// TODO
 				Thread currentThread = WizardControler.getInstance().downloadThread(_guidance, downloadFile, pathToDownload);			
 			}
 		}
 		
+	}
+	
+	private String getFileName(String path_file) {
+		String fileToBeReturn = "";
+		int indexSeparator = 0;
+		
+		indexSeparator = path_file.lastIndexOf('/');
+		fileToBeReturn = path_file.substring(indexSeparator+1);		
+		return fileToBeReturn;
 	}
 	
 	/**
