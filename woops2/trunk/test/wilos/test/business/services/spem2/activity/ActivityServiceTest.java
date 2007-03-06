@@ -5,19 +5,23 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import wilos.business.services.spem2.activity.ActivityService;
+import wilos.hibernate.misc.concreteactivity.ConcreteActivityDao;
+import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.spem2.activity.Activity;
 import wilos.test.TestConfiguration;
-
 
 public class ActivityServiceTest {
 
 	private ActivityService activityService;
+
+	private ConcreteActivityDao concreteActivityDao;
 
 	private Activity activity;
 
@@ -30,6 +34,10 @@ public class ActivityServiceTest {
 		this.activityService = (ActivityService) TestConfiguration
 				.getInstance().getApplicationContext().getBean(
 						"ActivityService");
+		// Get the ActivityService Singleton for managing Activity data
+		this.concreteActivityDao = (ConcreteActivityDao) TestConfiguration
+				.getInstance().getApplicationContext().getBean(
+						"ConcreteActivityDao");
 
 	}
 
@@ -79,6 +87,26 @@ public class ActivityServiceTest {
 		assertEquals(activityTmp.getPrefix(), PREFIX);
 		assertEquals(activityTmp.getIsOptional(), IS_OPTIONAL);
 
+		// Rk: the tearDown method is called here.
+	}
+
+	@Test
+	public void testGetAllConcreteActivities() {
+		// Rk: the setUp method is called here.
+
+		ConcreteActivity cact = new ConcreteActivity();
+		cact.setConcreteName("cname");
+		this.concreteActivityDao.saveOrUpdateConcreteActivity(cact);
+
+		// Save the activity to test the method saveActivity.
+		this.activity.addConcreteActivity(cact);
+		this.activityService.saveActivity(this.activity);
+		
+		// Look if this activity is also into the database.
+		Set<ConcreteActivity> activityTmp = this.activityService.getAllConcreteActivities(this.activity);
+		assertNotNull(activityTmp);
+		assertEquals(activityTmp.size(), 1);
+		
 		// Rk: the tearDown method is called here.
 	}
 
