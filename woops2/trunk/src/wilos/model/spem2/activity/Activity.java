@@ -50,6 +50,7 @@ public class Activity extends WorkBreakdownElement implements Cloneable {
 		this.guidances = new HashSet<Guidance>();
 		this.howToStaff = "";
 		this.purpose = "";
+		this.alternatives = "";
 	}
 
 	/*
