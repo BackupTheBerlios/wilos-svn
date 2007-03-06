@@ -5,21 +5,20 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Vector;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
-import javax.swing.tree.TreePath;
 
 import org.jdesktop.swingx.JXTree;
 
@@ -29,8 +28,8 @@ import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
-import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
+import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.element.Element;
 import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.task.Step;
@@ -111,20 +110,57 @@ public class WizardControler {
 	 * downloadTread
 	 * @return
 	 */
-	public synchronized Thread downloadThread (final String file, final String pathFileToDownload){
-		Thread monThread = new Thread (new Runnable(){
-			public void run() {
-					WizardControler.getInstance().connectToServer(this);
-					
-					// Code: appel de la webService pour telecharger
-					// affichage d une fenetre de telechargement
-					DownLoadFrame df = new DownLoadFrame(file, pathFileToDownload);
-					
-					
-					
-					WizardControler.getInstance().disconnectToServer(this);
+	public synchronized Thread downloadThread (final Guidance g, final String file, final String pathFileToDownload){
+		BreakdownElement bde = null;
+		String guidProcessTmp = null;
+		/*if (g.getTaskDefinitions() != null)
+			bde = g.getTaskDefinitions().iterator().next().getTaskDescriptors().iterator().next();
+		if (g.getRoleDefinitions() != null)
+			bde = g.getRoleDefinitions().iterator().next().getRoleDescriptors().iterator().next();
+		if (g.getActivities() != null)
+			bde = g.getActivities().iterator().next();
+		Thread monThread = null;
+		if (bde != null) {
+			while (bde.getSuperActivities().iterator().next() != null) {
+				bde = bde.getSuperActivities().iterator().next();
 			}
-		});
+			if (bde instanceof Process) {
+				guidProcessTmp = bde.getGuid();
+			}
+			
+		}*/
+		/*final String guidProcess = guidProcessTmp;*/
+		Thread	monThread = new Thread (new Runnable(){
+				public void run() {
+						
+						WizardControler.getInstance().connectToServer(this);
+						
+						// Code: appel de la webService pour telecharger
+						// affichage d une fenetre de telechargement
+						DownLoadFrame df = new DownLoadFrame(file, pathFileToDownload);
+						
+						byte [] file = WizardServicesProxy.getGuidanceAttachmentContent(g.getGuid());
+						
+						// Reconstruction du fichier en local
+						FileOutputStream f;
+						try {
+							f = new FileOutputStream(pathFileToDownload);
+							try {
+								f.write(file);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						} catch (FileNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+						System.out.println(pathFileToDownload + " " + new File(pathFileToDownload).exists());
+						
+						WizardControler.getInstance().disconnectToServer(this);
+				}
+			});
 		monThread.start();
 		return monThread;
 	}

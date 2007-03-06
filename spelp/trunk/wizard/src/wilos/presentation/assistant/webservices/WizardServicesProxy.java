@@ -67,6 +67,8 @@ public class WizardServicesProxy {
     	WizardServicesProxy.password = aPassword;
     	WizardServicesProxy.address = anAddress;
     }
+	
+	
     
         
         public static Participant getParticipant()
@@ -109,7 +111,21 @@ public class WizardServicesProxy {
             }
         }
    
-        
+        public static byte [] getGuidanceAttachmentContent(String idGuidance) {
+			byte [] fileContent = null;
+			
+        	try { 
+            	if (!login.equalsIgnoreCase(testIHMLoginString)) {
+            		WizardServicesService service = new WizardServicesService(new URL(address+ENDPOINT), new QName(URLWebService, nameWebService));            	
+                    WizardServices port = service.getWizardServicesPort();
+                    fileContent = port.getGuidanceAttachment(login, password, idGuidance);
+            	}
+            }
+            catch (java.lang.Exception e) {
+                e.printStackTrace();
+            }
+            return fileContent;
+        }
 
         public static  void stopConcreteTaskDescriptor (String theConcreteTaskId) {
             try { 
