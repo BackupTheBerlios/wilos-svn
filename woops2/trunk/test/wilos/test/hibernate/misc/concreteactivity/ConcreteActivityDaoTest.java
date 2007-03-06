@@ -24,7 +24,7 @@ import wilos.test.TestConfiguration;
 public class ConcreteActivityDaoTest {
 
 	private ConcreteActivityDao concreteactivityDao = null;
-
+	
 	private ConcreteActivity concreteactivity = null;
 
 	public static final String NAME = "thisConcreteActivity";
@@ -50,7 +50,6 @@ public class ConcreteActivityDaoTest {
 		this.concreteactivityDao = (ConcreteActivityDao) TestConfiguration
 				.getInstance().getApplicationContext().getBean(
 						"ConcreteActivityDao");
-
 	}
 
 	@Before
