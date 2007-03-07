@@ -255,12 +255,21 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 						.getState().equals(State.READY)))
 			;
 		{
+			String etat = this.concreteTaskDescriptor.getState();
 			this.concreteTaskDescriptorService
 					.removeConcreteTaskDescriptor(this.concreteTaskDescriptor);
 			// Refresh components.
-			super.refreshProjectTree();
+			
 			super.refreshProjectTable();
-
+			if(etat.equals(State.READY))
+			{
+				super.rebuildProjectTree();
+			}
+			else
+			{
+				super.refreshProjectTree();
+			}
+			
 			FacesContext context = FacesContext.getCurrentInstance();
 			MenuBean mb = (MenuBean) context.getApplication()
 					.getVariableResolver().resolveVariable(context, "menu");

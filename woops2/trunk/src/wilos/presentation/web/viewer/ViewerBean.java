@@ -23,6 +23,13 @@ public class ViewerBean {
 				.getVariableResolver().resolveVariable(context, "TreeBean");
 		treeBean.refreshProjectTree();
 	}
+	
+	protected void rebuildProjectTree() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		TreeBean treeBean = (TreeBean) context.getApplication()
+				.getVariableResolver().resolveVariable(context, "TreeBean");
+		treeBean.rebuildProjectTree();
+	}
 
 	protected void refreshProjectTable() {
 		FacesContext context = FacesContext.getCurrentInstance();
