@@ -75,7 +75,7 @@ public class RolesInstanciationBean {
 
 	private String projectTasksInstanciated;
 
-	private boolean projectModified;
+	private boolean projectModified ;
 
 	public RolesInstanciationBean() {
 		this.displayContent = new ArrayList<HashMap<String, Object>>();
@@ -126,7 +126,6 @@ public class RolesInstanciationBean {
 	 *
 	 */
 	public void instanciateConcreteRole() {
-		List<HashMap<String, Object>> tmp = this.displayContent;
 		List<HashMap<String, Object>> resultat = new ArrayList<HashMap<String, Object>>();
 
 		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
@@ -166,40 +165,62 @@ public class RolesInstanciationBean {
 	 */
 	private List<HashMap<String, Object>> retrieveHierarchicalItems(Activity _act) {
 
+		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
+		Project project = this.projectService.getProject(projectId);
+
 		List<HashMap<String, Object>> lines = new ArrayList<HashMap<String, Object>>();
 		String indentationString = "";
+		boolean evenInstanciated = true;
+
 		Activity act = this.activityService.getActivity(_act.getId());
 		SortedSet<BreakdownElement> set = this.activityService.getBreakdownElements(act);
 		act.setBreakdownElements(set);
-		for (BreakdownElement bde : act.getBreakdownElements()) {
-
+		
+		for (BreakdownElement bde : act.getBreakdownElements())
+		{
+			evenInstanciated = true;
 			HashMap<String, Object> hm = new HashMap<String, Object>();
-			if (!(bde instanceof TaskDescriptor)) {
-				if (bde instanceof WorkBreakdownElement) {
-					hm.put("nodeType", "node");
-					hm.put("expansionImage", CONTRACT_TABLE_ARROW);
-					hm.put("isVisible", false);
-				} else {
-					if (bde instanceof RoleDescriptor) {
-						//this.logger.debug("### Role : "+bde.getPresentationName()+" / Nb primary tasks : "+this.roleDescriptorService.getPrimaryTasks((RoleDescriptor)bde).size());
+			if (!(bde instanceof TaskDescriptor))
+			{
+				if (bde instanceof WorkBreakdownElement)
+				{
+					//if the activity have been instanciated for this project
+					evenInstanciated = this.concreteRoleInstanciationService.isActivityInstanciated((WorkBreakdownElement) bde, project);
+					if (evenInstanciated)
+					{
+						hm.put("nodeType", "node");
+						hm.put("expansionImage", CONTRACT_TABLE_ARROW);
+						hm.put("isVisible", false);
+					}
+				}
+				else
+				{
+					if (bde instanceof RoleDescriptor)
+					{
 						hm.put("nodeType", "leaf");
 						hm.put("expansionImage", TABLE_LEAF);
 						hm.put("isVisible", true);
 					}
 				}
-				hm.put("id", bde.getId());
-				hm.put("name", bde.getPresentationName());
-				hm.put("isEditable", act.getHasMultipleOccurrences());
-				hm.put("nbOccurences", new Integer(1));
-				hm.put("parentId", act.getId());
-				lines.add(hm);
+				//if the breakdownelement have been instanciated for this project 
+				if (evenInstanciated)
+				{
+					hm.put("id", bde.getId());
+					hm.put("name", bde.getPresentationName());
+					hm.put("isEditable", act.getHasMultipleOccurrences());
+					hm.put("nbOccurences", new Integer(1));
+					hm.put("parentId", act.getId());
+					lines.add(hm);
 
-				// if this is not the root node -> needIndentation == true
-				if (needIndentation) {
-					if (this.indentationContent.get(act.getId()) != null) {
-						indentationString = this.indentationContent.get(act.getId());
+					// if this is not the root node -> needIndentation == true
+					if (needIndentation)
+					{
+						if (this.indentationContent.get(act.getId()) != null)
+						{
+							indentationString = this.indentationContent.get(act.getId());
+						}
+						this.indentationContent.put((String) hm.get("id"), indentationString.concat(RolesInstanciationBean.INDENTATION_STRING));
 					}
-					this.indentationContent.put((String) hm.get("id"), indentationString.concat(RolesInstanciationBean.INDENTATION_STRING));
 				}
 			}
 		}
@@ -318,7 +339,6 @@ public class RolesInstanciationBean {
 	 * @return
 	 */
 	public String getProjectTasksInstanciated() {
-		String user_id = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID);
 		Project project = this.projectService.getProject((String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID));
 		if (project.getProcess() == null) {
 			this.projectTasksInstanciated = "projectTasksNotInstanciated";

@@ -96,12 +96,10 @@ public class ParticipantService {
 		HashMap<String,Boolean> concreteRolesList = new HashMap<String,Boolean>();
 		List<ConcreteRoleDescriptor> projectConcreteRolesList = this.concreteRoleDescriptorService.getAllConcreteRoleDescriptorsForProject(_projectId);
 		if(projectConcreteRolesList != null){
-			this.logger.debug("roles : "+projectConcreteRolesList.size());
 			List<ConcreteRoleDescriptor> participantConcreteRolesList = new ArrayList<ConcreteRoleDescriptor>();
 			participantConcreteRolesList.addAll(this.participantDao.getAllConcreteRolesForAParticipant(_participantId));
 			for(Iterator iter = projectConcreteRolesList.iterator(); iter.hasNext();){
 				ConcreteRoleDescriptor element = (ConcreteRoleDescriptor) iter.next() ;
-				this.logger.debug("roles : "+element.getConcreteName());
 				for(ConcreteRoleDescriptor concreteRoleDescriptor : participantConcreteRolesList){
 					if(element.getId() == concreteRoleDescriptor.getId())
 						concreteRolesList.put(concreteRoleDescriptor.getId(),new Boolean(true));

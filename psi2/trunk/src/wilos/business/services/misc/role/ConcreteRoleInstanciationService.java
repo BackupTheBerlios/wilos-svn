@@ -18,6 +18,8 @@ import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.activity.ActivityService;
 import wilos.business.services.spem2.breakdownelement.BreakdownElementService;
+import wilos.business.services.spem2.iteration.IterationService;
+import wilos.business.services.spem2.phase.PhaseService;
 import wilos.business.services.spem2.role.RoleDescriptorService;
 import wilos.hibernate.misc.concreterole.ConcreteRoleDescriptorDao;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
@@ -25,8 +27,13 @@ import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
+import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
 import wilos.model.misc.project.Project;
+import wilos.model.spem2.activity.Activity;
+import wilos.model.spem2.iteration.Iteration;
+import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.workbreakdownelement.WorkBreakdownElement;
 
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class ConcreteRoleInstanciationService {
@@ -35,6 +42,10 @@ public class ConcreteRoleInstanciationService {
 	private RoleDescriptorService roleDescriptorService;
 
 	private ActivityService activityService;
+	
+	private PhaseService phaseService;
+	
+	private IterationService iterationService;
 
 	private BreakdownElementService breakdownElementService;
 
@@ -140,6 +151,48 @@ public class ConcreteRoleInstanciationService {
 			}
 		}
 		return concretesActivitiesToModifiy;
+	}
+	
+	/**
+	 * return true if theActivity have been instanciated for the project
+	 * @param _activity
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public boolean isActivityInstanciated(WorkBreakdownElement _wbe, Project project)
+	{
+		Set<ConcreteWorkBreakdownElement> cwbes = new HashSet<ConcreteWorkBreakdownElement>();
+		Set<ConcreteWorkBreakdownElement> cwbesOfProject = new HashSet<ConcreteWorkBreakdownElement>();
+		
+		if (_wbe instanceof Iteration) {
+			Iteration it = (Iteration) _wbe;
+			it = this.iterationService.getIterationDao().getIteration(it.getId());
+			cwbes.addAll(this.iterationService.getAllConcreteIterations(it));
+		} else {
+			if (_wbe instanceof Phase) {
+				Phase ph = (Phase) _wbe;
+				ph = this.phaseService.getPhaseDao().getPhase(ph.getId());
+				cwbes.addAll(this.phaseService.getAllConcretePhases(ph));
+			} else {
+				if (_wbe instanceof Activity) {
+					Activity act = (Activity) _wbe;
+					act = this.activityService.getActivityDao().getActivity(act.getId());
+					cwbes.addAll(this.activityService.getAllConcreteActivities(act));
+				}
+			}
+		}
+		//test if the concreteBDEs belongs to the project
+		for (ConcreteWorkBreakdownElement element : cwbes) {
+			if(element.getProject() != null)
+			{
+				if(element.getProject().getId().equals(project.getId()))
+				{
+					cwbesOfProject.add(element);
+				}
+			}
+		}
+		this.logger.debug("### Activité : "+_wbe.getPresentationName()+" / Instancié :"+cwbesOfProject.size());
+		return (cwbesOfProject.size() > 0);
 	}
 
 	/**
@@ -280,6 +333,34 @@ public class ConcreteRoleInstanciationService {
 	 */
 	public void setConcreteBreakdownElementService(ConcreteBreakdownElementService concreteBreakdownElementService) {
 		this.concreteBreakdownElementService = concreteBreakdownElementService;
+	}
+
+	/**
+	 * @return the iterationService
+	 */
+	public IterationService getIterationService() {
+		return iterationService;
+	}
+
+	/**
+	 * @param iterationService the iterationService to set
+	 */
+	public void setIterationService(IterationService iterationService) {
+		this.iterationService = iterationService;
+	}
+
+	/**
+	 * @return the phaseService
+	 */
+	public PhaseService getPhaseService() {
+		return phaseService;
+	}
+
+	/**
+	 * @param phaseService the phaseService to set
+	 */
+	public void setPhaseService(PhaseService phaseService) {
+		this.phaseService = phaseService;
 	}
 
 }
