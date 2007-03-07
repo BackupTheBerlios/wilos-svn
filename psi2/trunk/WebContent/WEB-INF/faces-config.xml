@@ -502,7 +502,7 @@
 	<managed-bean>
 		<managed-bean-name>ExpTableBean</managed-bean-name>
 		<managed-bean-class>wilos.presentation.web.expandabletable.ExpTableBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>processService</property-name>
 			<value>#{ProcessService}</value>

@@ -79,8 +79,8 @@ public class ConcreteRoleInstanciationService {
 	 * 
 	 * @param liste
 	 */
-	@Transactional(readOnly = false)
 	@SuppressWarnings("unchecked")
+	@Transactional(readOnly = false)
 	public int saveInstanciateConcreteRole(List<HashMap<String, Object>> roleDescriptorsToInstanciate, String projectId) {
 		Project project = this.projectService.getProject(projectId);
 
@@ -88,23 +88,72 @@ public class ConcreteRoleInstanciationService {
 			HashMap<String, Object> hm = (HashMap<String, Object>) iter.next();
 
 			String parentActivityId = (String) hm.get("parentId");
-			int nbOccurence = (Integer) hm.get("nbOccurences");
 
 			//creation de ls liste des concrete activity ou il faudra ajouter le nouveau role
 			Set<ConcreteBreakdownElement> concretesActivitiesToModifiy = getConcreteActivitiesToModify(project, parentActivityId);
 			for (ConcreteBreakdownElement element : concretesActivitiesToModifiy) {
-				RoleDescriptor r = this.roleDescriptorService.getRoleDescriptorById((String) hm.get("id"));
 				
-				this.logger.debug("### RD : "+hm.get("id")+" dans l'activité "+element.getConcreteName());	
-
+				RoleDescriptor r = new RoleDescriptor();
+				r = this.roleDescriptorService.getRoleDescriptorDao().getRoleDescriptor((String) hm.get("id"));
+				this.roleDescriptorService.getRoleDescriptorDao().getSessionFactory().getCurrentSession().saveOrUpdate(r);
+				this.roleDescriptorService.getRoleDescriptorDao().getSessionFactory().getCurrentSession().refresh(r);				
 
 				ConcreteActivity concreteactivity = this.concreteActivityService.getConcreteActivity(element.getId());
+				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(concreteactivity);
+				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(concreteactivity);
+
+				this.logger.debug("### RD "+r.getPresentationName()+" dans l'activité "+concreteactivity.getConcreteName()+" / NB a instancier : "+(Integer)hm.get("nbOccurences"));
+				
+				
 				this.roleDescriptorService.roleDescriptorInstanciation(project, r, concreteactivity, (Integer)hm.get("nbOccurences"));
 			}
 		}
-
 		return 1;
 	}
+	
+	/*@Transactional(readOnly = false)
+	public void roleDescriptorInstanciation (Project _project, RoleDescriptor _rd, ConcreteActivity _cact, int _occ) {
+
+		if (_occ > 0)
+		{
+			for (int i=1; i <= _occ; i++)
+			{
+				ConcreteRoleDescriptor crd = new ConcreteRoleDescriptor();
+		
+				if (_occ > 1)
+				{
+					if (_rd.getPresentationName() == null)
+						crd.setConcreteName(_rd.getName() + "_" + (new Integer(i)).toString());
+					else
+						crd.setConcreteName(_rd.getPresentationName() + "_" + (new Integer(i)).toString());
+				}
+				else
+				{
+					if (_rd.getPresentationName() == null)
+						crd.setConcreteName(_rd.getName());
+					else
+						crd.setConcreteName(_rd.getPresentationName());
+				}
+				
+				this.roleDescriptorService.getRoleDescriptorDao().getSessionFactory().getCurrentSession().saveOrUpdate(_rd);
+				this.roleDescriptorService.getRoleDescriptorDao().getSessionFactory().getCurrentSession().refresh(_rd);		
+				crd.addRoleDescriptor(_rd);
+				
+				crd.setProject(_project);
+
+				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(_cact);
+				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(_cact);
+				_cact.setConcreteBreakdownElements(this.concreteActivityService.getConcreteBreakdownElements(_cact));
+
+				crd.addSuperConcreteActivity(_cact);
+
+				System.out.println("### ConcreteRoleDescriptorService "+crd.getConcreteName()+ " / RoleDescriptor : "+crd.getRoleDescriptor().getId());
+				this.concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(crd);
+				System.out.println("### ConcreteRoleDescriptor sauve");
+			}
+		}
+	}*/
+	
 
 	/**
 	 * 
@@ -115,7 +164,6 @@ public class ConcreteRoleInstanciationService {
 	private Set<ConcreteBreakdownElement> getConcreteActivitiesToModify(Project project, String parentActivityId) {
 
 		Set<ConcreteBreakdownElement> concretesActivitiesToModifiy = new HashSet<ConcreteBreakdownElement>();
-		this.logger.debug("### NOMBRE DELEMENT CONCRETE DU PROJET :"+project.getConcreteName()+" / "+this.concreteBreakdownElementService.getAllConcreteBreakdownElementsFromProject(project.getId()).size());
 		for (ConcreteBreakdownElement concreteBreakdownElement : this.concreteBreakdownElementService.getAllConcreteBreakdownElementsFromProject(project.getId())) {
 			if (concreteBreakdownElement instanceof ConcreteActivity) {
 				if (concreteBreakdownElement instanceof ConcretePhase) {
@@ -195,7 +243,7 @@ public class ConcreteRoleInstanciationService {
 				}
 			}
 		}
-		this.logger.debug("### Activité : "+_wbe.getPresentationName()+" / Instancié :"+cwbes.size());
+		//this.logger.debug("### Activité : "+_wbe.getPresentationName()+" / Instancié :"+cwbes.size());
 		//test if the concreteBDEs belongs to the project
 		for (ConcreteWorkBreakdownElement element : cwbes) {
 			if(element.getProject() != null)
@@ -206,7 +254,7 @@ public class ConcreteRoleInstanciationService {
 				}
 			}
 		}
-		this.logger.debug("### Activité : "+_wbe.getPresentationName()+" / Instancié du projet :"+cwbesOfProject.size());
+		//this.logger.debug("### Activité : "+_wbe.getPresentationName()+" / Instancié du projet :"+cwbesOfProject.size());
 		return (cwbesOfProject.size() > 0);
 	}
 

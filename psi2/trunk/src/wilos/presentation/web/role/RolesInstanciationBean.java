@@ -191,6 +191,7 @@ public class RolesInstanciationBean {
 						hm.put("nodeType", "node");
 						hm.put("expansionImage", CONTRACT_TABLE_ARROW);
 						hm.put("isVisible", false);
+						hm.put("isEditable", false);
 					}
 				}
 				else
@@ -199,6 +200,7 @@ public class RolesInstanciationBean {
 					{
 						hm.put("nodeType", "leaf");
 						hm.put("expansionImage", TABLE_LEAF);
+						hm.put("isEditable", act.getHasMultipleOccurrences());
 						hm.put("isVisible", true);
 					}
 				}
@@ -207,7 +209,6 @@ public class RolesInstanciationBean {
 				{
 					hm.put("id", bde.getId());
 					hm.put("name", bde.getPresentationName());
-					hm.put("isEditable", act.getHasMultipleOccurrences());
 					hm.put("nbOccurences", new Integer(1));
 					hm.put("parentId", act.getId());
 					lines.add(hm);
