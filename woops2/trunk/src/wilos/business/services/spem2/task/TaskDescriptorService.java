@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import wilos.business.services.misc.concreteactivity.ConcreteActivityService;
 import wilos.hibernate.misc.concretetask.ConcreteTaskDescriptorDao;
 import wilos.hibernate.spem2.task.TaskDescriptorDao;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
@@ -25,6 +26,8 @@ public class TaskDescriptorService {
 	private ConcreteTaskDescriptorDao concreteTaskDescriptorDao;
 
 	private TaskDescriptorDao taskDescriptorDao;
+	
+	private ConcreteActivityService concreteActivityService;
 
 	/**
 	 * 
@@ -58,6 +61,7 @@ public class TaskDescriptorService {
 
 				ctd.addTaskDescriptor(_td);
 				ctd.setProject(_project);
+				_cact.setConcreteBreakdownElements(this.concreteActivityService.getConcreteBreakdownElements(_cact));
 				ctd.addSuperConcreteActivity(_cact);
 
 				this.concreteTaskDescriptorDao
@@ -104,5 +108,20 @@ public class TaskDescriptorService {
 	public void setConcreteTaskDescriptorDao(
 			ConcreteTaskDescriptorDao _concreteTaskDescriptorDao) {
 		this.concreteTaskDescriptorDao = _concreteTaskDescriptorDao;
+	}
+
+	/**
+	 * @return the concreteActivityService
+	 */
+	public ConcreteActivityService getConcreteActivityService() {
+		return concreteActivityService;
+	}
+
+	/**
+	 * @param concreteActivityService the concreteActivityService to set
+	 */
+	public void setConcreteActivityService(
+			ConcreteActivityService concreteActivityService) {
+		this.concreteActivityService = concreteActivityService;
 	}
 }

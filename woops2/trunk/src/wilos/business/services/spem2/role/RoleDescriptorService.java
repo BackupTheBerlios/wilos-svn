@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import wilos.business.services.misc.concreteactivity.ConcreteActivityService;
 import wilos.hibernate.misc.concreterole.ConcreteRoleDescriptorDao;
 import wilos.hibernate.spem2.role.RoleDescriptorDao;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
@@ -24,6 +25,8 @@ public class RoleDescriptorService {
 	private ConcreteRoleDescriptorDao concreteRoleDescriptorDao;
 
 	private RoleDescriptorDao roleDescriptorDao;
+	
+	private ConcreteActivityService concreteActivityService;
 
 	/**
 	 * @return the roleDescriptorDao
@@ -95,6 +98,7 @@ public class RoleDescriptorService {
 		
 				crd.addRoleDescriptor(_rd);
 				crd.setProject(_project);
+				_cact.setConcreteBreakdownElements(this.concreteActivityService.getConcreteBreakdownElements(_cact));
 				crd.addSuperConcreteActivity(_cact);
 		
 				this.concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(crd);
@@ -117,5 +121,20 @@ public class RoleDescriptorService {
 	public void setConcreteRoleDescriptorDao(
 			ConcreteRoleDescriptorDao concreteRoleDescriptorDao) {
 		this.concreteRoleDescriptorDao = concreteRoleDescriptorDao;
+	}
+
+	/**
+	 * @return the concreteActivityService
+	 */
+	public ConcreteActivityService getConcreteActivityService() {
+		return concreteActivityService;
+	}
+
+	/**
+	 * @param concreteActivityService the concreteActivityService to set
+	 */
+	public void setConcreteActivityService(
+			ConcreteActivityService concreteActivityService) {
+		this.concreteActivityService = concreteActivityService;
 	}
 }
