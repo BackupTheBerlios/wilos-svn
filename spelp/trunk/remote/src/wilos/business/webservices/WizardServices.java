@@ -62,25 +62,6 @@ public class WizardServices {
     }
     
     @WebMethod
-    public boolean isFileExistOnRemote(@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="idGuidance") String idGuidance) throws Exception    
-    {
-    	String filePath = "";
-    	boolean exist = false;
-    	Participant wu = new Participant();
-    	System.out.println("APPEL DE LA METHODE isFileExistOnRemote");
-    	
-    	wu =  getAuthentifiedParticipant(login,password);
-        if (wu != null) {
-        	System.out.println("Le user "+wu.getName()+" est logge");
-        	filePath = assistantService.getAttachmentFilePath(idGuidance);
-        	
-        	File myfile = new File(filePath);
-        	exist = myfile.exists();
-        }
-    	return exist;
-    }
-    
-    @WebMethod
     public  byte []  getGuidanceAttachment(@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="idGuidance") String idGuidance) throws Exception
     {
        String filePath = "";
