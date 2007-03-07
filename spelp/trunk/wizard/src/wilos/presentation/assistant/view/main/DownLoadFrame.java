@@ -1,14 +1,20 @@
 package wilos.presentation.assistant.view.main;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.nio.ByteOrder;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,6 +22,7 @@ import javax.swing.JPanel;
 
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
+import wilos.presentation.assistant.view.panels.InfoPanel;
 
 public class DownLoadFrame extends JFrame {
 	
@@ -23,6 +30,9 @@ public class DownLoadFrame extends JFrame {
 	private JLabel dLFile = null;
 	private JLabel img = null ;
 	private JPanel mainPanel = null;
+	private JPanel buttonPanel = null;
+	private JPanel closeButtonPanel = null;
+	private JPanel infoFilePanel = null;
 	private JButton close = null ;
 	private static String textInfoFile = Bundle.getText("downloadFrame.FileInfo");
 	private static String fileNameInfoFirst = Bundle.getText("downloadFrame.fileNameInfoFirst");
@@ -41,21 +51,22 @@ public class DownLoadFrame extends JFrame {
 	}
 	
 	public void endOfTreatment () {
-		this.infoFile.setText("FICHIER TELECHARGE");
+		this.infoFile.setText(Bundle.getText("downloadFrame.finishDownload"));
+		close.setFocusable(true);
 		close.setEnabled(true);
+		img.setEnabled(false);
 	}
 	
 	private void displayInformation(String file, String filePathToDownload) {
-		this.dLFile.setText(textInfoFile+ " " +filePathToDownload);
-		this.infoFile.setText(fileNameInfoFirst+getFileName(file)+" "+fileNameInfoLast);		
-		
+		this.dLFile.setText(textInfoFile+'\r' + "  "+ System.getProperty("line.separator") + filePathToDownload);
+		this.infoFile.setText(fileNameInfoFirst+"\n \r"+getFileName(file)+" "+fileNameInfoLast);		
 	}
 
 	private String getFileName(String path_file) {
 		String fileToBeReturn = "";
 		int indexSeparator = 0;
 		
-		indexSeparator = path_file.lastIndexOf('/');
+		indexSeparator = path_file.lastIndexOf(File.separator);		
 		fileToBeReturn = path_file.substring(indexSeparator+1);		
 		return fileToBeReturn;
 	}
@@ -64,25 +75,53 @@ public class DownLoadFrame extends JFrame {
 		int x = (int)(Toolkit.getDefaultToolkit().getScreenSize().width/2-(605/2));
 		int y = (int)(Toolkit.getDefaultToolkit().getScreenSize().height/2-(220/2)) ;
 		this.setTitle(Bundle.getText("downloadFrame.downloadTitle"));
-		this.setBounds(x, y, 400, 200);
-		this.setResizable(false);
+		this.setBounds(x, y, 500, 150);
 		this.setContentPane(getMainPanel());
 		this.setVisible(true);
 	}
 
+	private Container getButtonPanel() {
+		buttonPanel = new JPanel();
+		
+		buttonPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		buttonPanel.setLayout(new BorderLayout());
+		buttonPanel.add(getDLFile(), BorderLayout.NORTH);		
+		buttonPanel.add(getButtonClosePanel(), BorderLayout.SOUTH);
+		return buttonPanel;
+	}
+
+	private Component getButtonClosePanel() {
+		closeButtonPanel = new JPanel();
+		
+		closeButtonPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		closeButtonPanel.setLayout(new GridBagLayout());
+		
+		closeButtonPanel.add(getClose(),  new GridBagConstraints());
+		return closeButtonPanel;
+	}
+
 	private Container getMainPanel() {
-		mainPanel = new JPanel();
+		mainPanel = new JPanel();		
+		
 		mainPanel.setLayout(new BorderLayout());	
-		mainPanel.add(getInfoFile(),BorderLayout.NORTH);
-		mainPanel.add(getImg(),BorderLayout.EAST);
-		mainPanel.add(getDLFile(),BorderLayout.CENTER);
-		mainPanel.add(getClose(),BorderLayout.SOUTH);
+		mainPanel.add(getInfoFilePanel(), BorderLayout.NORTH);
+		mainPanel.add(getImg(), BorderLayout.CENTER);
+		mainPanel.add(getButtonPanel(),BorderLayout.SOUTH);
 		return mainPanel ;
+	}
+
+	private Component getInfoFilePanel() {
+		infoFilePanel = new JPanel();
+		infoFilePanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		infoFilePanel.setLayout(new BorderLayout());
+		infoFilePanel.add(getInfoFile(), BorderLayout.NORTH);
+		
+		return infoFilePanel;
 	}
 
 	private JButton getClose () {
 		if (close == null) {
-			close = new JButton ("close");
+			close = new JButton ("Fermer");
 			close.setEnabled(false);
 			close.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
@@ -108,7 +147,6 @@ public class DownLoadFrame extends JFrame {
 		if (this.infoFile == null)
 		{
 			this.infoFile = new JLabel();
-			this.infoFile.setBounds(new Rectangle(20,10,400,20));
 			this.infoFile.setText("Le fichier X est en cours de téléchargement...");
 		}
 		return this.infoFile;
