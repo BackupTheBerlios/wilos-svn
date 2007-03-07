@@ -94,6 +94,10 @@ public class ConcreteRoleInstanciationService {
 			Set<ConcreteBreakdownElement> concretesActivitiesToModifiy = getConcreteActivitiesToModify(project, parentActivityId);
 			for (ConcreteBreakdownElement element : concretesActivitiesToModifiy) {
 				RoleDescriptor r = this.roleDescriptorService.getRoleDescriptorById((String) hm.get("id"));
+				
+				this.logger.debug("### RD : "+hm.get("id")+" dans l'activité "+element.getConcreteName());	
+
+
 				ConcreteActivity concreteactivity = this.concreteActivityService.getConcreteActivity(element.getId());
 				this.roleDescriptorService.roleDescriptorInstanciation(project, r, concreteactivity, (Integer)hm.get("nbOccurences"));
 			}
@@ -111,6 +115,7 @@ public class ConcreteRoleInstanciationService {
 	private Set<ConcreteBreakdownElement> getConcreteActivitiesToModify(Project project, String parentActivityId) {
 
 		Set<ConcreteBreakdownElement> concretesActivitiesToModifiy = new HashSet<ConcreteBreakdownElement>();
+		this.logger.debug("### NOMBRE DELEMENT CONCRETE DU PROJET :"+project.getConcreteName()+" / "+this.concreteBreakdownElementService.getAllConcreteBreakdownElementsFromProject(project.getId()).size());
 		for (ConcreteBreakdownElement concreteBreakdownElement : this.concreteBreakdownElementService.getAllConcreteBreakdownElementsFromProject(project.getId())) {
 			if (concreteBreakdownElement instanceof ConcreteActivity) {
 				if (concreteBreakdownElement instanceof ConcretePhase) {
@@ -145,7 +150,6 @@ public class ConcreteRoleInstanciationService {
 								}
 							}
 						}
-
 					}
 				}
 			}
@@ -166,21 +170,32 @@ public class ConcreteRoleInstanciationService {
 		
 		if (_wbe instanceof Iteration) {
 			Iteration it = (Iteration) _wbe;
-			it = this.iterationService.getIterationDao().getIteration(it.getId());
-			cwbes.addAll(this.iterationService.getAllConcreteIterations(it));
+			//it = this.iterationService.getIterationDao().getIteration(it.getId());
+			//cwbes.addAll(this.iterationService.getAllConcreteIterations(it));
+			this.iterationService.getIterationDao().getSessionFactory().getCurrentSession().saveOrUpdate(it);
+			this.iterationService.getIterationDao().getSessionFactory().getCurrentSession().refresh(it);
+			cwbes.addAll(it.getConcreteIterations());
+
 		} else {
 			if (_wbe instanceof Phase) {
 				Phase ph = (Phase) _wbe;
-				ph = this.phaseService.getPhaseDao().getPhase(ph.getId());
-				cwbes.addAll(this.phaseService.getAllConcretePhases(ph));
+				//ph = this.phaseService.getPhaseDao().getPhase(ph.getId());
+				//cwbes.addAll(this.phaseService.getAllConcretePhases(ph));
+				this.phaseService.getPhaseDao().getSessionFactory().getCurrentSession().saveOrUpdate(ph);
+				this.phaseService.getPhaseDao().getSessionFactory().getCurrentSession().refresh(ph);
+				cwbes.addAll(ph.getConcretePhases());
 			} else {
 				if (_wbe instanceof Activity) {
 					Activity act = (Activity) _wbe;
-					act = this.activityService.getActivityDao().getActivity(act.getId());
-					cwbes.addAll(this.activityService.getAllConcreteActivities(act));
+					//act = this.activityService.getActivityDao().getActivity(act.getId());
+					//cwbes.addAll(this.activityService.getAllConcreteActivities(act));
+					this.activityService.getActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(act);
+					this.activityService.getActivityDao().getSessionFactory().getCurrentSession().refresh(act);
+					cwbes.addAll(act.getConcreteActivities());
 				}
 			}
 		}
+		this.logger.debug("### Activité : "+_wbe.getPresentationName()+" / Instancié :"+cwbes.size());
 		//test if the concreteBDEs belongs to the project
 		for (ConcreteWorkBreakdownElement element : cwbes) {
 			if(element.getProject() != null)
@@ -191,7 +206,7 @@ public class ConcreteRoleInstanciationService {
 				}
 			}
 		}
-		this.logger.debug("### Activité : "+_wbe.getPresentationName()+" / Instancié :"+cwbesOfProject.size());
+		this.logger.debug("### Activité : "+_wbe.getPresentationName()+" / Instancié du projet :"+cwbesOfProject.size());
 		return (cwbesOfProject.size() > 0);
 	}
 

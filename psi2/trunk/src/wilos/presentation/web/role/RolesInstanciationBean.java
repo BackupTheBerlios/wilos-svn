@@ -153,10 +153,10 @@ public class RolesInstanciationBean {
 		message.setSeverity(FacesMessage.SEVERITY_ERROR);
 		context.addMessage(null, message);
 
-		//remise a 0 des nombres d'occurences
+		/*remise a 0 des nombres d'occurences
 		for (HashMap<String, Object> map : this.displayContent) {
 			map.put("nbOccurences", new Integer(0));
-		}
+		}*/
 	}
 
 	/**
