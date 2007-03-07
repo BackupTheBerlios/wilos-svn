@@ -172,7 +172,37 @@ public class WizardControler {
 		return monThread;
 	}
 	
+	/**
+	 * Create a thread for calling the wizard service proxy
+	 * @param taskGuid
+	 * @param newTime
+	 */
+	public synchronized void setAccomplishedTimeByTask(final String taskGuid,final float newTime) {
+		Thread aThread = new Thread (new Runnable(){
+			public void run() {
+				WizardControler.getInstance().connectToServer(this);
+				WizardServicesProxy.setAccomplishedTimeByTask(taskGuid, newTime);
+				WizardControler.getInstance().disconnectToServer(this);
+			}
+		}) ;
+		aThread.start() ;
+	}
 	
+	/**
+	 * Create a thread for calling the wizard service proxy
+	 * @param taskGuid
+	 * @param newTime
+	 */
+	public synchronized void setRemainingTimeByTask(final String taskGuid,final float newTime) {
+		Thread aThread = new Thread (new Runnable(){
+			public void run() {
+				WizardControler.getInstance().connectToServer(this);
+				WizardServicesProxy.setRemainingTimeByTask(taskGuid, newTime);
+				WizardControler.getInstance().disconnectToServer(this);
+			}
+		}) ;
+		aThread.start() ;
+	}
 	
 	public synchronized void launchBackgroundThreadForTree(){
 		currentRefreshThread = new Thread (new Runnable(){
