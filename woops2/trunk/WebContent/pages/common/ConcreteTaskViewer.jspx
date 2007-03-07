@@ -131,7 +131,7 @@
 								styleClass="smallbutton"/>
 								<ice:commandButton value="#{msgs['concretetaskviewer.dissociateButton']}"
 								visible="#{ConcreteTaskViewerBean.dissociateButtonIsVisible}"
-								action="#{ConcreteTaskViewerBean.dissociateTaskActionListener}"
+								actionListener="#{ConcreteTaskViewerBean.dissociateTaskActionListener}"
 								styleClass="smallbutton" />
 								
 							</td>
