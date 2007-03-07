@@ -438,6 +438,8 @@
 		class="wilos.business.services.misc.role.ConcreteRoleInstanciationService">
 		<property name="roleDescriptorService" ref="RoleDescriptorService" />
 		<property name="activityService" ref="ActivityService" />
+		<property name="phaseService" ref="PhaseService" />
+		<property name="iterationService" ref="IterationService" />		
 		<property name="breakdownElementService" ref="BreakdownElementService" />
 		<property name="concreteRoleDescriptorService" ref="ConcreteRoleDescriptorService" />
 		<property name="concreteRoleDescriptorDao" ref="ConcreteRoleDescriptorDao" />
