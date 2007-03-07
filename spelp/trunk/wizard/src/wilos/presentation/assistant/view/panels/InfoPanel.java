@@ -22,7 +22,7 @@ import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.utils.Constantes;
 
-public class InfoPanel extends JXPanel implements Observer {
+public class InfoPanel extends JXPanel implements Observer,ListenerTime {
 	private JXTaskPane tasks = null ;
 	private JLabel editor = null;
 	private JPanel infos = null;
@@ -35,8 +35,10 @@ public class InfoPanel extends JXPanel implements Observer {
 	private JLabel tps_restant_label;
 	private JTextField tps_restant;
 	private JLabel tps;
+	private static ConcreteTaskDescriptor CurrentTimedTask = null ;
 	//private JLabel non_started;
 
+	
 	public InfoPanel () {
 		initialize();
 	}
@@ -107,60 +109,7 @@ public class InfoPanel extends JXPanel implements Observer {
 			if (c.getState().equals(Constantes.State.STARTED) ||
 					(c.getState().equals(Constantes.State.SUSPENDED) || (c.getState().equals(Constantes.State.FINISHED) )))
 			{
-				modify.setVisible(true);
-				info1.setText("Date debut:");
-				info2.setText("Date fin:");
-				String dateD;
-				if (c.getPlannedStartingDate()==null)
-				{
-					dateD = "Non renseignee";
-				}else
-				{
-					dateD = String.valueOf(c.getPlannedStartingDate());
-				}
-				String dateF;
-				if (c.getPlannedFinishingDate()==null)
-				{
-					dateF = "Non renseignee";
-				}else
-				{
-					dateF = String.valueOf(c.getPlannedFinishingDate());
-				}
-				info1_label.setText(dateD);
-				info2_label.setText(dateF);
-				tps_restant_label.setText("Temps restant:");
-				String min = String.valueOf(Math.round(c.getRemainingTime()-(int)c.getRemainingTime()));
-				if (new Integer(min)!=0)
-				{
-					min = min.substring(2, min.length());
-				}
-				else
-				{
-					min = "00";
-				}
-				String time= new String((int)c.getRemainingTime()+":"
-						+min+":00"); 				
-				tps_restant.setText(String.valueOf(time));
-				tps_label.setText("Temps effectue");
-			String min1 = String.valueOf(Math.round(c.getAccomplishedTime()-(int)c.getAccomplishedTime()));
-				if (new Integer(min1)!=0)
-				{
-					min1 = min1.substring(2, min1.length());
-				}
-				else
-				{
-					min1 = "00";
-				}
-				String time1= new String((int)c.getAccomplishedTime()+":"
-						+min1+":00"); 		
-				tps.setText(String.valueOf(time1));
-				infos.setVisible(true);
-				if (c.getState().equals(Constantes.State.FINISHED))
-				{
-					modify.setVisible(false);
-					tps_restant.setEditable(false);
-				}
-				
+				manageUpdate(c);	
 			}
 			else
 			{
@@ -180,6 +129,48 @@ public class InfoPanel extends JXPanel implements Observer {
 		
 	}
 
+	private void manageUpdate(ConcreteTaskDescriptor c) {
+		modify.setVisible(true);
+		info1.setText("Date debut:");
+		info2.setText("Date fin:");
+		String dateD;
+		if (c.getPlannedStartingDate()==null)
+		{
+			dateD = "Non renseignee";
+		}else
+		{
+			dateD = String.valueOf(c.getPlannedStartingDate());
+		}
+		String dateF;
+		if (c.getPlannedFinishingDate()==null)
+		{
+			dateF = "Non renseignee";
+		}else
+		{
+			dateF = String.valueOf(c.getPlannedFinishingDate());
+		}
+		info1_label.setText(dateD);
+		info2_label.setText(dateF);
+		tps_restant_label.setText("Temps restant:");
+		int min = WizardControler.getInstance().getDecimalValueInMinutes(c.getRemainingTime());
+		String time= new String((int)c.getRemainingTime()+":"
+				+min+":00"); 				
+		tps_restant.setText(String.valueOf(time));
+		tps_label.setText("Temps effectue");
+		//System.out.println(c.getAccomplishedTime());
+		int min1 = WizardControler.getInstance().getDecimalValueInMinutes(c.getAccomplishedTime());
+		
+		String time1= new String((int)c.getAccomplishedTime()+":"
+				+min1+":00"); 		
+		tps.setText(String.valueOf(time1));
+		infos.setVisible(true);
+		if (c.getState().equals(Constantes.State.FINISHED))
+		{
+			modify.setVisible(false);
+			tps_restant.setEditable(false);
+		}
+	}
+
 	public JLabel getTps_label() {
 		return tps_label;
 	}
@@ -194,6 +185,58 @@ public class InfoPanel extends JXPanel implements Observer {
 
 	public void setTps(JLabel tps) {
 		this.tps = tps;
+	}
+
+	public static ConcreteTaskDescriptor getCurrentTimedTask() {
+		return CurrentTimedTask;
+	}
+
+	public static void setCurrentTimedTask(ConcreteTaskDescriptor currentTimedTask) {
+		CurrentTimedTask = currentTimedTask;
+	}
+
+	public void putValue(float tps_passe) {
+		if (CurrentTimedTask.equals(WizardControler.getInstance().getLastCtd())) {
+			//manageUpdate(CurrentTimedTask);
+			String time = tps.getText();
+			String min ="";
+			String heure = "";
+			int occu=0;
+			
+			for (int i=0;i	<time.length()&&occu!=2;i++) 
+			{
+				if (time.charAt(i)==':')occu++;
+				if(occu==0&&time.charAt(i)!=':')heure+=time.charAt(i);
+				if(occu==1&&time.charAt(i)!=':')min+=time.charAt(i);
+			}
+			
+		
+			if ((int)tps_passe == 5){
+				int val = Integer.valueOf(min)+1 ;
+				if (val == 60) {
+					int hr = Integer.valueOf(heure) + 1 ;
+					tps_passe = 0 ;
+					min = "00";
+					heure = String.valueOf(hr);
+				}
+				else {
+					min = String.valueOf(val);
+					tps_passe = 0 ;
+				}
+				
+				
+			}
+//			if ((int)tps_passe==5)
+//			{
+//				System.out.println("treet");
+//				tps_passe = 0;
+//				Integer i = new Integer(min);							
+//				min = String.valueOf(new Integer (i+1));
+//			}
+			
+			int val = (int)tps_passe ;
+			tps.setText(String.valueOf(heure+":"+min+":"+val));
+		}
 	}
 	
 }	
