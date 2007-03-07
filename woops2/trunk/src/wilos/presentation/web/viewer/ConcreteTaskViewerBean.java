@@ -119,6 +119,17 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		this.concreteTaskDescriptorService
 				.dissociateConcreteTaskDescriptor(this.concreteTaskDescriptor);
 
+		ResourceBundle bundle = ResourceBundle.getBundle(
+				"wilos.resources.messages", FacesContext.getCurrentInstance()
+						.getApplication().getDefaultLocale());
+		FacesMessage message = new FacesMessage();
+		message
+				.setSummary(bundle
+						.getString("concretetaskviewer.dissociated"));
+		message.setSeverity(FacesMessage.SEVERITY_INFO);
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		facesContext.addMessage(null, message);
+		
 		super.refreshProjectTable();
 		super.refreshProjectTree();
 	}
