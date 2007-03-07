@@ -1,6 +1,7 @@
 package wilos.presentation.assistant.control;
 
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -110,28 +111,10 @@ public class WizardControler {
 	
 	/**
 	 * downloadTread
-	 * @return
+	 * @return the current thread
 	 */
 	public synchronized Thread downloadThread (final Guidance g, final String file, final String pathFileToDownload){
-		BreakdownElement bde = null;
-		String guidProcessTmp = null;
-		/*if (g.getTaskDefinitions() != null)
-			bde = g.getTaskDefinitions().iterator().next().getTaskDescriptors().iterator().next();
-		if (g.getRoleDefinitions() != null)
-			bde = g.getRoleDefinitions().iterator().next().getRoleDescriptors().iterator().next();
-		if (g.getActivities() != null)
-			bde = g.getActivities().iterator().next();
-		Thread monThread = null;
-		if (bde != null) {
-			while (bde.getSuperActivities().iterator().next() != null) {
-				bde = bde.getSuperActivities().iterator().next();
-			}
-			if (bde instanceof Process) {
-				guidProcessTmp = bde.getGuid();
-			}
-			
-		}*/
-		/*final String guidProcess = guidProcessTmp;*/
+
 		Thread	monThread = new Thread (new Runnable(){
 				public void run() {
 						
@@ -142,31 +125,35 @@ public class WizardControler {
 						DownLoadFrame df = new DownLoadFrame(file, pathFileToDownload);
 						
 						byte [] file = WizardServicesProxy.getGuidanceAttachmentContent(g.getGuid());
+						if (file != null) {
 						
-						// Reconstruction du fichier en local
-						FileOutputStream f;
-						try {
-							f = new FileOutputStream(pathFileToDownload);
-							File aFile = new File(pathFileToDownload);
-							if (aFile.exists()){
-								aFile.delete() ;
-							}
+							// Reconstruction du fichier en local
+							FileOutputStream f;
 							try {
-								f.write(file);
-								f.close();
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						} catch (FileNotFoundException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+								f = new FileOutputStream(pathFileToDownload);
+								File aFile = new File(pathFileToDownload);
+								if (aFile.exists()){
+									aFile.delete() ;
+								}
+								try {
+									f.write(file);
+									f.close();
+								} 
+								catch (IOException e) {
+									e.printStackTrace();
+								}
+							} catch (FileNotFoundException e1) {
+								e1.printStackTrace();
+							}							
+							df.endOfTreatment() ;							
 						}
+						else {
 						
-						System.out.println("FIN TREATMENT");
-						df.endOfTreatment() ;
+							df.dispose();
+							JOptionPane.showMessageDialog(null, "Une erreur est survenue sur le serveur. "+ 
+									"Veuillez contacter votre ProcessManager.","Erreur", JOptionPane.ERROR_MESSAGE);
+						}
 						WizardControler.getInstance().disconnectToServer(this);
-						
 				}
 			});
 		monThread.start();
