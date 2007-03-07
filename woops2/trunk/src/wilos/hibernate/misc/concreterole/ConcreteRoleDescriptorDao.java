@@ -10,7 +10,6 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
-import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.utils.ExceptionManager;
 
 /**

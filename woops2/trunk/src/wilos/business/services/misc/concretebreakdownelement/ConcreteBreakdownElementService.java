@@ -24,8 +24,7 @@ public class ConcreteBreakdownElementService {
 	 */
 	public List<ConcreteBreakdownElement> getAllConcreteBreakdownElementsFromProject(
 			String _projectId) {
-		return this.concreteBreakdownElementDao
-				.getAllConcreteBreakdownElements();
+		return this.concreteBreakdownElementDao.getAllConcreteBreakdownElementsFromProject(_projectId);
 	}
 
 	/**

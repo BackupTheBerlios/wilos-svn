@@ -5,7 +5,6 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.classic.Session;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +18,6 @@ import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.role.RoleDescriptor;
-import wilos.model.spem2.task.TaskDescriptor;
 import wilos.utils.Constantes.State;
 
 /**
@@ -144,8 +142,8 @@ public class ConcreteTaskDescriptorService {
 			_concreteTaskDescriptor.removeConcreteRoleDescriptor(tmpConcreteRoleDescriptor);
 		}
 		
-		_concreteTaskDescriptor.removeAllSuperConcreteActivities();
-		
+		_concreteTaskDescriptor.removeTaskDescriptor(_concreteTaskDescriptor.getTaskDescriptor());
+		//this.concreteTaskDescriptorDao.deleteConcreteTaskDescriptor(_concreteTaskDescriptor);
 	}
 	
 	/**
@@ -154,53 +152,32 @@ public class ConcreteTaskDescriptorService {
 	 * @param _concreteTaskDescriptor
 	 */
 	@Transactional(readOnly = false)
-	public ConcreteTaskDescriptor affectedConcreteTaskDescriptor(
+	public void affectedConcreteTaskDescriptor(
 			ConcreteTaskDescriptor _concreteTaskDescriptor, Participant _user) {
-		ConcreteRoleDescriptor concreteRoleDescriptor = new ConcreteRoleDescriptor();
 		
+		this.concreteTaskDescriptorDao.getHibernateTemplate().saveOrUpdate(_concreteTaskDescriptor);
 		
-		TaskDescriptor tmp = _concreteTaskDescriptor.getTaskDescriptor();
-		RoleDescriptor tmpRoleDescriptor;
-		TaskDescriptor td = this.taskDescriptorService.getTaskDescriptorById(tmp.getId());
-
-		tmpRoleDescriptor = td.getMainRole();
-
-
-		RoleDescriptor rd = this.roleDescriptorService.getRoleDescriptorById(tmpRoleDescriptor.getId());
-		// recuperation des deux listes.
-		Set<ConcreteRoleDescriptor> listeRd = rd.getConcreteRoleDescriptors();
+		RoleDescriptor mainRole = _concreteTaskDescriptor.getTaskDescriptor().getMainRole();
+		
+		Set<ConcreteRoleDescriptor> listeRd = mainRole.getConcreteRoleDescriptors();
 
 		// on parcours les deux liste afin de trouver le bon
 		// concreteRoledescriptor
 		for (ConcreteRoleDescriptor tmpListeRd : listeRd) {
 
-			ConcreteRoleDescriptor crd = this.concreteRoleDescriptorService.getConcreteRoleDescriptorById(tmpListeRd.getId());
-			//logger.debug("idddddddd "+crd.getParticipant().getWilosuser_id());
-			if(crd.getParticipant() != null)
+			if(tmpListeRd.getParticipant() != null)
 			{
-				if(crd.getParticipant().getWilosuser_id().equals(_user.getWilosuser_id()))
+				if(tmpListeRd.getParticipant().getWilosuser_id().equals(_user.getWilosuser_id()))
 				{
-					concreteRoleDescriptor = tmpListeRd;
+					this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao().saveOrUpdateConcreteRoleDescriptor(tmpListeRd);
+					_concreteTaskDescriptor.addConcreteRoleDescriptor(tmpListeRd);
+					break;
 				}
 			}
 		}
-		ConcreteRoleDescriptor crd = this.concreteRoleDescriptorService.getConcreteRoleDescriptorById(concreteRoleDescriptor.getId());
-		
-		_concreteTaskDescriptor.addConcreteRoleDescriptor(crd);
-		return _concreteTaskDescriptor;
-	}
-
-	/**
-	 * 
-	 * @param _concreteTaskDescriptor
-	 */
-	public void affectedState(ConcreteTaskDescriptor _concreteTaskDescriptor)
-	{
 		_concreteTaskDescriptor.setState(State.READY);
-
-		this.updateConcreteTaskDescriptor(_concreteTaskDescriptor);
 	}
-	
+
 	/**
 	 * Suspend the ConcreteTaskDescriptor and save into the data base changings
 	 * (i.e. State).

@@ -84,4 +84,12 @@ public class ConcreteBreakdownElementDao extends HibernateDaoSupport {
 					"deleteConcreteBreakdownElement", _e);
 		}
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<ConcreteBreakdownElement> getAllConcreteBreakdownElementsFromProject(String _projectId) {
+		List crds = this.getHibernateTemplate().find(
+				"from ConcreteBreakdownElement cbde where cbde.project.id=?",
+				_projectId);
+		return crds;
+	}
 }
