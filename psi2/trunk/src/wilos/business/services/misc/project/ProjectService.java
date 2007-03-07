@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional ;
 import wilos.business.services.spem2.process.ProcessService ;
 import wilos.hibernate.misc.project.ProjectDao ;
 import wilos.hibernate.misc.wilosuser.ParticipantDao ;
+import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.project.Project ;
 import wilos.model.misc.wilosuser.Participant ;
 import wilos.model.spem2.process.Process ;
@@ -98,6 +99,19 @@ public class ProjectService {
 			}
 		}
 		return unfinishedP ;
+	}
+	
+	@ Transactional (readOnly = true)
+	public Set<ConcreteBreakdownElement> getAllConcreteBreakdownElementsFromProject(Project project)
+	{
+		Set<ConcreteBreakdownElement> tmp = new HashSet<ConcreteBreakdownElement>();
+		
+		this.getProjectDao().getSessionFactory().getCurrentSession().saveOrUpdate(project);
+		this.getProjectDao().getSessionFactory().getCurrentSession().refresh(project);
+		for (ConcreteBreakdownElement element : project.getConcreteBreakdownElements()) {
+			tmp.add(element);
+		}
+		return tmp;
 	}
 
 	/**
