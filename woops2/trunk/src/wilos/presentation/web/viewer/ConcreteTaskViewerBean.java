@@ -54,6 +54,8 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 	private boolean visibleSaveButton;
 
 	private boolean visiblePopup = false;
+	
+	private boolean visibleDeletePopup = false;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -245,6 +247,45 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		}
 	}
 
+	public String confirmDelete() {
+		
+		if (!this.getChangeButtonIsDisabled()
+				&& (this.concreteTaskDescriptor.getState()
+						.equals(State.CREATED) || this.concreteTaskDescriptor
+						.getState().equals(State.READY)))
+			;
+		{
+			this.concreteTaskDescriptorService
+					.removeConcreteTaskDescriptor(this.concreteTaskDescriptor);
+			// Refresh components.
+			super.refreshProjectTree();
+			super.refreshProjectTable();
+
+			FacesContext context = FacesContext.getCurrentInstance();
+			MenuBean mb = (MenuBean) context.getApplication()
+					.getVariableResolver().resolveVariable(context, "menu");
+
+			mb.changePage(WilosObjectNode.PROJECTNODE);
+			/* Displays info message */
+			ResourceBundle bundle = ResourceBundle.getBundle(
+					"wilos.resources.messages", FacesContext.getCurrentInstance()
+							.getApplication().getDefaultLocale());
+			FacesMessage message = new FacesMessage();
+			message
+					.setSummary(bundle
+							.getString("concretetaskviewer.removed"));
+			message.setSeverity(FacesMessage.SEVERITY_INFO);
+			context.addMessage(null, message);
+			this.visibleDeletePopup = false;
+		}
+		return "";
+	}
+	
+	public String cancelDelete() {
+		this.visibleDeletePopup = false;
+		return "";
+	}
+	
 	public String confirmStop() {
 		this.concreteTaskDescriptor.setRemainingTime(0);
 
@@ -275,34 +316,7 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 	}
 
 	public void removeActionListener(ActionEvent event) {
-		if (!this.getChangeButtonIsDisabled()
-				&& (this.concreteTaskDescriptor.getState()
-						.equals(State.CREATED) || this.concreteTaskDescriptor
-						.getState().equals(State.READY)))
-			;
-		{
-			this.concreteTaskDescriptorService
-					.removeConcreteTaskDescriptor(this.concreteTaskDescriptor);
-			// Refresh components.
-			super.refreshProjectTree();
-
-			FacesContext context = FacesContext.getCurrentInstance();
-			MenuBean mb = (MenuBean) context.getApplication()
-					.getVariableResolver().resolveVariable(context, "menu");
-
-			mb.changePage(WilosObjectNode.PROJECTNODE);
-			
-			/* Displays info message */
-			ResourceBundle bundle = ResourceBundle.getBundle(
-					"wilos.resources.messages", FacesContext.getCurrentInstance()
-							.getApplication().getDefaultLocale());
-			FacesMessage message = new FacesMessage();
-			message
-					.setSummary(bundle
-							.getString("concretetaskviewer.removed"));
-			message.setSeverity(FacesMessage.SEVERITY_INFO);
-			context.addMessage(null, message);
-		}
+		this.visibleDeletePopup = true;
 	}
 
 	public ConcreteTaskDescriptor getConcreteTaskDescriptor() {
@@ -587,5 +601,13 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 
 	public void setVisiblePopup(boolean visiblePopup) {
 		this.visiblePopup = visiblePopup;
+	}
+
+	public boolean isVisibleDeletePopup() {
+		return visibleDeletePopup;
+	}
+
+	public void setVisibleDeletePopup(boolean _visibleDeletePopup) {
+		this.visibleDeletePopup = _visibleDeletePopup;
 	}
 }
