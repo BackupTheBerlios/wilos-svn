@@ -252,8 +252,7 @@ public class HTMLViewer extends JFrame {
 		String pathToDownload = "";
 		String downloadFile = _guidance.getAttachment();
 		// creation and display the message dialog
-		int choice = JOptionPane.showConfirmDialog(this, "Un document associe a ce guide est disponible. " +
-									"Voulez-vous le telecharger ?", "Information", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+		int choice = JOptionPane.showConfirmDialog(this, Bundle.getText("htmlViewer.messageDialog"), Bundle.getText("htmlViewer.title"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 		
 		if (choice == JOptionPane.YES_OPTION) {
 			// JFileChooser creation to download the file on the remote
@@ -277,17 +276,8 @@ public class HTMLViewer extends JFrame {
 			fileChooser.setSelectedFile(new File(downloadFile));
 			System.out.println(downloadFile);
 			int selected = fileChooser.showSaveDialog(this);
-			if (selected == JFileChooser.APPROVE_OPTION) {
-				// TODO: Traitement : appel des webServices pour recuperer le fichier sur le serveur
-				
-				// Afficher une fenetre de telechargement type mozilla avec progressBar
-				
-				// Gestion d'un thread pour cette fenetre pour ne pas etre bloquant sur le reste de l'application
-				// pendant le telechargement
-				
-				pathToDownload = fileChooser.getSelectedFile().getAbsolutePath();
-				
-				// TODO
+			if (selected == JFileChooser.APPROVE_OPTION) {					
+				pathToDownload = fileChooser.getSelectedFile().getAbsolutePath();				
 				Thread currentThread = WizardControler.getInstance().downloadThread(_guidance, downloadFile, pathToDownload);			
 			}
 		}
