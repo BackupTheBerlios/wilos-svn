@@ -545,6 +545,7 @@
 	<bean id="PhaseService"
 		class="wilos.business.services.spem2.phase.PhaseService">
 		<property name="concretePhaseDao" ref="ConcretePhaseDao" />
+		<property name="phaseDao" ref="PhaseDao" />
 		<property name="activityService" ref="ActivityService" />
 		<property name="concreteActivityService" ref="ConcreteActivityService" />
 		<property name="iterationService" ref="IterationService" />
