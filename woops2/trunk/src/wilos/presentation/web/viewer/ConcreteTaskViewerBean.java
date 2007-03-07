@@ -117,7 +117,7 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		}
 	}
 
-	public void dissociateTask() {
+	public void dissociateTaskActionListener(ActionEvent event) {
 		this.concreteTaskDescriptorService
 				.dissociateConcreteTaskDescriptor(this.concreteTaskDescriptor);
 
