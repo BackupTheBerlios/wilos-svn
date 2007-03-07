@@ -100,13 +100,15 @@ public class ConcreteTaskDescriptorService {
 	 */
 	public void removeConcreteTaskDescriptor(
 			ConcreteTaskDescriptor _concreteTaskDescriptor) {
-		
+		logger.debug("### CTDService ### removeConcreteTaskDescriptor");
+		/*
 		Set <ConcreteActivity> superConcreteActivities =
 			_concreteTaskDescriptor.getSuperConcreteActivities() ;
 		TaskDescriptor taskDescriptor = _concreteTaskDescriptor.getTaskDescriptor() ;
-		
+
 		TaskDescriptor td2 =
 			this.taskDescriptorService.getTaskDescriptorById(taskDescriptor.getId()) ;
+		
 		
 		ConcreteTaskDescriptor ctd = this.getConcreteTaskDescriptor(_concreteTaskDescriptor.getId());
 		
@@ -116,6 +118,7 @@ public class ConcreteTaskDescriptorService {
 		for (ConcreteActivity sca : superConcreteActivities) {
 			sca.removeConcreteBreakdownElement(_concreteTaskDescriptor) ;
 		}
+		
 		if(concreteRoleDescriptor != null)
 		{
 			ConcreteRoleDescriptor crd2 =
@@ -128,7 +131,22 @@ public class ConcreteTaskDescriptorService {
 		_concreteTaskDescriptor.removeAllSuperConcreteActivities();
 		td2.removeConcreteTaskDescriptor(_concreteTaskDescriptor) ;
 		
+		}*/
+		this.concreteTaskDescriptorDao.getHibernateTemplate().saveOrUpdate(_concreteTaskDescriptor);
+		
+		for (ConcreteActivity sca : _concreteTaskDescriptor.getSuperConcreteActivities()){
+			sca.removeConcreteBreakdownElement(_concreteTaskDescriptor);
 		}
+		
+		if (_concreteTaskDescriptor.getMainConcreteRoleDescriptor() != null){
+			ConcreteRoleDescriptor tmpConcreteRoleDescriptor = _concreteTaskDescriptor.getMainConcreteRoleDescriptor();
+			tmpConcreteRoleDescriptor.removePrimaryConcreteTaskDescriptor(_concreteTaskDescriptor);
+			_concreteTaskDescriptor.removeConcreteRoleDescriptor(tmpConcreteRoleDescriptor);
+		}
+		
+		_concreteTaskDescriptor.removeAllSuperConcreteActivities();
+		
+	}
 	
 	/**
 	 * When the user click on the button affected.
