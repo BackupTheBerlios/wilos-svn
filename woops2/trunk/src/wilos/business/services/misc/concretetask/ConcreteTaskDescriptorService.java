@@ -18,6 +18,7 @@ import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.role.RoleDescriptor;
+import wilos.model.spem2.task.TaskDescriptor;
 import wilos.utils.Constantes.State;
 
 /**
@@ -99,51 +100,27 @@ public class ConcreteTaskDescriptorService {
 	public void removeConcreteTaskDescriptor(
 			ConcreteTaskDescriptor _concreteTaskDescriptor) {
 		logger.debug("### CTDService ### removeConcreteTaskDescriptor");
-		/*
-		Set <ConcreteActivity> superConcreteActivities =
-			_concreteTaskDescriptor.getSuperConcreteActivities() ;
-		TaskDescriptor taskDescriptor = _concreteTaskDescriptor.getTaskDescriptor() ;
-
-		TaskDescriptor td2 =
-			this.taskDescriptorService.getTaskDescriptorById(taskDescriptor.getId()) ;
 		
-		
-		ConcreteTaskDescriptor ctd = this.getConcreteTaskDescriptor(_concreteTaskDescriptor.getId());
-		
-		ConcreteRoleDescriptor concreteRoleDescriptor =
-			ctd.getMainConcreteRoleDescriptor() ;
-		
-		for (ConcreteActivity sca : superConcreteActivities) {
-			sca.removeConcreteBreakdownElement(_concreteTaskDescriptor) ;
-		}
-		
-		if(concreteRoleDescriptor != null)
-		{
-			ConcreteRoleDescriptor crd2 =
-				this.concreteRoleDescriptorService
-						.getConcreteRoleDescriptorById(concreteRoleDescriptor.getId()) ;
-			crd2.removePrimaryConcreteTaskDescriptor(_concreteTaskDescriptor) ;
-			
-		}
-		
-		_concreteTaskDescriptor.removeAllSuperConcreteActivities();
-		td2.removeConcreteTaskDescriptor(_concreteTaskDescriptor) ;
-		
-		}*/
 		this.concreteTaskDescriptorDao.getHibernateTemplate().saveOrUpdate(_concreteTaskDescriptor);
 		
 		for (ConcreteActivity sca : _concreteTaskDescriptor.getSuperConcreteActivities()){
-			sca.removeConcreteBreakdownElement(_concreteTaskDescriptor);
+			sca.getConcreteBreakdownElements().remove(_concreteTaskDescriptor);
+			this.concreteActivityDao.saveOrUpdateConcreteActivity(sca);
 		}
 		
 		if (_concreteTaskDescriptor.getMainConcreteRoleDescriptor() != null){
 			ConcreteRoleDescriptor tmpConcreteRoleDescriptor = _concreteTaskDescriptor.getMainConcreteRoleDescriptor();
-			tmpConcreteRoleDescriptor.removePrimaryConcreteTaskDescriptor(_concreteTaskDescriptor);
-			_concreteTaskDescriptor.removeConcreteRoleDescriptor(tmpConcreteRoleDescriptor);
+			this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao().getHibernateTemplate().saveOrUpdate(tmpConcreteRoleDescriptor);
+			tmpConcreteRoleDescriptor.getPrimaryConcreteTaskDescriptors().remove(_concreteTaskDescriptor);
+			this.concreteRoleDescriptorService.getConcreteRoleDescriptorDao().saveOrUpdateConcreteRoleDescriptor(tmpConcreteRoleDescriptor);
 		}
 		
-		_concreteTaskDescriptor.removeTaskDescriptor(_concreteTaskDescriptor.getTaskDescriptor());
-		//this.concreteTaskDescriptorDao.deleteConcreteTaskDescriptor(_concreteTaskDescriptor);
+		TaskDescriptor td = _concreteTaskDescriptor.getTaskDescriptor();
+		td.getConcreteTaskDescriptors().remove(_concreteTaskDescriptor);
+		this.taskDescriptorService.getTaskDescriptorDao().saveOrUpdateTaskDescriptor(td);
+		
+		
+		this.getConcreteTaskDescriptorDao().deleteConcreteTaskDescriptor(_concreteTaskDescriptor);
 	}
 	
 	/**
