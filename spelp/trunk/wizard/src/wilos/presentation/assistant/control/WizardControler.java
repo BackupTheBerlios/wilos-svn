@@ -150,8 +150,7 @@ public class WizardControler {
 						else {
 						
 							df.dispose();
-							JOptionPane.showMessageDialog(null, "Une erreur est survenue sur le serveur. "+ 
-									"Veuillez contacter votre ProcessManager.","Erreur", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, Bundle.getText("wizardControler.errorMessage"),Bundle.getText("ErrorDialog.title"), JOptionPane.ERROR_MESSAGE);
 						}
 						WizardControler.getInstance().disconnectToServer(this);
 				}
