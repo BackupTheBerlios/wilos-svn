@@ -390,7 +390,7 @@ public class HTMLViewer extends JFrame {
 		else if (e instanceof Activity) {
 			Activity theActivity = (Activity) e;
 			
-			if (! theActivity.getAlternatives().equals("")) {
+			if (theActivity.getAlternatives() != null && ! theActivity.getAlternatives().equals("")) {
 				content.append("<b>" + Bundle.getText("htmlViewer.alternatives") + "</b> <br>");
 				content.append(theActivity.getAlternatives());
 				content.append("<br><br>");
