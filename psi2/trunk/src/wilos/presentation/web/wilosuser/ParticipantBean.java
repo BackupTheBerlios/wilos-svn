@@ -27,6 +27,7 @@ import wilos.model.misc.concreterole.ConcreteRoleDescriptor ;
 import wilos.model.misc.project.Project ;
 import wilos.model.misc.wilosuser.Participant ;
 import wilos.presentation.web.template.MenuBean ;
+import wilos.presentation.web.tree.TreeBean;
 
 /**
  * Managed-Bean link to participantSubscribe.jspx
@@ -500,6 +501,10 @@ public class ParticipantBean {
 		saveAffectationMessage.setSummary(bundle.getString("component.tableparticipantproject.success")) ;
 		saveAffectationMessage.setSeverity(FacesMessage.SEVERITY_INFO) ;
 		FacesContext.getCurrentInstance().addMessage(null, saveAffectationMessage) ;
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		TreeBean treeBean = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");
+		treeBean.cleanTreeDisplay();
 	}
 
 	/**

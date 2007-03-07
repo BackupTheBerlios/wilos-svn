@@ -88,71 +88,63 @@ public class ConcreteRoleInstanciationService {
 			HashMap<String, Object> hm = (HashMap<String, Object>) iter.next();
 
 			String parentActivityId = (String) hm.get("parentId");
-
+			
+			RoleDescriptor r = new RoleDescriptor();
+			r = this.roleDescriptorService.getRoleDescriptorDao().getRoleDescriptor((String) hm.get("id"));
+			this.roleDescriptorService.getRoleDescriptorDao().getSessionFactory().getCurrentSession().saveOrUpdate(r);
+			this.roleDescriptorService.getRoleDescriptorDao().getSessionFactory().getCurrentSession().refresh(r);
+			
 			//creation de ls liste des concrete activity ou il faudra ajouter le nouveau role
 			Set<ConcreteBreakdownElement> concretesActivitiesToModifiy = getConcreteActivitiesToModify(project, parentActivityId);
 			for (ConcreteBreakdownElement element : concretesActivitiesToModifiy) {
-				
-				RoleDescriptor r = new RoleDescriptor();
-				r = this.roleDescriptorService.getRoleDescriptorDao().getRoleDescriptor((String) hm.get("id"));
-				this.roleDescriptorService.getRoleDescriptorDao().getSessionFactory().getCurrentSession().saveOrUpdate(r);
-				this.roleDescriptorService.getRoleDescriptorDao().getSessionFactory().getCurrentSession().refresh(r);				
 
 				ConcreteActivity concreteactivity = this.concreteActivityService.getConcreteActivity(element.getId());
 				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(concreteactivity);
 				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(concreteactivity);
 
-				this.logger.debug("### RD "+r.getPresentationName()+" dans l'activité "+concreteactivity.getConcreteName()+" / NB a instancier : "+(Integer)hm.get("nbOccurences"));
-				
-				
-				this.roleDescriptorService.roleDescriptorInstanciation(project, r, concreteactivity, (Integer)hm.get("nbOccurences"));
+				this.roleDescriptorInstanciation(project, r, concreteactivity, (Integer)hm.get("nbOccurences"));
 			}
 		}
 		return 1;
 	}
 	
-	/*@Transactional(readOnly = false)
+	@Transactional(readOnly = false)
 	public void roleDescriptorInstanciation (Project _project, RoleDescriptor _rd, ConcreteActivity _cact, int _occ) {
 
 		if (_occ > 0)
 		{
-			for (int i=1; i <= _occ; i++)
+			for (int i=0 ; i<_occ ; i++)
 			{
 				ConcreteRoleDescriptor crd = new ConcreteRoleDescriptor();
-		
-				if (_occ > 1)
+				int iterid = 1;
+				
+				for (ConcreteRoleDescriptor element : _rd.getConcreteRoleDescriptors()) {
+					if(element.getProject() != null)
+					{
+						if(element.getProject().getId().equals(_project.getId()))
+						{
+							iterid++;
+						}
+					}
+				}
+				
+				if (_rd.getPresentationName() == null)
 				{
-					if (_rd.getPresentationName() == null)
-						crd.setConcreteName(_rd.getName() + "_" + (new Integer(i)).toString());
-					else
-						crd.setConcreteName(_rd.getPresentationName() + "_" + (new Integer(i)).toString());
+					crd.setConcreteName(_rd.getName() +" "+iterid);
 				}
 				else
 				{
-					if (_rd.getPresentationName() == null)
-						crd.setConcreteName(_rd.getName());
-					else
-						crd.setConcreteName(_rd.getPresentationName());
+					crd.setConcreteName(_rd.getPresentationName() +" "+iterid);
 				}
 				
-				this.roleDescriptorService.getRoleDescriptorDao().getSessionFactory().getCurrentSession().saveOrUpdate(_rd);
-				this.roleDescriptorService.getRoleDescriptorDao().getSessionFactory().getCurrentSession().refresh(_rd);		
 				crd.addRoleDescriptor(_rd);
-				
 				crd.setProject(_project);
-
-				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(_cact);
-				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(_cact);
 				_cact.setConcreteBreakdownElements(this.concreteActivityService.getConcreteBreakdownElements(_cact));
-
 				crd.addSuperConcreteActivity(_cact);
-
-				System.out.println("### ConcreteRoleDescriptorService "+crd.getConcreteName()+ " / RoleDescriptor : "+crd.getRoleDescriptor().getId());
 				this.concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(crd);
-				System.out.println("### ConcreteRoleDescriptor sauve");
 			}
 		}
-	}*/
+	}
 	
 
 	/**
@@ -218,8 +210,6 @@ public class ConcreteRoleInstanciationService {
 		
 		if (_wbe instanceof Iteration) {
 			Iteration it = (Iteration) _wbe;
-			//it = this.iterationService.getIterationDao().getIteration(it.getId());
-			//cwbes.addAll(this.iterationService.getAllConcreteIterations(it));
 			this.iterationService.getIterationDao().getSessionFactory().getCurrentSession().saveOrUpdate(it);
 			this.iterationService.getIterationDao().getSessionFactory().getCurrentSession().refresh(it);
 			cwbes.addAll(it.getConcreteIterations());
@@ -227,23 +217,18 @@ public class ConcreteRoleInstanciationService {
 		} else {
 			if (_wbe instanceof Phase) {
 				Phase ph = (Phase) _wbe;
-				//ph = this.phaseService.getPhaseDao().getPhase(ph.getId());
-				//cwbes.addAll(this.phaseService.getAllConcretePhases(ph));
 				this.phaseService.getPhaseDao().getSessionFactory().getCurrentSession().saveOrUpdate(ph);
 				this.phaseService.getPhaseDao().getSessionFactory().getCurrentSession().refresh(ph);
 				cwbes.addAll(ph.getConcretePhases());
 			} else {
 				if (_wbe instanceof Activity) {
 					Activity act = (Activity) _wbe;
-					//act = this.activityService.getActivityDao().getActivity(act.getId());
-					//cwbes.addAll(this.activityService.getAllConcreteActivities(act));
 					this.activityService.getActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(act);
 					this.activityService.getActivityDao().getSessionFactory().getCurrentSession().refresh(act);
 					cwbes.addAll(act.getConcreteActivities());
 				}
 			}
 		}
-		//this.logger.debug("### Activité : "+_wbe.getPresentationName()+" / Instancié :"+cwbes.size());
 		//test if the concreteBDEs belongs to the project
 		for (ConcreteWorkBreakdownElement element : cwbes) {
 			if(element.getProject() != null)
@@ -254,8 +239,28 @@ public class ConcreteRoleInstanciationService {
 				}
 			}
 		}
-		//this.logger.debug("### Activité : "+_wbe.getPresentationName()+" / Instancié du projet :"+cwbesOfProject.size());
 		return (cwbesOfProject.size() > 0);
+	}
+	
+	@Transactional(readOnly = true)
+	public boolean isRoleInstanciated(RoleDescriptor rd, Project project) {
+		Set<ConcreteRoleDescriptor> crds = new HashSet<ConcreteRoleDescriptor>();
+		Set<ConcreteRoleDescriptor> crdsOfProject = new HashSet<ConcreteRoleDescriptor>();
+		
+		rd = this.getRoleDescriptorService().getRoleDescriptorById(rd.getId());
+		this.roleDescriptorService.getRoleDescriptorDao().getSessionFactory().getCurrentSession().saveOrUpdate(rd);
+		this.roleDescriptorService.getRoleDescriptorDao().getSessionFactory().getCurrentSession().refresh(rd);
+		crds.addAll(rd.getConcreteRoleDescriptors());
+
+		for (ConcreteRoleDescriptor element : crds) {
+			if (element.getProject() != null) {
+				if (element.getProject().getId().equals(project.getId())) {
+					crdsOfProject.add(element);
+				}
+			}
+		}
+		this.logger.debug("### ROle : "+rd.getPresentationName()+" /  instancié :"+crdsOfProject.size());
+		return (crdsOfProject.size() > 0);
 	}
 
 	/**

@@ -153,10 +153,13 @@ public class RolesInstanciationBean {
 		message.setSeverity(FacesMessage.SEVERITY_ERROR);
 		context.addMessage(null, message);
 
-		/*remise a 0 des nombres d'occurences
+		//remise a 0 des nombres d'occurences
 		for (HashMap<String, Object> map : this.displayContent) {
-			map.put("nbOccurences", new Integer(0));
-		}*/
+			if((Boolean)(map.get("isEditable")) == true)
+			{
+				map.put("nbOccurences", new Integer(0));
+			}
+		}
 	}
 
 	/**
@@ -171,6 +174,7 @@ public class RolesInstanciationBean {
 		List<HashMap<String, Object>> lines = new ArrayList<HashMap<String, Object>>();
 		String indentationString = "";
 		boolean evenInstanciated = true;
+		int nbOccurrences = 1;
 
 		Activity act = this.activityService.getActivity(_act.getId());
 		SortedSet<BreakdownElement> set = this.activityService.getBreakdownElements(act);
@@ -200,7 +204,18 @@ public class RolesInstanciationBean {
 					{
 						hm.put("nodeType", "leaf");
 						hm.put("expansionImage", TABLE_LEAF);
-						hm.put("isEditable", act.getHasMultipleOccurrences());
+						if(act.getHasMultipleOccurrences())
+						{
+							hm.put("isEditable", true);
+							if (this.concreteRoleInstanciationService.isRoleInstanciated((RoleDescriptor)bde, project))
+							{
+								nbOccurrences = 0;
+							}
+						}
+						else
+						{
+							hm.put("isEditable", false);
+						}
 						hm.put("isVisible", true);
 					}
 				}
@@ -209,7 +224,7 @@ public class RolesInstanciationBean {
 				{
 					hm.put("id", bde.getId());
 					hm.put("name", bde.getPresentationName());
-					hm.put("nbOccurences", new Integer(1));
+					hm.put("nbOccurences", nbOccurrences);
 					hm.put("parentId", act.getId());
 					lines.add(hm);
 

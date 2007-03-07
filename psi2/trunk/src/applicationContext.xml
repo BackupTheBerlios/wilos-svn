@@ -525,6 +525,7 @@
 		<property name="concreteRoleDescriptorDao"
 			ref="ConcreteRoleDescriptorDao" />
 		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
+		<property name="concreteActivityService" ref="ConcreteActivityService" />
 	</bean>
 
 	<bean id="RoleDefinitionService"
@@ -537,6 +538,7 @@
 		<property name="concreteTaskDescriptorDao"
 			ref="ConcreteTaskDescriptorDao" />
 		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
+		<property name="concreteActivityService" ref="ConcreteActivityService" />
 	</bean>
 
 	<bean id="TaskDefinitionService"
