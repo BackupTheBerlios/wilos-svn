@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.SortedSet;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
@@ -119,6 +120,16 @@ public class ExpTableBean {
 				.getApplication().getVariableResolver().resolveVariable(
 						context, "ProjectAdvancementBean");
 		pab.refreshProjectTable();
+		
+		/* Displays info message */
+		ResourceBundle bundle = ResourceBundle.getBundle(
+				"wilos.resources.messages", FacesContext.getCurrentInstance()
+						.getApplication().getDefaultLocale());
+		FacesMessage message = new FacesMessage();
+		message.setSummary(bundle
+						.getString("component.instanciation.instanciatedMessage"));
+		message.setSeverity(FacesMessage.SEVERITY_INFO);
+		context.addMessage(null, message);
 	}
 
 	/**
