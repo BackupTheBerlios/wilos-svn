@@ -291,6 +291,17 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 					.getVariableResolver().resolveVariable(context, "menu");
 
 			mb.changePage(WilosObjectNode.PROJECTNODE);
+			
+			/* Displays info message */
+			ResourceBundle bundle = ResourceBundle.getBundle(
+					"wilos.resources.messages", FacesContext.getCurrentInstance()
+							.getApplication().getDefaultLocale());
+			FacesMessage message = new FacesMessage();
+			message
+					.setSummary(bundle
+							.getString("concretetaskviewer.removed"));
+			message.setSeverity(FacesMessage.SEVERITY_INFO);
+			context.addMessage(null, message);
 		}
 	}
 
