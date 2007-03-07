@@ -1,7 +1,6 @@
 package wilos.presentation.assistant.control;
 
 import java.awt.Component;
-import java.awt.Dialog;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,7 +30,6 @@ import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
-import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.element.Element;
 import wilos.model.spem2.guide.Guidance;
 import wilos.model.spem2.task.Step;
@@ -434,6 +432,7 @@ public class WizardControler {
 			if (getState(tmpNode.getUserObject()).equals(Constantes.State.STARTED)){
 				if (tmpNode.getUserObject() instanceof ConcreteTaskDescriptor) {
 					ConcreteTaskDescriptor ctdactual = (ConcreteTaskDescriptor) tmpNode.getUserObject() ;
+					nbTasksTaskStarted = 1 ;
 					pauseConcreteTaskDescriptor(ctdactual,true);
 					updateTreeVisualAndState(ctdactual, Constantes.State.SUSPENDED,true);
 				}
@@ -770,6 +769,14 @@ public class WizardControler {
 		}
 	}
 	
+	private void saveTime() {
+		ConcreteTaskDescriptor c =(ConcreteTaskDescriptor)WizardControler.getInstance().getLastCtd();
+		float tps = (float)(infoPanel.getAhours()+(float)infoPanel.getAmin()/60);
+		WizardControler.getInstance().setAccomplishedTimeByTask(c.getId(),tps );
+		c.setAccomplishedTime(tps);
+		infoPanel.reinitializeTimes() ;
+	}
+	
 	/**
 	 * initActions init the actions for buttons play, pause, and finish
 	 */
@@ -789,56 +796,42 @@ public class WizardControler {
 			public void actionPerformed(ActionEvent e) {
 				threadTime.interrupt();
 				pauseTask();
-				ConcreteTaskDescriptor c =(ConcreteTaskDescriptor)WizardControler.getInstance().getLastCtd();
 				if (threadTime != null) {
-					int occ=0;
-					String min = "";
-					String heure = "";
-					for (int i = 0; i<infoPanel.getTps().getText().length()&&occ!=2;i++)
-					{
-						if(infoPanel.getTps().getText().charAt(i)==':' )occ++;
-						if(occ==0&&infoPanel.getTps().getText().charAt(i)!=':' )heure+=infoPanel.getTps().getText().charAt(i);
-						if(occ==1&&infoPanel.getTps().getText().charAt(i)!=':' )min+=infoPanel.getTps().getText().charAt(i);
-						
-					}
-					Float tps = new Float((new Integer(heure)+new Float(new Integer(min)/60)));
-					System.out.println("Tps sauvegarder:"+tps);
-					
-					c.setAccomplishedTime(tps);
-					WizardControler.getInstance().setAccomplishedTimeByTask(c.getId(),tps );
-					InfoPanel.setCurrentTimedTask(null);
-					
-					}
+					saveTime();	
+				}
 				else
 				{
 					threadTime.start();
 				}
 				
-				String tps = infoPanel.getTps().getText();
-				int occ=0;
-				String min = "";
-				String heure = "";
-				
-				for (int i = 0; i<tps.length()&&occ!=2;i++)
-				{
-					if(tps.charAt(i)==':' )occ++;
-					if(occ==0&&tps.charAt(i)!=':' )heure+=tps.charAt(i);
-					if(occ==1&&tps.charAt(i)!=':' )min+=tps.charAt(i);
+//				String tps = infoPanel.getTps().getText();
+//				int occ=0;
+//				String min = "";
+//				String heure = "";
+//				
+//				for (int i = 0; i<tps.length()&&occ!=2;i++)
+//				{
+//					if(tps.charAt(i)==':' )occ++;
+//					if(occ==0&&tps.charAt(i)!=':' )heure+=tps.charAt(i);
+//					if(occ==1&&tps.charAt(i)!=':' )min+=tps.charAt(i);
 					
-				}
+//				}
 //				System.out.println(tps);
 //				System.out.println(heure);
 //				System.out.println(min);
-				float newTime = new Float(new Integer(heure)+new Float(new Integer(min)/100*60));
+//				float newTime = new Float(new Integer(heure)+new Float(new Integer(min)/100*60));
 				//System.out.println(new Float(new Float(new Integer(heure))+new Float((new Integer(min)*100/60))));
 				//WizardServicesProxy.setRemainingTimeByTask(c.getTaskDescriptor().getGuid(), newTime);
 			
 				
 			}
+
+			
 		};
 		ActionListener actionFinish = new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				stopTask();
+				saveTime();
 			}
 		};
 		actionBar.getJButtonPlayTask().addActionListener(actionPlay);
@@ -1006,11 +999,7 @@ public class WizardControler {
 						monThread.sleep(1000);
 						long tps_passe = System.currentTimeMillis() - debut;
 						int tempsEnvoi = (int)tps_passe/1000 ;
-						notifyListeners(tempsEnvoi);
-						System.out.println(tempsEnvoi);
-						if (tempsEnvoi == 5){
-							debut = System.currentTimeMillis() ;
-						}
+						notifyListeners(tempsEnvoi);			
 //							for (int i=0;i	<time.length()&&occu!=2;i++) 
 //							{
 //								if (time.charAt(i)==':')occu++;
@@ -1068,11 +1057,10 @@ public class WizardControler {
 	}
 	
 	public int getDecimalValueInMinutes (float value) {
-		int min1 = Math.round(value-(int)value);
-		if (min1!=0)
-		{
-			min1 =(int)(min1 * 0.6) ;
-		}
+		//int min1 = Math.round(value-(float)value);
+		int min1 ;
+		float tmp = value - (int)value ;
+		min1 =Math.round(tmp * 60) ;
 		return min1 ;
 	}
 }
