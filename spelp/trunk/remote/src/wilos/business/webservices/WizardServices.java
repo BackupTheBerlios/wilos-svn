@@ -62,6 +62,25 @@ public class WizardServices {
     }
     
     @WebMethod
+    public boolean isFileExistOnRemote(@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="idGuidance") String idGuidance) throws Exception    
+    {
+    	String filePath = "";
+    	boolean exist = false;
+    	Participant wu = new Participant();
+    	System.out.println("APPEL DE LA METHODE isFileExistOnRemote");
+    	
+    	wu =  getAuthentifiedParticipant(login,password);
+        if (wu != null) {
+        	System.out.println("Le user "+wu.getName()+" est logge");
+        	filePath = assistantService.getAttachmentFilePath(idGuidance);
+        	
+        	File myfile = new File(filePath);
+        	exist = myfile.exists();
+        }
+    	return exist;
+    }
+    
+    @WebMethod
     public  byte []  getGuidanceAttachment(@WebParam(name="login") String login, @WebParam(name="password")  String password, @WebParam(name="idGuidance") String idGuidance) throws Exception
     {
        String filePath = "";
@@ -79,24 +98,27 @@ public class WizardServices {
     	   // serialisation du fichier
     		   
 		   File myfile = new File(filePath);
-		   
-		   // ouverture du fichier
-		   try {
-		      // Ouverture du fichier passé en paramètre dans la ligne de commande
-		      InputStream fluxFichier = new FileInputStream (filePath);
-		 
-		      // Lecture des n premiers octets du fichier. n est passé en paramètre
-		       contenuFichier  = new byte [(int) myfile.length()];
-		      fluxFichier.read (contenuFichier);
-		     
-		      // Fermeture du fichier
-		      fluxFichier.close ();
-		      
-		    }
-		    catch (IOException e) {
-		      // Exception déclenchée si un problème survient pendant l'accès au fichier
-		      System.out.println (e);
-		    }
+		   if (myfile.exists()) {
+			   // ouverture du fichier
+			   try {
+			      // Ouverture du fichier passé en paramètre dans la ligne de commande
+			      InputStream fluxFichier = new FileInputStream (filePath);
+			 
+			      // Lecture des n premiers octets du fichier. n est passé en paramètre
+			       contenuFichier  = new byte [(int) myfile.length()];
+			      fluxFichier.read (contenuFichier);
+			     
+			      // Fermeture du fichier
+			      fluxFichier.close ();
+			      
+			    }
+			    catch (IOException e) {
+			      // Exception déclenchée si un problème survient pendant l'accès au fichier
+			      System.out.println (e);
+			    }
+		   }
+		   else
+			   contenuFichier = null;
        }
        
        /*File xstreamFile = new File ("xstream.xml");
