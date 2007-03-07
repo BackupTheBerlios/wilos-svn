@@ -78,7 +78,7 @@ public class InfoPanel extends JXPanel implements Observer {
 			tasks.setTitle(Bundle.getText("infoPanel.informations"));
 			tasks.setExpanded(false);
 			editor = new JLabel(Bundle.getText("infoPanel.no_informations"));
-			modify = new JButton("Appliquer");
+			modify = new JButton("Modifier");
 			modify.setBounds(50, 50, 50, 50);
 			modify.addActionListener(new ActionListener()
 			{
@@ -104,7 +104,8 @@ public class InfoPanel extends JXPanel implements Observer {
 		{
 			tasks.setExpanded(true);
 			ConcreteTaskDescriptor c =(ConcreteTaskDescriptor)WizardControler.getInstance().getLastCtd();
-			if (c.getState().equals(Constantes.State.STARTED))
+			if (c.getState().equals(Constantes.State.STARTED) ||
+					(c.getState().equals(Constantes.State.SUSPENDED) || (c.getState().equals(Constantes.State.FINISHED) )))
 			{
 				modify.setVisible(true);
 				info1.setText("Date debut:");
@@ -128,17 +129,45 @@ public class InfoPanel extends JXPanel implements Observer {
 				info1_label.setText(dateD);
 				info2_label.setText(dateF);
 				tps_restant_label.setText("Temps restant:");
-				tps_restant.setText(String.valueOf(c.getRemainingTime()));
+				String min = String.valueOf(Math.round(c.getRemainingTime()-(int)c.getRemainingTime()));
+				if (new Integer(min)!=0)
+				{
+					min = min.substring(2, min.length());
+				}
+				else
+				{
+					min = "00";
+				}
+				String time= new String((int)c.getRemainingTime()+":"
+						+min+":00"); 				
+				tps_restant.setText(String.valueOf(time));
 				tps_label.setText("Temps effectue");
-				tps.setText(String.valueOf(c.getAccomplishedTime()));
+			String min1 = String.valueOf(Math.round(c.getAccomplishedTime()-(int)c.getAccomplishedTime()));
+				if (new Integer(min1)!=0)
+				{
+					min1 = min1.substring(2, min1.length());
+				}
+				else
+				{
+					min1 = "00";
+				}
+				String time1= new String((int)c.getAccomplishedTime()+":"
+						+min1+":00"); 		
+				tps.setText(String.valueOf(time1));
 				infos.setVisible(true);
+				if (c.getState().equals(Constantes.State.FINISHED))
+				{
+					modify.setVisible(false);
+					tps_restant.setEditable(false);
+				}
+				
 			}
 			else
 			{
+				tasks.setExpanded(false);
 				modify.setVisible(false);
 				info1.setText("Tache non demarree");
 				infos.setVisible(false);
-
 			}
 		}
 		else
