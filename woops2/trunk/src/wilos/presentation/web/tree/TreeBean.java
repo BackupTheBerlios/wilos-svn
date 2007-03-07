@@ -28,6 +28,7 @@ import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
+import wilos.presentation.web.expandabletable.ExpTableBean;
 import wilos.presentation.web.expandabletable.ProcessBean;
 import wilos.presentation.web.template.MenuBean;
 import wilos.presentation.web.viewer.ConcreteActivityViewerBean;
@@ -103,11 +104,9 @@ public class TreeBean {
 		DefaultMutableTreeNode defaultTree = new DefaultMutableTreeNode();
 		WilosObjectNode iceUserObject = new WilosObjectNode(defaultTree);
 
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
-		iceUserObject.setText(bundle
-				.getString("navigation.tree.defaulttreenodetext"));
+		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance()
+				.getApplication().getDefaultLocale());
+		iceUserObject.setText(bundle.getString("navigation.tree.defaulttreenodetext"));
 		defaultTree.setUserObject(iceUserObject);
 		return defaultTree;
 	}
@@ -117,31 +116,26 @@ public class TreeBean {
 	}
 
 	public void rebuildProjectTree() {
-		String prId = (String) this.webSessionService
-				.getAttribute(WebSessionService.PROJECT_ID);
+		String prId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
 		this.project = this.projectService.getProject(prId);
 		this.buildTreeModel();
 	}
 
 	public void cleanTreeDisplay() {
-		this.webSessionService.setAttribute(WebSessionService.PROJECT_ID,
-				DEFAULT_PROJECT_ID);
+		this.webSessionService.setAttribute(WebSessionService.PROJECT_ID, DEFAULT_PROJECT_ID);
 		this.projectId = DEFAULT_PROJECT_ID;
 		this.buildTreeModel();
 	}
 
 	private void buildTreeModel() {
-		if (this.projectId != null
-				&& !this.projectId.equals(DEFAULT_PROJECT_ID)) {
+		if (this.projectId != null && !this.projectId.equals(DEFAULT_PROJECT_ID)) {
 			ProjectNode projectNode;
 			if (this.selectedMode.equals(TASKS_MODE)) {
 				projectNode = new ProjectNode(this.project, true, treeMap);
-				this.webSessionService.setAttribute(
-						WebSessionService.TREE_MODE, TASKS_MODE);
+				this.webSessionService.setAttribute(WebSessionService.TREE_MODE, TASKS_MODE);
 			} else {
 				projectNode = new ProjectNode(this.project, false, treeMap);
-				this.webSessionService.setAttribute(
-						WebSessionService.TREE_MODE, ROLES_MODE);
+				this.webSessionService.setAttribute(WebSessionService.TREE_MODE, ROLES_MODE);
 			}
 			this.model = new DefaultTreeModel(projectNode);
 		} else {
@@ -155,8 +149,7 @@ public class TreeBean {
 
 		this.projectId = (String) evt.getNewValue();
 		// Put into the session the current project used.
-		this.webSessionService.setAttribute(WebSessionService.PROJECT_ID,
-				this.projectId);
+		this.webSessionService.setAttribute(WebSessionService.PROJECT_ID, this.projectId);
 
 		if (!this.projectId.equals(DEFAULT_PROJECT_ID)) {
 
@@ -166,19 +159,23 @@ public class TreeBean {
 			nodeTypeToShow = WilosObjectNode.PROJECTNODE;
 
 			// masquage de la exptable d'instanciation
-			String projectId = (String) this.webSessionService
-					.getAttribute(WebSessionService.PROJECT_ID);
+			String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
 			Project project = this.projectService.getProject(projectId);
 
 			FacesContext context = FacesContext.getCurrentInstance();
 
-			ProcessBean processBean = (ProcessBean) context.getApplication()
-					.getVariableResolver().resolveVariable(context,
-							"Woops2ProcessBean");
+			ProcessBean processBean = (ProcessBean) context.getApplication().getVariableResolver().resolveVariable(
+					context, "Woops2ProcessBean");
+
+			ExpTableBean expTableBean = (ExpTableBean) context.getApplication().getVariableResolver().resolveVariable(
+					context, "ExpTableBean");
 
 			if (project.getProcess() == null) {
 				processBean.setSelectedProcessGuid("default");
+				expTableBean.setSelectedProcessGuid("default");
 				processBean.setIsVisibleExpTable(false);
+				expTableBean.setIsInstanciedProject(false);
+				expTableBean.getExpTableContent().clear();
 			}
 		}
 
@@ -214,14 +211,11 @@ public class TreeBean {
 	public List<SelectItem> getModesList() {
 		ArrayList<SelectItem> modesList = new ArrayList<SelectItem>();
 
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
+		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance()
+				.getApplication().getDefaultLocale());
 
-		modesList.add(new SelectItem(TASKS_MODE, bundle
-				.getString("navigation.tree.checkboxlabel.tasks")));
-		modesList.add(new SelectItem(ROLES_MODE, bundle
-				.getString("navigation.tree.checkboxlabel.roles")));
+		modesList.add(new SelectItem(TASKS_MODE, bundle.getString("navigation.tree.checkboxlabel.tasks")));
+		modesList.add(new SelectItem(ROLES_MODE, bundle.getString("navigation.tree.checkboxlabel.roles")));
 
 		return modesList;
 	}
@@ -231,27 +225,22 @@ public class TreeBean {
 	public List<SelectItem> getProjects() {
 		List<SelectItem> projectsList = new ArrayList<SelectItem>();
 
-		String wilosUserId = (String) this.webSessionService
-				.getAttribute(WebSessionService.WILOS_USER_ID);
-		Participant participant = this.participantService
-				.getParticipant(wilosUserId);
+		String wilosUserId = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID);
+		Participant participant = this.participantService.getParticipant(wilosUserId);
 
 		if (participant != null) {
-			HashMap<Project, Boolean> projects = this.participantService
-					.getProjectsForAParticipant(participant);
+			HashMap<Project, Boolean> projects = this.participantService.getProjectsForAParticipant(participant);
 			for (Project project : projects.keySet()) {
 				if (projects.get(project)) {
-					this.addSelectItemToList(projectsList, new SelectItem(
-							project.getId(), project.getConcreteName()));
+					this.addSelectItemToList(projectsList, new SelectItem(project.getId(), project.getConcreteName()));
 				}
 			}
 		}
 
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
-		projectsList.add(0, new SelectItem(DEFAULT_PROJECT_ID, bundle
-				.getString("navigation.tree.defaulttreenodetext")));
+		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance()
+				.getApplication().getDefaultLocale());
+		projectsList
+				.add(0, new SelectItem(DEFAULT_PROJECT_ID, bundle.getString("navigation.tree.defaulttreenodetext")));
 		return projectsList;
 	}
 
@@ -266,16 +255,13 @@ public class TreeBean {
 	 * @param _si
 	 *            the SelectItem
 	 */
-	private void addSelectItemToList(List<SelectItem> _projectsList,
-			SelectItem _si) {
+	private void addSelectItemToList(List<SelectItem> _projectsList, SelectItem _si) {
 		if (_projectsList.size() == 0)
 			_projectsList.add(_si);
 		else {
 			int i;
 			// inserting the project in an alphabetically ordered list
-			for (i = 0; i < _projectsList.size()
-					&& _si.getLabel()
-							.compareTo(_projectsList.get(i).getLabel()) > 0; i++) {
+			for (i = 0; i < _projectsList.size() && _si.getLabel().compareTo(_projectsList.get(i).getLabel()) > 0; i++) {
 			}
 			_projectsList.add(i, _si);
 		}
@@ -289,14 +275,11 @@ public class TreeBean {
 	 */
 	private void selectNodeToShow(String _objectId, String _pageId) {
 		FacesContext context = FacesContext.getCurrentInstance();
-		MenuBean mb = (MenuBean) context.getApplication().getVariableResolver()
-				.resolveVariable(context, "menu");
+		MenuBean mb = (MenuBean) context.getApplication().getVariableResolver().resolveVariable(context, "menu");
 		if (_objectId != null && _pageId != null) {
 			if (_pageId.equals(WilosObjectNode.ACTIVITYNODE)) {
-				ConcreteActivityViewerBean av = (ConcreteActivityViewerBean) context
-						.getApplication().getVariableResolver()
-						.resolveVariable(context,
-								WilosObjectNode.ACTIVITYNODE + "Bean");
+				ConcreteActivityViewerBean av = (ConcreteActivityViewerBean) context.getApplication()
+						.getVariableResolver().resolveVariable(context, WilosObjectNode.ACTIVITYNODE + "Bean");
 
 				// recover the object in the HashMap for the viewer
 				ConcreteActivity ca = (ConcreteActivity) treeMap.get(_objectId);
@@ -304,46 +287,35 @@ public class TreeBean {
 
 				mb.changePage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.CONCRETETASKNODE)) {
-				ConcreteTaskViewerBean ctv = (ConcreteTaskViewerBean) context
-						.getApplication().getVariableResolver()
-						.resolveVariable(context,
-								WilosObjectNode.CONCRETETASKNODE + "Bean");
+				ConcreteTaskViewerBean ctv = (ConcreteTaskViewerBean) context.getApplication().getVariableResolver()
+						.resolveVariable(context, WilosObjectNode.CONCRETETASKNODE + "Bean");
 
 				// recover the object in the HashMap for the viewer
-				ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) treeMap
-						.get(_objectId);
+				ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) treeMap.get(_objectId);
 				ctv.setConcreteTaskDescriptor(ctd);
 
 				mb.changePage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.CONCRETEROLENODE)) {
-				ConcreteRoleViewerBean crv = (ConcreteRoleViewerBean) context
-						.getApplication().getVariableResolver()
-						.resolveVariable(context,
-								WilosObjectNode.CONCRETEROLENODE + "Bean");
+				ConcreteRoleViewerBean crv = (ConcreteRoleViewerBean) context.getApplication().getVariableResolver()
+						.resolveVariable(context, WilosObjectNode.CONCRETEROLENODE + "Bean");
 
 				// recover the object in the HashMap for the viewer
-				ConcreteRoleDescriptor crd = (ConcreteRoleDescriptor) treeMap
-						.get(_objectId);
+				ConcreteRoleDescriptor crd = (ConcreteRoleDescriptor) treeMap.get(_objectId);
 				crv.setConcreteRoleDescriptor(crd);
 
 				mb.changePage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.ITERATIONNODE)) {
-				ConcreteIterationViewerBean iv = (ConcreteIterationViewerBean) context
-						.getApplication().getVariableResolver()
-						.resolveVariable(context,
-								WilosObjectNode.ITERATIONNODE + "Bean");
+				ConcreteIterationViewerBean iv = (ConcreteIterationViewerBean) context.getApplication()
+						.getVariableResolver().resolveVariable(context, WilosObjectNode.ITERATIONNODE + "Bean");
 
 				// recover the object in the HashMap for the viewer
-				ConcreteIteration ci = (ConcreteIteration) treeMap
-						.get(_objectId);
+				ConcreteIteration ci = (ConcreteIteration) treeMap.get(_objectId);
 				iv.setConcreteIteration(ci);
 
 				mb.changePage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.PHASENODE)) {
-				ConcretePhaseViewerBean pb = (ConcretePhaseViewerBean) context
-						.getApplication().getVariableResolver()
-						.resolveVariable(context,
-								WilosObjectNode.PHASENODE + "Bean");
+				ConcretePhaseViewerBean pb = (ConcretePhaseViewerBean) context.getApplication().getVariableResolver()
+						.resolveVariable(context, WilosObjectNode.PHASENODE + "Bean");
 
 				// recover the object in the HashMap for the viewer
 				ConcretePhase cp = (ConcretePhase) treeMap.get(_objectId);
@@ -351,10 +323,8 @@ public class TreeBean {
 
 				mb.changePage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.PROJECTNODE)) {
-				ProjectViewerBean p = (ProjectViewerBean) context
-						.getApplication().getVariableResolver()
-						.resolveVariable(context,
-								WilosObjectNode.PROJECTNODE + "Bean");
+				ProjectViewerBean p = (ProjectViewerBean) context.getApplication().getVariableResolver()
+						.resolveVariable(context, WilosObjectNode.PROJECTNODE + "Bean");
 
 				// recover the object in the HashMap for the viewer
 				Project proj = (Project) treeMap.get(_objectId);
@@ -391,8 +361,7 @@ public class TreeBean {
 	}
 
 	public Boolean getLoadTree() {
-		if (this.projectId != null
-				&& !this.projectId.equals(DEFAULT_PROJECT_ID))
+		if (this.projectId != null && !this.projectId.equals(DEFAULT_PROJECT_ID))
 			this.loadTree = false;
 		else
 			this.loadTree = true;
@@ -459,8 +428,7 @@ public class TreeBean {
 	}
 
 	public boolean getHideRadio() {
-		if (this.projectId != null
-				&& !this.projectId.equals(DEFAULT_PROJECT_ID))
+		if (this.projectId != null && !this.projectId.equals(DEFAULT_PROJECT_ID))
 			this.hideRadio = true;
 		else
 			this.hideRadio = false;

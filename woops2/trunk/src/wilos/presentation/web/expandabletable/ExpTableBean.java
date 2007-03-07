@@ -79,23 +79,19 @@ public class ExpTableBean {
 
 	public void saveProjectInstanciation() {
 
-		String projectId = (String) this.webSessionService
-				.getAttribute(WebSessionService.PROJECT_ID);
+		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
 		if (projectId != null) {
 			Project project = projectService.getProject(projectId);
 			if (project != null) {
-				Process process = processService.getProcessDao()
-						.getProcessFromGuid(selectedProcessGuid);
+				Process process = processService.getProcessDao().getProcessFromGuid(selectedProcessGuid);
 				if (process != null) {
-					processService.projectInstanciation(project, process,
-							expTableContent, this.isInstanciedProject);
+					processService.projectInstanciation(project, process, expTableContent, this.isInstanciedProject);
 				}
 			}
 		}
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver()
-				.resolveVariable(context, "TreeBean");
+		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");
 		tb.rebuildProjectTree();
 
 		// clear occurences number of each object of expTableContent
@@ -104,30 +100,25 @@ public class ExpTableBean {
 		}
 
 		// lock the combobox
-		ProcessBean processBean = (ProcessBean) context.getApplication()
-				.getVariableResolver().resolveVariable(context,
-						"Woops2ProcessBean");
+		ProcessBean processBean = (ProcessBean) context.getApplication().getVariableResolver().resolveVariable(context,
+				"Woops2ProcessBean");
 		processBean.setReadOnly(true);
 
 		// refresh de la table des roles.
-		RolesInstanciationBean rib = (RolesInstanciationBean) context
-				.getApplication().getVariableResolver().resolveVariable(
-						context, "RolesInstanciationBean");
+		RolesInstanciationBean rib = (RolesInstanciationBean) context.getApplication().getVariableResolver()
+				.resolveVariable(context, "RolesInstanciationBean");
 		rib.refreshProcessTable();
 
 		// refresh de la table d'avancement.
-		ProjectAdvancementBean pab = (ProjectAdvancementBean) context
-				.getApplication().getVariableResolver().resolveVariable(
-						context, "ProjectAdvancementBean");
+		ProjectAdvancementBean pab = (ProjectAdvancementBean) context.getApplication().getVariableResolver()
+				.resolveVariable(context, "ProjectAdvancementBean");
 		pab.refreshProjectTable();
-		
+
 		/* Displays info message */
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
+		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance()
+				.getApplication().getDefaultLocale());
 		FacesMessage message = new FacesMessage();
-		message.setSummary(bundle
-						.getString("component.instanciation.instanciatedMessage"));
+		message.setSummary(bundle.getString("component.instanciation.instanciatedMessage"));
 		message.setSeverity(FacesMessage.SEVERITY_INFO);
 		context.addMessage(null, message);
 	}
@@ -138,15 +129,13 @@ public class ExpTableBean {
 	public List<HashMap<String, Object>> getExpTableContent() {
 
 		if (!this.selectedProcessGuid.equals("default")) {
-			Process process = this.processService
-					.getProcessFromGuid(this.selectedProcessGuid);
-			if (!this.viewedProcessId.equals(process.getId())) {
+			Process process = this.processService.getProcessFromGuid(this.selectedProcessGuid);
+			if (!this.viewedProcessId.equals(process.getId()) || this.expTableContent.isEmpty()) {
 				this.viewedProcessId = process.getId();
 				this.expTableContent.clear();
 				this.indentationContent.clear();
 				this.needIndentation = false;
-				List<HashMap<String, Object>> lines = this
-						.getExpTableLineContent(process);
+				List<HashMap<String, Object>> lines = this.getExpTableLineContent(process);
 				this.expTableContent.addAll(lines);
 			}
 		}
@@ -162,8 +151,7 @@ public class ExpTableBean {
 		List<HashMap<String, Object>> lines = new ArrayList<HashMap<String, Object>>();
 		String indentationString = "";
 		Activity act = this.activityService.getActivity(_act.getId());
-		SortedSet<BreakdownElement> set = this.activityService
-				.getBreakdownElements(act);
+		SortedSet<BreakdownElement> set = this.activityService.getBreakdownElements(act);
 		act.setBreakdownElements(set);
 		for (BreakdownElement bde : act.getBreakdownElements()) {
 			if (bde instanceof WorkBreakdownElement) {
@@ -177,8 +165,7 @@ public class ExpTableBean {
 				}
 				hm.put("id", bde.getId());
 				hm.put("name", bde.getPresentationName());
-				hm.put("isEditable", act.getHasMultipleOccurrences()
-						|| act.getIsRepeatable());
+				hm.put("isEditable", act.getHasMultipleOccurrences() || act.getIsRepeatable());
 				if (this.isInstanciedProject) {
 					hm.put("nbOccurences", new Integer(0));
 				} else {
@@ -190,11 +177,9 @@ public class ExpTableBean {
 
 				if (needIndentation) {
 					if (this.indentationContent.get(act.getId()) != null) {
-						indentationString = this.indentationContent.get(act
-								.getId());
+						indentationString = this.indentationContent.get(act.getId());
 					}
-					this.indentationContent.put((String) hm.get("id"),
-							indentationString.concat(INDENTATION_STRING));
+					this.indentationContent.put((String) hm.get("id"), indentationString.concat(INDENTATION_STRING));
 				}
 			}
 		}
@@ -223,11 +208,9 @@ public class ExpTableBean {
 			if (hm.get("id").equals(elementId)) {
 				if (hm.get("nodeType").equals("node")) {
 					hm.put("expansionImage", EXPAND_TABLE_ARROW);
-					Activity act = this.activityService.getActivityDao()
-							.getActivity((String) hm.get("id"));
+					Activity act = this.activityService.getActivityDao().getActivity((String) hm.get("id"));
 					index = this.expTableContent.indexOf(hm);
-					this.expTableContent.addAll(index + 1, this
-							.getExpTableLineContent(act));
+					this.expTableContent.addAll(index + 1, this.getExpTableLineContent(act));
 					return;
 				}
 			}
@@ -248,8 +231,7 @@ public class ExpTableBean {
 		/* Removes element which we want to contract from the parent list */
 		for (HashMap<String, Object> currentElement : this.expTableContent) {
 
-			if (currentElement.get("id").equals(elementId)
-					&& currentElement.get("nodeType").equals("node")) {
+			if (currentElement.get("id").equals(elementId) && currentElement.get("nodeType").equals("node")) {
 				currentElement.put("expansionImage", CONTRACT_TABLE_ARROW);
 				parentList.remove(currentElement);
 			}
@@ -264,11 +246,9 @@ public class ExpTableBean {
 	 * @param tmp
 	 */
 	@SuppressWarnings("unchecked")
-	private void deleteChildren(String parentId,
-			ArrayList<HashMap<String, Object>> parentList) {
+	private void deleteChildren(String parentId, ArrayList<HashMap<String, Object>> parentList) {
 		for (Iterator iter = parentList.iterator(); iter.hasNext();) {
-			HashMap<String, Object> child = (HashMap<String, Object>) iter
-					.next();
+			HashMap<String, Object> child = (HashMap<String, Object>) iter.next();
 			if (child.get("parentId").equals(parentId)) {
 				this.expTableContent.remove(child);
 				deleteChildren((String) child.get("id"), parentList);
@@ -316,8 +296,7 @@ public class ExpTableBean {
 	 * @param _expTableContent
 	 *            the expTableContent to set
 	 */
-	public void setExpTableContent(
-			ArrayList<HashMap<String, Object>> _expTableContent) {
+	public void setExpTableContent(ArrayList<HashMap<String, Object>> _expTableContent) {
 		this.expTableContent = _expTableContent;
 	}
 
@@ -452,8 +431,7 @@ public class ExpTableBean {
 	 * @param _indentationContent
 	 *            the indentationContent to set
 	 */
-	public void setIndentationContent(
-			HashMap<String, String> _indentationContent) {
+	public void setIndentationContent(HashMap<String, String> _indentationContent) {
 		this.indentationContent = _indentationContent;
 	}
 
@@ -461,14 +439,13 @@ public class ExpTableBean {
 	 * @return the instanciationBtName
 	 */
 	public String getInstanciationBtName() {
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
+		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance()
+				.getApplication().getDefaultLocale());
 
 		if (!this.isInstanciedProject) {
-			this.instanciationBtName =  bundle.getString("component.instanciation.button.ins");
+			this.instanciationBtName = bundle.getString("component.instanciation.button.ins");
 		} else {
-			this.instanciationBtName =  bundle.getString("component.instanciation.button.up");
+			this.instanciationBtName = bundle.getString("component.instanciation.button.up");
 		}
 		return this.instanciationBtName;
 	}

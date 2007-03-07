@@ -21,40 +21,37 @@ import wilos.model.spem2.process.Process;
 public class ProcessBean {
 
 	private ProcessService processService;
-	
+
 	private WebSessionService webSessionService;
-	
+
 	private ProjectService projectService;
 
 	private String selectedProcessGuid = "default";
-	
+
 	private boolean readOnly = false;
-	
+
 	private Project project;
-	
+
 	private boolean isVisibleExpTable = false;
-	
+
 	private boolean isProjectManager = false;
 
 	/**
 	 * Give all the processes save in the database
+	 * 
 	 * @return
 	 */
 	public List<SelectItem> getProcesses() {
 
 		List<SelectItem> processesList = new ArrayList<SelectItem>();
 
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
-		processesList.add(new SelectItem("default", bundle
-				.getString("component.combobox.processchoice.defaultlabel")));
+		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance()
+				.getApplication().getDefaultLocale());
+		processesList.add(new SelectItem("default", bundle.getString("component.combobox.processchoice.defaultlabel")));
 
-		List<Process> processes = this.processService.getProcessDao()
-				.getAllProcesses();
+		List<Process> processes = this.processService.getProcessDao().getAllProcesses();
 		for (Process process : processes) {
-			processesList.add(new SelectItem(process.getGuid(), process
-					.getPresentationName()));
+			processesList.add(new SelectItem(process.getGuid(), process.getPresentationName()));
 		}
 		return processesList;
 	}
@@ -63,12 +60,12 @@ public class ProcessBean {
 	 * listener on the processes selection combobox
 	 */
 	public void changeProcessSelectionListener(ValueChangeEvent evt) {
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
-		
-		ExpTableBean expTableBean = (ExpTableBean) context.getApplication().getVariableResolver()
-				.resolveVariable(context, "ExpTableBean");
-		
+
+		ExpTableBean expTableBean = (ExpTableBean) context.getApplication().getVariableResolver().resolveVariable(
+				context, "ExpTableBean");
+
 		this.selectedProcessGuid = (String) evt.getNewValue();
 		expTableBean.setSelectedProcessGuid((String) evt.getNewValue());
 		if (this.selectedProcessGuid.equals("default")) {
@@ -101,7 +98,8 @@ public class ProcessBean {
 	}
 
 	/**
-	 * @param _processGuid the processGuid to set
+	 * @param _processGuid
+	 *            the processGuid to set
 	 */
 	public void setSelectedProcessGuid(String _processGuid) {
 		this.selectedProcessGuid = _processGuid;
@@ -115,7 +113,8 @@ public class ProcessBean {
 	}
 
 	/**
-	 * @param _isVisibleExpTable the isVisibleExpTable to set
+	 * @param _isVisibleExpTable
+	 *            the isVisibleExpTable to set
 	 */
 	public void setIsVisibleExpTable(boolean _isVisibleExpTable) {
 		this.isVisibleExpTable = _isVisibleExpTable;
@@ -125,33 +124,33 @@ public class ProcessBean {
 	 * @return the readOnly
 	 */
 	public boolean getReadOnly() {
-		
+
 		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
 		Project project = this.projectService.getProject(projectId);
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
-		
-		ExpTableBean expTableBean = (ExpTableBean) context.getApplication().getVariableResolver()
-				.resolveVariable(context, "ExpTableBean");
-		
+
+		ExpTableBean expTableBean = (ExpTableBean) context.getApplication().getVariableResolver().resolveVariable(
+				context, "ExpTableBean");
+
 		if (project.getProcess() == null) {
 			this.readOnly = false;
 			expTableBean.setIsInstanciedProject(false);
-			
+
 		} else {
 			this.readOnly = true;
 			this.selectedProcessGuid = project.getProcess().getGuid();
 			expTableBean.setSelectedProcessGuid(this.selectedProcessGuid);
 			this.isVisibleExpTable = true;
-			
 			expTableBean.refreshExpTable();
 		}
-		
+
 		return this.readOnly;
 	}
 
 	/**
-	 * @param _readOnly the readOnly to set
+	 * @param _readOnly
+	 *            the readOnly to set
 	 */
 	public void setReadOnly(boolean _readOnly) {
 		this.readOnly = _readOnly;
@@ -165,7 +164,8 @@ public class ProcessBean {
 	}
 
 	/**
-	 * @param _webSessionService the webSessionService to set
+	 * @param _webSessionService
+	 *            the webSessionService to set
 	 */
 	public void setWebSessionService(WebSessionService _webSessionService) {
 		this.webSessionService = _webSessionService;
@@ -179,7 +179,8 @@ public class ProcessBean {
 	}
 
 	/**
-	 * @param _projectService the projectService to set
+	 * @param _projectService
+	 *            the projectService to set
 	 */
 	public void setProjectService(ProjectService _projectService) {
 		this.projectService = _projectService;
@@ -189,21 +190,23 @@ public class ProcessBean {
 	 * @return the isProjectManager
 	 */
 	public boolean getIsProjectManager() {
-		
+
 		String user_id = (String) this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID);
-		this.project = this.projectService.getProject((String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID));
+		this.project = this.projectService.getProject((String) this.webSessionService
+				.getAttribute(WebSessionService.PROJECT_ID));
 		this.isProjectManager = false;
 		if (this.project.getProjectManager() != null) {
 			if (this.project.getProjectManager().getWilosuser_id().equals(user_id)) {
 				this.isProjectManager = true;
 			}
 		}
-		
+
 		return this.isProjectManager;
 	}
 
 	/**
-	 * @param _isProjectManager the isProjectManager to set
+	 * @param _isProjectManager
+	 *            the isProjectManager to set
 	 */
 	public void setIsProjectManager(boolean _isProjectManager) {
 		this.isProjectManager = _isProjectManager;

@@ -175,7 +175,7 @@
 									<center>
 									<ice:inputText
 										value="#{process.nbOccurences}"
-										readonly="#{process.isEditable}"
+										disabled="#{process.isEditable}"
 										size="3" 
 										maxlength="3"
 										style="font-size:10px; height:10px; align: center; text-align:right;" />
@@ -183,13 +183,6 @@
 								</ice:column>
 							</ice:dataTable>
 						</ice:panelGrid>
-					<!--</ice:panelGroup>
-				
-					<ice:panelGroup id="projectProcesses_null">
-						<h4><ice:outputText value="#{msgs['component.process.management.empty']}"/></h4>
-					</ice:panelGroup>
-				
-				</ice:panelStack>-->
 			</ice:panelTab>
 			<!-- #################################################################################################### -->
 			
