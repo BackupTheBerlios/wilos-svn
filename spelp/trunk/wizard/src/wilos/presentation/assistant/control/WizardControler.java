@@ -71,6 +71,7 @@ public class WizardControler {
 	private Object MUTEX = new Object() ;
 	private TimeThread currentTask = new TimeThread();
 	private Object MUTEX_REFRESH_TIME = new Object() ;
+	private Thread unThread = null ;
 	private WizardControler() {
 		
 	}
@@ -789,12 +790,12 @@ public class WizardControler {
 		ActionListener actionPlay = new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				playTask();
+				unThread = new Thread(new TimeThread());
 			    ConcreteTaskDescriptor c =(ConcreteTaskDescriptor)WizardControler.getInstance().getLastCtd();
-		        Thread unThread = new Thread(new TimeThread());
 		        unThread.start();
 		           
 		        String min = String.valueOf(Math.round(c.getRemainingTime()-(int)c.getRemainingTime()));
-				if (new Integer(min)!=0)
+				if (Integer.valueOf(min)!=0)
 				{
 					min = min.substring(2, min.length());
 				}
@@ -802,7 +803,7 @@ public class WizardControler {
 				{
 					min = "00";
 				}
-				String time= new String(String.valueOf(new Integer((int)c.getRemainingTime()*60+new Integer(min))));
+				//String time= new String(String.valueOf(new Integer((int)c.getRemainingTime()*60+new Integer(min))));
 					
 								
 			}			
@@ -811,6 +812,31 @@ public class WizardControler {
 			public void actionPerformed(ActionEvent e) {
 				pauseTask();
 				ConcreteTaskDescriptor c =(ConcreteTaskDescriptor)WizardControler.getInstance().getLastCtd();
+				if (unThread != null)
+					{
+					int occ=0;
+					String min = "";
+					String heure = "";
+					
+					for (int i = 0; i<infoPanel.getTps().getText().length()&&occ!=2;i++)
+					{
+						if(infoPanel.getTps().getText().charAt(i)==':' )occ++;
+						if(occ==0&&infoPanel.getTps().getText().charAt(i)!=':' )heure+=infoPanel.getTps().getText().charAt(i);
+						if(occ==1&&infoPanel.getTps().getText().charAt(i)!=':' )min+=infoPanel.getTps().getText().charAt(i);
+						
+					}
+					Float tps = new Float((new Integer(heure)+new Float(new Integer(min)*100/60))/100);
+					System.out.println("Tps sauvegarder:"+tps);
+					unThread.interrupt();
+					WizardControler.getInstance().setRemainingTimeByTask(c.getId(),tps );
+					c.setRemainingTime(tps);
+					
+					}
+				else
+				{
+					unThread.start();
+				}
+				
 				String tps = infoPanel.getTps().getText();
 				int occ=0;
 				String min = "";
@@ -993,7 +1019,7 @@ public class WizardControler {
 		{
 			debut = System.currentTimeMillis();		
 			
-			while( continuer)
+			while(continuer)
 			{
 					try
 					{
@@ -1031,7 +1057,7 @@ public class WizardControler {
 					}
 					catch(InterruptedException e)
 					{
-						System.out.println(e.toString());
+						continuer = false ;
 					}
 			}
 		}
