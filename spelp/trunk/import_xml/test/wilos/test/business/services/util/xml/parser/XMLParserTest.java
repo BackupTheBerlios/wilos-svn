@@ -37,6 +37,8 @@ public class XMLParserTest extends TestCase {
 	public static File pathXP = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "xp.xml");
 	public static File pathWrongFile = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "WrongFile.xml");
 	
+	private static Process  OpenUPProcess = null;
+	private static Process  ScrumProcess = null;
 	
 	/**
 	 * Checks that the ProcessReturned is null if the file doesnt exist
@@ -65,11 +67,15 @@ public class XMLParserTest extends TestCase {
 	public void testFindsProcessInRegularFiles() {
 		Process theProcess;
 		
-		theProcess = XMLParser.getProcess(pathScrum);
-		assertTrue(theProcess != null);
+		if (ScrumProcess == null) {
+			ScrumProcess = XMLParser.getProcess(pathScrum);
+		}
+		assertTrue(ScrumProcess != null);
 		
-		theProcess = XMLParser.getProcess(pathOPenUP);
-		assertTrue(theProcess != null);
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
+		assertTrue(OpenUPProcess != null);
 		
 		theProcess = XMLParser.getProcess(pathScrumWithArte );
 		assertTrue(theProcess != null);
@@ -83,11 +89,12 @@ public class XMLParserTest extends TestCase {
 	 *
 	 */
 	public void testProcessFromOpenUPHasTheRightNames() {
-		Process theProcess;
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
 		
-		theProcess = XMLParser.getProcess(pathOPenUP);
-		assertTrue(theProcess.getPresentationName().equals("OpenUP/Basic Lifecycle"));
-		assertTrue(theProcess.getName().equals("openup_basic_process"));
+		assertTrue(OpenUPProcess.getPresentationName().equals("OpenUP/Basic Lifecycle"));
+		assertTrue(OpenUPProcess.getName().equals("openup_basic_process"));
 	}
 	
 	/**
@@ -95,20 +102,22 @@ public class XMLParserTest extends TestCase {
 	 *
 	 */
 	public void testProcessFromScrumHasTheRightAttributes() {
-		Process theScrumProcess;
+		if (ScrumProcess == null) {
+			ScrumProcess = XMLParser.getProcess(pathScrum);
+		}
 		
-		theScrumProcess = XMLParser.getProcess(pathScrum);
-		assertTrue( theScrumProcess.getPresentationName().equals("Cycle de vie Scrum") );
-		assertTrue( theScrumProcess.getName().equals("Scrum") );
-		assertTrue( theScrumProcess.getIsPlanned() );
-		assertTrue( ! theScrumProcess.getIsOptional() );
-		assertTrue( theScrumProcess.getIsRepeatable() );
-		assertTrue( ! theScrumProcess.getIsOngoing() );
-		assertTrue( theScrumProcess.getPrefix().equals("") );
-		assertTrue( theScrumProcess.getDescription().equals("Les phases, les sprints et les tâches dans la production d'une release") );
-		assertTrue( theScrumProcess.getGuid().equals("_9llsAQAvEdubGMceRDupFQ") );
-		assertTrue( ! theScrumProcess.getHasMultipleOccurrences() );
-		assertTrue( ! theScrumProcess.getIsEvenDriven() );		
+		ScrumProcess = XMLParser.getProcess(pathScrum);
+		assertTrue( ScrumProcess.getPresentationName().equals("Cycle de vie Scrum") );
+		assertTrue( ScrumProcess.getName().equals("Scrum") );
+		assertTrue( ScrumProcess.getIsPlanned() );
+		assertTrue( ! ScrumProcess.getIsOptional() );
+		assertTrue( ScrumProcess.getIsRepeatable() );
+		assertTrue( ! ScrumProcess.getIsOngoing() );
+		assertTrue( ScrumProcess.getPrefix().equals("") );
+		assertTrue( ScrumProcess.getDescription().equals("Les phases, les sprints et les tâches dans la production d'une release") );
+		assertTrue( ScrumProcess.getGuid().equals("_9llsAQAvEdubGMceRDupFQ") );
+		assertTrue( ! ScrumProcess.getHasMultipleOccurrences() );
+		assertTrue( ! ScrumProcess.getIsEvenDriven() );		
 	}
 	
 	/**
@@ -121,8 +130,12 @@ public class XMLParserTest extends TestCase {
 		// We expect 2 Phases and no oteration
 		int nbExpectedPhases = 2;
 		int nbExpectedIterations = 0;
-
-		process =  XMLParser.getProcess(pathScrum);
+		
+		if (ScrumProcess == null) {
+			ScrumProcess = XMLParser.getProcess(pathScrum);
+		}
+		
+		process =  ScrumProcess;
 		// The Process must contains more than 0 Bde
 		assertTrue(process.getBreakdownElements().size() > 0);
 		
@@ -152,8 +165,11 @@ public class XMLParserTest extends TestCase {
 	public void testPhasesFromScrumContainBreakDownElements() {
 		Iterator<BreakdownElement> itAct;
 		Process process;
-
-		process = XMLParser.getProcess(pathScrum);
+		
+		if (ScrumProcess == null) {
+			ScrumProcess = XMLParser.getProcess(pathScrum);
+		}
+		process = ScrumProcess;
 		itAct = process.getBreakdownElements().iterator();
 		
 		assertTrue(itAct.hasNext());
@@ -175,8 +191,11 @@ public class XMLParserTest extends TestCase {
 		boolean isThereARoleDesc;
 		
 		Process process;
-
-		process = XMLParser.getProcess(pathScrum);
+		
+		if (ScrumProcess == null) {
+			ScrumProcess = XMLParser.getProcess(pathScrum);
+		}
+		process = ScrumProcess;
 		itAct = process.getBreakdownElements().iterator();
 		
 		// Only the first Phase has role Descriptors !!!
@@ -213,7 +232,10 @@ public class XMLParserTest extends TestCase {
 		
 		Process scrumProcess;
 		
-		scrumProcess = XMLParser.getProcess(pathScrum);
+		if (ScrumProcess == null) {
+			ScrumProcess = XMLParser.getProcess(pathScrum);
+		}
+		scrumProcess = ScrumProcess;
 		itAct = scrumProcess.getBreakdownElements().iterator();
 		
 		// Only the first Phase has role Descriptors !!!
@@ -247,7 +269,10 @@ public class XMLParserTest extends TestCase {
 		Iterator<BreakdownElement> itAct2;
 		Process scrumProcess;
 		
-		scrumProcess = XMLParser.getProcess(pathScrum);
+		if (ScrumProcess == null) {
+			ScrumProcess = XMLParser.getProcess(pathScrum);
+		}
+		scrumProcess = ScrumProcess;
 		
 		// Iterator on the set of the two Phases of Scrum
 		itAct = scrumProcess.getBreakdownElements().iterator();
@@ -297,7 +322,10 @@ public class XMLParserTest extends TestCase {
 		int expectedNumber = expectedResults.size();
 		
 		Process scrumProcess;
-		scrumProcess = XMLParser.getProcess(pathScrum);
+		if (ScrumProcess == null) {
+			ScrumProcess = XMLParser.getProcess(pathScrum);
+		}
+		scrumProcess = ScrumProcess;
 
 		// Iterator on the set of the two Phases of Scrum
 		itAct = scrumProcess.getBreakdownElements().iterator();
@@ -339,11 +367,12 @@ public class XMLParserTest extends TestCase {
 		Iterator<BreakdownElement> itAct;
 		BreakdownElement bde;
 		
-		Process openUpProcess;
-		openUpProcess = XMLParser.getProcess(pathOPenUP);
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
 		
 		// Iterator on the set of the four Phases of OpenUP
-		itAct = openUpProcess.getBreakdownElements().iterator();
+		itAct = OpenUPProcess.getBreakdownElements().iterator();
 		
 		// Activity 1
 		assertTrue(itAct.hasNext());
@@ -379,10 +408,11 @@ public class XMLParserTest extends TestCase {
 		final int nbMiniSndLevelActivities = 4;
 		final int nbMaxiSndLevelActivities = 6;
 		
-		Process openUpProcess;
-		openUpProcess = XMLParser.getProcess(pathOPenUP);
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
 		// Iterator on the set of the four Phases of OpenUP
-		itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
+		itTopLevelAct = OpenUPProcess.getBreakdownElements().iterator();
 		
 		// Activity 1
 		while (itTopLevelAct.hasNext()) {
@@ -413,11 +443,12 @@ public class XMLParserTest extends TestCase {
 		expectedResults.add("Tester");
 		expectedResults.add("Architect");
 		
-		Process openUpProcess;
-		openUpProcess = XMLParser.getProcess(pathOPenUP);
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
 
 		// Iterator on the set of the four Phases of OpenUP
-		itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
+		itTopLevelAct = OpenUPProcess.getBreakdownElements().iterator();
 		
 		// Used to avoid Exception if error
 		assertTrue(itTopLevelAct.hasNext());
@@ -478,11 +509,12 @@ public class XMLParserTest extends TestCase {
 		expectedResults.add("Detail Requirements");
 		expectedResults.add("Create Test Cases");
 		
-		Process openUpProcess;
-		openUpProcess = XMLParser.getProcess(pathOPenUP);
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
 		
 		// Iterator on the set of the four Phases of OpenUP
-		itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
+		itTopLevelAct = OpenUPProcess.getBreakdownElements().iterator();
 		
 		topLevelActivity = null;
 		// We want the third Phase : Construction Iteration
@@ -592,7 +624,6 @@ public class XMLParserTest extends TestCase {
 	 *
 	 */
 	public void testOpenUPContainsGuidances() {
-		Process theTestedProcess;
 		Iterator<BreakdownElement> itTopLevelAct;
 		Iterator<BreakdownElement> itSecondLevelAct;
 		Activity topLevelActivity,secondLevelActivity;
@@ -608,11 +639,13 @@ public class XMLParserTest extends TestCase {
 		expectedResults.add("Detail Requirements");
 		expectedResults.add("Create Test Cases");
 		
-		theTestedProcess = XMLParser.getProcess(pathOPenUP);
-		assertNotNull(theTestedProcess);
-		if (theTestedProcess != null) {
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
+
+		if (OpenUPProcess != null) {
 			// Iterator on the set of the four Phases of OpenUP
-			itTopLevelAct = theTestedProcess.getBreakdownElements().iterator();
+			itTopLevelAct = OpenUPProcess.getBreakdownElements().iterator();
 			
 			topLevelActivity = null;
 			// We want the third Phase : Construction Iteration
@@ -673,9 +706,7 @@ public class XMLParserTest extends TestCase {
 	
 	
 	public void testOpenUPTaskDescriptorsRunDeveloperTestContainsOnePredecessor() {
-		Process theTestedProcess = null;
 		Iterator<BreakdownElement> itTopLevelAct,itSecondLevelAct,BdeIterator;
-		theTestedProcess = XMLParser.getProcess(pathOPenUP);
 		Activity topLevelActivity,secondLevelActivity;
 		int nbTaskDescriptors = 0;
 		BreakdownElement tmpBde = null;
@@ -683,8 +714,12 @@ public class XMLParserTest extends TestCase {
 		Iterator<WorkBreakdownElement> itPredecessor;
 		int nbPredecessor = 0;
 		
-		assertNotNull(theTestedProcess);
-		itTopLevelAct = theTestedProcess.getBreakdownElements().iterator();
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
+		
+		assertNotNull(OpenUPProcess);
+		itTopLevelAct = OpenUPProcess.getBreakdownElements().iterator();
 		topLevelActivity = null;
 		
 		// We want the third Phase : Elaboration Iteration
@@ -743,7 +778,6 @@ public class XMLParserTest extends TestCase {
 	}
 	
 	public void testOpenUPTaskDescriptorDesignSolutionContainsPredecessor() {
-		Process theTestedProcess = null;
 		Iterator<BreakdownElement> itTopLevelAct,itSecondLevelAct,BdeIterator;
 		Activity topLevelActivity,secondLevelActivity;
 		boolean rentreDansDevelopSolution = false;
@@ -756,12 +790,14 @@ public class XMLParserTest extends TestCase {
 		
 		Iterator<WorkBreakdownElement> itSuccessor;
 		
-		theTestedProcess = XMLParser.getProcess(pathOPenUP);
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
 		
-		assertNotNull(theTestedProcess);
-		if (theTestedProcess != null) {
+		assertNotNull(OpenUPProcess);
+		if (OpenUPProcess != null) {
 			// Iterator on the set of the four Phases of OpenUP
-			itTopLevelAct = theTestedProcess.getBreakdownElements().iterator();
+			itTopLevelAct = OpenUPProcess.getBreakdownElements().iterator();
 			
 			topLevelActivity = null;
 			// We want the third Phase : Construction Iteration
@@ -823,7 +859,6 @@ public class XMLParserTest extends TestCase {
 	}
 	
 	public void testOpenUPActivityInitiateProjectContainsTwoSuccessors() {
-		Process theTestedProcess = null;
 		Iterator<BreakdownElement> itTopLevelAct,itSecondLevelAct;
 		Activity topLevelActivity,secondLevelActivity;
 		boolean rentreDansInitiateProject = false;
@@ -834,12 +869,14 @@ public class XMLParserTest extends TestCase {
 		
 		Iterator<WorkBreakdownElement> itSuccessor;
 		
-		theTestedProcess = XMLParser.getProcess(pathOPenUP);
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
 		
-		assertNotNull(theTestedProcess);
-		if (theTestedProcess != null) {
+		assertNotNull(OpenUPProcess);
+		if (OpenUPProcess != null) {
 			// Iterator on the set of the four Phases of OpenUP
-			itTopLevelAct = theTestedProcess.getBreakdownElements().iterator();
+			itTopLevelAct = OpenUPProcess.getBreakdownElements().iterator();
 			
 			topLevelActivity = null;
 			// We want the third Phase : Construction Iteration
@@ -882,14 +919,17 @@ public class XMLParserTest extends TestCase {
 	}
 	
 	public void testOpenUPDefineVisionContainsExpectedGuidances() {
-		Process openUpProcess = XMLParser.getProcess(pathOPenUP);
 		Activity inceptionIterationAct = null;
 		Activity initiateProjectAct = null;
 		TaskDescriptor defineVisionTDesc = null;
 		TaskDefinition defineVisionTDef = null;
 		
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
+		
 		// First Step, Stop on Inception Iteration
-		Iterator<BreakdownElement> itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
+		Iterator<BreakdownElement> itTopLevelAct = OpenUPProcess.getBreakdownElements().iterator();
 		while (itTopLevelAct.hasNext()) {
 			BreakdownElement tmpBde = itTopLevelAct.next();
 			if (tmpBde.getPresentationName().equals("Inception Iteration [1..n]")) {
@@ -958,11 +998,13 @@ public class XMLParserTest extends TestCase {
 	
 	
 	public void testOpenUPInceptionIterationContainsExpectedGuidances() {
-		Process openUpProcess = XMLParser.getProcess(pathOPenUP);
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
 		Activity inceptionIterationAct = null;
 		
 		// First Step, Stop on Inception Iteration
-		Iterator<BreakdownElement> itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
+		Iterator<BreakdownElement> itTopLevelAct = OpenUPProcess.getBreakdownElements().iterator();
 		while (itTopLevelAct.hasNext()) {
 			BreakdownElement tmpBde = itTopLevelAct.next();
 			if (tmpBde.getPresentationName().equals("Inception Iteration [1..n]")) {
@@ -1044,12 +1086,14 @@ public class XMLParserTest extends TestCase {
 	 *
 	 */
 	public void testThatTheRoleDefinionAnalystFromOpenUpRefersTheRightRoleDescriptors() {
-		Process theOpenUpProcess = XMLParser.getProcess(pathOPenUP);
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
 		
 		// We want to get a RoleDescriptor with Analyst as PresentationName
 		RoleDescriptor anAnalystRoleDescriptor = null;
 		// Trough TopLevelActivities
-		for (BreakdownElement topLevelAct : theOpenUpProcess.getBreakdownElements()) {
+		for (BreakdownElement topLevelAct : OpenUPProcess.getBreakdownElements()) {
 			if (topLevelAct.getPresentationName().equals("Inception Iteration [1..n]")) {
 				assertTrue(topLevelAct instanceof Activity);
 				// Trough SndLevelActivities
@@ -1093,14 +1137,16 @@ public class XMLParserTest extends TestCase {
 	
 	public void testOpenUPTaskDescriptorDefineVisionContainsCheckList() {
 		
-		Process openUpProcess = XMLParser.getProcess(pathOPenUP);
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
 		Activity inceptionIterationAct = null;
 		Activity initiateProject = null;
 		TaskDescriptor defineVision = null;
 		TaskDefinition definitionVision = null;
 		
 		// First Step, Stop on Inception Iteration
-		Iterator<BreakdownElement> itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
+		Iterator<BreakdownElement> itTopLevelAct = OpenUPProcess.getBreakdownElements().iterator();
 		while (itTopLevelAct.hasNext()) {
 			BreakdownElement tmpBde = itTopLevelAct.next();
 			if (tmpBde.getPresentationName().equals("Inception Iteration [1..n]")) {
@@ -1173,13 +1219,15 @@ public class XMLParserTest extends TestCase {
 	
 	
 	public void testOpenUPDefineVisionTaskDefinitionContainsATemplateCalledVision () {
-		Process openUpProcess = XMLParser.getProcess(pathOPenUP);
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
 		Activity inceptionIterationAct = null;
 		Activity initiateProject = null;
 		TaskDescriptor defineVision = null;
 		
 		// First Step, Stop on Inception Iteration
-		Iterator<BreakdownElement> itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
+		Iterator<BreakdownElement> itTopLevelAct = OpenUPProcess.getBreakdownElements().iterator();
 		while (itTopLevelAct.hasNext()) {
 			BreakdownElement tmpBde = itTopLevelAct.next();
 			if (tmpBde.getPresentationName().equals("Inception Iteration [1..n]")) {
@@ -1226,13 +1274,15 @@ public class XMLParserTest extends TestCase {
 	}
 	
 	public void testOpenUPPlanTheProjectTaskDefinitionContains2ExamplesAnd3Templates () {
-		Process openUpProcess = XMLParser.getProcess(pathOPenUP);
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
 		Activity inceptionIterationAct = null;
 		Activity initiateProject = null;
 		TaskDescriptor planTheProject = null;
 		
 		// First Step, Stop on Inception Iteration
-		Iterator<BreakdownElement> itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
+		Iterator<BreakdownElement> itTopLevelAct = OpenUPProcess.getBreakdownElements().iterator();
 		while (itTopLevelAct.hasNext()) {
 			BreakdownElement tmpBde = itTopLevelAct.next();
 			if (tmpBde.getPresentationName().equals("Inception Iteration [1..n]")) {
@@ -1355,13 +1405,14 @@ public class XMLParserTest extends TestCase {
 	}
 	
 	public void testTmpPbApostrophes() {
-		Process theProcess;
-		theProcess = XMLParser.getProcess(pathScrum);
+		if (ScrumProcess == null) {
+			ScrumProcess = XMLParser.getProcess(pathScrum);
+		}
 		Phase thePhase = null;
 		RoleDescriptor theRoleDesc = null;
 		RoleDefinition theRoleDef;
 
-		for (BreakdownElement bde : theProcess.getBreakdownElements()) {
+		for (BreakdownElement bde : ScrumProcess.getBreakdownElements()) {
 			if (bde.getName().equals("Preparation Phase")) {
 				thePhase = (Phase) bde;
 				break;
@@ -1381,12 +1432,14 @@ public class XMLParserTest extends TestCase {
 	}
 	
 	public void testOpenUpDetermineArchitecturalFeasibilityHasOneRoleDescriptor() {
-		Process openUpProcess = XMLParser.getProcess(pathOPenUP);
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
 		Activity inceptionIterationAct = null;
 		Activity determineArchitecturalFeasibility = null;
 		
 		// First Step, Stop on Inception Iteration
-		Iterator<BreakdownElement> itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
+		Iterator<BreakdownElement> itTopLevelAct = OpenUPProcess.getBreakdownElements().iterator();
 		while (itTopLevelAct.hasNext()) {
 			BreakdownElement tmpBde = itTopLevelAct.next();
 			if (tmpBde.getPresentationName().equals("Inception Iteration [1..n]")) {
@@ -1417,13 +1470,15 @@ public class XMLParserTest extends TestCase {
 	}
 	
 	public void testOpenUpInceptionManageRequirementsAnalystHas2TaskDescriptors() {
-		Process openUpProcess = XMLParser.getProcess(pathOPenUP);
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
 		Activity inceptionIterationAct = null;
 		Activity manageRequirements = null;
 		RoleDescriptor analyst = null;
 		
 		// First Step, Stop on Inception Iteration
-		Iterator<BreakdownElement> itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
+		Iterator<BreakdownElement> itTopLevelAct = OpenUPProcess.getBreakdownElements().iterator();
 		while (itTopLevelAct.hasNext()) {
 			BreakdownElement tmpBde = itTopLevelAct.next();
 			if (tmpBde.getPresentationName().equals("Inception Iteration [1..n]")) {
@@ -1456,12 +1511,14 @@ public class XMLParserTest extends TestCase {
 	}
 	
 	public void testOpenUpInceptionManageRequirementsHas3TaskDescriptors() {
-		Process openUpProcess = XMLParser.getProcess(pathOPenUP);
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
 		Activity inceptionIterationAct = null;
 		Activity manageRequirements = null;
 		
 		// First Step, Stop on Inception Iteration
-		Iterator<BreakdownElement> itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
+		Iterator<BreakdownElement> itTopLevelAct = OpenUPProcess.getBreakdownElements().iterator();
 		while (itTopLevelAct.hasNext()) {
 			BreakdownElement tmpBde = itTopLevelAct.next();
 			if (tmpBde.getPresentationName().equals("Inception Iteration [1..n]")) {
@@ -1495,11 +1552,13 @@ public class XMLParserTest extends TestCase {
 	
 		// test to resolve we check the order of the 4 phases of openUP
 	public void testOpenUPOrderisInceptionElabrorationConstructionTransition(){
-		Process openUpProcess = XMLParser.getProcess(pathOPenUP);
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
 		Activity IterationAct = null;
 		
 		// First Step, Stop on Inception Iteration
-		Iterator<BreakdownElement> itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
+		Iterator<BreakdownElement> itTopLevelAct = OpenUPProcess.getBreakdownElements().iterator();
 		int num = 0 ;
 		while (itTopLevelAct.hasNext()) {
 			BreakdownElement tmpBde = itTopLevelAct.next();
@@ -1522,11 +1581,13 @@ public class XMLParserTest extends TestCase {
 	
 	// test to resolve we check the order of the activity in Elaboration phase
 	public void testOpenUPElaborationOrder(){
-		Process openUpProcess = XMLParser.getProcess(pathOPenUP);
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
 		Activity IterationAct = null;
 		boolean trouve = false ;
 		// First Step, Stop on Inception Iteration
-		Iterator<BreakdownElement> itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
+		Iterator<BreakdownElement> itTopLevelAct = OpenUPProcess.getBreakdownElements().iterator();
 		int num = 0 ;
 		while (!trouve && itTopLevelAct.hasNext()) {
 			BreakdownElement tmpBde = itTopLevelAct.next();
@@ -1566,11 +1627,13 @@ public class XMLParserTest extends TestCase {
 	
 	//	 test to resolve we check the order of the tasks in the activity Manage iteration
 	public void testOpenUPElaborationManageIterationOrder(){
-		Process openUpProcess = XMLParser.getProcess(pathOPenUP);
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
 		Activity IterationAct = null;
 		boolean trouve = false ;
 		// First Step, Stop on Inception Iteration
-		Iterator<BreakdownElement> itTopLevelAct = openUpProcess.getBreakdownElements().iterator();
+		Iterator<BreakdownElement> itTopLevelAct = OpenUPProcess.getBreakdownElements().iterator();
 		
 		while (!trouve && itTopLevelAct.hasNext()) {
 			BreakdownElement tmpBde = itTopLevelAct.next();
@@ -1609,15 +1672,16 @@ public class XMLParserTest extends TestCase {
 	}
 			
 	public void testScrumPreparationPhaseContainsRightMainDescriptionAndKeyConsiderations () {
-		Process theProcess;
-		theProcess = XMLParser.getProcess(pathScrum);
+		if (ScrumProcess == null) {
+			ScrumProcess = XMLParser.getProcess(pathScrum);
+		}
 		Phase thePhase = null;
 		String expectedMainDescription = "<p>\n" +
 			"    Scrum ne prend pas en compte tous les aspects de préparation d'un projet. Seules sont présentées les taches spécifiques\n" +
 			"    de Scrum plus une qui regroupe tous les travaux pouvant etre réalisés\n" +
 			"</p>";
 
-		for (BreakdownElement bde : theProcess.getBreakdownElements()) {
+		for (BreakdownElement bde : ScrumProcess.getBreakdownElements()) {
 			if (bde.getName().equals("Preparation Phase")) {
 				thePhase = (Phase) bde;
 				break;
@@ -1629,8 +1693,9 @@ public class XMLParserTest extends TestCase {
 	}
 		
 	public void testScrumRDContainsRightMainDescriptionAndKeyConsiderations () {
-		Process theProcess;
-		theProcess = XMLParser.getProcess(pathScrum);
+		if (ScrumProcess == null) {
+			ScrumProcess = XMLParser.getProcess(pathScrum);
+		}
 		Activity theActivity = null;
 		RoleDescriptor theRoleDesc = null;
 		RoleDefinition theRoleDef;
@@ -1654,7 +1719,7 @@ public class XMLParserTest extends TestCase {
 				"    L'implication dans le projet doit être importante pour assurer son succès\n" +
 				"</p>";
 
-		for (BreakdownElement bde : theProcess.getBreakdownElements()) {
+		for (BreakdownElement bde : ScrumProcess.getBreakdownElements()) {
 			if (bde.getName().equals("Preparation Phase")) {
 				theActivity = (Activity) bde;
 				break;
@@ -1675,15 +1740,16 @@ public class XMLParserTest extends TestCase {
 	}
 	
 	public void testScrumSprintPhasePlanSprintTaskContainsRightAlternativesAndPurpose () {
-		Process theProcess;
-		theProcess = XMLParser.getProcess(pathScrum);
+		if (ScrumProcess == null) {
+			ScrumProcess = XMLParser.getProcess(pathScrum);
+		}
 		Phase thePhase = null;
 		Iteration anIteration = null;
 		TaskDescriptor taskDescriptor = null;
 		String expectedAlternatives = "";
 		String expectedPurpose = "Le but est de planifier&nbsp;le sprint&nbsp;qui va commencer";
 
-		for (BreakdownElement bde : theProcess.getBreakdownElements()) {
+		for (BreakdownElement bde : ScrumProcess.getBreakdownElements()) {
 			if (bde.getName().equals("Sprint Phase")) {
 				thePhase = (Phase) bde;
 				break;
@@ -1709,23 +1775,34 @@ public class XMLParserTest extends TestCase {
 	}
 
 	public void testSortieEPFInceptionPhaseIterationContainsRight_Alternatives_HowToStaff_Purpose () {
-		Process theProcess;
-		theProcess = XMLParser.getProcess(pathOPenUP);
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
 		Activity anActivity = null;
 		String expectedAlternatives = "";
 		String expectedHowToStaff = "";
 		String expectedPurpose = "";
+		String expectedMainDescription = "<h3>\n" +
+    "    Introduction\n" +
+    "</h3>\n" +
+    "<p>\n" +
+    "    The project starts with ";
 
-		for (BreakdownElement bde : theProcess.getBreakdownElements()) {
+
+		for (BreakdownElement bde : OpenUPProcess.getBreakdownElements()) {
 			if (bde.getName().equals("inception_phase_iteration")) {
 				anActivity = (Activity) bde;
 				break;
 			}
 		}
 		
+		assertNotNull(anActivity);
+		
 		assertEquals(anActivity.getAlternatives(), expectedAlternatives);
 		assertEquals(anActivity.getHowToStaff(), expectedHowToStaff);
 		assertEquals(anActivity.getPurpose(), expectedPurpose);
+		
+		assertTrue(anActivity.getMainDescription().substring(0, 60).startsWith(expectedMainDescription));
 	}
 	
 	public void testScrumFillerTestProcessContainsRight_Alternatives_HowToStaff_Purpose () {

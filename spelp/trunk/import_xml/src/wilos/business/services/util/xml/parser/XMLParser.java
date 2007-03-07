@@ -329,13 +329,30 @@ public class XMLParser {
 		Node aNode;
 		for(int i = 0 ; i < activities.getLength(); i++){
 			/* for each list element , get the list item */
-			aNode = activities.item(i);
+			aNode = activities.item(i);			
+			
 			Activity anActivity = new Activity();
 			/* Filler for the iteration and the item (node)*/
 			FillerActivity itFiller = new FillerActivity(anActivity, aNode);	
 			Activity returnedActivityFilled = (Activity) itFiller.getFilledElement();
 			
 			setGuidanceByActivity(returnedActivityFilled, aNode);
+			
+			// We 
+			if (aNode.getAttributes().getNamedItem(attr_name_variabilityBasedOnElement) != null) {
+				// the current node contains the attribute: variabilityBasedOnElement in the XML file				
+				String parentElementID = aNode.getAttributes().getNamedItem(attr_name_variabilityBasedOnElement).getNodeValue();
+				// Xpath request to get the activity list by the id: variabilityBasedOnElement				
+				String xpath_parentElement = "//Process[@*[namespace-uri() and local-name()='type']='uma:CapabilityPattern' and @id='" + parentElementID + "']";
+				// get the list of the nodes by the XPath Expression
+				NodeList parentElement = (NodeList)XMLUtils.evaluate(xpath_parentElement,XPathConstants.NODESET);
+				if (parentElement.getLength() == 1) {
+					// the nodeList is not empty
+					aNode = parentElement.item(0);
+					itFiller.auxilliaryFill(aNode);
+					returnedActivityFilled = (Activity) itFiller.getFilledElement();
+				}
+			}
 			
 			/* Add the filled object in the result List */
 			activitiesList.add(returnedActivityFilled) ;

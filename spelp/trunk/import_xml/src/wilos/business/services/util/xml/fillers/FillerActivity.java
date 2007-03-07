@@ -11,6 +11,8 @@ public class FillerActivity extends FillerWorkBreakDownElement {
 	private static String NodeAlternatives = "Alternatives";
 	private static String NodeHowToStaff = "HowToStaff";
 	private static String NodePurpose = "Purpose";
+	private static String NodeMainDescription = "MainDescription";
+	private static String NodeKeyConsiderations = "KeyConsiderations";
 	
 	public FillerActivity(Element _e, Node _aNode) {
 		super(_e, _aNode);
@@ -25,6 +27,8 @@ public class FillerActivity extends FillerWorkBreakDownElement {
 		String alternatives = "";
 		String howToStaff = "";
 		String purposes = "";
+		String mainDescription = "";
+		String keyConsiderations = "";
 		
 		// searching for the Presentation node
 		for (int i = 0 ; i < myNodeList.getLength() && nodePresentation == null ; i++) {
@@ -48,11 +52,30 @@ public class FillerActivity extends FillerWorkBreakDownElement {
 				if (nodePresentationList.item(i).getNodeName().equals(NodePurpose)) {
 					purposes = nodePresentationList.item(i).getTextContent();
 				}
+				
+				
+				// We need it in the case that this fill is called by auxiliaryFill
+				
+				if (nodePresentationList.item(i).getNodeName().equals(NodeMainDescription)) {
+					mainDescription = nodePresentationList.item(i).getTextContent();
+				}
+				// Search for the KeyConsiderations node
+				if (nodePresentationList.item(i).getNodeName().equals(NodeKeyConsiderations)) {
+					keyConsiderations = nodePresentationList.item(i).getTextContent();
+				}
+				
 			}
 		}
 		
 		((Activity)myElement).setAlternatives(alternatives);
 		((Activity)myElement).setHowToStaff(howToStaff);
 		((Activity)myElement).setPurpose(purposes);
+		((Activity)myElement).setMainDescription(mainDescription);
+		((Activity)myElement).setKeyConsiderations(keyConsiderations);
+	}
+
+	public void auxilliaryFill(Node node) {
+		this.myNode = node;
+		this.fill();
 	}
 }

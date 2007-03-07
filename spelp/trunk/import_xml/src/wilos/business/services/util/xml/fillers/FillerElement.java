@@ -80,4 +80,8 @@ public class FillerElement {
 		return (myElement);
 	}
 	
+	public void setNode(Node _node) {
+		this.myNode = _node;
+	}
+	
 }
