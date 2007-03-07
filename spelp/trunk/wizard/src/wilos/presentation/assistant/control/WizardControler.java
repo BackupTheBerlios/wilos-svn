@@ -28,6 +28,7 @@ import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.element.Element;
@@ -172,6 +173,7 @@ public class WizardControler {
 	}
 	
 	
+	
 	public synchronized void launchBackgroundThreadForTree(){
 		currentRefreshThread = new Thread (new Runnable(){
 			public void run() {
@@ -220,6 +222,8 @@ public class WizardControler {
 			return ((ConcreteIteration) userObject).getIteration().getGuid();
 		else if (userObject instanceof ConcretePhase)
 			return ((ConcretePhase) userObject).getPhase().getGuid();
+		else if (userObject instanceof Project)
+			return null ;
 		else if (userObject instanceof ConcreteActivity)
 			return ((ConcreteActivity) userObject).getActivity().getGuid();
 		else if (userObject instanceof ConcreteTaskDescriptor) {
