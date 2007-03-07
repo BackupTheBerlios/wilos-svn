@@ -13,7 +13,11 @@ import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 
 /**
  * 
- * @author Padawan
+ * @author Sebastien
+ * @author Garwind
+ * @author Deder
+ * @author soosuske
+ * @author eperico
  * 
  */
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)

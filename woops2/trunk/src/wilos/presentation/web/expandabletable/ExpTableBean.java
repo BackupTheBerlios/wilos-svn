@@ -87,7 +87,7 @@ public class ExpTableBean {
 						.getProcessFromGuid(selectedProcessGuid);
 				if (process != null) {
 					processService.projectInstanciation(project, process,
-							expTableContent);
+							expTableContent, this.isInstanciedProject);
 				}
 			}
 		}

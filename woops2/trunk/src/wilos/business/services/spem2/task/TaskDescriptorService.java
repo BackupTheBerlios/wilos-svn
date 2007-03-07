@@ -15,9 +15,9 @@ import wilos.model.spem2.role.RoleDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
 
 /**
- *
+ * 
  * @author Soosuske
- *
+ * 
  */
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class TaskDescriptorService {
@@ -33,38 +33,43 @@ public class TaskDescriptorService {
 	 * @param _cact
 	 * @param _occ
 	 */
-	public void taskDescriptorInstanciation (Project _project, TaskDescriptor _td, ConcreteActivity _cact, int _occ) {
+	public void taskDescriptorInstanciation(Project _project,
+			TaskDescriptor _td, ConcreteActivity _cact, int _occ,
+			boolean _isInstanciated) {
 
 		if (_occ > 0) {
-			for (int i = 1;i <= _occ;i++) {
-				
+			for (int i = 1; i <= _occ; i++) {
+
 				ConcreteTaskDescriptor ctd = new ConcreteTaskDescriptor();
-		
+
 				if (_occ > 1) {
 					if (_td.getPresentationName() == null)
-						ctd.setConcreteName(_td.getName() + "_" + (new Integer(i)).toString());
+						ctd.setConcreteName(_td.getName() + "_"
+								+ (new Integer(i)).toString());
 					else
-						ctd.setConcreteName(_td.getPresentationName() + "_" + (new Integer(i)).toString());
+						ctd.setConcreteName(_td.getPresentationName() + "_"
+								+ (new Integer(i)).toString());
 				} else {
 					if (_td.getPresentationName() == null)
 						ctd.setConcreteName(_td.getName());
 					else
 						ctd.setConcreteName(_td.getPresentationName());
 				}
-		
+
 				ctd.addTaskDescriptor(_td);
 				ctd.setProject(_project);
 				ctd.addSuperConcreteActivity(_cact);
-		
-				this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(ctd);
+
+				this.concreteTaskDescriptorDao
+						.saveOrUpdateConcreteTaskDescriptor(ctd);
 				System.out.println("### ConcreteTaskDescriptor sauve");
 			}
 		}
 
 	}
-	
+
 	/**
-	 *
+	 * 
 	 * @param _act
 	 * @return
 	 */
@@ -78,8 +83,7 @@ public class TaskDescriptorService {
 		return tmp;
 	}
 
-	public TaskDescriptor getTaskDescriptorById(String _id)
-	{
+	public TaskDescriptor getTaskDescriptorById(String _id) {
 		TaskDescriptor taskDescriptor;
 		taskDescriptor = this.taskDescriptorDao.getTaskDescriptor(_id);
 		return taskDescriptor;

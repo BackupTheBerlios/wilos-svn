@@ -23,53 +23,58 @@ import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.iteration.Iteration;
 import wilos.model.spem2.phase.Phase;
 import wilos.model.spem2.task.TaskDescriptor;
+
 /**
  * PhaseManager is a transactional class, that manages operations about phase
- *
+ * 
+ * @author Sebastien
  */
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class PhaseService {
 
 	private ConcretePhaseDao concretePhaseDao;
-	
+
 	private PhaseDao phaseDao;
-	
+
 	private IterationService iterationService;
-	
+
 	private ActivityService activityService;
-	
+
 	private ConcreteActivityService concreteActivityService;
-	
+
 	private RoleDescriptorService roleDescriptorService;
-	
+
 	private TaskDescriptorService taskDescriptorService;
 
 	public Set<ConcretePhase> getAllConcretePhases(Phase _phase) {
 		Set<ConcretePhase> tmp = new HashSet<ConcretePhase>();
-		this.phaseDao.getSessionFactory().getCurrentSession().saveOrUpdate(
-				_phase);
+		this.phaseDao.getSessionFactory().getCurrentSession().saveOrUpdate(_phase);
 		for (ConcretePhase bde : _phase.getConcretePhases()) {
 			tmp.add(bde);
 		}
 		return tmp;
 	}
-	
+
 	/**
 	 * Instanciates a phase for a project
-	 * @param _project project for which the Phase shall be instanciated
-	 * @param _phase phase to instanciates
+	 * 
+	 * @param _project
+	 *            project for which the Phase shall be instanciated
+	 * @param _phase
+	 *            phase to instanciates
 	 */
-	public void phaseInstanciation (Project _project, Phase _phase, ConcreteActivity _cact, List<HashMap<String, Object>> _list, int _occ) {
+	public void phaseInstanciation(Project _project, Phase _phase, ConcreteActivity _cact,
+			List<HashMap<String, Object>> _list, int _occ, boolean _isInstanciated) {
 
 		// if one occurence at least
 		if (_occ > 0) {
-			for (int i = 1;i <= _occ;i++) {
-				
+			for (int i = 1; i <= _occ; i++) {
+
 				ConcretePhase cp = new ConcretePhase();
-				
+
 				Set<BreakdownElement> bdes = new HashSet<BreakdownElement>();
 				bdes.addAll(this.activityService.getInstanciableBreakdownElements(_phase));
-		
+
 				// if several occurrences
 				if (_occ > 1) {
 					if (_phase.getPresentationName() == null)
@@ -82,51 +87,66 @@ public class PhaseService {
 					else
 						cp.setConcreteName(_phase.getPresentationName());
 				}
-		
+
 				cp.addPhase(_phase);
 				cp.setProject(_project);
 				_cact.setConcreteBreakdownElements(this.concreteActivityService.getConcreteBreakdownElements(_cact));
 				cp.addSuperConcreteActivity(_cact);
-		
+
 				this.concretePhaseDao.saveOrUpdateConcretePhase(cp);
 				System.out.println("### ConcretePhase vide sauve");
-				
-				for (BreakdownElement bde : bdes ) {
+
+				for (BreakdownElement bde : bdes) {
 					if (bde instanceof Phase) {
 						Phase ph = (Phase) bde;
 						int occ = this.giveNbOccurences(ph.getId(), _list);
-						this.phaseInstanciation(_project, ph, cp, _list, occ);
+						if (!_isInstanciated) {
+							this.phaseInstanciation(_project, ph, _project, _list, occ, _isInstanciated);
+						} else {
+
+						}
 					} else {
 						if (bde instanceof Iteration) {
 							Iteration it = (Iteration) bde;
 							int occ = this.giveNbOccurences(it.getId(), _list);
-							this.iterationService.iterationInstanciation(_project, it, cp, _list, occ);
+							if (!_isInstanciated) {
+								this.iterationService.iterationInstanciation(_project, it, cp, _list, occ,
+										_isInstanciated);
+							} else {
+
+							}
 						} else {
 							if (bde instanceof Activity) {
 								Activity act = (Activity) bde;
 								int occ = this.giveNbOccurences(act.getId(), _list);
-								this.activityService.activityInstanciation(_project, act, cp, _list, occ);
+								if (!_isInstanciated) {
+									this.activityService.activityInstanciation(_project, act, cp, _list, occ,
+											_isInstanciated);
+								} else {
+
+								}
 							} else {
 								if (bde instanceof TaskDescriptor) {
 									TaskDescriptor td = (TaskDescriptor) bde;
 									int occ = this.giveNbOccurences(td.getId(), _list);
-									this.taskDescriptorService.taskDescriptorInstanciation(_project, td, cp, occ);
-								}/* else {
-									RoleDescriptor rd = (RoleDescriptor) bde;
-									int occ = this.giveNbOccurences(rd.getId(), _list);
-									this.roleDescriptorService.roleDescriptorInstanciation(_project, rd, cp, occ);
-								}*/
+									if (!_isInstanciated) {
+										this.taskDescriptorService.taskDescriptorInstanciation(_project, td, cp, occ,
+												_isInstanciated);
+									} else {
+
+									}
+								}
 							}
 						}
 					}
 				}
-				
+
 				this.concretePhaseDao.saveOrUpdateConcretePhase(cp);
 				System.out.println("### ConcretePhase update");
 			}
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param _id
@@ -134,22 +154,22 @@ public class PhaseService {
 	 * @return
 	 */
 	private int giveNbOccurences(String _id, List<HashMap<String, Object>> list) {
-		
+
 		int nb = 1;
-		
+
 		for (HashMap<String, Object> hashMap : list) {
 			if (((String) hashMap.get("id")).equals(_id)) {
 				nb = ((Integer) hashMap.get("nbOccurences")).intValue();
 				break;
 			}
 		}
-		
+
 		return nb;
 	}
 
 	/**
 	 * Getter of concretePhaseDao
-	 *
+	 * 
 	 * @return the concretePhaseDao
 	 */
 	public ConcretePhaseDao getConcretePhaseDao() {
@@ -158,8 +178,9 @@ public class PhaseService {
 
 	/**
 	 * Setter of concretePhaseDao
-	 *
-	 * @param concretePhaseDao the concretePhaseDao to set
+	 * 
+	 * @param concretePhaseDao
+	 *            the concretePhaseDao to set
 	 */
 	public void setConcretePhaseDao(ConcretePhaseDao concretePhaseDao) {
 		this.concretePhaseDao = concretePhaseDao;
@@ -173,7 +194,8 @@ public class PhaseService {
 	}
 
 	/**
-	 * @param iterationService the iterationService to set
+	 * @param iterationService
+	 *            the iterationService to set
 	 */
 	public void setIterationService(IterationService iterationService) {
 		this.iterationService = iterationService;
@@ -187,7 +209,8 @@ public class PhaseService {
 	}
 
 	/**
-	 * @param roleDescriptorService the roleDescriptorService to set
+	 * @param roleDescriptorService
+	 *            the roleDescriptorService to set
 	 */
 	public void setRoleDescriptorService(RoleDescriptorService roleDescriptorService) {
 		this.roleDescriptorService = roleDescriptorService;
@@ -201,7 +224,8 @@ public class PhaseService {
 	}
 
 	/**
-	 * @param taskDescriptorService the taskDescriptorService to set
+	 * @param taskDescriptorService
+	 *            the taskDescriptorService to set
 	 */
 	public void setTaskDescriptorService(TaskDescriptorService taskDescriptorService) {
 		this.taskDescriptorService = taskDescriptorService;
@@ -215,7 +239,8 @@ public class PhaseService {
 	}
 
 	/**
-	 * @param activityService the activityService to set
+	 * @param activityService
+	 *            the activityService to set
 	 */
 	public void setActivityService(ActivityService activityService) {
 		this.activityService = activityService;
@@ -229,10 +254,10 @@ public class PhaseService {
 	}
 
 	/**
-	 * @param _concreteActivityService the concreteActivityService to set
+	 * @param _concreteActivityService
+	 *            the concreteActivityService to set
 	 */
-	public void setConcreteActivityService(
-			ConcreteActivityService _concreteActivityService) {
+	public void setConcreteActivityService(ConcreteActivityService _concreteActivityService) {
 		this.concreteActivityService = _concreteActivityService;
 	}
 
@@ -244,7 +269,8 @@ public class PhaseService {
 	}
 
 	/**
-	 * @param phaseDao the phaseDao to set
+	 * @param phaseDao
+	 *            the phaseDao to set
 	 */
 	public void setPhaseDao(PhaseDao phaseDao) {
 		this.phaseDao = phaseDao;

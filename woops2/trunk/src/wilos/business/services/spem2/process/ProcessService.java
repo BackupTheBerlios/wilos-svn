@@ -135,18 +135,14 @@ public class ProcessService {
 	public Process spelpParsingXML(File _file) {
 		Process spelpProcess = null;
 		try {
-			logger.debug("### ProcessService ### spelpParsingXML "
-					+ _file.getAbsolutePath() + " abs path = "
+			logger.debug("### ProcessService ### spelpParsingXML " + _file.getAbsolutePath() + " abs path = "
 					+ _file.getPath());
 			String slash = System.getProperty("file.separator");
 
-			String path = _file.getAbsolutePath().substring(0,
-					_file.getAbsolutePath().lastIndexOf(slash));
+			String path = _file.getAbsolutePath().substring(0, _file.getAbsolutePath().lastIndexOf(slash));
 
-			logger.debug("### ProcessService ### spelpParsingXML PATH == "
-					+ path);
-			spelpProcess = XMLServices
-					.getProcess(_file.getAbsolutePath(), path);
+			logger.debug("### ProcessService ### spelpParsingXML PATH == " + path);
+			spelpProcess = XMLServices.getProcess(_file.getAbsolutePath(), path);
 			if (spelpProcess != null) {
 				spelpProcess.setFolderPath(path);
 			}
@@ -165,8 +161,7 @@ public class ProcessService {
 		Project project = this.projectDao.getProject(_projectId);
 		Set<ConcreteBreakdownElement> bdes = new HashSet<ConcreteBreakdownElement>();
 
-		bdes.addAll(this.concreteBreakdownElementService
-				.getAllConcreteBreakdownElementsFromProject(_projectId));
+		bdes.addAll(this.concreteBreakdownElementService.getAllConcreteBreakdownElementsFromProject(_projectId));
 		project.removeAllConcreteBreakdownElements();
 		project.addAllConcreteBreakdownElements(bdes);
 
@@ -240,14 +235,10 @@ public class ProcessService {
 		}
 
 		// destroy the persistance of the collections
-		_process.setBreakdownElements(this.activityService
-				.getBreakdownElements(_process));
-		_process.setPredecessors(this.workBreakdownElementService
-				.getPredecessors(_process));
-		_process.setSuccessors(this.workBreakdownElementService
-				.getSuccessors(_process));
-		_process.setSuperActivities(this.breakdownElementService
-				.getSuperActivities(_process));
+		_process.setBreakdownElements(this.activityService.getBreakdownElements(_process));
+		_process.setPredecessors(this.workBreakdownElementService.getPredecessors(_process));
+		_process.setSuccessors(this.workBreakdownElementService.getSuccessors(_process));
+		_process.setSuperActivities(this.breakdownElementService.getSuperActivities(_process));
 
 		// clone dependencies getting
 		_process.addAllBreakdownElements(clone.getBreakdownElements());
@@ -255,8 +246,7 @@ public class ProcessService {
 		_process.addAllSuccessors(clone.getSuccessors());
 		_process.addAllSuperActivities(clone.getSuperActivities());
 
-		_process.addProcessManager(this.processManagerService
-				.getProcessManager(_processManagerId));
+		_process.addProcessManager(this.processManagerService.getProcessManager(_processManagerId));
 
 		// update of the project
 		this.processDao.saveOrUpdateProcess(_process);
@@ -324,14 +314,10 @@ public class ProcessService {
 			}
 		}
 
-		_ph
-				.setBreakdownElements(this.activityService
-						.getBreakdownElements(_ph));
-		_ph.setPredecessors(this.workBreakdownElementService
-				.getPredecessors(_ph));
+		_ph.setBreakdownElements(this.activityService.getBreakdownElements(_ph));
+		_ph.setPredecessors(this.workBreakdownElementService.getPredecessors(_ph));
 		_ph.setSuccessors(this.workBreakdownElementService.getSuccessors(_ph));
-		_ph.setSuperActivities(this.breakdownElementService
-				.getSuperActivities(_ph));
+		_ph.setSuperActivities(this.breakdownElementService.getSuperActivities(_ph));
 		_ph.setGuidances(this.activityService.getGuidances(_ph));
 
 		// clone dependencies getting
@@ -402,14 +388,10 @@ public class ProcessService {
 			}
 		}
 
-		_it
-				.setBreakdownElements(this.activityService
-						.getBreakdownElements(_it));
-		_it.setPredecessors(this.workBreakdownElementService
-				.getPredecessors(_it));
+		_it.setBreakdownElements(this.activityService.getBreakdownElements(_it));
+		_it.setPredecessors(this.workBreakdownElementService.getPredecessors(_it));
 		_it.setSuccessors(this.workBreakdownElementService.getSuccessors(_it));
-		_it.setSuperActivities(this.breakdownElementService
-				.getSuperActivities(_it));
+		_it.setSuperActivities(this.breakdownElementService.getSuperActivities(_it));
 		_it.setGuidances(this.activityService.getGuidances(_it));
 
 		// clone dependencies getting
@@ -479,15 +461,10 @@ public class ProcessService {
 			}
 		}
 
-		_act.setBreakdownElements(this.activityService
-				.getBreakdownElements(_act));
-		_act.setPredecessors(this.workBreakdownElementService
-				.getPredecessors(_act));
-		_act
-				.setSuccessors(this.workBreakdownElementService
-						.getSuccessors(_act));
-		_act.setSuperActivities(this.breakdownElementService
-				.getSuperActivities(_act));
+		_act.setBreakdownElements(this.activityService.getBreakdownElements(_act));
+		_act.setPredecessors(this.workBreakdownElementService.getPredecessors(_act));
+		_act.setSuccessors(this.workBreakdownElementService.getSuccessors(_act));
+		_act.setSuperActivities(this.breakdownElementService.getSuperActivities(_act));
 		_act.setGuidances(this.activityService.getGuidances(_act));
 
 		// clone dependencies getting
@@ -509,8 +486,7 @@ public class ProcessService {
 	 * 
 	 * @param _rd
 	 */
-	private List<Guidance> parseRoleDescriptor(RoleDescriptor _rd,
-			List<Guidance> guid) {
+	private List<Guidance> parseRoleDescriptor(RoleDescriptor _rd, List<Guidance> guid) {
 
 		RoleDescriptor clone = null;
 
@@ -539,8 +515,7 @@ public class ProcessService {
 
 		// _rd.setAdditionalTasks(this.roleDescriptorService.getAdditionalTasks(_rd));
 		_rd.setPrimaryTasks(this.roleDescriptorService.getPrimaryTasks(_rd));
-		_rd.setSuperActivities(this.breakdownElementService
-				.getSuperActivities(_rd));
+		_rd.setSuperActivities(this.breakdownElementService.getSuperActivities(_rd));
 
 		// _rd.addAllAdditionalTasks(clone.getAdditionalTasks());
 		_rd.addAllPrimaryTasks(clone.getPrimaryTasks());
@@ -559,8 +534,7 @@ public class ProcessService {
 	 * 
 	 * @param _rdef
 	 */
-	private List<Guidance> parseRoleDefinition(RoleDefinition _rdef,
-			List<Guidance> guid) {
+	private List<Guidance> parseRoleDefinition(RoleDefinition _rdef, List<Guidance> guid) {
 
 		RoleDefinition clone = null;
 
@@ -606,8 +580,7 @@ public class ProcessService {
 	 * 
 	 * @param _td
 	 */
-	private List<Guidance> parseTaskDescriptor(TaskDescriptor _td,
-			List<Guidance> guid) {
+	private List<Guidance> parseTaskDescriptor(TaskDescriptor _td, List<Guidance> guid) {
 
 		TaskDescriptor clone = null;
 
@@ -638,11 +611,9 @@ public class ProcessService {
 
 		// To decomment when you want to manage additionalRoles
 		_td.setAdditionalRoles(this.taskDescriptorService.getAdditionalRoles(_td));
-		_td.setPredecessors(this.workBreakdownElementService
-				.getPredecessors(_td));
+		_td.setPredecessors(this.workBreakdownElementService.getPredecessors(_td));
 		_td.setSuccessors(this.workBreakdownElementService.getSuccessors(_td));
-		_td.setSuperActivities(this.breakdownElementService
-				.getSuperActivities(_td));
+		_td.setSuperActivities(this.breakdownElementService.getSuperActivities(_td));
 
 		// clone dependencies getting
 		_td.addAllAdditionalRoles(clone.getAdditionalRoles());
@@ -662,8 +633,7 @@ public class ProcessService {
 	 * 
 	 * @param _tdef
 	 */
-	private List<Guidance> parseTaskDefinition(TaskDefinition _tdef,
-			List<Guidance> guid) {
+	private List<Guidance> parseTaskDefinition(TaskDefinition _tdef, List<Guidance> guid) {
 
 		TaskDefinition clone = null;
 
@@ -809,55 +779,58 @@ public class ProcessService {
 	}
 
 	/**
+	 * Project instanciation
 	 * 
-	 * Create and associate ConcreteTaskDescriptors from TaskDescriptors of the
-	 * process whose id is id_process to the project whose id is id_project
-	 * 
-	 * @param id_process
-	 * @param id_project
+	 * @param _project
+	 * @param _process
+	 * @param list
 	 */
-	public void projectInstanciation(Project _project, Process _process,
-			List<HashMap<String, Object>> list) {
-
-		// Process p =
-		// this.processDao.getProcess(_project.getProcess().getId());
+	public void projectInstanciation(Project _project, Process _process, List<HashMap<String, Object>> list,
+			boolean _isInstanciated) {
 
 		// elements of collection getting
-		Set<BreakdownElement> forInstanciation = this.activityService
-				.getInstanciableBreakdownElements(_process);
+		Set<BreakdownElement> forInstanciation = this.activityService.getInstanciableBreakdownElements(_process);
 
 		for (BreakdownElement bde : forInstanciation) {
 			if (bde instanceof Phase) {
 				Phase ph = (Phase) bde;
 				int occ = this.giveNbOccurences(ph.getId(), list);
-				this.phaseService.phaseInstanciation(_project, ph, _project,
-						list, occ);
+				if (!_isInstanciated) {
+					this.phaseService.phaseInstanciation(_project, ph, _project, list, occ, _isInstanciated);
+				} else {
+
+				}
 			} else {
 				if (bde instanceof Iteration) {
 					Iteration it = (Iteration) bde;
 					int occ = this.giveNbOccurences(it.getId(), list);
-					this.iterationService.iterationInstanciation(_project, it,
-							_project, list, occ);
+					if (!_isInstanciated) {
+						this.iterationService
+								.iterationInstanciation(_project, it, _project, list, occ, _isInstanciated);
+					} else {
+
+					}
 				} else {
 					if (bde instanceof Activity) {
 						Activity act = (Activity) bde;
 						int occ = this.giveNbOccurences(act.getId(), list);
-						this.activityService.activityInstanciation(_project,
-								act, _project, list, occ);
+						if (!_isInstanciated) {
+							this.activityService.activityInstanciation(_project, act, _project, list, occ,
+									_isInstanciated);
+						} else {
+
+						}
 					} else {
 						if (bde instanceof TaskDescriptor) {
 							TaskDescriptor td = (TaskDescriptor) bde;
 							int occ = this.giveNbOccurences(td.getId(), list);
-							this.taskDescriptorService
-									.taskDescriptorInstanciation(_project, td,
-											_project, occ);
-						}/*
-							 * else { RoleDescriptor rd = (RoleDescriptor) bde;
-							 * int occ = this.giveNbOccurences(rd.getId(),
-							 * list);
-							 * this.roleDescriptorService.roleDescriptorInstanciation(_project,
-							 * rd, _project, occ); }
-							 */
+							if (!_isInstanciated) {
+								this.taskDescriptorService.taskDescriptorInstanciation(_project, td, _project, occ,
+										_isInstanciated);
+							} else {
+
+							}
+						}
 					}
 				}
 			}
@@ -1075,8 +1048,7 @@ public class ProcessService {
 	 * @param workBreakdownElementDao
 	 *            The workBreakdownElementDao to set.
 	 */
-	public void setWorkBreakdownElementDao(
-			WorkBreakdownElementDao workBreakdownElementDao) {
+	public void setWorkBreakdownElementDao(WorkBreakdownElementDao workBreakdownElementDao) {
 		this.workBreakdownElementDao = workBreakdownElementDao;
 	}
 
@@ -1084,8 +1056,7 @@ public class ProcessService {
 		return this.breakdownElementService;
 	}
 
-	public void setBreakdownElementService(
-			BreakdownElementService _breakdownElementService) {
+	public void setBreakdownElementService(BreakdownElementService _breakdownElementService) {
 		this.breakdownElementService = _breakdownElementService;
 	}
 
@@ -1117,8 +1088,7 @@ public class ProcessService {
 		return this.taskDescriptorService;
 	}
 
-	public void setTaskDescriptorService(
-			TaskDescriptorService _taskDescriptorService) {
+	public void setTaskDescriptorService(TaskDescriptorService _taskDescriptorService) {
 		this.taskDescriptorService = _taskDescriptorService;
 	}
 
@@ -1165,8 +1135,7 @@ public class ProcessService {
 	 * @param roleDescriptorService
 	 *            the roleDescriptorService to set
 	 */
-	public void setRoleDescriptorService(
-			RoleDescriptorService roleDescriptorService) {
+	public void setRoleDescriptorService(RoleDescriptorService roleDescriptorService) {
 		this.roleDescriptorService = roleDescriptorService;
 	}
 
@@ -1183,8 +1152,7 @@ public class ProcessService {
 	 * @param concreteBreakdownElementService
 	 *            The concreteBreakdownElementService to set.
 	 */
-	public void setConcreteBreakdownElementService(
-			ConcreteBreakdownElementService concreteBreakdownElementService) {
+	public void setConcreteBreakdownElementService(ConcreteBreakdownElementService concreteBreakdownElementService) {
 		this.concreteBreakdownElementService = concreteBreakdownElementService;
 	}
 
@@ -1199,8 +1167,7 @@ public class ProcessService {
 	 * @param _workBreakdownElementService
 	 *            the workBreakdownElementService to set
 	 */
-	public void setWorkBreakdownElementService(
-			WorkBreakdownElementService _workBreakdownElementService) {
+	public void setWorkBreakdownElementService(WorkBreakdownElementService _workBreakdownElementService) {
 		this.workBreakdownElementService = _workBreakdownElementService;
 	}
 
@@ -1215,8 +1182,7 @@ public class ProcessService {
 	 * @param _roleDefinitionService
 	 *            the roleDefinitionService to set
 	 */
-	public void setRoleDefinitionService(
-			RoleDefinitionService _roleDefinitionService) {
+	public void setRoleDefinitionService(RoleDefinitionService _roleDefinitionService) {
 		this.roleDefinitionService = _roleDefinitionService;
 	}
 
@@ -1231,8 +1197,7 @@ public class ProcessService {
 	 * @param _taskDefinitionService
 	 *            the taskDefinitionService to set
 	 */
-	public void setTaskDefinitionService(
-			TaskDefinitionService _taskDefinitionService) {
+	public void setTaskDefinitionService(TaskDefinitionService _taskDefinitionService) {
 		this.taskDefinitionService = _taskDefinitionService;
 	}
 
@@ -1248,8 +1213,7 @@ public class ProcessService {
 		return processManagerService;
 	}
 
-	public void setProcessManagerService(
-			ProcessManagerService _processManagerService) {
+	public void setProcessManagerService(ProcessManagerService _processManagerService) {
 		this.processManagerService = _processManagerService;
 	}
 
