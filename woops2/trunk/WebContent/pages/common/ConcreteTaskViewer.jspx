@@ -2,6 +2,29 @@
 	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1">
 	
 		<ice:panelPopup 
+			draggable="false" visible="#{ConcreteTaskViewerBean.visibleDeletePopup}"
+			rendered="true"	modal="true">
+			<f:facet name="header">
+				<ice:outputText value="#{msgs['concretetaskviewer.popupDeleteHeaderMessage']}" />
+			</f:facet>
+			<f:facet name="body">
+				<ice:panelGrid id="deletePopup">
+					<ice:graphicImage value="images/xpwilos/warning.gif"
+										style="border: 0px solid;" />
+					<ice:outputText value="#{msgs['concretetaskviewer.popupDeleteMessage']}" />				
+					<ice:panelGrid styleClass="pGrdPopupButtons" columns="2">
+						<ice:commandButton value="#{msgs['concretetaskviewer.popupDeleteConfirmButton']}"
+							styleClass="smallbutton"
+							action="#{ConcreteTaskViewerBean.confirmDelete}"/>
+						<ice:commandButton value="#{msgs['concretetaskviewer.popupDeleteCancelButton']}"
+							styleClass="smallbutton"
+							action="#{ConcreteTaskViewerBean.cancelDelete}"/>
+					</ice:panelGrid>
+				</ice:panelGrid>
+			</f:facet>
+		</ice:panelPopup>
+		
+		<ice:panelPopup 
 			draggable="false" visible="#{ConcreteTaskViewerBean.visiblePopup}"
 			rendered="true"	modal="true">
 			<f:facet name="header">
@@ -23,7 +46,6 @@
 				</ice:panelGrid>
 			</f:facet>
 		</ice:panelPopup>
-	
 	
 		<ice:panelTabSet styleClass="componentPanelTabSetLayout">
 			<br />
@@ -109,7 +131,7 @@
 								styleClass="smallbutton"/>
 								<ice:commandButton value="#{msgs['concretetaskviewer.dissociateButton']}"
 								visible="#{ConcreteTaskViewerBean.dissociateButtonIsVisible}"
-								action="#{ConcreteTaskViewerBean.dissociateTask}"
+								action="#{ConcreteTaskViewerBean.dissociateTaskActionListener}"
 								styleClass="smallbutton" />
 								
 							</td>
