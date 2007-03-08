@@ -1,3 +1,18 @@
+/*
+Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+General Public License as published by the Free Software Foundation; either version 2 of the License,
+or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program; if not,
+write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
+*/
 package wilos.business.services.misc.role;
 
 import java.util.HashMap;
@@ -108,16 +123,25 @@ public class ConcreteRoleInstanciationService {
 		return 1;
 	}
 	
+	/**
+	 * 
+	 * @param _project
+	 * @param _rd
+	 * @param _cact
+	 * @param _occ
+	 */
 	@Transactional(readOnly = false)
 	public void roleDescriptorInstanciation (Project _project, RoleDescriptor _rd, ConcreteActivity _cact, int _occ) {
 
 		if (_occ > 0)
 		{
+			//pour chaque occurrence
 			for (int i=0 ; i<_occ ; i++)
 			{
 				ConcreteRoleDescriptor crd = new ConcreteRoleDescriptor();
 				int iterid = 1;
 				
+				//creation du nom avec son numero
 				for (ConcreteRoleDescriptor element : _rd.getConcreteRoleDescriptors()) {
 					if(element.getProject() != null)
 					{

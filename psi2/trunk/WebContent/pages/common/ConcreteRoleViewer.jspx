@@ -13,7 +13,7 @@
 
 						<ice:outputText value="#{msgs['concreteRoleViewer.affectedTo']}" />
 						<ice:outputText
-							value="#{ConcreteRoleViewerBean.concreteRoleDescriptor.participant.name}" />
+							value="#{ConcreteRoleViewerBean.concreteRoleDescriptor.participant.firstname} #{ConcreteRoleViewerBean.concreteRoleDescriptor.participant.name}" />
 
 					</ice:panelGrid>
 					<ice:panelGrid id="roleNotAffected"
