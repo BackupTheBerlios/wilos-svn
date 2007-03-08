@@ -4,13 +4,17 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.Format;
+import java.text.ParseException;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.text.DefaultFormatter;
+import javax.swing.text.MaskFormatter;
 
 import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXTaskPane;
@@ -31,10 +35,12 @@ public class InfoPanel extends JXPanel implements Observer,ListenerTime {
 	private JLabel info2_label;
 	private JLabel tps_label;
 	private JLabel tps_restant_label;
-	private JTextField tps_restant;
-	private JLabel tps;
+	private HourTextField tps_restant;
+	private HourTextField tps;
 	
 	// attribute for accomplish time
+	private long currentTime = 0 ;
+	private long startTime =  0;
 	private int amin = 0 ;
 	private int ahours = 0 ;
 	private int aseconds =  0;
@@ -53,19 +59,25 @@ public class InfoPanel extends JXPanel implements Observer,ListenerTime {
 		initialize();
 	}
 
+	
 	/**
 	 * This method initializes this
 	 */
 	private void initialize() {
+		HourFormat hf = new HourFormat();
 		infos = new JPanel();
 		infos.setLayout(new GridLayout(4,2));
 		info1 = new JLabel();
 		info2 = new JLabel();
 		info1_label = new JLabel();
 		info2_label = new JLabel();
-		tps_restant = new JTextField();
+		tps_restant = new HourTextField(hf);
+		// definition of tps_restant
+		
+		
 		tps_restant_label = new JLabel();
-		tps = new JLabel();
+		tps = new HourTextField(hf);
+		tps.setEditable(false);
 		tps_label = new JLabel();
 
 		infos.add(info1);
@@ -82,7 +94,7 @@ public class InfoPanel extends JXPanel implements Observer,ListenerTime {
 		
 	
 	}
-
+	
 	public JXTaskPane getTasks (){
 		if (tasks == null){
 			tasks = new JXTaskPane();
@@ -162,24 +174,32 @@ public class InfoPanel extends JXPanel implements Observer,ListenerTime {
 		info1_label.setText(dateD);
 		info2_label.setText(dateF);
 		tps_restant_label.setText("Temps restant : ");
-		int min = WizardControler.getInstance().getDecimalValueInMinutes(c.getRemainingTime());
-		String time= new String((int)c.getRemainingTime()+":"
-				+min+":00"); 				
-		tps_restant.setText(String.valueOf(time));
+//		int min = WizardControler.getInstance().getDecimalValueInMinutes(c.getRemainingTime());
+//		String time= new String((int)c.getRemainingTime()+":"
+//				+min+":00"); 				
+		tps_restant.setValue(new Long(transformInSeconds(c.getRemainingTime())));
 		tps_label.setText("Temps effectue : ");
-		//System.out.println(c.getAccomplishedTime());
-		// in the case where there is no task timed
+//		//System.out.println(c.getAccomplishedTime());
+//		// in the case where there is no task timed
+//		if (CurrentTimedTask == null || !CurrentTimedTask.equals(WizardControler.getInstance().getLastCtd())){
+//			String time1= new String((int)c.getAccomplishedTime()+":"
+//					+WizardControler.getInstance().getDecimalValueInMinutes(c.getAccomplishedTime())+ ":00");
+//			tps.setValue(c.getAccomplishedTime());
+//		}
+//		// if the task focused on is the task timed
+//		else if (currentTime != 0){
+//			String time1= new String(ahours+":"
+//					+amin+":"+aseconds);
+//			tps.setValue(new Float(currentTime));
+//		}
+		
 		if (CurrentTimedTask == null || !CurrentTimedTask.equals(WizardControler.getInstance().getLastCtd())){
-			String time1= new String((int)c.getAccomplishedTime()+":"
-					+WizardControler.getInstance().getDecimalValueInMinutes(c.getAccomplishedTime())+ ":00");
-			tps.setText(time1);
+			tps.setValue(new Long(transformInSeconds(c.getAccomplishedTime())));
 		}
-		// if the task focused on is the task timed
-		else if (aseconds != 0 && amin != 0 && ahours != 0){
-			String time1= new String(ahours+":"
-					+amin+":"+aseconds);
-			tps.setText(time1);
+		else {
+			tps.setValue(new Long(currentTime));
 		}
+		
 		if (c.getState().equals(Constantes.State.FINISHED))
 		{
 			modify.setVisible(false);
@@ -187,6 +207,7 @@ public class InfoPanel extends JXPanel implements Observer,ListenerTime {
 		}
 		else {
 			modify.setVisible(true);
+			tps_restant.setEditable(true);
 		}
 		infos.setVisible(true);
 	}
@@ -199,11 +220,11 @@ public class InfoPanel extends JXPanel implements Observer,ListenerTime {
 		this.tps_label = tps_label;
 	}
 
-	public JLabel getTps() {
+	public HourTextField getTps() {
 		return tps;
 	}
 
-	public void setTps(JLabel tps) {
+	public void setTps(HourTextField tps) {
 		this.tps = tps;
 	}
 
@@ -215,20 +236,19 @@ public class InfoPanel extends JXPanel implements Observer,ListenerTime {
 		CurrentTimedTask = currentTimedTask;
 	}
 
-	public void putValue(float tps_passe) {
+	public void putValue(long tps_passe) {
 		if (CurrentTimedTask.equals(WizardControler.getInstance().getLastCtd())) {
 			//manageUpdate(CurrentTimedTask);
 			//String time = tps.getText();
 			if (start){
-				bmin = WizardControler.getInstance().getDecimalValueInMinutes(CurrentTimedTask.getAccomplishedTime());
-				bhours = (int)CurrentTimedTask.getAccomplishedTime() ;
-				bseconds = 0 ;
+				float tmp = CurrentTimedTask.getAccomplishedTime() ;
+				startTime = transformInSeconds(tmp);
 				start = false ;
 			}
 			
-			ahours = bhours + (int)tps_passe / 3600 ;
-			amin = bmin + (int)tps_passe / 60 ;
-			aseconds = bseconds + (int) tps_passe % 60 ;
+//			ahours = bhours + (int)tps_passe / 3600 ;
+//			amin = bmin + (int)tps_passe / 60 ;
+//			aseconds = bseconds + (int) tps_passe % 60 ;
 						
 //			for (int i=0;i	<time.length()&&occu!=2;i++) 
 //			{
@@ -260,8 +280,8 @@ public class InfoPanel extends JXPanel implements Observer,ListenerTime {
 //				Integer i = new Integer(min);							
 //				min = String.valueOf(new Integer (i+1));
 //			}
-			
-			tps.setText(ahours+":"+amin+":"+aseconds);
+			currentTime = startTime + tps_passe ;
+			tps.setValue(new Long(currentTime));
 			
 		}
 	}
@@ -314,5 +334,90 @@ public class InfoPanel extends JXPanel implements Observer,ListenerTime {
 		aseconds = 0 ;
 		CurrentTimedTask = null ;
 		start = true; 
+	}
+	
+	public long transformInSeconds(float val) {
+		int tmphour = (int)val *3600 ;
+		int tmpminutes = (int) ((val - (int)val)*60)  ;
+		return (tmphour + tmpminutes) ;
+	}
+	
+	public float getRemainingTimeForUpload(){
+		long val = (Long)tps_restant.getValue() ;
+		float retour = val/3600;
+		return retour ;
+	}
+	
+	public float getAccomplishTimeForUpload(){
+		long val = (Long)tps.getValue() ;
+		float retour = val/3600;
+		return retour ;
+	}
+	
+	private class HourTextField extends JFormattedTextField {
+		public HourTextField (AbstractFormatter f){
+			super(f);
+		}
+
+	}
+	
+	private class HourFormat extends DefaultFormatter {
+
+		@Override
+		public Object stringToValue(String string) throws ParseException {
+			// TODO Auto-generated method stub
+			String time = string ;
+			String heure = "0", min="0",sec = "0" ;
+			for (int i=0,occu = 0 ;i	<time.length();i++) 
+			{
+				if (time.charAt(i)==':')occu++;
+				if(occu==0&&time.charAt(i)!=':') heure+=time.charAt(i);
+				if(occu==1&&time.charAt(i)!=':') min+=time.charAt(i);
+				if(occu==2&&time.charAt(i)!=':') sec+=time.charAt(i);
+			}
+			int iheure,imin,isec ;
+			iheure= Integer.valueOf(heure)*3600 ;
+			imin = Integer.valueOf(min)*60 ;
+			isec = Integer.valueOf(sec) ;
+			Long retour = new Long(iheure + imin + isec );
+			System.out.println(iheure + " " + imin + " " + isec);
+			return retour;
+		}
+
+		@Override
+		public String valueToString(Object value) throws ParseException {
+			String retour = "" ;
+			if (value instanceof Long){
+				long val = (Long)value;
+				System.out.println(value);
+				float hour = (float)(val/3600) ;
+				int min = (int) ((hour-(int)hour)*60) ;
+				int sec = (int)((min - (int)min)*60) ;
+				System.out.println("test " + hour + " " + min + " " + sec);
+				if (hour < 10){
+					retour += ("0" + (int)hour); 
+				}
+				else {
+					retour += (int)hour ;
+				}
+				retour += ":";
+				if (min < 10){
+					retour += ("0" + min);
+				}
+				else {
+					retour += min ;
+				}
+				retour += ":";
+				if (sec < 10){
+					retour += ("0" + sec);
+				}
+				else {
+					retour += sec ;
+				}  
+			}
+			// TODO Auto-generated method stub
+			return retour ;
+		}
+		
 	}
 }

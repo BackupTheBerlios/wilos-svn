@@ -769,12 +769,19 @@ public class WizardControler {
 		}
 	}
 	
-	private void saveTime() {
+	private void saveTimes() {
 		ConcreteTaskDescriptor c =(ConcreteTaskDescriptor)WizardControler.getInstance().getLastCtd();
-		float tps = (float)(infoPanel.getAhours()+(float)infoPanel.getAmin()/60);
+		float tps = infoPanel.getAccomplishTimeForUpload() ;
 		WizardControler.getInstance().setAccomplishedTimeByTask(c.getId(),tps );
 		c.setAccomplishedTime(tps);
+		
+		//remaining times
+		tps = 0 ;
+		WizardControler.getInstance().setRemainingTimeByTask(c.getId(),tps );
+		c.setRemainingTime(tps);
+		
 		infoPanel.reinitializeTimes() ;
+		threadTime = null ;
 	}
 	
 	/**
@@ -796,13 +803,7 @@ public class WizardControler {
 			public void actionPerformed(ActionEvent e) {
 				threadTime.interrupt();
 				pauseTask();
-				if (threadTime != null) {
-					saveTime();	
-				}
-				else
-				{
-					threadTime.start();
-				}
+				saveTimes();	
 				
 //				String tps = infoPanel.getTps().getText();
 //				int occ=0;
@@ -830,8 +831,9 @@ public class WizardControler {
 		};
 		ActionListener actionFinish = new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
+				threadTime.interrupt();
 				stopTask();
-				saveTime();
+				saveTimes();
 			}
 		};
 		actionBar.getJButtonPlayTask().addActionListener(actionPlay);
@@ -998,7 +1000,7 @@ public class WizardControler {
 					{
 						monThread.sleep(1000);
 						long tps_passe = System.currentTimeMillis() - debut;
-						int tempsEnvoi = (int)tps_passe/1000 ;
+						long tempsEnvoi = (int)tps_passe/1000 ;
 						notifyListeners(tempsEnvoi);			
 //							for (int i=0;i	<time.length()&&occu!=2;i++) 
 //							{
