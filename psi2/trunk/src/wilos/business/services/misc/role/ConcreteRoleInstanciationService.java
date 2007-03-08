@@ -180,32 +180,37 @@ public class ConcreteRoleInstanciationService {
 	private Set<ConcreteBreakdownElement> getConcreteActivitiesToModify(Project project, String parentActivityId) {
 
 		Set<ConcreteBreakdownElement> concretesActivitiesToModifiy = new HashSet<ConcreteBreakdownElement>();
-		for (ConcreteBreakdownElement concreteBreakdownElement : this.concreteBreakdownElementService.getAllConcreteBreakdownElementsFromProject(project.getId())) {
-			if (concreteBreakdownElement instanceof ConcreteActivity) {
-				if (concreteBreakdownElement instanceof ConcretePhase) {
-					ConcretePhase concretePhase = (ConcretePhase) concreteBreakdownElement;
-					if (concretePhase.getPhase() != null) {
-						if (concretePhase.getPhase().getId().equals(parentActivityId)) {
-							concretesActivitiesToModifiy.add(concretePhase);
+		Set<ConcreteBreakdownElement> concretesActivitiesToParse = new HashSet<ConcreteBreakdownElement>();
+		
+		concretesActivitiesToParse.addAll(this.concreteBreakdownElementService.getAllConcreteBreakdownElementsFromProject(project.getId()));
+		concretesActivitiesToParse.add(project);
+		
+		for (ConcreteBreakdownElement concreteBreakdownElement : concretesActivitiesToParse) {
+			if (concreteBreakdownElement instanceof ConcretePhase) {
+				ConcretePhase concretePhase = (ConcretePhase) concreteBreakdownElement;
+				if (concretePhase.getPhase() != null) {
+					if (concretePhase.getPhase().getId().equals(parentActivityId)) {
+						concretesActivitiesToModifiy.add(concretePhase);
+					}
+				}
+			} else {
+				if (concreteBreakdownElement instanceof ConcreteIteration) {
+					ConcreteIteration concreteIteration = (ConcreteIteration) concreteBreakdownElement;
+					if (concreteIteration.getIteration() != null) {
+						if (concreteIteration.getIteration().getId().equals(parentActivityId)) {
+							concretesActivitiesToModifiy.add(concreteIteration);
 						}
 					}
 				} else {
-					if (concreteBreakdownElement instanceof ConcreteIteration) {
-						ConcreteIteration concreteIteration = (ConcreteIteration) concreteBreakdownElement;
-						if (concreteIteration.getIteration() != null) {
-							if (concreteIteration.getIteration().getId().equals(parentActivityId)) {
-								concretesActivitiesToModifiy.add(concreteIteration);
+					if (concreteBreakdownElement instanceof Project) {
+						Project concreteProcess = (Project) concreteBreakdownElement;
+						if (concreteProcess.getProcess() != null) {
+							if (concreteProcess.getProcess().getId().equals(parentActivityId)) {
+								concretesActivitiesToModifiy.add(concreteProcess);
 							}
 						}
 					} else {
-						if (concreteBreakdownElement instanceof Project) {
-							Project concreteProcess = (Project) concreteBreakdownElement;
-							if (concreteProcess.getProcess() != null) {
-								if (concreteProcess.getProcess().getId().equals(parentActivityId)) {
-									concretesActivitiesToModifiy.add(concreteProcess);
-								}
-							}
-						} else {
+						if (concreteBreakdownElement instanceof ConcreteActivity) {
 							ConcreteActivity concreteActivity = (ConcreteActivity) concreteBreakdownElement;
 
 							if (concreteActivity.getActivity() != null) {
@@ -223,6 +228,7 @@ public class ConcreteRoleInstanciationService {
 	
 	/**
 	 * return true if theActivity have been instanciated for the project
+	 * 
 	 * @param _activity
 	 * @return
 	 */

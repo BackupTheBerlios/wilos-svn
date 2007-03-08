@@ -505,6 +505,18 @@ public class ParticipantBean {
 		for(HashMap ligne : this.affectedProjectsList){
 			Boolean testAffectation = (Boolean) ligne.get("affected") ;
 			String project_id = (String) ligne.get("project_id") ;
+			
+			//si on se desaffecte du projet courement affiché on clean l'arbre
+			if (this.webSessionService.getAttribute(webSessionService.PROJECT_ID) != null)
+			{
+				if (this.webSessionService.getAttribute(webSessionService.PROJECT_ID).equals(project_id) && !testAffectation)
+				{
+					FacesContext context = FacesContext.getCurrentInstance();
+					TreeBean treeBean = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");
+					treeBean.cleanTreeDisplay();
+				}
+			}
+			
 			affectedProjects.put(project_id, testAffectation) ;
 		}
 		// saving of the new project affectation
@@ -516,9 +528,6 @@ public class ParticipantBean {
 		saveAffectationMessage.setSeverity(FacesMessage.SEVERITY_INFO) ;
 		FacesContext.getCurrentInstance().addMessage(null, saveAffectationMessage) ;
 		
-		FacesContext context = FacesContext.getCurrentInstance();
-		TreeBean treeBean = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");
-		treeBean.cleanTreeDisplay();
 	}
 
 	/**
