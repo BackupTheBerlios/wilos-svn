@@ -788,13 +788,15 @@ public class WizardControler {
 		threadTime = null ;
 	}
 	
-	public void saveTimes(ConcreteTaskDescriptor ctd,float remaining, float accomplish){
-		WizardControler.getInstance().setAccomplishedTimeByTask(ctd.getId(),accomplish);
+	public void saveTimes(ConcreteTaskDescriptor ctd,float remaining, float accomplish,boolean saveAccomplish){
 		WizardControler.getInstance().setRemainingTimeByTask(ctd.getId(),remaining);
-		ctd.setAccomplishedTime(accomplish);
 		ctd.setRemainingTime(remaining);
-		infoPanel.getTps().setValue(infoPanel.transformInSeconds(accomplish));
 		infoPanel.getTps_restant().setValue(infoPanel.transformInSeconds(remaining));
+		if (saveAccomplish){
+			WizardControler.getInstance().setAccomplishedTimeByTask(ctd.getId(),accomplish);
+			ctd.setAccomplishedTime(accomplish);
+			infoPanel.getTps().setValue(infoPanel.transformInSeconds(accomplish));
+		}
 	}
 	
 	/**

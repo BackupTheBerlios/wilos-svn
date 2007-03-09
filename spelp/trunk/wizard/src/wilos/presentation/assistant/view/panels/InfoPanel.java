@@ -117,7 +117,7 @@ public class InfoPanel extends JXPanel implements Observer,ListenerTime {
 				public void actionPerformed(ActionEvent e) 
 				{
 					if (WizardControler.getInstance().getLastCtd() instanceof ConcreteTaskDescriptor){
-						new InfoTpsPanel((ConcreteTaskDescriptor) WizardControler.getInstance().getLastCtd(),(Long)tps_restant.getValue(),(Long)tps.getValue());
+						new InfoTpsPanel((ConcreteTaskDescriptor) WizardControler.getInstance().getLastCtd(),(Long)tps_restant.getValue(),(Long)tps.getValue(),CurrentTimedTask==null);
 					}
 					
 				}				

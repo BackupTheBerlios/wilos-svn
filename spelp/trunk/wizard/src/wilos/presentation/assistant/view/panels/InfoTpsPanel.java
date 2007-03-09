@@ -30,10 +30,12 @@ public class InfoTpsPanel extends JDialog
 	private Long _remaining = null ;
 	private Long _accomplish = null ;
 	private ConcreteTaskDescriptor ctd = null ;
+	private boolean editable = true ;
 	
-	public InfoTpsPanel(ConcreteTaskDescriptor c , Long remaining,Long accomplish)
+	public InfoTpsPanel(ConcreteTaskDescriptor c , Long remaining,Long accomplish,boolean editAccomplish)
 	{
 		super(WizardControler.getInstance().getMainFrameForDialogs(),true);
+		editable = editAccomplish ;
 		_remaining = remaining ;
 		_accomplish = accomplish ;
 		ctd = c ;
@@ -52,7 +54,7 @@ public class InfoTpsPanel extends JDialog
 			zone_tps_Accomplish.commitEdit();
 			float remaining = getRemainingTimeForUpload();
 			float accomplish = getAccomplishTimeForUpload() ;
-			WizardControler.getInstance().saveTimes(ctd, remaining, accomplish);
+			WizardControler.getInstance().saveTimes(ctd, remaining, accomplish,editable);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -84,6 +86,7 @@ public class InfoTpsPanel extends JDialog
 			zone_tps_Accomplish = new HourTextField(new HourFormat());
 			zone_tps_Accomplish.setValue(_accomplish);
 			zone_tps_Accomplish.setBounds(130,50,100,20);
+			zone_tps_Accomplish.setEditable(editable);
 		}
 		return zone_tps_Accomplish;
 	}
