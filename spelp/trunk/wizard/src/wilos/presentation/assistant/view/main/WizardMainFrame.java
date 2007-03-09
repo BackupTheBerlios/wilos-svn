@@ -64,7 +64,7 @@ public class WizardMainFrame extends JFrame {
 		ContextualMenu menu = new ContextualMenu();
 		
 		// init of controler
-		WizardControler.getInstance().initUIElements(actionToolBar,jTree,menu,infoPanel);
+		WizardControler.getInstance().initUIElements(this,actionToolBar,jTree,menu,infoPanel);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.moveHTML();
 		this.addComponentListener(new ComponentListener(){

@@ -469,7 +469,7 @@ public class WizardServicesProxy {
             
             aTmpConcrete = new ConcreteTaskDescriptor();
             aTmpConcrete.setConcreteName("concr_faire_essais");
-            aTmpConcrete.setAccomplishedTime(42);
+            aTmpConcrete.setAccomplishedTime((float) 42.9);
             aTmpConcrete.setPlannedFinishingDate(new Date());
             aTmpConcrete.setState(Constantes.State.SUSPENDED);
             aTmpConcrete.setPlannedStartingDate(new Date());

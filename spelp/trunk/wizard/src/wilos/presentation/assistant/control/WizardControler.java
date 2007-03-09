@@ -39,6 +39,7 @@ import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 import wilos.presentation.assistant.view.main.ActionBar;
 import wilos.presentation.assistant.view.main.ContextualMenu;
 import wilos.presentation.assistant.view.main.DownLoadFrame;
+import wilos.presentation.assistant.view.main.WizardMainFrame;
 import wilos.presentation.assistant.view.panels.InfoPanel;
 import wilos.presentation.assistant.view.panels.ListenerTime;
 import wilos.presentation.assistant.view.panels.TreePanel;
@@ -72,6 +73,7 @@ public class WizardControler {
 	private TimeThread currentTask = new TimeThread();
 	private Object MUTEX_REFRESH_TIME = new Object() ;
 	private Thread threadTime = null ;
+	private WizardMainFrame wizardMainFrame;
 	private WizardControler() {
 		
 	}
@@ -656,12 +658,13 @@ public class WizardControler {
 	 * @param theTreePanel
 	 * @param menu
 	 */
-	public void initUIElements(ActionBar theActionToolBar,TreePanel theTreePanel, ContextualMenu menu,InfoPanel info) {;
+	public void initUIElements(WizardMainFrame mainFrame,ActionBar theActionToolBar,TreePanel theTreePanel, ContextualMenu menu,InfoPanel info) {;
 		actionBar = theActionToolBar ;
 		treePanel = theTreePanel;
 		menuContextuel = menu ;
 		infoPanel = info ;
 		showInfo = true;
+		wizardMainFrame = mainFrame ;
 		initActions() ;
 		
 	}
@@ -770,18 +773,28 @@ public class WizardControler {
 	}
 	
 	private void saveTimes() {
+		infoPanel.commitTextFields();
 		ConcreteTaskDescriptor c =(ConcreteTaskDescriptor)WizardControler.getInstance().getLastCtd();
 		float tps = infoPanel.getAccomplishTimeForUpload() ;
-		WizardControler.getInstance().setAccomplishedTimeByTask(c.getId(),tps );
+		WizardControler.getInstance().setAccomplishedTimeByTask(c.getId(),tps);
 		c.setAccomplishedTime(tps);
 		
 		//remaining times
-		tps = 0 ;
+		tps = infoPanel.getRemainingTimeForUpload() ;
 		WizardControler.getInstance().setRemainingTimeByTask(c.getId(),tps );
 		c.setRemainingTime(tps);
 		
 		infoPanel.reinitializeTimes() ;
 		threadTime = null ;
+	}
+	
+	public void saveTimes(ConcreteTaskDescriptor ctd,float remaining, float accomplish){
+		WizardControler.getInstance().setAccomplishedTimeByTask(ctd.getId(),accomplish);
+		WizardControler.getInstance().setRemainingTimeByTask(ctd.getId(),remaining);
+		ctd.setAccomplishedTime(accomplish);
+		ctd.setRemainingTime(remaining);
+		infoPanel.getTps().setValue(infoPanel.transformInSeconds(accomplish));
+		infoPanel.getTps_restant().setValue(infoPanel.transformInSeconds(remaining));
 	}
 	
 	/**
@@ -1064,5 +1077,9 @@ public class WizardControler {
 		float tmp = value - (int)value ;
 		min1 =Math.round(tmp * 60) ;
 		return min1 ;
+	}
+	
+	public JFrame getMainFrameForDialogs (){
+		return wizardMainFrame ;
 	}
 }
