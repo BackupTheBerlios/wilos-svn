@@ -113,7 +113,8 @@ public class InitAppliService {
 		    		logger.debug("appel");
 		    		concreteTaskDescriptorService.affectedConcreteTaskDescriptor(ctd2, pa);
 		    		logger.debug("sortie");
-		    		concreteTaskDescriptorService.affectedState(ctd2);
+		    		
+		    		//concreteTaskDescriptorService.affectedState(ctd2);
 		    		logger.debug("sortie");
 		    	}		    	
 		    
