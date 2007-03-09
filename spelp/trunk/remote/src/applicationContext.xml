@@ -210,7 +210,7 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 	<bean id="WizardServices"
 		class="wilos.business.webservices.WizardServices">
 		<property name="loginService" ref="LoginService" />		
-		<property name="assistantService" ref="AssistantService" />	
+		<property name="assistantService" ref="AssistantService" />
 	</bean>
 	
 	<!-- ========================= DAO Layer ========================= -->
@@ -429,7 +429,7 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 		<property name="participantDao" ref="ParticipantDao" />
 		<property name="concreteRoleDescriptorService" ref="ConcreteRoleDescriptorService" />
 	</bean>
-	
+
 	<bean id="ProcessManagementService"
 		class="wilos.business.services.spem2.process.ProcessManagementService">
 		<property name="processDao" ref="ProcessDao" />
@@ -448,6 +448,20 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 		<property name="guidanceDao" ref="GuidanceDao" />
 		<property name="checkListDao" ref="CheckListDao" />
 		<property name="sectionDao" ref="SectionDao" />
+	</bean>
+	
+	<bean id="ConcreteRoleInstanciationService"
+		class="wilos.business.services.misc.role.ConcreteRoleInstanciationService">
+		<property name="roleDescriptorService" ref="RoleDescriptorService" />
+		<property name="activityService" ref="ActivityService" />
+		<property name="phaseService" ref="PhaseService" />
+		<property name="iterationService" ref="IterationService" />		
+		<property name="breakdownElementService" ref="BreakdownElementService" />
+		<property name="concreteRoleDescriptorService" ref="ConcreteRoleDescriptorService" />
+		<property name="concreteRoleDescriptorDao" ref="ConcreteRoleDescriptorDao" />
+		<property name="concreteActivityService" ref="ConcreteActivityService" />
+		<property name="concreteBreakdownElementService" ref="ConcreteBreakdownElementService" />
+		<property name="projectService" ref="ProjectService" />
 	</bean>
 
 	<!-- =============================================================== -->
@@ -515,6 +529,7 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 		class="wilos.business.services.spem2.activity.ActivityService">
 		<property name="activityDao" ref="ActivityDao" />
 		<property name="concreteActivityDao" ref="ConcreteActivityDao" />
+		<property name="concreteActivityService" ref="ConcreteActivityService" />
 		<!-- <property name="phaseService" ref="PhaseService" />
 		<property name="iterationService" ref="IterationService" />-->
 		<property name="roleDescriptorService" ref="RoleDescriptorService" />
@@ -526,6 +541,7 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 		<property name="concreteRoleDescriptorDao"
 			ref="ConcreteRoleDescriptorDao" />
 		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
+		<property name="concreteActivityService" ref="ConcreteActivityService" />
 	</bean>
 
 	<bean id="RoleDefinitionService"
@@ -538,6 +554,7 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 		<property name="concreteTaskDescriptorDao"
 			ref="ConcreteTaskDescriptorDao" />
 		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
+		<property name="concreteActivityService" ref="ConcreteActivityService" />
 	</bean>
 
 	<bean id="TaskDefinitionService"
@@ -548,7 +565,9 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 	<bean id="PhaseService"
 		class="wilos.business.services.spem2.phase.PhaseService">
 		<property name="concretePhaseDao" ref="ConcretePhaseDao" />
+		<property name="phaseDao" ref="PhaseDao" />
 		<property name="activityService" ref="ActivityService" />
+		<property name="concreteActivityService" ref="ConcreteActivityService" />
 		<property name="iterationService" ref="IterationService" />
 		<property name="roleDescriptorService" ref="RoleDescriptorService" />
 		<property name="taskDescriptorService" ref="TaskDescriptorService" />
@@ -557,7 +576,9 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 	<bean id="IterationService"
 		class="wilos.business.services.spem2.iteration.IterationService">
 		<property name="concreteIterationDao" ref="ConcreteIterationDao" />
+		<property name="iterationDao" ref="IterationDao" />
 		<property name="activityService" ref="ActivityService" />
+		<property name="concreteActivityService" ref="ConcreteActivityService" />
 		<!-- <property name="phaseService" ref="PhaseService" />-->
 		<property name="roleDescriptorService" ref="RoleDescriptorService" />
 		<property name="taskDescriptorService" ref="TaskDescriptorService" />
@@ -573,6 +594,8 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 			ref="RoleDescriptorService" />
 		<property name="concreteRoleDescriptorService"
 			ref="ConcreteRoleDescriptorService" />
+		<property name="concreteActivityDao"
+			ref="ConcreteActivityDao" />
 	</bean>
 
 	<bean id="ConcreteRoleDescriptorService"
@@ -601,5 +624,5 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 		class="wilos.business.services.misc.concretebreakdownelement.ConcreteBreakdownElementService">
 		<property name="concreteBreakdownElementDao" ref="ConcreteBreakdownElementDao" />
 	</bean>
-	
+
 </beans>

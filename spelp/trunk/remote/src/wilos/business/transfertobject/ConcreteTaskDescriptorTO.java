@@ -33,6 +33,7 @@ public class ConcreteTaskDescriptorTO extends ConcreteTaskDescriptor implements 
     	this.setPlannedFinishingDate(myConcreteTaskDescriptor.getPlannedFinishingDate());
     	this.setPlannedStartingDate(myConcreteTaskDescriptor.getPlannedStartingDate());
     	this.setPlannedTime(myConcreteTaskDescriptor.getPlannedTime());
+    	this.setRemainingTime(myConcreteTaskDescriptor.getRemainingTime());
     	// TODO ConcreteTask a completer
     	this.setState(myConcreteTaskDescriptor.getState());
     	
