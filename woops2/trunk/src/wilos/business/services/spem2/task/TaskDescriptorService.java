@@ -42,7 +42,7 @@ public class TaskDescriptorService {
 	private ConcreteTaskDescriptorDao concreteTaskDescriptorDao;
 
 	private TaskDescriptorDao taskDescriptorDao;
-	
+
 	private ConcreteActivityService concreteActivityService;
 
 	/**
@@ -52,9 +52,7 @@ public class TaskDescriptorService {
 	 * @param _cact
 	 * @param _occ
 	 */
-	public void taskDescriptorInstanciation(Project _project,
-			TaskDescriptor _td, ConcreteActivity _cact, int _occ,
-			boolean _isInstanciated) {
+	public void taskDescriptorInstanciation(Project _project, TaskDescriptor _td, ConcreteActivity _cact, int _occ) {
 
 		if (_occ > 0) {
 			for (int i = 1; i <= _occ; i++) {
@@ -63,11 +61,9 @@ public class TaskDescriptorService {
 
 				if (_occ > 1) {
 					if (_td.getPresentationName() == null)
-						ctd.setConcreteName(_td.getName() + "_"
-								+ (new Integer(i)).toString());
+						ctd.setConcreteName(_td.getName() + "_" + (new Integer(i)).toString());
 					else
-						ctd.setConcreteName(_td.getPresentationName() + "_"
-								+ (new Integer(i)).toString());
+						ctd.setConcreteName(_td.getPresentationName() + "_" + (new Integer(i)).toString());
 				} else {
 					if (_td.getPresentationName() == null)
 						ctd.setConcreteName(_td.getName());
@@ -80,12 +76,31 @@ public class TaskDescriptorService {
 				_cact.setConcreteBreakdownElements(this.concreteActivityService.getConcreteBreakdownElements(_cact));
 				ctd.addSuperConcreteActivity(_cact);
 
-				this.concreteTaskDescriptorDao
-						.saveOrUpdateConcreteTaskDescriptor(ctd);
+				this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(ctd);
 				System.out.println("### ConcreteTaskDescriptor sauve");
 			}
 		}
 
+	}
+
+	/**
+	 * 
+	 * @param _project
+	 * @param _phase
+	 * @param _cact
+	 * @param _list
+	 * @param _occ
+	 * @param _isInstanciated
+	 */
+	public void taskDescriptorUpdate(Project _project, TaskDescriptor _td, Set<ConcreteActivity> _cacts, int _occ) {
+
+		// one concretephase at least to insert in all attached
+		// concreteactivities of the parent of _phase
+		if (_occ > 0) {
+			for (ConcreteActivity tmp : _cacts) {
+				this.taskDescriptorInstanciation(_project, _td, tmp, _occ);
+			}
+		}
 	}
 
 	/**
@@ -121,8 +136,7 @@ public class TaskDescriptorService {
 		return this.concreteTaskDescriptorDao;
 	}
 
-	public void setConcreteTaskDescriptorDao(
-			ConcreteTaskDescriptorDao _concreteTaskDescriptorDao) {
+	public void setConcreteTaskDescriptorDao(ConcreteTaskDescriptorDao _concreteTaskDescriptorDao) {
 		this.concreteTaskDescriptorDao = _concreteTaskDescriptorDao;
 	}
 
@@ -134,10 +148,10 @@ public class TaskDescriptorService {
 	}
 
 	/**
-	 * @param concreteActivityService the concreteActivityService to set
+	 * @param concreteActivityService
+	 *            the concreteActivityService to set
 	 */
-	public void setConcreteActivityService(
-			ConcreteActivityService concreteActivityService) {
+	public void setConcreteActivityService(ConcreteActivityService concreteActivityService) {
 		this.concreteActivityService = concreteActivityService;
 	}
 }

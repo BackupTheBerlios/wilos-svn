@@ -18,6 +18,7 @@ package wilos.business.services.spem2.phase;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -80,7 +81,7 @@ public class PhaseService {
 	 *            phase to instanciates
 	 */
 	public void phaseInstanciation(Project _project, Phase _phase, ConcreteActivity _cact,
-			List<HashMap<String, Object>> _list, int _occ, boolean _isInstanciated) {
+			List<HashMap<String, Object>> _list, int _occ) {
 
 		// if one occurence at least
 		if (_occ > 0) {
@@ -116,41 +117,22 @@ public class PhaseService {
 					if (bde instanceof Phase) {
 						Phase ph = (Phase) bde;
 						int occ = this.giveNbOccurences(ph.getId(), _list);
-						if (!_isInstanciated) {
-							this.phaseInstanciation(_project, ph, _project, _list, occ, _isInstanciated);
-						} else {
-
-						}
+						this.phaseInstanciation(_project, ph, _project, _list, occ);
 					} else {
 						if (bde instanceof Iteration) {
 							Iteration it = (Iteration) bde;
 							int occ = this.giveNbOccurences(it.getId(), _list);
-							if (!_isInstanciated) {
-								this.iterationService.iterationInstanciation(_project, it, cp, _list, occ,
-										_isInstanciated);
-							} else {
-
-							}
+							this.iterationService.iterationInstanciation(_project, it, cp, _list, occ);
 						} else {
 							if (bde instanceof Activity) {
 								Activity act = (Activity) bde;
 								int occ = this.giveNbOccurences(act.getId(), _list);
-								if (!_isInstanciated) {
-									this.activityService.activityInstanciation(_project, act, cp, _list, occ,
-											_isInstanciated);
-								} else {
-
-								}
+								this.activityService.activityInstanciation(_project, act, cp, _list, occ);
 							} else {
 								if (bde instanceof TaskDescriptor) {
 									TaskDescriptor td = (TaskDescriptor) bde;
 									int occ = this.giveNbOccurences(td.getId(), _list);
-									if (!_isInstanciated) {
-										this.taskDescriptorService.taskDescriptorInstanciation(_project, td, cp, occ,
-												_isInstanciated);
-									} else {
-
-									}
+									this.taskDescriptorService.taskDescriptorInstanciation(_project, td, cp, occ);
 								}
 							}
 						}
@@ -159,6 +141,63 @@ public class PhaseService {
 
 				this.concretePhaseDao.saveOrUpdateConcretePhase(cp);
 				System.out.println("### ConcretePhase update");
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @param _project
+	 * @param _phase
+	 * @param _cact
+	 * @param _list
+	 * @param _occ
+	 * @param _isInstanciated
+	 */
+	public void phaseUpdate(Project _project, Phase _phase, List<HashMap<String, Object>> _list, int _occ) {
+		
+		Set<Activity> parents = _phase.getSuperActivities();
+		Iterator i = parents.iterator();
+		Activity parent = (Activity) i.next();
+		
+		Set<ConcreteActivity> cacts = new HashSet<ConcreteActivity>();
+		cacts.addAll(this.activityService.getAllConcreteActivities(parent));
+		
+		// one concretephase at least to insert in all attached concreteactivities of the parent of _phase
+		if (_occ > 0) {
+			for (ConcreteActivity tmp : cacts) {
+				this.phaseInstanciation(_project, _phase, tmp, _list, _occ);
+			}
+		} else {
+			
+			// diving in all the concreteBreakdownElements to looking for update
+			Set<BreakdownElement> bdes = new HashSet<BreakdownElement>();
+			bdes.addAll(this.activityService.getInstanciableBreakdownElements(_phase));
+			
+			for (BreakdownElement bde : bdes) {
+				if (bde instanceof Phase) {
+					Phase ph = (Phase) bde;
+					int occ = this.giveNbOccurences(ph.getId(), _list);
+					this.phaseUpdate(_project, ph, _list, occ);
+				} else {
+					if (bde instanceof Iteration) {
+						Iteration it = (Iteration) bde;
+						int occ = this.giveNbOccurences(it.getId(), _list);
+						this.iterationService.iterationUpdate(_project, it, _list, occ);
+					} else {
+						if (bde instanceof Activity) {
+							Activity act = (Activity) bde;
+							int occ = this.giveNbOccurences(act.getId(), _list);
+							this.activityService.activityUpdate(_project, act, _list, occ);
+						} else {
+							if (bde instanceof TaskDescriptor) {
+								TaskDescriptor td = (TaskDescriptor) bde;
+								int occ = this.giveNbOccurences(td.getId(), _list);
+								this.taskDescriptorService.taskDescriptorUpdate(_project, td, cacts, occ);
+							}
+						}
+					}
+				}
 			}
 		}
 	}

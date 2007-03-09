@@ -157,6 +157,7 @@ public class ProcessBean {
 			this.readOnly = true;
 			this.selectedProcessGuid = project.getProcess().getGuid();
 			expTableBean.setSelectedProcessGuid(this.selectedProcessGuid);
+			expTableBean.setIsInstanciedProject(false);
 			this.isVisibleExpTable = true;
 			expTableBean.refreshExpTable();
 		}

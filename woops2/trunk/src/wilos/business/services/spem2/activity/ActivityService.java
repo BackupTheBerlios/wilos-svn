@@ -19,6 +19,7 @@ package wilos.business.services.spem2.activity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -74,7 +75,7 @@ public class ActivityService {
 	 *            activity to instanciate
 	 */
 	public void activityInstanciation(Project _project, Activity _activity, ConcreteActivity _cact,
-			List<HashMap<String, Object>> _list, int _occ, boolean _isInstanciated) {
+			List<HashMap<String, Object>> _list, int _occ) {
 
 		if (_occ > 0) {
 			for (int i = 1; i <= _occ; i++) {
@@ -108,27 +109,64 @@ public class ActivityService {
 					if (bde instanceof Activity) {
 						Activity act = (Activity) bde;
 						int occ = this.giveNbOccurences(act.getId(), _list);
-						if (!_isInstanciated) {
-							this.activityInstanciation(_project, act, cact, _list, occ, _isInstanciated);
-						} else {
-
-						}
+						this.activityInstanciation(_project, act, cact, _list, occ);
 					} else {
 						if (bde instanceof TaskDescriptor) {
 							TaskDescriptor td = (TaskDescriptor) bde;
 							int occ = this.giveNbOccurences(td.getId(), _list);
-							if (!_isInstanciated) {
-								this.taskDescriptorService.taskDescriptorInstanciation(_project, td, cact, occ,
-										_isInstanciated);
-							} else {
-
-							}
+							this.taskDescriptorService.taskDescriptorInstanciation(_project, td, cact, occ);
 						}
 					}
 				}
 
 				this.concreteActivityDao.saveOrUpdateConcreteActivity(cact);
-				System.out.println("### Activity update");
+				System.out.println("### ConcreteActivity update");
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @param _project
+	 * @param _phase
+	 * @param _cact
+	 * @param _list
+	 * @param _occ
+	 * @param _isInstanciated
+	 */
+	public void activityUpdate(Project _project, Activity _act, List<HashMap<String, Object>> _list, int _occ) {
+		
+		Set<Activity> parents = _act.getSuperActivities();
+		Iterator i = parents.iterator();
+		Activity parent = (Activity) i.next();
+		
+		Set<ConcreteActivity> cacts = new HashSet<ConcreteActivity>();
+		cacts.addAll(this.getAllConcreteActivities(parent));
+		
+		// one concretephase at least to insert in all attached concreteactivities of the parent of _phase
+		if (_occ > 0) {
+			for (ConcreteActivity tmp : cacts) {
+				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(tmp);
+				this.activityInstanciation(_project, _act, tmp, _list, _occ);
+			}
+		} else {
+			
+			// diving in all the concreteBreakdownElements to looking for update
+			Set<BreakdownElement> bdes = new HashSet<BreakdownElement>();
+			bdes.addAll(this.getInstanciableBreakdownElements(_act));
+			
+			for (BreakdownElement bde : bdes) {
+				if (bde instanceof Activity) {
+					Activity act = (Activity) bde;
+					int occ = this.giveNbOccurences(act.getId(), _list);
+					this.activityUpdate(_project, act, _list, occ);
+				} else {
+					if (bde instanceof TaskDescriptor) {
+						TaskDescriptor td = (TaskDescriptor) bde;
+						int occ = this.giveNbOccurences(td.getId(), _list);
+						this.taskDescriptorService.taskDescriptorUpdate(_project, td, cacts, occ);
+					}
+				}
 			}
 		}
 	}

@@ -19,6 +19,7 @@ package wilos.business.services.spem2.iteration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -83,7 +84,7 @@ public class IterationService {
 	 *            iteration to instanciates
 	 */
 	public void iterationInstanciation(Project _project, Iteration _iteration, ConcreteActivity _cact,
-			List<HashMap<String, Object>> _list, int _occ, boolean _isInstanciated) {
+			List<HashMap<String, Object>> _list, int _occ) {
 
 		if (_occ > 0) {
 			for (int i = 1; i <= _occ; i++) {
@@ -117,31 +118,17 @@ public class IterationService {
 					if (bde instanceof Iteration) {
 						Iteration it = (Iteration) bde;
 						int occ = this.giveNbOccurences(it.getId(), _list);
-						if (!_isInstanciated) {
-							this.iterationInstanciation(_project, it, ci, _list, occ, _isInstanciated);
-						} else {
-
-						}
+						this.iterationInstanciation(_project, it, ci, _list, occ);
 					} else {
 						if (bde instanceof Activity) {
 							Activity act = (Activity) bde;
 							int occ = this.giveNbOccurences(act.getId(), _list);
-							if (!_isInstanciated) {
-								this.activityService.activityInstanciation(_project, act, ci, _list, occ,
-										_isInstanciated);
-							} else {
-
-							}
+							this.activityService.activityInstanciation(_project, act, ci, _list, occ);
 						} else {
 							if (bde instanceof TaskDescriptor) {
 								TaskDescriptor td = (TaskDescriptor) bde;
 								int occ = this.giveNbOccurences(td.getId(), _list);
-								if (!_isInstanciated) {
-									this.taskDescriptorService.taskDescriptorInstanciation(_project, td, ci, occ,
-											_isInstanciated);
-								} else {
-
-								}
+								this.taskDescriptorService.taskDescriptorInstanciation(_project, td, ci, occ);
 							}
 						}
 					}
@@ -149,6 +136,57 @@ public class IterationService {
 
 				this.concreteIterationDao.saveOrUpdateConcreteIteration(ci);
 				System.out.println("### ConcreteIteration update");
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @param _project
+	 * @param _phase
+	 * @param _cact
+	 * @param _list
+	 * @param _occ
+	 * @param _isInstanciated
+	 */
+	public void iterationUpdate(Project _project, Iteration _it, List<HashMap<String, Object>> _list, int _occ) {
+		
+		Set<Activity> parents = _it.getSuperActivities();
+		Iterator i = parents.iterator();
+		Activity parent = (Activity) i.next();
+		
+		Set<ConcreteActivity> cacts = new HashSet<ConcreteActivity>();
+		cacts.addAll(this.activityService.getAllConcreteActivities(parent));
+		
+		// one concretephase at least to insert in all attached concreteactivities of the parent of _phase
+		if (_occ > 0) {
+			for (ConcreteActivity tmp : cacts) {
+				this.iterationInstanciation(_project, _it, tmp, _list, _occ);
+			}
+		} else {
+			
+			// diving in all the concreteBreakdownElements to looking for update
+			Set<BreakdownElement> bdes = new HashSet<BreakdownElement>();
+			bdes.addAll(this.activityService.getInstanciableBreakdownElements(_it));
+			
+			for (BreakdownElement bde : bdes) {
+				if (bde instanceof Iteration) {
+					Iteration it = (Iteration) bde;
+					int occ = this.giveNbOccurences(it.getId(), _list);
+					this.iterationUpdate(_project, it, _list, occ);
+				} else {
+					if (bde instanceof Activity) {
+						Activity act = (Activity) bde;
+						int occ = this.giveNbOccurences(act.getId(), _list);
+						this.activityService.activityUpdate(_project, act, _list, occ);
+					} else {
+						if (bde instanceof TaskDescriptor) {
+							TaskDescriptor td = (TaskDescriptor) bde;
+							int occ = this.giveNbOccurences(td.getId(), _list);
+							this.taskDescriptorService.taskDescriptorUpdate(_project, td, cacts, occ);
+						}
+					}
+				}
 			}
 		}
 	}

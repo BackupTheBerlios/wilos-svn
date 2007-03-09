@@ -58,6 +58,7 @@ import wilos.hibernate.spem2.task.StepDao;
 import wilos.hibernate.spem2.task.TaskDefinitionDao;
 import wilos.hibernate.spem2.task.TaskDescriptorDao;
 import wilos.hibernate.spem2.workbreakdownelement.WorkBreakdownElementDao;
+import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
@@ -801,8 +802,7 @@ public class ProcessService {
 	 * @param _process
 	 * @param list
 	 */
-	public void projectInstanciation(Project _project, Process _process, List<HashMap<String, Object>> list,
-			boolean _isInstanciated) {
+	public void projectInstanciation(Project _project, Process _process, List<HashMap<String, Object>> list) {
 
 		// elements of collection getting
 		Set<BreakdownElement> forInstanciation = this.activityService.getInstanciableBreakdownElements(_process);
@@ -811,41 +811,61 @@ public class ProcessService {
 			if (bde instanceof Phase) {
 				Phase ph = (Phase) bde;
 				int occ = this.giveNbOccurences(ph.getId(), list);
-				if (!_isInstanciated) {
-					this.phaseService.phaseInstanciation(_project, ph, _project, list, occ, _isInstanciated);
-				} else {
-
-				}
+				this.phaseService.phaseInstanciation(_project, ph, _project, list, occ);
 			} else {
 				if (bde instanceof Iteration) {
 					Iteration it = (Iteration) bde;
 					int occ = this.giveNbOccurences(it.getId(), list);
-					if (!_isInstanciated) {
-						this.iterationService
-								.iterationInstanciation(_project, it, _project, list, occ, _isInstanciated);
-					} else {
-
-					}
+					this.iterationService.iterationInstanciation(_project, it, _project, list, occ);
 				} else {
 					if (bde instanceof Activity) {
 						Activity act = (Activity) bde;
 						int occ = this.giveNbOccurences(act.getId(), list);
-						if (!_isInstanciated) {
-							this.activityService.activityInstanciation(_project, act, _project, list, occ,
-									_isInstanciated);
-						} else {
-
-						}
+						this.activityService.activityInstanciation(_project, act, _project, list, occ);
 					} else {
 						if (bde instanceof TaskDescriptor) {
 							TaskDescriptor td = (TaskDescriptor) bde;
 							int occ = this.giveNbOccurences(td.getId(), list);
-							if (!_isInstanciated) {
-								this.taskDescriptorService.taskDescriptorInstanciation(_project, td, _project, occ,
-										_isInstanciated);
-							} else {
+							this.taskDescriptorService.taskDescriptorInstanciation(_project, td, _project, occ);
+						}
+					}
+				}
+			}
+		}
 
-							}
+		_project.setProcess(_process);
+
+		this.projectDao.saveOrUpdateProject(_project);
+		System.out.println("### Project update");
+	}
+	
+	public void projectUpdate(Project _project, Process _process, List<HashMap<String, Object>> list) {
+
+		// elements of collection getting
+		Set<BreakdownElement> forInstanciation = this.activityService.getInstanciableBreakdownElements(_process);
+
+		for (BreakdownElement bde : forInstanciation) {
+			if (bde instanceof Phase) {
+				Phase ph = (Phase) bde;
+				int occ = this.giveNbOccurences(ph.getId(), list);
+				this.phaseService.phaseUpdate(_project, ph, list, occ);
+			} else {
+				if (bde instanceof Iteration) {
+					Iteration it = (Iteration) bde;
+					int occ = this.giveNbOccurences(it.getId(), list);
+					this.iterationService.iterationUpdate(_project, it, list, occ);
+				} else {
+					if (bde instanceof Activity) {
+						Activity act = (Activity) bde;
+						int occ = this.giveNbOccurences(act.getId(), list);
+						this.activityService.activityUpdate(_project, act, list, occ);
+					} else {
+						if (bde instanceof TaskDescriptor) {
+							TaskDescriptor td = (TaskDescriptor) bde;
+							Set<ConcreteActivity> cact = new HashSet<ConcreteActivity>();
+							cact.add(_project);
+							int occ = this.giveNbOccurences(td.getId(), list);
+							this.taskDescriptorService.taskDescriptorUpdate(_project, td, cact, occ);
 						}
 					}
 				}

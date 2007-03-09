@@ -98,7 +98,11 @@ public class ExpTableBean {
 			if (project != null) {
 				Process process = processService.getProcessDao().getProcessFromGuid(selectedProcessGuid);
 				if (process != null) {
-					processService.projectInstanciation(project, process, expTableContent, this.isInstanciedProject);
+					if (!this.isInstanciedProject) {
+						processService.projectInstanciation(project, process, expTableContent);
+					} else {
+						processService.projectUpdate(project, process, expTableContent);
+					}
 				}
 			}
 		}
