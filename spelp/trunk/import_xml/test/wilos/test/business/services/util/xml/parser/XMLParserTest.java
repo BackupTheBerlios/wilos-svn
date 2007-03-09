@@ -1790,7 +1790,7 @@ public class XMLParserTest extends TestCase {
 		assertEquals(taskDescriptor.getTaskDefinition().getPurpose(), expectedPurpose);
 	}
 
-	public void testSortieEPFInceptionPhaseIterationContainsRight_Alternatives_HowToStaff_Purpose () {
+	public void testSortieEPFInceptionPhaseIterationContainsRight_Alternatives_HowToStaff_Purpose_Descriptions () {
 		if (OpenUPProcess == null) {
 			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
 		}
@@ -1798,6 +1798,7 @@ public class XMLParserTest extends TestCase {
 		String expectedAlternatives = "";
 		String expectedHowToStaff = "";
 		String expectedPurpose = "";
+		String expectedBriefDescription = "This iteration template defines the activities (and associated roles and work  products) performed in a typical iteration in the Inception phase. Each activity  and related goals are described.";
 		String expectedMainDescription = "<h3>\n" +
     "    Introduction\n" +
     "</h3>\n" +
@@ -1819,6 +1820,8 @@ public class XMLParserTest extends TestCase {
 		assertEquals(anActivity.getPurpose(), expectedPurpose);
 		
 		assertTrue(anActivity.getMainDescription().substring(0, 60).startsWith(expectedMainDescription));
+		
+		assertTrue(anActivity.getDescription().equals(expectedBriefDescription));
 	}
 	
 	public void testScrumFillerTestProcessContainsRight_Alternatives_HowToStaff_Purpose () {

@@ -19,6 +19,7 @@ package wilos.business.services.util.xml.fillers;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import wilos.business.services.util.xml.parser.EncodingProcessor;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.element.Element;
 
@@ -29,6 +30,7 @@ public class FillerActivity extends FillerWorkBreakDownElement {
 	private static String NodePurpose = "Purpose";
 	private static String NodeMainDescription = "MainDescription";
 	private static String NodeKeyConsiderations = "KeyConsiderations";
+	private static String NodeDescription = "briefDescription" ;
 	
 	public FillerActivity(Element _e, Node _aNode) {
 		super(_e, _aNode);
@@ -78,8 +80,7 @@ public class FillerActivity extends FillerWorkBreakDownElement {
 				// Search for the KeyConsiderations node
 				if (nodePresentationList.item(i).getNodeName().equals(NodeKeyConsiderations)) {
 					keyConsiderations = nodePresentationList.item(i).getTextContent();
-				}
-				
+				}				
 			}
 		}
 		
@@ -93,5 +94,7 @@ public class FillerActivity extends FillerWorkBreakDownElement {
 	public void auxilliaryFill(Node node) {
 		this.myNode = node;
 		this.fill();
+		
+		myElement.setDescription(EncodingProcessor.cleanString(myNode.getAttributes().getNamedItem(NodeDescription).getNodeValue()));
 	}
 }
