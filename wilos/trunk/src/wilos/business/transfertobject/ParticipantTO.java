@@ -1,0 +1,54 @@
+/*
+Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+General Public License as published by the Free Software Foundation; either version 2 of the License,
+or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program; if not,
+write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
+*/
+
+package wilos.business.transfertobject;
+
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
+import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.model.misc.wilosuser.Participant;
+import wilos.model.spem2.role.RoleDescriptor;
+
+/**
+ *
+ * @author toine
+ */
+public class ParticipantTO extends Participant implements Serializable {
+    
+    /** Creates a new instance of ParticipantTO */
+    public ParticipantTO() {
+
+    }
+    
+  
+    public ParticipantTO(Participant myParticipant) {
+        this.setName(myParticipant.getName());
+        this.setLogin(myParticipant.getLogin());
+        this.setPassword(myParticipant.getPassword());
+        this.setFirstname(myParticipant.getFirstname());
+        this.setEmailAddress(myParticipant.getEmailAddress());  
+
+        Set<ConcreteRoleDescriptor> concreteRoleDescriptors = new HashSet<ConcreteRoleDescriptor>();
+        for (ConcreteRoleDescriptor crd : myParticipant.getConcreteRoleDescriptors()) {
+        	concreteRoleDescriptors.add(new ConcreteRoleDescriptorTO(crd));
+        }
+        this.setConcreteRoleDescriptors(concreteRoleDescriptors);
+    }
+
+}

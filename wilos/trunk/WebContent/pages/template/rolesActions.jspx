@@ -1,0 +1,43 @@
+<!-- 
+Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+General Public License as published by the Free Software Foundation; either version 2 of the License,
+or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program; if not,
+write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
+-->
+<ice:panelStack id="panelStack_roles_actions"
+                        styleClass=""
+                        selectedPanel="#{connect.selectedPanel.templateNameActions}">
+	<ice:panelGroup id="none">
+		<f:subview id="no_actions">		
+		</f:subview>
+	</ice:panelGroup>
+	<ice:panelGroup id="participant_role">
+		<f:subview id="participant_actions">
+			<jsp:directive.include file="./pages/participant/participantActions.jspx"/>		
+		</f:subview>
+	</ice:panelGroup>
+	<ice:panelGroup id="admin_role">
+		<f:subview id="admin_actions">
+			<jsp:directive.include file="./pages/admin/adminActions.jspx"/>		
+		</f:subview>
+	</ice:panelGroup>
+	<ice:panelGroup id="processManager_role">
+		<f:subview id="processManager_actions">
+			<jsp:directive.include file="./pages/processManager/processManagerActions.jspx"/>		
+		</f:subview>
+	</ice:panelGroup>
+	<ice:panelGroup id="projectDirector_role">
+		<f:subview id="projectDirector_actions">
+			<jsp:directive.include file="./pages/projectDirector/projectDirectorActions.jspx"/>		
+		</f:subview>
+	</ice:panelGroup>
+</ice:panelStack>
