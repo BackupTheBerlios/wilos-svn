@@ -1,23 +1,37 @@
+/*
+ * Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+ * Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program; if not,
+ * write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
 
 package wilos.test.business.services.project ;
+
+import static org.junit.Assert.*;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import junit.framework.TestCase ;
-import wilos.business.services.misc.project.ProjectService ;
-import wilos.model.misc.project.Project ;
-import wilos.test.configuration.TestConfiguration ;
-import wilos.model.misc.wilosuser.Participant;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-/**
- * This class represents the class test of the ProjectService class.
- * 
- * @author Marseyeah
- * 
- */
-public class ProjectServiceTest extends TestCase {
+import wilos.business.services.misc.project.ProjectService;
+import wilos.model.misc.project.Project;
+import wilos.model.misc.wilosuser.Participant;
+import wilos.test.configuration.TestConfiguration;
+
+public class ProjectServiceTest {
 
 	private ProjectService ps ;
 
@@ -25,15 +39,14 @@ public class ProjectServiceTest extends TestCase {
 
 	private Project p2 ;
 	private Participant parti ;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp() ;
+	
+	public ProjectServiceTest(){
 		this.ps = (ProjectService) TestConfiguration.getInstance().getApplicationContext().getBean("ProjectService") ;
+	}
+
+	@Before
+	public void setUp() {
+		
 		p = new Project() ;
 		p.setConcreteName("Wilos") ;
 		p.setDescription("projet de test") ;
@@ -47,23 +60,14 @@ public class ProjectServiceTest extends TestCase {
 		this.ps.getProjectDao().saveOrUpdateProject(p2);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown() ;
+	@After
+	public void tearDown(){
 		// Delete the tmp Project from the database.
 		this.ps.getProjectDao().deleteProject(this.p) ;
 		this.ps.getProjectDao().deleteProject(this.p2) ;
 	}
 
-	/**
-	 * Test method for
-	 * {@link woops2.business.services.project.ProjectService#saveProject(woops2.model.misc.project.Project)}.
-	 * 
-	 */
+	@Test
 	public void testSaveProject() {
 		this.ps.saveProject(this.p) ;
 		Project ProjectTmp = (Project) this.ps.getProjectDao().getProject(this.p.getId()) ;
@@ -73,10 +77,7 @@ public class ProjectServiceTest extends TestCase {
 		// assertEquals(ProjectTmp.getIsFinished(), true) ;
 	}
 
-	/**
-	 * Test method for {@link woops2.business.services.project.ProjectService#projectExists(String)}.
-	 * 
-	 */
+	@Test
 	public void testProjectExists() {
 		// Test for an existing project
 		this.ps.saveProject(this.p) ;
@@ -86,11 +87,7 @@ public class ProjectServiceTest extends TestCase {
 		assertFalse(this.ps.projectExist("poulou")) ;
 	}
 
-	/**
-	 * Test method for
-	 * {@link woops2.business.services.project.ProjectService#getUnfinishedProjects()}.
-	 * 
-	 */
+	@Test
 	public void testGetUnfinishedProjects() {
 		this.ps.saveProject(this.p) ;
 		this.ps.saveProject(this.p2) ;
@@ -104,10 +101,7 @@ public class ProjectServiceTest extends TestCase {
 		
 	}
 	
-	/**
-	 * Test method for addParticipant
-	 * 
-	 */
+	@Test
 	public void testAddParticipant() {
 		parti = new Participant() ;		
 		Set<Participant> participants = new HashSet<Participant>() ;
