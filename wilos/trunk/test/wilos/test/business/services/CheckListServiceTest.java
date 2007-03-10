@@ -20,7 +20,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import junit.framework.TestCase;
-import wilos.business.services.checklist.CheckListService;
+import wilos.business.services.spem2.checklist.CheckListService;
 import wilos.model.spem2.checklist.CheckList;
 import wilos.model.spem2.section.Section;
 import wilos.test.TestConfiguration;

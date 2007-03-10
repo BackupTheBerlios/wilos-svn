@@ -3,15 +3,16 @@ package wilos.test.business.services.wilosuser;
 import java.util.HashSet;
 import java.util.Set;
 
+import junit.framework.TestCase;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import junit.framework.TestCase;
-import wilos.test.configuration.TestConfiguration;
 import wilos.business.services.misc.wilosuser.ProcessManagerService;
 import wilos.business.util.Security;
 import wilos.model.misc.wilosuser.ProcessManager;
 import wilos.model.spem2.process.Process;
+import wilos.test.TestConfiguration;
 
 /**
  * @author Martial

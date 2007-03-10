@@ -1,10 +1,10 @@
 
 package wilos.test.hibernate.misc.wilosuser ;
 
-import junit.framework.TestCase ;
-import wilos.hibernate.misc.wilosuser.AdministratorDao ;
-import wilos.model.misc.wilosuser.Administrator ;
-import wilos.test.configuration.TestConfiguration ;
+import junit.framework.TestCase;
+import wilos.hibernate.misc.wilosuser.AdministratorDao;
+import wilos.model.misc.wilosuser.Administrator;
+import wilos.test.TestConfiguration;
 
 /**
  * This class represents the test class for AdministratorDao class.

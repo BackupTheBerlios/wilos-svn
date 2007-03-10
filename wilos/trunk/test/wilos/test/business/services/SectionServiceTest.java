@@ -17,9 +17,7 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 package wilos.test.business.services;
 
 import junit.framework.TestCase;
-import wilos.business.services.checklist.CheckListService;
-import wilos.business.services.section.SectionService;
-import wilos.model.spem2.checklist.CheckList;
+import wilos.business.services.spem2.section.SectionService;
 import wilos.model.spem2.section.Section;
 import wilos.test.TestConfiguration;
 

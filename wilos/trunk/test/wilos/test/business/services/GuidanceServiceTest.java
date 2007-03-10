@@ -17,7 +17,7 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 package wilos.test.business.services;
 
 import junit.framework.TestCase;
-import wilos.business.services.guide.GuidanceService;
+import wilos.business.services.spem2.guide.GuidanceService;
 import wilos.model.spem2.guide.Guidance;
 import wilos.test.TestConfiguration;
 

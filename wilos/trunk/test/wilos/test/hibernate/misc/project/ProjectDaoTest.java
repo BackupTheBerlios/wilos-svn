@@ -1,12 +1,12 @@
 
 package wilos.test.hibernate.misc.project ;
 
-import java.util.Set ;
+import java.util.Set;
 
-import junit.framework.TestCase ;
-import wilos.hibernate.misc.project.ProjectDao ;
-import wilos.model.misc.project.Project ;
-import wilos.test.configuration.TestConfiguration ;
+import junit.framework.TestCase;
+import wilos.hibernate.misc.project.ProjectDao;
+import wilos.model.misc.project.Project;
+import wilos.test.TestConfiguration;
 
 /**
  * 

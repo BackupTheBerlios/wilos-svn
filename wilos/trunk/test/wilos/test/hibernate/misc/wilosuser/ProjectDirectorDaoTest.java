@@ -1,12 +1,12 @@
 
 package wilos.test.hibernate.misc.wilosuser ;
 
-import java.util.Set ;
+import java.util.Set;
 
-import junit.framework.TestCase ;
-import wilos.hibernate.misc.wilosuser.ProjectDirectorDao ;
-import wilos.model.misc.wilosuser.ProjectDirector ;
-import wilos.test.configuration.TestConfiguration ;
+import junit.framework.TestCase;
+import wilos.hibernate.misc.wilosuser.ProjectDirectorDao;
+import wilos.model.misc.wilosuser.ProjectDirector;
+import wilos.test.TestConfiguration;
 
 /**
  * 

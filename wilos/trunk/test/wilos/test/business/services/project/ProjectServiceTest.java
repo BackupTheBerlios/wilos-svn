@@ -16,7 +16,10 @@
 
 package wilos.test.business.services.project ;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -29,7 +32,7 @@ import org.junit.Test;
 import wilos.business.services.misc.project.ProjectService;
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
-import wilos.test.configuration.TestConfiguration;
+import wilos.test.TestConfiguration;
 
 public class ProjectServiceTest {
 

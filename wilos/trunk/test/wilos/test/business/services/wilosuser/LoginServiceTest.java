@@ -1,6 +1,6 @@
 package wilos.test.business.services.wilosuser;
 
-import wilos.test.configuration.TestConfiguration;
+import junit.framework.TestCase;
 import wilos.business.services.misc.wilosuser.LoginService;
 import wilos.hibernate.misc.wilosuser.ParticipantDao;
 import wilos.hibernate.misc.wilosuser.ProcessManagerDao;
@@ -10,7 +10,7 @@ import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.ProcessManager;
 import wilos.model.misc.wilosuser.ProjectDirector;
 import wilos.model.misc.wilosuser.WilosUser;
-import junit.framework.TestCase;
+import wilos.test.TestConfiguration;
 
 /**
  * @author Michaël

@@ -1,17 +1,17 @@
 
 package wilos.test.business.services.wilosuser ;
 
-import java.util.HashMap ;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import junit.framework.TestCase ;
-import wilos.business.services.misc.project.ProjectService ;
-import wilos.business.services.misc.wilosuser.ParticipantService ;
-import wilos.business.util.Security ;
-import wilos.model.misc.project.Project ;
-import wilos.model.misc.wilosuser.Participant ;
-import wilos.test.configuration.TestConfiguration ;
+import junit.framework.TestCase;
+import wilos.business.services.misc.project.ProjectService;
+import wilos.business.services.misc.wilosuser.ParticipantService;
+import wilos.business.util.Security;
+import wilos.model.misc.project.Project;
+import wilos.model.misc.wilosuser.Participant;
+import wilos.test.TestConfiguration;
 
 /**
  * @author Martial

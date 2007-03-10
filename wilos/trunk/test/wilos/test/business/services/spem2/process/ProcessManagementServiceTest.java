@@ -1,7 +1,5 @@
 package wilos.test.business.services.spem2.process;
 
-import static org.junit.Assert.*;
-
 import junit.framework.TestCase;
 
 import org.junit.After;
@@ -12,7 +10,7 @@ import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.spem2.process.ProcessManagementService;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.process.Process;
-import wilos.test.configuration.TestConfiguration;
+import wilos.test.TestConfiguration;
 
 /**
  * @author BlackMilk

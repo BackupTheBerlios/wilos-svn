@@ -2,10 +2,10 @@ package wilos.test.hibernate.misc.wilosuser;
 
 import java.util.Set;
 
-import wilos.test.configuration.TestConfiguration;
+import junit.framework.TestCase;
 import wilos.hibernate.misc.wilosuser.ParticipantDao;
 import wilos.model.misc.wilosuser.Participant;
-import junit.framework.TestCase;
+import wilos.test.TestConfiguration;
 
 /**
  * This class represents the TestCase for the ParticipantDao class.

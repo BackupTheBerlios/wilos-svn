@@ -1,12 +1,12 @@
 
 package wilos.test.hibernate.misc.wilosuser ;
 
-import java.util.Set ;
+import java.util.Set;
 
-import junit.framework.TestCase ;
-import wilos.hibernate.misc.wilosuser.ProcessManagerDao ;
-import wilos.model.misc.wilosuser.ProcessManager ;
-import wilos.test.configuration.TestConfiguration ;
+import junit.framework.TestCase;
+import wilos.hibernate.misc.wilosuser.ProcessManagerDao;
+import wilos.model.misc.wilosuser.ProcessManager;
+import wilos.test.TestConfiguration;
 
 /**
  * This class represents the test class for ProcessManagerDao class.

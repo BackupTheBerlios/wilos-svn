@@ -7,7 +7,7 @@ import junit.framework.TestCase;
 import wilos.hibernate.misc.wilosuser.WilosUserDao;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
-import wilos.test.configuration.TestConfiguration;
+import wilos.test.TestConfiguration;
 
 /**
  * 
