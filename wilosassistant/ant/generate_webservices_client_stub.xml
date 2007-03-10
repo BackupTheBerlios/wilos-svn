@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Ant generating Webservices client stub" default="generate" basedir=".">
+    
+    <!-- Configure the context path for this application -->
+    <property name="jar.name" value="Spelp-client-generated.jar" />
+    <property name="ant.dir" value="${basedir}" />
+    <property name="lib.dir" value="${basedir}/../lib" />
+    <property file="${ant.dir}/server.properties" />
+    
+    <!-- Libraries Import -->
+    <path id="classpath">
+            <fileset dir="${lib.dir}">
+                    <include name="**/*.jar" />
+            		<exclude name="${jar.name}"/>
+            </fileset>
+    </path>
+    
+    <taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport">
+        <classpath refid="classpath"/>
+    </taskdef>
+    
+    <!-- Building space clean up -->
+    <target name="clean_tmp">
+            <delete dir="${basedir}/tmp" />
+    </target>
+    
+    <!-- Building space clean up -->
+    <target name="clean" depends="clean_tmp">
+            <delete file="${lib.dir}/${jar.name}" />
+    </target>
+    
+    <!-- Prepare all directories -->
+    <target name="prepare" depends="clean" description="Create build directories.">
+	<mkdir dir="${basedir}/tmp" />
+    </target>
+    
+    <!-- Build Target -->
+    <target name="generate" depends="prepare" description="Compile Java files and copy static files.">
+            <wsimport
+                destdir="${basedir}/tmp"
+                debug="true"
+                wsdl="${remoteAdress}"/>
+                
+            <jar
+                destfile="${lib.dir}/${jar.name}"
+                basedir="${basedir}/tmp"/>
+                
+            <!-- Remove temporary directory -->
+            <delete dir="${basedir}/tmp" />	
+    </target>
+</project>
