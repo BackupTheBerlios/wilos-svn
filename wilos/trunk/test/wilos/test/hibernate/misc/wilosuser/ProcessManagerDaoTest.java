@@ -1,95 +1,92 @@
+/*
+ * Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+ * Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program; if not,
+ * write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
 
-package wilos.test.hibernate.misc.wilosuser ;
+package wilos.test.hibernate.misc.wilosuser;
+
+import static org.junit.Assert.*;
 
 import java.util.Set;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.hibernate.misc.wilosuser.ProcessManagerDao;
 import wilos.model.misc.wilosuser.ProcessManager;
 import wilos.test.TestConfiguration;
 
-/**
- * This class represents the test class for ProcessManagerDao class.
- * 
- * @author Marseyeah
- * 
- */
-public class ProcessManagerDaoTest extends TestCase {
+public class ProcessManagerDaoTest {
 
-	private ProcessManagerDao pmd ;
+	private ProcessManagerDao pmd;
 
-	private ProcessManager pm ;
+	private ProcessManager pm;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp() ;
-		this.pmd = (ProcessManagerDao) TestConfiguration.getInstance().getApplicationContext().getBean("ProcessManagerDao") ;
-		this.pm = new ProcessManager() ;
-		this.pm.setLogin("testPM") ;
-		this.pm.setName("Lopes") ;
+	public ProcessManagerDaoTest() {
+		this.pmd = (ProcessManagerDao) TestConfiguration.getInstance()
+				.getApplicationContext().getBean("ProcessManagerDao");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown() ;
-		this.pmd.deleteProcessManager(this.pm) ;
+	@Before
+	public void setUp() {
+
+		this.pm = new ProcessManager();
+		this.pm.setLogin("testPM");
+		this.pm.setName("Lopes");
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.hibernate.misc.wilosuser.ProcessManagerDao#saveOrUpdateProcessManager(wilos.model.misc.wilosuser.ProcessManager)}.
-	 */
+	@After 
+	public void tearDown() {
+		this.pmd.deleteProcessManager(this.pm);
+	}
+
+	@Test
 	public void testSaveOrUpdateProcessManager() {
-		this.pmd.saveOrUpdateProcessManager(this.pm) ;
+		this.pmd.saveOrUpdateProcessManager(this.pm);
 
-		ProcessManager pmTmp = this.pmd.getProcessManager("testPM") ;
-		assertNotNull(pmTmp) ;
-		assertTrue(this.pm.getLogin().equals(pmTmp.getLogin())) ;
-		assertTrue(this.pm.getName().equals(pmTmp.getName())) ;
+		ProcessManager pmTmp = this.pmd.getProcessManager("testPM");
+		assertNotNull(pmTmp);
+		assertTrue(this.pm.getLogin().equals(pmTmp.getLogin()));
+		assertTrue(this.pm.getName().equals(pmTmp.getName()));
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.hibernate.misc.wilosuser.ProcessManagerDao#getAllProcessManagers()}.
-	 */
+	@Test
 	public void testGetAllProcessManagers() {
-		this.pmd.saveOrUpdateProcessManager(this.pm) ;
+		this.pmd.saveOrUpdateProcessManager(this.pm);
 
-		Set<ProcessManager> setTmp = this.pmd.getAllProcessManagers() ;
-		assertNotNull(setTmp) ;
-		assertTrue(setTmp.size() >= 1) ;
+		Set<ProcessManager> setTmp = this.pmd.getAllProcessManagers();
+		assertNotNull(setTmp);
+		assertTrue(setTmp.size() >= 1);
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.hibernate.misc.wilosuser.ProcessManagerDao#getProcessManager(java.lang.String)}.
-	 */
+	@Test
 	public void testGetProcessManager() {
-		this.pmd.saveOrUpdateProcessManager(this.pm) ;
-		ProcessManager pmTmp = this.pmd.getProcessManager("testPM") ;
-		assertNotNull(pmTmp) ;
-		assertEquals(pmTmp.getLogin(), "testPM") ;
-		assertEquals(pmTmp.getName(), "Lopes") ;
+		this.pmd.saveOrUpdateProcessManager(this.pm);
+		ProcessManager pmTmp = this.pmd.getProcessManager("testPM");
+		assertNotNull(pmTmp);
+		assertEquals(pmTmp.getLogin(), "testPM");
+		assertEquals(pmTmp.getName(), "Lopes");
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.hibernate.misc.wilosuser.ProcessManagerDao#deleteProcessManager(wilos.model.misc.wilosuser.ProcessManager)}.
-	 */
+	@Test
 	public void testDeleteProcessManager() {
-		this.pmd.saveOrUpdateProcessManager(this.pm) ;
-		this.pmd.deleteProcessManager(this.pm) ;
+		this.pmd.saveOrUpdateProcessManager(this.pm);
+		this.pmd.deleteProcessManager(this.pm);
 
-		ProcessManager pmTmp = this.pmd.getProcessManager("testPM") ;
-		assertNull(pmTmp) ;
+		ProcessManager pmTmp = this.pmd.getProcessManager("testPM");
+		assertNull(pmTmp);
 	}
 
 }

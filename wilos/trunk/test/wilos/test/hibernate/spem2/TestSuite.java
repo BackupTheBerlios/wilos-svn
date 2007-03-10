@@ -27,7 +27,10 @@ import org.junit.runners.Suite;
 		wilos.test.hibernate.spem2.activity.TestSuite.class,
 		wilos.test.hibernate.spem2.role.TestSuite.class,
 		wilos.test.hibernate.spem2.task.TestSuite.class,
-		wilos.test.hibernate.spem2.workbreakdownelement.TestSuite.class, })
+		wilos.test.hibernate.spem2.workbreakdownelement.TestSuite.class,
+		wilos.test.hibernate.spem2.guide.TestSuite.class,
+		wilos.test.hibernate.spem2.checklist.TestSuite.class
+})
 public class TestSuite {
 	// None.
 }

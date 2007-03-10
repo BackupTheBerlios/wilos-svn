@@ -1,54 +1,57 @@
+/*
+ * Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+ * Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program; if not,
+ * write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
 
 package wilos.test.hibernate.misc.wilosuser ;
 
 import java.util.Set;
 
 import junit.framework.TestCase;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import wilos.hibernate.misc.wilosuser.WilosUserDao;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
 import wilos.test.TestConfiguration;
 
-/**
- * 
- * This class represents the test class for WilosUserDao class.
- * 
- * @author Marseyeah
- * 
- */
 public class WilosUserDaoTest extends TestCase {
 
 	private WilosUserDao wud ;
 
 	private WilosUser wu ;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp() ;
+	
+	public WilosUserDaoTest(){
 		this.wud = (WilosUserDao) TestConfiguration.getInstance().getApplicationContext().getBean("WilosUserDao") ;
+	}
+
+	@Before
+	public void setUp() {
 		this.wu = new Participant() ;
 		this.wu.setLogin("loginWU") ;
 		this.wu.setName("nameWU") ;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown() ;
+	@After
+	public void tearDown() {
 		this.wud.deleteWilosUser(this.wu) ;
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.hibernate.misc.wilosuser.WilosUserDao#saveOrUpdateWilosUser(wilos.model.misc.wilosuser.WilosUser)}.
-	 */
+	@Test
 	public void testSaveOrUpdateWilosUser() {
 		this.wud.saveOrUpdateWilosUser(this.wu) ;
 
@@ -58,10 +61,7 @@ public class WilosUserDaoTest extends TestCase {
 		assertTrue(this.wu.getName().equals(wuTmp.getName())) ;
 	}
 
-	/**
-	 * Test method for 
-	 * {@link wilos.hibernate.misc.wilosuser.WilosUserDao#getAllWilosUsers()}.
-	 */
+	@Test
 	public void testGetAllWilosUsers() {
 		this.wud.saveOrUpdateWilosUser(this.wu) ;
 
@@ -70,10 +70,7 @@ public class WilosUserDaoTest extends TestCase {
 		assertTrue(setTmp.size() >= 1) ;
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.hibernate.misc.wilosuser.WilosUserDao#getWilosUser(java.lang.String)}.
-	 */
+	@Test
 	public void testGetWilosUser() {
 		this.wud.saveOrUpdateWilosUser(this.wu) ;
 
@@ -83,10 +80,7 @@ public class WilosUserDaoTest extends TestCase {
 		assertEquals(wuTmp.getName(), "nameWU") ;
 	}
 
-	/**
-	 * Test method for
-	 * {@link wilos.hibernate.misc.wilosuser.WilosUserDao#deleteWilosUser(wilos.model.misc.wilosuser.WilosUser)}.
-	 */
+	@Test
 	public void testDeleteWilosUser() {
 		this.wud.saveOrUpdateWilosUser(this.wu) ;
 		this.wud.deleteWilosUser(this.wu) ;

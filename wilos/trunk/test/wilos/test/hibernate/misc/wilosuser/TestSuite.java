@@ -13,23 +13,18 @@
  * You should have received a copy of the GNU General Public License along with this program; if not,
  * write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-package wilos.test.hibernate.misc ;
+package wilos.test.hibernate.misc.wilosuser;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( {
-	wilos.test.hibernate.misc.concreteactivity.TestSuite.class,
-	wilos.test.hibernate.misc.concretebreakdownelement.TestSuite.class,
-	wilos.test.hibernate.misc.concreteiteration.TestSuite.class,
-	wilos.test.hibernate.misc.concretephase.TestSuite.class,
-	wilos.test.hibernate.misc.concreterole.TestSuite.class,
-	wilos.test.hibernate.misc.concretetaskdescriptor.TestSuite.class,
-	wilos.test.hibernate.misc.concreteworkbreakdownelement.TestSuite.class,
-	wilos.test.hibernate.misc.project.TestSuite.class,
-	wilos.test.hibernate.misc.wilosuser.TestSuite.class,
-	})
+@Suite.SuiteClasses( { 
+	wilos.test.hibernate.misc.wilosuser.ProjectDirectorDaoTest.class,
+	wilos.test.hibernate.misc.wilosuser.ParticipantDaoTest.class,
+	wilos.test.hibernate.misc.wilosuser.ProcessManagerDaoTest.class,
+	wilos.test.hibernate.misc.wilosuser.ProjectDirectorDaoTest.class
+})
 public class TestSuite {
 	// None.
 }
