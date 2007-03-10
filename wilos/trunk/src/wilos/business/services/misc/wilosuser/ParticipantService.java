@@ -254,13 +254,13 @@ public class ParticipantService {
 			//if this is an affectation
 			if(Boolean.valueOf(affectedProjects.get(project_id)) == true)
 			{
-				currentParticipant.addToProject(currentProject) ;
+				currentParticipant.addAffectedProject(currentProject) ;
 			}
 			//if this is an unaffectation
 			else
 			{
 				//removing the participant from the project
-				currentParticipant.removeFromProject(currentProject) ;
+				currentParticipant.removeAffectedProject(currentProject) ;
 				
 				//if the project have a project manager
 				if (currentProject.getProjectManager() != null)

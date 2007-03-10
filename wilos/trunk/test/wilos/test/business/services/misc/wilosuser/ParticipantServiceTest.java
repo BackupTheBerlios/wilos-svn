@@ -126,14 +126,14 @@ public class ParticipantServiceTest {
 
 	@Test
 	public void testGetProjectsForAParticipant() {
-		this.participant.addToProject(this.p1);
+		this.participant.addAffectedProject(this.p1);
 		participantService.saveParticipant(this.participant);
 		Participant participant2 = new Participant();
 		participant2.setLogin("test");
 		participant2.setName("test");
 		participant2.setPassword("test");
 
-		participant2.addToProject(this.p2);
+		participant2.addAffectedProject(this.p2);
 		participantService.saveParticipant(participant2);
 		// this.projectService.saveProject(p1);
 		p1 = this.projectService.getProject(p1.getId());
@@ -157,14 +157,14 @@ public class ParticipantServiceTest {
 
 	@Test
 	public void testGetAllAffectedProjectsForParticipant() {
-		this.participant.addToProject(this.p1);
+		this.participant.addAffectedProject(this.p1);
 		participantService.saveParticipant(this.participant);
 		Participant participant2 = new Participant();
 		participant2.setLogin("test");
 		participant2.setName("test");
 		participant2.setPassword("test");
 
-		participant2.addToProject(this.p2);
+		participant2.addAffectedProject(this.p2);
 		participantService.saveParticipant(participant2);
 		this.projectService.saveProject(p1);
 		p1 = this.projectService.getProject(p1.getId());

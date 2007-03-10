@@ -132,7 +132,7 @@ public class ParticipantTest {
 	@Test
 	public void testAddToProject() {
 		Project project = new Project();
-		participant1.addToProject(project);
+		participant1.addAffectedProject(project);
 		assertNotNull(participant1.getAffectedProjectList());
 		assertEquals(project,
 				participant1.getAffectedProjectList().toArray()[0]);
@@ -142,9 +142,9 @@ public class ParticipantTest {
 	@Test
 	public void testRemoveFromProject() {
 		Project project = new Project();
-		participant1.addToProject(project);
+		participant1.addAffectedProject(project);
 		assertNotNull(participant1.getAffectedProjectList());
-		participant1.removeFromProject(project);
+		participant1.removeAffectedProject(project);
 		assertTrue(participant1.getAffectedProjectList().isEmpty());
 		assertTrue(project.getParticipants().isEmpty());
 	}
@@ -153,10 +153,10 @@ public class ParticipantTest {
 	public void testRemoveAllProject() {
 		Project project = new Project();
 		Project project2 = new Project();
-		participant1.addToProject(project);
-		participant1.addToProject(project2);
+		participant1.addAffectedProject(project);
+		participant1.addAffectedProject(project2);
 		assertNotNull(participant1.getAffectedProjectList());
-		participant1.removeAllProject();
+		participant1.removeAllAffectedProjects();
 		assertTrue(participant1.getAffectedProjectList().isEmpty());
 		assertTrue(project.getParticipants().isEmpty());
 		assertTrue(project2.getParticipants().isEmpty());
@@ -166,10 +166,10 @@ public class ParticipantTest {
 	public void testRemoveFromAllProject() {
 		Project project = new Project();
 		Project project2 = new Project();
-		participant1.addToProject(project);
-		participant1.addToProject(project2);
+		participant1.addAffectedProject(project);
+		participant1.addAffectedProject(project2);
 		assertNotNull(participant1.getAffectedProjectList());
-		participant1.removeFromAllProject();
+		participant1.removeAllAffectedProjects();
 		assertTrue(participant1.getAffectedProjectList().isEmpty());
 		assertTrue(project.getParticipants().isEmpty());
 		assertTrue(project2.getParticipants().isEmpty());
@@ -178,7 +178,7 @@ public class ParticipantTest {
 	@Test
 	public void testGetAffectedProjectList() {
 		Project project = new Project();
-		participant1.addToProject(project);
+		participant1.addAffectedProject(project);
 		assertNotNull(participant1.getAffectedProjectList());
 		assertEquals(project,
 				participant1.getAffectedProjectList().toArray()[0]);
@@ -196,9 +196,9 @@ public class ParticipantTest {
 	@Test
 	public void testRemoveManagedProject() {
 		Project project = new Project();
-		participant1.addToProject(project);
+		participant1.addAffectedProject(project);
 		assertNotNull(participant1.getManagedProjects());
-		participant1.removeFromProject(project);
+		participant1.removeAffectedProject(project);
 		assertTrue(participant1.getManagedProjects().isEmpty());
 		assertNull(project.getProjectManager());
 	}

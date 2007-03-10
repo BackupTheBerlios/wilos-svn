@@ -75,7 +75,6 @@ public class ProcessDaoTest {
 
 	@After
 	public void tearDown() {
-
 		this.processDao.deleteProcess(this.process);
 	}
 

@@ -269,7 +269,7 @@ public class ProjectService {
 	 */
 	@ Transactional (readOnly = false)
 	public void addParticipant(Participant participant, Project project) {
-		project.addToParticipant(participant) ;
+		project.addParticipant(participant) ;
 	}
 
 	/**

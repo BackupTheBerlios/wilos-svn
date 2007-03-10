@@ -46,95 +46,7 @@ public class Participant extends WilosUser implements Cloneable {
 		affectedProjectList = new HashSet<Project>() ;
 		managedProjects = new HashSet<Project>() ;
 	}
-
-	/**
-	 * Getter of rolesListForAProject.
-	 * @return the rolesListForAProject.
-	 */
-	public Set<ConcreteRoleDescriptor> getConcreteRoleDescriptors() {
-		return this.concreteRoleDescriptors ;
-	}
-
-	/**
-	 * Setter of rolesListForAProject.
-	 * @param _rolesListForAProject
-	 *            The rolesListForAProject to set.
-	 */
-	public void setConcreteRoleDescriptors(Set<ConcreteRoleDescriptor> _concreteRoleDescriptors) {
-		this.concreteRoleDescriptors = _concreteRoleDescriptors ;
-	}
-
-	/**
-	 * adds a role descriptor to the Set
-	 * @param _roleDescriptor
-	 */
-	public void addConcreteRoleDescriptor(ConcreteRoleDescriptor _roleDesc) {
-		this.concreteRoleDescriptors.add(_roleDesc) ;
-		_roleDesc.setParticipant(this) ;
-	}
-
-	/**
-	 * remove a RoleDescriptor
-	 * @param _roleDesc
-	 */
-	public void removeConcreteRoleDescriptor(ConcreteRoleDescriptor _roleDesc) {
-		_roleDesc.setParticipant(null) ;
-		this.concreteRoleDescriptors.remove(_roleDesc) ;		
-	}
-
-	/**
-	 * Remove all the role descriptors
-	 */
-	public void removeAllConcreteRoleDescriptors() {
-		for(ConcreteRoleDescriptor _roleD : this.concreteRoleDescriptors){
-			_roleD.removeParticipant(this) ;
-		}
-		this.concreteRoleDescriptors.clear() ;
-	}
-
-	/**
-	 * add participant to project
-	 * 
-	 * @param project
-	 * 				the project to add to
-	 */
-	public void addToProject(Project project) {
-		this.affectedProjectList.add(project) ;
-		project.getParticipants().add(this) ;
-	}
-
-	/**
-	 * remove a participant from a project 
-	 * 
-	 * @param project
-	 * 			the project to remove from
-	 */
-	public void removeFromProject(Project project) {
-		this.affectedProjectList.remove(project) ;
-		project.getParticipants().remove(this) ;
-	}
-
-	/**
-	 * remove the participant from all the project
-	 * 
-	 */
-	public void removeAllProject() {
-		for(Project project : this.affectedProjectList){
-			project.removeFromParticipant(this) ;
-		}
-		this.affectedProjectList.clear() ;
-	}
-
-	/**
-	 * remove all the project from the list
-	 *
-	 */
-	public void removeFromAllProject() {
-		for(Project project : this.affectedProjectList){
-			this.removeFromProject(project) ;
-		}
-	}
-
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#clone()
 	 */
@@ -182,23 +94,66 @@ public class Participant extends WilosUser implements Cloneable {
 	}
 
 	/**
-	 * Getter of affectedProjectList.
-	 *
-	 * @return the affectedProjectList.
+	 * adds a role descriptor to the Set
+	 * @param _roleDescriptor
 	 */
-	public Set<Project> getAffectedProjectList() {
-		return this.affectedProjectList ;
+	public void addConcreteRoleDescriptor(ConcreteRoleDescriptor _roleDesc) {
+		this.concreteRoleDescriptors.add(_roleDesc) ;
+		_roleDesc.setParticipant(this) ;
 	}
 
 	/**
-	 * Setter of affectedProjectList.
-	 *
-	 * @param _affectedProjectList The affectedProjectList to set.
+	 * remove a RoleDescriptor
+	 * @param _roleDesc
 	 */
-	public void setAffectedProjectList(Set<Project> _affectedProjectList) {
-		this.affectedProjectList = _affectedProjectList ;
+	public void removeConcreteRoleDescriptor(ConcreteRoleDescriptor _roleDesc) {
+		_roleDesc.setParticipant(null) ;
+		this.concreteRoleDescriptors.remove(_roleDesc) ;		
 	}
 
+	/**
+	 * Remove all the role descriptors
+	 */
+	public void removeAllConcreteRoleDescriptors() {
+		for(ConcreteRoleDescriptor _roleD : this.concreteRoleDescriptors){
+			_roleD.removeParticipant(this) ;
+		}
+		this.concreteRoleDescriptors.clear() ;
+	}
+
+	/**
+	 * add participant to project
+	 * 
+	 * @param project
+	 * 				the project to add to
+	 */
+	public void addAffectedProject(Project project) {
+		this.affectedProjectList.add(project) ;
+		project.getParticipants().add(this) ;
+	}
+
+	/**
+	 * remove a participant from a project 
+	 * 
+	 * @param project
+	 * 			the project to remove from
+	 */
+	public void removeAffectedProject(Project project) {
+		this.affectedProjectList.remove(project) ;
+		project.getParticipants().remove(this) ;
+	}
+
+	/**
+	 * remove the participant from all the project
+	 * 
+	 */
+	public void removeAllAffectedProjects() {
+		for(Project project : this.affectedProjectList){
+			project.removeParticipant(this) ;
+		}
+		this.affectedProjectList.clear() ;
+	}
+	
 	/**
 	 * 
 	 * Add a managed project
@@ -232,6 +187,26 @@ public class Participant extends WilosUser implements Cloneable {
 		}
 		this.managedProjects.clear() ;
 	}
+	
+	/* Getters & Setters */
+
+	/**
+	 * Getter of affectedProjectList.
+	 *
+	 * @return the affectedProjectList.
+	 */
+	public Set<Project> getAffectedProjectList() {
+		return this.affectedProjectList ;
+	}
+
+	/**
+	 * Setter of affectedProjectList.
+	 *
+	 * @param _affectedProjectList The affectedProjectList to set.
+	 */
+	public void setAffectedProjectList(Set<Project> _affectedProjectList) {
+		this.affectedProjectList = _affectedProjectList ;
+	}
 
 	/**
 	 * Getter of managedProjects.
@@ -251,4 +226,20 @@ public class Participant extends WilosUser implements Cloneable {
 		this.managedProjects = _managedProjects ;
 	}
 
+	/**
+	 * Getter of rolesListForAProject.
+	 * @return the rolesListForAProject.
+	 */
+	public Set<ConcreteRoleDescriptor> getConcreteRoleDescriptors() {
+		return this.concreteRoleDescriptors ;
+	}
+
+	/**
+	 * Setter of rolesListForAProject.
+	 * @param _rolesListForAProject
+	 *            The rolesListForAProject to set.
+	 */
+	public void setConcreteRoleDescriptors(Set<ConcreteRoleDescriptor> _concreteRoleDescriptors) {
+		this.concreteRoleDescriptors = _concreteRoleDescriptors ;
+	}
 }

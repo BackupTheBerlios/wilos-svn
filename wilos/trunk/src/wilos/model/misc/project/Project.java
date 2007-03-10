@@ -15,16 +15,17 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 */
 package wilos.model.misc.project ;
 
-import java.util.Date ;
-import java.util.HashSet ;
-import java.util.Set ;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.apache.commons.lang.builder.EqualsBuilder ;
-import org.apache.commons.lang.builder.HashCodeBuilder ;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import wilos.model.misc.concreteactivity.ConcreteActivity;
-import wilos.model.misc.wilosuser.Participant ;
+import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.ProjectDirector;
+import wilos.model.spem2.process.Process;
 
 /**
  * This class represents a project.
@@ -41,7 +42,7 @@ public class Project extends ConcreteActivity implements Cloneable {
 
 	private Boolean isFinished ;
 
-	private wilos.model.spem2.process.Process process ;
+	private Process process ;
 
 	private Set<Participant> participants ;
 	
@@ -67,7 +68,7 @@ public class Project extends ConcreteActivity implements Cloneable {
 	 * @param _process
 	 *            the process to be linked to
 	 */
-	public void addProcess(wilos.model.spem2.process.Process _process) {
+	public void addProcess(Process _process) {
 		this.process = _process ;
 		_process.getProjects().add(this) ;
 	}
@@ -76,7 +77,7 @@ public class Project extends ConcreteActivity implements Cloneable {
 	 * @param _process
 	 *            the process to be unlinked to
 	 */
-	public void removeFromProcess(wilos.model.spem2.process.Process _process) {
+	public void removeProcess(Process _process) {
 		this.process = null ;
 		_process.getProjects().remove(this) ;
 	}
@@ -188,7 +189,7 @@ public class Project extends ConcreteActivity implements Cloneable {
 	 * 
 	 * @return the process.
 	 */
-	public wilos.model.spem2.process.Process getProcess() {
+	public Process getProcess() {
 		return this.process ;
 	}
 
@@ -198,7 +199,7 @@ public class Project extends ConcreteActivity implements Cloneable {
 	 * @param _process
 	 *            The process to set.
 	 */
-	public void setProcess(wilos.model.spem2.process.Process _process) {
+	public void setProcess(Process _process) {
 		this.process = _process ;
 	}
 
@@ -235,7 +236,7 @@ public class Project extends ConcreteActivity implements Cloneable {
 	 * @param participant
 	 *            the participant to add
 	 */
-	public void addToParticipant(Participant participant) {
+	public void addParticipant(Participant participant) {
 		this.participants.add(participant) ;
 		participant.getAffectedProjectList().add(this) ;
 	}
@@ -246,7 +247,7 @@ public class Project extends ConcreteActivity implements Cloneable {
 	 * @param participant
 	 *            the participant to remove from
 	 */
-	public void removeFromParticipant(Participant participant) {		
+	public void removeParticipant(Participant participant) {		
 		participant.getAffectedProjectList().remove(this) ;
 		this.participants.remove(participant) ;
 	}
@@ -255,21 +256,11 @@ public class Project extends ConcreteActivity implements Cloneable {
 	 * remove the project from all the participants
 	 * 
 	 */
-	public void removeAllParticipant() {
+	public void removeAllParticipants() {
 		for(Participant participant : this.participants){
-			participant.removeFromProject(this) ;
+			participant.removeAffectedProject(this) ;
 		}
 		this.participants.clear() ;
-	}
-
-	/**
-	 * remove all the participants from the list
-	 * 
-	 */
-	public void removeFromAllParticipant() {
-		for(Participant participant : this.participants){
-			this.removeFromParticipant(participant) ;
-		}
 	}
 
 	/**
