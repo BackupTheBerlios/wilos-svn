@@ -13,6 +13,7 @@
  * You should have received a copy of the GNU General Public License along with this program; if not,
  * write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
+
 package wilos.test.model.misc ;
 
 import org.junit.runner.RunWith;
@@ -27,6 +28,7 @@ import org.junit.runners.Suite;
 	wilos.test.model.misc.concreteroledescriptor.TestSuite.class,
 	wilos.test.model.misc.concretetaskdescriptor.TestSuite.class,
 	wilos.test.model.misc.concreteworkbreakdownelement.TestSuite.class,
+	wilos.test.model.misc.wilosuser.TestSuite.class
 	})
 public class TestSuite {
 	// None.

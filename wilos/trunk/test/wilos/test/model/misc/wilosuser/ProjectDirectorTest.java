@@ -1,16 +1,31 @@
+/*
+ * Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+ * Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program; if not,
+ * write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
+
 package wilos.test.model.misc.wilosuser;
+
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.ProjectDirector;
-import junit.framework.TestCase;
 
-/**
- * @author BlackMilk
- *
- * This class represents the class test of the ProjectDirector class
- *
- */
-public class ProjectDirectorTest extends TestCase {
+public class ProjectDirectorTest {
 
 	private ProjectDirector pd1;
 	private ProjectDirector pd2;
@@ -34,25 +49,18 @@ public class ProjectDirectorTest extends TestCase {
 	private final static String DESCRIPTION = "process1";
 	private final static String DESCRIPTION2 = "process2";
 	
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp() ;
+	@Before
+	public void setUp() {
 		pd1 = new ProjectDirector();
 		pd2 = new ProjectDirector();
 	}
 
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown() ;
+	@After
+	public void tearDown() {
+		//None.
 	}
 
-	/**
-	 * Test method for {@link wilos.model.misc.wilosuser.ProjectDirector#equals(java.lang.Object)}.
-	 */
+	@Test
 	public void testEqualsObject() {
 		pd1.setLogin(LOGIN);
 		pd1.setFirstname(FIRSTNAME);
@@ -80,9 +88,7 @@ public class ProjectDirectorTest extends TestCase {
 		assertFalse(pd1.equals(pd2));
 	}
 	
-	/**
-	 * Test method for {@link wilos.model.misc.wilosuser.ProjectDirector#addMonitoredProject(wilos.model.misc.project.Project)}.
-	 */
+	@Test
 	public void testAddMonitoredProject() {
 		Project project = new Project();
 		project.setDescription(DESCRIPTION);
@@ -91,9 +97,7 @@ public class ProjectDirectorTest extends TestCase {
 		assertEquals(project.getProjectDirector(),pd1);
 	}
 
-	/**
-	 * Test method for {@link wilos.model.misc.wilosuser.ProjectDirector#removeMonitoredProject(wilos.model.misc.project.Project)}.
-	 */
+	@Test
 	public void testRemoveMonitoredProject() {
 		Project project = new Project();
 		project.setDescription(DESCRIPTION);
@@ -104,9 +108,7 @@ public class ProjectDirectorTest extends TestCase {
 		assertEquals(project.getProjectDirector(),null);
 	}
 
-	/**
-	 * Test method for {@link wilos.model.misc.wilosuser.ProjectDirector#removeAllMonitoredProjects()}.
-	 */
+	@Test
 	public void testRemoveAllMonitoredProjects() {
 		Project project1 = new Project();
 		project1.setDescription(DESCRIPTION);

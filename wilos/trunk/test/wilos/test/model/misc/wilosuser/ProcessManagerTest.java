@@ -1,16 +1,31 @@
+/*
+ * Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+ * Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program; if not,
+ * write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
+
 package wilos.test.model.misc.wilosuser;
+
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import wilos.model.misc.wilosuser.ProcessManager;
 import wilos.model.spem2.process.Process;
-import junit.framework.TestCase;
 
-/**
- * @author BlackMilk
- *
- * This class represents the class test of the ProcessManager class
- *
- */
-public class ProcessManagerTest extends TestCase {
+public class ProcessManagerTest {
 	
 	private ProcessManager pm1;
 	private ProcessManager pm2;
@@ -34,25 +49,18 @@ public class ProcessManagerTest extends TestCase {
 	private final static String DESCRIPTION = "process1";
 	private final static String DESCRIPTION2 = "process2";
 
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp() ;
+	@Before
+	public void setUp()  {
 		pm1 = new ProcessManager();
 		pm2 = new ProcessManager();
 	}
 
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown() ;
+	@After
+	public void tearDown() {
+		//None.
 	}
 
-	/**
-	 * Test method for {@link wilos.model.misc.wilosuser.ProcessManager#equals(java.lang.Object)}.
-	 */
+	@Test
 	public void testEqualsObject() {
 		pm1.setLogin(LOGIN);
 		pm1.setFirstname(FIRSTNAME);
@@ -80,9 +88,7 @@ public class ProcessManagerTest extends TestCase {
 		assertFalse(pm1.equals(pm2));
 	}
 
-	/**
-	 * Test method for {@link wilos.model.misc.wilosuser.ProcessManager#addManagedProcess(wilos.model.spem2.process.Process)}.
-	 */
+	@Test
 	public void testAddManagedProcess() {
 		Process process = new Process();
 		process.setDescription(DESCRIPTION);
@@ -91,9 +97,7 @@ public class ProcessManagerTest extends TestCase {
 		assertEquals(process.getProcessManager(),pm1);
 	}
 
-	/**
-	 * Test method for {@link wilos.model.misc.wilosuser.ProcessManager#removeManagedProject(wilos.model.spem2.process.Process)}.
-	 */
+	@Test
 	public void testRemoveManagedProject() {		
 		Process process = new Process();
 		process.setDescription(DESCRIPTION);
@@ -104,9 +108,7 @@ public class ProcessManagerTest extends TestCase {
 		assertEquals(process.getProcessManager(),null);
 	}
 
-	/**
-	 * Test method for {@link wilos.model.misc.wilosuser.ProcessManager#removeAllManagedProjects()}.
-	 */
+	@Test
 	public void testRemoveAllManagedProjects() {
 		Process process1 = new Process();
 		process1.setDescription(DESCRIPTION);

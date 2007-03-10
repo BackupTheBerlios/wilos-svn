@@ -1,16 +1,30 @@
+/*
+ * Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+ * Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program; if not,
+ * write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
+
 package wilos.test.model.misc.wilosuser;
 
-import wilos.model.misc.wilosuser.Administrator;
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
 
-/**
- * @author BlackMilk
- *
- * This class represents the class test of the Administrator class
- * 
- *
- */
-public class AdministratorTest extends TestCase {
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import wilos.model.misc.wilosuser.Administrator;
+
+public class AdministratorTest {
 	
 	private Administrator admin1;
 	private Administrator admin2;
@@ -31,25 +45,18 @@ public class AdministratorTest extends TestCase {
 	
 	private final static String PASS2 = "pass2" ;
 
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp();
+	@Before
+	public void setUp() {
 		admin1 = new Administrator();
 		admin2 = new Administrator();
 	}
 
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown() ;
+	@After
+	public void tearDown(){
+		//None.
 	}
 
-	/**
-	 * Test method for {@link wilos.model.misc.wilosuser.Administrator#equals(java.lang.Object)}.
-	 */
+	@Test
 	public void testEqualsObject() {
 		admin1.setLogin(LOGIN);
 		admin1.setFirstname(FIRSTNAME);

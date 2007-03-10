@@ -14,22 +14,13 @@
  * write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-package wilos.test.business.util ;
+package wilos.test.business.util;
 
-import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-import org.junit.Test;
-
-import wilos.business.util.Security;
-
-public class SecurityTest{
-
-	@Test
-	public void testEncode() {
-		// Test for a normal string
-		String s = "test" ;
-		assertEquals(Security.encode(s), "098f6bcd4621d373cade4e832627b4f6") ;
-
-	}
-
+@RunWith(Suite.class)
+@Suite.SuiteClasses( { wilos.test.business.util.SecurityTest.class })
+public class TestSuite {
+	// None.
 }
