@@ -26,13 +26,9 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 
 import wilos.business.services.assistant.AssistantService;
-import wilos.business.services.guide.GuidanceService;
 import wilos.business.services.misc.wilosuser.LoginService;
-import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.misc.wilosuser.WilosUser;
-import wilos.model.spem2.guide.Guidance;
-import wilos.model.spem2.process.Process;
 
 import com.thoughtworks.xstream.XStream;
 

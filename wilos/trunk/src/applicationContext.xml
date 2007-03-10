@@ -376,15 +376,15 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 	</bean>
 
 	<bean id="GuidanceService"
-		class="wilos.business.services.guide.GuidanceService">
+		class="wilos.business.services.spem2.guide.GuidanceService">
 		<property name="guidanceDao" ref="GuidanceDao" />
 	</bean>
 	<bean id="CheckListService"
-		class="wilos.business.services.checklist.CheckListService">
+		class="wilos.business.services.spem2.checklist.CheckListService">
 		<property name="checkListDao" ref="CheckListDao" />
 	</bean>
 	<bean id="SectionService"
-		class="wilos.business.services.section.SectionService">
+		class="wilos.business.services.spem2.section.SectionService">
 		<property name="sectionDao" ref="SectionDao" />
 	</bean>	
 

@@ -28,12 +28,12 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import wilos.business.services.checklist.CheckListService;
 import wilos.business.services.misc.concretebreakdownelement.ConcreteBreakdownElementService;
 import wilos.business.services.misc.wilosuser.ProcessManagerService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.activity.ActivityService;
 import wilos.business.services.spem2.breakdownelement.BreakdownElementService;
+import wilos.business.services.spem2.checklist.CheckListService;
 import wilos.business.services.spem2.iteration.IterationService;
 import wilos.business.services.spem2.phase.PhaseService;
 import wilos.business.services.spem2.role.RoleDefinitionService;
