@@ -191,7 +191,7 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	
 		
-	<!-- Webservices Definition -->
+	<!-- Webservices Definition 
 	<wss:bindings id="jax-ws.http">
 		<wss:bindings>
 			<wss:binding url="/WizardServices">
@@ -200,7 +200,7 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 				</wss:service>
 			</wss:binding>
 		</wss:bindings>
-	</wss:bindings>
+	</wss:bindings>-->
 
 	<!-- ========================= Start of BEAN DEFINITIONS ========================= -->
 
