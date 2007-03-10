@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
-Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
-Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+	Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+	Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
 
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU
-General Public License as published by the Free Software Foundation; either version 2 of the License,
-or (at your option) any later version.
+	This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+	General Public License as published by the Free Software Foundation; either version 2 of the License,
+	or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+	even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program; if not,
-write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
+	You should have received a copy of the GNU General Public License along with this program; if not,
+	write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
 -->
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:ws="http://jax-ws.dev.java.net/spring/core"
@@ -191,7 +191,7 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	
 		
-	<!-- Webservices Definition 
+	<!-- Webservices Definition -->
 	<wss:bindings id="jax-ws.http">
 		<wss:bindings>
 			<wss:binding url="/WizardServices">
@@ -200,7 +200,7 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 				</wss:service>
 			</wss:binding>
 		</wss:bindings>
-	</wss:bindings>-->
+	</wss:bindings>
 
 	<!-- ========================= Start of BEAN DEFINITIONS ========================= -->
 
@@ -213,9 +213,6 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 	
 	<!-- ========================= DAO Layer ========================= -->
 
-	<!-- =============================================================== -->
-	<!-- ========================= SPELP DAO =========================== -->
-	<!-- =============================================================== -->
 	<bean id="GuidanceDao"
 		class="wilos.hibernate.spem2.guide.GuidanceDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
@@ -229,9 +226,6 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 
-	<!-- =============================================================== -->
-	<!-- ========================= PSI2 DAO ============================ -->
-	<!-- =============================================================== -->
 	<bean id="ParticipantDao"
 		class="wilos.hibernate.misc.wilosuser.ParticipantDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
@@ -262,10 +256,6 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 
-
-	<!-- =============================================================== -->
-	<!-- ========================= WOOPS2 DAO ========================== -->
-	<!-- =============================================================== -->
 	<bean id="ProcessDao"
 		class="wilos.hibernate.spem2.process.ProcessDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
@@ -361,9 +351,6 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 
 	<!-- ========================= Business Layer ========================= -->
 
-	<!-- =============================================================== -->
-	<!-- ======================= SPELP Service ========================= -->
-	<!-- =============================================================== -->
 	<bean id="AssistantService"
 		class="wilos.business.services.assistant.AssistantService">
 		<property name="participantDao" ref="ParticipantDao" />
@@ -388,16 +375,11 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 		<property name="sectionDao" ref="SectionDao" />
 	</bean>	
 
-
-	<!-- =============================================================== -->
-	<!-- ======================= PSI2 Service ========================= -->
-	<!-- =============================================================== -->
 	<bean id="ParticipantService"
 		class="wilos.business.services.misc.wilosuser.ParticipantService">
 		<property name="participantDao" ref="ParticipantDao" />
 		<property name="projectService" ref="ProjectService" />
 		<property name="concreteRoleDescriptorService" ref="ConcreteRoleDescriptorService" />
-
 	</bean>
 
 	<bean id="ProcessManagerService"
@@ -461,10 +443,6 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 		<property name="concreteBreakdownElementService" ref="ConcreteBreakdownElementService" />
 		<property name="projectService" ref="ProjectService" />
 	</bean>
-
-	<!-- =============================================================== -->
-	<!-- ====================== WOOPS2 Service ========================= -->
-	<!-- =============================================================== -->
 
 	<bean id="WebSessionService"
 		class="wilos.business.services.presentation.web.WebSessionService">
