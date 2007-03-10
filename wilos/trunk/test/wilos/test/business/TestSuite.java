@@ -13,15 +13,16 @@
  * You should have received a copy of the GNU General Public License along with this program; if not,
  * write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-package wilos.test.business ;
+package wilos.test.business;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+
 @RunWith(Suite.class)
-@Suite.SuiteClasses( {
-	wilos.test.business.services.misc.TestSuite.class,
-	wilos.test.business.services.spem2.TestSuite.class
-	})
+@Suite.SuiteClasses( { wilos.test.business.services.misc.TestSuite.class,
+		wilos.test.business.services.TestSuite.class,
+		wilos.test.business.util.TestSuite.class,
+		wilos.test.business.webservices.TestSuite.class })
 public class TestSuite {
 	// None.
 }
