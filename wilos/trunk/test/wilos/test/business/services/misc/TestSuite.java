@@ -20,7 +20,9 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses( {
 	wilos.test.business.services.misc.concreterole.TestSuite.class,
-	wilos.test.business.services.misc.concretetask.TestSuite.class
+	wilos.test.business.services.misc.concretetask.TestSuite.class,
+	wilos.test.business.services.misc.project.TestSuite.class,
+	wilos.test.business.services.misc.wilosuser.TestSuite.class
 })
 public class TestSuite {
 	// None.
