@@ -21,7 +21,10 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses( {
 	wilos.test.business.services.spem2.activity.TestSuite.class,
 	wilos.test.business.services.spem2.process.TestSuite.class,
-	wilos.test.business.services.spem2.role.TestSuite.class
+	wilos.test.business.services.spem2.role.TestSuite.class,
+	wilos.test.business.services.spem2.section.TestSuite.class,
+	wilos.test.business.services.spem2.guide.TestSuite.class,
+	wilos.test.business.services.spem2.checklist.TestSuite.class
 	})
 public class TestSuite {
 	// None.
