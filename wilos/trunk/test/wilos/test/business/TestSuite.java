@@ -19,7 +19,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { wilos.test.business.services.misc.TestSuite.class,
+@Suite.SuiteClasses( { 
 		wilos.test.business.services.TestSuite.class,
 		wilos.test.business.util.TestSuite.class,
 		wilos.test.business.webservices.TestSuite.class })
