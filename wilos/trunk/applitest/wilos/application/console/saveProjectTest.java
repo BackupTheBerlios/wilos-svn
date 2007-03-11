@@ -1,4 +1,4 @@
-package wilos.test ;
+package wilos.application.console ;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

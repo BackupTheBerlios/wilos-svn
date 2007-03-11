@@ -1,4 +1,4 @@
-package wilos.test;
+package wilos.application.console;
 
 import java.util.ArrayList;
 import java.util.HashSet;
