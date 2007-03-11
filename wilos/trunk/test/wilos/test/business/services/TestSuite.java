@@ -19,12 +19,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { wilos.test.business.services.misc.TestSuite.class,
-		wilos.test.business.services.spem2.TestSuite.class,
+@Suite.SuiteClasses( { 
 		wilos.test.business.services.misc.TestSuite.class,
+		wilos.test.business.services.spem2.TestSuite.class,
 		//wilos.test.business.services.util.TestSuite.class,
 		wilos.test.business.services.assistant.TestSuite.class,
-		wilos.test.business.webservices.TestSuite.class 
 })
 public class TestSuite {
 	// None.
