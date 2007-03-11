@@ -35,10 +35,15 @@
 		</classpath>
 	</taskdef>
 
+	<!-- Taches webservices -->
+	<taskdef name="apt" classname="com.sun.tools.ws.ant.Apt">
+		   <classpath refid="classpath" />  
+	</taskdef>
+	
 	<!-- Libraries Import -->
 	<path id="classpath">
 		<fileset dir="${lib.dir}">
-			<include name="**/*.jar" />
+			<include name="**/*.*" />
 		</fileset>
 	</path>
 
@@ -61,29 +66,64 @@
 		<mkdir dir="${build.dir}/${project.name}/META-INF" />
 		<mkdir dir="${build.dir}/${project.name}/WEB-INF/classes" />
 		<mkdir dir="${build.dir}/${project.name}/WEB-INF/lib" />
-		<mkdir dir="${build.dir}/${project.name}/css" />
 		<mkdir dir="${dist.dir}" />
 	</target>
 
 
 
-	<!-- Copie des Jar et classes -->
+	<!-- Copie des Jar -->
 	<target name="copyJars">
 		<copy todir="${build.dir}/${project.name}/WEB-INF/lib">
 			<fileset dir="${lib.dir}">
-				<include name="*.jar" />
-				<include name="*.dtd" />
+				<include name="**/*.*" />
 			</fileset>
 		</copy>
 	</target>
+	
+	<!-- Generate Webservices -->
+	<target name="generate-webservices" description="Compile webservices">
+		<mkdir dir="${build.dir}/Wilos-webservices-server-generated" />
+		<mkdir dir="${build.dir}/Wilos-webservices-server-generated/src" />
+		
+		<apt
+		   debug="${debug}"
+		   verbose="${verbose}"
+		   destdir="${build.dir}/Wilos-webservices-server-generated"
+		   sourcedestdir="${build.dir}/Wilos-webservices-server-generated/src"
+		   sourcepath="${src.java.dir}">
+		   <classpath refid="classpath" /> 
+		   
+		   <source dir="${src.java.dir}">		  
+		      <include name="**/webservices/*.java"/>
+		   </source>			
+		</apt>
+		
+		<delete dir="${build.dir}/Wilos-webservices-server-generated/src" />
+		
+		<jar destfile="${lib.dir}/Wilos-webservices-server-generated.jar">
+			<fileset dir="${build.dir}/Wilos-webservices-server-generated/">
+				<include name="**/*.*" />
+			</fileset>
+		</jar>
+		
+		<delete dir="${build.dir}/Wilos-webservices-server-generated" />	
+	</target>
 
 	<!-- Build Target -->
-	<target name="build" depends="prepare,copyJars" description="Compile Java files and copy static files.">
-		<javac srcdir="${src.java.dir}" destdir="${build.dir}/${project.name}/WEB-INF/classes">
+	<target name="build" depends="prepare,generate-webservices,copyJars" description="Compile Java files and copy static files.">
+		<!-- web -->
+		<copy todir="${build.dir}/${project.name}">
+			<fileset dir="${web.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>	
+
+		<!-- java sources -->
+		<javac srcdir="${src.java.dir}" destdir="${build.dir}/${project.name}/WEB-INF/classes" source="1.5">
+			<classpath refid="classpath" />
 			<include name="**/*.java" />
 			<include name="**/*.xml" />
 			<include name="**/*.properties" />
-			<classpath refid="classpath" />
 		</javac>
 
 		<copy todir="${build.dir}/${project.name}/WEB-INF/classes">
@@ -94,41 +134,7 @@
 			</fileset>
 		</copy>
 
-		<copy todir="${build.dir}/${project.name}/WEB-INF">
-			<fileset dir="${web.dir}/WEB-INF">
-				<include name="*.xml" />
-				<include name="*.tld" />
-			</fileset>
-		</copy>
 
-		<copy todir="${build.dir}/${project.name}/">
-			<fileset dir="${web.dir}">
-				<include name="*.html" />
-				<include name="*.jsp" />
-				<include name="*.xml" />
-				<include name="**/*.*" />
-			</fileset>
-		</copy>
-
-		<copy todir="${build.dir}/${project.name}/css">
-			<fileset dir="${web.dir}/css">
-				<include name="*.css" />
-			</fileset>
-		</copy>
-
-		<copy todir="${build.dir}/${project.name}/META-INF">
-			<fileset dir="${web.dir}/META-INF">
-				<include name="*.MF" />
-			</fileset>
-		</copy>
-
-		<copy todir="${build.dir}/${project.name}/images">
-			<fileset dir="${web.dir}/images">
-				<include name="**/*.gif" />
-				<include name="**/*.jpg" />
-				<include name="**/*.png" />
-			</fileset>
-		</copy>
 	</target>
 
 	<!-- WebArchive Building -->
@@ -142,8 +148,6 @@
 		</war>
 		<delete dir="${build.dir}" />
 	</target>
-
-
 
 	<!-- ============================================================================= -->
 
