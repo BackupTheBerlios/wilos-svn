@@ -40,7 +40,8 @@ public class ConcreteActivityViewerBean extends ViewerBean {
 
 	public List<ConcreteBreakdownElement> getConcreteBreakdownElementsList() {
 		List<ConcreteBreakdownElement> list = new ArrayList<ConcreteBreakdownElement>();
-		list.addAll(this.concreteActivity.getConcreteBreakdownElements());
+		if (this.concreteActivity != null)
+			list.addAll(this.concreteActivity.getConcreteBreakdownElements());
 
 		// Filter to obtain only concreteworkbreakdownelement (without
 		// concreterole).
@@ -52,7 +53,7 @@ public class ConcreteActivityViewerBean extends ViewerBean {
 		return cwbdes;
 	}
 
-	public void saveIteration() {
+	public void saveActivity() {
 		super.getConcreteBreakdownElementService()
 				.saveAllFirstSonsConcreteBreakdownElementsForConcreteActivity(
 						this.concreteActivity);

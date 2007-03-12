@@ -23,7 +23,7 @@ import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
 import wilos.model.misc.project.Project;
 
-public class ProjectViewerBean extends ViewerBean{
+public class ProjectViewerBean extends ViewerBean {
 
 	private Project project;
 
@@ -36,7 +36,8 @@ public class ProjectViewerBean extends ViewerBean{
 
 	public List<ConcreteBreakdownElement> getConcreteBreakdownElementsList() {
 		List<ConcreteBreakdownElement> list = new ArrayList<ConcreteBreakdownElement>();
-		list.addAll(this.project.getConcreteBreakdownElements());
+		if (this.project != null)
+			list.addAll(this.project.getConcreteBreakdownElements());
 
 		// Filter to obtain only concreteworkbreakdownelement (without
 		// concreterole).
@@ -50,7 +51,8 @@ public class ProjectViewerBean extends ViewerBean{
 
 	public void saveProject() {
 		super.getConcreteBreakdownElementService()
-				.saveAllFirstSonsConcreteBreakdownElementsForConcreteActivity(this.project);
+				.saveAllFirstSonsConcreteBreakdownElementsForConcreteActivity(
+						this.project);
 
 		// Reload the treebean.
 		super.refreshProjectTree();

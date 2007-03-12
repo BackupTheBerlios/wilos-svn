@@ -34,7 +34,8 @@ public class ConcreteIterationViewerBean extends ViewerBean {
 
 	public List<ConcreteBreakdownElement> getConcreteBreakdownElementsList() {
 		List<ConcreteBreakdownElement> list = new ArrayList<ConcreteBreakdownElement>();
-		list.addAll(this.concreteIteration.getConcreteBreakdownElements());
+		if (this.concreteIteration != null)
+			list.addAll(this.concreteIteration.getConcreteBreakdownElements());
 
 		// Filter to obtain only concreteworkbreakdownelement (without
 		// concreterole).
