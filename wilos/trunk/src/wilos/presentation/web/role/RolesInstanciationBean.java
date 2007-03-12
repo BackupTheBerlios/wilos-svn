@@ -170,10 +170,7 @@ public class RolesInstanciationBean {
 
 		//remise a 0 des nombres d'occurences
 		for (HashMap<String, Object> map : this.displayContent) {
-			if((Boolean)(map.get("isEditable")) == true)
-			{
-				map.put("nbOccurences", new Integer(0));
-			}
+			map.put("nbOccurences", new Integer(0));
 		}
 	}
 
