@@ -208,7 +208,7 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 		<managed-bean-class>
 			wilos.presentation.web.viewer.ConcreteRoleViewerBean
 		</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
+		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
 			<property-name>concreteRoleDescriptorService</property-name>
 			<value>#{ConcreteRoleDescriptorService}</value>
