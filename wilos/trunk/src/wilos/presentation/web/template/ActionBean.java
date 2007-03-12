@@ -1,24 +1,25 @@
 /*
-Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
-Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+ * Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+ * Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program; if not,
+ * write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
 
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU
-General Public License as published by the Free Software Foundation; either version 2 of the License,
-or (at your option) any later version.
+package wilos.presentation.web.template;
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
+import java.util.Map;
 
-You should have received a copy of the GNU General Public License along with this program; if not,
-write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
-*/
-package wilos.presentation.web.template ;
-
-import java.util.Map ;
-
-import javax.faces.context.FacesContext ;
-import javax.faces.event.ActionEvent ;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 /**
  * @author BlackMilk
@@ -29,41 +30,50 @@ import javax.faces.event.ActionEvent ;
 public class ActionBean {
 
 	private String manageParticipants = "manageParticipants";
+
 	private String manageProcessManagers = "manageProcessManagers";
+
 	private String manageProjectDirectors = "manageProjectDirectors";
-	
+
 	private String affectProject = "affectProject";
+
 	private String affectProjectAsManager = "affectProjectAsManager";
-	private String updateParticipant = "updateParticipant" ;
-	
+
+	private String updateParticipant = "updateParticipant";
+
 	private String importProcessFile = "importProcessFile";
+
 	private String manageProcesses = "manageProcesses";
-	
-	private String projectCreate="projectCreate";
+
+	private String projectCreate = "projectCreate";
+
 	private String projectList = "projectList";
-	
+
 	private String adminMain = "admin_main";
+
 	private String participantMain = "participant_main";
+
 	private String projectDirectorMain = "project_director_main";
+
 	private String processManagerMain = "process_manager_main";
-	
 
 	/**
 	 * Getter of importProcessFile.
-	 *
+	 * 
 	 * @return the importProcessFile.
 	 */
 	public String getImportProcessFile() {
-		return this.importProcessFile ;
+		return this.importProcessFile;
 	}
 
 	/**
 	 * Setter of importProcessFile.
-	 *
-	 * @param _importProcessFile The importProcessFile to set.
+	 * 
+	 * @param _importProcessFile
+	 *            The importProcessFile to set.
 	 */
 	public void setImportProcessFile(String _importProcessFile) {
-		this.importProcessFile = _importProcessFile ;
+		this.importProcessFile = _importProcessFile;
 	}
 
 	/**
@@ -72,7 +82,7 @@ public class ActionBean {
 	 * @return the manageParticipant.
 	 */
 	public String getManageParticipants() {
-		return this.manageParticipants ;
+		return this.manageParticipants;
 	}
 
 	/**
@@ -82,7 +92,7 @@ public class ActionBean {
 	 *            The manageParticipant to set.
 	 */
 	public void setManageParticipants(String _manageParticipant) {
-		this.manageParticipants = _manageParticipant ;
+		this.manageParticipants = _manageParticipant;
 	}
 
 	public void selectNodeActionListener(ActionEvent _evt) {
@@ -90,224 +100,237 @@ public class ActionBean {
 		Map map = context.getExternalContext().getRequestParameterMap();
 		String mainPage = (String) map.get("mainPage");
 		String pageToShow = (String) map.get("pageToShow");
-		MenuBean menuBean = (MenuBean)context.getExternalContext().getSessionMap().get("menu");
+		MenuBean menuBean = (MenuBean) context.getExternalContext()
+				.getSessionMap().get("menu");
 		menuBean.getSelectedPanel().setTemplateName(mainPage);
 		menuBean.getSelectedPanel().setTemplateNameForARole(pageToShow);
 	}
 
 	/**
 	 * Getter of manageProcessManagers.
-	 *
+	 * 
 	 * @return the manageProcessManagers.
 	 */
 	public String getManageProcessManagers() {
-		return this.manageProcessManagers ;
+		return this.manageProcessManagers;
 	}
 
 	/**
 	 * Setter of manageProcessManagers.
-	 *
-	 * @param _manageProcessManagers The manageProcessManagers to set.
+	 * 
+	 * @param _manageProcessManagers
+	 *            The manageProcessManagers to set.
 	 */
 	public void setManageProcessManagers(String _manageProcessManagers) {
-		this.manageProcessManagers = _manageProcessManagers ;
+		this.manageProcessManagers = _manageProcessManagers;
 	}
 
 	/**
 	 * Getter of manageProjectDirectors.
-	 *
+	 * 
 	 * @return the manageProjectDirectors.
 	 */
 	public String getManageProjectDirectors() {
-		return this.manageProjectDirectors ;
+		return this.manageProjectDirectors;
 	}
 
 	/**
 	 * Setter of manageProjectDirectors.
-	 *
-	 * @param _manageProjectDirectors The manageProjectDirectors to set.
+	 * 
+	 * @param _manageProjectDirectors
+	 *            The manageProjectDirectors to set.
 	 */
 	public void setManageProjectDirectors(String _manageProjectDirectors) {
-		this.manageProjectDirectors = _manageProjectDirectors ;
+		this.manageProjectDirectors = _manageProjectDirectors;
 	}
 
 	/**
 	 * Getter of affectProject.
-	 *
+	 * 
 	 * @return the affectProject.
 	 */
 	public String getAffectProject() {
-		return this.affectProject ;
+		return this.affectProject;
 	}
 
 	/**
 	 * Setter of affectProject.
-	 *
-	 * @param _affectProject The affectProject to set.
+	 * 
+	 * @param _affectProject
+	 *            The affectProject to set.
 	 */
 	public void setAffectProject(String _affectProject) {
-		this.affectProject = _affectProject ;
+		this.affectProject = _affectProject;
 	}
 
 	/**
 	 * Getter of affectProjectAsManager.
-	 *
+	 * 
 	 * @return the affectProjectAsManager.
 	 */
 	public String getAffectProjectAsManager() {
-		return this.affectProjectAsManager ;
+		return this.affectProjectAsManager;
 	}
 
 	/**
 	 * Setter of affectProjectAsManager.
-	 *
-	 * @param _affectProjectAsManager The affectProjectAsManager to set.
+	 * 
+	 * @param _affectProjectAsManager
+	 *            The affectProjectAsManager to set.
 	 */
 	public void setAffectProjectAsManager(String _affectProjectAsManager) {
-		this.affectProjectAsManager = _affectProjectAsManager ;
+		this.affectProjectAsManager = _affectProjectAsManager;
 	}
 
 	/**
 	 * Getter of projectCreate.
-	 *
+	 * 
 	 * @return the projectCreate.
 	 */
 	public String getProjectCreate() {
-		return this.projectCreate ;
+		return this.projectCreate;
 	}
 
 	/**
 	 * Setter of projectCreate.
-	 *
-	 * @param _projectCreate The projectCreate to set.
+	 * 
+	 * @param _projectCreate
+	 *            The projectCreate to set.
 	 */
 	public void setProjectCreate(String _projectCreate) {
-		this.projectCreate = _projectCreate ;
+		this.projectCreate = _projectCreate;
 	}
 
 	/**
 	 * Getter of projectList.
-	 *
+	 * 
 	 * @return the projectList.
 	 */
 	public String getProjectList() {
-		return this.projectList ;
+		return this.projectList;
 	}
 
 	/**
 	 * Setter of projectList.
-	 *
-	 * @param _projectList The projectList to set.
+	 * 
+	 * @param _projectList
+	 *            The projectList to set.
 	 */
 	public void setProjectList(String _projectList) {
-		this.projectList = _projectList ;
+		this.projectList = _projectList;
 	}
 
 	/**
 	 * Getter of adminMain.
-	 *
+	 * 
 	 * @return the adminMain.
 	 */
 	public String getAdminMain() {
-		return this.adminMain ;
+		return this.adminMain;
 	}
 
 	/**
 	 * Setter of adminMain.
-	 *
-	 * @param _adminMain The adminMain to set.
+	 * 
+	 * @param _adminMain
+	 *            The adminMain to set.
 	 */
 	public void setAdminMain(String _adminMain) {
-		this.adminMain = _adminMain ;
+		this.adminMain = _adminMain;
 	}
 
 	/**
 	 * Getter of participantMain.
-	 *
+	 * 
 	 * @return the participantMain.
 	 */
 	public String getParticipantMain() {
-		return this.participantMain ;
+		return this.participantMain;
 	}
 
 	/**
 	 * Setter of participantMain.
-	 *
-	 * @param _participantMain The participantMain to set.
+	 * 
+	 * @param _participantMain
+	 *            The participantMain to set.
 	 */
 	public void setParticipantMain(String _participantMain) {
-		this.participantMain = _participantMain ;
+		this.participantMain = _participantMain;
 	}
 
 	/**
 	 * Getter of processManagerMain.
-	 *
+	 * 
 	 * @return the processManagerMain.
 	 */
 	public String getProcessManagerMain() {
-		return this.processManagerMain ;
+		return this.processManagerMain;
 	}
 
 	/**
 	 * Setter of processManagerMain.
-	 *
-	 * @param _processManagerMain The processManagerMain to set.
+	 * 
+	 * @param _processManagerMain
+	 *            The processManagerMain to set.
 	 */
 	public void setProcessManagerMain(String _processManagerMain) {
-		this.processManagerMain = _processManagerMain ;
+		this.processManagerMain = _processManagerMain;
 	}
 
 	/**
 	 * Getter of projectDirectorMain.
-	 *
+	 * 
 	 * @return the projectDirectorMain.
 	 */
 	public String getProjectDirectorMain() {
-		return this.projectDirectorMain ;
+		return this.projectDirectorMain;
 	}
 
 	/**
 	 * Setter of projectDirectorMain.
-	 *
-	 * @param _projectDirectorMain The projectDirectorMain to set.
+	 * 
+	 * @param _projectDirectorMain
+	 *            The projectDirectorMain to set.
 	 */
 	public void setProjectDirectorMain(String _projectDirectorMain) {
-		this.projectDirectorMain = _projectDirectorMain ;
+		this.projectDirectorMain = _projectDirectorMain;
 	}
 
 	/**
 	 * Getter of manageProcesses.
-	 *
+	 * 
 	 * @return the manageProcesses.
 	 */
 	public String getManageProcesses() {
-		return this.manageProcesses ;
+		return this.manageProcesses;
 	}
 
 	/**
 	 * Setter of manageProcesses.
-	 *
-	 * @param _manageProcesses The manageProcesses to set.
+	 * 
+	 * @param _manageProcesses
+	 *            The manageProcesses to set.
 	 */
 	public void setManageProcesses(String _manageProcesses) {
-		this.manageProcesses = _manageProcesses ;
+		this.manageProcesses = _manageProcesses;
 	}
 
 	/**
 	 * Getter of updateParticipant.
-	 *
+	 * 
 	 * @return the updateParticipant.
 	 */
 	public String getUpdateParticipant() {
-		return this.updateParticipant ;
+		return this.updateParticipant;
 	}
 
 	/**
 	 * Setter of updateParticipant.
-	 *
-	 * @param _updateParticipant The updateParticipant to set.
+	 * 
+	 * @param _updateParticipant
+	 *            The updateParticipant to set.
 	 */
 	public void setUpdateParticipant(String _updateParticipant) {
-		this.updateParticipant = _updateParticipant ;
+		this.updateParticipant = _updateParticipant;
 	}
 }
