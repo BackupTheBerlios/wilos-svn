@@ -1,18 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- 
-Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
-Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
-
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU
-General Public License as published by the Free Software Foundation; either version 2 of the License,
-or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with this program; if not,
-write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
+	Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+	Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+	
+	This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+	General Public License as published by the Free Software Foundation; either version 2 of the License,
+	or (at your option) any later version.
+	
+	This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+	even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+	
+	You should have received a copy of the GNU General Public License along with this program; if not,
+	write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
 -->
 
 <!DOCTYPE faces-config PUBLIC
@@ -20,7 +20,6 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
         "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
 
 <faces-config>
-
 	<application>
 		<locale-config>
 			<default-locale>en</default-locale>
@@ -36,9 +35,6 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 	</application>
 
 
-	<!-- =============================================================== -->
-	<!-- ========================= PSI2 Beans ========================== -->
-	<!-- =============================================================== -->
 	<managed-bean>
 		<managed-bean-name>LoginBean</managed-bean-name>
 		<managed-bean-class>
@@ -164,15 +160,21 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 	</managed-bean>
 
 	<managed-bean>
-		<managed-bean-name>ConcreteRoleAffectationBean</managed-bean-name>
-		<managed-bean-class>wilos.presentation.web.role.ConcreteRoleAffectationBean</managed-bean-class>
+		<managed-bean-name>
+			ConcreteRoleAffectationBean
+		</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.role.ConcreteRoleAffectationBean
+		</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
-			<property-name>concreteRoleAffectationService</property-name>
+			<property-name>
+				concreteRoleAffectationService
+			</property-name>
 			<value>#{ConcreteRoleAffectationService}</value>
 		</managed-property>
 		<managed-property>
-		<property-name>participantService</property-name>
+			<property-name>participantService</property-name>
 			<value>#{ParticipantService}</value>
 		</managed-property>
 		<managed-property>
@@ -183,7 +185,9 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 
 	<managed-bean>
 		<managed-bean-name>ProcessBean</managed-bean-name>
-		<managed-bean-class>wilos.presentation.web.process.ProcessBean</managed-bean-class>
+		<managed-bean-class>
+			wilos.presentation.web.process.ProcessBean
+		</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
 			<property-name>processService</property-name>
@@ -222,10 +226,12 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 			<value>#{ParticipantService}</value>
 		</managed-property>
 	</managed-bean>
-	
-		<managed-bean>
+
+	<managed-bean>
 		<managed-bean-name>RolesInstanciationBean</managed-bean-name>
-		<managed-bean-class>wilos.presentation.web.role.RolesInstanciationBean</managed-bean-class>
+		<managed-bean-class>
+			wilos.presentation.web.role.RolesInstanciationBean
+		</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
 			<property-name>processService</property-name>
@@ -248,14 +254,15 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 			<value>#{ProjectService}</value>
 		</managed-property>
 		<managed-property>
-			<property-name>concreteRoleInstanciationService</property-name>
+			<property-name>
+				concreteRoleInstanciationService
+			</property-name>
 			<value>#{ConcreteRoleInstanciationService}</value>
 		</managed-property>
 	</managed-bean>
-	
+
 
 	<!-- =============================================================== -->
-	<!-- ========================= PSI2 Bean =========================== -->
 	<!-- ======================== Navigation =========================== -->
 	<managed-bean>
 		<managed-bean-name>menu</managed-bean-name>
@@ -274,7 +281,6 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 	</managed-bean>
 
 	<!-- =============================================================== -->
-	<!-- ========================= PSI2 Bean =========================== -->
 	<!-- ======================== Connection =========================== -->
 	<managed-bean>
 		<managed-bean-name>connect</managed-bean-name>
@@ -284,10 +290,6 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
-
-	<!-- =============================================================== -->
-	<!-- ======================== WOOPS2 Beans ========================= -->
-	<!-- =============================================================== -->
 	<managed-bean>
 		<managed-bean-name>XmlFileImportBean</managed-bean-name>
 		<managed-bean-class>
@@ -317,7 +319,6 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 			wilos.presentation.web.validators.EqualValidator
 		</validator-class>
 	</validator>
-
 
 	<managed-bean>
 		<managed-bean-name>TreeBean</managed-bean-name>
@@ -362,7 +363,9 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 			<value>#{ProjectService}</value>
 		</managed-property>
 		<managed-property>
-			<property-name>concreteBreakdownElementService</property-name>
+			<property-name>
+				concreteBreakdownElementService
+			</property-name>
 			<value>#{ConcreteBreakdownElementService}</value>
 		</managed-property>
 	</managed-bean>
@@ -414,7 +417,9 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 			<value>#{ConcretePhaseService}</value>
 		</managed-property>
 		<managed-property>
-			<property-name>concreteBreakdownElementService</property-name>
+			<property-name>
+				concreteBreakdownElementService
+			</property-name>
 			<value>#{ConcreteBreakdownElementService}</value>
 		</managed-property>
 		<managed-property>
@@ -428,7 +433,9 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 	</managed-bean>
 
 	<managed-bean>
-		<managed-bean-name>ConcreteActivityViewerBean</managed-bean-name>
+		<managed-bean-name>
+			ConcreteActivityViewerBean
+		</managed-bean-name>
 		<managed-bean-class>
 			wilos.presentation.web.viewer.ConcreteActivityViewerBean
 		</managed-bean-class>
@@ -446,13 +453,17 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 			<value>#{ProjectService}</value>
 		</managed-property>
 		<managed-property>
-			<property-name>concreteBreakdownElementService</property-name>
+			<property-name>
+				concreteBreakdownElementService
+			</property-name>
 			<value>#{ConcreteBreakdownElementService}</value>
 		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
-		<managed-bean-name>ConcreteIterationViewerBean</managed-bean-name>
+		<managed-bean-name>
+			ConcreteIterationViewerBean
+		</managed-bean-name>
 		<managed-bean-class>
 			wilos.presentation.web.viewer.ConcreteIterationViewerBean
 		</managed-bean-class>
@@ -462,7 +473,9 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 			<value>#{ConcreteIterationService}</value>
 		</managed-property>
 		<managed-property>
-			<property-name>concreteBreakdownElementService</property-name>
+			<property-name>
+				concreteBreakdownElementService
+			</property-name>
 			<value>#{ConcreteBreakdownElementService}</value>
 		</managed-property>
 		<managed-property>
@@ -486,7 +499,9 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 			<value>#{ProjectService}</value>
 		</managed-property>
 		<managed-property>
-			<property-name>concreteBreakdownElementService</property-name>
+			<property-name>
+				concreteBreakdownElementService
+			</property-name>
 			<value>#{ConcreteBreakdownElementService}</value>
 		</managed-property>
 		<managed-property>
@@ -497,7 +512,9 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 
 	<managed-bean>
 		<managed-bean-name>Woops2ProcessBean</managed-bean-name>
-		<managed-bean-class>wilos.presentation.web.expandabletable.ProcessBean</managed-bean-class>
+		<managed-bean-class>
+			wilos.presentation.web.expandabletable.ProcessBean
+		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>processService</property-name>
@@ -515,7 +532,9 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 
 	<managed-bean>
 		<managed-bean-name>ExpTableBean</managed-bean-name>
-		<managed-bean-class>wilos.presentation.web.expandabletable.ExpTableBean</managed-bean-class>
+		<managed-bean-class>
+			wilos.presentation.web.expandabletable.ExpTableBean
+		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>processService</property-name>
