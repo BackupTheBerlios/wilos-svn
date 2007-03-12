@@ -107,19 +107,7 @@ public class OptionFrame extends JDialog {
 	{
 		if (lang == null)
 		{
-			Vector<Locale> locs = new Vector<Locale>();
-			
-			File locsDir = new File("src/wilos/presentation/assistant/ressources");
-			File [] ficLocs = locsDir.listFiles(new FileFilter(){
-				public boolean accept (File file){
-			      String nomFichier = file.getName().toLowerCase(); 
-			      return nomFichier.endsWith(".properties");
-				}
-			});
-			for (File f : ficLocs)
-			{
-				locs.add (new Locale (f.getName().substring(6,8)));
-			}
+			Vector<Locale> locs = Bundle.getAvailableLocales();
 			lang = new JComboBox(locs);
 			lang.setRenderer(new LocaleRenderer());
 			lang.setBounds(new Rectangle(280,20,80,20));
