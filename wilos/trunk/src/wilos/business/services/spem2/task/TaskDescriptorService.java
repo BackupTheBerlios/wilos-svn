@@ -55,6 +55,7 @@ public class TaskDescriptorService {
 	public void taskDescriptorInstanciation(Project _project, TaskDescriptor _td, ConcreteActivity _cact, int _occ) {
 
 		if (_occ > 0) {
+			this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(_cact);
 			for (int i = 1; i <= _occ; i++) {
 
 				ConcreteTaskDescriptor ctd = new ConcreteTaskDescriptor();
@@ -98,6 +99,7 @@ public class TaskDescriptorService {
 		// concreteactivities of the parent of _phase
 		if (_occ > 0) {
 			for (ConcreteActivity tmp : _cacts) {
+				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(tmp);
 				this.taskDescriptorInstanciation(_project, _td, tmp, _occ);
 			}
 		}

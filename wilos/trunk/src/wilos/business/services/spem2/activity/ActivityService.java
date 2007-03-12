@@ -19,7 +19,6 @@ package wilos.business.services.spem2.activity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -134,32 +133,39 @@ public class ActivityService {
 	 * @param _occ
 	 * @param _isInstanciated
 	 */
-	public void activityUpdate(Project _project, Activity _act, List<HashMap<String, Object>> _list, int _occ) {
+	public void activityUpdate(Project _project, Activity _act, Set<ConcreteActivity> _cacts, List<HashMap<String, Object>> _list, int _occ) {
 		
-		Set<Activity> parents = _act.getSuperActivities();
+		/*Set<Activity> parents = _act.getSuperActivities();
 		Iterator i = parents.iterator();
 		Activity parent = (Activity) i.next();
 		
 		Set<ConcreteActivity> cacts = new HashSet<ConcreteActivity>();
-		cacts.addAll(this.getAllConcreteActivities(parent));
+		cacts.addAll(this.getAllConcreteActivities(parent));*/
 		
 		// one concretephase at least to insert in all attached concreteactivities of the parent of _phase
 		if (_occ > 0) {
-			for (ConcreteActivity tmp : cacts) {
+			for (ConcreteActivity tmp : _cacts) {
 				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(tmp);
 				this.activityInstanciation(_project, _act, tmp, _list, _occ);
-			}
+				
+				// FIXME a priori tmp pe etre de type project, cph, cit ou cact
+				/*this.concreteActivityDao.saveOrUpdateConcreteActivity(tmp);
+				System.out.println("### ConcreteActivity update");*/
+			}			
 		} else {
 			
 			// diving in all the concreteBreakdownElements to looking for update
 			Set<BreakdownElement> bdes = new HashSet<BreakdownElement>();
 			bdes.addAll(this.getInstanciableBreakdownElements(_act));
 			
+			Set<ConcreteActivity> cacts = new HashSet<ConcreteActivity>();
+			cacts.addAll(this.getAllConcreteActivities(_act));
+			
 			for (BreakdownElement bde : bdes) {
 				if (bde instanceof Activity) {
 					Activity act = (Activity) bde;
 					int occ = this.giveNbOccurences(act.getId(), _list);
-					this.activityUpdate(_project, act, _list, occ);
+					this.activityUpdate(_project, act, cacts, _list, occ);
 				} else {
 					if (bde instanceof TaskDescriptor) {
 						TaskDescriptor td = (TaskDescriptor) bde;

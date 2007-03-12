@@ -847,25 +847,31 @@ public class ProcessService {
 		for (BreakdownElement bde : forInstanciation) {
 			if (bde instanceof Phase) {
 				Phase ph = (Phase) bde;
+				Set<ConcreteActivity> cacts = new HashSet<ConcreteActivity>();
+				cacts.add(_project);
 				int occ = this.giveNbOccurences(ph.getId(), list);
-				this.phaseService.phaseUpdate(_project, ph, list, occ);
+				this.phaseService.phaseUpdate(_project, ph, cacts, list, occ);
 			} else {
 				if (bde instanceof Iteration) {
 					Iteration it = (Iteration) bde;
+					Set<ConcreteActivity> cacts = new HashSet<ConcreteActivity>();
+					cacts.add(_project);
 					int occ = this.giveNbOccurences(it.getId(), list);
-					this.iterationService.iterationUpdate(_project, it, list, occ);
+					this.iterationService.iterationUpdate(_project, it, cacts, list, occ);
 				} else {
 					if (bde instanceof Activity) {
 						Activity act = (Activity) bde;
+						Set<ConcreteActivity> cacts = new HashSet<ConcreteActivity>();
+						cacts.add(_project);
 						int occ = this.giveNbOccurences(act.getId(), list);
-						this.activityService.activityUpdate(_project, act, list, occ);
+						this.activityService.activityUpdate(_project, act, cacts, list, occ);
 					} else {
 						if (bde instanceof TaskDescriptor) {
 							TaskDescriptor td = (TaskDescriptor) bde;
-							Set<ConcreteActivity> cact = new HashSet<ConcreteActivity>();
-							cact.add(_project);
+							Set<ConcreteActivity> cacts = new HashSet<ConcreteActivity>();
+							cacts.add(_project);
 							int occ = this.giveNbOccurences(td.getId(), list);
-							this.taskDescriptorService.taskDescriptorUpdate(_project, td, cact, occ);
+							this.taskDescriptorService.taskDescriptorUpdate(_project, td, cacts, occ);
 						}
 					}
 				}

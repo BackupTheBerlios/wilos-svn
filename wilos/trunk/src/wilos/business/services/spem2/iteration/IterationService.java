@@ -19,7 +19,6 @@ package wilos.business.services.spem2.iteration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -149,19 +148,23 @@ public class IterationService {
 	 * @param _occ
 	 * @param _isInstanciated
 	 */
-	public void iterationUpdate(Project _project, Iteration _it, List<HashMap<String, Object>> _list, int _occ) {
+	public void iterationUpdate(Project _project, Iteration _it, Set<ConcreteActivity> _cacts, List<HashMap<String, Object>> _list, int _occ) {
 		
-		Set<Activity> parents = _it.getSuperActivities();
+		/*Set<Activity> parents = _it.getSuperActivities();
 		Iterator i = parents.iterator();
 		Activity parent = (Activity) i.next();
 		
 		Set<ConcreteActivity> cacts = new HashSet<ConcreteActivity>();
-		cacts.addAll(this.activityService.getAllConcreteActivities(parent));
+		cacts.addAll(this.activityService.getAllConcreteActivities(parent));*/
 		
 		// one concretephase at least to insert in all attached concreteactivities of the parent of _phase
 		if (_occ > 0) {
-			for (ConcreteActivity tmp : cacts) {
+			for (ConcreteActivity tmp : _cacts) {
 				this.iterationInstanciation(_project, _it, tmp, _list, _occ);
+				
+				//FIXME a priori tmp pe etre de type project, cph ou cit
+				/*this.concreteActivityDao.saveOrUpdateConcreteActivity(tmp);
+				System.out.println("### ConcreteActivity update");*/
 			}
 		} else {
 			
@@ -169,16 +172,19 @@ public class IterationService {
 			Set<BreakdownElement> bdes = new HashSet<BreakdownElement>();
 			bdes.addAll(this.activityService.getInstanciableBreakdownElements(_it));
 			
+			Set<ConcreteActivity> cacts = new HashSet<ConcreteActivity>();
+			cacts.addAll(this.getAllConcreteIterations(_it));
+			
 			for (BreakdownElement bde : bdes) {
 				if (bde instanceof Iteration) {
 					Iteration it = (Iteration) bde;
 					int occ = this.giveNbOccurences(it.getId(), _list);
-					this.iterationUpdate(_project, it, _list, occ);
+					this.iterationUpdate(_project, it, cacts, _list, occ);
 				} else {
 					if (bde instanceof Activity) {
 						Activity act = (Activity) bde;
 						int occ = this.giveNbOccurences(act.getId(), _list);
-						this.activityService.activityUpdate(_project, act, _list, occ);
+						this.activityService.activityUpdate(_project, act, cacts, _list, occ);
 					} else {
 						if (bde instanceof TaskDescriptor) {
 							TaskDescriptor td = (TaskDescriptor) bde;

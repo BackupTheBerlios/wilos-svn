@@ -1,5 +1,4 @@
-<!-- 
-Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+<!--Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
 Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU
@@ -161,6 +160,7 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 								<ice:selectOneMenu disabled="#{Woops2ProcessBean.readOnly}" partialSubmit="true" value="#{Woops2ProcessBean.selectedProcessGuid}" valueChangeListener="#{Woops2ProcessBean.changeProcessSelectionListener}">
 									<f:selectItems value="#{Woops2ProcessBean.processes}" />
 								</ice:selectOneMenu>
+								<!--<ice:commandButton visible="#{Woops2ProcessBean.isVisibleExpTable}" value="#{ExpTableBean.instanciationBtName}" action="#{ExpTableBean.saveProjectInstanciation}" styleClass="smallbutton"/>-->
 								<ice:commandButton disabled="#{Woops2ProcessBean.readOnly}" visible="#{Woops2ProcessBean.isVisibleExpTable}" value="#{ExpTableBean.instanciationBtName}" action="#{ExpTableBean.saveProjectInstanciation}" styleClass="smallbutton"/>
 							</ice:panelGroup>
 						</f:subview>
