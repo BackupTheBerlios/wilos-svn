@@ -38,6 +38,7 @@
 							styleClass=".iceOutputProgressIndeterminate" /></center>
 					</ice:panelGroup>
 					<br />
+					<!--  
 					<ice:panelGroup styleClass="contentIncludePanelGroup"
 						style="text-align:center">
 						<img src="images/epf_logo.jpg" />
@@ -49,7 +50,7 @@
 						<ice:outputText
 							value="#{msgs['XmlFileImportBean.epfDescription']}"
 							styleClass="" />
-					</ice:panelGroup>
+					</ice:panelGroup> -->
 				</ice:panelGrid></center>
 			</ice:panelTab>
 		</ice:panelTabSet>
