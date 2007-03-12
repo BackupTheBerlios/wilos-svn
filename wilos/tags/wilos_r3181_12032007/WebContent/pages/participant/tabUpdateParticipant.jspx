@@ -1,0 +1,65 @@
+<!-- 
+Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+General Public License as published by the Free Software Foundation; either version 2 of the License,
+or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program; if not,
+write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
+-->
+<ice:form id="participant_form">	
+	<ice:inputHidden value="#{ParticipantBean.isSetParticipantFromSession}"/>
+		<ice:panelTabSet id="panelTabSet_participant_subscribe"
+			styleClass="componentPanelTabSetLayout">
+			
+			<ice:panelTab id="panelTab_participant_roles" label="#{msgs['component.participantUpdate.tabTitle']}" imageDir="images">
+			<ice:panelGrid columns="2">			
+				<ice:outputText value="#{msgs['component.forminscription.lastname']}" />					
+				<ice:inputText id="nom" title="Nom"
+					value="#{ParticipantBean.participant.name}" required="false" />
+	
+				<ice:outputText
+					value="#{msgs['component.forminscription.firstname']}" />
+				<ice:inputText id="prenom"
+					value="#{ParticipantBean.participant.firstname}" required="false" />
+	
+				<ice:outputText value="#{msgs['component.forminscription.email']}" />
+				<ice:inputText id="email"
+					value="#{ParticipantBean.participant.emailAddress}"
+					validator="#{ParticipantBean.emailValidation}" required="false">
+				</ice:inputText>
+				
+				<br/><br/>
+				
+				<ice:outputText value="#{msgs['component.participantUpdate.password']}"/>
+				<ice:inputSecret id="equal1"
+					value="#{ParticipantBean.participant.password}" required="false"/>
+	
+				<ice:outputText
+					value="#{msgs['component.participantUpdate.confirmPassword']}"/>
+				<ice:inputSecret id="equal2"
+					value="#{ParticipantBean.passwordConfirmation}"
+					validator="#{ParticipantBean.passwordEqualValidation}"
+					required="false">
+					<f:param name="forPassword"
+						value="#{ParticipantBean.participant.password}" />
+				</ice:inputSecret>		
+			</ice:panelGrid>
+			<ice:panelGrid columns="1">
+				<ice:outputText
+					value="#{msgs['component.participantUpdate.infoPassword']}"/>
+				<br/>
+				<ice:commandButton
+					value="#{msgs['component.participantUpdate.validationButton']}"
+					action="#{ParticipantBean.updateParticipantAction}"
+					styleClass="smallbutton" />
+			</ice:panelGrid>
+			</ice:panelTab>
+		</ice:panelTabSet>	
+</ice:form>
