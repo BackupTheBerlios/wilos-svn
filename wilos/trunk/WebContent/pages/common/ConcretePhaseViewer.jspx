@@ -23,7 +23,7 @@
 					<ice:outputText value="#{msgs['viewer.concreteName']}" />
 					<ice:inputText
 						value="#{ConcretePhaseViewerBean.concretePhase.concreteName}"
-						readonly="#{ConcretePhaseViewerBean.isInputNameReadOnly}" />
+						disabled="#{ConcretePhaseViewerBean.changeButtonIsDisabled}" size="60" />
 					<ice:commandButton value="#{msgs['button.changeconcretename']}"
 						action="#{ConcretePhaseViewerBean.changeConcreteName}"
 						disabled="#{ConcretePhaseViewerBean.changeButtonIsDisabled}"

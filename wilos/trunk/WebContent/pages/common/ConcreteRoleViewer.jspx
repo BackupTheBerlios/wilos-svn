@@ -21,7 +21,8 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 
 				<ice:panelGrid id="panelGridRoles" styleClass="contentLayoutGridStyle" columns="3">
 					<ice:outputText value="#{msgs['viewer.concreteName']}" />
-					<ice:inputText	value="#{ConcreteRoleViewerBean.concreteRoleDescriptor.concreteName}" disabled="#{ConcreteRoleViewerBean.changeButtonIsDisabled}"/>
+					<ice:inputText	value="#{ConcreteRoleViewerBean.concreteRoleDescriptor.concreteName}"
+									disabled="#{ConcreteRoleViewerBean.changeButtonIsDisabled}" size="60"/>
 					<ice:commandButton value="#{msgs['button.changeconcretename']}" 
 										action="#{ConcreteRoleViewerBean.changeConcreteName}" 
 										disabled="#{ConcreteRoleViewerBean.changeButtonIsDisabled}"

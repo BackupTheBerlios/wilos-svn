@@ -70,7 +70,7 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 					<ice:outputText value="#{msgs['viewer.concreteName']}" />
 					<ice:inputText
 						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.concreteName}"
-						readonly="#{ConcreteTaskViewerBean.isInputNameReadOnly}"/>
+						disabled="#{ConcreteTaskViewerBean.changeButtonIsDisabled}" size="60"/>
 					<ice:commandButton value="#{msgs['button.changeconcretename']}"
 						action="#{ConcreteTaskViewerBean.changeConcreteName}"
 						disabled="#{ConcreteTaskViewerBean.changeButtonIsDisabled}"

@@ -23,7 +23,7 @@
 					<ice:outputText value="#{msgs['viewer.concreteName'] }" />
 					<ice:inputText
 						value="#{ConcreteActivityViewerBean.concreteActivity.concreteName}"
-						readonly="#{ConcreteActivityViewerBean.isInputNameReadOnly}" />
+						disabled="#{ConcreteActivityViewerBean.changeButtonIsDisabled}" size="60"/>
 					<ice:commandButton value="#{msgs['button.changeconcretename']}"
 						action="#{ConcreteActivityViewerBean.changeConcreteName}"
 						disabled="#{ConcreteActivityViewerBean.changeButtonIsDisabled}"
