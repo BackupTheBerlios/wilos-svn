@@ -77,6 +77,18 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 		// refresh the tree
 		super.refreshProjectTree();
 	}
+	
+	
+	/**
+	 * action calledto change the concrete name of a concrete role
+	 * @return
+	 */
+	public void changeConcreteName()
+	{
+		this.concreteRoleDescriptorService.saveConcreteRoleDescriptor(this.concreteRoleDescriptor);
+		//Refresh the treebean.
+		super.refreshProjectTree();
+	}
 
 	public ConcreteRoleDescriptor getConcreteRoleDescriptor() {
 		return concreteRoleDescriptor;

@@ -212,7 +212,7 @@
 		<managed-bean-class>
 			wilos.presentation.web.viewer.ConcreteRoleViewerBean
 		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>concreteRoleDescriptorService</property-name>
 			<value>#{ConcreteRoleDescriptorService}</value>
@@ -224,6 +224,16 @@
 		<managed-property>
 			<property-name>participantService</property-name>
 			<value>#{ParticipantService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>
+				concreteBreakdownElementService
+			</property-name>
+			<value>#{ConcreteBreakdownElementService}</value>
 		</managed-property>
 	</managed-bean>
 
