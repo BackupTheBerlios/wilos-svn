@@ -31,8 +31,13 @@ import wilos.business.services.misc.concreteactivity.ConcreteActivityService;
 import wilos.business.services.spem2.role.RoleDescriptorService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.hibernate.misc.concreteactivity.ConcreteActivityDao;
+import wilos.hibernate.misc.concreteiteration.ConcreteIterationDao;
+import wilos.hibernate.misc.concretephase.ConcretePhaseDao;
+import wilos.hibernate.misc.project.ProjectDao;
 import wilos.hibernate.spem2.activity.ActivityDao;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.concreteiteration.ConcreteIteration;
+import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
@@ -51,6 +56,12 @@ public class ActivityService {
 
 	private ActivityDao activityDao;
 
+	private ConcretePhaseDao concretePhaseDao;
+	
+	private ConcreteIterationDao concreteIterationDao;
+	
+	private ProjectDao projectDao;
+	
 	private ConcreteActivityDao concreteActivityDao;
 
 	/*
@@ -149,8 +160,28 @@ public class ActivityService {
 				this.activityInstanciation(_project, _act, tmp, _list, _occ);
 				
 				// FIXME a priori tmp pe etre de type project, cph, cit ou cact
-				/*this.concreteActivityDao.saveOrUpdateConcreteActivity(tmp);
-				System.out.println("### ConcreteActivity update");*/
+				if (tmp instanceof Project) {
+					Project pj = (Project) tmp;
+					this.projectDao.saveOrUpdateProject(pj);
+				} else {
+					if (tmp instanceof ConcretePhase) {
+						ConcretePhase cph = (ConcretePhase) tmp;
+						this.concretePhaseDao.saveOrUpdateConcretePhase(cph);
+					} else {
+						if (tmp instanceof ConcreteIteration) {
+							ConcreteIteration cit = (ConcreteIteration) tmp;
+							this.concreteIterationDao.saveOrUpdateConcreteIteration(cit);
+						} else {
+							if (tmp instanceof ConcreteActivity) {
+								ConcreteActivity cact = (ConcreteActivity) tmp;
+								this.concreteActivityDao.saveOrUpdateConcreteActivity(cact);
+							}
+						}
+					}
+				}
+				
+				this.concreteActivityDao.saveOrUpdateConcreteActivity(tmp);
+				System.out.println("### ConcreteActivity update");
 			}			
 		} else {
 			
@@ -159,6 +190,7 @@ public class ActivityService {
 			bdes.addAll(this.getInstanciableBreakdownElements(_act));
 			
 			Set<ConcreteActivity> cacts = new HashSet<ConcreteActivity>();
+			//FIXME idem phaseService
 			cacts.addAll(this.getAllConcreteActivities(_act));
 			
 			for (BreakdownElement bde : bdes) {
@@ -358,6 +390,48 @@ public class ActivityService {
 	 * public void setPhaseService(PhaseService phaseService) {
 	 * this.phaseService = phaseService; }
 	 */
+
+	/**
+	 * @return the concreteIterationDao
+	 */
+	public ConcreteIterationDao getConcreteIterationDao() {
+		return concreteIterationDao;
+	}
+
+	/**
+	 * @param concreteIterationDao the concreteIterationDao to set
+	 */
+	public void setConcreteIterationDao(ConcreteIterationDao concreteIterationDao) {
+		this.concreteIterationDao = concreteIterationDao;
+	}
+
+	/**
+	 * @return the concretePhaseDao
+	 */
+	public ConcretePhaseDao getConcretePhaseDao() {
+		return concretePhaseDao;
+	}
+
+	/**
+	 * @param concretePhaseDao the concretePhaseDao to set
+	 */
+	public void setConcretePhaseDao(ConcretePhaseDao concretePhaseDao) {
+		this.concretePhaseDao = concretePhaseDao;
+	}
+
+	/**
+	 * @return the projectDao
+	 */
+	public ProjectDao getProjectDao() {
+		return projectDao;
+	}
+
+	/**
+	 * @param projectDao the projectDao to set
+	 */
+	public void setProjectDao(ProjectDao projectDao) {
+		this.projectDao = projectDao;
+	}
 
 	/**
 	 * @return the roleDescriptorService

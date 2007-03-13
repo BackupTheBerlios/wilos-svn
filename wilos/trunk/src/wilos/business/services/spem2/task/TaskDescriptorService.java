@@ -56,6 +56,7 @@ public class TaskDescriptorService {
 
 		if (_occ > 0) {
 			this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(_cact);
+			this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(_cact);
 			for (int i = 1; i <= _occ; i++) {
 
 				ConcreteTaskDescriptor ctd = new ConcreteTaskDescriptor();

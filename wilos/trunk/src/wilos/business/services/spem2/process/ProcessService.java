@@ -839,6 +839,12 @@ public class ProcessService {
 		System.out.println("### Project update");
 	}
 	
+	/**
+	 * 
+	 * @param _project
+	 * @param _process
+	 * @param list
+	 */
 	public void projectUpdate(Project _project, Process _process, List<HashMap<String, Object>> list) {
 
 		// elements of collection getting

@@ -173,6 +173,7 @@ public class IterationService {
 			bdes.addAll(this.activityService.getInstanciableBreakdownElements(_it));
 			
 			Set<ConcreteActivity> cacts = new HashSet<ConcreteActivity>();
+			//FIXME idem phaseService
 			cacts.addAll(this.getAllConcreteIterations(_it));
 			
 			for (BreakdownElement bde : bdes) {

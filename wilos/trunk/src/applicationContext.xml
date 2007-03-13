@@ -505,6 +505,9 @@
 		class="wilos.business.services.spem2.activity.ActivityService">
 		<property name="activityDao" ref="ActivityDao" />
 		<property name="concreteActivityDao" ref="ConcreteActivityDao" />
+		<property name="concreteIterationDao" ref="ConcreteIterationDao" />
+		<property name="concretePhaseDao" ref="ConcretePhaseDao" />
+		<property name="projectDao" ref="ProjectDao" />
 		<property name="concreteActivityService" ref="ConcreteActivityService" />
 		<!-- <property name="phaseService" ref="PhaseService" />
 		<property name="iterationService" ref="IterationService" />-->

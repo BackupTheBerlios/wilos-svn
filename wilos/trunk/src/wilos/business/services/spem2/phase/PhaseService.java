@@ -178,6 +178,7 @@ public class PhaseService {
 			bdes.addAll(this.activityService.getInstanciableBreakdownElements(_phase));
 			
 			Set<ConcreteActivity> cacts = new HashSet<ConcreteActivity>();
+			//FIXME faire et appeler la methode getAllConcretePhasesForAProject
 			cacts.addAll(this.getAllConcretePhases(_phase));
 			
 			for (BreakdownElement bde : bdes) {
