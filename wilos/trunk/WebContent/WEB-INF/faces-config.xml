@@ -353,7 +353,7 @@
 		<managed-bean-class>
 			wilos.presentation.web.viewer.ViewerBean
 		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>webSessionService</property-name>
 			<value>#{WebSessionService}</value>
@@ -375,7 +375,7 @@
 		<managed-bean-class>
 			wilos.presentation.web.viewer.ConcreteTaskViewerBean
 		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>webSessionService</property-name>
 			<value>#{WebSessionService}</value>
@@ -411,7 +411,7 @@
 		<managed-bean-class>
 			wilos.presentation.web.viewer.ConcretePhaseViewerBean
 		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>concretePhaseService</property-name>
 			<value>#{ConcretePhaseService}</value>
@@ -439,7 +439,7 @@
 		<managed-bean-class>
 			wilos.presentation.web.viewer.ConcreteActivityViewerBean
 		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>concreteActivityService</property-name>
 			<value>#{ConcreteActivityService}</value>
@@ -467,7 +467,7 @@
 		<managed-bean-class>
 			wilos.presentation.web.viewer.ConcreteIterationViewerBean
 		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>concreteIterationService</property-name>
 			<value>#{ConcreteIterationService}</value>
@@ -493,7 +493,7 @@
 		<managed-bean-class>
 			wilos.presentation.web.viewer.ProjectViewerBean
 		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>projectService</property-name>
 			<value>#{ProjectService}</value>
