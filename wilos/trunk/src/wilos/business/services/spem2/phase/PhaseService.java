@@ -106,7 +106,9 @@ public class PhaseService {
 			int nbCph = 0;
 			for (ConcreteBreakdownElement tmp : _cact.getConcreteBreakdownElements()) {
 				if (tmp instanceof ConcretePhase) {
-					nbCph++;
+					if (((ConcretePhase) tmp).getPhase().equals(_phase)) {
+						nbCph++;
+					}
 				}
 			}
 			for (int i = nbCph + 1; i <= nbCph + _occ; i++) {

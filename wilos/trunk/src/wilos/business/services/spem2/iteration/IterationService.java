@@ -112,7 +112,9 @@ public class IterationService {
 			int nbCit = 0;
 			for (ConcreteBreakdownElement tmp : _cact.getConcreteBreakdownElements()) {
 				if (tmp instanceof ConcreteIteration) {
-					nbCit++;
+					if (((ConcreteIteration) tmp).getIteration().equals(_iteration)) {
+						nbCit++;
+					}
 				}
 			}
 			for (int i = nbCit + 1; i <= nbCit + _occ; i++) {

@@ -96,7 +96,9 @@ public class ActivityService {
 			int nbCact = 0;
 			for (ConcreteBreakdownElement tmp : _cact.getConcreteBreakdownElements()) {
 				if (tmp instanceof ConcreteActivity) {
-					nbCact++;
+					if (((ConcreteActivity) tmp).getActivity().equals(_activity)) {
+						nbCact++;
+					}
 				}
 			}
 			for (int i = nbCact + 1; i <= nbCact + _occ; i++) {
