@@ -1894,6 +1894,57 @@ public class XMLParserTest extends TestCase {
 		for (int i=0; i<160; ++i) System.out.println();
 	}
 	
+	/**
+	 * Plan Iteration must not have additional Roles because its not used in Wilos, but in a normal
+	 * case, they should be parsed, and this test case rewritten
+	 */
+	public void testOpenUpPlanIterationHasOneMainRoleAndNoAdditionalRole() {
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
+		Activity IterationAct = null;
+		boolean trouve = false ;
+		// First Step, Stop on Inception Iteration
+		Iterator<BreakdownElement> itTopLevelAct = OpenUPProcess.getBreakdownElements().iterator();
+		
+		while (!trouve && itTopLevelAct.hasNext()) {
+			BreakdownElement tmpBde = itTopLevelAct.next();
+			IterationAct = (Activity) tmpBde;
+			trouve = (IterationAct.getPresentationName().equals("Elaboration Iteration [1..n]"));
+		}
+		assertTrue(trouve);
+		trouve= false ;
+		//	get the Activity Initiate Project
+		Iterator<BreakdownElement> itSecondLevelAct = IterationAct.getBreakdownElements().iterator();
+		BreakdownElement tmpBde = null ;
+		while (!trouve && itSecondLevelAct.hasNext()) {
+			tmpBde = itSecondLevelAct.next();
+			trouve = (tmpBde.getPresentationName().equals("Manage Iteration"));
+		}
+		assertTrue(trouve);
+		Activity manageRequirements = (Activity)tmpBde ;
+		
+		TaskDescriptor planIteration = null;
+		for (BreakdownElement bde : manageRequirements.getBreakdownElements()) {
+			if (bde.getPresentationName().equals("Plan Iteration")) {
+				planIteration = (TaskDescriptor) bde; 
+			}
+		}
+		assertNotNull(planIteration);
+		
+		assertNotNull(planIteration.getTaskDefinition());
+		
+		assertEquals(planIteration.getTaskDefinition().getName(), "plan_iteration");
+		
+		assertNotNull(planIteration.getMainRole());
+		
+		assertEquals(planIteration.getMainRole().getPresentationName(), "Project Manager");
+		
+		assertEquals(planIteration.getMainRole().getRoleDefinition().getName(), "project_manager");
+		
+		assertEquals(planIteration.getAdditionalRoles().size(), 0);
+	}
+	
 	
 	/*
 	public void testGetProcess(){
