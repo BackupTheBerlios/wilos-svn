@@ -22,6 +22,7 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.EventObject;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
@@ -35,6 +36,9 @@ import org.apache.commons.logging.LogFactory;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.spem2.process.Process;
+import wilos.presentation.web.template.ActionBean;
+import wilos.presentation.web.template.MenuBean;
+import wilos.presentation.web.tree.TreeBean;
 
 import com.icesoft.faces.component.inputfile.InputFile;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
@@ -128,6 +132,7 @@ public class XmlFileImportBean {
 					FacesContext facesContext = FacesContext.getCurrentInstance();
 					facesContext.addMessage(null, message);
 					file.delete() ;
+					this.percent = -1;
 					return ;
 				}
 				else {
@@ -252,6 +257,16 @@ public class XmlFileImportBean {
 					message.setSeverity(FacesMessage.SEVERITY_INFO);
 					FacesContext facesContext = FacesContext.getCurrentInstance();
 					facesContext.addMessage(null, message);
+					
+					
+					/* Forwards to the list of processes */
+					FacesContext context = FacesContext.getCurrentInstance();
+					ActionBean actionbean = (ActionBean) context.getApplication()
+							.getVariableResolver().resolveVariable(context, "ActionBean");
+					MenuBean menuBean = (MenuBean) facesContext.getExternalContext()
+							.getSessionMap().get("menu");
+					menuBean.getSelectedPanel().setTemplateName(actionbean.getProcessManagerMain());
+					menuBean.getSelectedPanel().setTemplateNameForARole(actionbean.getManageProcesses());
 				}
 				else
 				{
