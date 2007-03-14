@@ -248,7 +248,6 @@ public class Project extends ConcreteActivity implements Cloneable {
 	 *            the participant to remove from
 	 */
 	public void removeParticipant(Participant participant) {		
-		participant.getAffectedProjectList().remove(this) ;
 		this.participants.remove(participant) ;
 	}
 
@@ -296,7 +295,6 @@ public class Project extends ConcreteActivity implements Cloneable {
 	 */
 	public void removeFromProjectManager(Participant projectManager){
 		   this.projectManager = null;
-		   projectManager.getManagedProjects().remove(this);
 		}
 
 	/**
@@ -335,7 +333,6 @@ public class Project extends ConcreteActivity implements Cloneable {
 	 * @param project
 	 */
 	public void removeProjectDirector(ProjectDirector _projectDirector) {
-		_projectDirector.getProjectMonitored().remove(this);
 		this.projectDirector  = null;
 	}
 
