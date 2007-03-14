@@ -21,6 +21,7 @@ import wilos.model.misc.wilosuser.Participant;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
+import wilos.presentation.assistant.view.panels.AboutPanel;
 import wilos.presentation.assistant.view.panels.InfoPanel;
 import wilos.presentation.assistant.view.panels.TreePanel;
 import wilos.presentation.assistant.view.panels.WizardStateMachine;
@@ -39,6 +40,7 @@ public class WizardMainFrame extends JFrame {
 	private JPanel jPanel = null;
 	private TreePanel jTree = null;
 	private InfoPanel infoPanel = null ;
+	private JMenuItem jMenuItemAbout = null;
 	/**
 	 * This is the default constructor
 	 */
@@ -46,9 +48,7 @@ public class WizardMainFrame extends JFrame {
 		super();
 		initialize();
 		
-	}
-
-	
+	}	
 
 	/**
 	 * This method initializes this
@@ -234,6 +234,7 @@ public class WizardMainFrame extends JFrame {
 			jMenuHelp = new JMenu();
 			jMenuHelp.setText(Bundle.getText("wizardMainFrame.menuBar.help"));
 			jMenuHelp.add(getJMenuItemHelp());
+			jMenuHelp.add(getJMenuAbout());
 		}
 		return jMenuHelp;
 	}
@@ -249,6 +250,27 @@ public class WizardMainFrame extends JFrame {
 			jMenuItemHelp.setText(Bundle.getText("wizardMainFrame.menuBar.help.help"));
 		}
 		return jMenuItemHelp;
+	}
+	private JMenuItem getJMenuAbout()
+	{
+		if(jMenuItemAbout==null)
+		{
+			jMenuItemAbout = new JMenuItem();
+			jMenuItemAbout.setText("About");
+			jMenuItemAbout.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent arg0) {
+					//JFrame f = new JFrame("About");
+				
+					(new AboutPanel(WizardMainFrame.this)).setVisible(true);
+					
+					//f.setVisible(true);
+					//f.pack();
+					
+				}
+			});
+		}
+		return jMenuItemAbout;
 	}
 
 	/**
