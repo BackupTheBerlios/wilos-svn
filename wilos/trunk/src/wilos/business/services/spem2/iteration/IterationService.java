@@ -87,7 +87,7 @@ public class IterationService {
 		this.iterationDao.getSessionFactory().getCurrentSession().saveOrUpdate(_iteration);
 		this.projectDao.getSessionFactory().getCurrentSession().saveOrUpdate(_project);
 		for (ConcreteIteration cit : _iteration.getConcreteIterations()) {
-			if (cit.getProject().equals(_project))
+			if (cit.getProject().getId().equals(_project.getId()))
 				tmp.add(cit);
 		}
 		return tmp;
@@ -112,7 +112,7 @@ public class IterationService {
 			int nbCit = 0;
 			for (ConcreteBreakdownElement tmp : _cact.getConcreteBreakdownElements()) {
 				if (tmp instanceof ConcreteIteration) {
-					if (((ConcreteIteration) tmp).getIteration().equals(_iteration)) {
+					if (((ConcreteIteration) tmp).getIteration().getId().equals(_iteration.getId())) {
 						nbCit++;
 					}
 				}

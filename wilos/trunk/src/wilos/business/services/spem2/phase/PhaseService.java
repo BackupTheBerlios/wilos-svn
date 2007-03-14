@@ -80,7 +80,7 @@ public class PhaseService {
 		this.phaseDao.getSessionFactory().getCurrentSession().saveOrUpdate(_phase);
 		this.projectDao.getSessionFactory().getCurrentSession().saveOrUpdate(_project);
 		for (ConcretePhase cph : _phase.getConcretePhases()) {
-			if (cph.getProject().equals(_project))
+			if (cph.getProject().getId().equals(_project.getId()))
 				tmp.add(cph);
 		}
 		return tmp;
@@ -106,7 +106,7 @@ public class PhaseService {
 			int nbCph = 0;
 			for (ConcreteBreakdownElement tmp : _cact.getConcreteBreakdownElements()) {
 				if (tmp instanceof ConcretePhase) {
-					if (((ConcretePhase) tmp).getPhase().equals(_phase)) {
+					if (((ConcretePhase) tmp).getPhase().getId().equals(_phase.getId())) {
 						nbCph++;
 					}
 				}

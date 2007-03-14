@@ -96,7 +96,7 @@ public class ActivityService {
 			int nbCact = 0;
 			for (ConcreteBreakdownElement tmp : _cact.getConcreteBreakdownElements()) {
 				if (tmp instanceof ConcreteActivity) {
-					if (((ConcreteActivity) tmp).getActivity().equals(_activity)) {
+					if (((ConcreteActivity) tmp).getActivity().getId().equals(_activity.getId())) {
 						nbCact++;
 					}
 				}
@@ -241,7 +241,7 @@ public class ActivityService {
 		this.activityDao.getSessionFactory().getCurrentSession().saveOrUpdate(_act);
 		this.projectDao.getSessionFactory().getCurrentSession().saveOrUpdate(_project);
 		for (ConcreteActivity cact : _act.getConcreteActivities()) {
-			if (cact.getProject().equals(_project))
+			if (cact.getProject().getId().equals(_project.getId()))
 				tmp.add(cact);
 		}
 		return tmp;
