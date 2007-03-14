@@ -80,10 +80,14 @@ public class PhaseService {
 	 *            phase to instanciates
 	 */
 	public void phaseInstanciation(Project _project, Phase _phase, ConcreteActivity _cact,
-			List<HashMap<String, Object>> _list, int _occ) {
+			List<HashMap<String, Object>> _list, int _occ, boolean _isInstanciated) {
 
 		// if one occurence at least
 		if (_occ > 0) {
+			this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(_cact);
+			if (_isInstanciated) {
+				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(_cact);
+			}
 			for (int i = 1; i <= _occ; i++) {
 
 				ConcretePhase cp = new ConcretePhase();
@@ -116,22 +120,22 @@ public class PhaseService {
 					if (bde instanceof Phase) {
 						Phase ph = (Phase) bde;
 						int occ = this.giveNbOccurences(ph.getId(), _list);
-						this.phaseInstanciation(_project, ph, _project, _list, occ);
+						this.phaseInstanciation(_project, ph, _project, _list, occ, _isInstanciated);
 					} else {
 						if (bde instanceof Iteration) {
 							Iteration it = (Iteration) bde;
 							int occ = this.giveNbOccurences(it.getId(), _list);
-							this.iterationService.iterationInstanciation(_project, it, cp, _list, occ);
+							this.iterationService.iterationInstanciation(_project, it, cp, _list, occ, _isInstanciated);
 						} else {
 							if (bde instanceof Activity) {
 								Activity act = (Activity) bde;
 								int occ = this.giveNbOccurences(act.getId(), _list);
-								this.activityService.activityInstanciation(_project, act, cp, _list, occ);
+								this.activityService.activityInstanciation(_project, act, cp, _list, occ, _isInstanciated);
 							} else {
 								if (bde instanceof TaskDescriptor) {
 									TaskDescriptor td = (TaskDescriptor) bde;
 									int occ = this.giveNbOccurences(td.getId(), _list);
-									this.taskDescriptorService.taskDescriptorInstanciation(_project, td, cp, occ);
+									this.taskDescriptorService.taskDescriptorInstanciation(_project, td, cp, occ, _isInstanciated);
 								}
 							}
 						}
@@ -155,17 +159,10 @@ public class PhaseService {
 	 */
 	public void phaseUpdate(Project _project, Phase _phase, Set<ConcreteActivity> _cacts, List<HashMap<String, Object>> _list, int _occ) {
 		
-		/*Set<Activity> parents = _phase.getSuperActivities();
-		Iterator i = parents.iterator();
-		Activity parent = (Activity) i.next();
-		
-		Set<ConcreteActivity> cacts = new HashSet<ConcreteActivity>();
-		cacts.addAll(this.activityService.getAllConcreteActivities(parent));*/
-		
 		// one concretephase at least to insert in all attached concreteactivities of the parent of _phase
 		if (_occ > 0) {
 			for (ConcreteActivity tmp : _cacts) {
-				this.phaseInstanciation(_project, _phase, tmp, _list, _occ);
+				this.phaseInstanciation(_project, _phase, tmp, _list, _occ, true);
 				
 				// FIXME a priori tmp pe etre de type project ou cph
 				/*this.concreteActivityDao.saveOrUpdateConcreteActivity(tmp);

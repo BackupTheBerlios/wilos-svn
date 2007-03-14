@@ -83,9 +83,13 @@ public class IterationService {
 	 *            iteration to instanciates
 	 */
 	public void iterationInstanciation(Project _project, Iteration _iteration, ConcreteActivity _cact,
-			List<HashMap<String, Object>> _list, int _occ) {
+			List<HashMap<String, Object>> _list, int _occ, boolean _isInstanciated) {
 
 		if (_occ > 0) {
+			this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(_cact);
+			if (_isInstanciated) {
+				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(_cact);
+			}
 			for (int i = 1; i <= _occ; i++) {
 
 				ConcreteIteration ci = new ConcreteIteration();
@@ -117,17 +121,17 @@ public class IterationService {
 					if (bde instanceof Iteration) {
 						Iteration it = (Iteration) bde;
 						int occ = this.giveNbOccurences(it.getId(), _list);
-						this.iterationInstanciation(_project, it, ci, _list, occ);
+						this.iterationInstanciation(_project, it, ci, _list, occ, _isInstanciated);
 					} else {
 						if (bde instanceof Activity) {
 							Activity act = (Activity) bde;
 							int occ = this.giveNbOccurences(act.getId(), _list);
-							this.activityService.activityInstanciation(_project, act, ci, _list, occ);
+							this.activityService.activityInstanciation(_project, act, ci, _list, occ, _isInstanciated);
 						} else {
 							if (bde instanceof TaskDescriptor) {
 								TaskDescriptor td = (TaskDescriptor) bde;
 								int occ = this.giveNbOccurences(td.getId(), _list);
-								this.taskDescriptorService.taskDescriptorInstanciation(_project, td, ci, occ);
+								this.taskDescriptorService.taskDescriptorInstanciation(_project, td, ci, occ, _isInstanciated);
 							}
 						}
 					}
@@ -150,17 +154,11 @@ public class IterationService {
 	 */
 	public void iterationUpdate(Project _project, Iteration _it, Set<ConcreteActivity> _cacts, List<HashMap<String, Object>> _list, int _occ) {
 		
-		/*Set<Activity> parents = _it.getSuperActivities();
-		Iterator i = parents.iterator();
-		Activity parent = (Activity) i.next();
-		
-		Set<ConcreteActivity> cacts = new HashSet<ConcreteActivity>();
-		cacts.addAll(this.activityService.getAllConcreteActivities(parent));*/
-		
 		// one concretephase at least to insert in all attached concreteactivities of the parent of _phase
 		if (_occ > 0) {
 			for (ConcreteActivity tmp : _cacts) {
-				this.iterationInstanciation(_project, _it, tmp, _list, _occ);
+				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(tmp);
+				this.iterationInstanciation(_project, _it, tmp, _list, _occ, true);
 				
 				//FIXME a priori tmp pe etre de type project, cph ou cit
 				/*this.concreteActivityDao.saveOrUpdateConcreteActivity(tmp);

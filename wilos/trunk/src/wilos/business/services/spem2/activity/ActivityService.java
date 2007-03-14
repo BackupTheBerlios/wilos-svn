@@ -85,9 +85,13 @@ public class ActivityService {
 	 *            activity to instanciate
 	 */
 	public void activityInstanciation(Project _project, Activity _activity, ConcreteActivity _cact,
-			List<HashMap<String, Object>> _list, int _occ) {
+			List<HashMap<String, Object>> _list, int _occ, boolean _isInstanciated) {
 
 		if (_occ > 0) {
+			this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(_cact);
+			if (_isInstanciated) {
+				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(_cact);
+			}
 			for (int i = 1; i <= _occ; i++) {
 
 				ConcreteActivity cact = new ConcreteActivity();
@@ -119,12 +123,12 @@ public class ActivityService {
 					if (bde instanceof Activity) {
 						Activity act = (Activity) bde;
 						int occ = this.giveNbOccurences(act.getId(), _list);
-						this.activityInstanciation(_project, act, cact, _list, occ);
+						this.activityInstanciation(_project, act, cact, _list, occ, false);
 					} else {
 						if (bde instanceof TaskDescriptor) {
 							TaskDescriptor td = (TaskDescriptor) bde;
 							int occ = this.giveNbOccurences(td.getId(), _list);
-							this.taskDescriptorService.taskDescriptorInstanciation(_project, td, cact, occ);
+							this.taskDescriptorService.taskDescriptorInstanciation(_project, td, cact, occ, false);
 						}
 					}
 				}
@@ -146,18 +150,11 @@ public class ActivityService {
 	 */
 	public void activityUpdate(Project _project, Activity _act, Set<ConcreteActivity> _cacts, List<HashMap<String, Object>> _list, int _occ) {
 		
-		/*Set<Activity> parents = _act.getSuperActivities();
-		Iterator i = parents.iterator();
-		Activity parent = (Activity) i.next();
-		
-		Set<ConcreteActivity> cacts = new HashSet<ConcreteActivity>();
-		cacts.addAll(this.getAllConcreteActivities(parent));*/
-		
 		// one concretephase at least to insert in all attached concreteactivities of the parent of _phase
 		if (_occ > 0) {
 			for (ConcreteActivity tmp : _cacts) {
 				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(tmp);
-				this.activityInstanciation(_project, _act, tmp, _list, _occ);
+				this.activityInstanciation(_project, _act, tmp, _list, _occ, true);
 				
 				// FIXME a priori tmp pe etre de type project, cph, cit ou cact
 				if (tmp instanceof Project) {

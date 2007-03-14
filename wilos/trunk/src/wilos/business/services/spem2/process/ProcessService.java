@@ -811,22 +811,22 @@ public class ProcessService {
 			if (bde instanceof Phase) {
 				Phase ph = (Phase) bde;
 				int occ = this.giveNbOccurences(ph.getId(), list);
-				this.phaseService.phaseInstanciation(_project, ph, _project, list, occ);
+				this.phaseService.phaseInstanciation(_project, ph, _project, list, occ, false);
 			} else {
 				if (bde instanceof Iteration) {
 					Iteration it = (Iteration) bde;
 					int occ = this.giveNbOccurences(it.getId(), list);
-					this.iterationService.iterationInstanciation(_project, it, _project, list, occ);
+					this.iterationService.iterationInstanciation(_project, it, _project, list, occ, false);
 				} else {
 					if (bde instanceof Activity) {
 						Activity act = (Activity) bde;
 						int occ = this.giveNbOccurences(act.getId(), list);
-						this.activityService.activityInstanciation(_project, act, _project, list, occ);
+						this.activityService.activityInstanciation(_project, act, _project, list, occ, false);
 					} else {
 						if (bde instanceof TaskDescriptor) {
 							TaskDescriptor td = (TaskDescriptor) bde;
 							int occ = this.giveNbOccurences(td.getId(), list);
-							this.taskDescriptorService.taskDescriptorInstanciation(_project, td, _project, occ);
+							this.taskDescriptorService.taskDescriptorInstanciation(_project, td, _project, occ, false);
 						}
 					}
 				}

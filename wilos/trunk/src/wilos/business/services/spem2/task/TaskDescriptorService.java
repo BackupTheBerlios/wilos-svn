@@ -52,11 +52,13 @@ public class TaskDescriptorService {
 	 * @param _cact
 	 * @param _occ
 	 */
-	public void taskDescriptorInstanciation(Project _project, TaskDescriptor _td, ConcreteActivity _cact, int _occ) {
+	public void taskDescriptorInstanciation(Project _project, TaskDescriptor _td, ConcreteActivity _cact, int _occ, boolean _isInstanciated) {
 
 		if (_occ > 0) {
 			this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(_cact);
-			this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(_cact);
+			if (_isInstanciated) {
+				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(_cact);
+			}
 			for (int i = 1; i <= _occ; i++) {
 
 				ConcreteTaskDescriptor ctd = new ConcreteTaskDescriptor();
@@ -101,7 +103,7 @@ public class TaskDescriptorService {
 		if (_occ > 0) {
 			for (ConcreteActivity tmp : _cacts) {
 				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(tmp);
-				this.taskDescriptorInstanciation(_project, _td, tmp, _occ);
+				this.taskDescriptorInstanciation(_project, _td, tmp, _occ, true);
 			}
 		}
 	}
