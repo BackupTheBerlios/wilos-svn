@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Servers>
   <Server>
-    <Alias>marine serveur de test spelp</Alias>
-    <Address>http://marine.edu.ups-tlse.fr:9014/Wilos</Address>
+    <Alias>local Wilos</Alias>
+    <Address>http://localhost:8080/Wilos</Address>
     <Id>1</Id>
   </Server>
   <Server>
@@ -11,13 +11,13 @@
     <Id>2</Id>
   </Server>
   <Server>
-    <Alias>local Wilos</Alias>
-    <Address>http://localhost:8080/Wilos</Address>
+    <Alias>marine remote</Alias>
+    <Address>http://marine.edu.ups-tlse.fr:9014/remote</Address>
     <Id>3</Id>
   </Server>
   <Server>
-    <Alias>marine remote</Alias>
-    <Address>http://marine.edu.ups-tlse.fr:9014/remote</Address>
+    <Alias>marine serveur de test spelp</Alias>
+    <Address>http://marine.edu.ups-tlse.fr:9014/Wilos</Address>
     <Id>4</Id>
   </Server>
 </Servers>

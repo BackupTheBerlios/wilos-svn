@@ -54,8 +54,14 @@ public class MainFrame extends JFrame{
         myLoginPanel.setVisible(true);                
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	
-       
+        
+        // put the frame icon
+        try {
+        	this.setIconImage(ImagesService.getImage("images.frameIcon"));
+        } catch (IOException ex) {
+			ex.printStackTrace();
+			new ExceptionManager(ex);
+        }
 	}
 	
 	private InfoPanel getSouthPanel() 

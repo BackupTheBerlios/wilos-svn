@@ -12,6 +12,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.nio.ByteOrder;
 
 import javax.swing.BorderFactory;
@@ -20,6 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import wilos.presentation.assistant.control.ExceptionManager;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
 import wilos.presentation.assistant.view.panels.InfoPanel;
@@ -78,6 +80,14 @@ public class DownLoadFrame extends JFrame {
 		this.setBounds(x, y, 500, 150);
 		this.setContentPane(getMainPanel());
 		this.setVisible(true);
+		
+        // put the frame icon
+        try {
+        	this.setIconImage(ImagesService.getImage("images.frameIcon"));
+        } catch (IOException ex) {
+			ex.printStackTrace();
+			new ExceptionManager(ex);
+        }
 	}
 
 	private Container getButtonPanel() {

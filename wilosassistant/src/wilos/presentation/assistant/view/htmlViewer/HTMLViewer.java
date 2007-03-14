@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -56,6 +57,7 @@ import wilos.model.spem2.section.Section;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;
 import wilos.model.spem2.task.TaskDescriptor;
+import wilos.presentation.assistant.control.ExceptionManager;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
@@ -217,6 +219,14 @@ public class HTMLViewer extends JFrame {
 		this.getContentPane().add(northPanel, BorderLayout.NORTH);
 		this.getContentPane().add(this.myScrollPane, BorderLayout.CENTER);
 		this.getContentPane().add(this.southPanel, BorderLayout.SOUTH);
+		
+        // put the frame icon
+        try {
+        	this.setIconImage(ImagesService.getImage("images.frameIcon"));
+        } catch (IOException ex) {
+			ex.printStackTrace();
+			new ExceptionManager(ex);
+        }
 	}
 	
 	public void displayLinkedElement (String guid){

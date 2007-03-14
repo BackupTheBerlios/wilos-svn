@@ -8,6 +8,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -18,8 +19,10 @@ import javax.swing.JPanel;
 import org.jdesktop.swingx.JXTree;
 
 import wilos.model.misc.wilosuser.Participant;
+import wilos.presentation.assistant.control.ExceptionManager;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.Bundle;
+import wilos.presentation.assistant.ressources.ImagesService;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 import wilos.presentation.assistant.view.panels.AboutPanel;
 import wilos.presentation.assistant.view.panels.InfoPanel;
@@ -93,6 +96,15 @@ public class WizardMainFrame extends JFrame {
 			public void windowOpened(WindowEvent arg0) {}
 			
 		});
+		
+
+        // put the frame icon
+        try {
+        	this.setIconImage(ImagesService.getImage("images.frameIcon"));
+        } catch (IOException ex) {
+			ex.printStackTrace();
+			new ExceptionManager(ex);
+        }
 	}
 	
 	
