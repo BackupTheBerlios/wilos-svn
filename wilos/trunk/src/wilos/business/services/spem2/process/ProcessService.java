@@ -43,21 +43,11 @@ import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.business.services.spem2.workbreakdownelement.WorkBreakdownElementService;
 import wilos.business.services.util.xml.parser.XMLServices;
 import wilos.hibernate.misc.project.ProjectDao;
-import wilos.hibernate.spem2.activity.ActivityDao;
-import wilos.hibernate.spem2.breakdownelement.BreakdownElementDao;
-import wilos.hibernate.spem2.checklist.CheckListDao;
 import wilos.hibernate.spem2.element.ElementDao;
 import wilos.hibernate.spem2.guide.GuidanceDao;
-import wilos.hibernate.spem2.iteration.IterationDao;
-import wilos.hibernate.spem2.phase.PhaseDao;
 import wilos.hibernate.spem2.process.ProcessDao;
-import wilos.hibernate.spem2.role.RoleDefinitionDao;
-import wilos.hibernate.spem2.role.RoleDescriptorDao;
 import wilos.hibernate.spem2.section.SectionDao;
 import wilos.hibernate.spem2.task.StepDao;
-import wilos.hibernate.spem2.task.TaskDefinitionDao;
-import wilos.hibernate.spem2.task.TaskDescriptorDao;
-import wilos.hibernate.spem2.workbreakdownelement.WorkBreakdownElementDao;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.project.Project;
@@ -115,35 +105,15 @@ public class ProcessService {
 
 	private CheckListService checkListService;
 
-	private ActivityDao activityDao;
-
-	private PhaseDao phaseDao;
-
-	private IterationDao iterationDao;
-
-	private BreakdownElementDao breakdownElementDao;
-
 	private ElementDao elementDao;
 
 	private ProcessDao processDao;
 
-	private RoleDefinitionDao roleDefinitionDao;
-
-	private RoleDescriptorDao roleDescriptorDao;
-
 	private StepDao stepDao;
-
-	private TaskDefinitionDao taskDefinitionDao;
-
-	private TaskDescriptorDao taskDescriptorDao;
-
-	private WorkBreakdownElementDao workBreakdownElementDao;
 
 	private ProjectDao projectDao;
 
 	private GuidanceDao guidanceDao;
-
-	private CheckListDao checkListDao;
 
 	private SectionDao sectionDao;
 
@@ -302,7 +272,7 @@ public class ProcessService {
 		_ph.getSuccessors().clear();
 		_ph.getSuperActivities().clear();
 		_ph.getGuidances().clear();
-		this.phaseDao.saveOrUpdatePhase(_ph);
+		this.phaseService.getPhaseDao().saveOrUpdatePhase(_ph);
 		System.out.println("###Phase vide sauve");
 
 		for (Guidance g : guidances) {
@@ -345,7 +315,7 @@ public class ProcessService {
 		_ph.setGuidances(clone.getGuidances());
 
 		// Parse for guidances
-		this.phaseDao.saveOrUpdatePhase(_ph);
+		this.phaseService.getPhaseDao().saveOrUpdatePhase(_ph);
 		System.out.println("###Phase sauve");
 
 		return tmp;
@@ -381,7 +351,7 @@ public class ProcessService {
 		_it.getSuccessors().clear();
 		_it.getSuperActivities().clear();
 		_it.getGuidances().clear();
-		this.iterationDao.saveOrUpdateIteration(_it);
+		this.iterationService.getIterationDao().saveOrUpdateIteration(_it);
 		System.out.println("###Iteration vide sauve");
 
 		for (Guidance g : guidances) {
@@ -418,7 +388,7 @@ public class ProcessService {
 		_it.addAllSuperActivities(clone.getSuperActivities());
 		_it.setGuidances(clone.getGuidances());
 
-		this.iterationDao.saveOrUpdateIteration(_it);
+		this.iterationService.getIterationDao().saveOrUpdateIteration(_it);
 		System.out.println("###Iteration sauve");
 
 		return tmp;
@@ -454,7 +424,7 @@ public class ProcessService {
 		_act.getSuccessors().clear();
 		_act.getSuperActivities().clear();
 		_act.getGuidances().clear();
-		this.activityDao.saveOrUpdateActivity(_act);
+		this.activityService.saveActivity(_act);
 		System.out.println("###Activity vide sauve");
 
 		for (Guidance g : guidances) {
@@ -491,7 +461,7 @@ public class ProcessService {
 		_act.addAllSuperActivities(clone.getSuperActivities());
 		_act.setGuidances(clone.getGuidances());
 
-		this.activityDao.saveOrUpdateActivity(_act);
+		this.activityService.saveActivity(_act);
 		System.out.println("###Activity sauve");
 
 		return tmp;
@@ -523,7 +493,7 @@ public class ProcessService {
 		_rd.getSuperActivities().clear();
 		_rd.setRoleDefinition(null);
 
-		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(_rd);
+		this.roleDescriptorService.getRoleDescriptorDao().saveOrUpdateRoleDescriptor(_rd);
 		System.out.println("###RoleDescriptor vide sauve");
 
 		if (rdef != null) {
@@ -539,7 +509,7 @@ public class ProcessService {
 		_rd.addAllSuperActivities(clone.getSuperActivities());
 		_rd.setRoleDefinition(clone.getRoleDefinition());
 
-		this.roleDescriptorDao.saveOrUpdateRoleDescriptor(_rd);
+		this.roleDescriptorService.getRoleDescriptorDao().saveOrUpdateRoleDescriptor(_rd);
 		System.out.println("###RoleDescriptor sauve");
 
 		return tmp;
@@ -570,7 +540,7 @@ public class ProcessService {
 		_rdef.getRoleDescriptors().clear();
 		_rdef.getGuidances().clear();
 
-		this.roleDefinitionDao.saveOrUpdateRoleDefinition(_rdef);
+		this.roleDefinitionService.getRoleDefinitionDao().saveOrUpdateRoleDefinition(_rdef);
 		System.out.println("###RoleDefinition vide sauve");
 
 		for (Guidance g : guidances) {
@@ -585,7 +555,7 @@ public class ProcessService {
 		// _rdef.addAllRoleDescriptors(clone.getRoleDescriptors());
 		_rdef.addAllGuidances(clone.getGuidances());
 
-		this.roleDefinitionDao.saveOrUpdateRoleDefinition(_rdef);
+		this.roleDefinitionService.getRoleDefinitionDao().saveOrUpdateRoleDefinition(_rdef);
 		System.out.println("###RoleDefinition sauve");
 
 		return tmp;
@@ -619,7 +589,7 @@ public class ProcessService {
 		_td.setMainRole(null);
 		_td.setTaskDefinition(null);
 
-		this.taskDescriptorDao.saveOrUpdateTaskDescriptor(_td);
+		this.taskDescriptorService.getTaskDescriptorDao().saveOrUpdateTaskDescriptor(_td);
 		System.out.println("###TaskDescriptor vide sauve");
 
 		if (tdef != null) {
@@ -640,7 +610,7 @@ public class ProcessService {
 		_td.setMainRole(clone.getMainRole());
 		_td.setTaskDefinition(clone.getTaskDefinition());
 
-		this.taskDescriptorDao.saveOrUpdateTaskDescriptor(_td);
+		this.taskDescriptorService.getTaskDescriptorDao().saveOrUpdateTaskDescriptor(_td);
 		System.out.println("###TaskDescriptor sauve");
 
 		return tmp;
@@ -674,7 +644,7 @@ public class ProcessService {
 		_tdef.getTaskDescriptors().clear();
 		_tdef.getGuidances().clear();
 
-		this.taskDefinitionDao.saveOrUpdateTaskDefinition(_tdef);
+		this.taskDefinitionService.getTaskDefinitionDao().saveOrUpdateTaskDefinition(_tdef);
 		System.out.println("###TaskDefinition vide sauve");
 
 		for (Guidance g : guidances) {
@@ -695,7 +665,7 @@ public class ProcessService {
 		// _tdef.addAllTaskDesciptors(clone.getTaskDescriptors());
 		_tdef.addAllGuidances(clone.getGuidances());
 
-		this.taskDefinitionDao.saveOrUpdateTaskDefinition(_tdef);
+		this.taskDefinitionService.getTaskDefinitionDao().saveOrUpdateTaskDefinition(_tdef);
 		System.out.println("###TaskDefinition sauve");
 
 		return tmp;
@@ -750,7 +720,7 @@ public class ProcessService {
 
 		_checkList.getSections().clear();
 
-		this.checkListDao.saveOrUpdateCheckList(_checkList);
+		this.checkListService.saveCheckList(_checkList);
 		System.out.println("###CheckList vide sauvee");
 
 		for (Section section : sections) {
@@ -761,7 +731,7 @@ public class ProcessService {
 
 		_checkList.addAllSection(clone.getSections());
 
-		this.checkListDao.saveOrUpdateCheckList(_checkList);
+		this.checkListService.saveCheckList(_checkList);
 		System.out.println("###CheckList sauvee");
 	}
 
@@ -930,44 +900,6 @@ public class ProcessService {
 	}
 
 	/**
-	 * Getter of activityDao.
-	 * 
-	 * @return the activityDao.
-	 */
-	public ActivityDao getActivityDao() {
-		return activityDao;
-	}
-
-	/**
-	 * Setter of activityDao.
-	 * 
-	 * @param activityDao
-	 *            The activityDao to set.
-	 */
-	public void setActivityDao(ActivityDao activityDao) {
-		this.activityDao = activityDao;
-	}
-
-	/**
-	 * Getter of breakdownElementDao.
-	 * 
-	 * @return the breakdownElementDao.
-	 */
-	public BreakdownElementDao getBreakdownElementDao() {
-		return breakdownElementDao;
-	}
-
-	/**
-	 * Setter of breakdownElementDao.
-	 * 
-	 * @param breakdownElementDao
-	 *            The breakdownElementDao to set.
-	 */
-	public void setBreakdownElementDao(BreakdownElementDao breakdownElementDao) {
-		this.breakdownElementDao = breakdownElementDao;
-	}
-
-	/**
 	 * Getter of elementDao.
 	 * 
 	 * @return the elementDao.
@@ -987,44 +919,6 @@ public class ProcessService {
 	}
 
 	/**
-	 * Getter of roleDefinitionDao.
-	 * 
-	 * @return the roleDefinitionDao.
-	 */
-	public RoleDefinitionDao getRoleDefinitionDao() {
-		return roleDefinitionDao;
-	}
-
-	/**
-	 * Setter of roleDefinitionDao.
-	 * 
-	 * @param roleDefinitionDao
-	 *            The roleDefinitionDao to set.
-	 */
-	public void setRoleDefinitionDao(RoleDefinitionDao roleDefinitionDao) {
-		this.roleDefinitionDao = roleDefinitionDao;
-	}
-
-	/**
-	 * Getter of roleDescriptorDao.
-	 * 
-	 * @return the roleDescriptorDao.
-	 */
-	public RoleDescriptorDao getRoleDescriptorDao() {
-		return roleDescriptorDao;
-	}
-
-	/**
-	 * Setter of roleDescriptorDao.
-	 * 
-	 * @param roleDescriptorDao
-	 *            The roleDescriptorDao to set.
-	 */
-	public void setRoleDescriptorDao(RoleDescriptorDao roleDescriptorDao) {
-		this.roleDescriptorDao = roleDescriptorDao;
-	}
-
-	/**
 	 * Getter of stepDao.
 	 * 
 	 * @return the stepDao.
@@ -1041,63 +935,6 @@ public class ProcessService {
 	 */
 	public void setStepDao(StepDao stepDao) {
 		this.stepDao = stepDao;
-	}
-
-	/**
-	 * Getter of taskDefinitionDao.
-	 * 
-	 * @return the taskDefinitionDao.
-	 */
-	public TaskDefinitionDao getTaskDefinitionDao() {
-		return taskDefinitionDao;
-	}
-
-	/**
-	 * Setter of taskDefinitionDao.
-	 * 
-	 * @param taskDefinitionDao
-	 *            The taskDefinitionDao to set.
-	 */
-	public void setTaskDefinitionDao(TaskDefinitionDao taskDefinitionDao) {
-		this.taskDefinitionDao = taskDefinitionDao;
-	}
-
-	/**
-	 * Getter of taskDescriptorDao.
-	 * 
-	 * @return the taskDescriptorDao.
-	 */
-	public TaskDescriptorDao getTaskDescriptorDao() {
-		return taskDescriptorDao;
-	}
-
-	/**
-	 * Setter of taskDescriptorDao.
-	 * 
-	 * @param taskDescriptorDao
-	 *            The taskDescriptorDao to set.
-	 */
-	public void setTaskDescriptorDao(TaskDescriptorDao taskDescriptorDao) {
-		this.taskDescriptorDao = taskDescriptorDao;
-	}
-
-	/**
-	 * Getter of workBreakdownElementDao.
-	 * 
-	 * @return the workBreakdownElementDao.
-	 */
-	public WorkBreakdownElementDao getWorkBreakdownElementDao() {
-		return workBreakdownElementDao;
-	}
-
-	/**
-	 * Setter of workBreakdownElementDao.
-	 * 
-	 * @param workBreakdownElementDao
-	 *            The workBreakdownElementDao to set.
-	 */
-	public void setWorkBreakdownElementDao(WorkBreakdownElementDao workBreakdownElementDao) {
-		this.workBreakdownElementDao = workBreakdownElementDao;
 	}
 
 	public BreakdownElementService getBreakdownElementService() {
@@ -1138,22 +975,6 @@ public class ProcessService {
 
 	public void setTaskDescriptorService(TaskDescriptorService _taskDescriptorService) {
 		this.taskDescriptorService = _taskDescriptorService;
-	}
-
-	public IterationDao getIterationDao() {
-		return iterationDao;
-	}
-
-	public void setIterationDao(IterationDao iterationDao) {
-		this.iterationDao = iterationDao;
-	}
-
-	public PhaseDao getPhaseDao() {
-		return phaseDao;
-	}
-
-	public void setPhaseDao(PhaseDao phaseDao) {
-		this.phaseDao = phaseDao;
 	}
 
 	public ProjectDao getProjectDao() {
@@ -1263,14 +1084,6 @@ public class ProcessService {
 
 	public void setProcessManagerService(ProcessManagerService _processManagerService) {
 		this.processManagerService = _processManagerService;
-	}
-
-	public CheckListDao getCheckListDao() {
-		return checkListDao;
-	}
-
-	public void setCheckListDao(CheckListDao _checkListDao) {
-		this.checkListDao = _checkListDao;
 	}
 
 	public CheckListService getCheckListService() {

@@ -450,43 +450,25 @@
 
 	<bean id="ProcessService"
 		class="wilos.business.services.spem2.process.ProcessService">
-		<property name="processDao" ref="ProcessDao" />
-		<property name="activityDao" ref="ActivityDao" />
 		<property name="activityService" ref="ActivityService" />
-		<property name="breakdownElementDao" ref="BreakdownElementDao" />
-		<property name="breakdownElementService"
-			ref="BreakdownElementService" />
-		<property name="workBreakdownElementService"
-			ref="WorkBreakdownElementService" />
-		<property name="workBreakdownElementDao"
-			ref="WorkBreakdownElementDao" />
-		<property name="phaseDao" ref="PhaseDao" />
+		<property name="breakdownElementService" ref="BreakdownElementService" />
+		<property name="workBreakdownElementService" ref="WorkBreakdownElementService" />
 		<property name="phaseService" ref="PhaseService" />
-		<property name="iterationDao" ref="IterationDao" />
 		<property name="iterationService" ref="IterationService" />
-		<property name="roleDefinitionDao" ref="RoleDefinitionDao" />
-		<property name="roleDescriptorDao" ref="RoleDescriptorDao" />
-		<property name="roleDescriptorService"
-			ref="RoleDescriptorService" />
-		<property name="roleDefinitionService"
-			ref="RoleDefinitionService" />
+		<property name="roleDescriptorService" ref="RoleDescriptorService" />
+		<property name="roleDefinitionService" ref="RoleDefinitionService" />
 		<property name="checkListService" ref="CheckListService" />
-		<property name="taskDefinitionDao" ref="TaskDefinitionDao" />
-		<property name="taskDescriptorDao" ref="TaskDescriptorDao" />
-		<property name="taskDescriptorService"
-			ref="TaskDescriptorService" />
-		<property name="taskDefinitionService"
-			ref="TaskDefinitionService" />
+		<property name="taskDescriptorService" ref="TaskDescriptorService" />
+		<property name="taskDefinitionService" ref="TaskDefinitionService" />
 		<property name="webSessionService" ref="WebSessionService" />
 		<property name="processManagerService" ref="ProcessManagerService" />
+		<property name="concreteBreakdownElementService" ref="ConcreteBreakdownElementService" />
 		<property name="elementDao" ref="ElementDao" />
 		<property name="projectDao" ref="ProjectDao" />
 		<property name="stepDao" ref="StepDao" />
 		<property name="guidanceDao" ref="GuidanceDao" />
-		<property name="checkListDao" ref="CheckListDao" />
 		<property name="sectionDao" ref="SectionDao" />
-		<property name="concreteBreakdownElementService"
-			ref="ConcreteBreakdownElementService" />
+		<property name="processDao" ref="ProcessDao" />
 	</bean>
 
 	<bean id="BreakdownElementService"
@@ -504,7 +486,6 @@
 	<bean id="ActivityService"
 		class="wilos.business.services.spem2.activity.ActivityService">
 		<property name="activityDao" ref="ActivityDao" />
-		<property name="concreteActivityDao" ref="ConcreteActivityDao" />
 		<property name="concreteIterationDao" ref="ConcreteIterationDao" />
 		<property name="concretePhaseDao" ref="ConcretePhaseDao" />
 		<property name="projectDao" ref="ProjectDao" />
