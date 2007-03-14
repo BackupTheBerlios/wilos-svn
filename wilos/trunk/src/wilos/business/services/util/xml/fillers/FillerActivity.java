@@ -60,26 +60,26 @@ public class FillerActivity extends FillerWorkBreakDownElement {
 			for (int i = 0 ; i < nodePresentationList.getLength() && (alternatives.equals("") || howToStaff.equals("") || purposes.equals("")); i++) {
 				// Search for the Alternatives node
 				if (nodePresentationList.item(i).getNodeName().equals(NodeAlternatives)) {
-					alternatives = nodePresentationList.item(i).getTextContent();
+					alternatives = EncodingProcessor.cleanString(nodePresentationList.item(i).getTextContent());
 				}
 				// Search for the HowToStaff node
 				if (nodePresentationList.item(i).getNodeName().equals(NodeHowToStaff)) {
-					howToStaff = nodePresentationList.item(i).getTextContent();
+					howToStaff = EncodingProcessor.cleanString(nodePresentationList.item(i).getTextContent());
 				}
 				// Search for the Purpose node
 				if (nodePresentationList.item(i).getNodeName().equals(NodePurpose)) {
-					purposes = nodePresentationList.item(i).getTextContent();
+					purposes = EncodingProcessor.cleanString(nodePresentationList.item(i).getTextContent());
 				}
 				
 				
 				// We need it in the case that this fill is called by auxiliaryFill
 				
 				if (nodePresentationList.item(i).getNodeName().equals(NodeMainDescription)) {
-					mainDescription = nodePresentationList.item(i).getTextContent();
+					mainDescription = EncodingProcessor.cleanString(nodePresentationList.item(i).getTextContent());
 				}
 				// Search for the KeyConsiderations node
 				if (nodePresentationList.item(i).getNodeName().equals(NodeKeyConsiderations)) {
-					keyConsiderations = nodePresentationList.item(i).getTextContent();
+					keyConsiderations = EncodingProcessor.cleanString(nodePresentationList.item(i).getTextContent());
 				}				
 			}
 		}

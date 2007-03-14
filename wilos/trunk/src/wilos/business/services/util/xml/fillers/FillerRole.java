@@ -19,6 +19,7 @@ package wilos.business.services.util.xml.fillers;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import wilos.business.services.util.xml.parser.EncodingProcessor;
 import wilos.model.spem2.role.RoleDefinition;
 
 public class FillerRole extends FillerElement {
@@ -53,15 +54,15 @@ public class FillerRole extends FillerElement {
 			for (int i = 0 ; i < nodePresentationList.getLength() && (assignmentApproaches.equals("") || skills.equals("") || synonyms.equals("")); i++) {
 				// Search for the Alternatives node
 				if (nodePresentationList.item(i).getNodeName().equals(NodeAssignmentApproaches)) {
-					assignmentApproaches = nodePresentationList.item(i).getTextContent();
+					assignmentApproaches = EncodingProcessor.cleanString(nodePresentationList.item(i).getTextContent());
 				}
 				// Search for the HowToStaff node
 				if (nodePresentationList.item(i).getNodeName().equals(NodeSkills)) {
-					skills = nodePresentationList.item(i).getTextContent();
+					skills = EncodingProcessor.cleanString(nodePresentationList.item(i).getTextContent());
 				}
 				// Search for the Purpose node
 				if (nodePresentationList.item(i).getNodeName().equals(NodeSynonyms)) {
-					synonyms = nodePresentationList.item(i).getTextContent();
+					synonyms = EncodingProcessor.cleanString(nodePresentationList.item(i).getTextContent());
 				}
 			}
 		}

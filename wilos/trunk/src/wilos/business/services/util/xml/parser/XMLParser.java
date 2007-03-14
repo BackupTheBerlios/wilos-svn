@@ -616,7 +616,9 @@ public class XMLParser {
 				setMainRoleByTaskDescriptor(taskDescriptorfilled, aNode, allRoles);
 				
 				// affect the additional roles to the current task 
-				setAddiotionalRoleByTaskDescriptor(taskDescriptorfilled, aNode, allRoles);
+				
+				// Commented As AdditionalRoles are not treated
+				//setAddiotionalRoleByTaskDescriptor(taskDescriptorfilled, aNode, allRoles);
 				// add the filled taskDescriptor in the list to be return
 				taskList.add(taskDescriptorfilled);
 			}

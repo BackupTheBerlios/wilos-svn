@@ -76,11 +76,11 @@ public class FillerElement {
 			for (int i = 0 ; i < nodePresentationList.getLength() && (mainDescription.equals("") || keyConsiderations.equals("")); i++) {
 				// Search for the MainDescription node
 				if (nodePresentationList.item(i).getNodeName().equals(NodeMainDescription)) {
-					mainDescription = nodePresentationList.item(i).getTextContent();
+					mainDescription = EncodingProcessor.cleanString(nodePresentationList.item(i).getTextContent());
 				}
 				// Search for the KeyConsiderations node
 				if (nodePresentationList.item(i).getNodeName().equals(NodeKeyConsiderations)) {
-					keyConsiderations = nodePresentationList.item(i).getTextContent();
+					keyConsiderations = EncodingProcessor.cleanString(nodePresentationList.item(i).getTextContent());
 				}
 			}
 		}

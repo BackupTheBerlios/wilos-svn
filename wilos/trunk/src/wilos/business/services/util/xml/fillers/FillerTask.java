@@ -18,6 +18,7 @@ package wilos.business.services.util.xml.fillers;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import wilos.business.services.util.xml.parser.EncodingProcessor;
 
 import wilos.model.spem2.task.TaskDefinition;
 
@@ -52,11 +53,11 @@ public class FillerTask extends FillerElement
 			for (int i = 0 ; i < nodePresentationList.getLength() && (alternatives.equals("") || purposes.equals("")); i++) {
 				// Search for the Alternatives node
 				if (nodePresentationList.item(i).getNodeName().equals(NodeAlternatives)) {
-					alternatives = nodePresentationList.item(i).getTextContent();
+					alternatives = EncodingProcessor.cleanString(nodePresentationList.item(i).getTextContent());
 				}
 				// Search for the Purpose node
 				if (nodePresentationList.item(i).getNodeName().equals(NodePurpose)) {
-					purposes = nodePresentationList.item(i).getTextContent();
+					purposes = EncodingProcessor.cleanString(nodePresentationList.item(i).getTextContent());
 				}
 			}
 		}

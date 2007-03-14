@@ -55,7 +55,7 @@ public class FillerCheckList extends FillerGuidance {
 				for (int j = 0; j < listItems.getLength();j++) {
 					// case where there is a MainDescription
 					if (listItems.item(j).getNodeName().equals(XMLParser.maindescription)) {
-						mainDescription = listItems.item(j).getTextContent();
+						mainDescription = EncodingProcessor.cleanString(listItems.item(j).getTextContent());
 					}
 					// case where there are different sections
 					if (listItems.item(j).getNodeName().equals(XMLParser.section)) {						

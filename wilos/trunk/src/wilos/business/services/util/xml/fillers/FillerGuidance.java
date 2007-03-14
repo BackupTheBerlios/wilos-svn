@@ -55,13 +55,13 @@ public class FillerGuidance extends FillerElement{
 							int posFin = mainDescription.indexOf('"', posDebut + 1);
 							
 							if (posFin >= 0 && posDebut >= 0) {
-								attachment = mainDescription.substring(posDebut + 1, posFin);
+								attachment = EncodingProcessor.cleanString(mainDescription.substring(posDebut + 1, posFin));
 								mainDescription = "";
 							}
 						}							
 					}
 					if (listDesc.item(j).getNodeName().equals(FillerGuidance.attachment_tag)) {
-						attachment = listDesc.item(j).getTextContent() ;
+						attachment = EncodingProcessor.cleanString(listDesc.item(j).getTextContent()) ;
 						attachment = attachment.trim();
 					} 
 				}

@@ -38,7 +38,7 @@ public class FillerStep extends FillerElement {
 		for (int i = 0 ; i < myChildNodes.getLength() && !trouve ; i ++){
 			if (myChildNodes.item(i).getNodeName().equals(Description)){
 				trouve = true ;
-				buffDesc = myChildNodes.item(i).getTextContent();
+				buffDesc = EncodingProcessor.cleanString(myChildNodes.item(i).getTextContent());
 				
 			}
 		}
