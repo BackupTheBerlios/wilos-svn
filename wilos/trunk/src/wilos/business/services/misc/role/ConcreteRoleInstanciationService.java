@@ -1,18 +1,19 @@
 /*
-Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
-Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+ * Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+ * Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program; if not,
+ * write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
 
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU
-General Public License as published by the Free Software Foundation; either version 2 of the License,
-or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with this program; if not,
-write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
-*/
 package wilos.business.services.misc.role;
 
 import java.util.HashMap;
@@ -30,13 +31,10 @@ import wilos.business.services.misc.concreteactivity.ConcreteActivityService;
 import wilos.business.services.misc.concretebreakdownelement.ConcreteBreakdownElementService;
 import wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService;
 import wilos.business.services.misc.project.ProjectService;
-import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.activity.ActivityService;
-import wilos.business.services.spem2.breakdownelement.BreakdownElementService;
 import wilos.business.services.spem2.iteration.IterationService;
 import wilos.business.services.spem2.phase.PhaseService;
 import wilos.business.services.spem2.role.RoleDescriptorService;
-import wilos.hibernate.misc.concreterole.ConcreteRoleDescriptorDao;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreteiteration.ConcreteIteration;
@@ -62,12 +60,8 @@ public class ConcreteRoleInstanciationService {
 	
 	private IterationService iterationService;
 
-	private BreakdownElementService breakdownElementService;
-
 	//CONCRETE SERVICES
 	private ConcreteRoleDescriptorService concreteRoleDescriptorService;
-
-	private ConcreteRoleDescriptorDao concreteRoleDescriptorDao;
 
 	private ConcreteActivityService concreteActivityService;
 
@@ -76,8 +70,6 @@ public class ConcreteRoleInstanciationService {
 	private ProjectService projectService;
 
 	//OTHERS
-	private WebSessionService webSessionService;
-
 	private ConcreteRoleDescriptor concreteRoleDescriptor;
 
 	public final Log logger = LogFactory.getLog(this.getClass());
@@ -165,7 +157,7 @@ public class ConcreteRoleInstanciationService {
 				crd.setProject(_project);
 				_cact.setConcreteBreakdownElements(this.concreteActivityService.getConcreteBreakdownElements(_cact));
 				crd.addSuperConcreteActivity(_cact);
-				this.concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(crd);
+				this.concreteRoleDescriptorService.saveConcreteRoleDescriptor(crd);
 			}
 		}
 	}
@@ -308,20 +300,6 @@ public class ConcreteRoleInstanciationService {
 	}
 
 	/**
-	 * @return the breakdownElementService
-	 */
-	public BreakdownElementService getBreakdownElementService() {
-		return breakdownElementService;
-	}
-
-	/**
-	 * @param breakdownElementService the breakdownElementService to set
-	 */
-	public void setBreakdownElementService(BreakdownElementService breakdownElementService) {
-		this.breakdownElementService = breakdownElementService;
-	}
-
-	/**
 	 * @return the concreteActivityService
 	 */
 	public ConcreteActivityService getConcreteActivityService() {
@@ -347,20 +325,6 @@ public class ConcreteRoleInstanciationService {
 	 */
 	public void setConcreteRoleDescriptor(ConcreteRoleDescriptor concreteRoleDescriptor) {
 		this.concreteRoleDescriptor = concreteRoleDescriptor;
-	}
-
-	/**
-	 * @return the concreteRoleDescriptorDao
-	 */
-	public ConcreteRoleDescriptorDao getConcreteRoleDescriptorDao() {
-		return concreteRoleDescriptorDao;
-	}
-
-	/**
-	 * @param concreteRoleDescriptorDao the concreteRoleDescriptorDao to set
-	 */
-	public void setConcreteRoleDescriptorDao(ConcreteRoleDescriptorDao concreteRoleDescriptorDao) {
-		this.concreteRoleDescriptorDao = concreteRoleDescriptorDao;
 	}
 
 	/**
@@ -403,20 +367,6 @@ public class ConcreteRoleInstanciationService {
 	 */
 	public void setRoleDescriptorService(RoleDescriptorService roleDescriptorService) {
 		this.roleDescriptorService = roleDescriptorService;
-	}
-
-	/**
-	 * @return the webSessionService
-	 */
-	public WebSessionService getWebSessionService() {
-		return webSessionService;
-	}
-
-	/**
-	 * @param webSessionService the webSessionService to set
-	 */
-	public void setWebSessionService(WebSessionService webSessionService) {
-		this.webSessionService = webSessionService;
 	}
 
 	/**

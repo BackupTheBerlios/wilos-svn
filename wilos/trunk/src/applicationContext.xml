@@ -436,9 +436,7 @@
 		<property name="activityService" ref="ActivityService" />
 		<property name="phaseService" ref="PhaseService" />
 		<property name="iterationService" ref="IterationService" />		
-		<property name="breakdownElementService" ref="BreakdownElementService" />
 		<property name="concreteRoleDescriptorService" ref="ConcreteRoleDescriptorService" />
-		<property name="concreteRoleDescriptorDao" ref="ConcreteRoleDescriptorDao" />
 		<property name="concreteActivityService" ref="ConcreteActivityService" />
 		<property name="concreteBreakdownElementService" ref="ConcreteBreakdownElementService" />
 		<property name="projectService" ref="ProjectService" />
