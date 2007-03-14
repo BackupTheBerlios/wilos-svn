@@ -30,7 +30,6 @@ import org.springframework.transaction.annotation.Transactional;
 import wilos.business.services.misc.concreteactivity.ConcreteActivityService;
 import wilos.business.services.spem2.role.RoleDescriptorService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
-import wilos.hibernate.misc.concreteactivity.ConcreteActivityDao;
 import wilos.hibernate.misc.concreteiteration.ConcreteIterationDao;
 import wilos.hibernate.misc.concretephase.ConcretePhaseDao;
 import wilos.hibernate.misc.project.ProjectDao;
@@ -63,8 +62,6 @@ public class ActivityService {
 	
 	private ProjectDao projectDao;
 	
-	private ConcreteActivityDao concreteActivityDao;
-
 	/*
 	 * private PhaseService phaseService;
 	 * 
@@ -118,7 +115,7 @@ public class ActivityService {
 				_cact.setConcreteBreakdownElements(this.concreteActivityService.getConcreteBreakdownElements(_cact));
 				cact.addSuperConcreteActivity(_cact);
 
-				this.concreteActivityDao.saveOrUpdateConcreteActivity(cact);
+				this.concreteActivityService.saveConcreteActivity(cact);
 				System.out.println("### ConcreteActivity vide sauve");
 
 				for (BreakdownElement bde : bdes) {
@@ -135,7 +132,7 @@ public class ActivityService {
 					}
 				}
 
-				this.concreteActivityDao.saveOrUpdateConcreteActivity(cact);
+				this.concreteActivityService.saveConcreteActivity(cact);
 				System.out.println("### ConcreteActivity update");
 			}
 		}
@@ -173,13 +170,13 @@ public class ActivityService {
 						} else {
 							if (tmp instanceof ConcreteActivity) {
 								ConcreteActivity cact = (ConcreteActivity) tmp;
-								this.concreteActivityDao.saveOrUpdateConcreteActivity(cact);
+								this.concreteActivityService.saveConcreteActivity(cact);
 							}
 						}
 					}
 				}
 				
-				this.concreteActivityDao.saveOrUpdateConcreteActivity(tmp);
+				this.concreteActivityService.saveConcreteActivity(tmp);
 				System.out.println("### ConcreteActivity update");
 			}			
 		} else {
@@ -348,25 +345,6 @@ public class ActivityService {
 	 */
 	public void setActivityDao(ActivityDao _activityDao) {
 		this.activityDao = _activityDao;
-	}
-
-	/**
-	 * Getter of concreteActivityDao
-	 * 
-	 * @return the concreteActivityDao
-	 */
-	public ConcreteActivityDao getConcreteActivityDao() {
-		return concreteActivityDao;
-	}
-
-	/**
-	 * Setter of concreteActivityDao
-	 * 
-	 * @param concreteActivityDao
-	 *            the concreteActivityDao to set
-	 */
-	public void setConcreteActivityDao(ConcreteActivityDao concreteActivityDao) {
-		this.concreteActivityDao = concreteActivityDao;
 	}
 
 	/**
