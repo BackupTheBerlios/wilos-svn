@@ -26,6 +26,7 @@ import wilos.business.services.misc.concreteactivity.ConcreteActivityService;
 import wilos.hibernate.misc.concretetask.ConcreteTaskDescriptorDao;
 import wilos.hibernate.spem2.task.TaskDescriptorDao;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.role.RoleDescriptor;
@@ -59,21 +60,22 @@ public class TaskDescriptorService {
 			if (_isInstanciated) {
 				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(_cact);
 			}
-			for (int i = 1; i <= _occ; i++) {
+			int nbCtd = 0;
+			for (ConcreteBreakdownElement tmp : _cact.getConcreteBreakdownElements()) {
+				if (tmp instanceof ConcreteTaskDescriptor) {
+					if (((ConcreteTaskDescriptor) tmp).getTaskDescriptor().equals(_td)) {
+						nbCtd++;
+					}
+				}
+			}
+			for (int i = nbCtd + 1; i <= nbCtd + _occ; i++) {
 
 				ConcreteTaskDescriptor ctd = new ConcreteTaskDescriptor();
 
-				if (_occ > 1) {
-					if (_td.getPresentationName() == null)
-						ctd.setConcreteName(_td.getName() + "_" + (new Integer(i)).toString());
-					else
-						ctd.setConcreteName(_td.getPresentationName() + "_" + (new Integer(i)).toString());
-				} else {
-					if (_td.getPresentationName() == null)
-						ctd.setConcreteName(_td.getName());
-					else
-						ctd.setConcreteName(_td.getPresentationName());
-				}
+				if (_td.getPresentationName().equals(""))
+					ctd.setConcreteName(_td.getName() + "#" + (new Integer(i)).toString());
+				else
+					ctd.setConcreteName(_td.getPresentationName() + "#" + (new Integer(i)).toString());
 
 				ctd.addTaskDescriptor(_td);
 				ctd.setProject(_project);
@@ -103,6 +105,7 @@ public class TaskDescriptorService {
 		if (_occ > 0) {
 			for (ConcreteActivity tmp : _cacts) {
 				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(tmp);
+				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(tmp);
 				this.taskDescriptorInstanciation(_project, _td, tmp, _occ, true);
 			}
 		}

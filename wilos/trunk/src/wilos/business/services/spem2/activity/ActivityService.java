@@ -36,6 +36,7 @@ import wilos.hibernate.misc.concretephase.ConcretePhaseDao;
 import wilos.hibernate.misc.project.ProjectDao;
 import wilos.hibernate.spem2.activity.ActivityDao;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreteiteration.ConcreteIteration;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.project.Project;
@@ -92,24 +93,23 @@ public class ActivityService {
 			if (_isInstanciated) {
 				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(_cact);
 			}
-			for (int i = 1; i <= _occ; i++) {
+			int nbCact = 0;
+			for (ConcreteBreakdownElement tmp : _cact.getConcreteBreakdownElements()) {
+				if (tmp instanceof ConcreteActivity) {
+					nbCact++;
+				}
+			}
+			for (int i = nbCact + 1; i <= nbCact + _occ; i++) {
 
 				ConcreteActivity cact = new ConcreteActivity();
 
 				List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 				bdes.addAll(this.getInstanciableBreakdownElements(_activity));
 
-				if (_occ > 1) {
-					if (_activity.getPresentationName() == null)
-						cact.setConcreteName(_activity.getName() + "_" + (new Integer(i)).toString());
-					else
-						cact.setConcreteName(_activity.getPresentationName() + "_" + (new Integer(i)).toString());
-				} else {
-					if (_activity.getPresentationName() == null)
-						cact.setConcreteName(_activity.getName());
-					else
-						cact.setConcreteName(_activity.getPresentationName());
-				}
+				if (_activity.getPresentationName().equals(""))
+					cact.setConcreteName(_activity.getName() + "#" + (new Integer(i)).toString());
+				else
+					cact.setConcreteName(_activity.getPresentationName() + "#" + (new Integer(i)).toString());
 
 				cact.addActivity(_activity);
 				cact.setProject(_project);
@@ -154,9 +154,9 @@ public class ActivityService {
 		if (_occ > 0) {
 			for (ConcreteActivity tmp : _cacts) {
 				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(tmp);
+				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(tmp);
 				this.activityInstanciation(_project, _act, tmp, _list, _occ, true);
 				
-				// FIXME a priori tmp pe etre de type project, cph, cit ou cact
 				if (tmp instanceof Project) {
 					Project pj = (Project) tmp;
 					this.projectDao.saveOrUpdateProject(pj);
@@ -188,7 +188,7 @@ public class ActivityService {
 			
 			Set<ConcreteActivity> cacts = new HashSet<ConcreteActivity>();
 			//FIXME idem phaseService
-			cacts.addAll(this.getAllConcreteActivities(_act));
+			cacts.addAll(this.getAllConcreteActivitiesForAProject(_act, _project));
 			
 			for (BreakdownElement bde : bdes) {
 				if (bde instanceof Activity) {
@@ -230,6 +230,17 @@ public class ActivityService {
 		this.activityDao.getSessionFactory().getCurrentSession().saveOrUpdate(_act);
 		for (ConcreteActivity bde : _act.getConcreteActivities()) {
 			tmp.add(bde);
+		}
+		return tmp;
+	}
+	
+	public Set<ConcreteActivity> getAllConcreteActivitiesForAProject(Activity _act, Project _project) {
+		Set<ConcreteActivity> tmp = new HashSet<ConcreteActivity>();
+		this.activityDao.getSessionFactory().getCurrentSession().saveOrUpdate(_act);
+		this.projectDao.getSessionFactory().getCurrentSession().saveOrUpdate(_project);
+		for (ConcreteActivity cact : _act.getConcreteActivities()) {
+			if (cact.getProject().equals(_project))
+				tmp.add(cact);
 		}
 		return tmp;
 	}

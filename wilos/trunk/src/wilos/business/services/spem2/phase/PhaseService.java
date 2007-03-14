@@ -30,8 +30,10 @@ import wilos.business.services.spem2.iteration.IterationService;
 import wilos.business.services.spem2.role.RoleDescriptorService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.hibernate.misc.concretephase.ConcretePhaseDao;
+import wilos.hibernate.misc.project.ProjectDao;
 import wilos.hibernate.spem2.phase.PhaseDao;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
@@ -51,6 +53,8 @@ public class PhaseService {
 	private ConcretePhaseDao concretePhaseDao;
 
 	private PhaseDao phaseDao;
+	
+	private ProjectDao projectDao;
 
 	private IterationService iterationService;
 
@@ -67,6 +71,17 @@ public class PhaseService {
 		this.phaseDao.getSessionFactory().getCurrentSession().saveOrUpdate(_phase);
 		for (ConcretePhase bde : _phase.getConcretePhases()) {
 			tmp.add(bde);
+		}
+		return tmp;
+	}
+	
+	public Set<ConcretePhase> getAllConcretePhasesForAProject(Phase _phase, Project _project) {
+		Set<ConcretePhase> tmp = new HashSet<ConcretePhase>();
+		this.phaseDao.getSessionFactory().getCurrentSession().saveOrUpdate(_phase);
+		this.projectDao.getSessionFactory().getCurrentSession().saveOrUpdate(_project);
+		for (ConcretePhase cph : _phase.getConcretePhases()) {
+			if (cph.getProject().equals(_project))
+				tmp.add(cph);
 		}
 		return tmp;
 	}
@@ -88,25 +103,23 @@ public class PhaseService {
 			if (_isInstanciated) {
 				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(_cact);
 			}
-			for (int i = 1; i <= _occ; i++) {
+			int nbCph = 0;
+			for (ConcreteBreakdownElement tmp : _cact.getConcreteBreakdownElements()) {
+				if (tmp instanceof ConcretePhase) {
+					nbCph++;
+				}
+			}
+			for (int i = nbCph + 1; i <= nbCph + _occ; i++) {
 
 				ConcretePhase cp = new ConcretePhase();
 
 				Set<BreakdownElement> bdes = new HashSet<BreakdownElement>();
 				bdes.addAll(this.activityService.getInstanciableBreakdownElements(_phase));
 
-				// if several occurrences
-				if (_occ > 1) {
-					if (_phase.getPresentationName() == null)
-						cp.setConcreteName(_phase.getName() + "_" + (new Integer(i)).toString());
-					else
-						cp.setConcreteName(_phase.getPresentationName() + "_" + (new Integer(i)).toString());
-				} else {
-					if (_phase.getPresentationName() == null)
-						cp.setConcreteName(_phase.getName());
-					else
-						cp.setConcreteName(_phase.getPresentationName());
-				}
+				if (_phase.getPresentationName().equals(""))
+					cp.setConcreteName(_phase.getName() + "#" + (new Integer(i)).toString());
+				else
+					cp.setConcreteName(_phase.getPresentationName() + "#" + (new Integer(i)).toString());
 
 				cp.addPhase(_phase);
 				cp.setProject(_project);
@@ -162,11 +175,19 @@ public class PhaseService {
 		// one concretephase at least to insert in all attached concreteactivities of the parent of _phase
 		if (_occ > 0) {
 			for (ConcreteActivity tmp : _cacts) {
+				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(tmp);
+				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(tmp);
 				this.phaseInstanciation(_project, _phase, tmp, _list, _occ, true);
 				
-				// FIXME a priori tmp pe etre de type project ou cph
-				/*this.concreteActivityDao.saveOrUpdateConcreteActivity(tmp);
-				System.out.println("### ConcreteActivity update");*/
+				if (tmp instanceof Project) {
+					Project pj = (Project) tmp;
+					this.projectDao.saveOrUpdateProject(pj);
+				} else {
+					if (tmp instanceof ConcretePhase) {
+						ConcretePhase cph = (ConcretePhase) tmp;
+						this.concretePhaseDao.saveOrUpdateConcretePhase(cph);
+					}
+				}
 			}
 		} else {
 			
@@ -176,7 +197,7 @@ public class PhaseService {
 			
 			Set<ConcreteActivity> cacts = new HashSet<ConcreteActivity>();
 			//FIXME faire et appeler la methode getAllConcretePhasesForAProject
-			cacts.addAll(this.getAllConcretePhases(_phase));
+			cacts.addAll(this.getAllConcretePhasesForAProject(_phase, _project));
 			
 			for (BreakdownElement bde : bdes) {
 				if (bde instanceof Phase) {
@@ -333,5 +354,19 @@ public class PhaseService {
 	 */
 	public void setPhaseDao(PhaseDao phaseDao) {
 		this.phaseDao = phaseDao;
+	}
+
+	/**
+	 * @return the projectDao
+	 */
+	public ProjectDao getProjectDao() {
+		return projectDao;
+	}
+
+	/**
+	 * @param projectDao the projectDao to set
+	 */
+	public void setProjectDao(ProjectDao projectDao) {
+		this.projectDao = projectDao;
 	}
 }

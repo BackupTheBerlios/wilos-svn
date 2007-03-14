@@ -90,7 +90,7 @@ public class ExpTableBean {
 		this.isInstanciedProject = true;
 	}
 
-	public void saveProjectInstanciation() {
+	public String saveProjectInstanciation() {
 
 		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
 		if (projectId != null) {
@@ -138,6 +138,8 @@ public class ExpTableBean {
 		message.setSummary(bundle.getString("component.instanciation.instanciatedMessage"));
 		message.setSeverity(FacesMessage.SEVERITY_INFO);
 		context.addMessage(null, message);
+		
+		return "";
 	}
 
 	/**

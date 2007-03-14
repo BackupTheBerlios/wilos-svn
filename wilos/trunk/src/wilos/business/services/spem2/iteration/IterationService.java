@@ -31,9 +31,13 @@ import wilos.business.services.spem2.breakdownelement.BreakdownElementService;
 import wilos.business.services.spem2.role.RoleDescriptorService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
 import wilos.hibernate.misc.concreteiteration.ConcreteIterationDao;
+import wilos.hibernate.misc.concretephase.ConcretePhaseDao;
+import wilos.hibernate.misc.project.ProjectDao;
 import wilos.hibernate.spem2.iteration.IterationDao;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
+import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreteiteration.ConcreteIteration;
+import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.project.Project;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
@@ -52,6 +56,10 @@ public class IterationService {
 	private ConcreteIterationDao concreteIterationDao;
 
 	private IterationDao iterationDao;
+	
+	private ConcretePhaseDao concretePhaseDao;
+	
+	private ProjectDao projectDao;
 
 	private BreakdownElementService breakdownElementService;
 
@@ -73,6 +81,17 @@ public class IterationService {
 		}
 		return tmp;
 	}
+	
+	public Set<ConcreteIteration> getAllConcreteIterationsForAProject(Iteration _iteration, Project _project) {
+		Set<ConcreteIteration> tmp = new HashSet<ConcreteIteration>();
+		this.iterationDao.getSessionFactory().getCurrentSession().saveOrUpdate(_iteration);
+		this.projectDao.getSessionFactory().getCurrentSession().saveOrUpdate(_project);
+		for (ConcreteIteration cit : _iteration.getConcreteIterations()) {
+			if (cit.getProject().equals(_project))
+				tmp.add(cit);
+		}
+		return tmp;
+	}
 
 	/**
 	 * Instanciates an iteration for a project
@@ -90,24 +109,23 @@ public class IterationService {
 			if (_isInstanciated) {
 				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(_cact);
 			}
-			for (int i = 1; i <= _occ; i++) {
+			int nbCit = 0;
+			for (ConcreteBreakdownElement tmp : _cact.getConcreteBreakdownElements()) {
+				if (tmp instanceof ConcreteIteration) {
+					nbCit++;
+				}
+			}
+			for (int i = nbCit + 1; i <= nbCit + _occ; i++) {
 
 				ConcreteIteration ci = new ConcreteIteration();
 
 				List<BreakdownElement> bdes = new ArrayList<BreakdownElement>();
 				bdes.addAll(this.activityService.getInstanciableBreakdownElements(_iteration));
 
-				if (_occ > 1) {
-					if (_iteration.getPresentationName() == null)
-						ci.setConcreteName(_iteration.getName() + "_" + (new Integer(i)).toString());
-					else
-						ci.setConcreteName(_iteration.getPresentationName() + "_" + (new Integer(i)).toString());
-				} else {
-					if (_iteration.getPresentationName() == null)
-						ci.setConcreteName(_iteration.getName());
-					else
-						ci.setConcreteName(_iteration.getPresentationName());
-				}
+				if (_iteration.getPresentationName().equals(""))
+					ci.setConcreteName(_iteration.getName() + "#" + (new Integer(i)).toString());
+				else
+					ci.setConcreteName(_iteration.getPresentationName() + "#" + (new Integer(i)).toString());
 
 				ci.addIteration(_iteration);
 				ci.setProject(_project);
@@ -158,11 +176,23 @@ public class IterationService {
 		if (_occ > 0) {
 			for (ConcreteActivity tmp : _cacts) {
 				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(tmp);
+				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(tmp);
 				this.iterationInstanciation(_project, _it, tmp, _list, _occ, true);
 				
-				//FIXME a priori tmp pe etre de type project, cph ou cit
-				/*this.concreteActivityDao.saveOrUpdateConcreteActivity(tmp);
-				System.out.println("### ConcreteActivity update");*/
+				if (tmp instanceof Project) {
+					Project pj = (Project) tmp;
+					this.projectDao.saveOrUpdateProject(pj);
+				} else {
+					if (tmp instanceof ConcretePhase) {
+						ConcretePhase cph = (ConcretePhase) tmp;
+						this.concretePhaseDao.saveOrUpdateConcretePhase(cph);
+					} else {
+						if (tmp instanceof ConcreteIteration) {
+							ConcreteIteration cit = (ConcreteIteration) tmp;
+							this.concreteIterationDao.saveOrUpdateConcreteIteration(cit);
+						}
+					}
+				}
 			}
 		} else {
 			
@@ -172,7 +202,7 @@ public class IterationService {
 			
 			Set<ConcreteActivity> cacts = new HashSet<ConcreteActivity>();
 			//FIXME idem phaseService
-			cacts.addAll(this.getAllConcreteIterations(_it));
+			cacts.addAll(this.getAllConcreteIterationsForAProject(_it, _project));
 			
 			for (BreakdownElement bde : bdes) {
 				if (bde instanceof Iteration) {
@@ -339,6 +369,34 @@ public class IterationService {
 	 */
 	public void setIterationDao(IterationDao iterationDao) {
 		this.iterationDao = iterationDao;
+	}
+
+	/**
+	 * @return the concretePhaseDao
+	 */
+	public ConcretePhaseDao getConcretePhaseDao() {
+		return concretePhaseDao;
+	}
+
+	/**
+	 * @param concretePhaseDao the concretePhaseDao to set
+	 */
+	public void setConcretePhaseDao(ConcretePhaseDao concretePhaseDao) {
+		this.concretePhaseDao = concretePhaseDao;
+	}
+
+	/**
+	 * @return the projectDao
+	 */
+	public ProjectDao getProjectDao() {
+		return projectDao;
+	}
+
+	/**
+	 * @param projectDao the projectDao to set
+	 */
+	public void setProjectDao(ProjectDao projectDao) {
+		this.projectDao = projectDao;
 	}
 
 }
