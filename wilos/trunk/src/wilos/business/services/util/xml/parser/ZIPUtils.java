@@ -104,7 +104,7 @@ public class ZIPUtils
 				trouve = XMLUtils.isExtension(entry.getName(), "xml");
 				if (trouve){
 					String name =entry.getName() ; 
-					int pos = name.lastIndexOf("/") ;
+					int pos = name.lastIndexOf(File.separator) ;
 					if (pos < sizePath){
 						sizePath = pos ;
 						retour = entry ;
