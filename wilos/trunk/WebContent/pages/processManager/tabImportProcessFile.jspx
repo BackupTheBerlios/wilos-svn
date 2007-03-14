@@ -35,6 +35,7 @@
 							uniqueFolder="false" file="#{XmlFileImportBean.file}"
 							immediate="true" /> <ice:outputProgress id="pro"
 							indeterminate="true" value="#{XmlFileImportBean.percent}"
+							label="#{msgs['welcomeProcessManager.mainTable.labelProgressBarInProgress']}"
 							styleClass=".iceOutputProgressIndeterminate" /></center>
 					</ice:panelGroup>
 					<br />

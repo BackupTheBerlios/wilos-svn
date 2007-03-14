@@ -1464,9 +1464,10 @@ background-image:url("../images/xpwilos/tab-over.gif");
 }
 
 .iceOutputProgressText {
-    color: #9681B7;
+    color: #ffbf4d;
     font:bold 1em Verdana;
 }
+
 
 /*
    Classes for the output progress bar indeterminate
