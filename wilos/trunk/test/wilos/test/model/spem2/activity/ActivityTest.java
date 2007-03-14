@@ -167,6 +167,7 @@ public class ActivityTest {
 		tmp.setHasMultipleOccurrences(false);
 
 		SortedSet<BreakdownElement> set = new TreeSet<BreakdownElement>();
+		breakdownElement.setInsertionOrder(1);
 		set.add(breakdownElement);
 		set.add(tmp);
 
@@ -174,7 +175,7 @@ public class ActivityTest {
 
 		assertFalse("bdes vides", this.activity.getBreakdownElements()
 				.isEmpty());
-		assertTrue("bdes = 2", this.activity.getBreakdownElements().size() == 2);
+		assertTrue("bdes != 2", this.activity.getBreakdownElements().size() == 2);
 		assertFalse("brk acts vide", breakdownElement.getSuperActivities()
 				.isEmpty());
 		assertTrue("brk acts = 1",
@@ -223,9 +224,9 @@ public class ActivityTest {
 		tmp.setHasMultipleOccurrences(false);
 
 		SortedSet<BreakdownElement> set = new TreeSet<BreakdownElement>();
+		breakdownElement.setInsertionOrder(1);
+		set.add(tmp);	
 		set.add(breakdownElement);
-		set.add(tmp);
-
 		assertTrue(set.size() == 2);
 
 		this.activity.addAllBreakdownElements(set);
