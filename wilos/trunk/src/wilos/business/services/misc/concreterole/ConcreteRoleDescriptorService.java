@@ -23,10 +23,12 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import wilos.business.services.misc.concreteactivity.ConcreteActivityService;
+import wilos.business.services.spem2.role.RoleDescriptorService;
 import wilos.hibernate.misc.concreterole.ConcreteRoleDescriptorDao;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.model.spem2.role.RoleDescriptor;
 
 /**
 *
@@ -38,7 +40,11 @@ public class ConcreteRoleDescriptorService {
 
 		private ConcreteRoleDescriptorDao concreteRoleDescriptorDao;
 
-		private ConcreteActivityService concretActivityService;
+		private ConcreteActivityService concreteActivityService;
+		
+		private RoleDescriptorService roleDescriptorService;
+		
+		
 		
 		public void saveConcreteRoleDescriptor(ConcreteRoleDescriptor _concreteRoleDescriptor) {
 			this.concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(_concreteRoleDescriptor);
@@ -78,7 +84,7 @@ public class ConcreteRoleDescriptorService {
 		 */
 		public List<ConcreteActivity> getSuperConcreteActivities(String _crdid) {
 			ConcreteRoleDescriptor crd = this.getConcreteRoleDescriptorById(_crdid);
-			List<ConcreteActivity> listTmp = this.concretActivityService.getAllConcreteActivities();
+			List<ConcreteActivity> listTmp = this.concreteActivityService.getAllConcreteActivities();
 			List<ConcreteActivity> listToReturn = new ArrayList<ConcreteActivity>();
 
 			for(ConcreteActivity ca : listTmp){
@@ -88,6 +94,45 @@ public class ConcreteRoleDescriptorService {
 			}
 
 			return listToReturn;
+		}
+		
+		/**
+		 * delete a concreteRoleDescriptor
+		 */
+		@Transactional(readOnly = false)
+		public void removeConcreteRoleDescriptor(ConcreteRoleDescriptor _concreteRoledescriptor)
+		{
+			this.concreteRoleDescriptorDao.getHibernateTemplate().saveOrUpdate(_concreteRoledescriptor);
+			
+			//super activities automaintenance
+			for (ConcreteActivity sca : _concreteRoledescriptor.getSuperConcreteActivities())
+			{
+				sca.getConcreteBreakdownElements().remove(_concreteRoledescriptor);
+				this.concreteActivityService.getConcreteActivityDao().saveOrUpdateConcreteActivity(sca);
+			}
+			
+			//no automaintenance for the taskdescriptor because the deleting of a concreteRoleDscriptor implies it has been not affected
+			//this kind of automaintenance implies spring circular dependencies
+			/*
+			//concreteTasks automaintenance
+			if (_concreteRoledescriptor.getPrimaryConcreteTaskDescriptors() != null)
+			{
+				for (ConcreteTaskDescriptor tmpConcreteTaskDescriptor : _concreteRoledescriptor.getPrimaryConcreteTaskDescriptors())
+				{
+					this.concreteTaskDescriptorService.getConcreteTaskDescriptorDao().getHibernateTemplate().saveOrUpdate(tmpConcreteTaskDescriptor);
+					tmpConcreteTaskDescriptor.removeConcreteRoleDescriptor(_concreteRoledescriptor);
+					this.concreteTaskDescriptorService.getConcreteTaskDescriptorDao().saveOrUpdateConcreteTaskDescriptor(tmpConcreteTaskDescriptor);
+				}
+			}
+			*/
+			//RoleDescriptor automaintenance
+			RoleDescriptor rd = _concreteRoledescriptor.getRoleDescriptor();
+			this.roleDescriptorService.getRoleDescriptorDao().getHibernateTemplate().saveOrUpdate(rd);
+			rd.removeConcreteRoleDescriptor(_concreteRoledescriptor);
+			this.roleDescriptorService.getRoleDescriptorDao().saveOrUpdateRoleDescriptor(rd);
+			
+			//deleting
+			this.getConcreteRoleDescriptorDao().deleteConcreteRoleDescriptor(_concreteRoledescriptor);
 		}
 
 		/**
@@ -119,16 +164,15 @@ public class ConcreteRoleDescriptorService {
 		/**
 		 * @return the concretActivityService
 		 */
-		public ConcreteActivityService getConcretActivityService() {
-			return concretActivityService;
+		public ConcreteActivityService getConcreteActivityService() {
+			return concreteActivityService;
 		}
 
 		/**
 		 * @param concretActivityService the concretActivityService to set
 		 */
-		public void setConcretActivityService(
-				ConcreteActivityService _concretActivityService) {
-			this.concretActivityService = _concretActivityService;
+		public void setConcreteActivityService(ConcreteActivityService _concreteActivityService) {
+			this.concreteActivityService = _concreteActivityService;
 		}
 
 		/**
@@ -139,5 +183,19 @@ public class ConcreteRoleDescriptorService {
 		public List<ConcreteRoleDescriptor> getAllConcreteRoleDescriptorForARoleDescriptor(
 				String _roleDescriptorId) {
 			return this.concreteRoleDescriptorDao.getAllConcreteRoleDescriptorsForARoleDescriptor(_roleDescriptorId);
+		}
+
+		/**
+		 * @return the roleDescriptorService
+		 */
+		public RoleDescriptorService getRoleDescriptorService() {
+			return roleDescriptorService;
+		}
+
+		/**
+		 * @param roleDescriptorService the roleDescriptorService to set
+		 */
+		public void setRoleDescriptorService(RoleDescriptorService roleDescriptorService) {
+			this.roleDescriptorService = roleDescriptorService;
 		}
 }

@@ -15,6 +15,23 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 -->
 <ice:form>
 	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1">
+		
+		<!-- <ice:panelPopup draggable="false" visible="#{ConcreteRoleViewerBean.visibleDeletePopup}" rendered="true" modal="true">
+			<f:facet name="header">
+				<ice:outputText value="#{msgs['concreteRoleViewer.popupDeleteHeaderMessage']}" />
+			</f:facet>
+			<f:facet name="body">
+				<ice:panelGrid id="deletePopup">
+					<ice:graphicImage value="images/xpwilos/warning.gif" style="border: 0px solid;" />
+					<ice:outputText value="#{msgs['concreteRoleViewer.popupDeleteMessage']}" />				
+					<ice:panelGrid styleClass="pGrdPopupButtons" columns="2">
+						<ice:commandButton value="#{msgs['concreteRoleViewer.popupDeleteConfirmButton']}" styleClass="smallbutton" action="#{ConcreteRoleViewerBean.confirmDelete}"/>
+						<ice:commandButton value="#{msgs['concreteRoleViewer.popupDeleteCancelButton']}" styleClass="smallbutton" action="#{ConcreteRoleViewerBean.cancelDelete}"/>
+					</ice:panelGrid>
+				</ice:panelGrid>
+			</f:facet>
+		</ice:panelPopup> -->
+
 		<ice:panelTabSet styleClass="componentPanelTabSetLayout">
 			<br />
 			<ice:panelTab label="#{msgs['concreteRoleViewer.tabtitle'] }">
@@ -34,7 +51,7 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 					<ice:panelGrid id="roleAffectedTo" styleClass="contentLayoutGridStyle" columns="3">
 						<ice:outputText value="#{msgs['concreteRoleViewer.affectedTo']}" />
 						<ice:outputText value="#{ConcreteRoleViewerBean.concreteRoleDescriptor.participant.firstname} #{ConcreteRoleViewerBean.concreteRoleDescriptor.participant.name}" />
-						<ice:outputText value="" />
+						<ice:outputText value="" />						
 					</ice:panelGrid>
 
 					<ice:panelGrid id="roleNotAffected" styleClass="contentLayoutGridStyle" columns="3">
@@ -42,10 +59,15 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 						<ice:outputText value="#{msgs['concreteRoleViewer.notAffected']}" />
 						<ice:outputText value="" />
 						<ice:commandButton value="#{msgs['concreteRoleViewer.toAffect']}" action="#{ConcreteRoleViewerBean.affectParticipantToARole}" styleClass="smallbutton" />
-						<ice:outputText value="" />
+						<ice:commandButton value="#{msgs['concreteRoleViewer.remove'] }" 
+										action="#{ConcreteRoleViewerBean.confirmDelete}" 
+										visible="#{ConcreteRoleViewerBean.visibleRemove}"
+										styleClass="smallbutton"
+										title="#{msgs['concreteRoleViewer.remove.Bubble'] }"/>
 						<ice:outputText value="" />
 					</ice:panelGrid>
 				</ice:panelStack>
+				
 
 			</ice:panelTab>
 		</ice:panelTabSet>

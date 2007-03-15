@@ -20,12 +20,16 @@ import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 import wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.wilosuser.Participant;
+import wilos.presentation.web.template.MenuBean;
+import wilos.presentation.web.tree.WilosObjectNode;
+
 
 public class ConcreteRoleViewerBean extends ViewerBean {
 
@@ -38,6 +42,8 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 	private ParticipantService participantService;
 
 	private String selectAffectedRoleView;
+
+	private boolean visibleDeletePopup = false;
 
 	/**
 	 * TODO method description
@@ -77,6 +83,61 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 		// refresh the tree
 		super.refreshProjectTree();
 	}
+	
+	/**
+	 * @return the visibleRemove
+	 */
+	public boolean getVisibleRemove() {
+		return (!this.getChangeButtonIsDisabled() && (this.concreteRoleDescriptor.getParticipant() == null));
+	}
+	
+	/**
+	 * delete a concrete role
+	 *
+	 */
+	public void removeActionListener(ActionEvent event) {
+		this.visibleDeletePopup = true;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String confirmDelete() {
+
+		if (!this.getChangeButtonIsDisabled() && (this.concreteRoleDescriptor.getParticipant() == null))
+		{
+			this.concreteRoleDescriptorService.removeConcreteRoleDescriptor(this.concreteRoleDescriptor);
+			// Refresh components.
+			super.refreshProjectTable();
+			super.rebuildProjectTree();
+			super.refreshProjectTree();
+
+			FacesContext context = FacesContext.getCurrentInstance();
+			MenuBean mb = (MenuBean) context.getApplication().getVariableResolver().resolveVariable(context, "menu");
+			mb.changePage(WilosObjectNode.PROJECTNODE);
+			
+			/* Displays info message */
+			ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
+			FacesMessage message = new FacesMessage();
+			message.setSummary(bundle.getString("concreteRoleViewer.removed"));
+			message.setSeverity(FacesMessage.SEVERITY_INFO);
+			context.addMessage(null, message);
+			
+			this.visibleDeletePopup = false;
+		}
+		return "";
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String cancelDelete() {
+		this.visibleDeletePopup = false;
+		return "";
+	}
+
 	
 	
 	/**
@@ -135,5 +196,19 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 
 	public void setParticipantService(ParticipantService participantService) {
 		this.participantService = participantService;
+	}
+
+	/**
+	 * @return the visibleDeletePopup
+	 */
+	public boolean getVisibleDeletePopup() {
+		return visibleDeletePopup;
+	}
+
+	/**
+	 * @param visibleDeletePopup the visibleDeletePopup to set
+	 */
+	public void setVisibleDeletePopup(boolean visibleDeletePopup) {
+		this.visibleDeletePopup = visibleDeletePopup;
 	}
 }

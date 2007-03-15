@@ -563,6 +563,10 @@
 		class="wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService">
 		<property name="concreteRoleDescriptorDao"
 			ref="ConcreteRoleDescriptorDao" />
+		<property name="concreteActivityService"
+			ref="ConcreteActivityService" />
+		<property name="roleDescriptorService"
+			ref="RoleDescriptorService" />
 	</bean>
 
 	<bean id="ConcreteActivityService"
