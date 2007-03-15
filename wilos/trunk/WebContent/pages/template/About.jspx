@@ -17,7 +17,7 @@
 	<ice:panelGrid columns="3">
 		<ice:commandLink value="" action="#{AboutBean.displayAboutPopup}"
 			title="#{msgs['about.popupTitle']}">
-			<ice:graphicImage value="images/help_about.jpg" style="border: 0px solid;" />
+			<ice:graphicImage value="images/help_about.gif" style="border: 0px solid;" />
 		</ice:commandLink>
 		<ice:panelPopup draggable="true"
 			visible="#{AboutBean.visibleAboutPopup}" rendered="true"
