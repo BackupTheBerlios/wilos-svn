@@ -21,7 +21,7 @@
 		</ice:commandLink>
 		<ice:panelPopup draggable="true"
 			visible="#{AboutBean.visibleAboutPopup}" rendered="true"
-			modal="false">
+			modal="true" style="height:250px; background-color: #BEB4CC;">
 			<f:facet name="header">
 				<ice:outputText value="#{msgs['about.popupTitle']}" />
 			</f:facet>
