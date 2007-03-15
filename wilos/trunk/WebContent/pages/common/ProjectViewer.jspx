@@ -171,9 +171,8 @@
 							valueChangeListener="#{Woops2ProcessBean.changeProcessSelectionListener}">
 							<f:selectItems value="#{Woops2ProcessBean.processes}" />
 						</ice:selectOneMenu>
-						<ice:commandButton visible="#{Woops2ProcessBean.isVisibleExpTable}" value="#{ExpTableBean.instanciationBtName}" action="#{ExpTableBean.saveProjectInstanciation}" styleClass="smallbutton"/>
-						<!--<ice:commandButton enabledOnUserRole="#{Woops2ProcessBean.readOnly}"
-							visible="#{Woops2ProcessBean.isVisibleExpTable}"
+						<ice:commandButton disabled="#{Woops2ProcessBean.readOnly}" visible="#{Woops2ProcessBean.isVisibleExpTable}" value="#{ExpTableBean.instanciationBtName}" action="#{ExpTableBean.saveProjectInstanciation}" styleClass="smallbutton"/>
+						<!--<ice:commandButton visible="#{Woops2ProcessBean.isVisibleExpTable}"
 							value="#{ExpTableBean.instanciationBtName}"
 							action="#{ExpTableBean.saveProjectInstanciation}"
 							styleClass="smallbutton" />-->

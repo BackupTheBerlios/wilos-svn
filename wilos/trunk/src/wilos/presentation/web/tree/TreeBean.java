@@ -192,6 +192,11 @@ public class TreeBean {
 				processBean.setIsVisibleExpTable(false);
 				expTableBean.setIsInstanciedProject(false);
 				expTableBean.getExpTableContent().clear();
+			} else {
+				processBean.setSelectedProcessGuid(project.getProcess().getGuid());
+				expTableBean.setSelectedProcessGuid(project.getProcess().getGuid());
+				processBean.setIsVisibleExpTable(true);
+				expTableBean.setIsInstanciedProject(true);
 			}
 		}
 

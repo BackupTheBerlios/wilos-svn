@@ -112,14 +112,15 @@ public class ExpTableBean {
 		tb.rebuildProjectTree();
 
 		// clear occurences number of each object of expTableContent
-		for (HashMap<String, Object> map : this.expTableContent) {
+		/*for (HashMap<String, Object> map : this.expTableContent) {
 			map.put("nbOccurences", new Integer(0));
-		}
+		}*/
 
 		// lock the combobox
-		ProcessBean processBean = (ProcessBean) context.getApplication().getVariableResolver().resolveVariable(context,
-				"Woops2ProcessBean");
-		processBean.setReadOnly(true);
+		/*ProcessBean processBean = (ProcessBean) context.getApplication().getVariableResolver().resolveVariable(context,
+				"Woops2ProcessBean");*/
+		this.isInstanciedProject = true;
+		this.expTableContent.clear();
 
 		// refresh de la table des roles.
 		RolesInstanciationBean rib = (RolesInstanciationBean) context.getApplication().getVariableResolver()
@@ -151,6 +152,7 @@ public class ExpTableBean {
 			Process process = this.processService.getProcessFromGuid(this.selectedProcessGuid);
 			if (!this.viewedProcessId.equals(process.getId()) || this.expTableContent.isEmpty()) {
 				this.viewedProcessId = process.getId();
+				this.isExpanded.clear();
 				this.expTableContent.clear();
 				this.indentationContent.clear();
 				this.needIndentation = false;

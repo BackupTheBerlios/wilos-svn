@@ -144,22 +144,11 @@ public class ProcessBean {
 		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
 		Project project = this.projectService.getProject(projectId);
 
-		FacesContext context = FacesContext.getCurrentInstance();
-
-		ExpTableBean expTableBean = (ExpTableBean) context.getApplication().getVariableResolver().resolveVariable(
-				context, "ExpTableBean");
-
 		if (project.getProcess() == null) {
 			this.readOnly = false;
-			expTableBean.setIsInstanciedProject(false);
 
 		} else {
 			this.readOnly = true;
-			this.selectedProcessGuid = project.getProcess().getGuid();
-			expTableBean.setSelectedProcessGuid(this.selectedProcessGuid);
-			expTableBean.setIsInstanciedProject(false);
-			this.isVisibleExpTable = true;
-			expTableBean.refreshExpTable();
 		}
 
 		return this.readOnly;
