@@ -77,7 +77,7 @@ public class PhaseService {
 	
 	public Set<ConcretePhase> getAllConcretePhasesForAProject(Phase _phase, Project _project) {
 		Set<ConcretePhase> tmp = new HashSet<ConcretePhase>();
-		this.phaseDao.getSessionFactory().getCurrentSession().saveOrUpdate(_phase);
+		//this.phaseDao.getSessionFactory().getCurrentSession().saveOrUpdate(_phase);
 		this.projectDao.getSessionFactory().getCurrentSession().saveOrUpdate(_project);
 		for (ConcretePhase cph : _phase.getConcretePhases()) {
 			if (cph.getProject().getId().equals(_project.getId()))
@@ -100,9 +100,9 @@ public class PhaseService {
 		// if one occurence at least
 		if (_occ > 0) {
 			this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(_cact);
-			if (_isInstanciated) {
+			/*if (_isInstanciated) {
 				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(_cact);
-			}
+			}*/
 			int nbCph = 0;
 			for (ConcreteBreakdownElement tmp : _cact.getConcreteBreakdownElements()) {
 				if (tmp instanceof ConcretePhase) {
@@ -177,8 +177,8 @@ public class PhaseService {
 		// one concretephase at least to insert in all attached concreteactivities of the parent of _phase
 		if (_occ > 0) {
 			for (ConcreteActivity tmp : _cacts) {
-				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(tmp);
-				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(tmp);
+				/*this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(tmp);
+				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(tmp);*/
 				this.phaseInstanciation(_project, _phase, tmp, _list, _occ, true);
 				
 				if (tmp instanceof Project) {

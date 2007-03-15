@@ -57,9 +57,9 @@ public class TaskDescriptorService {
 
 		if (_occ > 0) {
 			this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(_cact);
-			if (_isInstanciated) {
+			/*if (_isInstanciated) {
 				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(_cact);
-			}
+			}*/
 			int nbCtd = 0;
 			for (ConcreteBreakdownElement tmp : _cact.getConcreteBreakdownElements()) {
 				if (tmp instanceof ConcreteTaskDescriptor) {
@@ -105,8 +105,8 @@ public class TaskDescriptorService {
 		if (_occ > 0) {
 			for (ConcreteActivity tmp : _cacts) {
 				//FIXME a different object with the same identifier value was already associated with the session: [wilos.model.misc.concreteiteration.ConcreteIteration#d2669a8b115259bc0111525b4ca9000b]
-				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(tmp);
-				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(tmp);
+				/*this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(tmp);
+				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(tmp);*/
 				this.taskDescriptorInstanciation(_project, _td, tmp, _occ, true);
 			}
 		}
