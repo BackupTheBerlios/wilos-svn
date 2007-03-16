@@ -1,3 +1,19 @@
+/*
+ * Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+ * Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program; if not,
+ * write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
+
 package wilos.presentation.assistant.view.main;
 
 import java.awt.BorderLayout;
@@ -148,7 +164,7 @@ public class DownLoadFrame extends JFrame {
 		{
 			this.dLFile = new JLabel();
 			this.dLFile.setBounds(new Rectangle(20,140,400,20));
-			this.dLFile.setText("Le fichier est téléchargé vers : X");
+			this.dLFile.setText("Le fichier est tï¿½lï¿½chargï¿½ vers : X");
 		}
 		return this.dLFile;
 	}
@@ -157,7 +173,7 @@ public class DownLoadFrame extends JFrame {
 		if (this.infoFile == null)
 		{
 			this.infoFile = new JLabel();
-			this.infoFile.setText("Le fichier X est en cours de téléchargement...");
+			this.infoFile.setText("Le fichier X est en cours de tï¿½lï¿½chargement...");
 		}
 		return this.infoFile;
 	}
