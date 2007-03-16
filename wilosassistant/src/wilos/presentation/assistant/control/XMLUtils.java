@@ -59,7 +59,6 @@ private static File document ;
 			resultat = exp.evaluate(document,retour);
 			
 		}catch(XPathExpressionException xpee){
-			xpee.printStackTrace();
     		new ExceptionManager(xpee);
 		}
 		return resultat;
@@ -82,9 +81,9 @@ private static File document ;
 			
 			
 		}catch(XPathExpressionException xpee){
-			xpee.printStackTrace();
+			new ExceptionManager(xpee);
 		}catch(IOException  ioe){
-			ioe.printStackTrace();	
+			new ExceptionManager(ioe);
 		}
 		return resultat;
 	}

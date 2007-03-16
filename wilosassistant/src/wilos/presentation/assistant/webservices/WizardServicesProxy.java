@@ -108,7 +108,6 @@ public class WizardServicesProxy {
             	}
             }
             catch (java.lang.Exception e) {
-                e.printStackTrace();
         		new ExceptionManager(e);
             }
             return myParticipant;
@@ -123,7 +122,7 @@ public class WizardServicesProxy {
             	}
             }
             catch (java.lang.Exception e) {
-                e.printStackTrace();
+            	new ExceptionManager(e);
             }
         }
    
@@ -138,7 +137,7 @@ public class WizardServicesProxy {
             	}
             }
             catch (java.lang.Exception e) {
-                e.printStackTrace();
+            	new ExceptionManager(e);
             }
             return fileContent;
         }
@@ -152,7 +151,7 @@ public class WizardServicesProxy {
             	}
             }
             catch (java.lang.Exception e) {
-                e.printStackTrace();
+            	new ExceptionManager(e);
             }
         }
 
@@ -165,7 +164,7 @@ public class WizardServicesProxy {
             	}
             }
             catch (java.lang.Exception e) {
-                e.printStackTrace();
+            	new ExceptionManager(e);
             }
         }
 
@@ -178,7 +177,7 @@ public class WizardServicesProxy {
             	}
             }
             catch (java.lang.Exception e) {
-                e.printStackTrace();
+            	new ExceptionManager(e);
             }
         }
     
@@ -193,7 +192,6 @@ public class WizardServicesProxy {
             	}
             }
             catch (java.lang.Exception e) {
-                e.printStackTrace();
                 new ExceptionManager(e);
             }
         }
@@ -207,7 +205,6 @@ public class WizardServicesProxy {
             	}
             }
             catch (java.lang.Exception e) {
-                e.printStackTrace();
                 new ExceptionManager(e);
             }
         }

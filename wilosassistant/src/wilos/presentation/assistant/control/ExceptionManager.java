@@ -62,7 +62,7 @@ public class ExceptionManager {
 		}
 
 		
-//		texte = classe + "\n" + msg;
+		//texte +="\n"+ classe + "\n" + msg;
 		
 		
 		// shows the message box

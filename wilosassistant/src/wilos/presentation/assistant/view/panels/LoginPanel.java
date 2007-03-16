@@ -39,6 +39,7 @@ import javax.swing.JTextField;
 import wilos.business.util.Security;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.guide.Guidance;
+import wilos.presentation.assistant.control.ExceptionManager;
 import wilos.presentation.assistant.control.ServersListParser;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.model.WizardServer;
@@ -145,7 +146,7 @@ public class LoginPanel extends JPanel {
                     adressTextField.setText(addr);
                     
                 } catch (Exception ex) {
-                    ex.printStackTrace();
+                    new ExceptionManager(ex);
                 }*/
        
     		if (this.adressTextField.getItemCount()!=0)this.adressTextField.removeAllItems();

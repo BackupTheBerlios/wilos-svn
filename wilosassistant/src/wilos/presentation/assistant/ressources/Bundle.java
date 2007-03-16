@@ -27,6 +27,8 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
+import wilos.presentation.assistant.control.ExceptionManager;
+
 
 public class Bundle {
 
@@ -108,7 +110,7 @@ public class Bundle {
 				System.out.println(jarCon.getContent());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				new ExceptionManager(e);
 			}
 			
 			
@@ -139,7 +141,7 @@ public class Bundle {
 			}*/	
 		/*} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			new ExceptionManager(e);
 		}*/
 		for (String s : availablesLocales) {
 			locs.add (new Locale (s));

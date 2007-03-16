@@ -51,7 +51,6 @@ public class ImagePanel extends JXImagePanel {
             // r�cup�ration de l'image que l'on applique au panel
             this.setImage(ImagesService.getImage(pict));
        } catch (IOException ex) {
-			ex.printStackTrace();
 			new ExceptionManager(ex);
        }
     }    

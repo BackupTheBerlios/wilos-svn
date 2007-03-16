@@ -36,6 +36,7 @@ import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXTaskPane;
 
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.presentation.assistant.control.ExceptionManager;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.utils.Constantes;
@@ -88,7 +89,7 @@ public class InfoPanel extends JXPanel implements Observer,ListenerTime {
 						tps_restant.commitEdit();
 						currentConcreteTask.setRemainingTime(getRemainingTimeForUpload());
 					} catch (ParseException e) {
-						e.printStackTrace();
+						new ExceptionManager(e);
 					}
 				}
 			}
@@ -355,7 +356,7 @@ public class InfoPanel extends JXPanel implements Observer,ListenerTime {
 			tps_restant.commitEdit();
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			new ExceptionManager(e);
 		}
 		
 	}

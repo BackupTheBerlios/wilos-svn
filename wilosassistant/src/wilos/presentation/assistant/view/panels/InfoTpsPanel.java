@@ -29,6 +29,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
+import wilos.presentation.assistant.control.ExceptionManager;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.view.main.WizardMainFrame;
@@ -73,7 +74,7 @@ public class InfoTpsPanel extends JDialog
 			WizardControler.getInstance().saveTimes(ctd, remaining, accomplish,editable);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			new ExceptionManager(e);
 		}
 	}
 	

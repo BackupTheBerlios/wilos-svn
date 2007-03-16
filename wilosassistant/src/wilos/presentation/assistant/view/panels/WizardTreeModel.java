@@ -31,6 +31,7 @@ import wilos.model.misc.wilosuser.Participant;
 import wilos.model.spem2.element.Element;
 import wilos.model.spem2.task.Step;
 import wilos.model.spem2.task.TaskDefinition;
+import wilos.presentation.assistant.control.ExceptionManager;
 import wilos.utils.Constantes;
 
 public class WizardTreeModel extends DefaultTreeModel {
@@ -50,7 +51,7 @@ public class WizardTreeModel extends DefaultTreeModel {
 			ca = s.iterator().next();
 		}
 		catch(Exception e){
-			
+			new ExceptionManager(e);
 		}
 		
 		return ca ;
@@ -123,7 +124,7 @@ public class WizardTreeModel extends DefaultTreeModel {
 							
 						} catch (CloneNotSupportedException e) {
 							// TODO Auto-generated catch block
-							e.printStackTrace();
+							new ExceptionManager(e);
 						}
 					}
 					// removing the steps from the task def and adding the cloned

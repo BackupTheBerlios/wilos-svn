@@ -157,10 +157,10 @@ public class WizardControler {
 									f.close();
 								} 
 								catch (IOException e) {
-									e.printStackTrace();
+									new ExceptionManager(e);
 								}
 							} catch (FileNotFoundException e1) {
-								e1.printStackTrace();
+								new ExceptionManager(e1);
 							}							
 							df.endOfTreatment() ;							
 						}

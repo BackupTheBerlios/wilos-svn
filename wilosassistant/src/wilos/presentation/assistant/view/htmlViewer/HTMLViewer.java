@@ -240,7 +240,6 @@ public class HTMLViewer extends JFrame {
         try {
         	this.setIconImage(ImagesService.getImage("images.frameIcon"));
         } catch (IOException ex) {
-			ex.printStackTrace();
 			new ExceptionManager(ex);
         }
 	}

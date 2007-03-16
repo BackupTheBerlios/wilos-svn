@@ -60,7 +60,6 @@ public class ServersListParser {
 			try {
 				XML_File.createNewFile();
 			} catch (IOException e) {
-				e.printStackTrace();
 				new ExceptionManager(e);
 			}
 		}
@@ -76,7 +75,9 @@ public class ServersListParser {
 		if (!XML_File.exists()) {
 			try {
 				XML_File.createNewFile();
-			} catch (Exception e) {}
+			} catch (Exception e) {
+				new ExceptionManager(e);
+			}
 		}
 	}
 
@@ -202,7 +203,7 @@ public class ServersListParser {
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			new ExceptionManager(e);
 		}
 	}
 	
