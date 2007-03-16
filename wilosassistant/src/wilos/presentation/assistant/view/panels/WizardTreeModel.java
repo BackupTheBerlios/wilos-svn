@@ -51,7 +51,7 @@ public class WizardTreeModel extends DefaultTreeModel {
 			ca = s.iterator().next();
 		}
 		catch(Exception e){
-			new ExceptionManager(e);
+			
 		}
 		
 		return ca ;
