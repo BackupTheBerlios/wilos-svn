@@ -1,19 +1,3 @@
-/*
- * Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
- * Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
- *
- * This program is free software; you can redistribute it and/or modify it under the terms of the GNU
- * General Public License as published by the Free Software Foundation; either version 2 of the License,
- * or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
- * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with this program; if not,
- * write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- */
-
 package wilos.presentation.assistant.view.panels;
 
 import java.awt.BorderLayout;
@@ -35,111 +19,77 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import wilos.presentation.assistant.ressources.Bundle;
+import wilos.presentation.assistant.ressources.ImagesService;
 
-/**
- * @author ?? Fenêtre "A propos"
- */
 public class AboutPanel extends JDialog implements ActionListener
 {
-    /** Bouton OK */
+    
     private JButton pbOk = null;
 
-    /**
-     * Constructeur d'un AboutDialog, ayant pour fenêtre appelante parentFrame
-     * 
-     * @param parentFrame
-     *            fenêtre appelante du AboutDialog
-     * @param sVersion
-     *            Version de l'application sous forme de chaîne
-     */
-    public AboutPanel(JFrame parentFrame)
+       public AboutPanel(JFrame parentFrame)
     {
-        // construire boite de dialogue, de titre à récupérer dans la locale
-        super(parentFrame,"About Spelp", true);
-//this.setResizable(true);
-
-        this.pbOk = new JButton("OK");
-        this.setPreferredSize(new Dimension(550,300));
+        
+        this.setTitle(Bundle.getText("aboutPanel.mainTitle"));
+        this.setModal(true);
+        this.setPreferredSize(new Dimension(300,250));
+        this.setVisible(true);
         this.pack();
-        GridBagConstraints gridBagConstraints;
+       
 
-        final JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        final JPanel centerPanel = new JPanel(new GridBagLayout());
-        centerPanel.setBorder(new EmptyBorder(new Insets(5, 5, 5, 5)));
-
-        // Boutton par défaut : bouton "OK" (=> touche ENTER = bouton OK)
+        
+        
+        JPanel main = new JPanel();
+         main.setLayout(null);
+        this.pbOk = new JButton("OK");
         this.pbOk.setDefaultCapable(true);
         this.getRootPane().setDefaultButton(this.pbOk);
-
         this.pbOk.addActionListener(this);
-
-        southPanel.add(this.pbOk);
+        this.pbOk.setBounds(108, 165, 70,25);
+        main.add(this.pbOk);
 
         // contenu du about
-        JLabel lbl;
+        JLabel lbl1;
+        JLabel lbl2;
+        JLabel lbl3;
+        JLabel lbl4;
+        JLabel lbl5;
+        JLabel lbl6;
+        lbl1 = new JLabel(Bundle.getText("aboutPanel.title"));
+       
+        lbl1.setBounds(70,10,120,30);
+        main.add(lbl1 );
 
-        lbl = new JLabel("Spelp assistant");
-        gridBagConstraints = new GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
-        centerPanel.add(lbl, gridBagConstraints);
+        lbl2 = new JLabel(ImagesService.getImageIcon(Bundle.getText("images.frameIcon")));
+        lbl2.setBounds(5, 5,64,64);
+        lbl2.setPreferredSize(new Dimension(30,30));
+        
+        
+        main .add(lbl2);
 
-        lbl = new JLabel(new ImageIcon("images.wilos"));
-        gridBagConstraints = new GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
-        gridBagConstraints.insets = new Insets(10, 0, 10, 0);
-        centerPanel.add(lbl, gridBagConstraints);
+        lbl3 = new JLabel("Version 0.8");
+        lbl3.setBounds(73, 40, 120, 30);
+        main.add(lbl3);
 
-        lbl = new JLabel("Version 0.8");
-        gridBagConstraints = new GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = GridBagConstraints.NORTH;
-        gridBagConstraints.insets = new Insets(10, 0, 0, 0);
-        centerPanel.add(lbl, gridBagConstraints);
+        lbl4 = new JLabel(Bundle.getText("aboutPanel.auteur"));
+        lbl4.setBounds(73, 70, 120, 30);
+        main.add(lbl4);
 
-        lbl = new JLabel("Auteurs: IUP ISI");
-        gridBagConstraints = new GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
-        gridBagConstraints.anchor = GridBagConstraints.WEST;
-        centerPanel.add(lbl, gridBagConstraints);
+//        lbl5 = new JLabel("Component");
+//        lbl5.setBounds(70, 100, 120, 30);
+//        main.add(lbl5);
 
-        lbl = new JLabel("Component");
-        gridBagConstraints = new GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
-        gridBagConstraints.anchor = GridBagConstraints.WEST;
-        centerPanel.add(lbl, gridBagConstraints);
+        lbl6 = new JLabel(Bundle.getText("aboutPanel.url"));
+        lbl6.setBounds(73, 110, 250, 30);
+        main.add(lbl6 );
 
-        lbl = new JLabel("Version?");
-        gridBagConstraints = new GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = GridBagConstraints.SOUTH;
-        gridBagConstraints.insets = new Insets(0, 0, 10, 0);
-        centerPanel.add(lbl, gridBagConstraints);
-
-        this.getContentPane().add(southPanel, BorderLayout.SOUTH);
-        this.getContentPane().add(centerPanel, BorderLayout.CENTER);
-        // boîte de dialogue modale et centrée par rapport à l'appelant
-
+        this.add(main);
         this.setResizable(false);
         this.pack();
         this.setLocationRelativeTo(parentFrame);
     }
 
-    /**
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
-    public void actionPerformed(ActionEvent e)
+     public void actionPerformed(ActionEvent e)
     {
-        // clic sur OK --> fermer la fenêtre
         if (e.getSource() == this.pbOk)
             dispose();
     }
