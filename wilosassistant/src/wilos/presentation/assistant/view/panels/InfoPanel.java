@@ -116,8 +116,9 @@ public class InfoPanel extends JXPanel implements Observer,ListenerTime {
 		
 		this.setLayout(new BorderLayout());
 		this.add(getTasks(),BorderLayout.CENTER);
-		
-	
+		tasks.setExpanded(false);
+		modify.setVisible(false);
+		infos.setVisible(false);
 	}
 	
 	public JXTaskPane getTasks (){
@@ -324,15 +325,17 @@ public class InfoPanel extends JXPanel implements Observer,ListenerTime {
 		CurrentTimedTask = null ;
 		currentTime = 0 ;
 		startTime = 0 ;
-		start = true; 
+		start = true ; 
 	}
 	
 	public long transformInSeconds(float val) {
 		int retour ;
 		int tmphour = (int)val *3600 ;
-		float minutes = (float)(float)val - (int)val ;
-		int tmpminutes = ((int) ((minutes)*60))*60   ;
-		int sec = Math.round(((float)minutes-(int)minutes)*60);
+		float minutes = (float)(val - (int)val) ;
+		int tmpminutes = ((int) ((minutes)*60))*60 ; 
+		minutes = minutes * 60 ;
+		minutes = (minutes - (int)minutes);
+		int sec = (int)(((float)minutes-(int)minutes)*60);
 		retour = tmphour + tmpminutes + sec;
 		return (retour) ;
 	}

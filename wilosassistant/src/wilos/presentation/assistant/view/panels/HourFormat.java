@@ -20,6 +20,8 @@ import java.text.ParseException;
 
 import javax.swing.text.DefaultFormatter;
 
+import org.apache.commons.lang.math.NumberUtils;
+
 public class HourFormat extends DefaultFormatter {
 
 	
@@ -27,6 +29,7 @@ public class HourFormat extends DefaultFormatter {
 		public Object stringToValue(String string) throws ParseException {
 			// TODO Auto-generated method stub 
 			Long retour = (long)0 ;
+			int iheure,imin,isec = 0 ;
 			if (string.matches(HourTextField.pattern)){
 				String time = string ;
 				String heure = "0", min="0",sec = "0" ;
@@ -37,11 +40,27 @@ public class HourFormat extends DefaultFormatter {
 					if(occu==1&&time.charAt(i)!=':') min+=time.charAt(i);
 					if(occu==2&&time.charAt(i)!=':') sec+=time.charAt(i);
 				}
-				int iheure,imin,isec ;
+				
 				iheure= Integer.valueOf(heure)*3600 ;
 				imin = Integer.valueOf(min)*60 ;
 				isec = Integer.valueOf(sec) ;
 				retour = new Long(iheure + imin + isec );
+			}
+			else if (NumberUtils.isDigits(string)){
+				switch (string.length()){
+					case 2 :
+					case 1 :retour = new Long(Integer.valueOf(string)*3600);		
+						break ;
+					case 6 :isec = Integer.valueOf(string.substring(4,6));
+					case 4 :iheure = Integer.valueOf(string.substring(0,2))*3600;
+							imin = Integer.valueOf(string.substring(2,4))*60;
+							retour = new Long(iheure + imin + isec );
+							break ;
+					default : retour = (long)0 ; 
+							break ;
+					
+						
+				}
 			}
 			return retour;
 		}

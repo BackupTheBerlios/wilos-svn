@@ -797,7 +797,7 @@ public class WizardControler {
 		
 		//remaining times
 		tps = infoPanel.getRemainingTimeForUpload() ;
-		WizardControler.getInstance().setRemainingTimeByTask(c.getId(),tps );
+		WizardControler.getInstance().setRemainingTimeByTask(c.getId(),tps);
 		c.setRemainingTime(tps);
 		
 		infoPanel.reinitializeTimes() ;
