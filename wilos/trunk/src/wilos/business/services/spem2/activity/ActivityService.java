@@ -121,12 +121,12 @@ public class ActivityService {
 				for (BreakdownElement bde : bdes) {
 					if (bde instanceof Activity) {
 						Activity act = (Activity) bde;
-						int occ = this.giveNbOccurences(act.getId(), _list);
+						int occ = this.giveNbOccurences(act.getId(), _list, false);
 						this.activityInstanciation(_project, act, cact, _list, occ, false);
 					} else {
 						if (bde instanceof TaskDescriptor) {
 							TaskDescriptor td = (TaskDescriptor) bde;
-							int occ = this.giveNbOccurences(td.getId(), _list);
+							int occ = this.giveNbOccurences(td.getId(), _list, false);
 							this.taskDescriptorService.taskDescriptorInstanciation(_project, td, cact, occ, false);
 						}
 					}
@@ -192,12 +192,12 @@ public class ActivityService {
 			for (BreakdownElement bde : bdes) {
 				if (bde instanceof Activity) {
 					Activity act = (Activity) bde;
-					int occ = this.giveNbOccurences(act.getId(), _list);
+					int occ = this.giveNbOccurences(act.getId(), _list, true);
 					this.activityUpdate(_project, act, cacts, _list, occ);
 				} else {
 					if (bde instanceof TaskDescriptor) {
 						TaskDescriptor td = (TaskDescriptor) bde;
-						int occ = this.giveNbOccurences(td.getId(), _list);
+						int occ = this.giveNbOccurences(td.getId(), _list, true);
 						this.taskDescriptorService.taskDescriptorUpdate(_project, td, cacts, occ);
 					}
 				}
@@ -211,9 +211,11 @@ public class ActivityService {
 	 * @param list
 	 * @return
 	 */
-	private int giveNbOccurences(String _id, List<HashMap<String, Object>> list) {
+	private int giveNbOccurences(String _id, List<HashMap<String, Object>> list, boolean _isInstanciated) {
 
-		int nb = 1;
+		int nb;
+		if (!_isInstanciated) nb = 1;
+		else nb = 0;
 
 		for (HashMap<String, Object> hashMap : list) {
 			if (((String) hashMap.get("id")).equals(_id)) {
@@ -221,6 +223,7 @@ public class ActivityService {
 				break;
 			}
 		}
+
 		return nb;
 	}
 

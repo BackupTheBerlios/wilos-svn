@@ -134,22 +134,22 @@ public class PhaseService {
 				for (BreakdownElement bde : bdes) {
 					if (bde instanceof Phase) {
 						Phase ph = (Phase) bde;
-						int occ = this.giveNbOccurences(ph.getId(), _list);
+						int occ = this.giveNbOccurences(ph.getId(), _list, false);
 						this.phaseInstanciation(_project, ph, _project, _list, occ, _isInstanciated);
 					} else {
 						if (bde instanceof Iteration) {
 							Iteration it = (Iteration) bde;
-							int occ = this.giveNbOccurences(it.getId(), _list);
+							int occ = this.giveNbOccurences(it.getId(), _list, false);
 							this.iterationService.iterationInstanciation(_project, it, cp, _list, occ, _isInstanciated);
 						} else {
 							if (bde instanceof Activity) {
 								Activity act = (Activity) bde;
-								int occ = this.giveNbOccurences(act.getId(), _list);
+								int occ = this.giveNbOccurences(act.getId(), _list, false);
 								this.activityService.activityInstanciation(_project, act, cp, _list, occ, _isInstanciated);
 							} else {
 								if (bde instanceof TaskDescriptor) {
 									TaskDescriptor td = (TaskDescriptor) bde;
-									int occ = this.giveNbOccurences(td.getId(), _list);
+									int occ = this.giveNbOccurences(td.getId(), _list, false);
 									this.taskDescriptorService.taskDescriptorInstanciation(_project, td, cp, occ, _isInstanciated);
 								}
 							}
@@ -204,22 +204,22 @@ public class PhaseService {
 			for (BreakdownElement bde : bdes) {
 				if (bde instanceof Phase) {
 					Phase ph = (Phase) bde;
-					int occ = this.giveNbOccurences(ph.getId(), _list);
+					int occ = this.giveNbOccurences(ph.getId(), _list, true);
 					this.phaseUpdate(_project, ph, cacts, _list, occ);
 				} else {
 					if (bde instanceof Iteration) {
 						Iteration it = (Iteration) bde;
-						int occ = this.giveNbOccurences(it.getId(), _list);
+						int occ = this.giveNbOccurences(it.getId(), _list, true);
 						this.iterationService.iterationUpdate(_project, it, cacts, _list, occ);
 					} else {
 						if (bde instanceof Activity) {
 							Activity act = (Activity) bde;
-							int occ = this.giveNbOccurences(act.getId(), _list);
+							int occ = this.giveNbOccurences(act.getId(), _list, true);
 							this.activityService.activityUpdate(_project, act, cacts, _list, occ);
 						} else {
 							if (bde instanceof TaskDescriptor) {
 								TaskDescriptor td = (TaskDescriptor) bde;
-								int occ = this.giveNbOccurences(td.getId(), _list);
+								int occ = this.giveNbOccurences(td.getId(), _list, true);
 								this.taskDescriptorService.taskDescriptorUpdate(_project, td, cacts, occ);
 							}
 						}
@@ -235,9 +235,11 @@ public class PhaseService {
 	 * @param list
 	 * @return
 	 */
-	private int giveNbOccurences(String _id, List<HashMap<String, Object>> list) {
+	private int giveNbOccurences(String _id, List<HashMap<String, Object>> list, boolean _isInstanciated) {
 
-		int nb = 1;
+		int nb;
+		if (!_isInstanciated) nb = 1;
+		else nb = 0;
 
 		for (HashMap<String, Object> hashMap : list) {
 			if (((String) hashMap.get("id")).equals(_id)) {

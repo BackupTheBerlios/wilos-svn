@@ -104,9 +104,6 @@ public class TaskDescriptorService {
 		// concreteactivities of the parent of _phase
 		if (_occ > 0) {
 			for (ConcreteActivity tmp : _cacts) {
-				//FIXME a different object with the same identifier value was already associated with the session: [wilos.model.misc.concreteiteration.ConcreteIteration#d2669a8b115259bc0111525b4ca9000b]
-				/*this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().saveOrUpdate(tmp);
-				this.concreteActivityService.getConcreteActivityDao().getSessionFactory().getCurrentSession().refresh(tmp);*/
 				this.taskDescriptorInstanciation(_project, _td, tmp, _occ, true);
 			}
 		}
