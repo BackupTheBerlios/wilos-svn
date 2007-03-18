@@ -106,10 +106,8 @@ public class ExpTableBean {
 				}
 			}
 		}
-
+		
 		FacesContext context = FacesContext.getCurrentInstance();
-		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");
-		tb.rebuildProjectTree();
 
 		// clear occurences number of each object of expTableContent
 		/*for (HashMap<String, Object> map : this.expTableContent) {
@@ -139,6 +137,9 @@ public class ExpTableBean {
 		message.setSummary(bundle.getString("component.instanciation.instanciatedMessage"));
 		message.setSeverity(FacesMessage.SEVERITY_INFO);
 		context.addMessage(null, message);
+		
+		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");
+		tb.rebuildProjectTree();
 		
 		return "";
 	}

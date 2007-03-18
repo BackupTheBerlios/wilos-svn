@@ -146,11 +146,11 @@ public class ConcreteRoleInstanciationService {
 				
 				if (_rd.getPresentationName() == null)
 				{
-					crd.setConcreteName(_rd.getName() +" "+iterid);
+					crd.setConcreteName(_rd.getName() +"#"+iterid);
 				}
 				else
 				{
-					crd.setConcreteName(_rd.getPresentationName() +" "+iterid);
+					crd.setConcreteName(_rd.getPresentationName() +"#"+iterid);
 				}
 				
 				crd.addRoleDescriptor(_rd);
