@@ -22,7 +22,8 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 
 public class ImagesService {
-	private final static String path = "wilos/presentation/assistant/ressources/images/"  ;
+	private final static String separator = java.io.File.separator;
+	private final static String path = "wilos"+separator+"presentation"+separator+"assistant"+separator+"ressources"+separator+"images"+separator  ;
 	
 	public static ImageIcon getImageIcon (String key){
 		ImageIcon img ; 
