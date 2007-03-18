@@ -135,11 +135,19 @@ public class ConcreteRoleInstanciationService {
 				
 				//creation du nom avec son numero
 				for (ConcreteRoleDescriptor element : _rd.getConcreteRoleDescriptors()) {
+					//si on est dans le bon projet
 					if(element.getProject() != null)
 					{
 						if(element.getProject().getId().equals(_project.getId()))
 						{
-							iterid++;
+							//si on est dans la bonne ativitÃ©
+							for (ConcreteActivity concreteActivity : element.getSuperConcreteActivities())
+							{
+								if(concreteActivity.getId().equals(_cact.getId()))
+								{
+									iterid++;									
+								}
+							}
 						}
 					}
 				}
@@ -281,7 +289,7 @@ public class ConcreteRoleInstanciationService {
 				}
 			}
 		}
-		this.logger.debug("### ROle : "+rd.getPresentationName()+" /  instancié :"+crdsOfProject.size());
+		this.logger.debug("### ROle : "+rd.getPresentationName()+" /  instanciï¿½ :"+crdsOfProject.size());
 		return (crdsOfProject.size() > 0);
 	}
 
