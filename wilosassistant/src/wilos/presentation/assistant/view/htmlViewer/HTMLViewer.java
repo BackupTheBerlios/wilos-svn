@@ -281,7 +281,7 @@ public class HTMLViewer extends JFrame {
 		
 		if (choice == JOptionPane.YES_OPTION) {
 			// JFileChooser creation to download the file on the remote
-			JFileChooser fileChooser = new JFileChooser("../");
+			JFileChooser fileChooser = new JFileChooser(".."+File.separator);
 			fileChooser.setFileFilter(new FileFilter(){
 
 				@Override
