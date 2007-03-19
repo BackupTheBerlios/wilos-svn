@@ -35,17 +35,20 @@ public class ExceptionManager {
 
 		// WebServices' exceptions
 		if(classe.equals("javax.xml.ws.WebServiceException")) {
+			
+			texte = Bundle.getText("exceptionManager.communicationError");
+			
 			String nomExep = msg.substring(0, msg.indexOf(':'));
 			
 			if(nomExep.equalsIgnoreCase("java.net.UnknownHostException"))
 			{
-				texte = Bundle.getText("exceptionManager.unknownHost");
+				texte += "\n" + Bundle.getText("exceptionManager.unknownHost");
 			}
 			else if (nomExep.equalsIgnoreCase("java.io.FileNotFoundException")) {
-				texte = Bundle.getText("exceptionManager.unknownHost");
+				texte += "\n" + Bundle.getText("exceptionManager.unknownHost");
 			}
 			else if (nomExep.equalsIgnoreCase("java.net.ConnectException")) {
-				texte = Bundle.getText("exceptionManager.connectionRefused");
+				texte += "\n" + Bundle.getText("exceptionManager.connectionRefused");
 			}
 		}
 		

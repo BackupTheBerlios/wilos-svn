@@ -39,6 +39,7 @@ import wilos.presentation.assistant.control.ExceptionManager;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
+import wilos.presentation.assistant.view.dialogs.ErrorDialog;
 import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
 import wilos.presentation.assistant.view.panels.AboutPanel;
 import wilos.presentation.assistant.view.panels.InfoPanel;
@@ -100,7 +101,9 @@ public class WizardMainFrame extends JFrame {
 
 			public void windowActivated(WindowEvent arg0) {}
 			public void windowClosed(WindowEvent arg0) {}
-			public void windowClosing(WindowEvent arg0) {}
+			public void windowClosing(WindowEvent arg0) {
+				tryToquit();
+			}
 			public void windowDeactivated(WindowEvent arg0) {
 			}
 			public void windowDeiconified(WindowEvent arg0) {
@@ -113,15 +116,28 @@ public class WizardMainFrame extends JFrame {
 			
 		});
 		
+		
+		// you can close this window only if there isn't any activity launched
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
+		
         // put the frame icon
         try {
         	this.setIconImage(ImagesService.getImage("images.frameIcon"));
-        } catch (IOException ex) {
+        } catch (Exception ex) {
 			new ExceptionManager(ex);
         }
 	}
 	
+
+	private void tryToquit() {
+		if(WizardControler.getInstance().getNbThreadStarted() != 0) {
+			new ErrorDialog(Bundle.getText("wizardMainFrame.canNotClose"));
+		}
+		else {
+			System.exit(0);
+		}
+	}
 	
 	public Point getHTMLLocation(){
 		return new Point(this.getLocation().x+this.getWidth(),this.getLocation().y);
@@ -193,7 +209,7 @@ public class WizardMainFrame extends JFrame {
 			jMenuItemQuit.setText(Bundle.getText("mainFrame.exit"));
 			jMenuItemQuit.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent arg0) {
-					System.exit(0);
+					tryToquit();
 				}
 			});
 		}
