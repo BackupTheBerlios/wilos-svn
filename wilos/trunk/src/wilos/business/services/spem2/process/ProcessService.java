@@ -874,7 +874,10 @@ public class ProcessService {
 
 		for (HashMap<String, Object> hashMap : list) {
 			if (((String) hashMap.get("id")).equals(_id)) {
-				nb = ((Integer) hashMap.get("nbOccurences")).intValue();
+				try {
+					nb = ((Integer) hashMap.get("nbOccurences")).intValue();
+				} catch (Exception e) {
+				}
 				break;
 			}
 		}
