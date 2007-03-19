@@ -142,36 +142,65 @@ public class RolesInstanciationBean {
 	 */
 	public void instanciateConcreteRole() {
 		List<HashMap<String, Object>> resultat = new ArrayList<HashMap<String, Object>>();
-
-		String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
+		boolean erreurNbOccurrences = false;
+		String projectId = (String)this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
 
 		for (Iterator iter = this.displayContent.iterator(); iter.hasNext();) {
 			HashMap<String, Object> hm = (HashMap<String, Object>) iter.next();
 			if (hm.get("nodeType").equals("leaf")) {
-				HashMap<String, Object> tmpHm = new HashMap<String, Object>();
-				tmpHm.put("id", hm.get("id"));
-				tmpHm.put("nbOccurences", hm.get("nbOccurences"));
-				tmpHm.put("parentId", hm.get("parentId"));
-				resultat.add(tmpHm);
+				if(!isNbOccurrenceValid(hm.get("nbOccurences"))) {
+					hm.put("nbOccurences", 0); 
+					erreurNbOccurrences = true;
+				}
+				else {
+					HashMap<String, Object> tmpHm = new HashMap<String, Object>();
+					tmpHm.put("id", hm.get("id"));
+					tmpHm.put("nbOccurences", hm.get("nbOccurences"));
+					tmpHm.put("parentId", hm.get("parentId"));
+					resultat.add(tmpHm);
+				}
 			}
 		}
-		this.concreteRoleInstanciationService.saveInstanciateConcreteRole(resultat, projectId);
-
-		FacesContext context = FacesContext.getCurrentInstance();
-		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");
-		tb.rebuildProjectTree();
-		tb.refreshProjectTree();
-
 		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
 		FacesMessage message = new FacesMessage();
-		message.setSummary(bundle.getString("component.project.rolesinstanciation.validationMessage"));
-		message.setSeverity(FacesMessage.SEVERITY_ERROR);
-		context.addMessage(null, message);
-
-		//remise a 0 des nombres d'occurences
-		for (HashMap<String, Object> map : this.displayContent) {
-			map.put("nbOccurences", new Integer(0));
+		FacesContext context = FacesContext.getCurrentInstance();
+		if(erreurNbOccurrences)
+		{
+			message.setSummary(bundle.getString("component.project.rolesinstanciation.errorMessage"));
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 		}
+		else
+		{
+			this.concreteRoleInstanciationService.saveInstanciateConcreteRole(resultat, projectId);
+			TreeBean tb = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");
+			tb.rebuildProjectTree();
+			tb.refreshProjectTree();
+			
+			message.setSummary(bundle.getString("component.project.rolesinstanciation.validationMessage"));
+			message.setSeverity(FacesMessage.SEVERITY_INFO);
+
+			//remise a 0 des nombres d'occurences
+			for (HashMap<String, Object> map : this.displayContent) {
+				map.put("nbOccurences", new Integer(0));
+			}
+		}
+		context.addMessage(null, message);
+	}
+	
+	
+	/**
+	 * control if the object is an integer
+	 * @param nbOcc
+	 * @return
+	 */
+	private boolean isNbOccurrenceValid(Object nbOcc)
+	{
+		boolean valid = true;
+		if(! (nbOcc instanceof Integer))
+		{
+			valid = false;
+		}
+		return valid;
 	}
 
 	/**
