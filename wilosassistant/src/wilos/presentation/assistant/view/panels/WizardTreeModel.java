@@ -46,14 +46,13 @@ public class WizardTreeModel extends DefaultTreeModel {
 	
 	// TODO : actuellement prise en compte d'une super activity a voir pour plusieurs
 	private ConcreteActivity getActivity (Set<ConcreteActivity> s){
-		ConcreteActivity ca = null ;
+		ConcreteActivity ca ;
 		try {
 			ca = s.iterator().next();
 		}
 		catch(Exception e){
-			
+			ca = null ;
 		}
-		
 		return ca ;
 	}
 	
