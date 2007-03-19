@@ -259,7 +259,9 @@
 								<ice:inputText value="#{processRole.nbOccurences}" size="3"
 									maxlength="3" disabled="#{processRole.isEditable}"
 									visible="#{processRole.isVisible}"
-									style="font-size:10px; height:10px; align: center; text-align:right;" />
+									style="font-size:10px; height:10px; align: center; text-align:right;" >
+									<f:validateLongRange minimum="0" maximum="100"/>
+								</ice:inputText>	
 							</ice:column>
 						</ice:dataTable>
 						<ice:commandButton
