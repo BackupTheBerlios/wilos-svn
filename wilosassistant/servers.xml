@@ -5,20 +5,5 @@
     <Address>http://localhost:8080/Wilos</Address>
     <Id>1</Id>
   </Server>
-  <Server>
-    <Alias>Marine2Remote</Alias>
-    <Address>http://localhost:9014/remote</Address>
-    <Id>2</Id>
-  </Server>
-  <Server>
-    <Alias>marine remote</Alias>
-    <Address>http://marine.edu.ups-tlse.fr:9014/remote</Address>
-    <Id>3</Id>
-  </Server>
-  <Server>
-    <Alias>marine serveur de test spelp</Alias>
-    <Address>http://marine.edu.ups-tlse.fr:9014/Wilos</Address>
-    <Id>4</Id>
-  </Server>
 </Servers>
 
