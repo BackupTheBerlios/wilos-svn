@@ -471,7 +471,7 @@ public class WizardControler {
 	
 	public void setTimeToRefresh(long value){
 		synchronized (MUTEX_REFRESH_TIME) {
-			timeToRefresh = value * 1000 ;
+			timeToRefresh = value * 60000 ;
 		}
 		
 	}
