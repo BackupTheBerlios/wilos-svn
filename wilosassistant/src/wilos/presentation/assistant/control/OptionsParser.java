@@ -37,7 +37,7 @@ public class OptionsParser {
 	private static final String fic = "options.xml";
 	private File XML_File;
 	private int refreshTime;
-	private Locale locale = Locale.getDefault();
+	private Locale locale = null ;
 	private static final String xpath_locale ="//Locale";
 	private static final String xpath_refreshtime ="//RefreshTime";
 	
@@ -85,6 +85,14 @@ public class OptionsParser {
 			Node node = (Node)XMLUtils.evaluate(xpath_locale, XPathConstants.NODE);
 			if(node != null) {
 				locale = new Locale(node.getTextContent());
+			}
+		}
+		else if (locale == null) {
+			try {
+				locale = Locale.getDefault();
+			}
+			catch (Exception e){
+				locale = Locale.ENGLISH ; 	
 			}
 		}
 		

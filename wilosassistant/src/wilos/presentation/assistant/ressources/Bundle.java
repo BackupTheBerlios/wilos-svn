@@ -34,7 +34,7 @@ public class Bundle {
 
 	static private final String separator = java.io.File.separator;
 	static private final String BASENAME = "wilos"+separator+"presentation"+separator+"assistant"+separator+"ressources"+separator+"label";
-	static private ResourceBundle bundle = ResourceBundle.getBundle(Bundle.BASENAME, Locale.getDefault());
+	static private ResourceBundle bundle ; //  = ResourceBundle.getBundle(Bundle.BASENAME, Locale.getDefault());
 	static String [] availablesLocales = {"en", "fr"};
 	
 	
