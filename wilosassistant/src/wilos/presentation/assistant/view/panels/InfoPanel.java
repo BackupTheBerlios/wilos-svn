@@ -155,7 +155,7 @@ public class InfoPanel extends JXPanel implements Observer,ListenerTime {
 		if (WizardControler.getInstance().getLastCtd() instanceof ConcreteTaskDescriptor)
 		{
 			ConcreteTaskDescriptor c =(ConcreteTaskDescriptor)WizardControler.getInstance().getLastCtd();
-			if (c.getState().equals(Constantes.State.STARTED) ||
+			if (c.getState().equals(Constantes.State.STARTED) || c.getState().equals(Constantes.State.READY)  ||
 					(c.getState().equals(Constantes.State.SUSPENDED) || (c.getState().equals(Constantes.State.FINISHED) )))
 			{
 				currentConcreteTask = c ;
