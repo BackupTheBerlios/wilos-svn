@@ -88,12 +88,7 @@ public class OptionsParser {
 			}
 		}
 		else if (locale == null) {
-			try {
 				locale = Locale.getDefault();
-			}
-			catch (Exception e){
-				locale = Locale.ENGLISH ; 	
-			}
 		}
 		
 		return locale;

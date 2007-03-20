@@ -46,8 +46,14 @@ public class Bundle {
 	  {
 	    if (locale != null)
 	    {
-	      Locale.setDefault(locale);
-	      Bundle.bundle = ResourceBundle.getBundle(Bundle.BASENAME, locale);
+	    	try {
+	    		Locale.setDefault(locale);
+	    		Bundle.bundle = ResourceBundle.getBundle(Bundle.BASENAME, locale);
+	    	}
+	    	catch (Exception e){
+	    		Locale.setDefault(Locale.ENGLISH);
+	    		Bundle.bundle = ResourceBundle.getBundle(Bundle.BASENAME, Locale.ENGLISH);
+	    	}
 	     }
 	  }
 
