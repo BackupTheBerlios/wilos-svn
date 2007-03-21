@@ -23,7 +23,7 @@ public class AboutDialog extends JDialog implements ActionListener
         
         this.setTitle(Bundle.getText("aboutPanel.mainTitle"));
         this.setModal(true);
-        this.setPreferredSize(new Dimension(300,250));
+        this.setPreferredSize(new Dimension(300,220));
 
        
 
@@ -35,7 +35,7 @@ public class AboutDialog extends JDialog implements ActionListener
         this.pbOk.setDefaultCapable(true);
         this.getRootPane().setDefaultButton(this.pbOk);
         this.pbOk.addActionListener(this);
-        this.pbOk.setBounds(108, 165, 70,25);
+        this.pbOk.setBounds(108, 155, 70,25);
         main.add(this.pbOk);
 
         // contenu du about
@@ -47,22 +47,22 @@ public class AboutDialog extends JDialog implements ActionListener
         JLabel lbl6;
         lbl1 = new JLabel(Bundle.getText("aboutPanel.title"));
        
-        lbl1.setBounds(70,10,120,30);
+        lbl1.setBounds(20,10,120,30);
         main.add(lbl1 );
 
-        lbl2 = new JLabel(ImagesService.getImageIcon(Bundle.getText("images.frameIcon")));
-        lbl2.setBounds(5, 5,64,64);
+        lbl2 = new JLabel(ImagesService.getImageIcon("aboutPanel.logo"));
+        lbl2.setBounds(150, 25,100,73);
         lbl2.setPreferredSize(new Dimension(30,30));
         
         
         main .add(lbl2);
 
         lbl3 = new JLabel("Version 0.8");
-        lbl3.setBounds(73, 40, 120, 30);
+        lbl3.setBounds(20, 40, 120, 30);
         main.add(lbl3);
 
         lbl4 = new JLabel(Bundle.getText("aboutPanel.auteur"));
-        lbl4.setBounds(73, 70, 120, 30);
+        lbl4.setBounds(20, 70, 120, 30);
         main.add(lbl4);
 
 //        lbl5 = new JLabel("Component");
@@ -70,7 +70,7 @@ public class AboutDialog extends JDialog implements ActionListener
 //        main.add(lbl5);
 
         lbl6 = new JLabel(Bundle.getText("aboutPanel.url"));
-        lbl6.setBounds(73, 110, 250, 30);
+        lbl6.setBounds(20, 110, 250, 30);
         main.add(lbl6 );
 
         this.add(main);
