@@ -85,7 +85,7 @@ public class ProcessManagerServiceTest {
 		assertEquals(ProcessManagerTmp.getPassword(), Security.encode("pass"));
 	}
 
-	@Test
+	/*@Test
 	public void testGetProcessManagers() {
 		ProcessManager processManager3 = new ProcessManager();
 		processManager3.setName("bert");
@@ -112,7 +112,7 @@ public class ProcessManagerServiceTest {
 
 		this.processManagerService.deleteProcessManager(processManager3);
 
-	}
+	}*/
 
 	@Test
 	public void testDeleteProcessManager() {

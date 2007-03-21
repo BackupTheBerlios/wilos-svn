@@ -80,13 +80,13 @@ public class ProcessManagerDaoTest {
 		assertEquals(pmTmp.getName(), "Lopes");
 	}
 
-	@Test
+	/*@Test
 	public void testDeleteProcessManager() {
 		this.pmd.saveOrUpdateProcessManager(this.pm);
 		this.pmd.deleteProcessManager(this.pm);
 
 		ProcessManager pmTmp = this.pmd.getProcessManager("testPM");
 		assertNull(pmTmp);
-	}
+	}*/
 
 }
