@@ -1,22 +1,14 @@
 package wilos.presentation.assistant.view.dialogs;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Rectangle;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
@@ -26,14 +18,13 @@ public class AboutDialog extends JDialog implements ActionListener
     
     private JButton pbOk = null;
 
-       public AboutDialog(JFrame parentFrame)
+       public AboutDialog(Frame parentFrame)
     {
         
         this.setTitle(Bundle.getText("aboutPanel.mainTitle"));
         this.setModal(true);
         this.setPreferredSize(new Dimension(300,250));
-        this.setVisible(true);
-        this.pack();
+
        
 
         
@@ -84,8 +75,10 @@ public class AboutDialog extends JDialog implements ActionListener
 
         this.add(main);
         this.setResizable(false);
+      
         this.pack();
         this.setLocationRelativeTo(parentFrame);
+        this.setVisible(true);
     }
 
      public void actionPerformed(ActionEvent e)

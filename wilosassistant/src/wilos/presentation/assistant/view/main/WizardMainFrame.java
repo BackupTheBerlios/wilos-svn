@@ -303,7 +303,7 @@ public class WizardMainFrame extends JFrame {
 				public void actionPerformed(ActionEvent arg0) {
 					//JFrame f = new JFrame("About");
 				
-					(new AboutDialog(WizardMainFrame.this)).setVisible(true);
+					new AboutDialog(WizardMainFrame.this);
 					
 					//f.setVisible(true);
 					//f.pack();
