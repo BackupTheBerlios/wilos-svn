@@ -18,13 +18,17 @@ package wilos.presentation.web.viewer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 import wilos.business.services.misc.concretephase.ConcretePhaseService;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
 
-public class ConcretePhaseViewerBean extends ViewerBean{
+public class ConcretePhaseViewerBean extends ViewerBean {
 
 	private ConcretePhase concretePhase;
 
@@ -34,7 +38,7 @@ public class ConcretePhaseViewerBean extends ViewerBean{
 
 	public List<ConcreteBreakdownElement> getConcreteBreakdownElementsList() {
 		List<ConcreteBreakdownElement> list = new ArrayList<ConcreteBreakdownElement>();
-		if(this.concretePhase != null)
+		if (this.concretePhase != null)
 			list.addAll(this.concretePhase.getConcreteBreakdownElements());
 
 		// Filter to obtain only concreteworkbreakdownelement (without
@@ -49,7 +53,20 @@ public class ConcretePhaseViewerBean extends ViewerBean{
 
 	public void savePhase() {
 		super.getConcreteBreakdownElementService()
-				.saveAllFirstSonsConcreteBreakdownElementsForConcreteActivity(this.concretePhase);
+				.saveAllFirstSonsConcreteBreakdownElementsForConcreteActivity(
+						this.concretePhase);
+
+		// successful message.
+		ResourceBundle bundle = ResourceBundle.getBundle(
+				"wilos.resources.messages", FacesContext.getCurrentInstance()
+						.getApplication().getDefaultLocale());
+		FacesMessage message = new FacesMessage();
+		message
+				.setSummary(bundle
+						.getString("viewer.visibility.successMessage"));
+		message.setSeverity(FacesMessage.SEVERITY_ERROR);
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		facesContext.addMessage(null, message);
 
 		// Reload the treebean.
 		super.refreshProjectTree();

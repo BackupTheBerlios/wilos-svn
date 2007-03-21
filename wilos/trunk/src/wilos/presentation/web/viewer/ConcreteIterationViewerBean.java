@@ -18,6 +18,10 @@ package wilos.presentation.web.viewer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 import wilos.business.services.misc.concreteiteration.ConcreteIterationService;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
@@ -61,6 +65,18 @@ public class ConcreteIterationViewerBean extends ViewerBean {
 	public void changeConcreteName() {
 		this.concreteIterationService
 				.saveConcreteIteration(this.concreteIteration);
+
+		// successful message.
+		ResourceBundle bundle = ResourceBundle.getBundle(
+				"wilos.resources.messages", FacesContext.getCurrentInstance()
+						.getApplication().getDefaultLocale());
+		FacesMessage message = new FacesMessage();
+		message
+				.setSummary(bundle
+						.getString("viewer.visibility.successMessage"));
+		message.setSeverity(FacesMessage.SEVERITY_ERROR);
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		facesContext.addMessage(null, message);
 
 		// Refresh the treebean.
 		super.refreshProjectTree();
