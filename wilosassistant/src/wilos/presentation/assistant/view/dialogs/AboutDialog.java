@@ -57,7 +57,7 @@ public class AboutDialog extends JDialog implements ActionListener
         
         main .add(lbl2);
 
-        lbl3 = new JLabel("Version 0.8");
+        lbl3 = new JLabel(Bundle.getText("aboutPanel.version"));
         lbl3.setBounds(20, 40, 120, 30);
         main.add(lbl3);
 
