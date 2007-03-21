@@ -1,4 +1,4 @@
-package wilos.presentation.assistant.view.panels;
+package wilos.presentation.assistant.view.dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -21,12 +21,12 @@ import javax.swing.border.EmptyBorder;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
 
-public class AboutPanel extends JDialog implements ActionListener
+public class AboutDialog extends JDialog implements ActionListener
 {
     
     private JButton pbOk = null;
 
-       public AboutPanel(JFrame parentFrame)
+       public AboutDialog(JFrame parentFrame)
     {
         
         this.setTitle(Bundle.getText("aboutPanel.mainTitle"));

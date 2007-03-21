@@ -24,7 +24,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -39,9 +38,8 @@ import wilos.presentation.assistant.control.ExceptionManager;
 import wilos.presentation.assistant.control.WizardControler;
 import wilos.presentation.assistant.ressources.Bundle;
 import wilos.presentation.assistant.ressources.ImagesService;
+import wilos.presentation.assistant.view.dialogs.AboutDialog;
 import wilos.presentation.assistant.view.dialogs.ErrorDialog;
-import wilos.presentation.assistant.view.htmlViewer.HTMLViewer;
-import wilos.presentation.assistant.view.panels.AboutPanel;
 import wilos.presentation.assistant.view.panels.InfoPanel;
 import wilos.presentation.assistant.view.panels.TreePanel;
 import wilos.presentation.assistant.view.panels.WizardStateMachine;
@@ -305,7 +303,7 @@ public class WizardMainFrame extends JFrame {
 				public void actionPerformed(ActionEvent arg0) {
 					//JFrame f = new JFrame("About");
 				
-					(new AboutPanel(WizardMainFrame.this)).setVisible(true);
+					(new AboutDialog(WizardMainFrame.this)).setVisible(true);
 					
 					//f.setVisible(true);
 					//f.pack();
