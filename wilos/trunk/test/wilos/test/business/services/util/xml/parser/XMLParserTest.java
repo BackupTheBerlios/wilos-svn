@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.Vector;
 
 import junit.framework.TestCase;
 import wilos.business.services.util.xml.parser.XMLParser;
@@ -52,8 +53,10 @@ public class XMLParserTest extends TestCase {
 	public static File crashingScrum = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "crashingScrum.xml");
 	public static File pathXP = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "xp.xml");
 	public static File pathWrongFile = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "WrongFile.xml");
+	public static File pathOpenUpCrashing = new File("test"+ File.separator +"wilos"+ File.separator +"test"+File.separator+"business"+ File.separator+ "services" +File.separator +  "util" +File.separator  +  "xml" +File.separator  + "resources" +File.separator  + "openup2_crashing.xml");
 	
 	private static Process  OpenUPProcess = null;
+	private static Process  OpenUPProcessCrashing = null;
 	private static Process  ScrumProcess = null;
 	
 	/**
@@ -1945,6 +1948,131 @@ public class XMLParserTest extends TestCase {
 		assertEquals(planIteration.getAdditionalRoles().size(), 0);
 	}
 	
+	public void testOpenUPRoleDescriptorsMayHaveSameGUID() {
+		if (OpenUPProcess == null) {
+			OpenUPProcess = XMLParser.getProcess(pathOPenUP);
+		}
+		
+		Vector<String> allRoleDescGuid = new Vector<String>();
+		Vector<String> duplicatedDescGuid = new Vector<String>();
+		
+		final int nbExpected_topLevelActivities = 4;
+		final int nbExpected_sndLevelActivities = 19;
+		final int nbExpected_roleDescriptors = 61;
+		
+		// Counters for assertions
+		int nb_topLevelActivities = 0;
+		int nb_sndLevelActivities = 0;
+		
+		// First we get with the Top Level Activities : Inception, Elaboration, ...
+		for (BreakdownElement bde : OpenUPProcess.getBreakdownElements()) {
+			if (bde instanceof Activity) {
+				Activity topLevelActivity = (Activity) bde;
+				nb_topLevelActivities++;
+				
+				// For each TopLevelActivity, we get with its sndLevelActivity : Initite Project, ...
+				for (BreakdownElement bde_2 : topLevelActivity.getBreakdownElements()) {
+					if (bde_2 instanceof Activity) {
+						Activity sndLevelActivity = (Activity) bde_2;
+						nb_sndLevelActivities++;
+						
+						// We now can get all the RoleDescriptors of the process at this step
+						for (BreakdownElement bde_3 : sndLevelActivity.getBreakdownElements()) {
+							if (bde_3 instanceof RoleDescriptor) {
+								RoleDescriptor aRD = (RoleDescriptor) bde_3;
+								
+								//System.out.print(sndLevelActivity.getPresentationName() + " " + sndLevelActivity.getGuid() + " - " + aRD.getPresentationName() + " " + aRD.getGuid());
+								
+								// If the Guid of this Role is already known
+								if (allRoleDescGuid.contains(aRD.getGuid())) {
+									duplicatedDescGuid.add(aRD.getGuid());
+									//System.out.print("*** DUP ***");
+								}
+								//System.out.println();
+								
+								
+								// In all cases
+								allRoleDescGuid.add(aRD.getGuid());
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		assertEquals("Top Activities Number", nbExpected_topLevelActivities, nb_topLevelActivities);
+		assertEquals("Snd Activities Number", nbExpected_sndLevelActivities, nb_sndLevelActivities);
+		assertEquals("Role Descriptors Number", nbExpected_roleDescriptors, allRoleDescGuid.size());
+		
+		assertNotSame("Duplicated Role Desc", 0, duplicatedDescGuid.size());
+	}
+	
+	public void testOpenUpProcessCrashingIsNotNull() {
+		if (OpenUPProcessCrashing == null) {
+			OpenUPProcessCrashing = XMLParser.getProcess(pathOpenUpCrashing);
+		}
+		
+		assertNotNull(OpenUPProcessCrashing);
+	}
+	
+	public void testOpenUpProcessCrashingCointainsActivitiesAndRoleDescAndTaskDesk() {
+		if (OpenUPProcessCrashing == null) {
+			OpenUPProcessCrashing = XMLParser.getProcess(pathOpenUpCrashing);
+		}
+		
+		assertNotNull(OpenUPProcessCrashing);
+		
+		final int nbExpected_topLevelActivities = 4;
+		final int nbExpected_sndLevelActivities = 19;
+		final int nbExpected_roleDescriptors = 61;		
+		
+//		 Counters for assertions
+		int nb_topLevelActivities = 0;
+		int nb_sndLevelActivities = 0;
+		int nb_roleDescriptors = 0;
+//		 First we get with the Top Level Activities : Inception, Elaboration, ...
+		for (BreakdownElement bde : OpenUPProcess.getBreakdownElements()) {
+			if (bde instanceof Activity) {
+				Activity topLevelActivity = (Activity) bde;
+				nb_topLevelActivities++;
+				
+				// For each TopLevelActivity, we get with its sndLevelActivity : Initite Project, ...
+				for (BreakdownElement bde_2 : topLevelActivity.getBreakdownElements()) {
+					if (bde_2 instanceof Activity) {
+						Activity sndLevelActivity = (Activity) bde_2;
+						nb_sndLevelActivities++;
+						
+						boolean isThereARoleDescriptor = false;
+						boolean isThereATaskDescriptor = false;
+						// We now can get all the RoleDescriptors of the process at this step
+						for (BreakdownElement bde_3 : sndLevelActivity.getBreakdownElements()) {
+							if (bde_3 instanceof RoleDescriptor) {
+								RoleDescriptor aRD = (RoleDescriptor) bde_3;
+								
+								assertNotNull(aRD.getRoleDefinition());
+								isThereARoleDescriptor = true;
+								
+								nb_roleDescriptors++;
+							}
+							
+							if (bde_3 instanceof TaskDescriptor) {
+								TaskDescriptor aTD = (TaskDescriptor) bde_3;
+								
+								assertNotNull(aTD.getTaskDefinition());
+								isThereATaskDescriptor = true;
+							}
+						}
+						assertTrue(isThereARoleDescriptor);
+						assertTrue(isThereATaskDescriptor);
+					}
+				}
+			}
+		}
+		
+		assertEquals("Top Activities Number", nbExpected_topLevelActivities, nb_topLevelActivities);
+		assertEquals("Snd Activities Number", nbExpected_sndLevelActivities, nb_sndLevelActivities);
+		assertEquals("Role Descriptors Number", nbExpected_roleDescriptors, nb_roleDescriptors);
+	}
 	
 	/*
 	public void testGetProcess(){

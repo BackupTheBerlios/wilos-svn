@@ -19,9 +19,17 @@ package wilos.test.business.services.util.xml.parser;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Vector;
+
+import javax.xml.xpath.XPathConstants;
 
 import junit.framework.TestCase;
+
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import wilos.business.services.util.xml.parser.XMLParser;
+import wilos.business.services.util.xml.parser.XMLUtils;
 import wilos.model.spem2.activity.Activity;
 import wilos.model.spem2.breakdownelement.BreakdownElement;
 import wilos.model.spem2.process.Process;
@@ -81,6 +89,100 @@ public class XMLParserTestAnalyst extends TestCase {
 					}
 				}
 				
-		}		
+		}
+		
+		
+	}
+	
+	/**
+	 * It seems that OpenUP may contains multiple role descriptor that has the
+	 * same id
+	 * We are gonna check this
+	 *
+	 */
+	public void determinesIfOpenUpContainsMultipleRoleDescWithSameId() {
+		String xpath_roleDescriptor = "//BreakdownElement[@*[namespace-uri() and local-name()='type']='uma:RoleDescriptor']";
+		String AttributeId = "id" ;
+		
+		String guid;
+		
+		Vector<String> allRoleDescGuid = new Vector<String>();
+		Vector<String> duplicatedDescGuid = new Vector<String>();
+		
+		XMLUtils.setDocument(pathOPenUP);
+		
+		NodeList roleDescriptorsNodeList = (NodeList)XMLUtils.evaluate(xpath_roleDescriptor, XPathConstants.NODESET);
+		
+		Node aNode;
+		for(int i=0;i<roleDescriptorsNodeList.getLength();i++){
+			aNode = roleDescriptorsNodeList.item(i);
+			
+			guid = aNode.getAttributes().getNamedItem(AttributeId).getNodeValue();
+			
+			if (allRoleDescGuid.contains(guid)) {
+				duplicatedDescGuid.add(guid);
+			}
+			
+			allRoleDescGuid.add(guid);	
+		}
+		
+		System.out.println("Resultat :");
+		if (duplicatedDescGuid.isEmpty()) {
+			System.out.println("Aucun RoleDesc dupliqué");
+		}
+		else {
+			for (String s : duplicatedDescGuid) {
+				System.out.println(s);
+			}
+		}
+		
+		assertTrue(true);
+	}
+	
+	/**
+	 * No we go further : Are there two elements with the same id ??
+	 * We are gonna check this
+	 *
+	 */
+	public void determinesIfOpenUpContainsMultipleElementsWithSameId() {
+		String xpath_roleDescriptor = "//*";
+		String AttributeId = "id" ;
+		
+		String guid;
+		
+		Vector<String> allRoleDescGuid = new Vector<String>();
+		Vector<String> duplicatedDescGuid = new Vector<String>();
+		
+		XMLUtils.setDocument(pathOPenUP);
+		
+		NodeList roleDescriptorsNodeList = (NodeList)XMLUtils.evaluate(xpath_roleDescriptor, XPathConstants.NODESET);
+		
+		Node aNode;
+		for(int i=0;i<roleDescriptorsNodeList.getLength();i++){
+			aNode = roleDescriptorsNodeList.item(i);
+			
+			//if (aNode.getAttributes().)
+			guid = aNode.getAttributes().getNamedItem(AttributeId).getNodeValue();
+			
+			if (allRoleDescGuid.contains(guid)) {
+				duplicatedDescGuid.add(guid);
+			}
+			
+			allRoleDescGuid.add(guid);	
+		}
+		
+		System.out.println("Resultat :");
+		if (duplicatedDescGuid.isEmpty()) {
+			System.out.println("Aucun RoleDesc dupliqué");
+		}
+		else {
+			for (String s : duplicatedDescGuid) {
+				System.out.println(s);
+			}
+		}
+		
+		assertTrue(true);
 	}
 }
+
+	
