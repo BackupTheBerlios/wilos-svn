@@ -23,7 +23,7 @@ import javax.swing.ImageIcon;
 
 public class ImagesService {
 	private final static String separator = java.io.File.separator;
-	private final static String path = "wilos"+separator+"presentation"+separator+"assistant"+separator+"ressources"+separator+"images"+separator  ;
+	private final static String path = "wilos/presentation/assistant/ressources/images/"  ;
 	
 	public static ImageIcon getImageIcon (String key){
 		ImageIcon img ; 
