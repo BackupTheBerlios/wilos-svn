@@ -1,0 +1,65 @@
+<!-- 
+Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+General Public License as published by the Free Software Foundation; either version 2 of the License,
+or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program; if not,
+write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
+-->
+<ice:form id="processes_management_form" partialSubmit="true">
+	<ice:panelTabSet id="panelTabSet_processes" styleClass="componentPanelTabSetLayout">
+		<ice:panelTab id="panelTab_processes_management" label="#{msgs['component.process.management.tabtitle']}" imageDir="images" >
+			<ice:panelStack id="panelStack_processes_management" selectedPanel="#{ProcessBean.processesListView}">			
+				<ice:panelGroup id="processesManagementPanelGroup_not_null" styleClass="contentIncludePanelGroup">
+					<ice:dataTable value="#{ProcessBean.processesList}" columnWidths="400px,250px,30px" border="0" var="process">
+						<ice:column>
+							<f:facet name="header">
+								<ice:outputText value="#{msgs['component.process.management.name']}" />
+							</f:facet>
+							<ice:inputText value="#{process.presentationName}" rendered="#{process.isEditable}"/>
+							<ice:outputText value="#{process.presentationName}" rendered="#{!process.isEditable}"/>
+						</ice:column>
+						
+						
+						<ice:column>
+							<f:facet name="header">
+								<ice:outputText value="#{msgs['component.process.management.processmanagername']}" />
+							</f:facet>
+							
+							<ice:outputText value="#{process.owner}"/>
+						</ice:column>
+						
+						
+						<ice:column>
+							<f:facet name="header">
+								<ice:outputText value="#{msgs['component.process.management.actions']}" />
+							</f:facet>						
+							<ice:commandLink value="" actionListener="#{ProcessBean.editName}" rendered="#{!process.isEditable}" title="#{msgs['component.processList.editnameprocesstip']}">
+								<f:param name="processEditId" value="#{process.id}"/>
+								<ice:graphicImage value="images/modify.gif" style="border: 0px solid;" />
+							</ice:commandLink>
+							<ice:commandLink value="" actionListener="#{ProcessBean.saveName}" rendered="#{process.isEditable}" title="#{msgs['component.processList.savenameprocesstip']}">
+								<f:param name="processSaveId" value="#{process.id}"/>
+								<ice:graphicImage value="images/save.gif" style="border: 0px solid;" />
+							</ice:commandLink>
+							  <ice:commandLink value="" actionListener="#{ProcessBean.deleteProcess}" title="#{msgs['component.processList.deleteprocesstip']}">
+								<f:param name="processId" value="#{process.id}"/>
+								<ice:graphicImage value="images/delete.gif" style="border: 0px solid;" />
+							</ice:commandLink>
+						</ice:column>
+					</ice:dataTable>
+				</ice:panelGroup>				
+				<ice:panelGroup id="processesManagement_null">
+					<h4><ice:outputText value="#{msgs['component.process.management.empty']}"/></h4>
+				</ice:panelGroup>
+			</ice:panelStack>			
+		</ice:panelTab>
+	</ice:panelTabSet>
+</ice:form>

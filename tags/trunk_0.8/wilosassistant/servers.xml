@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Servers>
+  <Server>
+    <Alias>local Wilos</Alias>
+    <Address>http://localhost:8080/Wilos</Address>
+    <Id>1</Id>
+  </Server>
+</Servers>
+

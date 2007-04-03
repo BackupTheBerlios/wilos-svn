@@ -1,0 +1,163 @@
+<?xml version="1.0"?>
+<!-- 
+	Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+	Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+	
+	This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+	General Public License as published by the Free Software Foundation; either version 2 of the License,
+	or (at your option) any later version.
+	
+	This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+	even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+	
+	You should have received a copy of the GNU General Public License along with this program; if not,
+	write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
+-->
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-app_2_4.xsd"
+	version="2.4">
+
+	<display-name>Wilos</display-name>
+	<description></description>
+
+	<context-param>
+		<param-name>com.icesoft.faces.debugDOMUpdate</param-name>
+		<param-value>false</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>server</param-value>
+		<description>
+			State saving method: "client" or "server" (= default) See
+			JSF Specification 2.5.2
+		</description>
+	</context-param>
+
+	<context-param>
+		<param-name>com.icesoft.faces.uploadDirectory</param-name>
+		<param-value>upload</param-value>
+	</context-param>
+
+	<!-- concurrent DOM views -->
+	<context-param>
+		<param-name>com.icesoft.faces.concurrentDOMViews</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	<!-- Asynchronous Updates -->
+	<context-param>
+		<param-name>com.icesoft.faces.synchronousUpdate</param-name>
+		<param-value>false</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>
+			com.sun.faces.config.ConfigureListener
+		</listener-class>
+	</listener>
+
+
+	<listener>
+		<listener-class>
+			com.icesoft.faces.util.event.servlet.ContextEventRepeater
+		</listener-class>
+	</listener>
+
+	<!-- file upload Servlet -->
+	<servlet>
+		<servlet-name>uploadServlet</servlet-name>
+		<servlet-class>
+			com.icesoft.faces.component.inputfile.FileUploadServlet
+		</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<!-- WebServices Servlet -->
+	<servlet>
+		<servlet-name>jaxws-servlet</servlet-name>
+		<servlet-class>
+			com.sun.xml.ws.transport.http.servlet.WSSpringServlet
+		</servlet-class>
+	</servlet>
+
+
+	<!-- Faces Servlet -->
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>Persistent Faces Servlet</servlet-name>
+		<servlet-class>
+			com.icesoft.faces.webapp.xmlhttp.PersistentFacesServlet
+		</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>Blocking Servlet</servlet-name>
+		<servlet-class>
+			com.icesoft.faces.webapp.xmlhttp.BlockingServlet
+		</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>SpringContextServlet</servlet-name>
+		<servlet-class>
+			org.springframework.web.context.ContextLoaderServlet
+		</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			/WEB-INF/classes/applicationContext*.xml
+		</param-value>
+	</context-param>
+
+
+	<!-- extension mapping -->
+
+	<servlet-mapping>
+		<servlet-name>uploadServlet</servlet-name>
+		<url-pattern>/uploadHtml</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>Persistent Faces Servlet</servlet-name>
+		<url-pattern>*.iface</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>Persistent Faces Servlet</servlet-name>
+		<url-pattern>/xmlhttp/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>Blocking Servlet</servlet-name>
+		<url-pattern>/block/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- WebServices mapping-->
+	<servlet-mapping>
+		<servlet-name>jaxws-servlet</servlet-name>
+		<url-pattern>/WizardServices</url-pattern>
+	</servlet-mapping>
+
+	<session-config>
+		<session-timeout>15</session-timeout>
+	</session-config>
+
+	<!-- Welcome files -->
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+</web-app>

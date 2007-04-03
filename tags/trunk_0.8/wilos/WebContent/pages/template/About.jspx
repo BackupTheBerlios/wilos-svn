@@ -1,0 +1,41 @@
+<!-- 
+	Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+	Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+
+	This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+	General Public License as published by the Free Software Foundation; either version 2 of the License,
+	or (at your option) any later version.
+
+	This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+	even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License along with this program; if not,
+	write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
+-->
+<ice:form id="about_form">
+	<ice:panelGrid columns="3">
+		<ice:commandLink value="" action="#{AboutBean.displayAboutPopup}"
+			title="#{msgs['about.popupTitle']}">
+			<ice:graphicImage value="images/help_about.gif" style="border: 0px solid;" />
+		</ice:commandLink>
+		<ice:panelPopup draggable="true"
+			visible="#{AboutBean.visibleAboutPopup}" rendered="true"
+			modal="true" style="height:250px; background-color: #BEB4CC;">
+			<f:facet name="header">
+				<ice:outputText value="#{msgs['about.popupTitle']}" />
+			</f:facet>
+			<f:facet name="body">
+				<ice:panelGrid id="aboutPopup">
+					<center><ice:graphicImage value="images/logo_wilos.png"
+						style="border: 0px solid;" /> <br />
+					<ice:outputText value="#{msgs['about.popupBody']}" /> <ice:panelGrid
+						styleClass="pGrdPopupButtons" columns="2">
+						<ice:commandButton value="#{msgs['about.popupOkButton']}"
+							styleClass="smallbutton" action="#{AboutBean.okAction}" />
+					</ice:panelGrid></center>
+				</ice:panelGrid>
+			</f:facet>
+		</ice:panelPopup>
+	</ice:panelGrid>
+</ice:form>

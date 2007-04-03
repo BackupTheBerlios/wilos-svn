@@ -1,0 +1,52 @@
+<!-- 
+Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+General Public License as published by the Free Software Foundation; either version 2 of the License,
+or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program; if not,
+write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
+-->
+<ice:panelTab id="panelTab_project_directors_list" label="#{msgs['component.projectDirectorList.title']}" imageDir="images">
+
+			<ice:panelStack id="panelStack_projectDirectorList" selectedPanel="#{ProjectDirectorBean.projectDirectorView}">
+
+				<ice:panelGroup id="projectDirectorView_not_null" styleClass="contentIncludePanelGroup">
+					<ice:dataTable value="#{ProjectDirectorBean.projectDirectorList}" columnWidths="100px,100px,100px" border="0" var="projectDirector">
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="#{msgs['component.projectDirectorList.login']}"/>
+						    </f:facet>
+						    <ice:outputText value="#{projectDirector.login}"/>
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="#{msgs['component.projectDirectorList.lastname']}"/>
+						    </f:facet>
+						    <ice:outputText value="#{projectDirector.name}"/>
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+						    	<ice:outputText value="#{msgs['component.projectDirectorList.firstname']}"/>
+						    </f:facet>
+						    <ice:outputText value="#{projectDirector.firstname}"/>
+						</ice:column>
+					</ice:dataTable>
+				</ice:panelGroup>
+				
+				
+				<ice:panelGroup id="projectDirectorView_null">
+							<h4><ice:outputText value="#{msgs['component.projectDirectorList.norecord']}"/></h4>
+						</ice:panelGroup>
+				</ice:panelStack>
+				
+				
+				
+				
+			</ice:panelTab>	

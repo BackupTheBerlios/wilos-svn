@@ -1,0 +1,39 @@
+<!-- 
+Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+General Public License as published by the Free Software Foundation; either version 2 of the License,
+or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program; if not,
+write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
+-->
+<ice:form id="navigation">
+	<!-- ScrollBar -->
+	<div class="navTree"><!-- Tree - The process tree with its taskDescriptors -->
+	<ice:tree id="tree" value="#{TreeBean.model}" var="item"
+		hideRootNode="#{TreeBean.loadTree}" hideNavigation="false"
+		imageDir="images/tree/">
+		<ice:treeNode>
+			<f:facet name="icon">
+				<ice:panelGroup style="display: inline">
+					<h:graphicImage value="#{item.userObject.icon}" />
+				</ice:panelGroup>
+			</f:facet>
+			<f:facet name="content">
+				<ice:panelGroup style="display: inline">
+					<ice:commandLink value="#{item.userObject.text}"
+						actionListener="#{TreeBean.selectNodeActionListener}">
+						<f:param name="nodeId" value="#{item.userObject.id}" />
+						<f:param name="pageId" value="#{item.userObject.pageId}" />
+					</ice:commandLink>
+				</ice:panelGroup>
+			</f:facet>
+		</ice:treeNode>
+	</ice:tree></div>
+</ice:form>

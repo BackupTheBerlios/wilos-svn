@@ -1,0 +1,65 @@
+<!-- 
+	Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+	Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+
+	This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+	General Public License as published by the Free Software Foundation; either version 2 of the License,
+	or (at your option) any later version.
+
+	This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+	even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License along with this program; if not,
+	write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
+-->
+<ice:form>
+	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1">
+		<ice:panelTabSet styleClass="componentPanelTabSetLayout">
+			<br />
+			<ice:panelTab label="#{msgs['iterationViewer.tabtitle'] }">
+				<br />
+				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="3">
+					<ice:outputText value="#{msgs['viewer.concreteName']}" />
+					<ice:inputText
+						value="#{ConcreteIterationViewerBean.concreteIteration.concreteName}"
+						disabled="#{ConcreteIterationViewerBean.changeButtonIsDisabled}" size="60" />
+					<ice:commandButton value="#{msgs['button.changeconcretename']}"
+						action="#{ConcreteIterationViewerBean.changeConcreteName}"
+						disabled="#{ConcreteIterationViewerBean.changeButtonIsDisabled}"
+						styleClass="smallbutton" />
+					<ice:outputText value="#{msgs['viewer.description'] }" />
+					<ice:outputText
+						value="#{ConcreteIterationViewerBean.concreteIteration.iteration.description}" />
+					<br />
+				</ice:panelGrid>
+				<ice:panelGroup
+					visible="#{ConcreteIterationViewerBean.treeMaskIsAvailable}"
+					styleClass="panelGroupTopMargin">
+					<ice:outputText styleClass="propertyLabel"
+						value="#{msgs['viewer.visibility.title']}" />
+					<ice:dataTable
+						value="#{ConcreteIterationViewerBean.concreteBreakdownElementsList}"
+						var="cwbde" columnWidths="300px,30px">
+						<ice:column>
+							<f:facet name="header">
+								<ice:outputText value="#{msgs['viewer.visibility.subElement']}" />
+							</f:facet>
+							<ice:outputText value="#{cwbde.concreteName}" />
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+								<ice:outputText value="#{msgs['viewer.visibility.isVisible']}" />
+							</f:facet>
+							<ice:selectBooleanCheckbox value="#{cwbde.isInUsed}" />
+						</ice:column>
+					</ice:dataTable>
+					<ice:commandButton value="#{msgs['viewer.buttonlabel']}"
+						action="#{ConcreteIterationViewerBean.saveIteration}"
+						styleClass="smallbutton"
+						title="#{msgs['viewer.buttonlabel.Bubble'] }" />
+				</ice:panelGroup>
+			</ice:panelTab>
+		</ice:panelTabSet>
+	</ice:panelGrid>
+</ice:form>

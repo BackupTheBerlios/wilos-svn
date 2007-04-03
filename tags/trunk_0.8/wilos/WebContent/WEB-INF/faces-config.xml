@@ -1,0 +1,656 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- 
+	Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+	Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+	
+	This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+	General Public License as published by the Free Software Foundation; either version 2 of the License,
+	or (at your option) any later version.
+	
+	This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+	even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+	
+	You should have received a copy of the GNU General Public License along with this program; if not,
+	write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
+-->
+
+<!DOCTYPE faces-config PUBLIC
+        "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+        "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+
+<faces-config>
+	<application>
+		<locale-config>
+			<default-locale>en</default-locale>
+		</locale-config>
+	</application>
+
+	<!--   Spring Variable resolver -->
+	<application>
+		<variable-resolver>
+			org.springframework.web.jsf.DelegatingVariableResolver
+		</variable-resolver>
+		<locale-config />
+	</application>
+
+
+	<managed-bean>
+		<managed-bean-name>LoginBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.wilosuser.LoginBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>loginService</property-name>
+			<value>#{LoginService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>ParticipantBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.wilosuser.ParticipantBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>participantService</property-name>
+			<value>#{ParticipantService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>loginService</property-name>
+			<value>#{LoginService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>ProcessManagerBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.wilosuser.ProcessManagerBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>processManagerService</property-name>
+			<value>#{ProcessManagerService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>loginService</property-name>
+			<value>#{LoginService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>ProjectDirectorBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.wilosuser.ProjectDirectorBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>projectDirectorService</property-name>
+			<value>#{ProjectDirectorService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>loginService</property-name>
+			<value>#{LoginService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>ProjectBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.project.ProjectBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>projectDirectorService</property-name>
+			<value>#{ProjectDirectorService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>processService</property-name>
+			<value>#{ProcessService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>participantService</property-name>
+			<value>#{ParticipantService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>ProjectAdvancementBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.project.ProjectAdvancementBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>concreteActivityService</property-name>
+			<value>#{ConcreteActivityService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>ActionBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.template.ActionBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>AboutBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.template.AboutBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>
+			ConcreteRoleAffectationBean
+		</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.role.ConcreteRoleAffectationBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>
+				concreteRoleAffectationService
+			</property-name>
+			<value>#{ConcreteRoleAffectationService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>participantService</property-name>
+			<value>#{ParticipantService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>ProcessBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.process.ProcessBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>processService</property-name>
+			<value>#{ProcessService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>processManagementService</property-name>
+			<value>#{ProcessManagementService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>processManagerService</property-name>
+			<value>#{ProcessManagerService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>ConcreteRoleViewerBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.viewer.ConcreteRoleViewerBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>concreteRoleDescriptorService</property-name>
+			<value>#{ConcreteRoleDescriptorService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>participantService</property-name>
+			<value>#{ParticipantService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>
+				concreteBreakdownElementService
+			</property-name>
+			<value>#{ConcreteBreakdownElementService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>RolesInstanciationBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.role.RolesInstanciationBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>processService</property-name>
+			<value>#{ProcessService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>activityService</property-name>
+			<value>#{ActivityService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>roleDescriptorService</property-name>
+			<value>#{RoleDescriptorService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>
+				concreteRoleInstanciationService
+			</property-name>
+			<value>#{ConcreteRoleInstanciationService}</value>
+		</managed-property>
+	</managed-bean>
+
+
+	<!-- =============================================================== -->
+	<!-- ======================== Navigation =========================== -->
+	<managed-bean>
+		<managed-bean-name>menu</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.template.MenuBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>treeMenu</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.template.TreeMenu
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<!-- =============================================================== -->
+	<!-- ======================== Connection =========================== -->
+	<managed-bean>
+		<managed-bean-name>connect</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.template.ConnectViewBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>XmlFileImportBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.upload.XmlFileImportBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>processService</property-name>
+			<value>#{ProcessService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<validator>
+		<validator-id>emailValidator</validator-id>
+		<validator-class>
+			wilos.presentation.web.validators.EmailValidator
+		</validator-class>
+	</validator>
+
+	<validator>
+		<validator-id>equalValidator</validator-id>
+		<validator-class>
+			wilos.presentation.web.validators.EqualValidator
+		</validator-class>
+	</validator>
+
+	<managed-bean>
+		<managed-bean-name>TreeBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.tree.TreeBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>processService</property-name>
+			<value>#{ProcessService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>loginService</property-name>
+			<value>#{LoginService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>participantService</property-name>
+			<value>#{ParticipantService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>ViewerBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.viewer.ViewerBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>
+				concreteBreakdownElementService
+			</property-name>
+			<value>#{ConcreteBreakdownElementService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>ConcreteTaskViewerBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.viewer.ConcreteTaskViewerBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>concreteTaskDescriptorService</property-name>
+			<value>#{ConcreteTaskDescriptorService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>taskDescriptorService</property-name>
+			<value>#{TaskDescriptorService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>concreteRoleDescriptorService</property-name>
+			<value>#{ConcreteRoleDescriptorService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>roleDescriptorService</property-name>
+			<value>#{RoleDescriptorService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>participantService</property-name>
+			<value>#{ParticipantService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>ConcretePhaseViewerBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.viewer.ConcretePhaseViewerBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>concretePhaseService</property-name>
+			<value>#{ConcretePhaseService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>
+				concreteBreakdownElementService
+			</property-name>
+			<value>#{ConcreteBreakdownElementService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>
+			ConcreteActivityViewerBean
+		</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.viewer.ConcreteActivityViewerBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>concreteActivityService</property-name>
+			<value>#{ConcreteActivityService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>
+				concreteBreakdownElementService
+			</property-name>
+			<value>#{ConcreteBreakdownElementService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>
+			ConcreteIterationViewerBean
+		</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.viewer.ConcreteIterationViewerBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>concreteIterationService</property-name>
+			<value>#{ConcreteIterationService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>
+				concreteBreakdownElementService
+			</property-name>
+			<value>#{ConcreteBreakdownElementService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>ProjectViewerBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.viewer.ProjectViewerBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>
+				concreteBreakdownElementService
+			</property-name>
+			<value>#{ConcreteBreakdownElementService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>Woops2ProcessBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.expandabletable.ProcessBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>processService</property-name>
+			<value>#{ProcessService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>ExpTableBean</managed-bean-name>
+		<managed-bean-class>
+			wilos.presentation.web.expandabletable.ExpTableBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>processService</property-name>
+			<value>#{ProcessService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>projectService</property-name>
+			<value>#{ProjectService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>activityService</property-name>
+			<value>#{ActivityService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webSessionService</property-name>
+			<value>#{WebSessionService}</value>
+		</managed-property>
+	</managed-bean>
+
+
+	<!-- =============================================================== -->
+	<!-- =========================== Reload ============================ -->
+	<!-- =============================================================== -->
+	<navigation-rule>
+		<description>Theme Reload</description>
+		<navigation-case>
+			<from-outcome>reload</from-outcome>
+			<to-view-id>/index.jsp</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- =============================================================== -->
+	<!-- ====================== Navigation Rules ======================= -->
+	<!-- =============================================================== -->
+	<navigation-rule>
+		<description>Custom Pgae for Wilos</description>
+
+		<navigation-case>
+			<from-outcome>connect</from-outcome>
+			<to-view-id>/connect.iface</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>createParticipant</from-outcome>
+			<to-view-id>/participantSubscribe.iface</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>admin_main</from-outcome>
+			<to-view-id>/admin_main.iface</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/welcome.iface</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>welcomeProjectDirector</from-outcome>
+			<to-view-id>/welcomeProjectDirector.iface</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>welcomeProcessManager</from-outcome>
+			<to-view-id>/welcomeProcessManager.iface</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>processManager_create</from-outcome>
+			<to-view-id>/processManager_create.iface</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>projectDirector_create</from-outcome>
+			<to-view-id>/projectDirector_create.iface</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>project_create</from-outcome>
+			<to-view-id>/project_create.iface</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>process_create</from-outcome>
+			<to-view-id>/process_create.iface</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>affect_roles</from-outcome>
+			<to-view-id>/affect_roles.iface</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>createProject</from-outcome>
+			<to-view-id>/project_create.iface</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+</faces-config>
