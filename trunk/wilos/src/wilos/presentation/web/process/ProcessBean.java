@@ -1,90 +1,96 @@
 /*
-Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
-Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <massie@irit.fr>
+ * Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+ * Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <massie@irit.fr>
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program; if not,
+ * write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
+ */
+package wilos.presentation.web.process;
 
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU
-General Public License as published by the Free Software Foundation; either version 2 of the License,
-or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with this program; if not,
-write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
-*/
-package wilos.presentation.web.process ;
-
-import java.util.ArrayList ;
-import java.util.HashMap ;
-import java.util.Iterator ;
-import java.util.List ;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle ;
+import java.util.ResourceBundle;
 
-import javax.faces.application.FacesMessage ;
-import javax.faces.context.FacesContext ;
-import javax.faces.event.ActionEvent ;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
-import org.apache.commons.logging.Log ;
-import org.apache.commons.logging.LogFactory ;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
-import wilos.business.services.misc.project.ProjectService ;
+import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.misc.wilosuser.ProcessManagerService;
-import wilos.business.services.spem2.process.ProcessManagementService ;
-import wilos.business.services.spem2.process.ProcessService ;
-import wilos.model.spem2.process.Process ;
+import wilos.business.services.spem2.process.ProcessManagementService;
+import wilos.business.services.spem2.process.ProcessService;
+import wilos.model.spem2.process.Process;
 
 public class ProcessBean {
 
-	private ProcessService processService ;
+	private ProcessService processService;
 
-	private ProjectService projectService ;
-	
+	private ProjectService projectService;
+
 	private ProcessManagerService processManagerService;
 
-	private List<HashMap<String, Object>> processesList ;
+	private List<HashMap<String, Object>> processesList;
 
-	private String processesListView ;
+	private String processesListView;
 
-	private static final String VIEW_NULL = "processesManagement_null" ;
+	private static final String VIEW_NULL = "processesManagement_null";
 
-	private static final String VIEW_NOT_NULL = "processesManagementPanelGroup_not_null" ;
+	private static final String VIEW_NOT_NULL = "processesManagementPanelGroup_not_null";
 
-	protected final Log logger = LogFactory.getLog(this.getClass()) ;
+	protected final Log logger = LogFactory.getLog(this.getClass());
 
-	private ProcessManagementService processManagementService ;
-	
+	private ProcessManagementService processManagementService;
+
 	private boolean visiblePopup = false;
-	
+
 	private String processId;
 
 	public ProcessBean() {
-		//None.
+		// None.
 	}
-	
+
 	/* Manage the popup. */
 
 	public void confirmDelete(ActionEvent event) {
 
-		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale()) ;
-		FacesMessage message = new FacesMessage() ;
-		message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
-		FacesContext facesContext = FacesContext.getCurrentInstance() ;
+		ResourceBundle bundle = ResourceBundle.getBundle(
+				"wilos.resources.messages", FacesContext.getCurrentInstance()
+						.getApplication().getDefaultLocale());
+		FacesMessage message = new FacesMessage();
+		message.setSeverity(FacesMessage.SEVERITY_ERROR);
+		FacesContext facesContext = FacesContext.getCurrentInstance();
 
-		for(Process process : this.processService.getProcessesList()){
-			if(process.getId().equals(processId)){
-				if(this.processManagementService.hasBeenInstanciated(this.processId)){
-					message.setSummary(bundle.getString("component.process.management.deletionforbidden")) ;
-				}
-				else{
-					this.processManagementService.removeProcess(process) ;
-					message.setSummary(bundle.getString("component.process.management.deletiondone")) ;
+		for (Process process : this.processService.getProcessesList()) {
+			if (process.getId().equals(processId)) {
+				if (this.processManagementService
+						.hasBeenInstanciated(this.processId)) {
+					message
+							.setSummary(bundle
+									.getString("component.process.management.deletionforbidden"));
+				} else {
+					this.processManagementService.removeProcess(process);
+					message
+							.setSummary(bundle
+									.getString("component.process.management.deletiondone"));
 				}
 			}
 		}
-		facesContext.addMessage(null, message) ;
-		
+		facesContext.addMessage(null, message);
+
 		this.visiblePopup = false;
 	}
 
@@ -97,14 +103,16 @@ public class ProcessBean {
 	/**
 	 * 
 	 * Deletes selected process from the database
-	 *
-	 * @param e event received when a user clicks on suppress button in the datatable
+	 * 
+	 * @param e
+	 *            event received when a user clicks on suppress button in the
+	 *            datatable
 	 */
 	public void deleteProcess(ActionEvent e) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map map = context.getExternalContext().getRequestParameterMap();
 		this.processId = (String) map.get("processId");
-		
+
 		this.visiblePopup = true;
 	}
 
@@ -114,38 +122,48 @@ public class ProcessBean {
 	 * @return the processesList.
 	 */
 	public List<HashMap<String, Object>> getProcessesList() {
-		if(this.processesList == null || this.processesList.size() != this.processService.getProcessesList().size()){
-			this.processesList = new ArrayList<HashMap<String, Object>>() ;
-			for(Process process : this.processService.getProcessesList()){
-				HashMap<String, Object> processDescription = new HashMap<String, Object>() ;
-				processDescription.put("presentationName", process.getPresentationName()) ;
-				processDescription.put("id", process.getId()) ;
-				processDescription.put("isEditable", new Boolean(false)) ;
-				
-				if (process.getProcessManager() != null)
-				{
-					process.setProcessManager(this.processManagerService.getProcessManager(process.getProcessManager().getWilosuser_id()));
-					processDescription.put("owner", process.getProcessManager().getFirstname()+" "+process.getProcessManager().getName()) ;
+		if (this.processesList == null
+				|| this.processesList.size() != this.processService
+						.getProcessesList().size()) {
+			this.processesList = new ArrayList<HashMap<String, Object>>();
+			for (Process process : this.processService.getProcessesList()) {
+				HashMap<String, Object> processDescription = new HashMap<String, Object>();
+				processDescription.put("presentationName", process
+						.getPresentationName());
+				processDescription.put("id", process.getId());
+				processDescription.put("isEditable", new Boolean(false));
+
+				if (process.getProcessManager() != null) {
+					process.setProcessManager(this.processManagerService
+							.getProcessManager(process.getProcessManager()
+									.getWilosuser_id()));
+					processDescription.put("owner", process.getProcessManager()
+							.getFirstname()
+							+ " " + process.getProcessManager().getName());
 				}
-				
-				this.processesList.add(processDescription) ;
+
+				this.processesList.add(processDescription);
 			}
-			return this.processesList ;
+			return this.processesList;
 		}
-		return this.processesList ;
+		return this.processesList;
 	}
 
 	/**
 	 * 
 	 * Editing process name
-	 *
-	 * @param e event received when a user clicks on edit button in the datatable
+	 * 
+	 * @param e
+	 *            event received when a user clicks on edit button in the
+	 *            datatable
 	 */
 	public void editName(ActionEvent e) {
-		String processId = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("processEditId") ;
-		for(HashMap<String, Object> processDescription : this.processesList){
-			if( ((String) processDescription.get("id")).equals(processId)){
-				processDescription.put("isEditable", new Boolean(true)) ;
+		String processId = (String) FacesContext.getCurrentInstance()
+				.getExternalContext().getRequestParameterMap().get(
+						"processEditId");
+		for (HashMap<String, Object> processDescription : this.processesList) {
+			if (((String) processDescription.get("id")).equals(processId)) {
+				processDescription.put("isEditable", new Boolean(true));
 			}
 		}
 	}
@@ -153,19 +171,48 @@ public class ProcessBean {
 	/**
 	 * 
 	 * Saving new process name
-	 *
-	 * @param e event received when a user clicks on save button in the datatable
+	 * 
+	 * @param e
+	 *            event received when a user clicks on save button in the
+	 *            datatable
 	 */
 	@SuppressWarnings("unchecked")
 	public void saveName(ActionEvent e) {
-		String processId = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("processSaveId") ;
-		Process process = this.processService.getProcessDao().getProcess(processId) ;
-		for(Iterator iter = this.getProcessesList().iterator(); iter.hasNext();){
-			HashMap<String, Object> processDescription = (HashMap<String, Object>) iter.next() ;
-			if( ((String) processDescription.get("id")).equals(processId)){
-				process.setPresentationName((String) processDescription.get("presentationName")) ;
-				this.processService.getProcessDao().saveOrUpdateProcess(process) ;
-				processDescription.put("isEditable", new Boolean(false)) ;
+		String processId = (String) FacesContext.getCurrentInstance()
+				.getExternalContext().getRequestParameterMap().get(
+						"processSaveId");
+		Process process = this.processService.getProcessDao().getProcess(
+				processId);
+		for (Iterator iter = this.getProcessesList().iterator(); iter.hasNext();) {
+			HashMap<String, Object> processDescription = (HashMap<String, Object>) iter
+					.next();
+			if (((String) processDescription.get("id")).equals(processId)) {
+				String presentationName = (String) processDescription
+						.get("presentationName");
+				if ((presentationName.equals(""))
+						|| (presentationName.equals(" "))) {
+					processDescription.put("presentationName", process
+							.getPresentationName());
+
+					// Error message.
+					ResourceBundle bundle = ResourceBundle.getBundle(
+							"wilos.resources.messages", FacesContext
+									.getCurrentInstance().getApplication()
+									.getDefaultLocale());
+					FacesMessage message = new FacesMessage();
+					message
+							.setSummary(bundle
+									.getString("component.process.management.message.invalidName"));
+					message.setSeverity(FacesMessage.SEVERITY_INFO);
+					FacesContext facesContext = FacesContext
+							.getCurrentInstance();
+					facesContext.addMessage(null, message);
+				} else {
+					process.setPresentationName(presentationName);
+					this.processService.getProcessDao().saveOrUpdateProcess(
+							process);
+					processDescription.put("isEditable", new Boolean(false));
+				}
 			}
 		}
 	}
@@ -177,7 +224,7 @@ public class ProcessBean {
 	 *            The processesList to set.
 	 */
 	public void setProcessesList(List<HashMap<String, Object>> _processesList) {
-		this.processesList = _processesList ;
+		this.processesList = _processesList;
 	}
 
 	/**
@@ -186,13 +233,12 @@ public class ProcessBean {
 	 * @return the processesListView.
 	 */
 	public String getProcessesListView() {
-		if(this.getProcessesList().size() == 0){
-			this.processesListView = VIEW_NULL ;
+		if (this.getProcessesList().size() == 0) {
+			this.processesListView = VIEW_NULL;
+		} else {
+			this.processesListView = VIEW_NOT_NULL;
 		}
-		else{
-			this.processesListView = VIEW_NOT_NULL ;
-		}
-		return this.processesListView ;
+		return this.processesListView;
 	}
 
 	/**
@@ -202,7 +248,7 @@ public class ProcessBean {
 	 *            The processesListView to set.
 	 */
 	public void setProcessesListView(String _processesListView) {
-		this.processesListView = _processesListView ;
+		this.processesListView = _processesListView;
 	}
 
 	/**
@@ -211,7 +257,7 @@ public class ProcessBean {
 	 * @return the processService.
 	 */
 	public ProcessService getProcessService() {
-		return this.processService ;
+		return this.processService;
 	}
 
 	/**
@@ -221,7 +267,7 @@ public class ProcessBean {
 	 *            The processService to set.
 	 */
 	public void setProcessService(ProcessService _processService) {
-		this.processService = _processService ;
+		this.processService = _processService;
 	}
 
 	/**
@@ -230,7 +276,7 @@ public class ProcessBean {
 	 * @return the projectService.
 	 */
 	public ProjectService getProjectService() {
-		return this.projectService ;
+		return this.projectService;
 	}
 
 	/**
@@ -240,22 +286,24 @@ public class ProcessBean {
 	 *            The projectService to set.
 	 */
 	public void setProjectService(ProjectService _projectService) {
-		this.projectService = _projectService ;
+		this.projectService = _projectService;
 	}
 
 	public ProcessManagementService getProcessManagementService() {
-		return processManagementService ;
+		return processManagementService;
 	}
 
-	public void setProcessManagementService(ProcessManagementService processManagementService) {
-		this.processManagementService = processManagementService ;
+	public void setProcessManagementService(
+			ProcessManagementService processManagementService) {
+		this.processManagementService = processManagementService;
 	}
 
 	public ProcessManagerService getProcessManagerService() {
 		return processManagerService;
 	}
 
-	public void setProcessManagerService(ProcessManagerService processManagerService) {
+	public void setProcessManagerService(
+			ProcessManagerService processManagerService) {
 		this.processManagerService = processManagerService;
 	}
 
@@ -267,7 +315,8 @@ public class ProcessBean {
 	}
 
 	/**
-	 * @param visiblePopup the visiblePopup to set
+	 * @param visiblePopup
+	 *            the visiblePopup to set
 	 */
 	public void setVisiblePopup(boolean _visiblePopup) {
 		this.visiblePopup = _visiblePopup;
