@@ -29,10 +29,10 @@
 				<ice:panelGrid styleClass="pGrdPopupButtons" columns="2">
 					<ice:commandButton
 						value="#{msgs['component.projectlist.popupDeleteConfirmButton']}"
-						styleClass="smallbutton" action="#{ProjectBean.confirmDelete}" />
+						styleClass="smallbutton" actionListener="#{ProjectBean.confirmDelete}" />
 					<ice:commandButton
 						value="#{msgs['component.projectlist.popupDeleteCancelButton']}"
-						styleClass="smallbutton" action="#{ProjectBean.cancelDelete}" />
+						styleClass="smallbutton" actionListener="#{ProjectBean.cancelDelete}" />
 				</ice:panelGrid>
 			</ice:panelGrid>
 		</f:facet>

@@ -31,11 +31,11 @@
 					<ice:commandButton
 						value="#{msgs['concreteRoleViewer.popupDeleteConfirmButton']}"
 						styleClass="smallbutton"
-						action="#{ConcreteRoleViewerBean.confirmDelete}" />
+						actionListener="#{ConcreteRoleViewerBean.confirmDelete}" />
 					<ice:commandButton
 						value="#{msgs['concreteRoleViewer.popupDeleteCancelButton']}"
 						styleClass="smallbutton"
-						action="#{ConcreteRoleViewerBean.cancelDelete}" />
+						actionListener="#{ConcreteRoleViewerBean.cancelDelete}" />
 				</ice:panelGrid>
 			</ice:panelGrid>
 		</f:facet>
