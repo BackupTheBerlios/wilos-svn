@@ -1,6 +1,6 @@
 /*
 Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
-Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <massie@irit.fr>
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU
 General Public License as published by the Free Software Foundation; either version 2 of the License,
@@ -19,6 +19,7 @@ import java.util.ArrayList ;
 import java.util.HashMap ;
 import java.util.Iterator ;
 import java.util.List ;
+import java.util.Map;
 import java.util.ResourceBundle ;
 
 import javax.faces.application.FacesMessage ;
@@ -34,12 +35,6 @@ import wilos.business.services.spem2.process.ProcessManagementService ;
 import wilos.business.services.spem2.process.ProcessService ;
 import wilos.model.spem2.process.Process ;
 
-/**
- * @author BlackMilk
- * 
- * This class represents ... TODO
- * 
- */
 public class ProcessBean {
 
 	private ProcessService processService ;
@@ -59,27 +54,27 @@ public class ProcessBean {
 	protected final Log logger = LogFactory.getLog(this.getClass()) ;
 
 	private ProcessManagementService processManagementService ;
+	
+	private boolean visiblePopup = false;
+	
+	private String processId;
 
 	public ProcessBean() {
-
+		//None.
 	}
+	
+	/* Manage the popup. */
 
-	/**
-	 * 
-	 * Deletes selected process from the database
-	 *
-	 * @param e event received when a user clicks on suppress button in the datatable
-	 */
-	public void deleteProcess(ActionEvent e) {
+	public String confirmDelete() {
+
 		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale()) ;
 		FacesMessage message = new FacesMessage() ;
 		message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
 		FacesContext facesContext = FacesContext.getCurrentInstance() ;
 
-		String processId = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("processId") ;
 		for(Process process : this.processService.getProcessesList()){
 			if(process.getId().equals(processId)){
-				if(this.processManagementService.hasBeenInstanciated(processId)){
+				if(this.processManagementService.hasBeenInstanciated(this.processId)){
 					message.setSummary(bundle.getString("component.process.management.deletionforbidden")) ;
 				}
 				else{
@@ -89,6 +84,30 @@ public class ProcessBean {
 			}
 		}
 		facesContext.addMessage(null, message) ;
+		
+		this.visiblePopup = false;
+		return "";
+	}
+
+	public String cancelDelete() {
+		this.visiblePopup = false;
+		return "";
+	}
+
+	/* Others */
+
+	/**
+	 * 
+	 * Deletes selected process from the database
+	 *
+	 * @param e event received when a user clicks on suppress button in the datatable
+	 */
+	public void deleteProcess(ActionEvent e) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map map = context.getExternalContext().getRequestParameterMap();
+		this.processId = (String) map.get("processId");
+		
+		this.visiblePopup = true;
 	}
 
 	/**
@@ -139,6 +158,7 @@ public class ProcessBean {
 	 *
 	 * @param e event received when a user clicks on save button in the datatable
 	 */
+	@SuppressWarnings("unchecked")
 	public void saveName(ActionEvent e) {
 		String processId = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("processSaveId") ;
 		Process process = this.processService.getProcessDao().getProcess(processId) ;
@@ -239,6 +259,20 @@ public class ProcessBean {
 
 	public void setProcessManagerService(ProcessManagerService processManagerService) {
 		this.processManagerService = processManagerService;
+	}
+
+	/**
+	 * @return the visiblePopup
+	 */
+	public boolean getVisiblePopup() {
+		return this.visiblePopup;
+	}
+
+	/**
+	 * @param visiblePopup the visiblePopup to set
+	 */
+	public void setVisiblePopup(boolean _visiblePopup) {
+		this.visiblePopup = _visiblePopup;
 	}
 
 }
