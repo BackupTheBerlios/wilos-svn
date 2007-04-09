@@ -91,12 +91,7 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 		this.visibleDeletePopup = true;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public String confirmDelete() {
-
+	public void confirmDelete(ActionEvent _event) {
 		if (!this.getChangeButtonIsDisabled()
 				&& (this.concreteRoleDescriptor.getParticipant() == null)) {
 			this.concreteRoleDescriptorService
@@ -123,12 +118,10 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 
 			this.visibleDeletePopup = false;
 		}
-		return "";
 	}
 
-	public String cancelDelete() {
+	public void cancelDelete(ActionEvent _event) {
 		this.visibleDeletePopup = false;
-		return "";
 	}
 
 	/**

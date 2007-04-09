@@ -1,6 +1,6 @@
 /*
  * Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
- * Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+ * Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <massie@irit.fr>
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU
  * General Public License as published by the Free Software Foundation; either version 2 of the License,
@@ -250,18 +250,18 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		super.refreshProjectTable();
 	}
 
-	public void stopActionListener(ActionEvent event) {
+	public void stopActionListener(ActionEvent _event) {
 		// Displays the modal popup.
 		// The stop action will be applied or aborted according
 		// to the user's choice through the 'Confirm' or 'Cancel' buttons
 		if (this.concreteTaskDescriptor.getRemainingTime() == 0) {
-			this.confirmStop();
+			this.confirmStop(_event);
 		} else {
 			this.visiblePopup = true;
 		}
 	}
 
-	public String confirmDelete() {
+	public void confirmDelete(ActionEvent _event) {
 
 		if (!this.getChangeButtonIsDisabled()
 				&& (this.concreteTaskDescriptor.getState()
@@ -295,15 +295,13 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 			context.addMessage(null, message);
 			this.visibleDeletePopup = false;
 		}
-		return "";
 	}
 
-	public String cancelDelete() {
+	public void cancelDelete(ActionEvent _event) {
 		this.visibleDeletePopup = false;
-		return "";
 	}
 
-	public String confirmStop() {
+	public void confirmStop(ActionEvent _event) {
 		this.concreteTaskDescriptor.setRemainingTime(0);
 
 		this.concreteTaskDescriptorService
@@ -315,12 +313,10 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 
 		// once the treatment done, hide the popup
 		this.visiblePopup = false;
-		return "";
 	}
 
-	public String cancelStop() {
+	public void cancelStop(ActionEvent _event) {
 		this.visiblePopup = false;
-		return "";
 	}
 
 	public void suspendedActionListener(ActionEvent event) {

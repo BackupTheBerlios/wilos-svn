@@ -65,7 +65,7 @@ public class ProcessBean {
 	
 	/* Manage the popup. */
 
-	public String confirmDelete() {
+	public void confirmDelete(ActionEvent event) {
 
 		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale()) ;
 		FacesMessage message = new FacesMessage() ;
@@ -86,12 +86,10 @@ public class ProcessBean {
 		facesContext.addMessage(null, message) ;
 		
 		this.visiblePopup = false;
-		return "";
 	}
 
-	public String cancelDelete() {
+	public void cancelDelete(ActionEvent event) {
 		this.visiblePopup = false;
-		return "";
 	}
 
 	/* Others */
