@@ -1,73 +1,93 @@
 <!-- 
-Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
-Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+	Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+	Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <massie@irit.fr>
 
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU
-General Public License as published by the Free Software Foundation; either version 2 of the License,
-or (at your option) any later version.
+	This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+	General Public License as published by the Free Software Foundation; either version 2 of the License,
+	or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+	even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program; if not,
-write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
+	You should have received a copy of the GNU General Public License along with this program; if not,
+	write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
 -->
 <ice:form>
-	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1">
-		
-		<!-- <ice:panelPopup draggable="false" visible="#{ConcreteRoleViewerBean.visibleDeletePopup}" rendered="true" modal="true">
-			<f:facet name="header">
-				<ice:outputText value="#{msgs['concreteRoleViewer.popupDeleteHeaderMessage']}" />
-			</f:facet>
-			<f:facet name="body">
-				<ice:panelGrid id="deletePopup">
-					<ice:graphicImage value="images/xpwilos/warning.gif" style="border: 0px solid;" />
-					<ice:outputText value="#{msgs['concreteRoleViewer.popupDeleteMessage']}" />				
-					<ice:panelGrid styleClass="pGrdPopupButtons" columns="2">
-						<ice:commandButton value="#{msgs['concreteRoleViewer.popupDeleteConfirmButton']}" styleClass="smallbutton" action="#{ConcreteRoleViewerBean.confirmDelete}"/>
-						<ice:commandButton value="#{msgs['concreteRoleViewer.popupDeleteCancelButton']}" styleClass="smallbutton" action="#{ConcreteRoleViewerBean.cancelDelete}"/>
-					</ice:panelGrid>
+	<ice:panelPopup draggable="false"
+		visible="#{ConcreteRoleViewerBean.visibleDeletePopup}" rendered="true"
+		modal="true">
+		<f:facet name="header">
+			<ice:outputText
+				value="#{msgs['concreteRoleViewer.popupDeleteHeaderMessage']}" />
+		</f:facet>
+		<f:facet name="body">
+			<ice:panelGrid id="deletePopup">
+				<ice:graphicImage value="images/xpwilos/warning.gif"
+					style="border: 0px solid;" />
+				<ice:outputText
+					value="#{msgs['concreteRoleViewer.popupDeleteMessage']}" />
+				<ice:panelGrid styleClass="pGrdPopupButtons" columns="2">
+					<ice:commandButton
+						value="#{msgs['concreteRoleViewer.popupDeleteConfirmButton']}"
+						styleClass="smallbutton"
+						action="#{ConcreteRoleViewerBean.confirmDelete}" />
+					<ice:commandButton
+						value="#{msgs['concreteRoleViewer.popupDeleteCancelButton']}"
+						styleClass="smallbutton"
+						action="#{ConcreteRoleViewerBean.cancelDelete}" />
 				</ice:panelGrid>
-			</f:facet>
-		</ice:panelPopup> -->
+			</ice:panelGrid>
+		</f:facet>
+	</ice:panelPopup>
+
+	<ice:panelGrid styleClass="contentLayoutGridStyle" columns="1">
 
 		<ice:panelTabSet styleClass="componentPanelTabSetLayout">
 			<br />
 			<ice:panelTab label="#{msgs['concreteRoleViewer.tabtitle'] }">
 
-				<ice:panelGrid id="panelGridRoles" styleClass="contentLayoutGridStyle" columns="3">
+				<ice:panelGrid id="panelGridRoles"
+					styleClass="contentLayoutGridStyle" columns="3">
 					<ice:outputText value="#{msgs['viewer.concreteName']}" />
-					<ice:inputText	value="#{ConcreteRoleViewerBean.concreteRoleDescriptor.concreteName}"
-									disabled="#{ConcreteRoleViewerBean.changeButtonIsDisabled}" size="60"/>
-					<ice:commandButton value="#{msgs['button.changeconcretename']}" 
-										action="#{ConcreteRoleViewerBean.changeConcreteName}" 
-										disabled="#{ConcreteRoleViewerBean.changeButtonIsDisabled}"
-										styleClass="smallbutton"
-										title="#{msgs['concreteRoleViewer.changeName.Bubble'] }"/>
+					<ice:inputText
+						value="#{ConcreteRoleViewerBean.concreteRoleDescriptor.concreteName}"
+						disabled="#{ConcreteRoleViewerBean.changeButtonIsDisabled}"
+						size="60" />
+					<ice:commandButton value="#{msgs['button.changeconcretename']}"
+						action="#{ConcreteRoleViewerBean.changeConcreteName}"
+						disabled="#{ConcreteRoleViewerBean.changeButtonIsDisabled}"
+						styleClass="smallbutton"
+						title="#{msgs['concreteRoleViewer.changeName.Bubble'] }" />
 				</ice:panelGrid>
 
-				<ice:panelStack id="panelStack_affectedRole" selectedPanel="#{ConcreteRoleViewerBean.selectAffectedRoleView}">
-					<ice:panelGrid id="roleAffectedTo" styleClass="contentLayoutGridStyle" columns="3">
+				<ice:panelStack id="panelStack_affectedRole"
+					selectedPanel="#{ConcreteRoleViewerBean.selectAffectedRoleView}">
+					<ice:panelGrid id="roleAffectedTo"
+						styleClass="contentLayoutGridStyle" columns="3">
 						<ice:outputText value="#{msgs['concreteRoleViewer.affectedTo']}" />
-						<ice:outputText value="#{ConcreteRoleViewerBean.concreteRoleDescriptor.participant.firstname} #{ConcreteRoleViewerBean.concreteRoleDescriptor.participant.name}" />
-						<ice:outputText value="" />						
+						<ice:outputText
+							value="#{ConcreteRoleViewerBean.concreteRoleDescriptor.participant.firstname} #{ConcreteRoleViewerBean.concreteRoleDescriptor.participant.name}" />
+						<ice:outputText value="" />
 					</ice:panelGrid>
 
-					<ice:panelGrid id="roleNotAffected" styleClass="contentLayoutGridStyle" columns="3">
+					<ice:panelGrid id="roleNotAffected"
+						styleClass="contentLayoutGridStyle" columns="3">
 						<ice:outputText value="#{msgs['concreteRoleViewer.affectedTo']}" />
 						<ice:outputText value="#{msgs['concreteRoleViewer.notAffected']}" />
 						<ice:outputText value="" />
-						<ice:commandButton value="#{msgs['concreteRoleViewer.toAffect']}" action="#{ConcreteRoleViewerBean.affectParticipantToARole}" styleClass="smallbutton" />
-						<ice:commandButton value="#{msgs['concreteRoleViewer.remove'] }" 
-										action="#{ConcreteRoleViewerBean.confirmDelete}" 
-										visible="#{ConcreteRoleViewerBean.visibleRemove}"
-										styleClass="smallbutton"
-										title="#{msgs['concreteRoleViewer.remove.Bubble'] }"/>
+						<ice:commandButton value="#{msgs['concreteRoleViewer.toAffect']}"
+							action="#{ConcreteRoleViewerBean.affectParticipantToARole}"
+							styleClass="smallbutton" />
+						<ice:commandButton value="#{msgs['concreteRoleViewer.remove'] }"
+							actionListener="#{ConcreteRoleViewerBean.removeActionListener}"
+							visible="#{ConcreteRoleViewerBean.visibleRemove}"
+							styleClass="smallbutton"
+							title="#{msgs['concreteRoleViewer.remove.Bubble'] }" />
 						<ice:outputText value="" />
 					</ice:panelGrid>
 				</ice:panelStack>
-				
+
 
 			</ice:panelTab>
 		</ice:panelTabSet>

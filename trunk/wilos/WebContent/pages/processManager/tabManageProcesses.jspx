@@ -1,19 +1,44 @@
 <!-- 
-Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
-Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+	Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
+	Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <massie@irit.fr>
 
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU
-General Public License as published by the Free Software Foundation; either version 2 of the License,
-or (at your option) any later version.
+	This program is free software; you can redistribute it and/or modify it under the terms of the GNU
+	General Public License as published by the Free Software Foundation; either version 2 of the License,
+	or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+	even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program; if not,
-write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
+	You should have received a copy of the GNU General Public License along with this program; if not,
+	write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
 -->
 <ice:form id="processes_management_form" partialSubmit="true">
+
+	<ice:panelPopup draggable="false" visible="#{ProcessBean.visiblePopup}"
+		rendered="true" modal="true">
+		<f:facet name="header">
+			<ice:outputText
+				value="#{msgs['component.processList.popupDeleteHeaderMessage']}" />
+		</f:facet>
+		<f:facet name="body">
+			<ice:panelGrid id="deleteProjectPopup">
+				<ice:graphicImage value="images/xpwilos/warning.gif"
+					style="border: 0px solid;" />
+				<ice:outputText
+					value="#{msgs['component.processList.popupDeleteMessage']}" />
+				<ice:panelGrid styleClass="pGrdPopupButtons" columns="2">
+					<ice:commandButton
+						value="#{msgs['component.processList.popupDeleteConfirmButton']}"
+						styleClass="smallbutton" action="#{ProcessBean.confirmDelete}" />
+					<ice:commandButton
+						value="#{msgs['component.processList.popupDeleteCancelButton']}"
+						styleClass="smallbutton" action="#{ProcessBean.cancelDelete}" />
+				</ice:panelGrid>
+			</ice:panelGrid>
+		</f:facet>
+	</ice:panelPopup>
+	
 	<ice:panelTabSet id="panelTabSet_processes" styleClass="componentPanelTabSetLayout">
 		<ice:panelTab id="panelTab_processes_management" label="#{msgs['component.process.management.tabtitle']}" imageDir="images" >
 			<ice:panelStack id="panelStack_processes_management" selectedPanel="#{ProcessBean.processesListView}">			

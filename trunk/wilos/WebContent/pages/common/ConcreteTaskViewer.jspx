@@ -80,16 +80,6 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.displayedState}" />
 					<ice:outputText value=""/>
-					<!-- INFORMATIONS INUTILISEES
-					<ice:outputText value="#{msgs['concretetaskviewer.plannedstartingdate']}" />
-					<ice:outputText
-						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.plannedStartingDate}" />
-					<ice:outputText value=""/>
-					<ice:outputText value="#{msgs['concretetaskviewer.plannedFinishingDate']}" />
-					<ice:outputText
-						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.plannedFinishingDate}" />
-					<ice:outputText value=""/>
-					-->
 					<ice:outputText
 						value="#{msgs['concretetaskviewer.accomplishedtime']}"
 						visible="#{ConcreteTaskViewerBean.accomplishedTimeVisible}"/>
