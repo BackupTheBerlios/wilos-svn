@@ -1,6 +1,6 @@
 /*
  * Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
- * Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+ * Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <massie@irit.fr>
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU
  * General Public License as published by the Free Software Foundation; either version 2 of the License,
@@ -30,7 +30,6 @@ import wilos.model.misc.wilosuser.Participant;
 import wilos.presentation.web.template.MenuBean;
 import wilos.presentation.web.tree.WilosObjectNode;
 
-
 public class ConcreteRoleViewerBean extends ViewerBean {
 
 	private ConcreteRoleDescriptor concreteRoleDescriptor;
@@ -45,10 +44,6 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 
 	private boolean visibleDeletePopup = false;
 
-	/**
-	 * TODO method description
-	 * 
-	 */
 	public void buildConcreteRoleModel() {
 		this.concreteRoleDescriptor = new ConcreteRoleDescriptor();
 		if (!(concreteRoleDescriptorId.equals(""))
@@ -58,10 +53,6 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 		}
 	}
 
-	/**
-	 * TODO method description
-	 * 
-	 */
 	public void affectParticipantToARole() {
 		ResourceBundle bundle = ResourceBundle.getBundle(
 				"wilos.resources.messages", FacesContext.getCurrentInstance()
@@ -83,71 +74,72 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 		// refresh the tree
 		super.refreshProjectTree();
 	}
-	
+
 	/**
 	 * @return the visibleRemove
 	 */
 	public boolean getVisibleRemove() {
-		return (!this.getChangeButtonIsDisabled() && (this.concreteRoleDescriptor.getParticipant() == null));
+		return (!this.getChangeButtonIsDisabled() && (this.concreteRoleDescriptor
+				.getParticipant() == null));
 	}
-	
+
 	/**
 	 * delete a concrete role
-	 *
+	 * 
 	 */
 	public void removeActionListener(ActionEvent event) {
 		this.visibleDeletePopup = true;
 	}
-	
+
 	/**
 	 * 
 	 * @return
 	 */
 	public String confirmDelete() {
 
-		if (!this.getChangeButtonIsDisabled() && (this.concreteRoleDescriptor.getParticipant() == null))
-		{
-			this.concreteRoleDescriptorService.removeConcreteRoleDescriptor(this.concreteRoleDescriptor);
+		if (!this.getChangeButtonIsDisabled()
+				&& (this.concreteRoleDescriptor.getParticipant() == null)) {
+			this.concreteRoleDescriptorService
+					.removeConcreteRoleDescriptor(this.concreteRoleDescriptor);
 			// Refresh components.
 			super.refreshProjectTable();
 			super.rebuildProjectTree();
 			super.refreshProjectTree();
 
 			FacesContext context = FacesContext.getCurrentInstance();
-			MenuBean mb = (MenuBean) context.getApplication().getVariableResolver().resolveVariable(context, "menu");
+			MenuBean mb = (MenuBean) context.getApplication()
+					.getVariableResolver().resolveVariable(context, "menu");
 			mb.changePage(WilosObjectNode.PROJECTNODE);
-			
+
 			/* Displays info message */
-			ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
+			ResourceBundle bundle = ResourceBundle.getBundle(
+					"wilos.resources.messages", FacesContext
+							.getCurrentInstance().getApplication()
+							.getDefaultLocale());
 			FacesMessage message = new FacesMessage();
 			message.setSummary(bundle.getString("concreteRoleViewer.removed"));
 			message.setSeverity(FacesMessage.SEVERITY_INFO);
 			context.addMessage(null, message);
-			
+
 			this.visibleDeletePopup = false;
 		}
 		return "";
 	}
-	
-	/**
-	 * 
-	 * @return
-	 */
+
 	public String cancelDelete() {
 		this.visibleDeletePopup = false;
 		return "";
 	}
 
-	
-	
 	/**
 	 * action calledto change the concrete name of a concrete role
+	 * 
 	 * @return
 	 */
-	public void changeConcreteName()
-	{
-		this.concreteRoleDescriptorService.saveConcreteRoleDescriptor(this.concreteRoleDescriptor);
-		//Refresh the treebean.
+	public void changeConcreteName() {
+		this.concreteRoleDescriptorService
+				.saveConcreteRoleDescriptor(this.concreteRoleDescriptor);
+		// Refresh the treebean.
 		super.refreshProjectTree();
 	}
 
@@ -202,13 +194,14 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 	 * @return the visibleDeletePopup
 	 */
 	public boolean getVisibleDeletePopup() {
-		return visibleDeletePopup;
+		return this.visibleDeletePopup;
 	}
 
 	/**
-	 * @param visibleDeletePopup the visibleDeletePopup to set
+	 * @param visibleDeletePopup
+	 *            the visibleDeletePopup to set
 	 */
-	public void setVisibleDeletePopup(boolean visibleDeletePopup) {
-		this.visibleDeletePopup = visibleDeletePopup;
+	public void setVisibleDeletePopup(boolean _visibleDeletePopup) {
+		this.visibleDeletePopup = _visibleDeletePopup;
 	}
 }
