@@ -26,6 +26,8 @@ import wilos.model.spem2.guide.Guidance;
 
 public class ActivityTO extends Activity implements Serializable {
 
+	private static final long serialVersionUID = 1531990547468325073L;
+
 	public ActivityTO() {}
 	
 	public ActivityTO(Activity _activity) {

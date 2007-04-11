@@ -25,6 +25,11 @@ import wilos.model.misc.concretephase.ConcretePhase;
 
 public class ConcretePhaseTO extends ConcretePhase implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6706906773605019978L;
+
 	public ConcretePhaseTO() {}
 
     public ConcretePhaseTO(ConcretePhase _myConcretePhase) {

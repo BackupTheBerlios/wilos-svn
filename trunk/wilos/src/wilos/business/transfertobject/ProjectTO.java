@@ -18,10 +18,14 @@ package wilos.business.transfertobject;
 
 import java.io.Serializable;
 
-import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.misc.project.Project;
 
 public class ProjectTO extends Project implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5796969689713723162L;
 
 	public ProjectTO() {}
 	

@@ -25,6 +25,11 @@ import wilos.model.spem2.process.Process;
 
 public class ProcessTO extends Process implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3467670120930818858L;
+
 	public ProcessTO() {}
 
 	public ProcessTO(Process _process) {

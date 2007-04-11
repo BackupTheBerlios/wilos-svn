@@ -21,9 +21,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
-import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.wilosuser.Participant;
-import wilos.model.spem2.role.RoleDescriptor;
 
 /**
  *
@@ -31,7 +29,13 @@ import wilos.model.spem2.role.RoleDescriptor;
  */
 public class ParticipantTO extends Participant implements Serializable {
     
-    /** Creates a new instance of ParticipantTO */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -175514417997688236L;
+
+
+	/** Creates a new instance of ParticipantTO */
     public ParticipantTO() {
 
     }

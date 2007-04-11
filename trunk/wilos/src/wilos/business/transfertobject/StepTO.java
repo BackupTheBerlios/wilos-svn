@@ -29,7 +29,12 @@ public class StepTO extends Step implements Serializable{
     //TaskDefinition t = new TaskDefinition().
 
     
-    /** Creates a new instance of StepTO */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4548833532125970339L;
+
+	/** Creates a new instance of StepTO */
     public StepTO() {
         
         

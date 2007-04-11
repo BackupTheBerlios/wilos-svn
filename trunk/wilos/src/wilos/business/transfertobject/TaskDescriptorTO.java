@@ -17,10 +17,7 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 package wilos.business.transfertobject;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
-import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.spem2.task.TaskDescriptor;
 
 /**
@@ -30,7 +27,13 @@ import wilos.model.spem2.task.TaskDescriptor;
 public class TaskDescriptorTO extends TaskDescriptor implements Serializable{
     
 
-    /** Creates a new instance of TaskDescriptorTO */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5257048255787493710L;
+
+
+	/** Creates a new instance of TaskDescriptorTO */
     public TaskDescriptorTO() {
     }
 

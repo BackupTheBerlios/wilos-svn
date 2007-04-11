@@ -26,6 +26,11 @@ import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 
 public class ConcreteRoleDescriptorTO extends ConcreteRoleDescriptor implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6193498903419221055L;
+
 	/** Creates a new instance of ParticipantTO */
     public ConcreteRoleDescriptorTO() {
 

@@ -25,6 +25,11 @@ import wilos.model.misc.concreteiteration.ConcreteIteration;
 
 public class ConcreteIterationTO extends ConcreteIteration implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8530841673060460523L;
+
 	public ConcreteIterationTO() {}
 
     public ConcreteIterationTO(ConcreteIteration _myConcreteIteration) {

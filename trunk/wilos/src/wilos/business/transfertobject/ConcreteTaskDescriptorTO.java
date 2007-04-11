@@ -21,6 +21,11 @@ import java.io.Serializable;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 
 public class ConcreteTaskDescriptorTO extends ConcreteTaskDescriptor implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6579786954492644739L;
+
 	/** Creates a new instance of ParticipantTO */
     public ConcreteTaskDescriptorTO() {
 

@@ -26,6 +26,11 @@ import wilos.model.spem2.iteration.Iteration;
 
 public class IterationTO extends Iteration implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6845546096183827985L;
+
 	public IterationTO() {}
 
 	public IterationTO(Iteration _iteration) {

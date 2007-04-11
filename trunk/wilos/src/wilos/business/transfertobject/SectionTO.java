@@ -22,6 +22,11 @@ import wilos.model.spem2.section.Section;
 
 public class SectionTO extends Section implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3478890824306139556L;
+
 	public SectionTO() {
 		
 	}

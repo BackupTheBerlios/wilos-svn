@@ -28,6 +28,12 @@ import wilos.model.misc.project.Project;
 
 public class ConcreteActivityTO extends ConcreteActivity implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3857147546912132326L;
+
+
 	/** Creates a new instance of ParticipantTO */
     public ConcreteActivityTO() {
 

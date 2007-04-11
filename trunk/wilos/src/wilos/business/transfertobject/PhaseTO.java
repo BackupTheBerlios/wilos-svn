@@ -26,6 +26,11 @@ import wilos.model.spem2.phase.Phase;
 
 public class PhaseTO extends Phase implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4681548168470197482L;
+
 	public PhaseTO() {}
 	
 	public PhaseTO(Phase _phase) {

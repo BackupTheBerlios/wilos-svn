@@ -17,11 +17,8 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 package wilos.business.transfertobject;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import wilos.business.transfertobject.TaskDescriptorTO;
+
 import wilos.model.spem2.role.RoleDescriptor;
-import wilos.model.spem2.task.TaskDescriptor;
 
 /**
  *
@@ -29,7 +26,12 @@ import wilos.model.spem2.task.TaskDescriptor;
  */
 public class RoleDescriptorTO extends RoleDescriptor implements Serializable{
                 
-    /** Creates a new instance of RoleDescriptorTO */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3467847737413616456L;
+
+	/** Creates a new instance of RoleDescriptorTO */
     public RoleDescriptorTO() {
     }
     

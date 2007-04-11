@@ -28,6 +28,11 @@ import wilos.model.spem2.section.Section;
 public class CheckListTO extends CheckList implements Serializable {
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2651484866248124962L;
+
 	/** Creates a new instance of CheckList */
     public CheckListTO() {
 

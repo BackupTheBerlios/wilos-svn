@@ -17,16 +17,16 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 package wilos.business.transfertobject;
 
 import java.io.Serializable;
-import java.util.HashSet;
 
-import wilos.model.misc.concreteactivity.ConcreteActivity;
-import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
-import wilos.model.misc.concreteiteration.ConcreteIteration;
-import wilos.model.misc.concretephase.ConcretePhase;
 import wilos.model.spem2.guide.Guidance;
 
 public class GuidanceTO extends Guidance implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7049962463051718494L;
+
 	/** Creates a new instance of ParticipantTO */
     public GuidanceTO() {
 

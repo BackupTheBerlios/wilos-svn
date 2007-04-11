@@ -507,9 +507,9 @@ public class ParticipantBean {
 			String project_id = (String) ligne.get("project_id") ;
 			
 			//si on se desaffecte du projet courement affiché on clean l'arbre
-			if (this.webSessionService.getAttribute(webSessionService.PROJECT_ID) != null)
+			if (this.webSessionService.getAttribute(WebSessionService.PROJECT_ID) != null)
 			{
-				if (this.webSessionService.getAttribute(webSessionService.PROJECT_ID).equals(project_id) && !testAffectation)
+				if (this.webSessionService.getAttribute(WebSessionService.PROJECT_ID).equals(project_id) && !testAffectation)
 				{
 					FacesContext context = FacesContext.getCurrentInstance();
 					TreeBean treeBean = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");

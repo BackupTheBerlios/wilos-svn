@@ -34,7 +34,12 @@ import wilos.model.spem2.task.TaskDefinition;
 public class TaskDefinitionTO extends TaskDefinition implements Serializable {
     
     
-    /** Creates a new instance of TaskDefinitionTO */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 428935428254462072L;
+
+	/** Creates a new instance of TaskDefinitionTO */
     public TaskDefinitionTO() {
         
     }
