@@ -189,6 +189,7 @@ public class ProcessBean {
 			if (((String) processDescription.get("id")).equals(processId)) {
 				String presentationName = (String) processDescription
 						.get("presentationName");
+
 				if ((presentationName.equals(""))
 						|| (presentationName.equals(" "))) {
 					processDescription.put("presentationName", process
@@ -207,6 +208,8 @@ public class ProcessBean {
 					FacesContext facesContext = FacesContext
 							.getCurrentInstance();
 					facesContext.addMessage(null, message);
+				}
+				if (this.presentationNameAlreadyExists(presentationName)) {
 				} else {
 					process.setPresentationName(presentationName);
 					this.processService.getProcessDao().saveOrUpdateProcess(
@@ -215,6 +218,11 @@ public class ProcessBean {
 				}
 			}
 		}
+	}
+
+	private boolean presentationNameAlreadyExists(String _presentationName) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	/**
