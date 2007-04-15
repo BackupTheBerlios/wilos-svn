@@ -209,7 +209,23 @@ public class ProcessBean {
 							.getCurrentInstance();
 					facesContext.addMessage(null, message);
 				}
-				if (this.presentationNameAlreadyExists(presentationName)) {
+				if (this.presentationNameAlreadyExists(presentationName, processId)) {
+					processDescription.put("presentationName", process
+							.getPresentationName());
+
+					// Error message.
+					ResourceBundle bundle = ResourceBundle.getBundle(
+							"wilos.resources.messages", FacesContext
+									.getCurrentInstance().getApplication()
+									.getDefaultLocale());
+					FacesMessage message = new FacesMessage();
+					message
+							.setSummary(bundle
+									.getString("component.process.management.message.nameAlreadyExists"));
+					message.setSeverity(FacesMessage.SEVERITY_INFO);
+					FacesContext facesContext = FacesContext
+							.getCurrentInstance();
+					facesContext.addMessage(null, message);
 				} else {
 					process.setPresentationName(presentationName);
 					this.processService.getProcessDao().saveOrUpdateProcess(
@@ -220,8 +236,10 @@ public class ProcessBean {
 		}
 	}
 
-	private boolean presentationNameAlreadyExists(String _presentationName) {
-		// TODO Auto-generated method stub
+	private boolean presentationNameAlreadyExists(String _presentationName, String _processId) {
+		for(Process process : this.processService.getProcessesList())
+			if((process.getPresentationName().equals(_presentationName))&&(!_processId.equals(process.getId())))
+				return true;
 		return false;
 	}
 
