@@ -251,6 +251,13 @@ public class XmlFileImportBean {
 
 					// mise en place du controle du process
 					if ((p != null) && (!alreadyExists)) {
+						//check that the process name doesn't exist, else rename it with the guid.
+						for (Process tmp : list)
+							if (tmp.getPresentationName().equals(p.getPresentationName())){
+								p.setPresentationName(p.getPresentationName()+ "_" + p.getGuid());
+								break;
+							}
+						
 						// save the process
 						logger.debug("### XmlFileImportBean ### action -> id="
 								+ p.getId());
