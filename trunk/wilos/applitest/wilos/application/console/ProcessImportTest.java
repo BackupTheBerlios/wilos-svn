@@ -1,6 +1,6 @@
 /*
  * Wilos Is a cLever process Orchestration Software - http://wilos.berlios.de
- * Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <aubry@irit.fr>
+ * Copyright (C) 2006-2007 Paul Sabatier University, IUP ISI (Toulouse, France) <massie@irit.fr>
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU
  * General Public License as published by the Free Software Foundation; either version 2 of the License,
@@ -27,14 +27,18 @@ import wilos.model.spem2.process.Process;
 public class ProcessImportTest {
 	public static void main(String[] args) {
 		// Getback the application context from the spring configuration file
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-		
+		ApplicationContext ctx = new ClassPathXmlApplicationContext(
+				"applicationContext.xml");
+
 		ProcessService am = (ProcessService) ctx.getBean("ProcessService");
-		Process scrum = am.spelpParsingXML(new File("applitest/wilos/application/console/scrum.xml"));
-		//am.saveProcess(scrum);
-		
-		Process openup = am.spelpParsingXML(new File("applitest/wilos/application/console/openUP.xml"));
-		//Process openup = am.spelpParsingXML(new File("applitest/wilos/application/console/openup.zip"));
-		//am.saveProcess(openup);
-		}
+		Process scrum = am.spelpParsingXML(new File(
+				"applitest/wilos/application/console/scrum.xml"));
+		// am.saveProcess(scrum);
+
+		Process openup = am.spelpParsingXML(new File(
+				"applitest/wilos/application/console/openUP.xml"));
+		// Process openup = am.spelpParsingXML(new
+		// File("applitest/wilos/application/console/openup.zip"));
+		// am.saveProcess(openup);
+	}
 }
