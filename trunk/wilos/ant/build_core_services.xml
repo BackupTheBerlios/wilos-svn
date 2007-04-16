@@ -15,7 +15,7 @@
 	write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  
 -->
 <!-- Script for building jar application (without lib)-->
-<project name="Wilos Core Services Jar" default="build.jar" basedir="../">
+<project name="Wilos Core Services (Jar)" default="build.jar" basedir="../">
 
 	<!-- Configure the context path for this application -->
 	<property name="project.name" value="Wilos-core-services" />
