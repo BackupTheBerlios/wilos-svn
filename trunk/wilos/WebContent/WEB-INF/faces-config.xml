@@ -439,6 +439,10 @@
 			<value>#{WebPageService}</value>
 		</managed-property>
 		<managed-property>
+			<property-name>webMessageService</property-name>
+			<value>#{WebMessageService}</value>
+		</managed-property>
+		<managed-property>
 			<property-name>concreteTaskDescriptorService</property-name>
 			<value>#{ConcreteTaskDescriptorService}</value>
 		</managed-property>
