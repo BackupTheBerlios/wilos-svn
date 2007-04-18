@@ -24,10 +24,10 @@ import javax.faces.event.ActionEvent;
 
 import wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
+import wilos.business.services.presentation.web.WebPageService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.wilosuser.Participant;
-import wilos.presentation.web.template.MenuBean;
 import wilos.presentation.web.tree.WilosObjectNode;
 
 public class ConcreteRoleViewerBean extends ViewerBean {
@@ -35,6 +35,8 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 	private ConcreteRoleDescriptor concreteRoleDescriptor;
 
 	private ConcreteRoleDescriptorService concreteRoleDescriptorService;
+	
+	private WebPageService webPageService;
 
 	private String concreteRoleDescriptorId = "";
 
@@ -102,10 +104,8 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 			super.refreshProjectTree();
 
 			FacesContext context = FacesContext.getCurrentInstance();
-			MenuBean mb = (MenuBean) context.getApplication()
-					.getVariableResolver().resolveVariable(context, "menu");
-			mb.changePage(WilosObjectNode.PROJECTNODE);
-
+			this.webPageService.changeContentPage(WilosObjectNode.PROJECTNODE);
+			
 			/* Displays info message */
 			ResourceBundle bundle = ResourceBundle.getBundle(
 					"wilos.resources.messages", FacesContext
@@ -196,5 +196,19 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 	 */
 	public void setVisibleDeletePopup(boolean _visibleDeletePopup) {
 		this.visibleDeletePopup = _visibleDeletePopup;
+	}
+
+	/**
+	 * @return the webPageService
+	 */
+	public WebPageService getWebPageService() {
+		return webPageService;
+	}
+
+	/**
+	 * @param webPageService the webPageService to set
+	 */
+	public void setWebPageService(WebPageService webPageService) {
+		this.webPageService = webPageService;
 	}
 }

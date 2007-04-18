@@ -35,6 +35,7 @@ import org.apache.commons.logging.LogFactory;
 import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.misc.wilosuser.LoginService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
+import wilos.business.services.presentation.web.WebPageService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
@@ -46,7 +47,6 @@ import wilos.model.misc.project.Project;
 import wilos.model.misc.wilosuser.Participant;
 import wilos.presentation.web.expandabletable.ExpTableBean;
 import wilos.presentation.web.expandabletable.ProcessBean;
-import wilos.presentation.web.template.MenuBean;
 import wilos.presentation.web.viewer.ConcreteActivityViewerBean;
 import wilos.presentation.web.viewer.ConcreteIterationViewerBean;
 import wilos.presentation.web.viewer.ConcretePhaseViewerBean;
@@ -68,6 +68,8 @@ import wilos.presentation.web.viewer.ProjectViewerBean;
 public class TreeBean {
 
 	/* Services */
+	
+	private WebPageService webPageService;
 
 	private WebSessionService webSessionService;
 
@@ -296,7 +298,6 @@ public class TreeBean {
 	 */
 	private void selectNodeToShow(String _objectId, String _pageId) {
 		FacesContext context = FacesContext.getCurrentInstance();
-		MenuBean mb = (MenuBean) context.getApplication().getVariableResolver().resolveVariable(context, "menu");
 		if (_objectId != null && _pageId != null) {
 			if (_pageId.equals(WilosObjectNode.ACTIVITYNODE)) {
 				ConcreteActivityViewerBean av = (ConcreteActivityViewerBean) context.getApplication()
@@ -306,7 +307,7 @@ public class TreeBean {
 				ConcreteActivity ca = (ConcreteActivity) treeMap.get(_objectId);
 				av.setConcreteActivity(ca);
 
-				mb.changePage(_pageId);
+				this.webPageService.changeContentPage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.CONCRETETASKNODE)) {
 				ConcreteTaskViewerBean ctv = (ConcreteTaskViewerBean) context.getApplication().getVariableResolver()
 						.resolveVariable(context, WilosObjectNode.CONCRETETASKNODE + "Bean");
@@ -315,7 +316,7 @@ public class TreeBean {
 				ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) treeMap.get(_objectId);
 				ctv.setConcreteTaskDescriptor(ctd);
 
-				mb.changePage(_pageId);
+				this.webPageService.changeContentPage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.CONCRETEROLENODE)) {
 				ConcreteRoleViewerBean crv = (ConcreteRoleViewerBean) context.getApplication().getVariableResolver()
 						.resolveVariable(context, WilosObjectNode.CONCRETEROLENODE + "Bean");
@@ -324,7 +325,7 @@ public class TreeBean {
 				ConcreteRoleDescriptor crd = (ConcreteRoleDescriptor) treeMap.get(_objectId);
 				crv.setConcreteRoleDescriptor(crd);
 
-				mb.changePage(_pageId);
+				this.webPageService.changeContentPage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.ITERATIONNODE)) {
 				ConcreteIterationViewerBean iv = (ConcreteIterationViewerBean) context.getApplication()
 						.getVariableResolver().resolveVariable(context, WilosObjectNode.ITERATIONNODE + "Bean");
@@ -333,7 +334,7 @@ public class TreeBean {
 				ConcreteIteration ci = (ConcreteIteration) treeMap.get(_objectId);
 				iv.setConcreteIteration(ci);
 
-				mb.changePage(_pageId);
+				this.webPageService.changeContentPage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.PHASENODE)) {
 				ConcretePhaseViewerBean pb = (ConcretePhaseViewerBean) context.getApplication().getVariableResolver()
 						.resolveVariable(context, WilosObjectNode.PHASENODE + "Bean");
@@ -342,7 +343,7 @@ public class TreeBean {
 				ConcretePhase cp = (ConcretePhase) treeMap.get(_objectId);
 				pb.setConcretePhase(cp);
 
-				mb.changePage(_pageId);
+				this.webPageService.changeContentPage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.PROJECTNODE)) {
 				ProjectViewerBean p = (ProjectViewerBean) context.getApplication().getVariableResolver()
 						.resolveVariable(context, WilosObjectNode.PROJECTNODE + "Bean");
@@ -351,10 +352,10 @@ public class TreeBean {
 				Project proj = (Project) treeMap.get(_objectId);
 				p.setProject(proj);
 
-				mb.changePage(_pageId);
+				this.webPageService.changeContentPage(_pageId);
 			} else {
 				// displays blank page
-				mb.changePage("wilos");
+				this.webPageService.changeContentPage("wilos");
 			}
 		}
 	}
@@ -410,11 +411,11 @@ public class TreeBean {
 	}
 
 	public WebSessionService getWebSessionService() {
-		return webSessionService;
+		return this.webSessionService;
 	}
 
-	public void setWebSessionService(WebSessionService webSessionService) {
-		this.webSessionService = webSessionService;
+	public void setWebSessionService(WebSessionService _webSessionService) {
+		this.webSessionService = _webSessionService;
 	}
 
 	public ProcessService getProcessService() {
@@ -458,5 +459,19 @@ public class TreeBean {
 
 	public void setHideRadio(boolean _hideRadio) {
 		this.hideRadio = _hideRadio;
+	}
+
+	/**
+	 * @return the webPageService
+	 */
+	public WebPageService getWebPageService() {
+		return this.webPageService;
+	}
+
+	/**
+	 * @param webPageService the webPageService to set
+	 */
+	public void setWebPageService(WebPageService _webPageService) {
+		this.webPageService = _webPageService;
 	}
 }

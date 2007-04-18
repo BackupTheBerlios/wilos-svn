@@ -49,6 +49,14 @@
 			<property-name>webSessionService</property-name>
 			<value>#{WebSessionService}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>webPageService</property-name>
+			<value>#{WebPageService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webMessageService</property-name>
+			<value>#{WebMessageService}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -68,6 +76,10 @@
 		<managed-property>
 			<property-name>webSessionService</property-name>
 			<value>#{WebSessionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webPageService</property-name>
+			<value>#{WebPageService}</value>
 		</managed-property>
 	</managed-bean>
 
@@ -128,6 +140,14 @@
 		<managed-property>
 			<property-name>webSessionService</property-name>
 			<value>#{WebSessionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webPageService</property-name>
+			<value>#{WebPageService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webMessageService</property-name>
+			<value>#{WebMessageService}</value>
 		</managed-property>
 	</managed-bean>
 
@@ -230,6 +250,10 @@
 			<value>#{WebSessionService}</value>
 		</managed-property>
 		<managed-property>
+			<property-name>webPageService</property-name>
+			<value>#{WebPageService}</value>
+		</managed-property>
+		<managed-property>
 			<property-name>participantService</property-name>
 			<value>#{ParticipantService}</value>
 		</managed-property>
@@ -322,6 +346,14 @@
 			<property-name>webSessionService</property-name>
 			<value>#{WebSessionService}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>webPageService</property-name>
+			<value>#{WebPageService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webMessageService</property-name>
+			<value>#{WebMessageService}</value>
+		</managed-property>
 	</managed-bean>
 
 	<validator>
@@ -347,6 +379,10 @@
 		<managed-property>
 			<property-name>webSessionService</property-name>
 			<value>#{WebSessionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webPageService</property-name>
+			<value>#{WebPageService}</value>
 		</managed-property>
 		<managed-property>
 			<property-name>projectService</property-name>
@@ -397,6 +433,10 @@
 		<managed-property>
 			<property-name>webSessionService</property-name>
 			<value>#{WebSessionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webPageService</property-name>
+			<value>#{WebPageService}</value>
 		</managed-property>
 		<managed-property>
 			<property-name>concreteTaskDescriptorService</property-name>

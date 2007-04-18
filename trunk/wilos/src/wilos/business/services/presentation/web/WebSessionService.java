@@ -20,6 +20,10 @@ import javax.faces.context.FacesContext ;
 import javax.servlet.http.HttpServletRequest ;
 import javax.servlet.http.HttpSession ;
 
+/**
+ * Allow to manage the web session and its attributes.
+ * 
+ */
 public class WebSessionService {
 
 	/**

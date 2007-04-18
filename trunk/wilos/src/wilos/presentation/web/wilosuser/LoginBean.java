@@ -18,14 +18,15 @@ package wilos.presentation.web.wilosuser;
 
 import java.util.ResourceBundle;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+
 import wilos.business.services.misc.wilosuser.LoginService;
+import wilos.business.services.presentation.web.WebMessageService;
+import wilos.business.services.presentation.web.WebPageService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.util.Security;
 import wilos.model.misc.wilosuser.WilosUser;
 import wilos.presentation.web.template.ConnectViewBean;
-import wilos.presentation.web.template.MenuBean;
 import wilos.presentation.web.tree.TreeBean;
 
 /**
@@ -43,6 +44,10 @@ public class LoginBean {
 	private LoginService loginService;
 
 	private WebSessionService webSessionService;
+	
+	private WebPageService webPageService;
+	
+	private WebMessageService webMessageService;
 
 	/**
 	 * Getter of login.
@@ -140,15 +145,10 @@ public class LoginBean {
 				applicationRole = "admin_role";
 			}
 			/* Test de la navigation */
-			changeContentPage(url);
+			this.webPageService.changeContentPage(url);
 			changeConnectView(true, applicationRole);
 		} else {
-			FacesMessage message = new FacesMessage();
-			message.setSummary(bundle.getString("component.authentificationerror.loginError"));
-			message.setSeverity(FacesMessage.SEVERITY_ERROR);
-
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-			facesContext.addMessage(null, message);
+			this.webMessageService.addErrorMessage(bundle.getString("component.authentificationerror.loginError"));
 			url = "connect";
 		}
 		// return url;
@@ -170,28 +170,13 @@ public class LoginBean {
 	}
 
 	/**
-	 * Method designed to change main page content depending on user's role
-	 * 
-	 * @param url
-	 */
-	public void changeContentPage(String url) {
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		Object menuObject = facesContext.getApplication().createValueBinding("#{menu}").getValue(facesContext);
-		if (menuObject != null && menuObject instanceof MenuBean) {
-
-			MenuBean menuBean = (MenuBean) menuObject;
-			menuBean.changePage(url);
-		}
-	}
-
-	/**
 	 * Method designed to describe the action to do when the wilosuser is trying to disconnect.
 	 * 
 	 * @return
 	 */
 	public String logoutAction() {
 		String url = "wilos";
-		changeContentPage(url);
+		this.webPageService.changeContentPage(url);
 		changeConnectView(false, "none");
 
 		this.webSessionService.cleanSesssion();
@@ -217,5 +202,33 @@ public class LoginBean {
 	 */
 	public void setWebSessionService(WebSessionService _webSessionService) {
 		this.webSessionService = _webSessionService;
+	}
+
+	/**
+	 * @return the webPageService
+	 */
+	public WebPageService getWebPageService() {
+		return webPageService;
+	}
+
+	/**
+	 * @param webPageService the webPageService to set
+	 */
+	public void setWebPageService(WebPageService webPageService) {
+		this.webPageService = webPageService;
+	}
+
+	/**
+	 * @return the webMessageService
+	 */
+	public WebMessageService getWebMessageService() {
+		return webMessageService;
+	}
+
+	/**
+	 * @param webMessageService the webMessageService to set
+	 */
+	public void setWebMessageService(WebMessageService webMessageService) {
+		this.webMessageService = webMessageService;
 	}
 }

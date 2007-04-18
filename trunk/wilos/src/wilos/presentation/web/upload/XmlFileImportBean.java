@@ -25,7 +25,6 @@ import java.util.EventObject;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -33,11 +32,12 @@ import javax.faces.event.ActionEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import wilos.business.services.presentation.web.WebMessageService;
+import wilos.business.services.presentation.web.WebPageService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.spem2.process.Process;
 import wilos.presentation.web.template.ActionBean;
-import wilos.presentation.web.template.MenuBean;
 
 import com.icesoft.faces.component.inputfile.InputFile;
 import com.icesoft.faces.webapp.xmlhttp.PersistentFacesState;
@@ -54,6 +54,10 @@ public class XmlFileImportBean {
 	private ProcessService processService;
 
 	private WebSessionService webSessionService;
+	
+	private WebPageService webPageService;
+	
+	private WebMessageService webMessageService;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -102,11 +106,7 @@ public class XmlFileImportBean {
 					"wilos.resources.messages", FacesContext
 							.getCurrentInstance().getApplication()
 							.getDefaultLocale());
-			FacesMessage message = new FacesMessage();
-			message.setSummary(bundle.getString("XmlFileImportBean.noFile"));
-			message.setSeverity(FacesMessage.SEVERITY_INFO);
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-			facesContext.addMessage(null, message);
+			this.webMessageService.addInfoMessage(bundle.getString("XmlFileImportBean.noFile"));
 		} else {
 			if (inputFile.getStatus() == InputFile.SAVED) {
 				fileName = inputFile.getFileInfo().getFileName();
@@ -120,14 +120,7 @@ public class XmlFileImportBean {
 							"wilos.resources.messages", FacesContext
 									.getCurrentInstance().getApplication()
 									.getDefaultLocale());
-					FacesMessage message = new FacesMessage();
-					message
-							.setSummary(bundle
-									.getString("XmlFileImportBean.noGoodExtensionFile"));
-					message.setSeverity(FacesMessage.SEVERITY_INFO);
-					FacesContext facesContext = FacesContext
-							.getCurrentInstance();
-					facesContext.addMessage(null, message);
+					this.webMessageService.addInfoMessage(bundle.getString("XmlFileImportBean.noGoodExtensionFile"));
 					file.delete();
 					this.percent = -1;
 					return;
@@ -158,13 +151,7 @@ public class XmlFileImportBean {
 						"wilos.resources.messages", FacesContext
 								.getCurrentInstance().getApplication()
 								.getDefaultLocale());
-				FacesMessage message = new FacesMessage();
-				message
-						.setSummary(bundle
-								.getString("XmlFileImportBean.noFile"));
-				message.setSeverity(FacesMessage.SEVERITY_INFO);
-				FacesContext facesContext = FacesContext.getCurrentInstance();
-				facesContext.addMessage(null, message);
+				this.webMessageService.addInfoMessage(bundle.getString("XmlFileImportBean.noFile"));
 			} else {
 
 				if (inputFile.getStatus() == InputFile.SIZE_LIMIT_EXCEEDED) {
@@ -271,13 +258,7 @@ public class XmlFileImportBean {
 								"wilos.resources.messages", FacesContext
 										.getCurrentInstance().getApplication()
 										.getDefaultLocale());
-						FacesMessage message = new FacesMessage();
-						message.setSummary(bundle
-								.getString("XmlFileImportBean.processok"));
-						message.setSeverity(FacesMessage.SEVERITY_INFO);
-						FacesContext facesContext = FacesContext
-								.getCurrentInstance();
-						facesContext.addMessage(null, message);
+						this.webMessageService.addInfoMessage(bundle.getString("XmlFileImportBean.processok"));
 
 						/* Forwards to the list of processes */
 						FacesContext context = FacesContext
@@ -285,12 +266,9 @@ public class XmlFileImportBean {
 						ActionBean actionbean = (ActionBean) context
 								.getApplication().getVariableResolver()
 								.resolveVariable(context, "ActionBean");
-						MenuBean menuBean = (MenuBean) facesContext
-								.getExternalContext().getSessionMap().get(
-										"menu");
-						menuBean.getSelectedPanel().setTemplateName(
+						this.webPageService.getSelectedPanel().setTemplateName(
 								actionbean.getProcessManagerMain());
-						menuBean.getSelectedPanel().setTemplateNameForARole(
+						this.webPageService.getSelectedPanel().setTemplateNameForARole(
 								actionbean.getManageProcesses());
 					} else {
 						this.percent = -1;
@@ -298,22 +276,10 @@ public class XmlFileImportBean {
 								"wilos.resources.messages", FacesContext
 										.getCurrentInstance().getApplication()
 										.getDefaultLocale());
-						FacesMessage message = new FacesMessage();
-						if (alreadyExists) {
-							message
-									.setSummary(bundle
-											.getString("XmlFileImportBean.processAlreadyExists"));
-							message.setSeverity(FacesMessage.SEVERITY_INFO);
-						} else {
-							message
-									.setSummary(bundle
-											.getString("XmlFileImportBean.processNull"));
-							message.setSeverity(FacesMessage.SEVERITY_INFO);
-						}
-
-						FacesContext facesContext = FacesContext
-								.getCurrentInstance();
-						facesContext.addMessage(null, message);
+						if (alreadyExists) 
+							this.webMessageService.addInfoMessage(bundle.getString("XmlFileImportBean.processAlreadyExists"));
+						else 
+							this.webMessageService.addInfoMessage(bundle.getString("XmlFileImportBean.processNull"));
 					}
 				} catch (Exception e) {
 					logger.error("### XmlFileImportBean ### action -> " + e);
@@ -385,5 +351,33 @@ public class XmlFileImportBean {
 	 */
 	public void setWebSessionService(WebSessionService _webSessionService) {
 		this.webSessionService = _webSessionService;
+	}
+
+	/**
+	 * @return the webPageService
+	 */
+	public WebPageService getWebPageService() {
+		return webPageService;
+	}
+
+	/**
+	 * @param webPageService the webPageService to set
+	 */
+	public void setWebPageService(WebPageService webPageService) {
+		this.webPageService = webPageService;
+	}
+
+	/**
+	 * @return the webMessageService
+	 */
+	public WebMessageService getWebMessageService() {
+		return webMessageService;
+	}
+
+	/**
+	 * @param webMessageService the webMessageService to set
+	 */
+	public void setWebMessageService(WebMessageService webMessageService) {
+		this.webMessageService = webMessageService;
 	}
 }

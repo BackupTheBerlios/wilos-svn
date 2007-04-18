@@ -22,7 +22,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
@@ -33,6 +32,8 @@ import org.apache.commons.logging.LogFactory;
 import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
 import wilos.business.services.misc.wilosuser.ProjectDirectorService;
+import wilos.business.services.presentation.web.WebMessageService;
+import wilos.business.services.presentation.web.WebPageService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.misc.project.Project;
@@ -55,6 +56,10 @@ public class ProjectBean {
 	private ProcessService processService;
 
 	private WebSessionService webSessionService;
+	
+	private WebPageService webPageService;
+	
+	private WebMessageService webMessageService;
 
 	private ParticipantService participantService;
 
@@ -117,19 +122,13 @@ public class ProjectBean {
 		ResourceBundle bundle = ResourceBundle.getBundle(
 				"wilos.resources.messages", FacesContext.getCurrentInstance()
 						.getApplication().getDefaultLocale());
-		FacesMessage message = new FacesMessage();
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-
-		if (this.projectService.deleteProject(this.projectId)) {
-			message.setSummary(bundle
+		
+		if (this.projectService.deleteProject(this.projectId)) 
+			this.webMessageService.addInfoMessage(bundle
 					.getString("component.projectcreate.deleteSuccess"));
-			message.setSeverity(FacesMessage.SEVERITY_INFO);
-		} else {
-			message.setSummary(bundle
+		else 
+			this.webMessageService.addErrorMessage(bundle
 					.getString("component.projectcreate.deleteError"));
-			message.setSeverity(FacesMessage.SEVERITY_ERROR);
-		}
-		facesContext.addMessage(null, message);
 		
 		this.visiblePopup = false;
 	}
@@ -151,36 +150,19 @@ public class ProjectBean {
 						.getApplication().getDefaultLocale());
 		String url = "";
 		boolean error = false;
-		FacesMessage message = new FacesMessage();
-		FacesContext facesContext = FacesContext.getCurrentInstance();
 		// test if the fields are correctly completed
-
-		if (this.project.getConcreteName().trim().length() == 0) {
-			FacesMessage errName = new FacesMessage();
-			errName.setSummary(bundle
+		if (this.project.getConcreteName().trim().length() == 0) 
+			this.webMessageService.addErrorMessage(bundle
 					.getString("component.projectcreate.err.namerequired"));
-			errName.setSeverity(FacesMessage.SEVERITY_ERROR);
-			error = true;
-			facesContext.addMessage(null, errName);
-		}
-
-		if (this.project.getLaunchingDate() == null) {
-			FacesMessage errDate = new FacesMessage();
-			errDate
-					.setSummary(bundle
-							.getString("component.projectcreate.err.launchingdaterequired"));
-			errDate.setSeverity(FacesMessage.SEVERITY_ERROR);
-			error = true;
-			facesContext.addMessage(null, errDate);
-		}
+		if (this.project.getLaunchingDate() == null) 
+			this.webMessageService.addErrorMessage(bundle
+					.getString("component.projectcreate.err.launchingdaterequired"));
 		if (!this.projectModification) {
 			if (this.projectService.projectExist(this.project.getConcreteName()
 					.trim())) {
 
-				message
-						.setSummary(bundle
-								.getString("component.projectcreate.err.projectalreadyexists"));
-				message.setSeverity(FacesMessage.SEVERITY_ERROR);
+				this.webMessageService.addErrorMessage(bundle
+						.getString("component.projectcreate.err.projectalreadyexists"));
 				error = true;
 			}
 		}
@@ -191,24 +173,17 @@ public class ProjectBean {
 					.getProjectDirector(user_id);
 			this.project.setProjectDirector(pd);
 			this.projectService.saveProject(this.project);
-			if (this.projectModification) {
-				message
-						.setSummary(bundle
-								.getString("component.projectcreate.modificationSuccess"));
-			} else {
-				message.setSummary(bundle
+			if (this.projectModification) 
+				this.webMessageService.addInfoMessage(bundle
+						.getString("component.projectcreate.modificationSuccess"));
+			else 
+				this.webMessageService.addInfoMessage(bundle
 						.getString("component.projectcreate.success"));
-			}
-			message.setSeverity(FacesMessage.SEVERITY_INFO);
-
+			
 			// return on the projectlist page
-			FacesContext context = FacesContext.getCurrentInstance();
-			MenuBean mb = (MenuBean) context.getApplication()
-					.getVariableResolver().resolveVariable(context, "menu");
-			mb.getSelectedPanel().setTemplateNameForARole("projectList");
+			this.webPageService.getSelectedPanel().setTemplateNameForARole("projectList");
 
 		}
-		facesContext.addMessage(null, message);
 		this.projectModification = false;
 		this.project = new Project();
 		return url;
@@ -645,6 +620,34 @@ public class ProjectBean {
 	 */
 	public void setVisiblePopup(boolean _visiblePopup) {
 		this.visiblePopup = _visiblePopup;
+	}
+
+	/**
+	 * @return the webPageService
+	 */
+	public WebPageService getWebPageService() {
+		return webPageService;
+	}
+
+	/**
+	 * @param webPageService the webPageService to set
+	 */
+	public void setWebPageService(WebPageService webPageService) {
+		this.webPageService = webPageService;
+	}
+
+	/**
+	 * @return the webMessageService
+	 */
+	public WebMessageService getWebMessageService() {
+		return webMessageService;
+	}
+
+	/**
+	 * @param webMessageService the webMessageService to set
+	 */
+	public void setWebMessageService(WebMessageService webMessageService) {
+		this.webMessageService = webMessageService;
 	}
 
 }
