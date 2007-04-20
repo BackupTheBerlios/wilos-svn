@@ -20,16 +20,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ResourceBundle;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.misc.role.ConcreteRoleAffectationService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
+import wilos.business.services.presentation.web.WebCommonService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.presentation.web.project.ProjectAdvancementBean;
@@ -49,6 +46,8 @@ public class ConcreteRoleAffectationBean {
 	private ParticipantService participantService;
 	
 	private WebSessionService webSessionService;
+	
+	private WebCommonService webCommonService;
 	
 	private List<HashMap<String,Object>> concreteRolesDescriptorsList;
 	
@@ -170,23 +169,14 @@ public class ConcreteRoleAffectationBean {
 		for(HashMap<String,Object> concreteRoleInfo : this.concreteRolesDescriptorsList){
 			this.concreteRoleAffectationService.saveParticipantConcreteRoles(concreteRoleInfo,(String)this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID));
 		}
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
-		FacesMessage message = new FacesMessage() ;
-		message.setSummary(bundle.getString("component.project.projectroles.validationMessage")) ;
-		message.setSeverity(FacesMessage.SEVERITY_ERROR) ;
-		FacesContext facesContext = FacesContext.getCurrentInstance() ;
-		facesContext.addMessage(null, message) ;
+		this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.project.projectroles.validationMessage"));
 		
 		//refresh the tree 
-		FacesContext context = FacesContext.getCurrentInstance();
-		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver()
-				.resolveVariable(context, "TreeBean");
+		TreeBean tb = (TreeBean) this.webCommonService.getBean("TreeBean");
 		tb.refreshProjectTree();
 		
 		//refresh the project advancement table
-		ProjectAdvancementBean pab = (ProjectAdvancementBean) context.getApplication().getVariableResolver()
-		.resolveVariable(context, "ProjectAdvancementBean");
+		ProjectAdvancementBean pab = (ProjectAdvancementBean) this.webCommonService.getBean("ProjectAdvancementBean");
 		pab.refreshProjectTable();
 
 		return "";
@@ -249,5 +239,21 @@ public class ConcreteRoleAffectationBean {
 	 */
 	public void setOldNodeId(String _oldNodeId) {
 		this.oldNodeId = _oldNodeId ;
+	}
+
+
+	/**
+	 * @return the webCommonService
+	 */
+	public WebCommonService getWebCommonService() {
+		return webCommonService;
+	}
+
+
+	/**
+	 * @param webCommonService the webCommonService to set
+	 */
+	public void setWebCommonService(WebCommonService webCommonService) {
+		this.webCommonService = webCommonService;
 	}
 }

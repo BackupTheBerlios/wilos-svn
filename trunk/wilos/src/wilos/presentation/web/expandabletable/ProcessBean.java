@@ -18,13 +18,12 @@ package wilos.presentation.web.expandabletable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
-import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import wilos.business.services.misc.project.ProjectService;
+import wilos.business.services.presentation.web.WebCommonService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.misc.project.Project;
@@ -39,6 +38,8 @@ public class ProcessBean {
 	private ProcessService processService;
 
 	private WebSessionService webSessionService;
+	
+	private WebCommonService webCommonService;
 
 	private ProjectService projectService;
 
@@ -61,9 +62,7 @@ public class ProcessBean {
 
 		List<SelectItem> processesList = new ArrayList<SelectItem>();
 
-		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance()
-				.getApplication().getDefaultLocale());
-		processesList.add(new SelectItem("default", bundle.getString("component.combobox.processchoice.defaultlabel")));
+		processesList.add(new SelectItem("default", this.webCommonService.getStringFromBundle("component.combobox.processchoice.defaultlabel")));
 
 		List<Process> processes = this.processService.getProcessDao().getAllProcesses();
 		for (Process process : processes) {
@@ -77,10 +76,7 @@ public class ProcessBean {
 	 */
 	public void changeProcessSelectionListener(ValueChangeEvent evt) {
 
-		FacesContext context = FacesContext.getCurrentInstance();
-
-		ExpTableBean expTableBean = (ExpTableBean) context.getApplication().getVariableResolver().resolveVariable(
-				context, "ExpTableBean");
+		ExpTableBean expTableBean = (ExpTableBean) this.webCommonService.getBean("ExpTableBean");
 
 		this.selectedProcessGuid = (String) evt.getNewValue();
 		expTableBean.setSelectedProcessGuid((String) evt.getNewValue());
@@ -216,5 +212,19 @@ public class ProcessBean {
 	 */
 	public void setIsProjectManager(boolean _isProjectManager) {
 		this.isProjectManager = _isProjectManager;
+	}
+
+	/**
+	 * @return the webCommonService
+	 */
+	public WebCommonService getWebCommonService() {
+		return webCommonService;
+	}
+
+	/**
+	 * @param webCommonService the webCommonService to set
+	 */
+	public void setWebCommonService(WebCommonService webCommonService) {
+		this.webCommonService = webCommonService;
 	}
 }

@@ -21,14 +21,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.SortedSet;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import wilos.business.services.misc.project.ProjectService;
+import wilos.business.services.presentation.web.WebCommonService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.activity.ActivityService;
 import wilos.business.services.spem2.process.ProcessService;
@@ -71,6 +70,8 @@ public class ExpTableBean {
 	private boolean needIndentation = false;
 
 	private WebSessionService webSessionService;
+	
+	private WebCommonService webCommonService;
 
 	private boolean isVisible = true;
 
@@ -107,8 +108,6 @@ public class ExpTableBean {
 			}
 		}
 		
-		FacesContext context = FacesContext.getCurrentInstance();
-
 		// clear occurences number of each object of expTableContent
 		/*for (HashMap<String, Object> map : this.expTableContent) {
 			map.put("nbOccurences", new Integer(0));
@@ -121,24 +120,17 @@ public class ExpTableBean {
 		this.expTableContent.clear();
 
 		// refresh de la table des roles.
-		RolesInstanciationBean rib = (RolesInstanciationBean) context.getApplication().getVariableResolver()
-				.resolveVariable(context, "RolesInstanciationBean");
+		RolesInstanciationBean rib = (RolesInstanciationBean) this.webCommonService.getBean("RolesInstanciationBean");
 		rib.refreshProcessTable();
 
 		// refresh de la table d'avancement.
-		ProjectAdvancementBean pab = (ProjectAdvancementBean) context.getApplication().getVariableResolver()
-				.resolveVariable(context, "ProjectAdvancementBean");
+		ProjectAdvancementBean pab = (ProjectAdvancementBean) this.webCommonService.getBean("ProjectAdvancementBean");
 		pab.refreshProjectTable();
 
 		/* Displays info message */
-		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance()
-				.getApplication().getDefaultLocale());
-		FacesMessage message = new FacesMessage();
-		message.setSummary(bundle.getString("component.instanciation.instanciatedMessage"));
-		message.setSeverity(FacesMessage.SEVERITY_INFO);
-		context.addMessage(null, message);
+		this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("component.instanciation.instanciatedMessage"));
 		
-		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver().resolveVariable(context, "TreeBean");
+		TreeBean tb = (TreeBean) this.webCommonService.getBean("TreeBean");
 		tb.rebuildProjectTree();
 		
 		return "";
@@ -461,13 +453,10 @@ public class ExpTableBean {
 	 * @return the instanciationBtName
 	 */
 	public String getInstanciationBtName() {
-		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance()
-				.getApplication().getDefaultLocale());
-
 		if (!this.isInstanciedProject) {
-			this.instanciationBtName = bundle.getString("component.instanciation.button.ins");
+			this.instanciationBtName = this.webCommonService.getStringFromBundle("component.instanciation.button.ins");
 		} else {
-			this.instanciationBtName = bundle.getString("component.instanciation.button.up");
+			this.instanciationBtName = this.webCommonService.getStringFromBundle("component.instanciation.button.up");
 		}
 		return this.instanciationBtName;
 	}
@@ -478,6 +467,20 @@ public class ExpTableBean {
 	 */
 	public void setInstanciationBtName(String _instanciationBtName) {
 		this.instanciationBtName = _instanciationBtName;
+	}
+
+	/**
+	 * @return the webCommonService
+	 */
+	public WebCommonService getWebCommonService() {
+		return webCommonService;
+	}
+
+	/**
+	 * @param webCommonService the webCommonService to set
+	 */
+	public void setWebCommonService(WebCommonService webCommonService) {
+		this.webCommonService = webCommonService;
 	}
 
 }

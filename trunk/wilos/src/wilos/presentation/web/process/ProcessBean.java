@@ -21,9 +21,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
@@ -32,6 +30,7 @@ import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.misc.wilosuser.ProcessManagerService;
+import wilos.business.services.presentation.web.WebCommonService;
 import wilos.business.services.spem2.process.ProcessManagementService;
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.spem2.process.Process;
@@ -43,6 +42,8 @@ public class ProcessBean {
 	private ProjectService projectService;
 
 	private ProcessManagerService processManagerService;
+	
+	private WebCommonService webCommonService;
 
 	private List<HashMap<String, Object>> processesList;
 
@@ -68,30 +69,17 @@ public class ProcessBean {
 
 	public void confirmDelete(ActionEvent event) {
 
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
-		FacesMessage message = new FacesMessage();
-		message.setSeverity(FacesMessage.SEVERITY_ERROR);
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-
 		for (Process process : this.processService.getProcessesList()) {
 			if (process.getId().equals(processId)) {
 				if (this.processManagementService
 						.hasBeenInstanciated(this.processId)) {
-					message
-							.setSummary(bundle
-									.getString("component.process.management.deletionforbidden"));
+					this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.process.management.deletionforbidden"));
 				} else {
 					this.processManagementService.removeProcess(process);
-					message
-							.setSummary(bundle
-									.getString("component.process.management.deletiondone"));
+					this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.process.management.deletiondone"));
 				}
 			}
 		}
-		facesContext.addMessage(null, message);
-
 		this.visiblePopup = false;
 	}
 
@@ -197,36 +185,14 @@ public class ProcessBean {
 							.getPresentationName());
 
 					// Error message.
-					ResourceBundle bundle = ResourceBundle.getBundle(
-							"wilos.resources.messages", FacesContext
-									.getCurrentInstance().getApplication()
-									.getDefaultLocale());
-					FacesMessage message = new FacesMessage();
-					message
-							.setSummary(bundle
-									.getString("component.process.management.message.invalidName"));
-					message.setSeverity(FacesMessage.SEVERITY_INFO);
-					FacesContext facesContext = FacesContext
-							.getCurrentInstance();
-					facesContext.addMessage(null, message);
+					this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("component.process.management.message.invalidName"));
 				}
 				if (this.presentationNameAlreadyExists(presentationName, processId)) {
 					processDescription.put("presentationName", process
 							.getPresentationName());
 
 					// Error message.
-					ResourceBundle bundle = ResourceBundle.getBundle(
-							"wilos.resources.messages", FacesContext
-									.getCurrentInstance().getApplication()
-									.getDefaultLocale());
-					FacesMessage message = new FacesMessage();
-					message
-							.setSummary(bundle
-									.getString("component.process.management.message.nameAlreadyExists"));
-					message.setSeverity(FacesMessage.SEVERITY_INFO);
-					FacesContext facesContext = FacesContext
-							.getCurrentInstance();
-					facesContext.addMessage(null, message);
+					this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("component.process.management.message.nameAlreadyExists"));
 				} else {
 					process.setPresentationName(presentationName);
 					this.processService.getProcessDao().saveOrUpdateProcess(
@@ -347,6 +313,20 @@ public class ProcessBean {
 	 */
 	public void setVisiblePopup(boolean _visiblePopup) {
 		this.visiblePopup = _visiblePopup;
+	}
+
+	/**
+	 * @return the webCommonService
+	 */
+	public WebCommonService getWebCommonService() {
+		return webCommonService;
+	}
+
+	/**
+	 * @param webCommonService the webCommonService to set
+	 */
+	public void setWebCommonService(WebCommonService webCommonService) {
+		this.webCommonService = webCommonService;
 	}
 
 }

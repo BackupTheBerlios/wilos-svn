@@ -180,13 +180,9 @@ public class TreeBean {
 			String projectId = (String) this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
 			Project project = this.projectService.getProject(projectId);
 
-			FacesContext context = FacesContext.getCurrentInstance();
+			ProcessBean processBean = (ProcessBean) this.webCommonService.getBean("Woops2ProcessBean");
 
-			ProcessBean processBean = (ProcessBean) context.getApplication().getVariableResolver().resolveVariable(
-					context, "Woops2ProcessBean");
-
-			ExpTableBean expTableBean = (ExpTableBean) context.getApplication().getVariableResolver().resolveVariable(
-					context, "ExpTableBean");
+			ExpTableBean expTableBean = (ExpTableBean) this.webCommonService.getBean("ExpTableBean");
 
 			if (project.getProcess() == null) {
 				processBean.setSelectedProcessGuid("default");
@@ -297,11 +293,9 @@ public class TreeBean {
 	 *            node selection function
 	 */
 	private void selectNodeToShow(String _objectId, String _pageId) {
-		FacesContext context = FacesContext.getCurrentInstance();
 		if (_objectId != null && _pageId != null) {
 			if (_pageId.equals(WilosObjectNode.ACTIVITYNODE)) {
-				ConcreteActivityViewerBean av = (ConcreteActivityViewerBean) context.getApplication()
-						.getVariableResolver().resolveVariable(context, WilosObjectNode.ACTIVITYNODE + "Bean");
+				ConcreteActivityViewerBean av = (ConcreteActivityViewerBean) this.webCommonService.getBean(WilosObjectNode.ACTIVITYNODE + "Bean");
 
 				// recover the object in the HashMap for the viewer
 				ConcreteActivity ca = (ConcreteActivity) treeMap.get(_objectId);
@@ -309,8 +303,7 @@ public class TreeBean {
 
 				this.webCommonService.changeContentPage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.CONCRETETASKNODE)) {
-				ConcreteTaskViewerBean ctv = (ConcreteTaskViewerBean) context.getApplication().getVariableResolver()
-						.resolveVariable(context, WilosObjectNode.CONCRETETASKNODE + "Bean");
+				ConcreteTaskViewerBean ctv = (ConcreteTaskViewerBean) this.webCommonService.getBean(WilosObjectNode.CONCRETETASKNODE + "Bean");
 
 				// recover the object in the HashMap for the viewer
 				ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) treeMap.get(_objectId);
@@ -318,8 +311,7 @@ public class TreeBean {
 
 				this.webCommonService.changeContentPage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.CONCRETEROLENODE)) {
-				ConcreteRoleViewerBean crv = (ConcreteRoleViewerBean) context.getApplication().getVariableResolver()
-						.resolveVariable(context, WilosObjectNode.CONCRETEROLENODE + "Bean");
+				ConcreteRoleViewerBean crv = (ConcreteRoleViewerBean) this.webCommonService.getBean(WilosObjectNode.CONCRETEROLENODE + "Bean");
 
 				// recover the object in the HashMap for the viewer
 				ConcreteRoleDescriptor crd = (ConcreteRoleDescriptor) treeMap.get(_objectId);
@@ -327,8 +319,7 @@ public class TreeBean {
 
 				this.webCommonService.changeContentPage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.ITERATIONNODE)) {
-				ConcreteIterationViewerBean iv = (ConcreteIterationViewerBean) context.getApplication()
-						.getVariableResolver().resolveVariable(context, WilosObjectNode.ITERATIONNODE + "Bean");
+				ConcreteIterationViewerBean iv = (ConcreteIterationViewerBean) this.webCommonService.getBean(WilosObjectNode.ITERATIONNODE + "Bean");
 
 				// recover the object in the HashMap for the viewer
 				ConcreteIteration ci = (ConcreteIteration) treeMap.get(_objectId);
@@ -336,8 +327,7 @@ public class TreeBean {
 
 				this.webCommonService.changeContentPage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.PHASENODE)) {
-				ConcretePhaseViewerBean pb = (ConcretePhaseViewerBean) context.getApplication().getVariableResolver()
-						.resolveVariable(context, WilosObjectNode.PHASENODE + "Bean");
+				ConcretePhaseViewerBean pb = (ConcretePhaseViewerBean) this.webCommonService.getBean(WilosObjectNode.PHASENODE + "Bean");
 
 				// recover the object in the HashMap for the viewer
 				ConcretePhase cp = (ConcretePhase) treeMap.get(_objectId);
@@ -345,8 +335,7 @@ public class TreeBean {
 
 				this.webCommonService.changeContentPage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.PROJECTNODE)) {
-				ProjectViewerBean p = (ProjectViewerBean) context.getApplication().getVariableResolver()
-						.resolveVariable(context, WilosObjectNode.PROJECTNODE + "Bean");
+				ProjectViewerBean p = (ProjectViewerBean) this.webCommonService.getBean(WilosObjectNode.PROJECTNODE + "Bean");
 
 				// recover the object in the HashMap for the viewer
 				Project proj = (Project) treeMap.get(_objectId);
