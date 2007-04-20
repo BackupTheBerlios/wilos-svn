@@ -35,7 +35,7 @@ import org.apache.commons.logging.LogFactory;
 import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.misc.wilosuser.LoginService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
-import wilos.business.services.presentation.web.WebPageService;
+import wilos.business.services.presentation.web.WebCommonService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
@@ -69,7 +69,7 @@ public class TreeBean {
 
 	/* Services */
 	
-	private WebPageService webPageService;
+	private WebCommonService webCommonService;
 
 	private WebSessionService webSessionService;
 
@@ -307,7 +307,7 @@ public class TreeBean {
 				ConcreteActivity ca = (ConcreteActivity) treeMap.get(_objectId);
 				av.setConcreteActivity(ca);
 
-				this.webPageService.changeContentPage(_pageId);
+				this.webCommonService.changeContentPage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.CONCRETETASKNODE)) {
 				ConcreteTaskViewerBean ctv = (ConcreteTaskViewerBean) context.getApplication().getVariableResolver()
 						.resolveVariable(context, WilosObjectNode.CONCRETETASKNODE + "Bean");
@@ -316,7 +316,7 @@ public class TreeBean {
 				ConcreteTaskDescriptor ctd = (ConcreteTaskDescriptor) treeMap.get(_objectId);
 				ctv.setConcreteTaskDescriptor(ctd);
 
-				this.webPageService.changeContentPage(_pageId);
+				this.webCommonService.changeContentPage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.CONCRETEROLENODE)) {
 				ConcreteRoleViewerBean crv = (ConcreteRoleViewerBean) context.getApplication().getVariableResolver()
 						.resolveVariable(context, WilosObjectNode.CONCRETEROLENODE + "Bean");
@@ -325,7 +325,7 @@ public class TreeBean {
 				ConcreteRoleDescriptor crd = (ConcreteRoleDescriptor) treeMap.get(_objectId);
 				crv.setConcreteRoleDescriptor(crd);
 
-				this.webPageService.changeContentPage(_pageId);
+				this.webCommonService.changeContentPage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.ITERATIONNODE)) {
 				ConcreteIterationViewerBean iv = (ConcreteIterationViewerBean) context.getApplication()
 						.getVariableResolver().resolveVariable(context, WilosObjectNode.ITERATIONNODE + "Bean");
@@ -334,7 +334,7 @@ public class TreeBean {
 				ConcreteIteration ci = (ConcreteIteration) treeMap.get(_objectId);
 				iv.setConcreteIteration(ci);
 
-				this.webPageService.changeContentPage(_pageId);
+				this.webCommonService.changeContentPage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.PHASENODE)) {
 				ConcretePhaseViewerBean pb = (ConcretePhaseViewerBean) context.getApplication().getVariableResolver()
 						.resolveVariable(context, WilosObjectNode.PHASENODE + "Bean");
@@ -343,7 +343,7 @@ public class TreeBean {
 				ConcretePhase cp = (ConcretePhase) treeMap.get(_objectId);
 				pb.setConcretePhase(cp);
 
-				this.webPageService.changeContentPage(_pageId);
+				this.webCommonService.changeContentPage(_pageId);
 			} else if (_pageId.equals(WilosObjectNode.PROJECTNODE)) {
 				ProjectViewerBean p = (ProjectViewerBean) context.getApplication().getVariableResolver()
 						.resolveVariable(context, WilosObjectNode.PROJECTNODE + "Bean");
@@ -352,10 +352,10 @@ public class TreeBean {
 				Project proj = (Project) treeMap.get(_objectId);
 				p.setProject(proj);
 
-				this.webPageService.changeContentPage(_pageId);
+				this.webCommonService.changeContentPage(_pageId);
 			} else {
 				// displays blank page
-				this.webPageService.changeContentPage("wilos");
+				this.webCommonService.changeContentPage("wilos");
 			}
 		}
 	}
@@ -462,16 +462,16 @@ public class TreeBean {
 	}
 
 	/**
-	 * @return the webPageService
+	 * @return the webCommonService
 	 */
-	public WebPageService getWebPageService() {
-		return this.webPageService;
+	public WebCommonService getWebCommonService() {
+		return webCommonService;
 	}
 
 	/**
-	 * @param webPageService the webPageService to set
+	 * @param webCommonService the webCommonService to set
 	 */
-	public void setWebPageService(WebPageService _webPageService) {
-		this.webPageService = _webPageService;
+	public void setWebCommonService(WebCommonService webCommonService) {
+		this.webCommonService = webCommonService;
 	}
 }

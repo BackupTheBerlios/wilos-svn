@@ -19,7 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.faces.context.FacesContext;
@@ -32,8 +31,7 @@ import org.apache.commons.logging.LogFactory;
 import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
 import wilos.business.services.misc.wilosuser.ProjectDirectorService;
-import wilos.business.services.presentation.web.WebMessageService;
-import wilos.business.services.presentation.web.WebPageService;
+import wilos.business.services.presentation.web.WebCommonService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.misc.project.Project;
@@ -57,9 +55,7 @@ public class ProjectBean {
 
 	private WebSessionService webSessionService;
 	
-	private WebPageService webPageService;
-	
-	private WebMessageService webMessageService;
+	private WebCommonService webCommonService;
 
 	private ParticipantService participantService;
 
@@ -119,16 +115,10 @@ public class ProjectBean {
 	/* Manage the popup. */
 
 	public void confirmDelete(ActionEvent event) {
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
-		
 		if (this.projectService.deleteProject(this.projectId)) 
-			this.webMessageService.addInfoMessage(bundle
-					.getString("component.projectcreate.deleteSuccess"));
+			this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("component.projectcreate.deleteSuccess"));
 		else 
-			this.webMessageService.addErrorMessage(bundle
-					.getString("component.projectcreate.deleteError"));
+			this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.projectcreate.deleteError"));
 		
 		this.visiblePopup = false;
 	}
@@ -145,24 +135,18 @@ public class ProjectBean {
 	 * @return
 	 */
 	public String saveProjectAction() {
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
 		String url = "";
 		boolean error = false;
 		// test if the fields are correctly completed
 		if (this.project.getConcreteName().trim().length() == 0) 
-			this.webMessageService.addErrorMessage(bundle
-					.getString("component.projectcreate.err.namerequired"));
+			this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.projectcreate.err.namerequired"));
 		if (this.project.getLaunchingDate() == null) 
-			this.webMessageService.addErrorMessage(bundle
-					.getString("component.projectcreate.err.launchingdaterequired"));
+			this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.projectcreate.err.launchingdaterequired"));
 		if (!this.projectModification) {
 			if (this.projectService.projectExist(this.project.getConcreteName()
 					.trim())) {
 
-				this.webMessageService.addErrorMessage(bundle
-						.getString("component.projectcreate.err.projectalreadyexists"));
+				this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.projectcreate.err.projectalreadyexists"));
 				error = true;
 			}
 		}
@@ -174,14 +158,12 @@ public class ProjectBean {
 			this.project.setProjectDirector(pd);
 			this.projectService.saveProject(this.project);
 			if (this.projectModification) 
-				this.webMessageService.addInfoMessage(bundle
-						.getString("component.projectcreate.modificationSuccess"));
+				this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("component.projectcreate.modificationSuccess"));
 			else 
-				this.webMessageService.addInfoMessage(bundle
-						.getString("component.projectcreate.success"));
+				this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("component.projectcreate.success"));
 			
 			// return on the projectlist page
-			this.webPageService.getSelectedPanel().setTemplateNameForARole("projectList");
+			this.webCommonService.getSelectedPanel().setTemplateNameForARole("projectList");
 
 		}
 		this.projectModification = false;
@@ -208,14 +190,10 @@ public class ProjectBean {
 				}
 			}
 		}
-		FacesContext context = FacesContext.getCurrentInstance();
-		TreeBean tb = (TreeBean) context.getApplication().getVariableResolver()
-				.resolveVariable(context, "TreeBean");
+		TreeBean tb = (TreeBean) this.webCommonService.getBean("TreeBean");
 		tb.rebuildProjectTree();
 
-		ProjectAdvancementBean pab = (ProjectAdvancementBean) context
-				.getApplication().getVariableResolver().resolveVariable(
-						context, "ProjectAdvancementBean");
+		ProjectAdvancementBean pab = (ProjectAdvancementBean) this.webCommonService.getBean("ProjectAdvancementBean");
 		pab.refreshProjectTable();
 
 		return "";
@@ -442,8 +420,7 @@ public class ProjectBean {
 		this.project = this.projectService.getProject(projectId);
 		this.projectModification = true;
 
-		MenuBean mb = (MenuBean) context.getApplication().getVariableResolver()
-				.resolveVariable(context, "menu");
+		MenuBean mb = (MenuBean) this.webCommonService.getBean("menu");
 		mb.getSelectedPanel().setTemplateNameForARole("projectCreate");
 	}
 
@@ -625,29 +602,29 @@ public class ProjectBean {
 	/**
 	 * @return the webPageService
 	 */
-	public WebPageService getWebPageService() {
-		return webPageService;
+	public WebCommonService getWebCommonService() {
+		return webCommonService;
 	}
 
 	/**
 	 * @param webPageService the webPageService to set
 	 */
-	public void setWebPageService(WebPageService webPageService) {
-		this.webPageService = webPageService;
+	public void setWebCommonService(WebCommonService webCommonService) {
+		this.webCommonService = webCommonService;
 	}
 
 	/**
 	 * @return the webMessageService
 	 */
-	public WebMessageService getWebMessageService() {
-		return webMessageService;
+	public WebCommonService getWebMessageService() {
+		return webCommonService;
 	}
 
 	/**
 	 * @param webMessageService the webMessageService to set
 	 */
-	public void setWebMessageService(WebMessageService webMessageService) {
-		this.webMessageService = webMessageService;
+	public void setWebMessageService(WebCommonService webMessageService) {
+		this.webCommonService = webMessageService;
 	}
 
 }

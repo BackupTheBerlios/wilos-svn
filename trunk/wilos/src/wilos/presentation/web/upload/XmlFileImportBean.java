@@ -23,7 +23,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.EventObject;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -32,8 +31,7 @@ import javax.faces.event.ActionEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import wilos.business.services.presentation.web.WebMessageService;
-import wilos.business.services.presentation.web.WebPageService;
+import wilos.business.services.presentation.web.WebCommonService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.process.ProcessService;
 import wilos.model.spem2.process.Process;
@@ -54,10 +52,8 @@ public class XmlFileImportBean {
 	private ProcessService processService;
 
 	private WebSessionService webSessionService;
-	
-	private WebPageService webPageService;
-	
-	private WebMessageService webMessageService;
+
+	private WebCommonService webCommonService;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -102,11 +98,8 @@ public class XmlFileImportBean {
 		if (inputFile.getFile() == null && file == null) {
 			// stop the progress bar
 			this.percent = -1;
-			ResourceBundle bundle = ResourceBundle.getBundle(
-					"wilos.resources.messages", FacesContext
-							.getCurrentInstance().getApplication()
-							.getDefaultLocale());
-			this.webMessageService.addInfoMessage(bundle.getString("XmlFileImportBean.noFile"));
+			this.webCommonService.addInfoMessage(this.webCommonService
+					.getStringFromBundle("XmlFileImportBean.noFile"));
 		} else {
 			if (inputFile.getStatus() == InputFile.SAVED) {
 				fileName = inputFile.getFileInfo().getFileName();
@@ -116,42 +109,29 @@ public class XmlFileImportBean {
 
 			if (!contentType.equalsIgnoreCase("application/zip")) {
 				if (!contentType.equalsIgnoreCase("text/xml")) {
-					ResourceBundle bundle = ResourceBundle.getBundle(
-							"wilos.resources.messages", FacesContext
-									.getCurrentInstance().getApplication()
-									.getDefaultLocale());
-					this.webMessageService.addInfoMessage(bundle.getString("XmlFileImportBean.noGoodExtensionFile"));
+					this.webCommonService
+							.addInfoMessage(this.webCommonService
+									.getStringFromBundle("XmlFileImportBean.noGoodExtensionFile"));
 					file.delete();
 					this.percent = -1;
 					return;
 				} else {
 					// xml upload ok
-					ResourceBundle bundle = ResourceBundle.getBundle(
-							"wilos.resources.messages", FacesContext
-									.getCurrentInstance().getApplication()
-									.getDefaultLocale());
-					uploadStatus = bundle
-							.getString("XmlFileImportBean.xmlFileUploadOk");
+					uploadStatus = this.webCommonService
+							.getStringFromBundle("XmlFileImportBean.xmlFileUploadOk");
 				}
 			} else {
 				// zip upload ok
-				ResourceBundle bundle = ResourceBundle.getBundle(
-						"wilos.resources.messages", FacesContext
-								.getCurrentInstance().getApplication()
-								.getDefaultLocale());
-				uploadStatus = bundle
-						.getString("XmlFileImportBean.zipFileUploadOk");
+				uploadStatus = this.webCommonService
+						.getStringFromBundle("XmlFileImportBean.zipFileUploadOk");
 			}
 
 			if (inputFile.getStatus() == InputFile.INVALID) {
 				// stop the progress bar
 				this.percent = -1;
 				// inputFile.getFileInfo().getException().printStackTrace();
-				ResourceBundle bundle = ResourceBundle.getBundle(
-						"wilos.resources.messages", FacesContext
-								.getCurrentInstance().getApplication()
-								.getDefaultLocale());
-				this.webMessageService.addInfoMessage(bundle.getString("XmlFileImportBean.noFile"));
+				this.webCommonService.addInfoMessage(this.webCommonService
+						.getStringFromBundle("XmlFileImportBean.noFile"));
 			} else {
 
 				if (inputFile.getStatus() == InputFile.SIZE_LIMIT_EXCEEDED) {
@@ -238,13 +218,16 @@ public class XmlFileImportBean {
 
 					// mise en place du controle du process
 					if ((p != null) && (!alreadyExists)) {
-						//check that the process name doesn't exist, else rename it with the guid.
+						// check that the process name doesn't exist, else
+						// rename it with the guid.
 						for (Process tmp : list)
-							if (tmp.getPresentationName().equals(p.getPresentationName())){
-								p.setPresentationName(p.getPresentationName()+ "_" + p.getGuid());
+							if (tmp.getPresentationName().equals(
+									p.getPresentationName())) {
+								p.setPresentationName(p.getPresentationName()
+										+ "_" + p.getGuid());
 								break;
 							}
-						
+
 						// save the process
 						logger.debug("### XmlFileImportBean ### action -> id="
 								+ p.getId());
@@ -254,32 +237,29 @@ public class XmlFileImportBean {
 						this.processService.saveProcess(p, managerId);
 						// stop the progress bar
 						this.percent = -1;
-						ResourceBundle bundle = ResourceBundle.getBundle(
-								"wilos.resources.messages", FacesContext
-										.getCurrentInstance().getApplication()
-										.getDefaultLocale());
-						this.webMessageService.addInfoMessage(bundle.getString("XmlFileImportBean.processok"));
+						this.webCommonService
+								.addInfoMessage(this.webCommonService
+										.getStringFromBundle("XmlFileImportBean.processok"));
 
 						/* Forwards to the list of processes */
-						FacesContext context = FacesContext
-								.getCurrentInstance();
-						ActionBean actionbean = (ActionBean) context
-								.getApplication().getVariableResolver()
-								.resolveVariable(context, "ActionBean");
-						this.webPageService.getSelectedPanel().setTemplateName(
-								actionbean.getProcessManagerMain());
-						this.webPageService.getSelectedPanel().setTemplateNameForARole(
-								actionbean.getManageProcesses());
+						ActionBean actionbean = (ActionBean) this.webCommonService
+								.getBean("ActionBean");
+						this.webCommonService.getSelectedPanel()
+								.setTemplateName(
+										actionbean.getProcessManagerMain());
+						this.webCommonService.getSelectedPanel()
+								.setTemplateNameForARole(
+										actionbean.getManageProcesses());
 					} else {
 						this.percent = -1;
-						ResourceBundle bundle = ResourceBundle.getBundle(
-								"wilos.resources.messages", FacesContext
-										.getCurrentInstance().getApplication()
-										.getDefaultLocale());
-						if (alreadyExists) 
-							this.webMessageService.addInfoMessage(bundle.getString("XmlFileImportBean.processAlreadyExists"));
-						else 
-							this.webMessageService.addInfoMessage(bundle.getString("XmlFileImportBean.processNull"));
+						if (alreadyExists)
+							this.webCommonService
+									.addInfoMessage(this.webCommonService
+											.getStringFromBundle("XmlFileImportBean.processAlreadyExists"));
+						else
+							this.webCommonService
+									.addInfoMessage(this.webCommonService
+											.getStringFromBundle("XmlFileImportBean.processNull"));
 					}
 				} catch (Exception e) {
 					logger.error("### XmlFileImportBean ### action -> " + e);
@@ -353,31 +333,11 @@ public class XmlFileImportBean {
 		this.webSessionService = _webSessionService;
 	}
 
-	/**
-	 * @return the webPageService
-	 */
-	public WebPageService getWebPageService() {
-		return webPageService;
+	public WebCommonService getWebCommonService() {
+		return webCommonService;
 	}
 
-	/**
-	 * @param webPageService the webPageService to set
-	 */
-	public void setWebPageService(WebPageService webPageService) {
-		this.webPageService = webPageService;
-	}
-
-	/**
-	 * @return the webMessageService
-	 */
-	public WebMessageService getWebMessageService() {
-		return webMessageService;
-	}
-
-	/**
-	 * @param webMessageService the webMessageService to set
-	 */
-	public void setWebMessageService(WebMessageService webMessageService) {
-		this.webMessageService = webMessageService;
+	public void setWebCommonService(WebCommonService webCommonService) {
+		this.webCommonService = webCommonService;
 	}
 }

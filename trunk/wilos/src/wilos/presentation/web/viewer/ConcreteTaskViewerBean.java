@@ -17,9 +17,7 @@
 package wilos.presentation.web.viewer;
 
 import java.util.List;
-import java.util.ResourceBundle;
 
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import org.apache.commons.logging.Log;
@@ -28,8 +26,7 @@ import org.apache.commons.logging.LogFactory;
 import wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService;
 import wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
-import wilos.business.services.presentation.web.WebMessageService;
-import wilos.business.services.presentation.web.WebPageService;
+import wilos.business.services.presentation.web.WebCommonService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.role.RoleDescriptorService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
@@ -55,10 +52,8 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 
 	private ParticipantService participantService;
 	
-	private WebPageService webPageService;
+	private WebCommonService webCommonService;
 	
-	private WebMessageService webMessageService;
-
 	/* Simple fields */
 
 	private ConcreteTaskDescriptor concreteTaskDescriptor;
@@ -82,36 +77,21 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 	public String getDisplayedState() {
 		String _state = "";
 		if (this.concreteTaskDescriptor.getState().equals(State.CREATED)) {
-			_state = ResourceBundle.getBundle(
-					"wilos.resources.messages",
-					FacesContext.getCurrentInstance().getApplication()
-							.getDefaultLocale()).getString(
+			_state = this.webCommonService.getStringFromBundle(
 					"constantes.state.created");
 		} else if (this.concreteTaskDescriptor.getState().equals(State.READY)) {
-			_state = ResourceBundle.getBundle(
-					"wilos.resources.messages",
-					FacesContext.getCurrentInstance().getApplication()
-							.getDefaultLocale()).getString(
+			_state = this.webCommonService.getStringFromBundle(
 					"constantes.state.ready");
 		} else if (this.concreteTaskDescriptor.getState().equals(State.STARTED)) {
-			_state = ResourceBundle.getBundle(
-					"wilos.resources.messages",
-					FacesContext.getCurrentInstance().getApplication()
-							.getDefaultLocale()).getString(
+			_state = this.webCommonService.getStringFromBundle(
 					"constantes.state.started");
 		} else if (this.concreteTaskDescriptor.getState().equals(
 				State.SUSPENDED)) {
-			_state = ResourceBundle.getBundle(
-					"wilos.resources.messages",
-					FacesContext.getCurrentInstance().getApplication()
-							.getDefaultLocale()).getString(
+			_state = this.webCommonService.getStringFromBundle(
 					"constantes.state.suspended");
 		} else if (this.concreteTaskDescriptor.getState()
 				.equals(State.FINISHED)) {
-			_state = ResourceBundle.getBundle(
-					"wilos.resources.messages",
-					FacesContext.getCurrentInstance().getApplication()
-							.getDefaultLocale()).getString(
+			_state = this.webCommonService.getStringFromBundle(
 					"constantes.state.finished");
 		}
 		return _state;
@@ -141,10 +121,7 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		this.concreteTaskDescriptorService
 				.dissociateConcreteTaskDescriptor(this.concreteTaskDescriptor);
 
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
-		this.webMessageService.addInfoMessage(bundle.getString("concretetaskviewer.dissociated"));
+		this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("concretetaskviewer.dissociated"));
 
 		super.refreshProjectTable();
 		super.refreshProjectTree();
@@ -170,10 +147,7 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		this.concreteTaskDescriptorService.affectedConcreteTaskDescriptor(
 				this.concreteTaskDescriptor, participant);
 
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
-		this.webMessageService.addInfoMessage(bundle.getString("concretetaskviewer.updateAffected"));
+		this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("concretetaskviewer.updateAffected"));
 
 		super.refreshProjectTable();
 		super.refreshProjectTree();
@@ -274,13 +248,9 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 				super.refreshProjectTree();
 			}
 
-			this.webPageService.changeContentPage(WilosObjectNode.PROJECTNODE);
+			this.webCommonService.changeContentPage(WilosObjectNode.PROJECTNODE);
 			/* Displays info message */
-			ResourceBundle bundle = ResourceBundle.getBundle(
-					"wilos.resources.messages", FacesContext
-							.getCurrentInstance().getApplication()
-							.getDefaultLocale());
-			this.webMessageService.addInfoMessage(bundle.getString("concretetaskviewer.removed"));
+			this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("concretetaskviewer.removed"));
 			this.visibleDeletePopup = false;
 		}
 	}
@@ -476,10 +446,7 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 	public void updateActionListener(ActionEvent event) {
 		this.concreteTaskDescriptorService
 				.updateConcreteTaskDescriptor(this.concreteTaskDescriptor);
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
-		this.webMessageService.addInfoMessage(bundle.getString("concretetaskviewer.updateMessage"));
+		this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("concretetaskviewer.updateMessage"));
 
 		super.refreshProjectTable();
 	}
@@ -606,31 +573,11 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		this.visibleDeletePopup = _visibleDeletePopup;
 	}
 
-	/**
-	 * @return the webPageService
-	 */
-	public WebPageService getWebPageService() {
-		return webPageService;
+	public WebCommonService getWebCommonService() {
+		return webCommonService;
 	}
 
-	/**
-	 * @param webPageService the webPageService to set
-	 */
-	public void setWebPageService(WebPageService webPageService) {
-		this.webPageService = webPageService;
-	}
-
-	/**
-	 * @return the webMessageService
-	 */
-	public WebMessageService getWebMessageService() {
-		return webMessageService;
-	}
-
-	/**
-	 * @param webMessageService the webMessageService to set
-	 */
-	public void setWebMessageService(WebMessageService webMessageService) {
-		this.webMessageService = webMessageService;
+	public void setWebCommonService(WebCommonService webCommonService) {
+		this.webCommonService = webCommonService;
 	}
 }

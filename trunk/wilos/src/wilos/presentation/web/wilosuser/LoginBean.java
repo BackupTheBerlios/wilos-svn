@@ -16,13 +16,10 @@
 
 package wilos.presentation.web.wilosuser;
 
-import java.util.ResourceBundle;
-
 import javax.faces.context.FacesContext;
 
 import wilos.business.services.misc.wilosuser.LoginService;
-import wilos.business.services.presentation.web.WebMessageService;
-import wilos.business.services.presentation.web.WebPageService;
+import wilos.business.services.presentation.web.WebCommonService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.util.Security;
 import wilos.model.misc.wilosuser.WilosUser;
@@ -45,10 +42,8 @@ public class LoginBean {
 
 	private WebSessionService webSessionService;
 	
-	private WebPageService webPageService;
+	private WebCommonService webCommonService;
 	
-	private WebMessageService webMessageService;
-
 	/**
 	 * Getter of login.
 	 * 
@@ -113,8 +108,6 @@ public class LoginBean {
 	 */
 	public String authentificationAction() {
 
-		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
-
 		String url = "";
 		String applicationRole = "";
 		WilosUser user = this.loginService.getAuthentifiedUser(this.login, Security.encode(this.password));
@@ -145,10 +138,10 @@ public class LoginBean {
 				applicationRole = "admin_role";
 			}
 			/* Test de la navigation */
-			this.webPageService.changeContentPage(url);
+			this.webCommonService.changeContentPage(url);
 			changeConnectView(true, applicationRole);
 		} else {
-			this.webMessageService.addErrorMessage(bundle.getString("component.authentificationerror.loginError"));
+			this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.authentificationerror.loginError"));
 			url = "connect";
 		}
 		// return url;
@@ -176,7 +169,7 @@ public class LoginBean {
 	 */
 	public String logoutAction() {
 		String url = "wilos";
-		this.webPageService.changeContentPage(url);
+		this.webCommonService.changeContentPage(url);
 		changeConnectView(false, "none");
 
 		this.webSessionService.cleanSesssion();
@@ -205,30 +198,16 @@ public class LoginBean {
 	}
 
 	/**
-	 * @return the webPageService
-	 */
-	public WebPageService getWebPageService() {
-		return webPageService;
-	}
-
-	/**
-	 * @param webPageService the webPageService to set
-	 */
-	public void setWebPageService(WebPageService webPageService) {
-		this.webPageService = webPageService;
-	}
-
-	/**
 	 * @return the webMessageService
 	 */
-	public WebMessageService getWebMessageService() {
-		return webMessageService;
+	public WebCommonService getWebCommonService() {
+		return webCommonService;
 	}
 
 	/**
 	 * @param webMessageService the webMessageService to set
 	 */
-	public void setWebMessageService(WebMessageService webMessageService) {
-		this.webMessageService = webMessageService;
+	public void setWebCommonService(WebCommonService webCommonService) {
+		this.webCommonService = webCommonService;
 	}
 }

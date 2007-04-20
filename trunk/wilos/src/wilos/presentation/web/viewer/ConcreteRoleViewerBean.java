@@ -16,15 +16,11 @@
 
 package wilos.presentation.web.viewer;
 
-import java.util.ResourceBundle;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
-import wilos.business.services.presentation.web.WebPageService;
+import wilos.business.services.presentation.web.WebCommonService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.wilosuser.Participant;
@@ -36,7 +32,7 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 
 	private ConcreteRoleDescriptorService concreteRoleDescriptorService;
 	
-	private WebPageService webPageService;
+	private WebCommonService webCommonService;
 
 	private String concreteRoleDescriptorId = "";
 
@@ -56,15 +52,7 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 	}
 
 	public void affectParticipantToARole() {
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
-
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		FacesMessage message = new FacesMessage();
-		message.setSummary(bundle.getString("concreteRoleViewer.success"));
-		message.setSeverity(FacesMessage.SEVERITY_ERROR);
-		facesContext.addMessage(null, message);
+		this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("concreteRoleViewer.success"));
 
 		String wilosUserId = (String) super.getWebSessionService()
 				.getAttribute(WebSessionService.WILOS_USER_ID);
@@ -103,18 +91,10 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 			super.rebuildProjectTree();
 			super.refreshProjectTree();
 
-			FacesContext context = FacesContext.getCurrentInstance();
-			this.webPageService.changeContentPage(WilosObjectNode.PROJECTNODE);
+			this.webCommonService.changeContentPage(WilosObjectNode.PROJECTNODE);
 			
 			/* Displays info message */
-			ResourceBundle bundle = ResourceBundle.getBundle(
-					"wilos.resources.messages", FacesContext
-							.getCurrentInstance().getApplication()
-							.getDefaultLocale());
-			FacesMessage message = new FacesMessage();
-			message.setSummary(bundle.getString("concreteRoleViewer.removed"));
-			message.setSeverity(FacesMessage.SEVERITY_INFO);
-			context.addMessage(null, message);
+			this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("concreteRoleViewer.removed"));
 
 			this.visibleDeletePopup = false;
 		}
@@ -199,16 +179,16 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 	}
 
 	/**
-	 * @return the webPageService
+	 * @return the webCommonService
 	 */
-	public WebPageService getWebPageService() {
-		return webPageService;
+	public WebCommonService getWebCommonService() {
+		return webCommonService;
 	}
 
 	/**
-	 * @param webPageService the webPageService to set
+	 * @param webCommonService the webCommonService to set
 	 */
-	public void setWebPageService(WebPageService webPageService) {
-		this.webPageService = webPageService;
+	public void setWebCommonService(WebCommonService webCommonService) {
+		this.webCommonService = webCommonService;
 	}
 }

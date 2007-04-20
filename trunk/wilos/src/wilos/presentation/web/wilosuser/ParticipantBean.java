@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,7 +38,7 @@ import org.apache.commons.logging.LogFactory;
 import wilos.business.services.misc.project.ProjectService;
 import wilos.business.services.misc.wilosuser.LoginService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
-import wilos.business.services.presentation.web.WebPageService;
+import wilos.business.services.presentation.web.WebCommonService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.model.misc.project.Project;
@@ -87,7 +86,7 @@ public class ParticipantBean {
 
 	private WebSessionService webSessionService;
 	
-	private WebPageService webPageService;
+	private WebCommonService webCommonService;
 
 	private String isSetParticipantFromSession;
 
@@ -118,87 +117,46 @@ public class ParticipantBean {
 	 */
 	public String saveParticipantAction() {
 
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
-
 		String url = "";
 		boolean error = false;
-		FacesMessage message = new FacesMessage();
-
+		
 		// test if the fields are correctly completed
 		if (this.participant.getName().trim().length() == 0) {
-			FacesMessage errName = new FacesMessage();
-			errName
-					.setSummary(bundle
-							.getString("component.forminscription.err.lastnameRequired"));
-			errName.setSeverity(FacesMessage.SEVERITY_ERROR);
 			error = true;
-			facesContext.addMessage(null, errName);
+			this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.forminscription.err.lastnameRequired"));
 		}
 
 		if (this.participant.getFirstname().trim().length() == 0) {
-			FacesMessage errFirstName = new FacesMessage();
-			errFirstName
-					.setSummary(bundle
-							.getString("component.forminscription.err.firstnameRequired"));
-			errFirstName.setSeverity(FacesMessage.SEVERITY_ERROR);
 			error = true;
-			facesContext.addMessage(null, errFirstName);
+			this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.forminscription.err.firstnameRequired"));
 		}
 		if (this.participant.getEmailAddress().trim().length() == 0) {
-			FacesMessage errMail = new FacesMessage();
-			errMail.setSummary(bundle
-					.getString("component.forminscription.err.emailRequired"));
-			errMail.setSeverity(FacesMessage.SEVERITY_ERROR);
 			error = true;
-			facesContext.addMessage(null, errMail);
+			this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.forminscription.err.emailRequired"));
 		}
 		if (this.participant.getLogin().trim().length() == 0) {
-			FacesMessage errLogin = new FacesMessage();
-			errLogin.setSummary(bundle
-					.getString("component.forminscription.err.loginRequired"));
-			errLogin.setSeverity(FacesMessage.SEVERITY_ERROR);
 			error = true;
-			facesContext.addMessage(null, errLogin);
+			this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.forminscription.err.loginRequired"));
 		}
 		if (this.participant.getPassword().trim().length() == 0) {
-			FacesMessage errpasswd = new FacesMessage();
-			errpasswd
-					.setSummary(bundle
-							.getString("component.forminscription.err.passwordRequired"));
-			errpasswd.setSeverity(FacesMessage.SEVERITY_ERROR);
 			error = true;
-			facesContext.addMessage(null, errpasswd);
+			this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.forminscription.err.passwordRequired"));
 		}
 		if (this.passwordConfirmation.trim().length() == 0) {
-			FacesMessage errConfirmation = new FacesMessage();
-			errConfirmation
-					.setSummary(bundle
-							.getString("component.forminscription.err.confirmpasswordRequired"));
-			errConfirmation.setSeverity(FacesMessage.SEVERITY_ERROR);
 			error = true;
-			facesContext.addMessage(null, errConfirmation);
+			this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.forminscription.err.confirmpasswordRequired"));
 		}
 
 		if (!error) {
 			if (this.loginService
 					.loginExist(this.participant.getLogin().trim())) {
-				message
-						.setSummary(bundle
-								.getString("component.forminscription.err.loginalreadyexist"));
-				message.setSeverity(FacesMessage.SEVERITY_ERROR);
-				facesContext.addMessage(null, message);
+				this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.forminscription.err.loginalreadyexist"));
 			} else {
 				this.participantService.saveParticipant(this.participant);
-				message.setSummary(bundle
-						.getString("component.forminscription.success"));
-				message.setSeverity(FacesMessage.SEVERITY_INFO);
-				facesContext.addMessage(null, message);
+				this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("component.forminscription.success"));
 				url = "wilos"; // TODO :Passer eventuellement sur une page de
 				// confirmation
-				this.webPageService.changeContentPage(url);
+				this.webCommonService.changeContentPage(url);
 			}
 		}
 		this.participant = new Participant();
@@ -213,50 +171,26 @@ public class ParticipantBean {
 	 */
 	public String updateParticipantAction() {
 
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
-
 		String url = "";
 		boolean error = false;
-		FacesMessage message = new FacesMessage();
-
+		
 		// test if the fields are correctly completed
 		if (this.participant.getName().trim().length() == 0) {
-			FacesMessage errName = new FacesMessage();
-			errName
-					.setSummary(bundle
-							.getString("component.forminscription.err.lastnameRequired"));
-			errName.setSeverity(FacesMessage.SEVERITY_ERROR);
 			error = true;
-			facesContext.addMessage(null, errName);
+			this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.forminscription.err.lastnameRequired"));
 		}
 
 		if (this.participant.getFirstname().trim().length() == 0) {
-			FacesMessage errFirstName = new FacesMessage();
-			errFirstName
-					.setSummary(bundle
-							.getString("component.forminscription.err.firstnameRequired"));
-			errFirstName.setSeverity(FacesMessage.SEVERITY_ERROR);
 			error = true;
-			facesContext.addMessage(null, errFirstName);
+			this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.forminscription.err.firstnameRequired"));
 		}
 		if (this.participant.getEmailAddress().trim().length() == 0) {
-			FacesMessage errMail = new FacesMessage();
-			errMail.setSummary(bundle
-					.getString("component.forminscription.err.emailRequired"));
-			errMail.setSeverity(FacesMessage.SEVERITY_ERROR);
+			this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.forminscription.err.emailRequired"));
 			error = true;
-			facesContext.addMessage(null, errMail);
 		}
 		if (this.participant.getLogin().trim().length() == 0) {
-			FacesMessage errLogin = new FacesMessage();
-			errLogin.setSummary(bundle
-					.getString("component.forminscription.err.loginRequired"));
-			errLogin.setSeverity(FacesMessage.SEVERITY_ERROR);
+			this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.forminscription.err.loginRequired"));
 			error = true;
-			facesContext.addMessage(null, errLogin);
 		}
 
 		if (!error) {
@@ -268,13 +202,10 @@ public class ParticipantBean {
 			} else {
 				this.participantService.saveParticipant(this.participant);
 			}
-			message.setSummary(bundle
-					.getString("component.participantUpdate.success"));
-			message.setSeverity(FacesMessage.SEVERITY_INFO);
-			facesContext.addMessage(null, message);
+			this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("component.participantUpdate.success"));
 			url = "wilos"; // TODO :Passer eventuellement sur une page de
 			// confirmation
-			this.webPageService.changeContentPage(url);
+			this.webCommonService.changeContentPage(url);
 		}
 
 		return "";
@@ -291,9 +222,6 @@ public class ParticipantBean {
 	 */
 	public void emailValidation(FacesContext _context, UIComponent _toValidate,
 			Object _value) throws ValidatorException {
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
 		String enteredEmail = (String) _value;
 		// Set the email pattern string
 		Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
@@ -303,8 +231,7 @@ public class ParticipantBean {
 		boolean matchFound = m.matches();
 		if (!matchFound) {
 			FacesMessage message = new FacesMessage();
-			message.setSummary(bundle
-					.getString("component.forminscription.err.invalidemail"));
+			message.setSummary(this.webCommonService.getStringFromBundle("component.forminscription.err.invalidemail"));
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 			throw new ValidatorException(message);
 		}
@@ -345,9 +272,6 @@ public class ParticipantBean {
 	public void passwordEqualValidation(FacesContext _context,
 			UIComponent _toValidate, Object _value) throws ValidatorException {
 		String passConfirm = (String) _value;
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
 		// TODO : recuperer le nom de l autre champs de password via une f:param
 		/*
 		 * ExternalContext ec = (ExternalContext)_context.getExternalContext();
@@ -362,8 +286,7 @@ public class ParticipantBean {
 		if (!passConfirm.equals(passValue)) {
 			FacesMessage message = new FacesMessage();
 			message
-					.setSummary(bundle
-							.getString("component.forminscription.err.passwordnotequals"));
+					.setSummary(this.webCommonService.getStringFromBundle("component.forminscription.err.passwordnotequals"));
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 			throw new ValidatorException(message);
 		}
@@ -528,9 +451,6 @@ public class ParticipantBean {
 	}
 
 	public void saveProjectsAffectation() {
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
 		// getting the participant stored into the session
 		Participant user = getParticipantFromSession();
 
@@ -555,10 +475,7 @@ public class ParticipantBean {
 					this.visiblePopup = true;
 
 					// clean the tree display.
-					FacesContext context = FacesContext.getCurrentInstance();
-					TreeBean treeBean = (TreeBean) context.getApplication()
-							.getVariableResolver().resolveVariable(context,
-									"TreeBean");
+					TreeBean treeBean = (TreeBean) this.webCommonService.getBean("TreeBean");
 					treeBean.cleanTreeDisplay();
 				}
 			}
@@ -570,14 +487,8 @@ public class ParticipantBean {
 				affectedProjects);
 
 		// displaying a message to express the good validation
-		FacesMessage saveAffectationMessage = new FacesMessage();
-		saveAffectationMessage.setSummary(bundle
-				.getString("component.tableparticipantproject.success"));
-		saveAffectationMessage.setSeverity(FacesMessage.SEVERITY_INFO);
-		FacesContext.getCurrentInstance().addMessage(null,
-				saveAffectationMessage);
-
-	}
+		this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("component.tableparticipantproject.success"));
+}
 
 	public void changeModeActionListener(ValueChangeEvent evt) {
 		Boolean isForAssignment = (Boolean) evt.getNewValue();
@@ -633,10 +544,6 @@ public class ParticipantBean {
 
 		Participant user = getParticipantFromSession();
 
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
-
 		if (user instanceof Participant) {
 			this.manageableProjectsList = new ArrayList<HashMap<String, Object>>();
 			HashMap<Project, Participant> manageableProjects = (HashMap<Project, Participant>) this.participantService
@@ -665,8 +572,7 @@ public class ParticipantBean {
 					ligne
 							.put(
 									"projectManagerName",
-									bundle
-											.getString("component.table1participantprojectManager.noAffectation"));
+									this.webCommonService.getStringFromBundle("component.table1participantprojectManager.noAffectation"));
 					ligne.put("projectManager_id", "");
 					ligne.put("affected", (new Boolean(false)).toString());
 					ligne.put("hasOtherManager", new Boolean(false));
@@ -705,9 +611,6 @@ public class ParticipantBean {
 	 * 
 	 */
 	public void saveProjectManagerAffectation() {
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
 		Participant user = getParticipantFromSession();
 		Map<String, Boolean> affectedManagedProjects = new HashMap<String, Boolean>();
 		for (HashMap ligne : this.manageableProjectsList) {
@@ -722,13 +625,7 @@ public class ParticipantBean {
 		this.participantService.saveManagedProjectsForAParticipant(user,
 				affectedManagedProjects);
 		if (affectedManagedProjects.size() > 0) {
-			FacesMessage saveAffectationMessage = new FacesMessage();
-			saveAffectationMessage
-					.setSummary(bundle
-							.getString("component.table1participantprojectManager.success"));
-			saveAffectationMessage.setSeverity(FacesMessage.SEVERITY_ERROR);
-			FacesContext.getCurrentInstance().addMessage(null,
-					saveAffectationMessage);
+			this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.table1participantprojectManager.success"));
 		}
 	}
 
@@ -951,14 +848,14 @@ public class ParticipantBean {
 	/**
 	 * @return the webPageService
 	 */
-	public WebPageService getWebPageService() {
-		return webPageService;
+	public WebCommonService getWebCommonService() {
+		return webCommonService;
 	}
 
 	/**
 	 * @param webPageService the webPageService to set
 	 */
-	public void setWebPageService(WebPageService webPageService) {
-		this.webPageService = webPageService;
+	public void setWebCommonService(WebCommonService webCommonService) {
+		this.webCommonService = webCommonService;
 	}
 }
