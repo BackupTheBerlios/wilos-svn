@@ -14,28 +14,28 @@
  * write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-package wilos.business.services.misc.wilosuser ;
+package wilos.business.services.misc.wilosuser;
 
 import java.util.ArrayList;
-import java.util.HashMap ;
-import java.util.HashSet ;
-import java.util.Iterator ;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map ;
-import java.util.Set ;
+import java.util.Map;
+import java.util.Set;
 
-import org.apache.commons.logging.Log ;
-import org.apache.commons.logging.LogFactory ;
-import org.springframework.transaction.annotation.Propagation ;
-import org.springframework.transaction.annotation.Transactional ;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import wilos.hibernate.misc.wilosuser.ParticipantDao ;
-import wilos.model.misc.project.Project ;
-import wilos.model.misc.wilosuser.Participant ;
-import wilos.model.misc.concreterole.ConcreteRoleDescriptor ;
+import wilos.hibernate.misc.wilosuser.ParticipantDao;
+import wilos.model.misc.project.Project;
+import wilos.model.misc.wilosuser.Participant;
+import wilos.model.misc.concreterole.ConcreteRoleDescriptor;
 import wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService;
-import wilos.business.services.misc.project.ProjectService ;
-import wilos.business.util.Security ;
+import wilos.business.services.misc.project.ProjectService;
+import wilos.business.util.Security;
 
 /**
  * The services associated to the Participant
@@ -47,20 +47,21 @@ import wilos.business.util.Security ;
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class ParticipantService {
 
-	private ParticipantDao participantDao ;
+	private ParticipantDao participantDao;
 
-	private ProjectService projectService ;
+	private ProjectService projectService;
 
 	private ConcreteRoleDescriptorService concreteRoleDescriptorService;
 
-	protected final Log logger = LogFactory.getLog(this.getClass()) ;
+	protected final Log logger = LogFactory.getLog(this.getClass());
 
 	public ConcreteRoleDescriptorService getConcreteRoleDescriptorService() {
-		return this.concreteRoleDescriptorService ;
+		return this.concreteRoleDescriptorService;
 	}
 
-	public void setConcreteRoleDescriptorService(ConcreteRoleDescriptorService _concreteRoleDescriptorService) {
-		this.concreteRoleDescriptorService = _concreteRoleDescriptorService ;
+	public void setConcreteRoleDescriptorService(
+			ConcreteRoleDescriptorService _concreteRoleDescriptorService) {
+		this.concreteRoleDescriptorService = _concreteRoleDescriptorService;
 	}
 
 	/**
@@ -69,7 +70,7 @@ public class ParticipantService {
 	 * @return the ParticipantDao
 	 */
 	public ParticipantDao getParticipantDao() {
-		return this.participantDao ;
+		return this.participantDao;
 	}
 
 	/**
@@ -79,7 +80,7 @@ public class ParticipantService {
 	 *            The participantDao to set.
 	 */
 	public void setParticipantDao(ParticipantDao _participantDao) {
-		this.participantDao = _participantDao ;
+		this.participantDao = _participantDao;
 	}
 
 	/**
@@ -88,7 +89,7 @@ public class ParticipantService {
 	 * @return the projectService.
 	 */
 	public ProjectService getProjectService() {
-		return this.projectService ;
+		return this.projectService;
 	}
 
 	/**
@@ -98,29 +99,37 @@ public class ParticipantService {
 	 *            The projectService to set.
 	 */
 	public void setProjectService(ProjectService _projectService) {
-		this.projectService = _projectService ;
+		this.projectService = _projectService;
 	}
 
 	/**
 	 * Return all the roles
+	 * 
 	 * @return the roles
 	 */
 	@Transactional(readOnly = true)
-	public HashMap<String,Boolean> getConcreteRoleDescriptorsForAParticipantAndForAProject(String _projectId, String _participantId) {
+	public HashMap<String, Boolean> getConcreteRoleDescriptorsForAParticipantAndForAProject(
+			String _projectId, String _participantId) {
 		// TODO: getRolesListForAParticipant à deplacer dans le RoleService
-		HashMap<String,Boolean> concreteRolesList = new HashMap<String,Boolean>();
-		List<ConcreteRoleDescriptor> projectConcreteRolesList = this.concreteRoleDescriptorService.getAllConcreteRoleDescriptorsForProject(_projectId);
-		if(projectConcreteRolesList != null){
+		HashMap<String, Boolean> concreteRolesList = new HashMap<String, Boolean>();
+		List<ConcreteRoleDescriptor> projectConcreteRolesList = this.concreteRoleDescriptorService
+				.getAllConcreteRoleDescriptorsForProject(_projectId);
+		if (projectConcreteRolesList != null) {
 			List<ConcreteRoleDescriptor> participantConcreteRolesList = new ArrayList<ConcreteRoleDescriptor>();
-			participantConcreteRolesList.addAll(this.participantDao.getAllConcreteRolesForAParticipant(_participantId));
-			for(Iterator iter = projectConcreteRolesList.iterator(); iter.hasNext();){
-				ConcreteRoleDescriptor element = (ConcreteRoleDescriptor) iter.next() ;
-				for(ConcreteRoleDescriptor concreteRoleDescriptor : participantConcreteRolesList){
-					if(element.getId() == concreteRoleDescriptor.getId())
-						concreteRolesList.put(concreteRoleDescriptor.getId(),new Boolean(true));
+			participantConcreteRolesList.addAll(this.participantDao
+					.getAllConcreteRolesForAParticipant(_participantId));
+			for (Iterator iter = projectConcreteRolesList.iterator(); iter
+					.hasNext();) {
+				ConcreteRoleDescriptor element = (ConcreteRoleDescriptor) iter
+						.next();
+				for (ConcreteRoleDescriptor concreteRoleDescriptor : participantConcreteRolesList) {
+					if (element.getId() == concreteRoleDescriptor.getId())
+						concreteRolesList.put(concreteRoleDescriptor.getId(),
+								new Boolean(true));
 					else
-						concreteRolesList.put(concreteRoleDescriptor.getId(),new Boolean(true));
-				}			
+						concreteRolesList.put(concreteRoleDescriptor.getId(),
+								new Boolean(true));
+				}
 			}
 		}
 		return concreteRolesList;
@@ -133,9 +142,9 @@ public class ParticipantService {
 	 */
 	@Transactional(readOnly = true)
 	public Set<Participant> getParticipants() {
-		return this.participantDao.getAllParticipants() ;
+		return this.participantDao.getAllParticipants();
 	}
-	
+
 	/**
 	 * Return the Participant which have the id _id.
 	 * 
@@ -143,7 +152,7 @@ public class ParticipantService {
 	 */
 	@Transactional(readOnly = true)
 	public Participant getParticipant(String _id) {
-		return this.participantDao.getParticipantById(_id) ;
+		return this.participantDao.getParticipantById(_id);
 	}
 
 	/**
@@ -153,10 +162,10 @@ public class ParticipantService {
 	 */
 	@Transactional(readOnly = false)
 	public void saveParticipant(Participant _participant) {
-		_participant.setPassword(Security.encode(_participant.getPassword())) ;
-		participantDao.saveOrUpdateParticipant(_participant) ;
+		_participant.setPassword(Security.encode(_participant.getPassword()));
+		participantDao.saveOrUpdateParticipant(_participant);
 	}
-	
+
 	/**
 	 * Save participant without encryption of the password
 	 * 
@@ -164,74 +173,78 @@ public class ParticipantService {
 	 */
 	@Transactional(readOnly = false)
 	public void saveParticipantWithoutEncryption(Participant _participant) {
-		participantDao.saveOrUpdateParticipant(_participant) ;
+		participantDao.saveOrUpdateParticipant(_participant);
 	}
-	
+
 	/**
 	 * delete a participant
+	 * 
 	 * @param participantId
 	 */
-	public void deleteParticipant(String participantId)
-	{
+	public void deleteParticipant(String participantId) {
 		Participant participant = this.getParticipant(participantId);
 		this.participantDao.deleteParticipant(participant);
 	}
 
 	/**
 	 * 
-	 * return the list of project where a participant is affected to
-	 * TODO method description to improve
+	 * return the list of project where a participant is affected to TODO method
+	 * description to improve
+	 * 
 	 * @param participant
 	 *            the participant which the affected to project are returned
 	 * @return list of project where the participant is affected to
 	 */
-	@Transactional (readOnly = true)
-	public HashMap<Project, Boolean> getProjectsForAParticipant(Participant participant) {
-		HashMap<Project, Boolean> affectedProjectList = new HashMap<Project, Boolean>() ;
-		HashSet<Project> allProjectList = new HashSet<Project>() ;
-		Participant chargedParticipant = new Participant() ;
+	@Transactional(readOnly = true)
+	public HashMap<Project, Boolean> getProjectsForAParticipant(
+			Participant participant) {
+		HashMap<Project, Boolean> affectedProjectList = new HashMap<Project, Boolean>();
+		HashSet<Project> allProjectList = new HashSet<Project>();
+		Participant chargedParticipant = new Participant();
 
 		// chargement du participant et des projets
-		String login = participant.getLogin() ;
-		chargedParticipant = this.participantDao.getParticipant(login) ;
-		allProjectList = (HashSet<Project>) this.projectService.getUnfinishedProjects() ;
+		String login = participant.getLogin();
+		chargedParticipant = this.participantDao.getParticipant(login);
+		allProjectList = (HashSet<Project>) this.projectService
+				.getUnfinishedProjects();
 
-		for(Project p : allProjectList){
-			if(chargedParticipant.getAffectedProjectList().contains(p)){
-				affectedProjectList.put(p, true) ;
-			}
-			else{
-				affectedProjectList.put(p, false) ;
+		for (Project p : allProjectList) {
+			if (chargedParticipant.getAffectedProjectList().contains(p)) {
+				affectedProjectList.put(p, true);
+			} else {
+				affectedProjectList.put(p, false);
 			}
 		}
-		return affectedProjectList ;
+		return affectedProjectList;
 	}
-	
+
 	/**
 	 * 
-	 * return the list of project where a participant is affected to
-	 * TODO
+	 * return the list of project where a participant is affected to TODO
+	 * 
 	 * @param participant
 	 *            the participant which the affected to project are returned
 	 * @return list of project where the participant is affected to
 	 */
-	@Transactional (readOnly = true)
-	public List<Project> getAllAffectedProjectsForParticipant(Participant participant) {
-		List<Project> affectedProjectList = new ArrayList<Project>() ;
-		HashSet<Project> allProjectList = new HashSet<Project>() ;
-		Participant chargedParticipant = new Participant() ;
+	@Transactional(readOnly = true)
+	public List<Project> getAllAffectedProjectsForParticipant(
+			Participant participant) {
+		List<Project> affectedProjectList = new ArrayList<Project>();
+		HashSet<Project> allProjectList = new HashSet<Project>();
+		Participant chargedParticipant = new Participant();
 
 		// chargement du participant et des projets
-		String login = participant.getLogin() ;
-		chargedParticipant = this.participantDao.getParticipant(login) ;
-		allProjectList = (HashSet<Project>) this.projectService.getUnfinishedProjects() ;
+		String login = participant.getLogin();
+		chargedParticipant = this.participantDao.getParticipant(login);
+		allProjectList = (HashSet<Project>) this.projectService
+				.getUnfinishedProjects();
 
-		for(Project p : allProjectList){
-			if(chargedParticipant.getAffectedProjectList().contains(p)){
-				affectedProjectList.add(p) ;
+		for (Project p : allProjectList) {
+			if (chargedParticipant.getAffectedProjectList().contains(p)) {
+				affectedProjectList.add(p);
 			}
 		}
-		return affectedProjectList ;
+		return affectedProjectList;
 	}
 
 	/**
@@ -242,40 +255,58 @@ public class ParticipantService {
 	 * @param affectedProjects
 	 */
 	@Transactional(readOnly = false)
-	public void saveProjectsForAParticipant(Participant participant, Map<String, Boolean> affectedProjects) {
-		Participant currentParticipant = this.getParticipantDao().getParticipant(participant.getLogin()) ;
-		Project currentProject ;
+	public void saveProjectsForAParticipant(Participant participant,
+			Map<String, Boolean> affectedProjects) {
+		Participant currentParticipant = this.getParticipantDao()
+				.getParticipant(participant.getLogin());
+		Project currentProject;
 
-		//for every project 
-		for(Iterator iter = affectedProjects.keySet().iterator(); iter.hasNext();){
+		// for every project
+		for (Iterator iter = affectedProjects.keySet().iterator(); iter
+				.hasNext();) {
 
-			String project_id = (String) iter.next() ;
-			currentProject = this.projectService.getProject(project_id) ;
+			String project_id = (String) iter.next();
+			currentProject = this.projectService.getProject(project_id);
 
-			//if this is an affectation
-			if(Boolean.valueOf(affectedProjects.get(project_id)) == true)
-			{
-				currentParticipant.addAffectedProject(currentProject) ;
+			// if this is an affectation
+			if (Boolean.valueOf(affectedProjects.get(project_id)) == true) {
+				currentParticipant.addAffectedProject(currentProject);
 			}
-			//if this is an unaffectation
-			else
-			{
-				//removing the participant from the project
-				currentParticipant.removeAffectedProject(currentProject) ;
-				
-				//if the project have a project manager
-				if (currentProject.getProjectManager() != null)
-				{
-					//if the project manager is the current participant
-					if (currentProject.getProjectManager().getWilosuser_id().equals(currentParticipant.getWilosuser_id()))
-					{
+			// if this is an unaffectation
+			else {
+				// removing the participant from the project
+				currentParticipant.removeAffectedProject(currentProject);
+
+				// if the project have a project manager
+				if (currentProject.getProjectManager() != null) {
+					// if the project manager is the current participant
+					if (currentProject.getProjectManager().getWilosuser_id()
+							.equals(currentParticipant.getWilosuser_id())) {
 						currentParticipant.removeManagedProject(currentProject);
 						this.projectService.saveProject(currentProject);
 					}
 				}
 			}
 		}
-		this.participantDao.saveOrUpdateParticipant(currentParticipant) ;
+		this.participantDao.saveOrUpdateParticipant(currentParticipant);
+	}
+
+	@Transactional(readOnly = false)
+	public void saveProjectForAProjectManager(String _participantId,
+			String _projectId, boolean _isForAssignment) {
+		Participant currentParticipant = this.getParticipantDao()
+				.getParticipantById(_participantId);
+		Project currentProject = this.projectService.getProject(_projectId);
+
+		if (_isForAssignment) {
+			currentParticipant.addManagedProject(currentProject);
+		}
+		else {
+			// removing the participant from the project.
+			currentParticipant.removeManagedProject(currentProject);
+		}
+		this.projectService.saveProject(currentProject);
+		this.participantDao.saveOrUpdateParticipant(currentParticipant);
 	}
 
 	/**
@@ -283,34 +314,37 @@ public class ParticipantService {
 	 * TODO Method description
 	 * 
 	 * @param participant
-	 * @return HashMap with couples of this form : 
-	 * 				(Project,ProjectManager) or (Project,null)
+	 * @return HashMap with couples of this form : (Project,ProjectManager) or
+	 *         (Project,null)
 	 */
 	@Transactional(readOnly = true)
-	public HashMap<Project, Participant> getManageableProjectsForAParticipant(Participant participant) {
-		HashMap<Project, Boolean> affectedProjectList = new HashMap<Project, Boolean>() ;
-		HashMap<Project, Participant> manageableProjectList = new HashMap<Project, Participant>() ;
+	public HashMap<Project, Participant> getManageableProjectsForAParticipant(
+			Participant participant) {
+		HashMap<Project, Boolean> affectedProjectList = new HashMap<Project, Boolean>();
+		HashMap<Project, Participant> manageableProjectList = new HashMap<Project, Participant>();
 
 		// chargement des projets
-		affectedProjectList = this.getProjectsForAParticipant(participant) ;
+		affectedProjectList = this.getProjectsForAParticipant(participant);
 
-		Project currentProject ;
+		Project currentProject;
 		// for every project
-		for(Iterator iter = affectedProjectList.keySet().iterator(); iter.hasNext();){
-			currentProject = (Project) iter.next() ;
+		for (Iterator iter = affectedProjectList.keySet().iterator(); iter
+				.hasNext();) {
+			currentProject = (Project) iter.next();
 			// if the project is affected to the participant
-			if(affectedProjectList.get(currentProject).booleanValue() == true){
+			if (affectedProjectList.get(currentProject).booleanValue() == true) {
 				// if there is no projectManager -> the project is manageable
-				if(currentProject.getProjectManager() == null){
-					manageableProjectList.put(currentProject, null) ;
+				if (currentProject.getProjectManager() == null) {
+					manageableProjectList.put(currentProject, null);
 				}
 				// if there is a projectManager -> the project is not manageable
-				else{
-					manageableProjectList.put(currentProject, currentProject.getProjectManager()) ;
+				else {
+					manageableProjectList.put(currentProject, currentProject
+							.getProjectManager());
 				}
 			}
 		}
-		return manageableProjectList ;
+		return manageableProjectList;
 	}
 
 	/**
@@ -318,25 +352,25 @@ public class ParticipantService {
 	 * TODO Method description
 	 * 
 	 * @param participant
-	 * @param managedProjects : Map of couples of this form :(project_id, Boolean)
+	 * @param managedProjects :
+	 *            Map of couples of this form :(project_id, Boolean)
 	 */
 	@Transactional(readOnly = false)
-	public void saveManagedProjectsForAParticipant(Participant participant, Map<String,Boolean> managedProjects)
-	{
-		Participant currentParticipant = this.getParticipantDao().getParticipant(participant.getLogin());
+	public void saveManagedProjectsForAParticipant(Participant participant,
+			Map<String, Boolean> managedProjects) {
+		Participant currentParticipant = this.getParticipantDao()
+				.getParticipant(participant.getLogin());
 		Project currentProject;
-		
-		for(Iterator iter = managedProjects.keySet().iterator(); iter.hasNext();){
-			String project_id = (String) iter.next() ;
+
+		for (Iterator iter = managedProjects.keySet().iterator(); iter
+				.hasNext();) {
+			String project_id = (String) iter.next();
 			// loading the current project from database
 			currentProject = this.projectService.getProject(project_id);
-			if((Boolean)managedProjects.get(project_id))
-			{
-				//currentProject.addToProjectManager(currentParticipant);
+			if ((Boolean) managedProjects.get(project_id)) {
+				// currentProject.addToProjectManager(currentParticipant);
 				currentParticipant.addManagedProject(currentProject);
-			}
-			else
-			{
+			} else {
 				currentParticipant.removeManagedProject(currentProject);
 			}
 		}

@@ -16,27 +16,69 @@
 
 package wilos.business.services.presentation.web;
 
+import java.util.ResourceBundle;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-public class WebMessageService {
+import wilos.presentation.web.template.MenuBean;
+import wilos.presentation.web.template.PageContentBean;
+
+public class WebCommonService {
+	
+	/* Manage Bundle */
+	
+	public String getStringFromBundle(String _bundleValue){
+		ResourceBundle bundle = ResourceBundle.getBundle(
+				"wilos.resources.messages", FacesContext
+						.getCurrentInstance().getApplication()
+						.getDefaultLocale());
+		return bundle.getString(_bundleValue);
+	}
+	
+	/* Manage Beans */
+	
+	public Object getBean(String _beanName){
+		return this.getCurrentFacesContext()
+		.getApplication().getVariableResolver()
+		.resolveVariable(this.getCurrentFacesContext(), _beanName);
+	}
+	
+	/* Manage pages */
+	
+	public void changeContentPage(String _pageUrl) {
+		this.getMenuBean().changePage(_pageUrl);
+	}
+
+	public PageContentBean getSelectedPanel(){
+		return this.getMenuBean().getSelectedPanel();
+	}
+	
+	/* Manage messages */
 	
 	public void addInfoMessage(String _message){
 		FacesMessage message = new FacesMessage();
 		message.setSummary(_message);
 		message.setSeverity(FacesMessage.SEVERITY_INFO);
-		FacesContext facesContext = FacesContext
-				.getCurrentInstance();
-		facesContext.addMessage(null, message);
+		this.getCurrentFacesContext().addMessage(null, message);
 	}
 	
 	public void addErrorMessage(String _message){
 		FacesMessage message = new FacesMessage();
 		message.setSummary(_message);
 		message.setSeverity(FacesMessage.SEVERITY_ERROR);
-		FacesContext facesContext = FacesContext
-				.getCurrentInstance();
-		facesContext.addMessage(null, message);
+		this.getCurrentFacesContext().addMessage(null, message);
 	}
 
+	/* Private methods */
+	
+	private FacesContext getCurrentFacesContext(){
+		return FacesContext.getCurrentInstance();
+	}
+	
+	private MenuBean getMenuBean(){
+		MenuBean menuBean = (MenuBean) this.getCurrentFacesContext().getApplication()
+				.createValueBinding("#{menu}").getValue(this.getCurrentFacesContext());
+		return menuBean;
+	}
 }

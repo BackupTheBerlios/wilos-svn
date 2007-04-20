@@ -446,14 +446,10 @@
 		class="wilos.business.services.presentation.web.WebSessionService">
 	</bean>
 	
-	<bean id="WebPageService"
-		class="wilos.business.services.presentation.web.WebPageService">
+	<bean id="WebCommonService"
+		class="wilos.business.services.presentation.web.WebCommonService">
 	</bean>
 	
-	<bean id="WebMessageService"
-		class="wilos.business.services.presentation.web.WebMessageService">
-	</bean>
-
 	<bean id="ProcessService"
 		class="wilos.business.services.spem2.process.ProcessService">
 		<property name="activityService" ref="ActivityService" />
