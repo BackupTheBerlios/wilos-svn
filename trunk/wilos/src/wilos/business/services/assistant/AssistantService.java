@@ -81,6 +81,7 @@ public class AssistantService {
 
 	public void finishConcreteTaskDescriptor (String id) {
 		ConcreteTaskDescriptor ct = concreteTaskDescriptorService.getConcreteTaskDescriptorDao().getConcreteTaskDescriptor(id);
+		ct.setRemainingTime((float)0.0);
 		concreteTaskDescriptorService.finishConcreteTaskDescriptor(ct);
 	}
 
