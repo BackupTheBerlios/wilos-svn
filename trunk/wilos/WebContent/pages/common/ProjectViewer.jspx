@@ -25,11 +25,21 @@
 					border="0">
 					<ice:outputText value="#{msgs['viewer.concreteName']}" />
 					<ice:inputText value="#{ProjectViewerBean.project.concreteName}"
-						disabled="#{ProjectViewerBean.changeButtonIsDisabled}" size="60" />
-					<ice:commandButton value="#{msgs['button.changeconcretename']}"
-						action="#{ProjectViewerBean.changeConcreteName}"
-						disabled="#{ProjectViewerBean.changeButtonIsDisabled}"
-						styleClass="smallbutton" />
+						disabled="#{!ProjectViewerBean.nameIsEditable}" size="60" />
+					<ice:commandLink value="" action="#{ProjectViewerBean.editName}"
+						visible="#{!ProjectViewerBean.changeButtonIsDisabled}"
+						rendered="#{!ProjectViewerBean.nameIsEditable}"
+						title="#{msgs['viewer.editNameCommandlink.bubble']}">
+						<ice:graphicImage value="images/modify.gif"
+							style="border: 0px solid;" />
+					</ice:commandLink>
+					<ice:commandLink value="" action="#{ProjectViewerBean.saveName}"
+						visible="#{!ProjectViewerBean.changeButtonIsDisabled}"
+						rendered="#{ProjectViewerBean.nameIsEditable}"
+						title="#{msgs['viewer.saveNameCommandlink.bubble']}">
+						<ice:graphicImage value="images/save.gif"
+							style="border: 0px solid;" />
+					</ice:commandLink>
 					<ice:outputText value="#{msgs['projectviewer.creationdate']}" />
 					<ice:outputText value="#{ProjectViewerBean.project.creationDate}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
@@ -172,7 +182,8 @@
 							<f:selectItems value="#{Woops2ProcessBean.processes}" />
 						</ice:selectOneMenu>
 						<!--<ice:commandButton disabled="#{Woops2ProcessBean.readOnly}" visible="#{Woops2ProcessBean.isVisibleExpTable}" value="#{ExpTableBean.instanciationBtName}" action="#{ExpTableBean.saveProjectInstanciation}" styleClass="smallbutton"/>-->
-						<ice:commandButton visible="#{Woops2ProcessBean.isVisibleExpTable}"
+						<ice:commandButton
+							visible="#{Woops2ProcessBean.isVisibleExpTable}"
 							value="#{ExpTableBean.instanciationBtName}"
 							action="#{ExpTableBean.saveProjectInstanciation}"
 							styleClass="smallbutton" />
@@ -205,10 +216,9 @@
 							</f:facet>
 							<center><ice:inputText value="#{process.nbOccurences}"
 								disabled="#{process.isEditable}" size="3" maxlength="3"
-								style="font-size:10px; height:10px; align: center; text-align:right;" >
-									<f:validateLongRange minimum="0" maximum="100"/>
-								</ice:inputText>
-							</center>
+								style="font-size:10px; height:10px; align: center; text-align:right;">
+								<f:validateLongRange minimum="0" maximum="100" />
+							</ice:inputText></center>
 						</ice:column>
 					</ice:dataTable>
 				</ice:panelGrid>
@@ -259,9 +269,9 @@
 								<ice:inputText value="#{processRole.nbOccurences}" size="3"
 									maxlength="3" disabled="#{processRole.isEditable}"
 									visible="#{processRole.isVisible}"
-									style="font-size:10px; height:10px; align: center; text-align:right;" >
-									<f:validateLongRange minimum="0" maximum="100"/>
-								</ice:inputText>	
+									style="font-size:10px; height:10px; align: center; text-align:right;">
+									<f:validateLongRange minimum="0" maximum="100" />
+								</ice:inputText>
 							</ice:column>
 						</ice:dataTable>
 						<ice:commandButton

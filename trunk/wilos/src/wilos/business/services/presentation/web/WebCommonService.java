@@ -23,6 +23,7 @@ import javax.faces.context.FacesContext;
 
 import wilos.presentation.web.template.MenuBean;
 import wilos.presentation.web.template.PageContentBean;
+import wilos.utils.Constantes.State;
 
 public class WebCommonService {
 	
@@ -68,6 +69,24 @@ public class WebCommonService {
 		message.setSummary(_message);
 		message.setSeverity(FacesMessage.SEVERITY_ERROR);
 		this.getCurrentFacesContext().addMessage(null, message);
+	}
+	
+	/* Manage constante */
+	
+	public String getDisplayedState(String _state) {
+		String stateInString = "";
+		if (_state.equals(State.CREATED)) {
+			stateInString = this.getStringFromBundle("constantes.state.created");
+		} else if (_state.equals(State.READY)) {
+			stateInString = this.getStringFromBundle("constantes.state.ready");
+		} else if (_state.equals(State.STARTED)) {
+			stateInString = this.getStringFromBundle("constantes.state.started");
+		} else if (_state.equals(State.SUSPENDED)) {
+			stateInString = this.getStringFromBundle("constantes.state.suspended");
+		} else if (_state.equals(State.FINISHED)) {
+			stateInString = this.getStringFromBundle("constantes.state.finished");
+		}
+		return stateInString;
 	}
 
 	/* Private methods */

@@ -21,13 +21,22 @@
 				<br />
 				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="3">
 					<ice:outputText value="#{msgs['viewer.concreteName'] }" />
-					<ice:inputText
-						value="#{ConcreteActivityViewerBean.concreteActivity.concreteName}"
-						disabled="#{ConcreteActivityViewerBean.changeButtonIsDisabled}" size="60"/>
-					<ice:commandButton value="#{msgs['button.changeconcretename']}"
-						action="#{ConcreteActivityViewerBean.changeConcreteName}"
-						disabled="#{ConcreteActivityViewerBean.changeButtonIsDisabled}"
-						styleClass="smallbutton" />
+					<ice:inputText value="#{ConcreteActivityViewerBean.concreteActivity.concreteName}"
+						disabled="#{!ConcreteActivityViewerBean.nameIsEditable}" size="60" />
+					<ice:commandLink value="" action="#{ConcreteActivityViewerBean.editName}"
+						visible="#{!ConcreteActivityViewerBean.changeButtonIsDisabled}"
+						rendered="#{!ConcreteActivityViewerBean.nameIsEditable}"
+						title="#{msgs['viewer.editNameCommandlink.bubble']}">
+						<ice:graphicImage value="images/modify.gif"
+							style="border: 0px solid;" />
+					</ice:commandLink>
+					<ice:commandLink value="" action="#{ConcreteActivityViewerBean.saveName}"
+						visible="#{!ConcreteActivityViewerBean.changeButtonIsDisabled}"
+						rendered="#{ConcreteActivityViewerBean.nameIsEditable}"
+						title="#{msgs['viewer.saveNameCommandlink.bubble']}">
+						<ice:graphicImage value="images/save.gif"
+							style="border: 0px solid;" />
+					</ice:commandLink>
 					<ice:outputText value="#{msgs['viewer.description'] }" />
 					<ice:outputText
 						value="#{ConcreteActivityViewerBean.concreteActivity.activity.description}" />

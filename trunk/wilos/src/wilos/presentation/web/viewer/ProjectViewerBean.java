@@ -30,12 +30,15 @@ import wilos.model.misc.project.Project;
 public class ProjectViewerBean extends ViewerBean {
 
 	private Project project;
-
-	public void changeConcreteName() {
+	
+	public void saveName() {
 		super.getProjectService().saveProject(project);
 
 		// Refresh the treebean.
 		super.refreshProjectTree();
+		
+		//put the name text editor to disable.
+		super.setNameIsEditable(false);
 	}
 
 	public List<ConcreteBreakdownElement> getConcreteBreakdownElementsList() {

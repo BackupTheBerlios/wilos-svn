@@ -31,7 +31,7 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 	private ConcreteRoleDescriptor concreteRoleDescriptor;
 
 	private ConcreteRoleDescriptorService concreteRoleDescriptorService;
-	
+
 	private WebCommonService webCommonService;
 
 	private String concreteRoleDescriptorId = "";
@@ -52,7 +52,8 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 	}
 
 	public void affectParticipantToARole() {
-		this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("concreteRoleViewer.success"));
+		this.webCommonService.addErrorMessage(this.webCommonService
+				.getStringFromBundle("concreteRoleViewer.success"));
 
 		String wilosUserId = (String) super.getWebSessionService()
 				.getAttribute(WebSessionService.WILOS_USER_ID);
@@ -91,10 +92,12 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 			super.rebuildProjectTree();
 			super.refreshProjectTree();
 
-			this.webCommonService.changeContentPage(WilosObjectNode.PROJECTNODE);
-			
+			this.webCommonService
+					.changeContentPage(WilosObjectNode.PROJECTNODE);
+
 			/* Displays info message */
-			this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("concreteRoleViewer.removed"));
+			this.webCommonService.addInfoMessage(this.webCommonService
+					.getStringFromBundle("concreteRoleViewer.removed"));
 
 			this.visibleDeletePopup = false;
 		}
@@ -109,11 +112,15 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 	 * 
 	 * @return
 	 */
-	public void changeConcreteName() {
+	public void saveName() {
 		this.concreteRoleDescriptorService
 				.saveConcreteRoleDescriptor(this.concreteRoleDescriptor);
+
 		// Refresh the treebean.
 		super.refreshProjectTree();
+
+		// put the name text editor to disable.
+		super.setNameIsEditable(false);
 	}
 
 	public ConcreteRoleDescriptor getConcreteRoleDescriptor() {
@@ -186,7 +193,8 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 	}
 
 	/**
-	 * @param webCommonService the webCommonService to set
+	 * @param webCommonService
+	 *            the webCommonService to set
 	 */
 	public void setWebCommonService(WebCommonService webCommonService) {
 		this.webCommonService = webCommonService;

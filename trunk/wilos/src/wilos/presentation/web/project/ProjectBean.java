@@ -54,7 +54,7 @@ public class ProjectBean {
 	private ProcessService processService;
 
 	private WebSessionService webSessionService;
-	
+
 	private WebCommonService webCommonService;
 
 	private ParticipantService participantService;
@@ -97,8 +97,8 @@ public class ProjectBean {
 	private String projectListView;
 
 	private String processesListView;
-	
-	private String projectId;//to delete
+
+	private String projectId;// to delete
 
 	/**
 	 * Constructor.
@@ -115,11 +115,15 @@ public class ProjectBean {
 	/* Manage the popup. */
 
 	public void confirmDelete(ActionEvent event) {
-		if (this.projectService.deleteProject(this.projectId)) 
-			this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("component.projectcreate.deleteSuccess"));
-		else 
-			this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.projectcreate.deleteError"));
-		
+		if (this.projectService.deleteProject(this.projectId))
+			this.webCommonService
+					.addInfoMessage(this.webCommonService
+							.getStringFromBundle("component.projectcreate.deleteSuccess"));
+		else
+			this.webCommonService
+					.addErrorMessage(this.webCommonService
+							.getStringFromBundle("component.projectcreate.deleteError"));
+
 		this.visiblePopup = false;
 	}
 
@@ -134,19 +138,27 @@ public class ProjectBean {
 	 * 
 	 * @return
 	 */
-	public String saveProjectAction() {
-		String url = "";
+	public void saveProjectAction(ActionEvent e) {
 		boolean error = false;
 		// test if the fields are correctly completed
-		if (this.project.getConcreteName().trim().length() == 0) 
-			this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.projectcreate.err.namerequired"));
-		if (this.project.getLaunchingDate() == null) 
-			this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.projectcreate.err.launchingdaterequired"));
+		if (this.project.getConcreteName().trim().length() == 0) {
+			this.webCommonService
+					.addErrorMessage(this.webCommonService
+							.getStringFromBundle("component.projectcreate.err.namerequired"));
+			error = true;
+		}
+		if (this.project.getLaunchingDate() == null) {
+			this.webCommonService
+					.addErrorMessage(this.webCommonService
+							.getStringFromBundle("component.projectcreate.err.launchingdaterequired"));
+			error = true;
+		}
 		if (!this.projectModification) {
 			if (this.projectService.projectExist(this.project.getConcreteName()
 					.trim())) {
-
-				this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.projectcreate.err.projectalreadyexists"));
+				this.webCommonService
+						.addErrorMessage(this.webCommonService
+								.getStringFromBundle("component.projectcreate.err.projectalreadyexists"));
 				error = true;
 			}
 		}
@@ -157,18 +169,22 @@ public class ProjectBean {
 					.getProjectDirector(user_id);
 			this.project.setProjectDirector(pd);
 			this.projectService.saveProject(this.project);
-			if (this.projectModification) 
-				this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("component.projectcreate.modificationSuccess"));
-			else 
-				this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("component.projectcreate.success"));
-			
+			if (this.projectModification)
+				this.webCommonService
+						.addInfoMessage(this.webCommonService
+								.getStringFromBundle("component.projectcreate.modificationSuccess"));
+			else
+				this.webCommonService
+						.addInfoMessage(this.webCommonService
+								.getStringFromBundle("component.projectcreate.success"));
+
 			// return on the projectlist page
-			this.webCommonService.getSelectedPanel().setTemplateNameForARole("projectList");
+			this.webCommonService.getSelectedPanel().setTemplateNameForARole(
+					"projectList");
 
 		}
 		this.projectModification = false;
 		this.project = new Project();
-		return url;
 	}
 
 	/**
@@ -193,7 +209,8 @@ public class ProjectBean {
 		TreeBean tb = (TreeBean) this.webCommonService.getBean("TreeBean");
 		tb.rebuildProjectTree();
 
-		ProjectAdvancementBean pab = (ProjectAdvancementBean) this.webCommonService.getBean("ProjectAdvancementBean");
+		ProjectAdvancementBean pab = (ProjectAdvancementBean) this.webCommonService
+				.getBean("ProjectAdvancementBean");
 		pab.refreshProjectTable();
 
 		return "";
@@ -432,7 +449,7 @@ public class ProjectBean {
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map map = context.getExternalContext().getRequestParameterMap();
 		this.projectId = (String) map.get("projectId");
-		
+
 		this.visiblePopup = true;
 	}
 
@@ -607,7 +624,8 @@ public class ProjectBean {
 	}
 
 	/**
-	 * @param webPageService the webPageService to set
+	 * @param webPageService
+	 *            the webPageService to set
 	 */
 	public void setWebCommonService(WebCommonService webCommonService) {
 		this.webCommonService = webCommonService;
@@ -621,7 +639,8 @@ public class ProjectBean {
 	}
 
 	/**
-	 * @param webMessageService the webMessageService to set
+	 * @param webMessageService
+	 *            the webMessageService to set
 	 */
 	public void setWebMessageService(WebCommonService webMessageService) {
 		this.webCommonService = webMessageService;

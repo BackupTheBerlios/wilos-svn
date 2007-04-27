@@ -74,11 +74,14 @@ public class ConcretePhaseViewerBean extends ViewerBean {
 
 	/* Manage the concretename field editable. */
 
-	public void changeConcreteName() {
+	public void saveName() {
 		this.concretePhaseService.saveConcretePhase(this.concretePhase);
 
 		// Refresh the treebean.
 		super.refreshProjectTree();
+
+		// put the name text editor to disable.
+		super.setNameIsEditable(false);
 	}
 
 	/* Getters & Setters */

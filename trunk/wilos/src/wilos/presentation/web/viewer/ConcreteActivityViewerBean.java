@@ -34,12 +34,15 @@ public class ConcreteActivityViewerBean extends ViewerBean {
 
 	private ConcreteActivityService concreteActivityService;
 
-	public void changeConcreteName() {
+	public void saveName() {
 		this.concreteActivityService
 				.saveConcreteActivity(this.concreteActivity);
 
 		// Refresh the treebean.
 		super.refreshProjectTree();
+
+		// put the name text editor to disable.
+		super.setNameIsEditable(false);
 	}
 
 	public List<ConcreteBreakdownElement> getConcreteBreakdownElementsList() {

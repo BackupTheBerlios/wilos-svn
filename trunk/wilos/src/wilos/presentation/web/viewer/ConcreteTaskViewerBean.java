@@ -51,9 +51,9 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 	private RoleDescriptorService roleDescriptorService;
 
 	private ParticipantService participantService;
-	
+
 	private WebCommonService webCommonService;
-	
+
 	/* Simple fields */
 
 	private ConcreteTaskDescriptor concreteTaskDescriptor;
@@ -73,28 +73,9 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 	private boolean visibleDeletePopup = false;
 
 	protected final Log logger = LogFactory.getLog(this.getClass());
-
-	public String getDisplayedState() {
-		String _state = "";
-		if (this.concreteTaskDescriptor.getState().equals(State.CREATED)) {
-			_state = this.webCommonService.getStringFromBundle(
-					"constantes.state.created");
-		} else if (this.concreteTaskDescriptor.getState().equals(State.READY)) {
-			_state = this.webCommonService.getStringFromBundle(
-					"constantes.state.ready");
-		} else if (this.concreteTaskDescriptor.getState().equals(State.STARTED)) {
-			_state = this.webCommonService.getStringFromBundle(
-					"constantes.state.started");
-		} else if (this.concreteTaskDescriptor.getState().equals(
-				State.SUSPENDED)) {
-			_state = this.webCommonService.getStringFromBundle(
-					"constantes.state.suspended");
-		} else if (this.concreteTaskDescriptor.getState()
-				.equals(State.FINISHED)) {
-			_state = this.webCommonService.getStringFromBundle(
-					"constantes.state.finished");
-		}
-		return _state;
+	
+	public String getDisplayedState(){
+		return this.webCommonService.getDisplayedState(this.concreteTaskDescriptor.getState());
 	}
 
 	public boolean getDissociateButtonIsVisible() {
@@ -121,18 +102,22 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		this.concreteTaskDescriptorService
 				.dissociateConcreteTaskDescriptor(this.concreteTaskDescriptor);
 
-		this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("concretetaskviewer.dissociated"));
+		this.webCommonService.addInfoMessage(this.webCommonService
+				.getStringFromBundle("concretetaskviewer.dissociated"));
 
 		super.refreshProjectTable();
 		super.refreshProjectTree();
 	}
 
-	public void changeConcreteName() {
+	public void saveName() {
 		this.concreteTaskDescriptorService
 				.saveConcreteTaskDescriptor(this.concreteTaskDescriptor);
 
 		// Refresh the treebean.
 		super.refreshProjectTree();
+
+		// put the name text editor to disable.
+		super.setNameIsEditable(false);
 	}
 
 	/**
@@ -147,7 +132,8 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		this.concreteTaskDescriptorService.affectedConcreteTaskDescriptor(
 				this.concreteTaskDescriptor, participant);
 
-		this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("concretetaskviewer.updateAffected"));
+		this.webCommonService.addInfoMessage(this.webCommonService
+				.getStringFromBundle("concretetaskviewer.updateAffected"));
 
 		super.refreshProjectTable();
 		super.refreshProjectTree();
@@ -248,9 +234,11 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 				super.refreshProjectTree();
 			}
 
-			this.webCommonService.changeContentPage(WilosObjectNode.PROJECTNODE);
+			this.webCommonService
+					.changeContentPage(WilosObjectNode.PROJECTNODE);
 			/* Displays info message */
-			this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("concretetaskviewer.removed"));
+			this.webCommonService.addInfoMessage(this.webCommonService
+					.getStringFromBundle("concretetaskviewer.removed"));
 			this.visibleDeletePopup = false;
 		}
 	}
@@ -446,7 +434,8 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 	public void updateActionListener(ActionEvent event) {
 		this.concreteTaskDescriptorService
 				.updateConcreteTaskDescriptor(this.concreteTaskDescriptor);
-		this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("concretetaskviewer.updateMessage"));
+		this.webCommonService.addInfoMessage(this.webCommonService
+				.getStringFromBundle("concretetaskviewer.updateMessage"));
 
 		super.refreshProjectTable();
 	}

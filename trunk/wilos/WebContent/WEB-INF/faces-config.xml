@@ -161,6 +161,10 @@
 			<property-name>webSessionService</property-name>
 			<value>#{WebSessionService}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>webCommonService</property-name>
+			<value>#{WebCommonService}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>

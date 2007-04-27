@@ -50,15 +50,22 @@
 				<ice:panelGrid id="panelGridRoles"
 					styleClass="contentLayoutGridStyle" columns="3">
 					<ice:outputText value="#{msgs['viewer.concreteName']}" />
-					<ice:inputText
-						value="#{ConcreteRoleViewerBean.concreteRoleDescriptor.concreteName}"
-						disabled="#{ConcreteRoleViewerBean.changeButtonIsDisabled}"
-						size="60" />
-					<ice:commandButton value="#{msgs['button.changeconcretename']}"
-						action="#{ConcreteRoleViewerBean.changeConcreteName}"
-						disabled="#{ConcreteRoleViewerBean.changeButtonIsDisabled}"
-						styleClass="smallbutton"
-						title="#{msgs['concreteRoleViewer.changeName.Bubble'] }" />
+					<ice:inputText value="#{ConcreteRoleViewerBean.concreteRoleDescriptor.concreteName}"
+						disabled="#{!ConcreteRoleViewerBean.nameIsEditable}" size="60" />
+					<ice:commandLink value="" action="#{ConcreteRoleViewerBean.editName}"
+						visible="#{!ConcreteRoleViewerBean.changeButtonIsDisabled}"
+						rendered="#{!ConcreteRoleViewerBean.nameIsEditable}"
+						title="#{msgs['viewer.editNameCommandlink.bubble']}">
+						<ice:graphicImage value="images/modify.gif"
+							style="border: 0px solid;" />
+					</ice:commandLink>
+					<ice:commandLink value="" action="#{ConcreteRoleViewerBean.saveName}"
+						visible="#{!ConcreteRoleViewerBean.changeButtonIsDisabled}"
+						rendered="#{ConcreteRoleViewerBean.nameIsEditable}"
+						title="#{msgs['viewer.saveNameCommandlink.bubble']}">
+						<ice:graphicImage value="images/save.gif"
+							style="border: 0px solid;" />
+					</ice:commandLink>
 				</ice:panelGrid>
 
 				<ice:panelStack id="panelStack_affectedRole"

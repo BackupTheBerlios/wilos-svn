@@ -33,13 +33,19 @@ public class ViewerBean {
 
 	private ConcreteBreakdownElementService concreteBreakdownElementService;
 
+	private boolean nameIsEditable = false;
+
+	public void editName() {
+		this.nameIsEditable = true;
+	}
+
 	protected void refreshProjectTree() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		TreeBean treeBean = (TreeBean) context.getApplication()
 				.getVariableResolver().resolveVariable(context, "TreeBean");
 		treeBean.refreshProjectTree();
 	}
-	
+
 	protected void rebuildProjectTree() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		TreeBean treeBean = (TreeBean) context.getApplication()
@@ -67,8 +73,9 @@ public class ViewerBean {
 				.getProject((String) this.webSessionService
 						.getAttribute(WebSessionService.PROJECT_ID));
 
-		if ((project != null)&&((project.getProjectManager() != null)
-				&& (project.getProjectManager().getWilosuser_id()
+		if ((project != null)
+				&& ((project.getProjectManager() != null) && (project
+						.getProjectManager().getWilosuser_id()
 						.equals(wilosUserId))))
 			return false;
 		else
@@ -148,4 +155,17 @@ public class ViewerBean {
 		this.webSessionService = webSessionService;
 	}
 
+	/**
+	 * @return the nameIsEditable
+	 */
+	public boolean getNameIsEditable() {
+		return this.nameIsEditable;
+	}
+
+	/**
+	 * @param nameIsEditable the nameIsEditable to set
+	 */
+	public void setNameIsEditable(boolean _nameIsEditable) {
+		this.nameIsEditable = _nameIsEditable;
+	}
 }

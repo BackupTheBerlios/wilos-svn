@@ -35,7 +35,7 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 				<ice:panelGrid columns="2">
 					<ice:commandButton
 						value="#{msgs['component.projectcreate.register']}"
-						action="#{ProjectBean.saveProjectAction}"  styleClass="smallbutton"
+						actionListener="#{ProjectBean.saveProjectAction}"  styleClass="smallbutton"
 						title="#{msgs['component.projectcreate.registertip']}"/>
 				</ice:panelGrid>
 			</ice:panelGroup>

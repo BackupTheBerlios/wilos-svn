@@ -68,14 +68,22 @@
 				<br />
 				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="3">
 					<ice:outputText value="#{msgs['viewer.concreteName']}" />
-					<ice:inputText
-						value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.concreteName}"
-						disabled="#{ConcreteTaskViewerBean.changeButtonIsDisabled}" size="60"/>
-					<ice:commandButton value="#{msgs['button.changeconcretename']}"
-						action="#{ConcreteTaskViewerBean.changeConcreteName}"
-						disabled="#{ConcreteTaskViewerBean.changeButtonIsDisabled}"
-						styleClass="smallbutton"
-						title="#{msgs['concretetaskviewer.changeName.Bubble'] }" />
+					<ice:inputText value="#{ConcreteTaskViewerBean.concreteTaskDescriptor.concreteName}"
+						disabled="#{!ConcreteTaskViewerBean.nameIsEditable}" size="60" />
+					<ice:commandLink value="" action="#{ConcreteTaskViewerBean.editName}"
+						visible="#{!ConcreteTaskViewerBean.changeButtonIsDisabled}"
+						rendered="#{!ConcreteTaskViewerBean.nameIsEditable}"
+						title="#{msgs['viewer.editNameCommandlink.bubble']}">
+						<ice:graphicImage value="images/modify.gif"
+							style="border: 0px solid;" />
+					</ice:commandLink>
+					<ice:commandLink value="" action="#{ConcreteTaskViewerBean.saveName}"
+						visible="#{!ConcreteTaskViewerBean.changeButtonIsDisabled}"
+						rendered="#{ConcreteTaskViewerBean.nameIsEditable}"
+						title="#{msgs['viewer.saveNameCommandlink.bubble']}">
+						<ice:graphicImage value="images/save.gif"
+							style="border: 0px solid;" />
+					</ice:commandLink>
 					<ice:outputText value="#{msgs['concretetaskviewer.state']}" />
 					<ice:outputText
 						value="#{ConcreteTaskViewerBean.displayedState}" />

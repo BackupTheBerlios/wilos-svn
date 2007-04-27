@@ -21,13 +21,22 @@
 				<br />
 				<ice:panelGrid styleClass="contentLayoutGridStyle" columns="3">
 					<ice:outputText value="#{msgs['viewer.concreteName']}" />
-					<ice:inputText
-						value="#{ConcreteIterationViewerBean.concreteIteration.concreteName}"
-						disabled="#{ConcreteIterationViewerBean.changeButtonIsDisabled}" size="60" />
-					<ice:commandButton value="#{msgs['button.changeconcretename']}"
-						action="#{ConcreteIterationViewerBean.changeConcreteName}"
-						disabled="#{ConcreteIterationViewerBean.changeButtonIsDisabled}"
-						styleClass="smallbutton" />
+					<ice:inputText value="#{ConcreteIterationViewerBean.concreteIteration.concreteName}"
+						disabled="#{!ConcreteIterationViewerBean.nameIsEditable}" size="60" />
+					<ice:commandLink value="" action="#{ConcreteIterationViewerBean.editName}"
+						visible="#{!ConcreteIterationViewerBean.changeButtonIsDisabled}"
+						rendered="#{!ConcreteIterationViewerBean.nameIsEditable}"
+						title="#{msgs['viewer.editNameCommandlink.bubble']}">
+						<ice:graphicImage value="images/modify.gif"
+							style="border: 0px solid;" />
+					</ice:commandLink>
+					<ice:commandLink value="" action="#{ConcreteIterationViewerBean.saveName}"
+						visible="#{!ConcreteIterationViewerBean.changeButtonIsDisabled}"
+						rendered="#{ConcreteIterationViewerBean.nameIsEditable}"
+						title="#{msgs['viewer.saveNameCommandlink.bubble']}">
+						<ice:graphicImage value="images/save.gif"
+							style="border: 0px solid;" />
+					</ice:commandLink>
 					<ice:outputText value="#{msgs['viewer.description'] }" />
 					<ice:outputText
 						value="#{ConcreteIterationViewerBean.concreteIteration.iteration.description}" />

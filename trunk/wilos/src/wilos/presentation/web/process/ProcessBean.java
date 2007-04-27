@@ -179,15 +179,14 @@ public class ProcessBean {
 				String presentationName = (String) processDescription
 						.get("presentationName");
 
-				if ((presentationName.equals(""))
-						|| (presentationName.equals(" "))) {
+				if (presentationName.trim().length() == 0){
 					processDescription.put("presentationName", process
 							.getPresentationName());
 
 					// Error message.
 					this.webCommonService.addInfoMessage(this.webCommonService.getStringFromBundle("component.process.management.message.invalidName"));
 				}
-				if (this.presentationNameAlreadyExists(presentationName, processId)) {
+				else if (this.presentationNameAlreadyExists(presentationName, processId)) {
 					processDescription.put("presentationName", process
 							.getPresentationName());
 
@@ -199,6 +198,7 @@ public class ProcessBean {
 							process);
 					processDescription.put("isEditable", new Boolean(false));
 				}
+				break;
 			}
 		}
 	}

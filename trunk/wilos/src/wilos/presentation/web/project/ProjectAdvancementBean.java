@@ -31,13 +31,13 @@ import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.misc.concreteactivity.ConcreteActivityService;
 import wilos.business.services.misc.project.ProjectService;
+import wilos.business.services.presentation.web.WebCommonService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concretetask.ConcreteTaskDescriptor;
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
 import wilos.model.misc.project.Project;
-import wilos.utils.Constantes.State;
 
 /**
  * @author SaKaMaKaK
@@ -56,6 +56,8 @@ public class ProjectAdvancementBean {
 	private ProjectService projectService;
 
 	private WebSessionService webSessionService;
+	
+	private WebCommonService webCommonService;
 
 	private ConcreteActivityService concreteActivityService;
 
@@ -249,7 +251,7 @@ public class ProjectAdvancementBean {
 					hm.put("nodeType", "leaf");
 					hm.put("expansionImage", TABLE_LEAF);
 	
-					hm.put("concreteState", this.getDisplayedState(((ConcreteTaskDescriptor) concreteBreakdownElement)));
+					hm.put("concreteState", this.webCommonService.getDisplayedState(((ConcreteTaskDescriptor) concreteBreakdownElement).getState()));
 					hm.put("accomplishedTime", ((ConcreteTaskDescriptor) concreteBreakdownElement).getAccomplishedTime());
 					hm.put("remainingTime", ((ConcreteTaskDescriptor) concreteBreakdownElement).getRemainingTime());					
 					//if the task is affected to a role
@@ -365,50 +367,6 @@ public class ProjectAdvancementBean {
 		return couple;
 	}
 	
-	/**
-	 * 
-	 * @param ctd
-	 * @return
-	 */
-	public String getDisplayedState(ConcreteTaskDescriptor ctd) {
-		String _state = "";
-		if (ctd.getState().equals(State.CREATED)) {
-			_state = ResourceBundle.getBundle(
-					"wilos.resources.messages",
-					FacesContext.getCurrentInstance().getApplication()
-							.getDefaultLocale()).getString(
-					"constantes.state.created");
-		} else if (ctd.getState().equals(State.READY)) {
-			_state = ResourceBundle.getBundle(
-					"wilos.resources.messages",
-					FacesContext.getCurrentInstance().getApplication()
-							.getDefaultLocale()).getString(
-					"constantes.state.ready");
-		} else if (ctd.getState().equals(State.STARTED)) {
-			_state = ResourceBundle.getBundle(
-					"wilos.resources.messages",
-					FacesContext.getCurrentInstance().getApplication()
-							.getDefaultLocale()).getString(
-					"constantes.state.started");
-		} else if (ctd.getState().equals(
-				State.SUSPENDED)) {
-			_state = ResourceBundle.getBundle(
-					"wilos.resources.messages",
-					FacesContext.getCurrentInstance().getApplication()
-							.getDefaultLocale()).getString(
-					"constantes.state.suspended");
-		} else if (ctd.getState()
-				.equals(State.FINISHED)) {
-			_state = ResourceBundle.getBundle(
-					"wilos.resources.messages",
-					FacesContext.getCurrentInstance().getApplication()
-							.getDefaultLocale()).getString(
-					"constantes.state.finished");
-		}
-		return _state;
-	}
-	
-
 	/**
 	 * Setter of displayContent.
 	 * 
@@ -586,5 +544,19 @@ public class ProjectAdvancementBean {
 	 */
 	public void setProjectInstanciated(String projectInstanciated) {
 		this.projectInstanciated = projectInstanciated;
+	}
+
+	/**
+	 * @return the webCommonService
+	 */
+	public WebCommonService getWebCommonService() {
+		return webCommonService;
+	}
+
+	/**
+	 * @param webCommonService the webCommonService to set
+	 */
+	public void setWebCommonService(WebCommonService webCommonService) {
+		this.webCommonService = webCommonService;
 	}
 }
