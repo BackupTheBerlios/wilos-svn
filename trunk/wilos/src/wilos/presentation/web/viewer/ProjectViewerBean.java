@@ -18,10 +18,6 @@ package wilos.presentation.web.viewer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
 import wilos.model.misc.concreteworkbreakdownelement.ConcreteWorkBreakdownElement;
@@ -30,15 +26,34 @@ import wilos.model.misc.project.Project;
 public class ProjectViewerBean extends ViewerBean {
 
 	private Project project;
-	
-	public void saveName() {
-		super.getProjectService().saveProject(project);
 
-		// Refresh the treebean.
-		super.refreshProjectTree();
-		
-		//put the name text editor to disable.
-		super.setNameIsEditable(false);
+	public void saveName() {
+		//add the check of the fact that this name already exists in the db.
+		if (this.project.getConcreteName().trim().length() == 0) {
+			// re-put the former concrete name.
+			Project tmp = super.getProjectService()
+					.getProject(this.project.getId());
+			this.project.setConcreteName(tmp.getConcreteName());
+
+			// add error message.
+			super.getWebCommonService().addErrorMessage(
+					this.getWebCommonService().getStringFromBundle(
+							"viewer.err.checkNameBySaving"));
+		} else {
+			super.getProjectService()
+					.saveProject(this.project);
+
+			// Refresh the treebean.
+			super.refreshProjectTree();
+
+			// put the name text editor to disable.
+			super.setNameIsEditable(false);
+
+			// successful message.
+			super.getWebCommonService().addInfoMessage(
+					this.getWebCommonService().getStringFromBundle(
+							"viewer.visibility.successMessage"));
+		}
 	}
 
 	public List<ConcreteBreakdownElement> getConcreteBreakdownElementsList() {
@@ -60,18 +75,11 @@ public class ProjectViewerBean extends ViewerBean {
 		super.getConcreteBreakdownElementService()
 				.saveAllFirstSonsConcreteBreakdownElementsForConcreteActivity(
 						this.project);
-		
+
 		// successful message.
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
-		FacesMessage message = new FacesMessage();
-		message
-				.setSummary(bundle
-						.getString("viewer.visibility.successMessage"));
-		message.setSeverity(FacesMessage.SEVERITY_ERROR);
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		facesContext.addMessage(null, message);
+		super.getWebCommonService().addInfoMessage(
+				this.getWebCommonService().getStringFromBundle(
+						"viewer.visibility.successMessage"));
 
 		// Reload the treebean.
 		super.refreshProjectTree();

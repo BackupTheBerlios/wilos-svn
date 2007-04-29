@@ -52,6 +52,11 @@ public class ConcreteIterationViewerBean extends ViewerBean {
 				.saveAllFirstSonsConcreteBreakdownElementsForConcreteActivity(
 						this.concreteIteration);
 
+		// successful message.
+		super.getWebCommonService().addInfoMessage(
+				this.getWebCommonService().getStringFromBundle(
+						"viewer.visibility.successMessage"));
+
 		// Reload the treebean.
 		super.refreshProjectTree();
 	}
@@ -59,14 +64,31 @@ public class ConcreteIterationViewerBean extends ViewerBean {
 	/* Manage the concretename field editable. */
 
 	public void saveName() {
-		this.concreteIterationService
-				.saveConcreteIteration(this.concreteIteration);
+		if (this.concreteIteration.getConcreteName().trim().length() == 0) {
+			// re-put the former concrete name.
+			ConcreteIteration tmp = this.concreteIterationService
+					.getConcreteIteration(this.concreteIteration.getId());
+			this.concreteIteration.setConcreteName(tmp.getConcreteName());
 
-		// Refresh the treebean.
-		super.refreshProjectTree();
+			// add error message.
+			super.getWebCommonService().addErrorMessage(
+					this.getWebCommonService().getStringFromBundle(
+							"viewer.err.checkNameBySaving"));
+		} else {
+			this.concreteIterationService
+					.saveConcreteIteration(this.concreteIteration);
 
-		// put the name text editor to disable.
-		super.setNameIsEditable(false);
+			// Refresh the treebean.
+			super.refreshProjectTree();
+
+			// put the name text editor to disable.
+			super.setNameIsEditable(false);
+
+			// successful message.
+			super.getWebCommonService().addInfoMessage(
+					this.getWebCommonService().getStringFromBundle(
+							"viewer.visibility.successMessage"));
+		}
 	}
 
 	/* Getters & Setters */

@@ -413,6 +413,10 @@
 			<value>#{WebSessionService}</value>
 		</managed-property>
 		<managed-property>
+			<property-name>webCommonService</property-name>
+			<value>#{WebCommonService}</value>
+		</managed-property>
+		<managed-property>
 			<property-name>projectService</property-name>
 			<value>#{ProjectService}</value>
 		</managed-property>
@@ -488,6 +492,10 @@
 			<property-name>webSessionService</property-name>
 			<value>#{WebSessionService}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>webCommonService</property-name>
+			<value>#{WebCommonService}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -505,6 +513,10 @@
 		<managed-property>
 			<property-name>webSessionService</property-name>
 			<value>#{WebSessionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webCommonService</property-name>
+			<value>#{WebCommonService}</value>
 		</managed-property>
 		<managed-property>
 			<property-name>projectService</property-name>
@@ -544,6 +556,10 @@
 			<property-name>webSessionService</property-name>
 			<value>#{WebSessionService}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>webCommonService</property-name>
+			<value>#{WebCommonService}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -565,6 +581,10 @@
 		<managed-property>
 			<property-name>webSessionService</property-name>
 			<value>#{WebSessionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webCommonService</property-name>
+			<value>#{WebCommonService}</value>
 		</managed-property>
 	</managed-bean>
 

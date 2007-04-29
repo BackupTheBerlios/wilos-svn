@@ -18,10 +18,6 @@ package wilos.presentation.web.viewer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
 import wilos.business.services.misc.concreteactivity.ConcreteActivityService;
 import wilos.model.misc.concreteactivity.ConcreteActivity;
@@ -35,14 +31,31 @@ public class ConcreteActivityViewerBean extends ViewerBean {
 	private ConcreteActivityService concreteActivityService;
 
 	public void saveName() {
-		this.concreteActivityService
-				.saveConcreteActivity(this.concreteActivity);
+		if (this.concreteActivity.getConcreteName().trim().length() == 0) {
+			// re-put the former concrete name.
+			ConcreteActivity tmp = this.concreteActivityService
+					.getConcreteActivity(this.concreteActivity.getId());
+			this.concreteActivity.setConcreteName(tmp.getConcreteName());
 
-		// Refresh the treebean.
-		super.refreshProjectTree();
+			// add error message.
+			super.getWebCommonService().addErrorMessage(
+					this.getWebCommonService().getStringFromBundle(
+							"viewer.err.checkNameBySaving"));
+		} else {
+			this.concreteActivityService
+					.saveConcreteActivity(this.concreteActivity);
 
-		// put the name text editor to disable.
-		super.setNameIsEditable(false);
+			// Refresh the treebean.
+			super.refreshProjectTree();
+
+			// put the name text editor to disable.
+			super.setNameIsEditable(false);
+
+			// successful message.
+			super.getWebCommonService().addInfoMessage(
+					this.getWebCommonService().getStringFromBundle(
+							"viewer.visibility.successMessage"));
+		}
 	}
 
 	public List<ConcreteBreakdownElement> getConcreteBreakdownElementsList() {
@@ -66,16 +79,9 @@ public class ConcreteActivityViewerBean extends ViewerBean {
 						this.concreteActivity);
 
 		// successful message.
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
-		FacesMessage message = new FacesMessage();
-		message
-				.setSummary(bundle
-						.getString("viewer.visibility.successMessage"));
-		message.setSeverity(FacesMessage.SEVERITY_ERROR);
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		facesContext.addMessage(null, message);
+		super.getWebCommonService().addInfoMessage(
+				this.getWebCommonService().getStringFromBundle(
+						"viewer.visibility.successMessage"));
 
 		// Refresh the treebean.
 		super.refreshProjectTree();

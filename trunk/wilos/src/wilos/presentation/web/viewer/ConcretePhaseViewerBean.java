@@ -18,10 +18,6 @@ package wilos.presentation.web.viewer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
 import wilos.business.services.misc.concretephase.ConcretePhaseService;
 import wilos.model.misc.concretebreakdownelement.ConcreteBreakdownElement;
@@ -57,16 +53,9 @@ public class ConcretePhaseViewerBean extends ViewerBean {
 						this.concretePhase);
 
 		// successful message.
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance()
-						.getApplication().getDefaultLocale());
-		FacesMessage message = new FacesMessage();
-		message
-				.setSummary(bundle
-						.getString("viewer.visibility.successMessage"));
-		message.setSeverity(FacesMessage.SEVERITY_ERROR);
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		facesContext.addMessage(null, message);
+		super.getWebCommonService().addInfoMessage(
+				this.getWebCommonService().getStringFromBundle(
+						"viewer.visibility.successMessage"));
 
 		// Reload the treebean.
 		super.refreshProjectTree();
@@ -75,13 +64,31 @@ public class ConcretePhaseViewerBean extends ViewerBean {
 	/* Manage the concretename field editable. */
 
 	public void saveName() {
-		this.concretePhaseService.saveConcretePhase(this.concretePhase);
+		if (this.concretePhase.getConcreteName().trim().length() == 0) {
+			// re-put the former concrete name.
+			ConcretePhase tmp = this.concretePhaseService
+					.getConcretePhase(this.concretePhase.getId());
+			this.concretePhase.setConcreteName(tmp.getConcreteName());
 
-		// Refresh the treebean.
-		super.refreshProjectTree();
+			// add error message.
+			super.getWebCommonService().addErrorMessage(
+					this.getWebCommonService().getStringFromBundle(
+							"viewer.err.checkNameBySaving"));
+		} else {
+			this.concretePhaseService
+					.saveConcretePhase(this.concretePhase);
 
-		// put the name text editor to disable.
-		super.setNameIsEditable(false);
+			// Refresh the treebean.
+			super.refreshProjectTree();
+
+			// put the name text editor to disable.
+			super.setNameIsEditable(false);
+
+			// successful message.
+			super.getWebCommonService().addInfoMessage(
+					this.getWebCommonService().getStringFromBundle(
+							"viewer.visibility.successMessage"));
+		}
 	}
 
 	/* Getters & Setters */

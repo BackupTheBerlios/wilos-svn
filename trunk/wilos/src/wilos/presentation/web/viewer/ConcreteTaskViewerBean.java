@@ -26,7 +26,6 @@ import org.apache.commons.logging.LogFactory;
 import wilos.business.services.misc.concreterole.ConcreteRoleDescriptorService;
 import wilos.business.services.misc.concretetask.ConcreteTaskDescriptorService;
 import wilos.business.services.misc.wilosuser.ParticipantService;
-import wilos.business.services.presentation.web.WebCommonService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.business.services.spem2.role.RoleDescriptorService;
 import wilos.business.services.spem2.task.TaskDescriptorService;
@@ -52,8 +51,6 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 
 	private ParticipantService participantService;
 
-	private WebCommonService webCommonService;
-
 	/* Simple fields */
 
 	private ConcreteTaskDescriptor concreteTaskDescriptor;
@@ -75,7 +72,7 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 	protected final Log logger = LogFactory.getLog(this.getClass());
 	
 	public String getDisplayedState(){
-		return this.webCommonService.getDisplayedState(this.concreteTaskDescriptor.getState());
+		return super.getWebCommonService().getDisplayedState(this.concreteTaskDescriptor.getState());
 	}
 
 	public boolean getDissociateButtonIsVisible() {
@@ -102,7 +99,7 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		this.concreteTaskDescriptorService
 				.dissociateConcreteTaskDescriptor(this.concreteTaskDescriptor);
 
-		this.webCommonService.addInfoMessage(this.webCommonService
+		super.getWebCommonService().addInfoMessage(super.getWebCommonService()
 				.getStringFromBundle("concretetaskviewer.dissociated"));
 
 		super.refreshProjectTable();
@@ -110,14 +107,31 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 	}
 
 	public void saveName() {
-		this.concreteTaskDescriptorService
-				.saveConcreteTaskDescriptor(this.concreteTaskDescriptor);
+		if (this.concreteTaskDescriptor.getConcreteName().trim().length() == 0) {
+			// re-put the former concrete name.
+			ConcreteTaskDescriptor tmp = this.concreteTaskDescriptorService
+					.getConcreteTaskDescriptor(this.concreteTaskDescriptor.getId());
+			this.concreteTaskDescriptor.setConcreteName(tmp.getConcreteName());
 
-		// Refresh the treebean.
-		super.refreshProjectTree();
+			// add error message.
+			super.getWebCommonService().addErrorMessage(
+					this.getWebCommonService().getStringFromBundle(
+							"viewer.err.checkNameBySaving"));
+		} else {
+			this.concreteTaskDescriptorService
+					.saveConcreteTaskDescriptor(this.concreteTaskDescriptor);
 
-		// put the name text editor to disable.
-		super.setNameIsEditable(false);
+			// Refresh the treebean.
+			super.refreshProjectTree();
+
+			// put the name text editor to disable.
+			super.setNameIsEditable(false);
+
+			// successful message.
+			super.getWebCommonService().addInfoMessage(
+					this.getWebCommonService().getStringFromBundle(
+							"viewer.visibility.successMessage"));
+		}
 	}
 
 	/**
@@ -132,7 +146,7 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 		this.concreteTaskDescriptorService.affectedConcreteTaskDescriptor(
 				this.concreteTaskDescriptor, participant);
 
-		this.webCommonService.addInfoMessage(this.webCommonService
+		super.getWebCommonService().addInfoMessage(super.getWebCommonService()
 				.getStringFromBundle("concretetaskviewer.updateAffected"));
 
 		super.refreshProjectTable();
@@ -234,10 +248,10 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 				super.refreshProjectTree();
 			}
 
-			this.webCommonService
+			super.getWebCommonService()
 					.changeContentPage(WilosObjectNode.PROJECTNODE);
 			/* Displays info message */
-			this.webCommonService.addInfoMessage(this.webCommonService
+			super.getWebCommonService().addInfoMessage(super.getWebCommonService()
 					.getStringFromBundle("concretetaskviewer.removed"));
 			this.visibleDeletePopup = false;
 		}
@@ -434,7 +448,7 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 	public void updateActionListener(ActionEvent event) {
 		this.concreteTaskDescriptorService
 				.updateConcreteTaskDescriptor(this.concreteTaskDescriptor);
-		this.webCommonService.addInfoMessage(this.webCommonService
+		super.getWebCommonService().addInfoMessage(super.getWebCommonService()
 				.getStringFromBundle("concretetaskviewer.updateMessage"));
 
 		super.refreshProjectTable();
@@ -560,13 +574,5 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 
 	public void setVisibleDeletePopup(boolean _visibleDeletePopup) {
 		this.visibleDeletePopup = _visibleDeletePopup;
-	}
-
-	public WebCommonService getWebCommonService() {
-		return webCommonService;
-	}
-
-	public void setWebCommonService(WebCommonService webCommonService) {
-		this.webCommonService = webCommonService;
 	}
 }

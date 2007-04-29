@@ -16,10 +16,9 @@
 
 package wilos.presentation.web.viewer;
 
-import javax.faces.context.FacesContext;
-
 import wilos.business.services.misc.concretebreakdownelement.ConcreteBreakdownElementService;
 import wilos.business.services.misc.project.ProjectService;
+import wilos.business.services.presentation.web.WebCommonService;
 import wilos.business.services.presentation.web.WebSessionService;
 import wilos.model.misc.project.Project;
 import wilos.presentation.web.project.ProjectAdvancementBean;
@@ -28,6 +27,8 @@ import wilos.presentation.web.tree.TreeBean;
 public class ViewerBean {
 
 	private WebSessionService webSessionService;
+
+	private WebCommonService webCommonService;
 
 	private ProjectService projectService;
 
@@ -40,24 +41,38 @@ public class ViewerBean {
 	}
 
 	protected void refreshProjectTree() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		TreeBean treeBean = (TreeBean) context.getApplication()
-				.getVariableResolver().resolveVariable(context, "TreeBean");
+		/*
+		 * FacesContext context = FacesContext.getCurrentInstance(); TreeBean
+		 * treeBean = (TreeBean) context.getApplication()
+		 * .getVariableResolver().resolveVariable(context, "TreeBean");
+		 * treeBean.refreshProjectTree();
+		 */
+		TreeBean treeBean = (TreeBean) this.webCommonService
+				.getBean("TreeBean");
 		treeBean.refreshProjectTree();
 	}
 
 	protected void rebuildProjectTree() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		TreeBean treeBean = (TreeBean) context.getApplication()
-				.getVariableResolver().resolveVariable(context, "TreeBean");
+		/*
+		 * FacesContext context = FacesContext.getCurrentInstance(); TreeBean
+		 * treeBean = (TreeBean) context.getApplication()
+		 * .getVariableResolver().resolveVariable(context, "TreeBean");
+		 * treeBean.rebuildProjectTree();
+		 */
+		TreeBean treeBean = (TreeBean) this.webCommonService
+				.getBean("TreeBean");
 		treeBean.rebuildProjectTree();
 	}
 
 	protected void refreshProjectTable() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		ProjectAdvancementBean pab = (ProjectAdvancementBean) context
-				.getApplication().getVariableResolver().resolveVariable(
-						context, "ProjectAdvancementBean");
+		/*
+		 * FacesContext context = FacesContext.getCurrentInstance();
+		 * ProjectAdvancementBean pab = (ProjectAdvancementBean) context
+		 * .getApplication().getVariableResolver().resolveVariable( context,
+		 * "ProjectAdvancementBean"); pab.refreshProjectTable();
+		 */
+		ProjectAdvancementBean pab = (ProjectAdvancementBean) this.webCommonService
+				.getBean("ProjectAdvancementBean");
 		pab.refreshProjectTable();
 	}
 
@@ -163,9 +178,25 @@ public class ViewerBean {
 	}
 
 	/**
-	 * @param nameIsEditable the nameIsEditable to set
+	 * @param nameIsEditable
+	 *            the nameIsEditable to set
 	 */
 	public void setNameIsEditable(boolean _nameIsEditable) {
 		this.nameIsEditable = _nameIsEditable;
+	}
+
+	/**
+	 * @return the webCommonService
+	 */
+	public WebCommonService getWebCommonService() {
+		return webCommonService;
+	}
+
+	/**
+	 * @param webCommonService
+	 *            the webCommonService to set
+	 */
+	public void setWebCommonService(WebCommonService webCommonService) {
+		this.webCommonService = webCommonService;
 	}
 }
