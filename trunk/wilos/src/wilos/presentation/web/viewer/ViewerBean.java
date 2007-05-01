@@ -36,41 +36,19 @@ public class ViewerBean {
 
 	private boolean nameIsEditable = false;
 
-	public void editName() {
-		this.nameIsEditable = true;
-	}
-
 	protected void refreshProjectTree() {
-		/*
-		 * FacesContext context = FacesContext.getCurrentInstance(); TreeBean
-		 * treeBean = (TreeBean) context.getApplication()
-		 * .getVariableResolver().resolveVariable(context, "TreeBean");
-		 * treeBean.refreshProjectTree();
-		 */
 		TreeBean treeBean = (TreeBean) this.webCommonService
 				.getBean("TreeBean");
 		treeBean.refreshProjectTree();
 	}
 
 	protected void rebuildProjectTree() {
-		/*
-		 * FacesContext context = FacesContext.getCurrentInstance(); TreeBean
-		 * treeBean = (TreeBean) context.getApplication()
-		 * .getVariableResolver().resolveVariable(context, "TreeBean");
-		 * treeBean.rebuildProjectTree();
-		 */
 		TreeBean treeBean = (TreeBean) this.webCommonService
 				.getBean("TreeBean");
 		treeBean.rebuildProjectTree();
 	}
 
 	protected void refreshProjectTable() {
-		/*
-		 * FacesContext context = FacesContext.getCurrentInstance();
-		 * ProjectAdvancementBean pab = (ProjectAdvancementBean) context
-		 * .getApplication().getVariableResolver().resolveVariable( context,
-		 * "ProjectAdvancementBean"); pab.refreshProjectTable();
-		 */
 		ProjectAdvancementBean pab = (ProjectAdvancementBean) this.webCommonService
 				.getBean("ProjectAdvancementBean");
 		pab.refreshProjectTable();
@@ -78,6 +56,10 @@ public class ViewerBean {
 
 	public boolean getIsInputNameReadOnly() {
 		return (this.getChangeButtonIsDisabled());
+	}
+	
+	public void editName() {
+		this.nameIsEditable = true;
 	}
 
 	public boolean getChangeButtonIsDisabled() {
@@ -118,7 +100,6 @@ public class ViewerBean {
 							.equals(wilosUserId)))
 				return true;
 		}
-
 		return false;
 	}
 
