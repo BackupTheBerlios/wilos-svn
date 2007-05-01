@@ -28,20 +28,29 @@ public class ProjectViewerBean extends ViewerBean {
 	private Project project;
 
 	public void saveName() {
-		//add the check of the fact that this name already exists in the db.
+		// add the check of the fact that this name already exists in the db.
 		if (this.project.getConcreteName().trim().length() == 0) {
 			// re-put the former concrete name.
-			Project tmp = super.getProjectService()
-					.getProject(this.project.getId());
+			Project tmp = super.getProjectService().getProject(
+					this.project.getId());
 			this.project.setConcreteName(tmp.getConcreteName());
 
 			// add error message.
 			super.getWebCommonService().addErrorMessage(
 					this.getWebCommonService().getStringFromBundle(
 							"viewer.err.checkNameBySaving"));
+		} else if (this.presentationNameAlreadyExists(this.project.getConcreteName(), this.project.getId())) {
+			// re-put the former concrete name.
+			Project tmp = super.getProjectService().getProject(
+					this.project.getId());
+			this.project.setConcreteName(tmp.getConcreteName());
+
+			// add error message.
+			super.getWebCommonService().addErrorMessage(
+					this.getWebCommonService().getStringFromBundle(
+							"component.projectcreate.err.projectalreadyexists"));
 		} else {
-			super.getProjectService()
-					.saveProject(this.project);
+			super.getProjectService().saveProject(this.project);
 
 			// Refresh the treebean.
 			super.refreshProjectTree();
@@ -54,6 +63,13 @@ public class ProjectViewerBean extends ViewerBean {
 					this.getWebCommonService().getStringFromBundle(
 							"viewer.visibility.successMessage"));
 		}
+	}
+	
+	private boolean presentationNameAlreadyExists(String _concreteName, String _projectId) {
+		for(Project project : super.getProjectService().getAllProjects())
+			if((project.getConcreteName().equals(_concreteName))&&(!_projectId.equals(project.getId())))
+				return true;
+		return false;
 	}
 
 	public List<ConcreteBreakdownElement> getConcreteBreakdownElementsList() {

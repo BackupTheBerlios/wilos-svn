@@ -146,21 +146,18 @@ public class ProjectBean {
 					.addErrorMessage(this.webCommonService
 							.getStringFromBundle("component.projectcreate.err.namerequired"));
 			error = true;
+		} else if (this.presentationNameAlreadyExists(this.project
+				.getConcreteName(), this.project.getId())) {
+			this.webCommonService
+					.addErrorMessage(this.webCommonService
+							.getStringFromBundle("component.projectcreate.err.projectalreadyexists"));
+			error = true;
 		}
 		if (this.project.getLaunchingDate() == null) {
 			this.webCommonService
 					.addErrorMessage(this.webCommonService
 							.getStringFromBundle("component.projectcreate.err.launchingdaterequired"));
 			error = true;
-		}
-		if (!this.projectModification) {
-			if (this.projectService.projectExist(this.project.getConcreteName()
-					.trim())) {
-				this.webCommonService
-						.addErrorMessage(this.webCommonService
-								.getStringFromBundle("component.projectcreate.err.projectalreadyexists"));
-				error = true;
-			}
 		}
 		if (!error) {
 			String user_id = (String) this.webSessionService
@@ -184,7 +181,15 @@ public class ProjectBean {
 
 		}
 		this.projectModification = false;
-		this.project = new Project();
+	}
+
+	private boolean presentationNameAlreadyExists(String _concreteName,
+			String _projectId) {
+		for (Project project : this.projectService.getAllProjects())
+			if ((project.getConcreteName().equals(_concreteName))
+					&& (!_projectId.equals(project.getId())))
+				return true;
+		return false;
 	}
 
 	/**
