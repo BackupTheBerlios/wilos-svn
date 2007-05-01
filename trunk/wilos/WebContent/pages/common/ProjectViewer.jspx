@@ -214,12 +214,13 @@
 								<ice:outputText
 									value="#{msgs['component.exptable.header.column2']}" />
 							</f:facet>
-							<center><ice:inputText value="#{process.nbOccurences}"
+							<center><ice:inputText id="pouet" value="#{process.nbOccurences}"
 								disabled="#{process.isEditable}" size="3" maxlength="3"
 								style="font-size:10px; height:10px; align: center; text-align:right;">
 								<f:validateLongRange minimum="0" maximum="100" />
 							</ice:inputText></center>
 						</ice:column>
+						<h:message for="pouet" />
 					</ice:dataTable>
 				</ice:panelGrid>
 			</ice:panelTab>
