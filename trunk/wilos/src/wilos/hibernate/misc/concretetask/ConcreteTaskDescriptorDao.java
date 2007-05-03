@@ -19,6 +19,7 @@ package wilos.hibernate.misc.concretetask;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -110,5 +111,13 @@ public class ConcreteTaskDescriptorDao extends HibernateDaoSupport {
 				"from ConcreteTaskDescriptor ctd where ctd.project.id=?",
 				_projectId);
 		return ctds;
+	}
+
+	public String getConcreteTaskDescriptorName(String _concreteTaskDescriptorId) {
+		Query query = this.getSession().createQuery("select ctd.concreteName from ConcreteTaskDescriptor ctd where ctd.id='"+_concreteTaskDescriptorId+"'");
+		List results = query.list();
+		if(results.size() == 1)
+			return (String)results.get(0);
+		return null;
 	}
 }

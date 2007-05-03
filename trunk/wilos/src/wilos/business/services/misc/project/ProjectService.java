@@ -206,6 +206,10 @@ public class ProjectService {
 	public Project getProject(String _id) {
 		return this.projectDao.getProject(_id) ;
 	}
+	
+	public String getProjectName(String _projectId){
+		return this.projectDao.getProjectName(_projectId);
+	}
 
 	/**
 	 * Getter of participantDao.

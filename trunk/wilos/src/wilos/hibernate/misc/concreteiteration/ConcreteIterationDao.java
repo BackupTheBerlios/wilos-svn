@@ -19,6 +19,7 @@ package wilos.hibernate.misc.concreteiteration;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -117,5 +118,13 @@ public class ConcreteIterationDao extends HibernateDaoSupport {
 			ExceptionManager.getInstance().manageDataAccessException(
 					this.getClass().getName(), "getConcreteIteration", _e);
 		}
+	}
+
+	public String getConcreteIterationName(String _concreteIterationId) {
+		Query query = this.getSession().createQuery("select ca.concreteName from ConcreteIteration ca where ca.id='"+_concreteIterationId+"'");
+		List results = query.list();
+		if(results.size() == 1)
+			return (String)results.get(0);
+		return null;
 	}
 }

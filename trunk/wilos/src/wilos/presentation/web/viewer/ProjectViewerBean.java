@@ -31,9 +31,7 @@ public class ProjectViewerBean extends ViewerBean {
 		// add the check of the fact that this name already exists in the db.
 		if (this.project.getConcreteName().trim().length() == 0) {
 			// re-put the former concrete name.
-			Project tmp = super.getProjectService().getProject(
-					this.project.getId());
-			this.project.setConcreteName(tmp.getConcreteName());
+			this.project.setConcreteName(super.getProjectService().getProjectName(this.project.getId()));
 
 			// add error message.
 			super.getWebCommonService().addErrorMessage(
@@ -41,9 +39,7 @@ public class ProjectViewerBean extends ViewerBean {
 							"viewer.err.checkNameBySaving"));
 		} else if (this.presentationNameAlreadyExists(this.project.getConcreteName(), this.project.getId())) {
 			// re-put the former concrete name.
-			Project tmp = super.getProjectService().getProject(
-					this.project.getId());
-			this.project.setConcreteName(tmp.getConcreteName());
+			this.project.setConcreteName(super.getProjectService().getProjectName(this.project.getId()));
 
 			// add error message.
 			super.getWebCommonService().addErrorMessage(

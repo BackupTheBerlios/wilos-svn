@@ -17,8 +17,10 @@
 package wilos.hibernate.misc.project;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Query;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import wilos.model.misc.project.Project;
@@ -79,5 +81,13 @@ public class ProjectDao extends HibernateDaoSupport {
 			// Catch normally errors when we delete an unexisting project into the db.
 			logger.error("#### ERROR #### --- ProjectDao => deleteProject : trying to delete unexisting object \n" + sose);
 		}
+	}
+
+	public String getProjectName(String _projectId) {
+		Query query = this.getSession().createQuery("select p.concreteName from Project p where p.id='"+_projectId+"'");
+		List results = query.list();
+		if(results.size() == 1)
+			return (String)results.get(0);
+		return null;
 	}
 }

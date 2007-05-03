@@ -45,6 +45,10 @@ public class ConcreteIterationService {
 	public void saveConcreteIteration(ConcreteIteration _concreteIteration) {
 		this.concreteIterationDao.saveOrUpdateConcreteIteration(_concreteIteration);
 	}
+	
+	public String getConcreteIterationName(String _concreteIterationId){
+		return this.concreteIterationDao.getConcreteIterationName(_concreteIterationId);
+	}
 
 	/**
 	 * @return the concreteIterationDao

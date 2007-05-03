@@ -112,9 +112,7 @@ public class ConcreteRoleViewerBean extends ViewerBean {
 	public void saveName() {
 		if (this.concreteRoleDescriptor.getConcreteName().trim().length() == 0) {
 			// re-put the former concrete name.
-			ConcreteRoleDescriptor tmp = this.concreteRoleDescriptorService
-					.getConcreteRoleDescriptorById(this.concreteRoleDescriptor.getId());
-			this.concreteRoleDescriptor.setConcreteName(tmp.getConcreteName());
+			this.concreteRoleDescriptor.setConcreteName(this.concreteRoleDescriptorService.getConcreteRoleDescriptorName(this.concreteRoleDescriptor.getId()));
 
 			// add error message.
 			super.getWebCommonService().addErrorMessage(

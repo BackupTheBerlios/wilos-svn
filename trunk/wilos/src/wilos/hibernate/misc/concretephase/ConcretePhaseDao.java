@@ -19,6 +19,7 @@ package wilos.hibernate.misc.concretephase;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -111,5 +112,13 @@ public class ConcretePhaseDao extends HibernateDaoSupport {
 			ExceptionManager.getInstance().manageDataAccessException(
 					this.getClass().getName(), "deleteConcretePhase", _e);
 		}
+	}
+
+	public String getConcretePhaseName(String _concretePhaseId) {
+		Query query = this.getSession().createQuery("select cp.concreteName from ConcretePhase cp where cp.id='"+_concretePhaseId+"'");
+		List results = query.list();
+		if(results.size() == 1)
+			return (String)results.get(0);
+		return null;
 	}
 }

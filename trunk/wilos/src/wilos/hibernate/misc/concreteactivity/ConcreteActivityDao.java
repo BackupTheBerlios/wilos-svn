@@ -19,6 +19,7 @@ package wilos.hibernate.misc.concreteactivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -129,6 +130,14 @@ public class ConcreteActivityDao extends HibernateDaoSupport {
 			}
 		}
 		return listConcreteBdes;
+	}
+
+	public String getConcreteActivityName(String _concreteActivityId) {
+		Query query = this.getSession().createQuery("select ca.concreteName from ConcreteActivity ca where ca.id='"+_concreteActivityId+"'");
+		List results = query.list();
+		if(results.size() == 1)
+			return (String)results.get(0);
+		return null;
 	}
 }
 

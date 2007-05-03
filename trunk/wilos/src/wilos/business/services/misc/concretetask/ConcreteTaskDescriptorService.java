@@ -56,8 +56,6 @@ public class ConcreteTaskDescriptorService {
 
 	private ConcreteRoleDescriptorService concreteRoleDescriptorService;
 	
-
-
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
 	/**
@@ -225,6 +223,10 @@ public class ConcreteTaskDescriptorService {
 		_concreteTaskDescriptor.setState(State.CREATED);
 		this.concreteTaskDescriptorDao.saveOrUpdateConcreteTaskDescriptor(_concreteTaskDescriptor);
 		this.concreteRoleDescriptorService.saveConcreteRoleDescriptor(cmrd);
+	}
+	
+	public String getConcreteTaskDescriptorName(String _concreteTaskDescriptorId){
+		return this.concreteTaskDescriptorDao.getConcreteTaskDescriptorName(_concreteTaskDescriptorId);
 	}
 	
 	/**

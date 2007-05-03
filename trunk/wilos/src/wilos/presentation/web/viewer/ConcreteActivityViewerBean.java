@@ -33,9 +33,7 @@ public class ConcreteActivityViewerBean extends ViewerBean {
 	public void saveName() {
 		if (this.concreteActivity.getConcreteName().trim().length() == 0) {
 			// re-put the former concrete name.
-			ConcreteActivity tmp = this.concreteActivityService
-					.getConcreteActivity(this.concreteActivity.getId());
-			this.concreteActivity.setConcreteName(tmp.getConcreteName());
+			this.concreteActivity.setConcreteName(this.concreteActivityService.getConcreteActivityName(this.concreteActivity.getId()));
 
 			// add error message.
 			super.getWebCommonService().addErrorMessage(

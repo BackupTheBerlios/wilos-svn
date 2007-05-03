@@ -89,6 +89,12 @@ public class ConcreteActivityService {
 	public List<ConcreteActivity> getAllConcreteActivities() {
 		return this.concreteActivityDao.getAllConcreteActivities();
 	}
+	
+	public String getConcreteActivityName(String _concreteActivityId){
+		return this.concreteActivityDao.getConcreteActivityName(_concreteActivityId);
+	}
+	
+	/* Getters & Setters */
 
 	/**
 	 * Return the concrete activity Dao

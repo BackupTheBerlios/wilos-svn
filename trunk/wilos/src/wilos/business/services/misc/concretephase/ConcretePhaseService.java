@@ -44,6 +44,10 @@ public class ConcretePhaseService {
 	public void saveConcretePhase(ConcretePhase _concretePhase) {
 		this.concretePhaseDao.saveOrUpdateConcretePhase(_concretePhase);
 	}
+	
+	public String getConcretePhaseName(String _concretePhaseId){
+		return this.concretePhaseDao.getConcretePhaseName(_concretePhaseId);
+	}
 
 	/**
 	 * @return the concretePhaseDao

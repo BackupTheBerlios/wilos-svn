@@ -44,8 +44,6 @@ public class ConcreteRoleDescriptorService {
 		
 		private RoleDescriptorService roleDescriptorService;
 		
-		
-		
 		public void saveConcreteRoleDescriptor(ConcreteRoleDescriptor _concreteRoleDescriptor) {
 			this.concreteRoleDescriptorDao.saveOrUpdateConcreteRoleDescriptor(_concreteRoleDescriptor);
 		}
@@ -142,6 +140,10 @@ public class ConcreteRoleDescriptorService {
 		 */
 		public ConcreteRoleDescriptor getConcreteRoleDescriptorById(String _id){
 			return this.concreteRoleDescriptorDao.getConcreteRoleDescriptor(_id);
+		}
+		
+		public String getConcreteRoleDescriptorName(String _concreteRoleDescriptorId){
+			return this.concreteRoleDescriptorDao.getConcreteRoleDescriptorName(_concreteRoleDescriptorId);
 		}
 
 		/**

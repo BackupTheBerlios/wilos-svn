@@ -66,9 +66,7 @@ public class ConcreteIterationViewerBean extends ViewerBean {
 	public void saveName() {
 		if (this.concreteIteration.getConcreteName().trim().length() == 0) {
 			// re-put the former concrete name.
-			ConcreteIteration tmp = this.concreteIterationService
-					.getConcreteIteration(this.concreteIteration.getId());
-			this.concreteIteration.setConcreteName(tmp.getConcreteName());
+			this.concreteIteration.setConcreteName(this.concreteIterationService.getConcreteIterationName(this.concreteIteration.getId()));
 
 			// add error message.
 			super.getWebCommonService().addErrorMessage(

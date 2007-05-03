@@ -66,9 +66,7 @@ public class ConcretePhaseViewerBean extends ViewerBean {
 	public void saveName() {
 		if (this.concretePhase.getConcreteName().trim().length() == 0) {
 			// re-put the former concrete name.
-			ConcretePhase tmp = this.concretePhaseService
-					.getConcretePhase(this.concretePhase.getId());
-			this.concretePhase.setConcreteName(tmp.getConcreteName());
+			this.concretePhase.setConcreteName(this.concretePhaseService.getConcretePhaseName(this.concretePhase.getId()));
 
 			// add error message.
 			super.getWebCommonService().addErrorMessage(

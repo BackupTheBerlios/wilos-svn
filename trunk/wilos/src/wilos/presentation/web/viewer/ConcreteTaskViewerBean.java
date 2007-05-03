@@ -109,9 +109,7 @@ public class ConcreteTaskViewerBean extends ViewerBean {
 	public void saveName() {
 		if (this.concreteTaskDescriptor.getConcreteName().trim().length() == 0) {
 			// re-put the former concrete name.
-			ConcreteTaskDescriptor tmp = this.concreteTaskDescriptorService
-					.getConcreteTaskDescriptor(this.concreteTaskDescriptor.getId());
-			this.concreteTaskDescriptor.setConcreteName(tmp.getConcreteName());
+			this.concreteTaskDescriptor.setConcreteName(this.concreteTaskDescriptorService.getConcreteTaskDescriptorName(this.concreteTaskDescriptor.getId()));
 
 			// add error message.
 			super.getWebCommonService().addErrorMessage(
