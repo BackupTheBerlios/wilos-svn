@@ -18,7 +18,6 @@ package wilos.presentation.web.wilosuser;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -30,6 +29,7 @@ import org.apache.commons.logging.LogFactory;
 
 import wilos.business.services.misc.wilosuser.LoginService;
 import wilos.business.services.misc.wilosuser.ProjectDirectorService;
+import wilos.business.services.presentation.web.WebCommonService;
 import wilos.model.misc.wilosuser.ProjectDirector;
 
 /**
@@ -41,6 +41,8 @@ public class ProjectDirectorBean {
 
 	private ProjectDirectorService projectDirectorService;
 
+	private WebCommonService webCommonService;
+
 	private ProjectDirector projectDirector;
 
 	private LoginService loginService;
@@ -48,11 +50,10 @@ public class ProjectDirectorBean {
 	private String passwordConfirmation;
 
 	private List<ProjectDirector> projectDirectorList;
-	
+
 	private String projectDirectorView;
-	
+
 	protected final Log logger = LogFactory.getLog(this.getClass());
-	
 
 	/**
 	 * Constructor.
@@ -68,103 +69,85 @@ public class ProjectDirectorBean {
 	 * @return
 	 */
 	public String saveProjectDirectorAction() {
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
 		String url = "";
-		boolean error=false;
-		FacesMessage message = new FacesMessage();
-		FacesContext facesContext = FacesContext.getCurrentInstance() ;
-		//		test if the fields are correctly completed 
-		if (this.projectDirector.getName().trim().length()==0)
-		{
-			FacesMessage errName = new FacesMessage() ;
-			errName.setSummary(bundle.getString("component.projectdirectorcreate.err.lastnameRequired"));
-			errName.setSeverity(FacesMessage.SEVERITY_ERROR) ;
-			error=true;
-			facesContext.addMessage(null, errName) ;
+		boolean error = false;
+		// test if the fields are correctly completed
+		if (this.projectDirector.getName().trim().length() == 0) {
+			error = true;
+			this.webCommonService
+					.addErrorMessage(this.webCommonService
+							.getStringFromBundle("component.projectdirectorcreate.err.lastnameRequired"));
 		}
-		
-		if (this.projectDirector.getFirstname().trim().length()==0)
-		{
-			FacesMessage errFirstName = new FacesMessage() ;
-			errFirstName.setSummary(bundle.getString("component.projectdirectorcreate.err.firstnameRequired"));
-			errFirstName.setSeverity(FacesMessage.SEVERITY_ERROR) ;
-			error=true;
-			facesContext.addMessage(null, errFirstName) ;
+		if (this.projectDirector.getFirstname().trim().length() == 0) {
+			error = true;
+			this.webCommonService
+					.addErrorMessage(this.webCommonService
+							.getStringFromBundle("component.projectdirectorcreate.err.firstnameRequired"));
 		}
-		if (this.projectDirector.getLogin().trim().length()==0)
-		{
-			FacesMessage errLogin = new FacesMessage() ;
-			errLogin.setSummary(bundle.getString("component.projectdirectorcreate.err.loginRequired"));
-			errLogin.setSeverity(FacesMessage.SEVERITY_ERROR) ;
-			error=true;
-			facesContext.addMessage(null, errLogin) ;
+		if (this.projectDirector.getLogin().trim().length() == 0) {
+			error = true;
+			this.webCommonService
+					.addErrorMessage(this.webCommonService
+							.getStringFromBundle("component.projectdirectorcreate.err.loginRequired"));
 		}
-		if (this.projectDirector.getPassword().trim().length()==0)
-		{
-			FacesMessage errpasswd = new FacesMessage() ;
-			errpasswd.setSummary(bundle.getString("component.projectdirectorcreate.err.passwordRequired"));
-			errpasswd.setSeverity(FacesMessage.SEVERITY_ERROR) ;
-			error=true;
-			facesContext.addMessage(null, errpasswd) ;
+		if (this.projectDirector.getPassword().trim().length() == 0) {
+			error = true;
+			this.webCommonService
+					.addErrorMessage(this.webCommonService
+							.getStringFromBundle("component.projectdirectorcreate.err.passwordRequired"));
 		}
-		if (this.passwordConfirmation.trim().length()==0)
-		{
-			FacesMessage errConfirmation = new FacesMessage() ;
-			errConfirmation.setSummary(bundle.getString("component.projectdirectorcreate.err.confirmpasswordRequired"));
-			errConfirmation.setSeverity(FacesMessage.SEVERITY_ERROR) ;
-			error=true;
-			facesContext.addMessage(null, errConfirmation) ;
+		if (this.passwordConfirmation.trim().length() == 0) {
+			error = true;
+			this.webCommonService
+					.addErrorMessage(this.webCommonService
+							.getStringFromBundle("component.projectdirectorcreate.err.confirmpasswordRequired"));
 		}
-		
-		if (!error)
-		{
-			if (this.loginService.loginExist(this.projectDirector.getLogin().trim())) {			
-				message.setSummary(bundle.getString("component.projectdirectorcreate.err.loginalreadyexist"));
-				message.setSeverity(FacesMessage.SEVERITY_ERROR);
+
+		if (!error) {
+			if (this.loginService.loginExist(this.projectDirector.getLogin()
+					.trim())) {
+				this.webCommonService
+						.addErrorMessage(this.webCommonService
+								.getStringFromBundle("component.projectdirectorcreate.err.loginalreadyexist"));
 			} else {
-				this.projectDirectorService.saveProjectDirector(this.projectDirector);
-				message.setSummary(bundle.getString("component.projectdirectorcreate.success"));
-				message.setSeverity(FacesMessage.SEVERITY_INFO);
+				this.projectDirectorService
+						.saveProjectDirector(this.projectDirector);
+				this.webCommonService
+						.addInfoMessage(this.webCommonService
+								.getStringFromBundle("component.projectdirectorcreate.success"));
+				//TODO add the return of the project director tab.
 			}
-			facesContext.addMessage(null, message);
-		}	
+		}
 		this.projectDirector = new ProjectDirector();
-		
+
 		return url;
 	}
+
 	/**
 	 * 
-	 * methode qui controle que les deux mots de passes sont identiques 
-	 *
+	 * methode qui controle que les deux mots de passes sont identiques
+	 * 
 	 * @param _context
 	 * @param _toValidate
 	 * @param _value
 	 * @throws ValidatorException
 	 */
-	public void passwordEqualValidation(FacesContext _context, UIComponent _toValidate, Object _value) throws ValidatorException
-	{
-		ResourceBundle bundle = ResourceBundle.getBundle(
-				"wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
-		String passConfirm = (String) _value;
+	public void passwordEqualValidation(FacesContext _context,
+			UIComponent _toValidate, Object _value) throws ValidatorException {
 
-		//TODO : recuperer le nom de l autre champs de password via une f:param
-		/*ExternalContext ec = (ExternalContext)_context.getExternalContext();
-		HashMap hm = new HashMap(ec.getRequestParameterMap());
-		String passName = (String)hm.get("forPassword");
-		UIComponent passcomponent = _toValidate.findComponent(passName) ;*/
-		
-		UIComponent passcomponent = _toValidate.findComponent("equal1PD") ;
+		UIComponent passcomponent = _toValidate.findComponent("equal1PD");
 		String passValue = (String) passcomponent.getAttributes().get("value");
-		
-		if(!passConfirm.equals(passValue))
-		{
+
+		if (!_value.equals(passValue)) {
 			FacesMessage message = new FacesMessage();
-			message.setSummary(bundle.getString("component.projectdirectorcreate.err.passwordnotequals"));
+			message
+					.setSummary(this.webCommonService
+							.getStringFromBundle("component.projectdirectorcreate.err.passwordnotequals"));
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
-			throw new ValidatorException(message) ;
+			throw new ValidatorException(message);
 		}
 	}
+
 	/**
 	 * Getter of projectDirector.
 	 * 
@@ -236,54 +219,67 @@ public class ProjectDirectorBean {
 	public void setLoginService(LoginService _loginService) {
 		this.loginService = _loginService;
 	}
-	
+
 	/**
 	 * Getter of ProjectDirectorList.
-	 *
+	 * 
 	 * @return the ProjectDirectorList.
 	 */
 	public List<ProjectDirector> getProjectDirectorList() {
 		this.projectDirectorList = new ArrayList<ProjectDirector>();
-		projectDirectorList.addAll(this.projectDirectorService.getProjectDirectors());
-		return this.projectDirectorList ;
+		projectDirectorList.addAll(this.projectDirectorService
+				.getProjectDirectors());
+		return this.projectDirectorList;
 	}
 
 	/**
 	 * Setter of ProcessManagerList.
-	 *
-	 * @param _ProcessManagerList The ProcessManagerList to set.
+	 * 
+	 * @param _ProcessManagerList
+	 *            The ProcessManagerList to set.
 	 */
-	public void setProjectDirectorList(List<ProjectDirector> _projectDirectorList) {
-		this.projectDirectorList = _projectDirectorList ;
-	}	
-	
-	
+	public void setProjectDirectorList(
+			List<ProjectDirector> _projectDirectorList) {
+		this.projectDirectorList = _projectDirectorList;
+	}
+
 	/**
 	 * Getter of projectDirectorView.
-	 *
+	 * 
 	 * @return the projectDirectorView.
 	 */
 	public String getProjectDirectorView() {
-		if (this.getProjectDirectorList().size()==0 )
-		{
-			this.projectDirectorView  = "projectDirectorView_null";
-		}
-		else
-		{
-			this.projectDirectorView ="projectDirectorView_not_null";
+		if (this.getProjectDirectorList().size() == 0) {
+			this.projectDirectorView = "projectDirectorView_null";
+		} else {
+			this.projectDirectorView = "projectDirectorView_not_null";
 		}
 		return this.projectDirectorView;
 	}
 
 	/**
 	 * Setter of projectDirectorView.
-	 *
-	 * @param _projectDirectorView The projectDirectorView to set.
+	 * 
+	 * @param _projectDirectorView
+	 *            The projectDirectorView to set.
 	 */
 	public void setProcessManagerView(String _projectDirectorView) {
-		this.projectDirectorView = _projectDirectorView ;
+		this.projectDirectorView = _projectDirectorView;
 	}
-	
-	
-	
+
+	/**
+	 * @return the webCommonService
+	 */
+	public WebCommonService getWebCommonService() {
+		return webCommonService;
+	}
+
+	/**
+	 * @param webCommonService
+	 *            the webCommonService to set
+	 */
+	public void setWebCommonService(WebCommonService webCommonService) {
+		this.webCommonService = webCommonService;
+	}
+
 }

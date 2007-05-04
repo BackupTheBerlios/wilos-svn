@@ -93,6 +93,10 @@
 			<property-name>loginService</property-name>
 			<value>#{LoginService}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>webCommonService</property-name>
+			<value>#{WebCommonService}</value>
+		</managed-property>
 	</managed-bean>
 
 	<managed-bean>
@@ -108,6 +112,10 @@
 		<managed-property>
 			<property-name>loginService</property-name>
 			<value>#{LoginService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>webCommonService</property-name>
+			<value>#{WebCommonService}</value>
 		</managed-property>
 	</managed-bean>
 
@@ -174,7 +182,7 @@
 		</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
-	
+
 	<managed-bean>
 		<managed-bean-name>AboutBean</managed-bean-name>
 		<managed-bean-class>
@@ -355,20 +363,6 @@
 			<value>#{WebCommonService}</value>
 		</managed-property>
 	</managed-bean>
-
-	<validator>
-		<validator-id>emailValidator</validator-id>
-		<validator-class>
-			wilos.presentation.web.validators.EmailValidator
-		</validator-class>
-	</validator>
-
-	<validator>
-		<validator-id>equalValidator</validator-id>
-		<validator-class>
-			wilos.presentation.web.validators.EqualValidator
-		</validator-class>
-	</validator>
 
 	<managed-bean>
 		<managed-bean-name>TreeBean</managed-bean-name>

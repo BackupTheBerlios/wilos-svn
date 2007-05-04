@@ -125,7 +125,6 @@ public class ParticipantBean {
 			error = true;
 			this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.forminscription.err.lastnameRequired"));
 		}
-
 		if (this.participant.getFirstname().trim().length() == 0) {
 			error = true;
 			this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.forminscription.err.firstnameRequired"));
@@ -271,22 +270,12 @@ public class ParticipantBean {
 	 */
 	public void passwordEqualValidation(FacesContext _context,
 			UIComponent _toValidate, Object _value) throws ValidatorException {
-		String passConfirm = (String) _value;
-		// TODO : recuperer le nom de l autre champs de password via une f:param
-		/*
-		 * ExternalContext ec = (ExternalContext)_context.getExternalContext();
-		 * HashMap hm = new HashMap(ec.getRequestParameterMap()); String
-		 * passName = (String)hm.get("forPassword"); UIComponent passcomponent =
-		 * _toValidate.findComponent(passName) ;
-		 */
-
 		UIComponent passcomponent = _toValidate.findComponent("equal1");
 		String passValue = (String) passcomponent.getAttributes().get("value");
 
-		if (!passConfirm.equals(passValue)) {
+		if (!_value.equals(passValue)) {
 			FacesMessage message = new FacesMessage();
-			message
-					.setSummary(this.webCommonService.getStringFromBundle("component.forminscription.err.passwordnotequals"));
+			message.setSummary(this.webCommonService.getStringFromBundle("component.forminscription.err.passwordnotequals"));
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 			throw new ValidatorException(message);
 		}
@@ -492,9 +481,7 @@ public class ParticipantBean {
 
 	public void changeModeActionListener(ValueChangeEvent evt) {
 		Boolean isForAssignment = (Boolean) evt.getNewValue();
-		FacesContext context = FacesContext.getCurrentInstance();
-		Map map = context.getExternalContext().getRequestParameterMap();
-		this.selectedProjectId = (String) map.get("projectId");
+		this.selectedProjectId = (String)this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
 		if (!isForAssignment) {
 			// show the confirmation popup.
 			this.visiblePopup = true;
@@ -507,9 +494,7 @@ public class ParticipantBean {
 
 	public void assignActionListener(ActionEvent event) {
 		//get the participant id into the session.
-		FacesContext context = FacesContext.getCurrentInstance();
-		Map map = context.getExternalContext().getRequestParameterMap();
-		this.selectedProjectId = (String) map.get("projectId");
+		this.selectedProjectId = (String)this.webSessionService.getAttribute(WebSessionService.PROJECT_ID);
 		
 		//save.
 		this.participantService.saveProjectForAProjectManager(this
