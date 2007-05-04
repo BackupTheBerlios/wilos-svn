@@ -68,18 +68,14 @@ public class ProcessBean {
 	/* Manage the popup. */
 
 	public void confirmDelete(ActionEvent event) {
-
-		for (Process process : this.processService.getProcessesList()) {
-			if (process.getId().equals(processId)) {
-				if (this.processManagementService
-						.hasBeenInstanciated(this.processId)) {
-					this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.process.management.deletionforbidden"));
-				} else {
-					this.processManagementService.removeProcess(process);
-					this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.process.management.deletiondone"));
-				}
-			}
+		if (this.processManagementService
+				.hasBeenInstanciated(this.processId)) {
+			this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.process.management.deletionforbidden"));
+		} else {
+			this.processManagementService.removeProcess(this.processId);
+			this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.process.management.deletiondone"));
 		}
+		
 		this.visiblePopup = false;
 	}
 

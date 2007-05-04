@@ -42,205 +42,234 @@ import wilos.presentation.web.tree.TreeBean;
 public class ConcreteRoleAffectationBean {
 
 	private ConcreteRoleAffectationService concreteRoleAffectationService;
-	
+
 	private ParticipantService participantService;
-	
+
 	private WebSessionService webSessionService;
-	
+
 	private WebCommonService webCommonService;
-	
-	private List<HashMap<String,Object>> concreteRolesDescriptorsList;
-	
+
+	private List<HashMap<String, Object>> concreteRolesDescriptorsList;
+
 	private String nodeId;
-	
+
 	private String oldNodeId;
-	
+
 	private String selectRolesView;
 
-	protected final Log logger = LogFactory.getLog(this.getClass()) ;
+	protected final Log logger = LogFactory.getLog(this.getClass());
 
-	public ConcreteRoleAffectationBean()
-	{
-		this.concreteRolesDescriptorsList = new ArrayList<HashMap<String,Object>>();
+	public ConcreteRoleAffectationBean() {
+		this.concreteRolesDescriptorsList = new ArrayList<HashMap<String, Object>>();
 	}
-	
-	
+
 	/**
 	 * Getter of selectAffectedProjectView.
-	 *
+	 * 
 	 * @return the selectAffectedProjectView.
 	 */
 	public String getSelectRolesView() {
-		if (this.getConcreteRolesDescriptorsList().size()==0 )
-		{
-			this.selectRolesView  = "no_roles_view";
-		}
-		else
-		{
-			this.selectRolesView ="roles_view";
+		if (this.getConcreteRolesDescriptorsList().size() == 0) {
+			this.selectRolesView = "no_roles_view";
+		} else {
+			this.selectRolesView = "roles_view";
 		}
 		return this.selectRolesView;
 	}
 
 	/**
 	 * Setter of selectAffectedProjectView.
-	 *
-	 * @param _selectAffectedProjectView The selectAffectedProjectView to set.
+	 * 
+	 * @param _selectAffectedProjectView
+	 *            The selectAffectedProjectView to set.
 	 */
 	public void setSelectRolesView(String _selectRolesView) {
-		this.selectRolesView = _selectRolesView ;
+		this.selectRolesView = _selectRolesView;
 	}
-	
+
 	/**
 	 * Getter of participantService.
-	 *
+	 * 
 	 * @return the participantService.
 	 */
 	public ParticipantService getParticipantService() {
-		return this.participantService ;
+		return this.participantService;
 	}
 
 	/**
 	 * Setter of participantService.
-	 *
-	 * @param _participantService The participantService to set.
+	 * 
+	 * @param _participantService
+	 *            The participantService to set.
 	 */
 	public void setParticipantService(ParticipantService _participantService) {
-		this.participantService = _participantService ;
+		this.participantService = _participantService;
 	}
-	
+
 	/**
 	 * Getter of concreteRoleAffectationService.
-	 *
+	 * 
 	 * @return the concreteRoleAffectationService.
 	 */
 	public ConcreteRoleAffectationService getConcreteRoleAffectationService() {
-		return this.concreteRoleAffectationService ;
+		return this.concreteRoleAffectationService;
 	}
 
 	/**
 	 * Setter of concreteRoleAffectationService.
-	 *
-	 * @param _concreteRoleAffectationService The concreteRoleAffectationService to set.
+	 * 
+	 * @param _concreteRoleAffectationService
+	 *            The concreteRoleAffectationService to set.
 	 */
-	public void setConcreteRoleAffectationService(ConcreteRoleAffectationService _concreteRoleAffectationService) {
-		this.concreteRoleAffectationService = _concreteRoleAffectationService ;
+	public void setConcreteRoleAffectationService(
+			ConcreteRoleAffectationService _concreteRoleAffectationService) {
+		this.concreteRoleAffectationService = _concreteRoleAffectationService;
 	}
 
 	/**
 	 * Getter of webSessionService.
-	 *
+	 * 
 	 * @return the webSessionService.
 	 */
 	public WebSessionService getWebSessionService() {
-		return this.webSessionService ;
+		return this.webSessionService;
 	}
 
 	/**
 	 * Setter of webSessionService.
-	 *
-	 * @param _webSessionService The webSessionService to set.
+	 * 
+	 * @param _webSessionService
+	 *            The webSessionService to set.
 	 */
 	public void setWebSessionService(WebSessionService _webSessionService) {
-		this.webSessionService = _webSessionService ;
+		this.webSessionService = _webSessionService;
 	}
 
 	/**
 	 * Getter of concreteRolesDescriptorsList.
-	 *
+	 * 
 	 * @return the concreteRolesDescriptorsList.
 	 */
 	public List<HashMap<String, Object>> getConcreteRolesDescriptorsList() {
 		this.concreteRolesDescriptorsList.clear();
-			List<ConcreteRoleDescriptor> globalCRD = this.concreteRoleAffectationService.getAllConcreteRolesDescriptorsForActivity(this.nodeId,(String)this.webSessionService.getAttribute(WebSessionService.PROJECT_ID));
-			for(Iterator iter = globalCRD.iterator(); iter.hasNext();){
-				ConcreteRoleDescriptor element = (ConcreteRoleDescriptor) iter.next() ;
-				HashMap<String,Object> hm = new HashMap<String,Object>();
-				hm.put("concreteId",element.getId());
-				hm.put("concreteName",element.getConcreteName());
-				hm.put("affected", ((HashMap<String,Boolean>)this.getParticipantAffectationForConcreteRoleDescriptor((String)this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID),element.getId())).get("affected"));
-				hm.put("not_allowed", ((HashMap<String,Boolean>)this.getParticipantAffectationForConcreteRoleDescriptor((String)this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID),element.getId())).get("not_allowed"));
-				this.concreteRolesDescriptorsList.add(hm);
-			}
-		return this.concreteRolesDescriptorsList ;
-	}
-	
-	public String saveConcreteRoleAffectation() {
-		for(HashMap<String,Object> concreteRoleInfo : this.concreteRolesDescriptorsList){
-			this.concreteRoleAffectationService.saveParticipantConcreteRoles(concreteRoleInfo,(String)this.webSessionService.getAttribute(WebSessionService.WILOS_USER_ID));
+		List<ConcreteRoleDescriptor> globalCRD = this.concreteRoleAffectationService
+				.getAllConcreteRolesDescriptorsForActivity(this.nodeId,
+						(String) this.webSessionService
+								.getAttribute(WebSessionService.PROJECT_ID));
+		for (Iterator iter = globalCRD.iterator(); iter.hasNext();) {
+			ConcreteRoleDescriptor element = (ConcreteRoleDescriptor) iter
+					.next();
+			HashMap<String, Object> hm = new HashMap<String, Object>();
+			hm.put("concreteId", element.getId());
+			hm.put("concreteName", element.getConcreteName());
+			hm
+					.put(
+							"affected",
+							((HashMap<String, Boolean>) this
+									.getParticipantAffectationForConcreteRoleDescriptor(
+											(String) this.webSessionService
+													.getAttribute(WebSessionService.WILOS_USER_ID),
+											element.getId())).get("affected"));
+			hm
+					.put(
+							"not_allowed",
+							((HashMap<String, Boolean>) this
+									.getParticipantAffectationForConcreteRoleDescriptor(
+											(String) this.webSessionService
+													.getAttribute(WebSessionService.WILOS_USER_ID),
+											element.getId()))
+									.get("not_allowed"));
+			this.concreteRolesDescriptorsList.add(hm);
 		}
-		this.webCommonService.addErrorMessage(this.webCommonService.getStringFromBundle("component.project.projectroles.validationMessage"));
-		
-		//refresh the tree 
+		return this.concreteRolesDescriptorsList;
+	}
+
+	public String saveConcreteRoleAffectation() {
+		for (HashMap<String, Object> concreteRoleInfo : this.concreteRolesDescriptorsList) {
+			this.concreteRoleAffectationService.saveParticipantConcreteRoles(
+					concreteRoleInfo, (String) this.webSessionService
+							.getAttribute(WebSessionService.WILOS_USER_ID));
+		}
+		this.webCommonService
+				.addErrorMessage(this.webCommonService
+						.getStringFromBundle("component.project.projectroles.validationMessage"));
+
+		// refresh the tree
 		TreeBean tb = (TreeBean) this.webCommonService.getBean("TreeBean");
 		tb.refreshProjectTree();
-		
-		//refresh the project advancement table
-		ProjectAdvancementBean pab = (ProjectAdvancementBean) this.webCommonService.getBean("ProjectAdvancementBean");
+
+		// refresh the project advancement table
+		ProjectAdvancementBean pab = (ProjectAdvancementBean) this.webCommonService
+				.getBean("ProjectAdvancementBean");
 		pab.refreshProjectTable();
 
 		return "";
 	}
 
-	
 	/**
 	 * TODO Method description
-	 *
+	 * 
 	 * @param _wilosUserId
 	 * @param _concreteId
 	 * @return
 	 */
-	
-	private HashMap<String,Boolean> getParticipantAffectationForConcreteRoleDescriptor(String _wilosUserId, String _concreteId) {
-		return this.concreteRoleAffectationService.getParticipantAffectationForConcreteRoleDescriptor(_wilosUserId,_concreteId);
+
+	private HashMap<String, Boolean> getParticipantAffectationForConcreteRoleDescriptor(
+			String _wilosUserId, String _concreteId) {
+		return this.concreteRoleAffectationService
+				.getParticipantAffectationForConcreteRoleDescriptor(
+						_wilosUserId, _concreteId);
 	}
 
 	/**
 	 * Setter of concreteRolesDescriptorsList.
-	 *
-	 * @param _concreteRolesDescriptorsList The concreteRolesDescriptorsList to set.
+	 * 
+	 * @param _concreteRolesDescriptorsList
+	 *            The concreteRolesDescriptorsList to set.
 	 */
-	public void setConcreteRolesDescriptorsList(List<HashMap<String, Object>> _concreteRolesDescriptorsList) {
-		this.concreteRolesDescriptorsList = _concreteRolesDescriptorsList ;
+	public void setConcreteRolesDescriptorsList(
+			List<HashMap<String, Object>> _concreteRolesDescriptorsList) {
+		this.concreteRolesDescriptorsList = _concreteRolesDescriptorsList;
 	}
 
 	/**
 	 * Getter of nodeId.
-	 *
+	 * 
 	 * @return the nodeId.
 	 */
 	public String getNodeId() {
-		return this.nodeId ;
+		return this.nodeId;
 	}
 
 	/**
 	 * Setter of nodeId.
-	 *
-	 * @param _nodeId The nodeId to set.
+	 * 
+	 * @param _nodeId
+	 *            The nodeId to set.
 	 */
 	public void setNodeId(String _nodeId) {
 		this.oldNodeId = this.nodeId;
-		this.nodeId = _nodeId ;
+		this.nodeId = _nodeId;
 	}
 
 	/**
 	 * Getter of oldNodeId.
-	 *
+	 * 
 	 * @return the oldNodeId.
 	 */
 	public String getOldNodeId() {
-		return this.oldNodeId ;
+		return this.oldNodeId;
 	}
 
 	/**
 	 * Setter of oldNodeId.
-	 *
-	 * @param _oldNodeId The oldNodeId to set.
+	 * 
+	 * @param _oldNodeId
+	 *            The oldNodeId to set.
 	 */
 	public void setOldNodeId(String _oldNodeId) {
-		this.oldNodeId = _oldNodeId ;
+		this.oldNodeId = _oldNodeId;
 	}
-
 
 	/**
 	 * @return the webCommonService
@@ -249,9 +278,9 @@ public class ConcreteRoleAffectationBean {
 		return webCommonService;
 	}
 
-
 	/**
-	 * @param webCommonService the webCommonService to set
+	 * @param webCommonService
+	 *            the webCommonService to set
 	 */
 	public void setWebCommonService(WebCommonService webCommonService) {
 		this.webCommonService = webCommonService;

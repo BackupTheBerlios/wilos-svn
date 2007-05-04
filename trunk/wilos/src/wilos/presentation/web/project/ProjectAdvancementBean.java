@@ -239,7 +239,7 @@ public class ProjectAdvancementBean {
 		String indentationString = "";
 		List<HashMap<String, Object>> subConcretesContent = new ArrayList<HashMap<String, Object>>();
 		ResourceBundle bundle = ResourceBundle.getBundle("wilos.resources.messages", FacesContext.getCurrentInstance().getApplication().getDefaultLocale());
-	
+		
 		//for every child of the activity
 		for (ConcreteBreakdownElement concreteBreakdownElement : _concreteActivity.getConcreteBreakdownElements()) {
 			HashMap<String, Object> hm = new HashMap<String, Object>();
