@@ -71,7 +71,7 @@ public class WebCommonService {
 		this.getCurrentFacesContext().addMessage(null, message);
 	}
 	
-	/* Manage constante */
+	/* Manage constante translation according the langue */
 	
 	public String getDisplayedState(String _state) {
 		String stateInString = "";
@@ -88,7 +88,7 @@ public class WebCommonService {
 		}
 		return stateInString;
 	}
-
+	
 	/* Private methods */
 	
 	private FacesContext getCurrentFacesContext(){

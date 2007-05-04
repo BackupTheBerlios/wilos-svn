@@ -105,11 +105,11 @@ public class ProcessManagementService {
 	 *            a process to remove
 	 */
 	@ Transactional (readOnly = false)
-	public void removeProcess(Process _process) {
+	public void removeProcess(String _processId) {
 		this.objetsToRemoveLast.clear() ;
 
 		// loads process from database
-		Process p = this.processDao.getProcess(_process.getId()) ;
+		Process p = this.processDao.getProcess(_processId) ;
 
 		// retrieve subelements of process
 		List<BreakdownElement> bdes = new ArrayList<BreakdownElement>() ;
