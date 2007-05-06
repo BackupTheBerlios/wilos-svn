@@ -42,12 +42,12 @@
 					</ice:commandLink>
 					<ice:outputText value="#{msgs['projectviewer.creationdate']}" />
 					<ice:outputText value="#{ProjectViewerBean.project.creationDate}">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
+						<f:convertDateTime pattern="#{msgs['constantes.date.datepattern']}" />
 					</ice:outputText>
 					<ice:outputText value="" />
 					<ice:outputText value="#{msgs['projectviewer.launchingdate']}" />
 					<ice:outputText value="#{ProjectViewerBean.project.launchingDate}">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
+						<f:convertDateTime pattern="#{msgs['constantes.date.datepattern']}" />
 					</ice:outputText>
 					<ice:outputText value="" />
 					<ice:outputText value="#{msgs['projectviewer.isFinished']}" />

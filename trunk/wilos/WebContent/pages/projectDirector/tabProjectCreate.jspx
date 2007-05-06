@@ -26,11 +26,11 @@ write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Bo
 
 					<ice:outputText
 						value="#{msgs['component.projectcreate.launchingdate']}">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
+						<f:convertDateTime pattern="#{msgs['constantes.date.datepattern']}" />
 					</ice:outputText>
 					<ice:selectInputDate id="launchingDate"
 						value="#{ProjectBean.project.launchingDate}"
-						popupDateFormat="dd/MM/yyyy" renderAsPopup="true" required="false" imageDir="images/"/>
+						popupDateFormat="#{msgs['constantes.date.datepattern']}" renderAsPopup="true" required="false" imageDir="images/"/>
 				</ice:panelGrid>
 				<ice:panelGrid columns="2">
 					<ice:commandButton

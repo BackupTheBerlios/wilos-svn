@@ -75,7 +75,7 @@
 									value="#{msgs['component.projectList.creationDate']}" />
 							</f:facet>
 							<ice:outputText value="#{project.creationDate}">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
+								<f:convertDateTime pattern="#{msgs['constantes.date.datepattern']}" />
 							</ice:outputText>
 						</ice:column>
 						<ice:column>
@@ -84,7 +84,7 @@
 									value="#{msgs['component.projectList.launchingDate']}" />
 							</f:facet>
 							<ice:outputText value="#{project.launchingDate}">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
+								<f:convertDateTime pattern="#{msgs['constantes.date.datepattern']}" />
 							</ice:outputText>
 						</ice:column>
 						<ice:column>
